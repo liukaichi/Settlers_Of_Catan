@@ -37,6 +37,7 @@ public interface IProxy {
 	 * 2. A new AI player of the specified type has been added to the current game. The server selected a name and color for the player.
 	 * On failure:
 	 * 1. The server returns an HTTP 400 error response, and the body contains an error message.
+	 * 
 	 * @param aiType Values returned by listAI, currently only LARGEST_ARMY is supported
 	 */
 	void addAI(AIType aiType);
