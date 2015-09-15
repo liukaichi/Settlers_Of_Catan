@@ -13,4 +13,9 @@ public class Player
     {
         bank = new PlayerBank();
     }
+
+    public String getName()
+    {
+        return playerInfo.getName();
+    }
 }
