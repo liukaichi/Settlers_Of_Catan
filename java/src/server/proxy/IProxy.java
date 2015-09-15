@@ -44,16 +44,19 @@ public interface IProxy {
 
 	/** Converts the received JSON client model of the updated game into an Java client model.
 	 *
-	 * @return
+	 * @return returns the client model of the server's game state.
 	 */
 	ClientModel getGameState();
+
+
 
 	/** Converts the received JSON client model if the given version number doesn't match the server's current version.
 	 *
 	 * @param versionNumber The version number of the client.
-	 * @return
+	 * @return returns the client model of the server's game state. If it already matches, it returns null.
 	 */
 	ClientModel getGameState(int versionNumber);
+
 
 	/**	Converts the received JSON client model of a restarted game into a Java client. For the default games created by the server, this method reverts the game to the state
 	 immediately after the initial placement round. For user­created games, this method reverts the game to the very beginning (i.e., before the initial placement round).
@@ -62,12 +65,15 @@ public interface IProxy {
 	 */
 	ClientModel resetGame();
 
+
 	/** Description
 	 * 
 	 * @return
 	 */
 	List<GameInfo> listGames();
-	
+
+
+
 	/** Adds an AI player to the current game.
 	 * <p></p>
 	 * On success:
