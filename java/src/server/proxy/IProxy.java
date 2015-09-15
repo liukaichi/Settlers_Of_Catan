@@ -31,13 +31,13 @@ public interface IProxy {
 	List<GameInfo> listGames();
 	
 	/** Adds an AI player to the current game.
-	 * <p>
-	 * <b>On success:</b>
+	 * <p></p>
+	 * On success:
 	 * <ul>
 	 * <li>1. The server returns an HTTP 200 success response with “Success” in the body.
 	 * <li>2. A new AI player of the specified type has been added to the current game. The server selected a name and color for the player.
 	 * </ul>
-	 * <b>On failure:</b>
+	 * On failure:
 	 * <ul>
 	 * <li>1. The server returns an HTTP 400 error response, and the body contains an error message.
 	 * </ul>
@@ -47,13 +47,13 @@ public interface IProxy {
 	
 	//Util Method
 	/** Sets the server’s logging level.
-	 * <p>
-	 * <b>On success:</b>
+	 * <p></p>
+	 * On success:
 	 * <ul>
 	 * <li>1. The server returns an HTTP 200 success response with “Success” in the body.
 	 * <li>2. The Server is using the specified logging level
 	 * </ul>
-	 * <b>On failure:</b>
+	 * On failure:
 	 * <ul>
 	 * <li>1. The server returns an HTTP 400 error response, and the body contains an error message
 	 * </ul>
