@@ -1,4 +1,4 @@
-package shared.model;
+package shared.model.message;
 
 /**
  * Represents a single message line in the chat.

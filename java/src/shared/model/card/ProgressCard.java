@@ -1,8 +1,12 @@
-package shared.model.card
+package shared.model.card;
+
+import shared.definitions.DevCardType;
 
 public class ProgressCard extends DevCard
 {
-	public void playAction(DevCardType type){
-		
-	}
+    @Override
+    public void playAction(DevCardType type)
+    {
+
+    }
 }

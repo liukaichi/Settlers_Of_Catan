@@ -1,8 +1,9 @@
-package shared.model;
+package shared.model.map;
 
 import java.util.List;
 
 import shared.locations.HexLocation;
+import shared.model.*;
 
 public class CatanMap
 {

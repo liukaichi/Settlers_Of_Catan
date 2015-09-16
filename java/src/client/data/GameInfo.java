@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import shared.model.Player;
+import shared.model.player.Player;
 
 /**
  * Used to pass game information into views<br>

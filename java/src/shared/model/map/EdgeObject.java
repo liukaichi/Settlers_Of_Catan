@@ -1,4 +1,4 @@
-package shared.model;
+package shared.model.map;
 
 import shared.definitions.PlayerIndex;
 import shared.locations.EdgeLocation;
