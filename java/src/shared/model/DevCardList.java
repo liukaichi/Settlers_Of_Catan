@@ -2,5 +2,15 @@ package shared.model;
 
 public class DevCardList
 {
-    private int monopoly, monument, roadBuilding, solider, yearOfPlenty;
+    private ProgressCard monopoly, roadBuilding, yearOfPlenty;
+    private KnightCard knight;
+    private VictoryPointCard monument;
+    
+    public void getAll(){
+        
+    }
+    
+    public void getOne(DevCard card){
+        
+    }
 }
