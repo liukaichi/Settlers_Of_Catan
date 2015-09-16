@@ -1,6 +1,15 @@
-package shared.model;
+package shared.model.resource;
 
 public class ResourceList
 {
-    private int brick, ore, sheep, wheat, wood;
+    private Resource brick, ore, sheep, wheat, wood;
+    
+    public void getAll(){
+        
+    }
+    
+    public void getOne(Resource resource){
+        
+    }
+    
 }
