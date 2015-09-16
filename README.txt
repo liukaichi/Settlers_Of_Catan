@@ -5,7 +5,7 @@ order to read the documentation.  The "Java docs" link takes you to documentatio
 for the Java GUI code that you will use to build your Catan client.  The
 "Interactive Server API" link will take you to the server's Swagger page, which
 allows you to interactively call the server's web API methods, and documents
-the inputs and outputs of the server's methods.  The other links on the server's
+the inputs and outputs of the server's methods.  The other links on the srv
 documentation page are not relevant to the version of the project you are doing.
 
 
