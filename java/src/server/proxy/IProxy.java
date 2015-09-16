@@ -5,6 +5,7 @@ import java.util.logging.Level;
 
 import client.data.GameInfo;
 import shared.model.ClientModel;
+import shared.model.UserParam;
 
 public interface IProxy
 {
