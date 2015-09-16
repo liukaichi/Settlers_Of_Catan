@@ -1,4 +1,4 @@
-package shared.model;
+package shared.model.message;
 
 import java.util.List;
 
