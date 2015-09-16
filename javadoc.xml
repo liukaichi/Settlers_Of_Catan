@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="private" additionalparam=" -tag custom.pre:a: &quot;Pre-Conditions:&quot;&#13;&#10;-tag custom.post:a: &quot;Post-Conditions:&quot;" author="true" classpath="demo/lib/xstream-1.4.7.jar;demo/server.jar;java/lib/hamcrest-core-1.3.jar;demo/client.jar;demo/lib/gson-2.2.4.jar;java/lib/junit-4.11.jar;java/lib/gson-2.2.4.jar;demo/lib/sqlitejdbc-v056.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" source="1.8" sourcefiles="java/src/server/proxy/IProxy.java" sourcepath="java/src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>
