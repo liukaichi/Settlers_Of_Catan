@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.logging.Level;
 
 import client.data.GameInfo;
+import shared.model.ClientModel;
 
 public interface IProxy
 {
-
-    String method();
-
     // User Methods
     /**
      * Logs the caller in to the server, and sets their catan.user HTTP cookie.
@@ -59,25 +57,24 @@ public interface IProxy
      * 
      * @param userParameter
      *        the username and password of the individual.
-     * @custom.pre username and password in userParameter are not null. The
-     *             username is not already in use.
-     * @custom.post If there is no existing user with the specified username,
-     *              <ul>
-     *              <li>1. A new user account has been created with the
-     *              specified username and password.
-     *              <li>2. The server returns an HTTP 200 success response with
-     *              “Success” in the body.
-     *              <li>3. The HTTP response headers set the <b>catan.user</b>
-     *              cookie to contain the identity of the logged­in player. The
-     *              cookie uses ”Path=/”, and its value contains a url­encoded
-     *              JSON object of the following form: { “name”: STRING,
-     *              “password”: STRING, “playerID”: INTEGER }. For example, {
-     *              “name”: “Rick”, “password”: “secret”, “playerID”: 14 }.
-     *              </ul>
-     *              If there is already an existing user with the specified
-     *              name, or the operation fails for any other reason, the
-     *              server returns an HTTP 400 error response, and the body
-     *              contains an error message.
+     * @pre username and password in userParameter are not null. The username is
+     *      not already in use.
+     * @post If there is no existing user with the specified username,
+     *       <ul>
+     *       <li>1. A new user account has been created with the specified
+     *       username and password.
+     *       <li>2. The server returns an HTTP 200 success response with
+     *       “Success” in the body.
+     *       <li>3. The HTTP response headers set the <b>catan.user</b> cookie
+     *       to contain the identity of the logged­in player. The cookie uses
+     *       ”Path=/”, and its value contains a url­encoded JSON object of the
+     *       following form: { “name”: STRING, “password”: STRING, “playerID”:
+     *       INTEGER }. For example, { “name”: “Rick”, “password”: “secret”,
+     *       “playerID”: 14 }.
+     *       </ul>
+     *       If there is already an existing user with the specified name, or
+     *       the operation fails for any other reason, the server returns an
+     *       HTTP 400 error response, and the body contains an error message.
      * @see https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.
      *      pdf
      */
@@ -89,14 +86,14 @@ public interface IProxy
      * <p>
      * </p>
      * 
-     * @custom.post If the operation succeeds,
-     *              <ul>
-     *              <li>1. The server returns an HTTP 200 success response.
-     *              <li>2. The body contains a JSON array containing a list of
-     *              objects that contain information about the server’s games.
-     *              </ul>
-     *              If the operation fails, The server returns an HTTP 400 error
-     *              response, and the body contains an error message.
+     * @post If the operation succeeds,
+     *       <ul>
+     *       <li>1. The server returns an HTTP 200 success response.
+     *       <li>2. The body contains a JSON array containing a list of objects
+     *       that contain information about the server’s games.
+     *       </ul>
+     *       If the operation fails, The server returns an HTTP 400 error
+     *       response, and the body contains an error message.
      * @return Information about all of the current games on the server.
      */
     List<GameInfo> listGames();
@@ -148,5 +145,58 @@ public interface IProxy
     void changeLogLevel(Level level);
 
     // Move Methods
+
+    /**
+     * Only for debugging purposes. Used for saving the game when bugs occur so
+     * you can load directly back to where the bug happens.
+     * <p>
+     * </p>
+     * On success:
+     * <ul>
+     * <li>The server returns an HTTP 200 success response with “Success” in the
+     * body.</li>
+     * <li>The game in the specified file has been loaded into the server and
+     * its state restored(including its ID).</li>
+     * </ul>
+     * On failure:
+     * <ul>
+     * <li>1. The server returns an HTTP 400 error response, and the body
+     * contains an error message</li>
+     * </ul>
+     * 
+     * @param gameName
+     *        the file name of the game that is saved on the server
+     */
+    void loadGame(String gameName);
+
+    /**
+     * Converts the received JSON client model of the updated game into an Java
+     * client model.
+     *
+     * @return returns the client model of the server's game state.
+     */
+    ClientModel getGameState();
+
+    /**
+     * Converts the received JSON client model if the given version number
+     * doesn't match the server's current version.
+     *
+     * @param versionNumber
+     *        The version number of the client.
+     * @return returns the client model of the server's game state. If it
+     *         already matches, it returns null.
+     */
+    ClientModel getGameState(int versionNumber);
+
+    /**
+     * Converts the received JSON client model of a restarted game into a Java
+     * client. For the default games created by the server, this method reverts
+     * the game to the state immediately after the initial placement round. For
+     * user­created games, this method reverts the game to the very beginning
+     * (i.e., before the initial placement round).
+     *
+     * @return Returns the client model of the reset game.
+     */
+    ClientModel resetGame();
 
 }

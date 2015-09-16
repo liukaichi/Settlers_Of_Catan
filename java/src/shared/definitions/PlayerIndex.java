@@ -6,7 +6,7 @@ public enum PlayerIndex
 
     private final int index;
 
-    PlayerIndex(int index)
+    private PlayerIndex(int index)
     {
         this.index = index;
     }
