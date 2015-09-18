@@ -1,4 +1,4 @@
-package shared.model;
+package shared.model.map;
 
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;

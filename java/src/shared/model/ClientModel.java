@@ -5,6 +5,10 @@ import java.util.List;
 
 import client.data.GameInfo;
 import shared.definitions.PlayerIndex;
+import shared.model.bank.Bank;
+import shared.model.map.CatanMap;
+import shared.model.message.MessageList;
+import shared.model.player.Player;
 
 public class ClientModel
 {
