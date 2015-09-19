@@ -1,4 +1,4 @@
-package shared.model.map;
+package shared.model.map.structure;
 
 import shared.definitions.*;
 import shared.locations.*;

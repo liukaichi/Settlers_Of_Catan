@@ -9,38 +9,48 @@ public interface IProxyGameCommands
 {
     // Game Methods
     /**
-     * Returns information about all of the current games on the server.
-     * <p>
-     * </p>
+     * Returns information about all of the current games on the server. <br>
      * 
      * @post If the operation succeeds,
-     *       <ul>
-     *       <li>1. The server returns an HTTP 200 success response.
-     *       <li>2. The body contains a JSON array containing a list of objects
+     *       <ol>
+     *       <li>The server returns an HTTP 200 success response.
+     *       <li>The body contains a JSON array containing a list of objects
      *       that contain information about the server’s games.
+     *       </ol>
+     *       If the operation fails,
+     *       <ul>
+     *       <li>The server returns an HTTP 400 error response, and the body
+     *       contains an error message.
      *       </ul>
-     *       If the operation fails, The server returns an HTTP 400 error
-     *       response, and the body contains an error message.
      * @return Information about all of the current games on the server.
      */
     List<GameInfo> listGames();
 
     /**
-     * Adds an AI player to the current game.
-     * <p>
-     * </p>
-     * On success:
-     * <ul>
-     * <li>1. The server returns an HTTP 200 success response with “Success” in
-     * the body.
-     * <li>2. A new AI player of the specified type has been added to the
-     * current game. The server selected a name and color for the player.
-     * </ul>
-     * On failure:
-     * <ul>
-     * <li>1. The server returns an HTTP 400 error response, and the body
-     * contains an error message.
-     * </ul>
+     * Adds an AI player to the current game.Currently, LARGEST_ARMY is the only
+     * supported type.<br>
+     * 
+     * @pre
+     *      <ol>
+     *      <li>The caller has previously logged in to the server and joined a
+     *      game (i.e., they have valid catan.user and catan.game HTTP cookies).
+     *      <li>There is space in the game for another player (i.e., the game is
+     *      not “full”).
+     *      <li>The specified “AIType” is valid (i.e., one of the values
+     *      returned by the /game/listAI method).
+     *      </ol>
+     * @post On success:
+     *       <ol>
+     *       <li>The server returns an HTTP 200 success response with “Success”
+     *       in the body.
+     *       <li>A new AI player of the specified type has been added to the
+     *       current game. The server selected a name and color for the player.
+     *       </ol>
+     *       On failure:
+     *       <ul>
+     *       <li>The server returns an HTTP 400 error response, and the body
+     *       contains an error message.
+     *       </ul>
      * 
      * @param aiType
      *        Values returned by listAI, currently only LARGEST_ARMY is
@@ -50,9 +60,7 @@ public interface IProxyGameCommands
 
     /**
      * Only for debugging purposes. Used for saving the game when bugs occur so
-     * you can load directly back to where the bug happens.
-     * <p>
-     * </p>
+     * you can load directly back to where the bug happens. <br>
      * On success:
      * <ul>
      * <li>The server returns an HTTP 200 success response with “Success” in the
@@ -62,8 +70,8 @@ public interface IProxyGameCommands
      * </ul>
      * On failure:
      * <ul>
-     * <li>1. The server returns an HTTP 400 error response, and the body
-     * contains an error message</li>
+     * <li>The server returns an HTTP 400 error response, and the body contains
+     * an error message</li>
      * </ul>
      * 
      * @param gameName

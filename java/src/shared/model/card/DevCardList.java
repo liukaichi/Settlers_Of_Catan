@@ -1,20 +1,16 @@
 package shared.model.card;
 
-import shared.model.card.*;
+import shared.definitions.DevCardType;
 
-public class DevCardList
+public abstract class DevCardList
 {
-    private ProgressCard monopoly, roadBuilding, yearOfPlenty;
-    private KnightCard knight;
-    private VictoryPointCard monument;
+    private int amount;
+    private DevCardType type;
 
-    public void getAll()
+    public int getAmount()
     {
-
+        return amount;
     }
 
-    public void getOne(DevCard card)
-    {
-
-    }
+    public abstract void playAction();
 }

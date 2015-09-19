@@ -1,8 +1,6 @@
 package client.data;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import shared.model.player.Player;
 
@@ -64,4 +62,5 @@ public class GameInfo
     {
         return Collections.unmodifiableList(players);
     }
+
 }

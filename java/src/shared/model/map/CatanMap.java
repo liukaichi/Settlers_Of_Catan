@@ -1,17 +1,33 @@
 package shared.model.map;
 
-import java.util.List;
+import java.util.*;
 
-import shared.locations.HexLocation;
-import shared.model.*;
+import shared.definitions.*;
+import shared.definitions.exceptions.PlacementException;
+import shared.locations.*;
+import shared.model.map.structure.*;
 
 public class CatanMap
 {
     private List<Hex> hexes;
     private List<Port> ports;
-    private List<Road> roads;
-    // VertexObject as opposed to Structure. They have the same functionality.
-    private List<VertexObject> settlements, cities;
+    private Map<EdgeLocation, Road> roads;
+    private Map<VertexLocation, Structure> structures;
     private int radius;
     private HexLocation robberLocation;
+
+    public void canPlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
+    {
+
+    }
+
+    public void canPlaceCity(PlayerIndex player, VertexLocation location) throws PlacementException
+    {
+
+    }
+
+    public void canPlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
+    {
+
+    }
 }

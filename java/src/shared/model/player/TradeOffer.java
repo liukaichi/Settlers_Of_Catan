@@ -1,4 +1,4 @@
-package shared.model;
+package shared.model.player;
 
 import shared.definitions.PlayerIndex;
 import shared.model.resource.ResourceList;

@@ -1,14 +1,11 @@
 package shared.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import client.data.GameInfo;
 import shared.definitions.PlayerIndex;
 import shared.model.bank.Bank;
 import shared.model.map.CatanMap;
 import shared.model.message.MessageList;
-import shared.model.player.Player;
+import shared.model.player.TradeOffer;
 
 public class ClientModel
 {
@@ -16,7 +13,6 @@ public class ClientModel
     private Bank bank;
     private MessageList chat, log;
     private CatanMap map;
-    private List<Player> players;
     private TradeOffer tradeOffer;
     private TurnTracker turnTracker;
     private int version;
@@ -28,10 +24,65 @@ public class ClientModel
         chat = null;
         log = null;
         map = null;
-        players = new ArrayList<Player>();
         tradeOffer = null;
         turnTracker = null;
         version = 0;
         winner = PlayerIndex.NONE;
     }
+
+    public GameInfo getGameInfo()
+    {
+        return gameInfo;
+    }
+
+    public void setGameInfo(GameInfo gameInfo)
+    {
+        this.gameInfo = gameInfo;
+    }
+
+    public Bank getBank()
+    {
+        return bank;
+    }
+
+    public MessageList getChat()
+    {
+        return chat;
+    }
+
+    public MessageList getLog()
+    {
+        return log;
+    }
+
+    public CatanMap getMap()
+    {
+        return map;
+    }
+
+    public TradeOffer getTradeOffer()
+    {
+        return tradeOffer;
+    }
+
+    public TurnTracker getTurnTracker()
+    {
+        return turnTracker;
+    }
+
+    public int getVersion()
+    {
+        return version;
+    }
+
+    public PlayerIndex getWinner()
+    {
+        return winner;
+    }
+
+    public void setWinner(PlayerIndex winner)
+    {
+        this.winner = winner;
+    }
+
 }

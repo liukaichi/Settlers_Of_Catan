@@ -9,8 +9,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
     // User Methods
     /**
      * Logs the caller in to the server, and sets their catan.user HTTP cookie.
-     * <p>
-     * </p>
+     * <br>
      * The passed­in username and password may correspond to the credentials of
      * any registered user. The server starts with four users: Sam, Brooke, Pete
      * and Mark. Their passwords are sam, brooke, pete and mark respectively.
@@ -34,17 +33,16 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       If the passed­in (username, password) pair is not valid, or the
      *       operation fails for any other reason, The server returns an HTTP
      *       400 error response, and the body contains an error message.
-     * @see https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.
-     *      pdf
+     * @see <a href=
+     *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
+     *      Cookies</a>
      * 
      */
     // Or just Username/Password. We should discuss this, probably.
     void userLogin(UserParam userParameter);
 
     /**
-     * Logs into the server and sets the user's HTTP cookie.
-     * <p>
-     * </p>
+     * Logs into the server and sets the user's HTTP cookie. <br>
      * This method does two things:
      * <ul>
      * <li>1. Creates a new user account.
@@ -72,16 +70,15 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       If there is already an existing user with the specified name, or
      *       the operation fails for any other reason, the server returns an
      *       HTTP 400 error response, and the body contains an error message.
-     * @see https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.
-     *      pdf
+     * @see <a href=
+     *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
+     *      Cookies</a>
      */
     void userRegister(UserParam userParameter);
 
     // Util Method
     /**
-     * Sets the server’s logging level.
-     * <p>
-     * </p>
+     * Sets the server’s logging level. <br>
      * On success:
      * <ul>
      * <li>1. The server returns an HTTP 200 success response with “Success” in
