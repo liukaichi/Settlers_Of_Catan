@@ -1,14 +1,12 @@
 package shared.model.map;
 
-import shared.definitions.PortType;
-import shared.definitions.TradeRatio;
-import shared.locations.EdgeDirection;
-import shared.locations.HexLocation;
+import shared.definitions.*;
+import shared.locations.*;
 
 public class Port
 {
-    PortType resource;
-    HexLocation location;
-    EdgeDirection direction;
-    TradeRatio ratio;
+    private PortType resource;
+    private HexLocation location;
+    private EdgeDirection direction;
+    private TradeRatio ratio;
 }

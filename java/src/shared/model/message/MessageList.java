@@ -9,7 +9,8 @@ public class MessageList
 {
     /**
      * An array of MessageLine.
+     * 
      * @see MessageLine
      */
-    List<MessageLine> lines;
+    private List<MessageLine> lines;
 }
