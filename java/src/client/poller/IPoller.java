@@ -16,12 +16,23 @@ import shared.model.ClientModel;
  */
 public interface IPoller {
 
-
-
     void setProxy(IProxy proxy);
 
-    void poll(IProxy proxy);
+    /** Goes through the Proxy to check for updates in the server's model.
+     * Executes updateModel() if model has changed.
+     */
+    void poll();
 
+    /** Uses a ScheduledExecutorService to continuously run poll() in short intervals.
+     *
+     */
+    void runPoll();
+
+
+    /** Replaces the old model with the given new one.
+     *
+     * @param newModel the new model received from the server.
+     */
     void updateModel(ClientModel newModel);
 
 }
