@@ -4,6 +4,15 @@ import java.util.logging.Level;
 
 import shared.model.player.Credentials;
 
+/**
+ * All operations that have to do with users as well as server utility methods
+ * are contained in this interface.<br>
+ * <br>
+ * This interface is used by {@link IProxy}.
+ * 
+ * @author Cache Staheli
+ *
+ */
 public interface IProxyNonMoveAPI extends IProxyGameCommands
 {
     // User Methods
@@ -35,7 +44,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       400 error response, and the body contains an error message.
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
-     *      Cookies</a>
+     *      How the Catan Server Uses HTTP Cookies</a>
      * 
      */
     // Or just Username/Password. We should discuss this, probably.
@@ -43,6 +52,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
 
     /**
      * Logs into the server and sets the user's HTTP cookie. <br>
+     * <br>
      * This method does two things:
      * <ul>
      * <li>1. Creates a new user account.
@@ -72,16 +82,16 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       HTTP 400 error response, and the body contains an error message.
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
-     *      Cookies</a>
+     *      How the Catan Server Uses HTTP Cookies</a>
      */
     void userRegister(Credentials credentials);
 
     // Util Method
     /**
-     * Sets the server’s logging level. <br>
+     * Sets the server’s logging level.
      * 
      * @pre The caller specifies a valid logging level. Valid values include:
-     *      SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST
+     *      <i>SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST.</i>
      * @post On success:
      *       <ol>
      *       <li>The server returns an HTTP 200 success response with “Success”

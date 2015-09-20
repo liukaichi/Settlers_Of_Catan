@@ -1,9 +1,17 @@
 package server.proxy;
 
-import server.communication.*;
 import server.communication.moveCommands.*;
 import shared.model.ClientModel;
 
+/**
+ * Contains all of the commands that are called on the server relating to
+ * playing cards.<br>
+ * <br>
+ * This interface is extended by {@link IProxyMoveAPI}.
+ * 
+ * @author Cache Staheli
+ *
+ */
 public interface IProxyDevCardCommands
 {
 

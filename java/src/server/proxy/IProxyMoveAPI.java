@@ -1,9 +1,17 @@
 package server.proxy;
 
-import server.communication.*;
 import server.communication.moveCommands.*;
 import shared.model.ClientModel;
 
+/**
+ * Contains the commands/actions that you can take for a game that your are
+ * currently in. This requires a Cookie.<br>
+ * <br>
+ * This interface is used by {@link IProxy}.
+ * 
+ * @author Cache Staheli
+ *
+ */
 public interface IProxyMoveAPI extends IProxyPlayingCommands, IProxyDevCardCommands
 {
     // Anytime Commands
