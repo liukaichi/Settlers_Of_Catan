@@ -17,11 +17,19 @@ public class Resource
         return type;
     }
 
+    /**
+     * 
+     * @param num
+     */
     public void addResource(int num)
     {
 
     }
 
+    /**
+     * 
+     * @param num
+     */
     public void subResource(int num)
     {
 

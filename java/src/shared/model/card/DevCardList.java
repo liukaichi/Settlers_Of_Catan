@@ -12,5 +12,8 @@ public abstract class DevCardList
         return amount;
     }
 
+    /**
+     * Ability for player to play any of the 6 development cards
+     */
     public abstract void playAction();
 }

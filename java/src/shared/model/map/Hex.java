@@ -31,6 +31,7 @@ public class Hex
      */
     private int numberTile; // Do we want this to be a seperate class?
 
+    
     public void canPlaceSettlement(PlayerInfo player, VertexLocation location) throws PlacementException
     {
 
