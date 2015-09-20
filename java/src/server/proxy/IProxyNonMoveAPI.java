@@ -2,7 +2,7 @@ package server.proxy;
 
 import java.util.logging.Level;
 
-import shared.model.player.UserParam;
+import shared.model.player.Credentials;
 
 public interface IProxyNonMoveAPI extends IProxyGameCommands
 {
@@ -16,8 +16,8 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      * Any additional registered users should also work with this call.
      * 
      * 
-     * @param userParameter
-     *        the username and password of the individual.
+     * @param credentials
+     *        The player's username and password.
      * @pre username and password in userParameter are not null.
      * @post If the passed­in (username, password) pair is valid,
      *       <ul>
@@ -39,7 +39,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      * 
      */
     // Or just Username/Password. We should discuss this, probably.
-    void userLogin(UserParam userParameter);
+    void userLogin(Credentials credentials);
 
     /**
      * Logs into the server and sets the user's HTTP cookie. <br>
@@ -50,8 +50,8 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      * catan.user HTTP cookie.
      * </ul>
      * 
-     * @param userParameter
-     *        the username and password of the individual.
+     * @param credentials
+     *        The player's username and password.
      * @pre username and password in userParameter are not null. The username is
      *      not already in use.
      * @post If there is no existing user with the specified username,
@@ -74,26 +74,29 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
      *      Cookies</a>
      */
-    void userRegister(UserParam userParameter);
+    void userRegister(Credentials credentials);
 
     // Util Method
     /**
      * Sets the server’s logging level. <br>
-     * On success:
-     * <ul>
-     * <li>1. The server returns an HTTP 200 success response with “Success” in
-     * the body.
-     * <li>2. The Server is using the specified logging level
-     * </ul>
-     * On failure:
-     * <ul>
-     * <li>1. The server returns an HTTP 400 error response, and the body
-     * contains an error message
-     * </ul>
+     * 
+     * @pre The caller specifies a valid logging level. Valid values include:
+     *      SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST
+     * @post On success:
+     *       <ol>
+     *       <li>The server returns an HTTP 200 success response with “Success”
+     *       in the body.
+     *       <li>The Server is using the specified logging level
+     *       </ol>
+     *       On failure:
+     *       <ul>
+     *       <li>The server returns an HTTP 400 error response, and the body
+     *       contains an error message
+     *       </ul>
      * 
      * @param level
-     *        Valid values include: SEVERE, WARNING, INFO, CONFIG, FINE, FINER,
-     *        FINEST
+     *        The logging level
+     * @see Level
      */
     void changeLogLevel(Level level);
 }

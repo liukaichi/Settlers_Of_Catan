@@ -1,12 +1,12 @@
 package shared.model.player;
 
-public class UserParam
+public class Credentials
 {
 
     private Username username;
     private Password password;
 
-    public UserParam()
+    public Credentials()
     {
 
     }
