@@ -22,6 +22,7 @@ public class DevCardHand
      */
     public DevCardList getDevCardList(DevCardType cardType)
     {
+    	return null;
     	
     }
 }
