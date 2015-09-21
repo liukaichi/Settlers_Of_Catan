@@ -4,8 +4,7 @@ import shared.definitions.PlayerIndex;
 import shared.locations.EdgeLocation;
 
 /*
- * I called this EdgeObject instead of EdgeValue, because it's same naming
- * convention as VertexObject
+ * Object representing a road or a hex edge in the Catan game
  */
 public abstract class Road
 {

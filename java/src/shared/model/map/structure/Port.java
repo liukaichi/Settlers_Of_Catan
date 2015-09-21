@@ -3,6 +3,11 @@ package shared.model.map.structure;
 import shared.definitions.*;
 import shared.locations.*;
 
+/**
+ * Object representing a port in the Catan game
+ * @author amandafisher
+ *
+ */
 public class Port
 {
     private PortType resource;

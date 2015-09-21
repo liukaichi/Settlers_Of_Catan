@@ -2,7 +2,7 @@ package shared.definitions.exceptions;
 
 
 /**
- * 
+ * General Catan game exception 
  * @author amandafisher
  *
  */

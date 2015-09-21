@@ -2,6 +2,11 @@ package shared.model.resource;
 
 import shared.definitions.ResourceType;
 
+/**
+ * Object representing the many different resources in the Catan game
+ * @author amandafisher
+ *
+ */
 public class Resource
 {
     private ResourceType type;

@@ -3,6 +3,12 @@ package shared.model.map.structure;
 import shared.definitions.PlayerIndex;
 import shared.locations.VertexLocation;
 
+/**
+ * Structures in our design include settlements, cities and roads. These are represented by the structure object
+ * in our Catan game. They are each worth a certain number of victory points. 
+ * @author amandafisher
+ *
+ */
 public abstract class Structure
 {
     private PlayerIndex owner;
