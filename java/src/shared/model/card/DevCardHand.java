@@ -9,13 +9,14 @@ public class DevCardHand
     private YearOfPlentyCardList yearOfPlenty;
     private KnightCardList knight;
     private VictoryPointCardList monument;
-/**
- * Why is this function returning an integer?
- * @param cardType
- * @return number
- */
-    public int getDevCardList(DevCardType cardType)
+    
+    /**
+     * Gets a list of cards matching the specified card type
+     * @param cardType -- the card type of the list to be returned
+     * @returns DevCardList of the specified DevCardType
+     */
+    public DevCardList getDevCardList(DevCardType cardType)
     {
-        return -1;
+
     }
 }

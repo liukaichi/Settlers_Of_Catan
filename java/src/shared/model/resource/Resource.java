@@ -18,8 +18,8 @@ public class Resource
     }
 
     /**
-     * 
-     * @param num
+     * Increases the count of this resource by @param num amount
+     * @param num -- number of this resource to increase
      */
     public void addResource(int num)
     {
@@ -27,8 +27,8 @@ public class Resource
     }
 
     /**
-     * 
-     * @param num
+     * Decreases the count of this resource by the @param num amount
+     * @param num -- number of this resrouce to decrease
      */
     public void subResource(int num)
     {

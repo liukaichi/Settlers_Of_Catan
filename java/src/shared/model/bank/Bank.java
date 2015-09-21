@@ -8,12 +8,20 @@ public class Bank
     private ResourceList resources;
     private DevCardHand devCards;
 
-    public ResourceList getResourceList(ResourceList list)
+    /**
+     * Returns a ResourceList object
+     * @returns the ResourceList in this Bank
+     */
+    public ResourceList getResourceList()
     {
         return resources;
     };
 
-    public DevCardHand getDevCardList(DevCardHand list)
+    /**
+     * Returns a DevCardHand object
+     * @returns the DevCardHand in this Bank
+     */
+    public DevCardHand getDevCardList()
     {
         return devCards;
     };
