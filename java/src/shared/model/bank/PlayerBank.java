@@ -1,12 +1,20 @@
 package shared.model.bank;
 
+import java.util.List;
+
 import shared.definitions.*;
+import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientFundsException;
+import shared.model.map.structure.Port;
 
 public class PlayerBank extends Bank
 {
     private int cities, settlements, roads;
     private int soldiers, monuments;
+    /**
+     * List of ports owned by player
+     */
+    private List<Port> ports;
     // should this be it's own class?
     private int victoryPoints;
 
@@ -47,5 +55,14 @@ public class PlayerBank extends Bank
     {
     	return false;
     }
+    /**
+     * Determines if the player can trade with a port
+     * @param type -- the type of resource being traded with a port
+     * @return returns true if the player owns a port with that type of resource
+     */
+    public boolean canAccessPort(PortType type) throws CatanException
+    {
+		return false;
+	}
 
 }

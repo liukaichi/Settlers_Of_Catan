@@ -18,6 +18,9 @@ public class Port
      * This indicates where the port is on the Catan map
      */
     private HexLocation location;
+    /**
+     *  This is the location of the hex.
+     */
     private EdgeDirection direction;
     /**
      * This indicates the ratio for the resource in maritime trade
