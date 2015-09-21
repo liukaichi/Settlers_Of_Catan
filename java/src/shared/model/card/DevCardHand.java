@@ -2,6 +2,11 @@ package shared.model.card;
 
 import shared.definitions.DevCardType;
 
+/**
+ * Object that represents a player's hand of development cards in the Catan game
+ * @author amandafisher
+ *
+ */
 public class DevCardHand
 {
     private MonopolyCardList monopoly;

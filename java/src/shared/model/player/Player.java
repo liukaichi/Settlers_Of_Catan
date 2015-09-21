@@ -19,6 +19,9 @@ public class Player
      */
     private PlayerInfo playerInfo;
 
+    /**
+     * A player bank is instantiated with the creation of each new player
+     */
     public Player()
     {
         bank = new PlayerBank();

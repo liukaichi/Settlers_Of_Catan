@@ -1,5 +1,10 @@
 package shared.model.player;
 
+/**
+ * Object that represents a string holding the username of the player.
+ * @author amandafisher
+ *
+ */
 public class Username
 {
 

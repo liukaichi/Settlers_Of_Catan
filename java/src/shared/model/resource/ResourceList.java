@@ -2,6 +2,11 @@ package shared.model.resource;
 
 import shared.definitions.ResourceType;
 
+/**
+ * List of the resource objects 
+ * @author amandafisher
+ *
+ */
 public class ResourceList
 {
     private Resource brick, ore, sheep, wheat, wood;

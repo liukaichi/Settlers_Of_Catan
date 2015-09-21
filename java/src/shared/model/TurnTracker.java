@@ -3,6 +3,11 @@ package shared.model;
 import shared.definitions.PlayerIndex;
 import shared.definitions.TurnStatus;
 
+/**
+ * This class manages player's turns during the Catan game
+ * @author amandafisher
+ *
+ */
 public class TurnTracker
 {
     private PlayerIndex currentTurn, longestRoad, largestArmy;

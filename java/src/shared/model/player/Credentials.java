@@ -1,5 +1,11 @@
 package shared.model.player;
 
+/**
+ * Credentials class holds the login information for each player. This validates
+ * that the user can login and begin game play.
+ * @author amandafisher
+ *
+ */
 public class Credentials
 {
 

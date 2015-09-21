@@ -1,5 +1,11 @@
 package shared.model.card;
 
+/**
+ * This is a specific development card -- Road Building. This extends the general development card class
+ * and implements just this devCard's function.
+ * @author amandafisher
+ *
+ */
 public class RoadBuildingCardList extends DevCardList
 {
 

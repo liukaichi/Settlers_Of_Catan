@@ -10,9 +10,18 @@ import shared.locations.*;
  */
 public class Port
 {
+	/**
+	 * This indicates which resource the port trade is available with
+	 */
     private PortType resource;
+    /**
+     * This indicates where the port is on the Catan map
+     */
     private HexLocation location;
     private EdgeDirection direction;
+    /**
+     * This indicates the ratio for the resource in maritime trade
+     */
     private TradeRatio ratio;
 	public PortType getResource() {
 		return resource;
