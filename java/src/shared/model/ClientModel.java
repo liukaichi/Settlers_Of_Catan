@@ -7,6 +7,11 @@ import shared.model.map.CatanMap;
 import shared.model.message.MessageList;
 import shared.model.player.TradeOffer;
 
+/**
+ * The client model for the Catan game
+ * @author amandafisher
+ *
+ */
 public class ClientModel
 {
     private GameInfo gameInfo;

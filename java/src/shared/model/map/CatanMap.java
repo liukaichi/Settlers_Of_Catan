@@ -7,6 +7,11 @@ import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
 
+/**
+ * Represents the board game map of the Catan game
+ * @author amandafisher
+ *
+ */
 public class CatanMap
 {
     private List<Hex> hexes;
