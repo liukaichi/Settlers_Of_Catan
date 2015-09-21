@@ -1,5 +1,7 @@
 package shared.locations;
-
+/**
+ * Enums for Vertex directions and their respective opposites
+ */
 public enum VertexDirection
 {
 	West, NorthWest, NorthEast, East, SouthEast, SouthWest;

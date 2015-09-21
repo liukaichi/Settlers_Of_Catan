@@ -16,10 +16,10 @@ public class EdgeLocation
 	}
 	
 	public HexLocation getHexLoc()
-	{
-		return hexLoc;
-	}
-	
+		{
+			return hexLoc;
+		}
+
 	private void setHexLoc(HexLocation hexLoc)
 	{
 		if(hexLoc == null)
@@ -54,7 +54,12 @@ public class EdgeLocation
 		result = prime * result + ((hexLoc == null) ? 0 : hexLoc.hashCode());
 		return result;
 	}
-	
+
+	/** Equals function comparing Direction and Hex Location
+	 *
+	 * @param obj Object to be compared with
+	 * @return returns true if equals, false if not.
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{

@@ -1,5 +1,8 @@
 package shared.locations;
 
+/**
+ * Enums for Edge directions and their respective opposites
+ */
 public enum EdgeDirection
 {
 	

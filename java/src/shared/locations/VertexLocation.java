@@ -54,7 +54,12 @@ public class VertexLocation
 		result = prime * result + ((hexLoc == null) ? 0 : hexLoc.hashCode());
 		return result;
 	}
-	
+
+	/** Equals function comparing direction and hex location
+	 *
+	 * @param obj Object to be compared to
+	 * @return True if equal, otherwise false.
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{

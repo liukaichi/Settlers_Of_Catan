@@ -3,7 +3,7 @@ package shared.model.map.structure;
 import shared.definitions.PlayerIndex;
 import shared.locations.EdgeLocation;
 
-/*
+/**
  * Object representing a road or a hex edge in the Catan game
  */
 public abstract class Road

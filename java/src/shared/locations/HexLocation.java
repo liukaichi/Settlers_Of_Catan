@@ -50,7 +50,12 @@ public class HexLocation
 		result = prime * result + y;
 		return result;
 	}
-	
+
+	/** Equals function that check for matching x and y coordinates
+	 *
+	 * @param obj Object to be compared to
+	 * @return true if equal, otherwise returns false.
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -67,7 +72,13 @@ public class HexLocation
 			return false;
 		return true;
 	}
-	
+
+
+	/** Returns a HexLocation in the given direction of the hex.
+	 *
+	 * @param dir Which direction you want the location
+	 * @return A Hex Location in the given direction. If there is no hex, returns null.
+	 */
 	public HexLocation getNeighborLoc(EdgeDirection dir)
 	{
 		switch (dir)

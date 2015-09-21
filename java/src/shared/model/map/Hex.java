@@ -29,7 +29,7 @@ public class Hex
      * The number assigned to this tile. Range of number is [2-12],
      * representative of the possible rolls of 2 dices
      */
-    private int numberTile; // Do we want this to be a seperate class?
+    private int numberTile; // Do we want this to be a separate class?
 
     
     /**
