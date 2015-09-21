@@ -18,7 +18,7 @@ public class ResourceList
      */
     public Resource getResource(ResourceType resource)
     {
-
+    	return null;
     }
 
 }
