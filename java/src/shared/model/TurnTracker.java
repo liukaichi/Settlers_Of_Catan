@@ -16,7 +16,7 @@ public class TurnTracker
     /**
     * Updates the currentTurn counter
     */
-    private void updateCurrentTurn(){
+    public void updateCurrentTurn(){
         
     }
     
@@ -24,7 +24,7 @@ public class TurnTracker
     * Updates the longestRoad counter.
     * A player has the longest road if he or she has at least 5 roads
     */    
-    private void updateLongestRoad(){
+    public void updateLongestRoad(){
         
     }
     
@@ -32,16 +32,32 @@ public class TurnTracker
     * Updates the largest army counter
     * A player has the largest army if he or she has at least 3 knights
     */    
-    private void updateLargestArmy(){
+    public void updateLargestArmy(){
         
     }
     
     /**
     * Updates the status string based on the current phase of the player's turn
     */   
-    private void updateStatus(){
+    public void updateStatus(){
         
     }
+
+	public PlayerIndex getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public PlayerIndex getLongestRoad() {
+		return longestRoad;
+	}
+
+	public PlayerIndex getLargestArmy() {
+		return largestArmy;
+	}
+
+	public TurnStatus getStatus() {
+		return status;
+	}
     
     
     
