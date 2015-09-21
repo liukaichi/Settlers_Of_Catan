@@ -1,6 +1,6 @@
 package server.proxy;
 
-import server.communication.moveCommands.*;
+import shared.communication.moveCommands.*;
 import shared.model.ClientModel;
 
 /**
@@ -10,7 +10,7 @@ import shared.model.ClientModel;
  * This interface is used by {@link IProxy}.
  * 
  * @author Cache Staheli
- *
+ * 
  */
 public interface IProxyMoveAPI extends IProxyPlayingCommands, IProxyDevCardCommands
 {

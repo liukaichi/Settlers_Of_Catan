@@ -1,6 +1,6 @@
 package server.proxy;
 
-import server.communication.moveCommands.*;
+import shared.communication.moveCommands.*;
 import shared.model.ClientModel;
 
 /**

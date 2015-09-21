@@ -1,7 +1,6 @@
 package server.proxy;
 
-import server.communication.*;
-import server.communication.moveCommands.*;
+import shared.communication.moveCommands.*;
 import shared.model.ClientModel;
 
 public interface IProxyPlayingCommands

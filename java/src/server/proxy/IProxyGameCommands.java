@@ -3,7 +3,7 @@ package server.proxy;
 import java.util.List;
 
 import client.data.GameInfo;
-import server.communication.*;
+import shared.communication.*;
 import shared.model.ClientModel;
 
 /**
