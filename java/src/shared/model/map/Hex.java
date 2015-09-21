@@ -31,6 +31,10 @@ public class Hex
      */
     private int numberTile; // Do we want this to be a separate class?
 
+    /**
+     * This is stored as true if the robber is on this hex.
+     */
+    private boolean robber;
     
     /**
      * Method that indicates whether a player has the ability to place a settlement in a certain location on the map
@@ -63,5 +67,14 @@ public class Hex
     public void canPlaceRoad(PlayerInfo player, EdgeLocation location) throws PlacementException
     {
 
+    }
+
+    public void setHasRobber(boolean newHasRobber){
+        robber = newHasRobber;
+    }
+
+    public boolean hasRobber()
+    {
+        return robber;
     }
 }
