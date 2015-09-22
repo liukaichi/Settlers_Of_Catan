@@ -321,8 +321,8 @@ public interface IProxyGameCommands
      *       <li>The server returns an HTTP 200 success response.
      *       <li>The body contains the game’s updated client model JSON
      *       </ol>
-     *       <ul>
      *       If the operation fails,
+     *       <ul>
      *       <li>The server returns an HTTP 400 error response, and the body
      *       contains an error message.
      *       </ul>
