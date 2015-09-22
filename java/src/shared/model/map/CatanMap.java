@@ -30,11 +30,11 @@ public class CatanMap
      * Method that indicates whether a player has the ability to place a settlement in a certain location on the map
      * @param player -- this will be the player placing the settlement
      * @param location -- this will be the location of the settlement; must ensure that this space on the map is empty
-     * @throws PlacementException -- exception thrown if either of the two above statements cannot be true
+     * @return boolean -- returns true if the location is vacant and at least two spaces away from another settlement otherwise returns false
      */
-    public void canPlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
+    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
     {
-
+    	return false;
     }
 
     /**
@@ -42,11 +42,11 @@ public class CatanMap
      * @param player -- this will be the player placing the city
      * @param location -- this will be the location of the city; must ensure that this space already has a settlement
      *                 located their owned by this player
-     * @throws PlacementException -- exception thrown if either of the two above statements cannot be true
+     * @return boolean -- returns true if there is a settlement at the specified location and it is owned by the player otherwise returns false
      */
-    public void canPlaceCity(PlayerIndex player, VertexLocation location) throws PlacementException
+    public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
     {
-
+    	return false;
     }
 
     /**
@@ -54,11 +54,11 @@ public class CatanMap
      * @param player -- this will be the player placing the road
      * @param location -- this will be the edge location where the road will be placed; must ensure this space is
      *                 empty on the map
-     * @throws PlacementException -- exception thrown if either of the two above statements cannot be true
+     * @return boolean -- returns true if the player owns a settlement or city at the neighboring vertex locations and there is no current road there otherwise returns false
      */
-    public void canPlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
+    public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
     {
-
+    	return false;
     }
 
     /**
@@ -66,10 +66,10 @@ public class CatanMap
      * @param player -- this will be the player placing the robber
      * @param location -- this will be the hex location where the robber will be placed; cannot place on water or
      *                 where the robber already is
-     * @throws PlacementException -- exception thrown if either of the two above statements cannot be true
+     * @return boolean -- returns true if it is not moving to its current location and it is not a sea piece otherwise returns false
      */
-    public void canMoveRobber(PlayerIndex player, HexLocation location) throws PlacementException
+    public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
-
+    	return false;
     }
 }
