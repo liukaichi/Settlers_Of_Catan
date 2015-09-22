@@ -60,11 +60,12 @@
     <target name="make-java-doc" description="Generate the Java docs">
         <echo> Making Java documentation </echo>
         <delete dir="${javadoc.dir}"/>
-		<javadoc destdir="${javadoc.dir}" Package="true">
+		<javadoc destdir="${javadoc.dir}" Package="true" additionalparam=" -tag pre:a:&quot;Pre-Conditions:&quot;&#13;&#10; -tag post:a:&quot;Post-Conditions:&quot;&#13;&#10; -tag invariant:a:&quot;Invariants:&quot;">
 			<classpath refid="java.lib.classpath" />
 			<packageset dir="${java.src.dir}">
 				<include name="client/**"/>
 				<include name="shared/**"/>
+				<include name="server/**"/>
 			</packageset>
 		</javadoc>
    </target>

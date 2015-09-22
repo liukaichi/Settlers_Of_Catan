@@ -29,6 +29,9 @@ public class MessageList
     /**
      * Adds the message to the list.
      * 
+     * @param source
+     *        the player from whom this message originates, or NONE, if the
+     *        server.
      * @param message
      *        the message to add.
      */
