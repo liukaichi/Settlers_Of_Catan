@@ -46,7 +46,7 @@ public class ClientFacade
      * Dev Card Controller Methods
      */
 
-    public void buyCard() throws CardException
+    public void buyDevCard() throws CardException
     {
 
     }
