@@ -1,6 +1,7 @@
 package client.facade;
 
 import client.data.RobPlayerInfo;
+import shared.definitions.Dice;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.*;
 import shared.locations.*;
@@ -238,6 +239,9 @@ public class ClientFacade
     /*
      * Points Controller methods
      */
+    /**
+     * Updates the players victory points, getting the values from the model
+     */
     public void initPointsFromModel()
     {
 
@@ -246,19 +250,32 @@ public class ClientFacade
     /*
      * Roll Dice Controller methods
      */
-    public void rollDice()
+    /**
+     * Calls the roll method on the dice
+     * @return Dice - Returns a dice object containing the values of two dice.
+     * @post Value of dice is changed
+     */
+    public Dice rollDice()
     {
-
+    	//roll dice
+    	return null;
     }
 
     /*
      * Turn tracker controller methods
      */
+    /**
+     * Ends the players turn
+     *
+     * @post The turn is ended
+     */
     public void endTurn()
     {
 
     }
-
+/**
+ * Initializes the turn tracker using the model
+ */
     public void initTurnFromModel()
     {
 
