@@ -197,32 +197,68 @@ public class ClientFacade
     {
         return false;
     }
-
+/**
+ * Checks to see if player meets the condition to move the robber
+ * @pre place robber is called
+ * @post boolean is returned
+ * @param hexLoc
+ * @return true if a seven has been rolled and the location is viable
+ */
     public boolean canPlaceRobber(HexLocation hexLoc)
     {
         return false;
     }
-
+/**
+ * Player purchases and places a road
+ * @pre player clicks on a location to place road
+ * @post player met conditions and road is on map
+ * @param edgeLoc
+ * @throws PlacementException
+ */
     public void placeRoad(EdgeLocation edgeLoc) throws PlacementException
     {
 
     }
-
+/**
+ * Player purchases and places a settlement
+ * @pre player clicks on a location to place a settlement
+ * @post player met conditions and settlment is now on map
+ * @param vertLoc
+ * @throws PlacementException
+ */
     public void placeSettlement(VertexLocation vertLoc) throws PlacementException
     {
 
     }
-
+/**
+ * Player purchases and places a city at a location specified
+ * @post a city is now owned by the player
+ * @pre player clicks to build on a location
+ * @param vertLoc
+ * @throws PlacementException
+ */
     public void placeCity(VertexLocation vertLoc) throws PlacementException
     {
 
     }
-
+/**
+ * Changes the Robbers HexLocation
+ * @post player robs player
+ * @pre player rolls a 7
+ * @param hexLoc
+ * @throws PlacementException
+ */
     public void placeRobber(HexLocation hexLoc) throws PlacementException
     {
 
     }
-
+/**
+ * Robs a player, player receives one resource from the player being robbed
+ * @pre robber is placed
+ * @post player has an extra resource
+ * @param victim
+ * @throws PlacementException
+ */
     public void robPlayer(RobPlayerInfo victim) throws PlacementException
     {
 
@@ -230,6 +266,11 @@ public class ClientFacade
 
     /*
      * Martitime Trade Controller methods
+     */
+    /**
+     * Completes maritime trade
+     * @post trade complete and model updated
+     * @throws TradingException
      */
     public void makeTrade() throws TradingException
     {
@@ -241,6 +282,8 @@ public class ClientFacade
      */
     /**
      * Updates the players victory points, getting the values from the model
+     * @post players points reflect the values from the model
+     * @pre model changed
      */
     public void initPointsFromModel()
     {
@@ -275,6 +318,7 @@ public class ClientFacade
     }
 /**
  * Initializes the turn tracker using the model
+ * @post the turn is now initialized
  */
     public void initTurnFromModel()
     {
