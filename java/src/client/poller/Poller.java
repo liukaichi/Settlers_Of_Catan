@@ -1,9 +1,9 @@
 package client.poller;
 
+import com.google.gson.JsonElement;
 import server.proxy.IProxy;
 import shared.model.ClientModel;
 
-import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -12,7 +12,6 @@ import java.util.TimerTask;
 public class Poller extends TimerTask implements IPoller {
 
     private IProxy proxy;
-    private Timer timer;
     private int currentVersion;
 
 
@@ -53,5 +52,15 @@ public class Poller extends TimerTask implements IPoller {
     @Override
     public void run() {
 
+    }
+
+
+    /**
+     * Uses Gson to deserialize Json to a Client Model
+     * @param element Json element of a Client Model
+     * @return returns the deserialized ClientModel
+     */
+    private ClientModel deserialize(JsonElement element){
+        return null;
     }
 }
