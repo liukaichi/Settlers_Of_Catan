@@ -3,16 +3,22 @@ package client.poller;
 import server.proxy.IProxy;
 import shared.model.ClientModel;
 
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by liukaichi on 9/19/2015.
  */
-public class Poller implements IPoller {
+public class Poller extends TimerTask implements IPoller {
 
     private IProxy proxy;
-    private ClientModel model;
-    private ScheduledExecutorService scheduler;
+    private Timer timer;
+    private int currentVersion;
+
+
+    Poller(IProxy proxy){
+        this.proxy = proxy;
+    }
 
     @Override
     public void setProxy(IProxy proxy) {
@@ -27,8 +33,7 @@ public class Poller implements IPoller {
 
     }
 
-    /** Uses the scheduler attribute to continuously run poll() in short intervals.
-     */
+
     @Override
     public void runPoll() {
 
@@ -40,6 +45,13 @@ public class Poller implements IPoller {
      */
     @Override
     public void updateModel(ClientModel newModel) {
+
+    }
+
+    /** Implements TimerTask's abstract run method.
+     */
+    @Override
+    public void run() {
 
     }
 }
