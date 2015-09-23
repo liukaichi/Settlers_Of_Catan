@@ -10,7 +10,8 @@ public class Bank
 
     /**
      * Returns a ResourceList object
-     * @returns the ResourceList in this Bank
+     * 
+     * @return the ResourceList in this Bank
      */
     public ResourceList getResourceList()
     {
@@ -19,7 +20,8 @@ public class Bank
 
     /**
      * Returns a DevCardHand object
-     * @returns the DevCardHand in this Bank
+     * 
+     * @return the DevCardHand in this Bank
      */
     public DevCardHand getDevCardList()
     {

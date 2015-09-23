@@ -2,4 +2,8 @@
 java/build/
 doc/
 .idea
+<<<<<<< HEAD
 *.xml
+=======
+/docs/
+>>>>>>> 51bf20b2e05bc9766f8ceceb292c09a62ae5ef57
