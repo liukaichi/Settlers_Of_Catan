@@ -11,7 +11,6 @@ public class PlayerBank extends Bank
 {
     private Structure structures;
     private int knights, victoryPoints;
-    private List<Port> portsOwn; 
     /**
      * List of ports owned by player
      */
@@ -26,19 +25,6 @@ public class PlayerBank extends Bank
     {
     	return structures; 
     }
-    
-    /**
-     * Determines if the player can purchase a PieceType
-     * 
-     * @param type
-     *        -- the type of structure being purchased
-     * @return true if game conditions are met, false if there are insufficient
-     *         structures left to be built, or the PieceType is invalid.
-     */
-    public boolean canBuyPiece(PieceType type)
-    {
-        return false;
-    }
 
     /**
      * Determines if the player can purchase a DevCard
@@ -47,7 +33,7 @@ public class PlayerBank extends Bank
      * @throws InsufficientFundsException
      *         if there are insufficient resources to buy a DevCard
      */
-    public boolean canBuyDevCard() throws InsufficientFundsException
+    public boolean canBuyDevCard()
     {
         return false;
     }
@@ -59,7 +45,7 @@ public class PlayerBank extends Bank
      * @throws InsufficientFundsException
      *         if there are insufficient resources to buy a Road
      */
-    public boolean canBuyRoad() throws InsufficientFundsException
+    public boolean canBuyRoad()
     {
         return false;
     }
@@ -71,7 +57,7 @@ public class PlayerBank extends Bank
      * @throws InsufficientFundsException
      *         if there are insufficient resources to buy a Settlement
      */
-    public boolean canBuySettlement() throws InsufficientFundsException
+    public boolean canBuySettlement()
     {
         return false;
     }
@@ -84,7 +70,7 @@ public class PlayerBank extends Bank
      * @throws InsufficientFundsException
      *         if there are insufficient resources to buy a City
      */
-    public boolean canBuyDevCity() throws InsufficientFundsException
+    public boolean canBuyCity()
     {
         return false;
     }
@@ -98,9 +84,14 @@ public class PlayerBank extends Bank
      * @throws InsufficientFundsException
      *         if the player does not have the specified DevCard
      */
-    public boolean canPlayDevCard(DevCardType type) throws InsufficientFundsException
+    public boolean canPlayDevCard(DevCardType type)
     {
         return false;
+    }
+    
+    public void playDevCard(DevCardType type)
+    {
+    	
     }
 
     /**
@@ -112,7 +103,7 @@ public class PlayerBank extends Bank
      * @throws CatanException
      *         if anything goes wrong.
      */
-    public boolean canAccessPort(PortType type) throws CatanException
+    public boolean canAccessPort(PortType type)
     {
         return false;
     }
