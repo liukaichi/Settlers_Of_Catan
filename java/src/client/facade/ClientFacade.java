@@ -10,7 +10,11 @@ import shared.model.bank.resource.Resources;
 import shared.model.player.Credentials;
 import shared.model.player.TradeOffer;
 
-
+/**
+ * The facade, containing all communication with the model
+ * @author dtaylor
+ *
+ */
 public class ClientFacade
 {
     private static ClientFacade _instance = null;
