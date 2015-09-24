@@ -8,6 +8,7 @@ import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.Credentials;
+import shared.model.player.TradeOffer;
 
 
 public class ClientFacade

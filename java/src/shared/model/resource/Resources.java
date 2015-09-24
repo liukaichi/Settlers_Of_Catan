@@ -1,6 +1,7 @@
 package shared.model.resource;
 
 import shared.definitions.ResourceType;
+import shared.model.bank.resource.Resource;
 
 /**
  * List of the resource objects

@@ -125,5 +125,14 @@ public class Player
         bank.playDevCard(type);
     }
     
+    /**
+     * Gets the players name from info
+     * @return string -- the name of the player
+     */
+    public String getName()
+    {
+    	return info.getName();
+    }
+    
     
 }
