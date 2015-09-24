@@ -3,21 +3,14 @@ package shared.model.map;
 import java.util.*;
 
 import shared.definitions.PlayerIndex;
-<<<<<<< HEAD
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
-=======
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
-import shared.model.map.structure.Port;
-import shared.model.map.structure.Road;
-import shared.model.map.structure.Structure;
+import shared.locations.*;
+import shared.model.map.structure.*;
 
 import java.util.List;
 import java.util.Map;
->>>>>>> branch 'phase1' of https://bitbucket.org/thesettlers/the-settlers-of-catan.git
 
 /**
  * Represents the board game map of the Catan game
