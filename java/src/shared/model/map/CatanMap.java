@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Represents the board game map of the Catan game
  * 
- * @author amandafisher
+ * @author davidtaylor
  *
  */
 public class CatanMap
@@ -96,21 +96,53 @@ public class CatanMap
         return false;
     }
 
+    /**
+     * Method that places a road on the map
+     * @param player
+     *        -- this will be the player placing the road
+     * @param location
+     * 		  -- this will be the hex location where the road will be placed
+     * @throws PlacementException
+     */
     public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
 
     }
 
+    /**
+     * Method that places a settlement on the map
+     * @param player
+     * 		  -- this will be the player placing the settlement
+     * @param location
+     * 		  -- this will be the vertex location where the settlement will be placed
+     * @throws PlacementException
+     */
     public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
     {
         
     }
 
+    /**
+     * Method that places a city on the map
+     * @param player
+     * 		  -- this will be the player placing the city
+     * @param location
+     * 		  -- this will be the vertex location where the city will be placed
+     * @throws PlacementException
+     */
     public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
 
     }
 
+    /**
+     * Method that moves the robber on the map
+     * @param player
+     * 		  -- this will be the player moving the robber
+     * @param location
+     * 		  -- this will be the hex location where the robber will be placed
+     * @throws PlacementException
+     */
     public void moveRobber(PlayerIndex player, HexLocation location) throws PlacementException
     {
 

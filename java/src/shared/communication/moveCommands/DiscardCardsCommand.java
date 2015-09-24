@@ -2,6 +2,7 @@ package shared.communication.moveCommands;
 
 import shared.model.bank.resource.Resources;
 
+
 /**
  * discardCards command object.
  * 

@@ -8,6 +8,7 @@ public class Bank
     private Resources resources;
     private DevCards devCards;
 
+
     /**
      * Returns a Resources object
      * 
