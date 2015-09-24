@@ -58,6 +58,7 @@ public class PlayerBank extends Bank
     /**
      * Purchase a road
      * @post Removes the resources required to purchase a road
+     * @pre Passed the canBuy method
      */
     public void buyRoad()
     {
@@ -81,6 +82,7 @@ public class PlayerBank extends Bank
     /**
      * Purchase a settlement
      * @post Removes the resources required in purchasing a settlement
+     * @pre Already passed the canBuy method
      */
     public void buySettlement()
     {
@@ -103,6 +105,7 @@ public class PlayerBank extends Bank
     /**
      * Purchase a city
      * @post Removes a city from the players hand
+     * @pre passed the canBuy method
      */
     public void buyCity()
     {
@@ -123,6 +126,12 @@ public class PlayerBank extends Bank
         return false;
     }
     
+    /**
+     * Plays a dev card
+     * @post removes a devcard from the hand
+     * @pre passed the canPlay method
+     * @param type
+     */
     public void playDevCard(DevCardType type)
     {
     	
