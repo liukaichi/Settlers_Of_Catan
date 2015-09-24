@@ -9,7 +9,7 @@ import shared.model.map.structure.Structure;
 
 public class PlayerBank extends Bank
 {
-    private Structure structures;
+    private Structures structures;
     private int knights, victoryPoints;
     /**
      * List of ports owned by player
