@@ -34,7 +34,7 @@ public class Hex
     /**
      * This is stored as true if the robber is on this hex.
      */
-    private boolean robber;
+    private boolean robberPresent;
     
     /**
      * Method that indicates whether a player has the ability to place a settlement in a certain location on the map
@@ -70,11 +70,11 @@ public class Hex
     }
 
     public void setHasRobber(boolean newHasRobber){
-        robber = newHasRobber;
+        robberPresent = newHasRobber;
     }
 
     public boolean hasRobber()
     {
-        return robber;
+        return robberPresent;
     }
 }

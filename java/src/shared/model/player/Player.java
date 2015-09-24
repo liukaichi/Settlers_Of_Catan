@@ -31,4 +31,35 @@ public class Player
     {
         return playerInfo.getName();
     }
+    
+    boolean canBuyRoad()
+    {
+    	return bank.canPlaceRoad();
+    }
+    
+    void buyRoad()
+    {
+    	bank.buyRoad();
+    }
+    
+    boolean canBuySettlement()
+    {
+    	return bank.canPlaceSettlement();
+    }
+    
+    void buySettlement()
+    {
+    	bank.buySettlement();
+    }
+    
+    boolean canBuyCity()
+    {
+    	return bank.canPlaceCity();
+    }
+    
+    void buyCity()
+    {
+    	bank.buyCity();
+    }
+    
 }
