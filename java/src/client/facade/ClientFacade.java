@@ -7,6 +7,7 @@ import shared.definitions.*;
 import shared.definitions.exceptions.*;
 import shared.locations.*;
 import shared.model.ClientModel;
+import shared.model.player.Credentials;
 import shared.model.resource.ResourceList;
 
 public class ClientFacade
@@ -345,13 +346,28 @@ public class ClientFacade
     /*
      * Login Controller methods
      */
-
-    public void signInUser() throws SignInException
+    /**
+     * Signs in the player with the given credentials.
+     * 
+     * @param credentials
+     *        the player's credentials
+     * @throws SignInException
+     *         If the player is not registered.
+     */
+    public void signInUser(Credentials credentials) throws SignInException
     {
 
     }
 
-    public void registerUser() throws SignInException
+    /**
+     * Registers the user with the given credentials.
+     * 
+     * @param credentials
+     *        the credentials of the user registering.
+     * @throws SignInException
+     *         if the user is already registered.
+     */
+    public void registerUser(Credentials credentials) throws SignInException
     {
 
     }
@@ -361,99 +377,120 @@ public class ClientFacade
      */
     /**
      * Checks to see if the player meets the conditions to place a road
+     * 
      * @pre place road is called
      * @post place road continuese
      * @param edgeLoc
-     * @return boolean - true if the player has the required resources and the location is vacant and the player owns a settlement or city at a neighboring vertex location
+     * @return boolean - true if the player has the required resources and the
+     *         location is vacant and the player owns a settlement or city at a
+     *         neighboring vertex location
      */
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return false;
     }
-/**
- * Checks to see if the player meets the condition to place a settlement
- * @pre place settlement is called
- * @post place settlement continues
- * @param vertLoc
- * @return boolean - true if player has the required resources and the location is 2 edges or more from another settlement
- */
+
+    /**
+     * Checks to see if the player meets the condition to place a settlement
+     * 
+     * @pre place settlement is called
+     * @post place settlement continues
+     * @param vertLoc
+     * @return boolean - true if player has the required resources and the
+     *         location is 2 edges or more from another settlement
+     */
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         return false;
     }
-/**
- * Checks to see if the player meets the condition to place a city
- * @pre place city is called
- * @post place city continues
- * @param vertLoc
- * @return boolean - true if player has the required resources and the player owns the settlement at that location
- */
+
+    /**
+     * Checks to see if the player meets the condition to place a city
+     * 
+     * @pre place city is called
+     * @post place city continues
+     * @param vertLoc
+     * @return boolean - true if player has the required resources and the
+     *         player owns the settlement at that location
+     */
     public boolean canPlaceCity(VertexLocation vertLoc)
     {
         return false;
     }
-/**
- * Checks to see if player meets the condition to move the robber
- * @pre place robber is called
- * @post place city continues
- * @param hexLoc
- * @return true if a seven has been rolled and the location is viable
- */
+
+    /**
+     * Checks to see if player meets the condition to move the robber
+     * 
+     * @pre place robber is called
+     * @post place city continues
+     * @param hexLoc
+     * @return true if a seven has been rolled and the location is viable
+     */
     public boolean canPlaceRobber(HexLocation hexLoc)
     {
         return false;
     }
-/**
- * Player purchases and places a road
- * @pre player clicks on a location to place road
- * @post player met conditions and road is on map
- * @param edgeLoc
- * @throws PlacementException
- */
+
+    /**
+     * Player purchases and places a road
+     * 
+     * @pre player clicks on a location to place road
+     * @post player met conditions and road is on map
+     * @param edgeLoc
+     * @throws PlacementException
+     */
     public void placeRoad(EdgeLocation edgeLoc) throws PlacementException
     {
 
     }
-/**
- * Player purchases and places a settlement
- * @pre player clicks on a location to place a settlement
- * @post player met conditions and settlment is now on map
- * @param vertLoc
- * @throws PlacementException
- */
+
+    /**
+     * Player purchases and places a settlement
+     * 
+     * @pre player clicks on a location to place a settlement
+     * @post player met conditions and settlment is now on map
+     * @param vertLoc
+     * @throws PlacementException
+     */
     public void placeSettlement(VertexLocation vertLoc) throws PlacementException
     {
 
     }
-/**
- * Player purchases and places a city at a location specified
- * @post a city is now owned by the player
- * @pre player clicks to build on a location
- * @param vertLoc
- * @throws PlacementException
- */
+
+    /**
+     * Player purchases and places a city at a location specified
+     * 
+     * @post a city is now owned by the player
+     * @pre player clicks to build on a location
+     * @param vertLoc
+     * @throws PlacementException
+     */
     public void placeCity(VertexLocation vertLoc) throws PlacementException
     {
 
     }
-/**
- * Changes the Robbers HexLocation
- * @post player robs player
- * @pre player rolls a 7
- * @param hexLoc
- * @throws PlacementException
- */
+
+    /**
+     * Changes the Robbers HexLocation
+     * 
+     * @post player robs player
+     * @pre player rolls a 7
+     * @param hexLoc
+     * @throws PlacementException
+     */
     public void placeRobber(HexLocation hexLoc) throws PlacementException
     {
 
     }
-/**
- * Robs a player, player receives one resource from the player being robbed
- * @pre robber is placed
- * @post player has an extra resource
- * @param victim
- * @throws PlacementException
- */
+
+    /**
+     * Robs a player, player receives one resource from the player being robbed
+     * 
+     * @pre robber is placed
+     * @post player has an extra resource
+     * @param victim
+     * @throws PlacementException
+     */
     public void robPlayer(RobPlayerInfo victim) throws PlacementException
     {
 
@@ -464,6 +501,7 @@ public class ClientFacade
      */
     /**
      * Completes maritime trade
+     * 
      * @post trade complete and model updated
      * @throws TradingException
      */
@@ -477,6 +515,7 @@ public class ClientFacade
      */
     /**
      * Updates the players victory points, getting the values from the model
+     * 
      * @post players points reflect the values from the model
      * @pre model changed
      */
@@ -512,10 +551,12 @@ public class ClientFacade
     {
 
     }
-/**
- * Initializes the turn tracker using the model
- * @post the turn is now initialized
- */
+
+    /**
+     * Initializes the turn tracker using the model
+     * 
+     * @post the turn is now initialized
+     */
     public void initTurnFromModel()
     {
 
