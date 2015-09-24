@@ -7,10 +7,14 @@ import shared.definitions.*;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
-import shared.model.player.Credentials;
-import shared.model.player.TradeOffer;
+import shared.model.player.*;
 
-
+/**
+ * The Facade for the Controllers/Views interacting with the Model classes. The
+ * only class to directly touch the Model classes will be the Facade. Everything
+ * else will call the Facade to do actions. This class contains all available
+ * communications with the model.
+ */
 public class ClientFacade
 {
     private static ClientFacade _instance = null;

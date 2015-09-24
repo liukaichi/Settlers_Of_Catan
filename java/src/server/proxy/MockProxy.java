@@ -9,6 +9,18 @@ import shared.communication.moveCommands.*;
 import shared.model.ClientModel;
 import shared.model.player.Credentials;
 
+/**
+ * MockProxy is used in Dependency injection, along with ServerProxy, to return
+ * specific results from the server. <br>
+ * <br>
+ * the MockProxy does not actually communicate with the server. Instead, it is
+ * hard-coded to return specific results for specific actions. Used mostly for
+ * testing. This acts identically to the ServerProxy, but its server
+ * interactions are not real.
+ * 
+ * @author cstaheli
+ *
+ */
 public class MockProxy implements IProxy
 {
 

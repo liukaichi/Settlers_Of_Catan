@@ -9,6 +9,17 @@ import shared.communication.moveCommands.*;
 import shared.model.ClientModel;
 import shared.model.player.Credentials;
 
+/**
+ * ServerProxy is used in Dependency injection, along with MockProxy, to return
+ * specific results from the server. <br>
+ * <br>
+ * the ServerProxy actually communicates with the server and gets the actual
+ * server responses back, which it sends on to the Poller, or the Facade as
+ * needed.
+ * 
+ * @author cstaheli
+ *
+ */
 public class ServerProxy implements IProxy
 {
 
