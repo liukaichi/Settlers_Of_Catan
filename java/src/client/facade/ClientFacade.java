@@ -4,7 +4,7 @@ import client.data.RobPlayerInfo;
 import server.proxy.*;
 import shared.communication.AIType;
 import shared.definitions.*;
-import shared.definitions.exceptions.*;
+import shared.definitions.exceptions.DiscardException;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.player.Credentials;
@@ -45,10 +45,8 @@ public class ClientFacade
      * 
      * @param message
      *        the message to send.
-     * @throws CatanException
-     *         if anything goes wrong.
      */
-    public void sendMessage(String message) throws CatanException
+    public void sendMessage(String message)
     {
 
     }
@@ -58,12 +56,8 @@ public class ClientFacade
      */
     /**
      * Initializes the game history from a model.
-     * 
-     * @throws CatanException
-     *         if the model is invalid, or if anything goes wrong in
-     *         initialization.
      */
-    public void initHistoryFromModel() throws CatanException
+    public void initHistoryFromModel()
     {
 
     }
@@ -74,11 +68,8 @@ public class ClientFacade
     /**
      * Purchases a Development Card. This will take the card from the bank, and
      * adds it to the player' hand.
-     * 
-     * @throws CardException
-     *         if a card cannot be purchased.
      */
-    public void buyDevCard() throws CardException
+    public void buyDevCard()
     {
 
     }
@@ -88,43 +79,32 @@ public class ClientFacade
      * 
      * @param resource
      *        the type of resource the player is getting the monopoly on.
-     * @throws CardException
-     *         if the Player does not have a Monopoly card.
      */
-    public void playMonopolyCard(ResourceType resource) throws CardException
+    public void playMonopolyCard(ResourceType resource)
     {
 
     }
 
     /**
      * Plays a Monument Card.
-     * 
-     * @throws CardException
-     *         if the Player does not have a Monument card.
      */
-    public void playMonumentCard() throws CardException
+    public void playMonumentCard()
     {
 
     }
 
     /**
      * Plays a Road Building Card.
-     * 
-     * @throws CardException
-     *         if the Player does not have a Road Building card.
      */
-    public void playRoadBuildCard() throws CardException
+    public void playRoadBuildCard()
     {
 
     }
 
     /**
      * Plays a Soldier Card.
-     * 
-     * @throws CardException
-     *         if the Player does not have a Soldier card.
      */
-    public void playSoldierCard() throws CardException
+    public void playSoldierCard()
     {
 
     }
@@ -136,10 +116,8 @@ public class ClientFacade
      *        The first resource.
      * @param resource2
      *        The second resource.
-     * @throws CardException
-     *         if the Player does not have a Year of Plenty card.
      */
-    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) throws CardException
+    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
 
     }
@@ -153,9 +131,8 @@ public class ClientFacade
      * @param resource
      *        the resource to increase the amount of.
      * @throws DiscardException
-     *         if the operation fails.
      */
-    public void increaseResourceAmountDiscarded(ResourceType resource) throws DiscardException
+    public void increaseResourceAmountDiscarded(ResourceType resource)
     {
 
     }
@@ -165,10 +142,8 @@ public class ClientFacade
      * 
      * @param resource
      *        the resource to decrease the amount of.
-     * @throws DiscardException
-     *         if the operation fails.
      */
-    public void decreaseResourceAmountDiscarded(ResourceType resource) throws DiscardException
+    public void decreaseResourceAmountDiscarded(ResourceType resource)
     {
 
     }
@@ -178,10 +153,8 @@ public class ClientFacade
      * 
      * @param discardedResources
      *        the list of resources to discard.
-     * @throws DiscardException
-     *         if the operation fails.
      */
-    public void discardResources(ResourceList discardedResources) throws DiscardException
+    public void discardResources(ResourceList discardedResources)
     {
 
     }
@@ -194,10 +167,8 @@ public class ClientFacade
      * 
      * @param resource
      *        The type of resource to decrease the amount of.
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void decreaseTradeResourceAmount(ResourceType resource) throws TradingException
+    public void decreaseTradeResourceAmount(ResourceType resource)
     {
 
     }
@@ -207,21 +178,16 @@ public class ClientFacade
      * 
      * @param resource
      *        The type of resource to increase the amount of.
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void increaseTradeResourceAmount(ResourceType resource) throws TradingException
+    public void increaseTradeResourceAmount(ResourceType resource)
     {
 
     }
 
     /**
      * Sends a trade offer to a player.
-     * 
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void sendTradeOffer() throws TradingException
+    public void sendTradeOffer()
     {
     }
 
@@ -230,10 +196,8 @@ public class ClientFacade
      * 
      * @param playerIndex
      *        the index of the player to trade with.
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void setPlayerToTradeWith(int playerIndex) throws TradingException
+    public void setPlayerToTradeWith(int playerIndex)
     {
 
     }
@@ -243,10 +207,8 @@ public class ClientFacade
      * 
      * @param resource
      *        the resource to receive.
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void setResourceToReceive(ResourceType resource) throws TradingException
+    public void setResourceToReceive(ResourceType resource)
     {
 
     }
@@ -256,10 +218,8 @@ public class ClientFacade
      * 
      * @param resource
      *        the resource to send.
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void setResourceToSend(ResourceType resource) throws TradingException
+    public void setResourceToSend(ResourceType resource)
     {
 
     }
@@ -269,21 +229,16 @@ public class ClientFacade
      * 
      * @param resource
      *        the resource to remove.
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void unsetTradeResource(ResourceType resource) throws TradingException
+    public void unsetTradeResource(ResourceType resource)
     {
 
     }
 
     /**
      * Cancels the trade.
-     * 
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void cancelTrade() throws TradingException
+    public void cancelTrade()
     {
 
     }
@@ -293,10 +248,8 @@ public class ClientFacade
      * 
      * @param willAccept
      *        Whether or not the player will accept the trade.
-     * @throws TradingException
-     *         if the operation fails.
      */
-    public void acceptTrade(boolean willAccept) throws TradingException
+    public void acceptTrade(boolean willAccept)
     {
 
     }
@@ -306,23 +259,16 @@ public class ClientFacade
      */
     /**
      * Creates a new game.
-     * 
-     * @throws CatanException
-     *         if the game fails to be created.
      */
-    public void createNewGame() throws CatanException
+    public void createNewGame()
     {
 
     }
 
     /**
      * Joins an already existent game.
-     * 
-     * @throws CatanException
-     *         if there are not games to join, or if the requesting player is
-     *         already in a game.
      */
-    public void joinGame() throws CatanException
+    public void joinGame()
     {
 
     }
@@ -335,10 +281,8 @@ public class ClientFacade
      * 
      * @param type
      *        the type of the AI (LARGEST_ARMY is the only supported value.)
-     * @throws CatanException
-     *         if the type is invalid, or if anything goes wrong.
      */
-    public void addAI(AIType type) throws CatanException
+    public void addAI(AIType type)
     {
 
     }
@@ -351,10 +295,8 @@ public class ClientFacade
      * 
      * @param credentials
      *        the player's credentials
-     * @throws SignInException
-     *         If the player is not registered.
      */
-    public void signInUser(Credentials credentials) throws SignInException
+    public void signInUser(Credentials credentials)
     {
 
     }
@@ -364,10 +306,8 @@ public class ClientFacade
      * 
      * @param credentials
      *        the credentials of the user registering.
-     * @throws SignInException
-     *         if the user is already registered.
      */
-    public void registerUser(Credentials credentials) throws SignInException
+    public void registerUser(Credentials credentials)
     {
 
     }
@@ -379,8 +319,9 @@ public class ClientFacade
      * Checks to see if the player meets the conditions to place a road
      * 
      * @pre place road is called
-     * @post place road continuese
+     * @post place road continues
      * @param edgeLoc
+     *        the location of the Road
      * @return boolean - true if the player has the required resources and the
      *         location is vacant and the player owns a settlement or city at a
      *         neighboring vertex location
@@ -396,6 +337,7 @@ public class ClientFacade
      * @pre place settlement is called
      * @post place settlement continues
      * @param vertLoc
+     *        the location of the Vertex
      * @return boolean - true if player has the required resources and the
      *         location is 2 edges or more from another settlement
      */
@@ -410,6 +352,7 @@ public class ClientFacade
      * @pre place city is called
      * @post place city continues
      * @param vertLoc
+     *        the location of the Vertex
      * @return boolean - true if player has the required resources and the
      *         player owns the settlement at that location
      */
@@ -424,6 +367,7 @@ public class ClientFacade
      * @pre place robber is called
      * @post place city continues
      * @param hexLoc
+     *        the location of the hex
      * @return true if a seven has been rolled and the location is viable
      */
     public boolean canPlaceRobber(HexLocation hexLoc)
@@ -437,9 +381,9 @@ public class ClientFacade
      * @pre player clicks on a location to place road
      * @post player met conditions and road is on map
      * @param edgeLoc
-     * @throws PlacementException
+     *        the location of the road
      */
-    public void placeRoad(EdgeLocation edgeLoc) throws PlacementException
+    public void placeRoad(EdgeLocation edgeLoc)
     {
 
     }
@@ -448,11 +392,11 @@ public class ClientFacade
      * Player purchases and places a settlement
      * 
      * @pre player clicks on a location to place a settlement
-     * @post player met conditions and settlment is now on map
+     * @post player met conditions and settlement is now on map
      * @param vertLoc
-     * @throws PlacementException
+     *        the location of the Settlement
      */
-    public void placeSettlement(VertexLocation vertLoc) throws PlacementException
+    public void placeSettlement(VertexLocation vertLoc)
     {
 
     }
@@ -463,9 +407,9 @@ public class ClientFacade
      * @post a city is now owned by the player
      * @pre player clicks to build on a location
      * @param vertLoc
-     * @throws PlacementException
+     *        the location of the City
      */
-    public void placeCity(VertexLocation vertLoc) throws PlacementException
+    public void placeCity(VertexLocation vertLoc)
     {
 
     }
@@ -476,9 +420,9 @@ public class ClientFacade
      * @post player robs player
      * @pre player rolls a 7
      * @param hexLoc
-     * @throws PlacementException
+     *        the location of the Robber
      */
-    public void placeRobber(HexLocation hexLoc) throws PlacementException
+    public void placeRobber(HexLocation hexLoc)
     {
 
     }
@@ -489,9 +433,9 @@ public class ClientFacade
      * @pre robber is placed
      * @post player has an extra resource
      * @param victim
-     * @throws PlacementException
+     *        the victim of the brutal armed robbery
      */
-    public void robPlayer(RobPlayerInfo victim) throws PlacementException
+    public void robPlayer(RobPlayerInfo victim)
     {
 
     }
@@ -500,12 +444,10 @@ public class ClientFacade
      * Martitime Trade Controller methods
      */
     /**
-     * Completes maritime trade
+     * Completes a maritime trade
      * 
-     * @post trade complete and model updated
-     * @throws TradingException
      */
-    public void makeTrade() throws TradingException
+    public void makeTrade()
     {
 
     }
