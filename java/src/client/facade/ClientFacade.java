@@ -183,16 +183,35 @@ public class ClientFacade
     /*
      * Map controller methods
      */
+    /**
+     * Checks to see if the player meets the conditions to place a road
+     * @pre place road is called
+     * @post place road continuese
+     * @param edgeLoc
+     * @return boolean - true if the player has the required resources and the location is vacant and the player owns a settlement or city at a neighboring vertex location
+     */
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return false;
     }
-
+/**
+ * Checks to see if the player meets the condition to place a settlement
+ * @pre place settlement is called
+ * @post place settlement continues
+ * @param vertLoc
+ * @return boolean - true if player has the required resources and the location is 2 edges or more from another settlement
+ */
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         return false;
     }
-
+/**
+ * Checks to see if the player meets the condition to place a city
+ * @pre place city is called
+ * @post place city continues
+ * @param vertLoc
+ * @return boolean - true if player has the required resources and the player owns the settlement at that location
+ */
     public boolean canPlaceCity(VertexLocation vertLoc)
     {
         return false;
@@ -200,7 +219,7 @@ public class ClientFacade
 /**
  * Checks to see if player meets the condition to move the robber
  * @pre place robber is called
- * @post boolean is returned
+ * @post place city continues
  * @param hexLoc
  * @return true if a seven has been rolled and the location is viable
  */
