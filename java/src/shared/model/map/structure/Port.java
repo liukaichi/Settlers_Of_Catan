@@ -26,6 +26,8 @@ public class Port
      * This indicates the ratio for the resource in maritime trade
      */
     private TradeRatio ratio;
+
+
 	public PortType getResource() {
 		return resource;
 	}

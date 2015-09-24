@@ -1,7 +1,6 @@
 package shared.model.map;
 
 import shared.definitions.PlayerIndex;
-import shared.definitions.exceptions.PlacementException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;

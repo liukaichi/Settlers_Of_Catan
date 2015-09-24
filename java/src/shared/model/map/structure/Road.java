@@ -6,7 +6,7 @@ import shared.locations.EdgeLocation;
 /**
  * Object representing a road or a hex edge in the Catan game
  */
-public abstract class Road
+public class Road
 {
     private PlayerIndex owner;
     private EdgeLocation location;
