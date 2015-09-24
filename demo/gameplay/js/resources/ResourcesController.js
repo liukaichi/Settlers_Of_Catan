@@ -21,7 +21,7 @@ catan.resources.Controller = (function resources_namespace() {
     var PLAY_CARD = Definitions.PLAY_CARD;
     var ARMY = Definitions.ARMY;
     var Resources = Definitions.ResourceTypes;
-    var Buyables = new Array(ROAD, SETTLEMENT, CITY, BUY_CARD, PLAY_CARD, ARMY);
+    var Buyables = [ROAD, SETTLEMENT, CITY, BUY_CARD, PLAY_CARD, ARMY];
 		
 	var ResourceBarController = (function ResourceBarController_Class(){
     
@@ -37,7 +37,7 @@ catan.resources.Controller = (function resources_namespace() {
 		function ResourceBarController(view,clientModel,actions){
 			this.setActions(actions);
 			Controller.call(this,view,clientModel);
-		};
+		}
 
 		core.forceClassInherit(ResourceBarController,Controller);
         
@@ -58,7 +58,7 @@ catan.resources.Controller = (function resources_namespace() {
 
             // This calls the "startMove" method on the Map Controller.
 			this.getActions()[ROAD]();
-		}
+		};
         
 		/**
 		 * The action to take on clicking the resource bar settlement button. Brings up the map 
@@ -73,7 +73,7 @@ catan.resources.Controller = (function resources_namespace() {
 
             // This calls the "startMove" method on the Map Controller.
 			this.getActions()[SETTLEMENT]();
-		}
+		};
 
 		/**
 		 * The action to take on clicking the resource bar city button. Brings up the map 
@@ -88,10 +88,10 @@ catan.resources.Controller = (function resources_namespace() {
 
             // This calls the "startMove" method on the Map Controller.
 			this.getActions()[CITY]();
-		}
+		};
         
 		/**
-		 * The action to take on clicking the resource bar "buy a card" button. 
+		 * The action to take on clicking the resource bar "buy a card" button.
 		 * Should bring up the "buy a card" overlay.
 		 * 
 		 * @method buyCard
@@ -103,10 +103,10 @@ catan.resources.Controller = (function resources_namespace() {
 
             // This calls the "showModal" method on the Buy Card View.
 			this.getActions()[BUY_CARD]();
-		}
+		};
         
 		/**
-		 * The action to take on clicking the resource bar "play a card" button. 
+		 * The action to take on clicking the resource bar "play a card" button.
 		 * Should bring up the "play a card" overlay.
 		 * 
 		 * @method playCard
@@ -118,7 +118,7 @@ catan.resources.Controller = (function resources_namespace() {
 
             // This calls the "showModal" method on the Dev Card View.
 			this.getActions()[PLAY_CARD]();
-		}
+		};
 		
 		return ResourceBarController;
 		

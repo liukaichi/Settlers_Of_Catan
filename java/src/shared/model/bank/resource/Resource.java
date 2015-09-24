@@ -1,9 +1,9 @@
-package shared.model.resource;
+package shared.model.bank.resource;
 
 import shared.definitions.ResourceType;
 
 /**
- * Object representing the many different resources in the Catan game
+ * Object representing a resource in the Catan game
  * @author amandafisher
  *
  */
@@ -23,7 +23,7 @@ public class Resource
     }
 
     /**
-     * Increases the count of this resource by @param num amount
+     * Increases the count of this resource by the specified amount
      * @param num -- number of this resource to increase
      */
     public void addResource(int num)
@@ -32,7 +32,7 @@ public class Resource
     }
 
     /**
-     * Decreases the count of this resource by the @param num amount
+     * Decreases the count of this resource by the specified amount
      * @param num -- number of this resrouce to decrease
      */
     public void subResource(int num)

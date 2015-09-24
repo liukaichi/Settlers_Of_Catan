@@ -1,30 +1,30 @@
 package shared.model.bank;
 
-import shared.model.card.DevCardHand;
-import shared.model.resource.ResourceList;
+import shared.model.bank.card.DevCards;
+import shared.model.bank.resource.Resources;
 
 public class Bank
 {
-    private ResourceList resources;
-    private DevCardHand devCards;
+    private Resources resources;
+    private DevCards devCards;
 
     /**
-     * Returns a ResourceList object
+     * Returns a Resources object
      * 
-     * @return the ResourceList in this Bank
+     * @return the Resources in this Bank
      */
-    public ResourceList getResources()
+    public Resources getResources()
     {
         return resources;
-    };
+    }
 
     /**
      * Returns a DevCardHand object
      * 
      * @return the DevCardHand in this Bank
      */
-    public DevCardHand getDevCards()
+    public DevCards getDevCards()
     {
         return devCards;
-    };
+    }
 }

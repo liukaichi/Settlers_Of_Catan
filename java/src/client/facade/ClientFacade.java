@@ -7,8 +7,8 @@ import shared.definitions.*;
 import shared.definitions.exceptions.DiscardException;
 import shared.locations.*;
 import shared.model.ClientModel;
+import shared.model.bank.resource.Resources;
 import shared.model.player.Credentials;
-import shared.model.resource.ResourceList;
 
 public class ClientFacade
 {
@@ -154,7 +154,7 @@ public class ClientFacade
      * @param discardedResources
      *        the list of resources to discard.
      */
-    public void discardResources(ResourceList discardedResources)
+    public void discardResources(Resources discardedResources)
     {
 
     }

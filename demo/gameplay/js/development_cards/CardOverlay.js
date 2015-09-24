@@ -34,7 +34,7 @@ catan.devCards.View = (function (){
 			this.setActions(initActions.call(this));
 			this.setDisplayElems({});
 			BasicOverlay.call(this, "Development Cards", "dev-cards");
-		}
+		};
 		
 		DevCardView.prototype = core.inherit(BasicOverlay.prototype);
         
@@ -56,12 +56,12 @@ catan.devCards.View = (function (){
 			makeCardsArea.call(this);
 			makeExtraFeatureArea.call(this);
 			this.setView(this.generateBody());
-		}
+		};
         
 		/**
 		 Enables a single card
 		 @method setCardEnabled
-		 @param {String} card the card to update (from catan.definitions.CardTypes) 
+		 @param {String} card the card to update (from catan.definitions.CardTypes)
 		 @param {Boolean} enabled whether the player can use the card
 		 @return void
 		 */		
@@ -70,7 +70,7 @@ catan.devCards.View = (function (){
 				this.getDisplayElems()[card].enable(SHOW_MOUSEOVER);
 			else
 				this.getDisplayElems()[card].disable(SHOW_MOUSEOVER);
-		}
+		};
         
 		/**
 		 Sets the amount for a single card
@@ -81,7 +81,7 @@ catan.devCards.View = (function (){
 		 */		
 		DevCardView.prototype.updateAmount = function(value, amount){	
 			this.getDisplayElems()[value].updateLabel(amount);
-		}
+		};
         
 		/**
 		 * Resets the overlay view
@@ -96,7 +96,7 @@ catan.devCards.View = (function (){
 			this.getOpt2().hide();
 			
 			this.getBtn().hide();
-		}
+		};
 		
 		// private methods
         
@@ -130,7 +130,7 @@ catan.devCards.View = (function (){
             div.appendChild(messageElem);
 				
 			return div;
-		}
+		};
         
 		DevCardView.prototype.generateFooter = function(){		
 			
@@ -143,7 +143,7 @@ catan.devCards.View = (function (){
             div.appendChild(cancelButton.getView());
 			
 			return div;
-		}
+		};
 		
 		var makeCardsArea = function(){
 			for(index in CardTypes){
@@ -157,21 +157,21 @@ catan.devCards.View = (function (){
                 this.getDisplayElems()[cardType] = displayElem;
                 displayElem.enable(SHOW_MOUSEOVER);
 			}	
-		}
+		};
 		
 		var makeExtraFeatureArea = function(){
 			var btn = new DisplayElement.ButtonArea();
             this.setBtn(btn);
             btn.hide();
 				
-			var o1 = new DisplayElement.ChooserElement("option1", makeChooserOptions.call(this))
+			var o1 = new DisplayElement.ChooserElement("option1", makeChooserOptions.call(this));
             this.setOpt1(o1);
-            o1.hide()
+            o1.hide();
 			
-			var o2 = new DisplayElement.ChooserElement("option2", makeChooserOptions.call(this))
+			var o2 = new DisplayElement.ChooserElement("option2", makeChooserOptions.call(this));
             this.setOpt2(o2);
             o2.hide();
-		}
+		};
 		
 		// displays the options for the card
         
@@ -185,7 +185,7 @@ catan.devCards.View = (function (){
             this.getBtn().updateAction(core.makeAnonymousAction(this, this.doYop));
             this.getBtn().setMessage("use year of plenty");
             this.getBtn().show();
-		}
+		};
 		
 		DevCardView.prototype.showMon = function(){
 			this.getOpt1().reset();
@@ -197,7 +197,7 @@ catan.devCards.View = (function (){
 			this.getBtn().updateAction(core.makeAnonymousAction(this, this.doMon));
 			this.getBtn().show();
 			this.getBtn().setMessage("use monopoly");
-		}
+		};
 		
 		// called on pressing the "use" button
         
@@ -208,19 +208,19 @@ catan.devCards.View = (function (){
 	
 			if(o1 != NULL_VALUE && o2 != NULL_VALUE)
 				this.getController().useYearOfPlenty(o1, o2);
-		}
+		};
         
 		DevCardView.prototype.doMon = function(){
 			
 			var o1 = this.getOpt1().getSelected();
 			if(o1 != NULL_VALUE)
 				this.getController().useMonopoly(o1);
-		}
+		};
 	
 		// for building the views
         
 		var makeChooserOptions = function(){
-			var options = new Array();
+			var options = [];
 			
 			options.push({	label:NULL_VALUE});
 			
@@ -228,7 +228,7 @@ catan.devCards.View = (function (){
 				options.push({	label:ResourceTypes[index]	});
 			}
 			return options;
-		}
+		};
 		
 		var initActions = function(){
 			var actions = {};
@@ -240,20 +240,20 @@ catan.devCards.View = (function (){
             actions[Definitions.MONUMENT] = core.makeAnonymousAction(this, this.useMonument);
             
 			return actions;
-		}
+		};
 		
 		DevCardView.prototype.useRoadBuild = function(){
 			this.getController().useRoadBuild();
-		}
+		};
         
 		DevCardView.prototype.useMonument = function(){
 			console.log("using road!");
 			this.getController().useMonument()
-		}
+		};
         
 		DevCardView.prototype.useSoldier = function(){
 			this.getController().useSoldier();
-		}
+		};
 		
 		var getMessage = function(card){
 			return Definitions.CardInfo[card];

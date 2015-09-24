@@ -4,9 +4,12 @@ import java.util.List;
 
 import shared.definitions.*;
 import shared.definitions.exceptions.*;
+import shared.model.bank.structure.Structures;
 import shared.model.map.structure.Port;
-import shared.model.map.structure.Structure;
 
+/**
+ * This class extends Bank with properties and methods specific to the Player
+ */
 public class PlayerBank extends Bank
 {
     private Structures structures;
@@ -21,130 +24,111 @@ public class PlayerBank extends Bank
         super();
     }
 
-    public Structure getStructures()
+    public Structures getStructures()
     {
     	return structures; 
     }
 
     /**
-     * Determines if the player can purchase a DevCard
-     * 
-     * @return true if game conditions are met
-     * @throws InsufficientFundsException
-     *         if there are insufficient resources to buy a DevCard
+     * Determines if PlayerBank has the resources to purchase a DevCard
+     * @return true if the condition is met
      */
     public boolean canBuyDevCard()
     {
         return false;
     }
-    
-    public void buyDevCard()
+
+    /**
+     * Increments the appropriate DevCard count in PlayerBank and decrements appropriate
+     * resources
+     * @throws InsufficientResourcesException
+     */
+    public void buyDevCard() throws InsufficientResourcesException
     {
     	
     }
-    
+
     /**
-     * Determines if the player can purchase a Road
-     * 
-     * @return true if game conditions are met
-     * @throws InsufficientFundsException
-     *         if there are insufficient resources to buy a Road
+     * Determines if PlayerBank has the resources to purchase a Road
+     * @return true if the condition is met
      */
     public boolean canBuyRoad()
     {
         return false;
     }
-    
+
     /**
-     * Purchase a road
-     * @post Removes the resources required to purchase a road
-     * @pre Passed the canBuy method
+     * Increments the road count in PlayerBank and decrements appropriate
+     * resources
+     * @throws InsufficientResourcesException
      */
-    public void buyRoad()
+    public void buyRoad() throws InsufficientResourcesException
     {
     	
     }
-    
-    
-    
+
     /**
-     * Determines if the player can purchase a Settlement
-     * 
-     * @return true if game conditions are met
-     * @throws InsufficientFundsException
-     *         if there are insufficient resources to buy a Settlement
+     * Determines if PlayerBank has the resources to purchase a Settlement
+     * @return true if the condition is met
      */
     public boolean canBuySettlement()
     {
         return false;
     }
-    
+
     /**
-     * Purchase a settlement
-     * @post Removes the resources required in purchasing a settlement
-     * @pre Already passed the canBuy method
+     * Increments the settlement count in PlayerBank and decrements appropriate
+     * resources
+     * @throws InsufficientResourcesException
      */
-    public void buySettlement()
+    public void buySettlement() throws InsufficientResourcesException
     {
     	
     }
-    
-    
+
     /**
-     * Determines if the player can purchase a City
-     * 
-     * @return true if game conditions are met
-     * @throws InsufficientFundsException
-     *         if there are insufficient resources to buy a City
+     * Determines if PlayerBank has the resources to purchase a City
+     * @return true if the condition is met
      */
     public boolean canBuyCity()
     {
         return false;
     }
-    
+
     /**
-     * Purchase a city
-     * @post Removes a city from the players hand
-     * @pre passed the canBuy method
+     * Increments the city count in PlayerBank and decrements appropriate
+     * resources
+     * @throws InsufficientResourcesException
      */
-    public void buyCity()
+    public void buyCity() throws InsufficientResourcesException
     {
     	
     }
 
     /**
-     * Determines if the player is allowed to play a DevCard
-     * 
-     * @param type
-     *        -- the DevCard being played
-     * @return true if the player is allowed to play a DevCard
-     * @throws InsufficientFundsException
-     *         if the player does not have the specified DevCard
+     * Determines if the specified DevCard is playable AND is available in PlayerBank
+     * @param type the type of DevCard to check
+     * @return true if both conditions are met
      */
     public boolean canPlayDevCard(DevCardType type)
     {
         return false;
     }
-    
+
     /**
-     * Plays a dev card
-     * @post removes a devcard from the hand
-     * @pre passed the canPlay method
-     * @param type
+     * Calls playAction() on the DevCard
+     * @param type the type of DevCard to play
+     * @throws InsufficientResourcesException
      */
-    public void playDevCard(DevCardType type)
+    public void playDevCard(DevCardType type) throws InsufficientResourcesException
     {
     	
     }
 
     /**
-     * Determines if the player can trade with a port
-     * 
-     * @param type
-     *        -- the type of resource being traded with a port
-     * @return returns true if the player owns a port with that type of resource
-     * @throws CatanException
-     *         if anything goes wrong.
+     * Determines if a Player has control over a Port
+     * @param type the type of Port to check
+     * @return true if the condition is met
      */
     public boolean canAccessPort(PortType type)
     {

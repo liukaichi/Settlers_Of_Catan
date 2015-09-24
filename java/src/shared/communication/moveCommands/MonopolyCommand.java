@@ -1,6 +1,6 @@
 package shared.communication.moveCommands;
 
-import shared.model.resource.Resource;
+import shared.model.bank.resource.Resource;
 
 /**
  * Monopoly command object.

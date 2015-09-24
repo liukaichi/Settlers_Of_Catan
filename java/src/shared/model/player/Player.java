@@ -1,6 +1,8 @@
 package shared.model.player;
 
 import client.data.PlayerInfo;
+import shared.definitions.DevCardType;
+import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.*;
 
 /**
@@ -12,12 +14,12 @@ public class Player
     /**
      * @see Bank
      */
-    private Bank bank;
+    private PlayerBank bank;
 
     /**
      * @see PlayerInfo
      */
-    private PlayerInfo playerInfo;
+    private PlayerInfo info;
 
     /**
      * A player bank is instantiated with the creation of each new player
@@ -27,39 +29,101 @@ public class Player
         bank = new PlayerBank();
     }
 
-    public String getName()
+    public PlayerInfo getPlayerInfo()
     {
-        return playerInfo.getName();
+        return info;
     }
     
     boolean canBuyRoad()
     {
-    	return bank.canPlaceRoad();
+    	return bank.canBuyRoad();
     }
-    
-    void buyRoad()
-    {
+
+    /**
+     * Updates the PlayerBank to decrement resources used and increment road count
+     */
+    public void buyRoad() throws InsufficientResourcesException {
     	bank.buyRoad();
     }
-    
-    boolean canBuySettlement()
+
+    /**
+     * Determines if the PlayerBank has Settlements left to purchase AND if the
+     * resources required are available
+     * @return true if both conditions are met
+     */
+    public boolean canBuySettlement()
     {
-    	return bank.canPlaceSettlement();
+    	return bank.canBuySettlement();
     }
-    
-    void buySettlement()
+
+    /**
+     * Updates the PlayerBank to decrement resources used and increment settlement count
+     */
+    public void buySettlement()
     {
-    	bank.buySettlement();
+        try {
+            bank.buySettlement();
+        } catch (InsufficientResourcesException e) {
+            e.printStackTrace();
+        }
     }
-    
-    boolean canBuyCity()
+
+    /**
+     * Determines if the PlayerBank has Cities left to purchase AND if the
+     * resources required are available
+     * @return true if both conditions are met
+     */
+    public  boolean canBuyCity()
     {
-    	return bank.canPlaceCity();
+    	return bank.canBuyCity();
     }
-    
-    void buyCity()
-    {
+
+    /**
+     * Updates the PlayerBank to decrement resources used and increment city count
+     * @throws InsufficientResourcesException
+     */
+    public void buyCity() throws InsufficientResourcesException {
     	bank.buyCity();
     }
+
+    /**
+     * Determines if the PlayerBank has Settlements left to purchase AND if the
+     * resources required are available
+     * @return true if both conditions are met
+     */
+    public boolean canBuyDevCard()
+    {
+        return bank.canBuyDevCard();
+    }
+
+    /**
+     * Updates the PlayerBank to decrement resources used and increment the appropriate DevCard count
+     * @throws InsufficientResourcesException
+     */
+    public void buyDevCard() throws InsufficientResourcesException {
+        bank.buyDevCard();
+    }
+
+    /**
+     * Determines if the PlayerBank has the specified DevCard to play AND if the DevCard is playable
+     * during the turn
+     * @param type the type of DevCard being checked
+     * @throws InsufficientResourcesException
+     * @return true if both conditions are met
+     */
+    public boolean canPlayDevCard(DevCardType type)
+    {
+        return bank.canPlayDevCard(type);
+    }
+
+    /**
+     * Plays the action of the specified DevCard
+     * @param type -- the type of DevCard to play
+     * @throws InsufficientResourcesException
+     */
+    public void playDevCard(DevCardType type) throws InsufficientResourcesException {
+        bank.playDevCard(type);
+    }
+    
     
 }
