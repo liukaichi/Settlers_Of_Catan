@@ -38,6 +38,11 @@ public class PlayerBank extends Bank
         return false;
     }
     
+    public void buyDevCard()
+    {
+    	
+    }
+    
     /**
      * Determines if the player can purchase a Road
      * 
@@ -51,6 +56,17 @@ public class PlayerBank extends Bank
     }
     
     /**
+     * Purchase a road
+     * @post Removes the resources required to purchase a road
+     */
+    public void buyRoad()
+    {
+    	
+    }
+    
+    
+    
+    /**
      * Determines if the player can purchase a Settlement
      * 
      * @return true if game conditions are met
@@ -60,6 +76,15 @@ public class PlayerBank extends Bank
     public boolean canBuySettlement()
     {
         return false;
+    }
+    
+    /**
+     * Purchase a settlement
+     * @post Removes the resources required in purchasing a settlement
+     */
+    public void buySettlement()
+    {
+    	
     }
     
     
@@ -73,6 +98,15 @@ public class PlayerBank extends Bank
     public boolean canBuyCity()
     {
         return false;
+    }
+    
+    /**
+     * Purchase a city
+     * @post Removes a city from the players hand
+     */
+    public void buyCity()
+    {
+    	
     }
 
     /**
