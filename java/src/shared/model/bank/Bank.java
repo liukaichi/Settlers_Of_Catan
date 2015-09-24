@@ -13,7 +13,7 @@ public class Bank
      * 
      * @return the ResourceList in this Bank
      */
-    public ResourceList getResourceList()
+    public ResourceList getResources()
     {
         return resources;
     };
@@ -23,7 +23,7 @@ public class Bank
      * 
      * @return the DevCardHand in this Bank
      */
-    public DevCardHand getDevCardList()
+    public DevCardHand getDevCards()
     {
         return devCards;
     };

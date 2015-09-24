@@ -5,23 +5,28 @@ import java.util.List;
 import shared.definitions.*;
 import shared.definitions.exceptions.*;
 import shared.model.map.structure.Port;
+import shared.model.map.structure.Structure;
 
 public class PlayerBank extends Bank
 {
-    private int cities, settlements, roads;
-    private int soldiers, monuments;
+    private Structure structures;
+    private int knights, victoryPoints;
+    private List<Port> portsOwn; 
     /**
      * List of ports owned by player
      */
     private List<Port> ports;
-    // should this be it's own class?
-    private int victoryPoints;
 
     public PlayerBank()
     {
         super();
     }
 
+    public Structure getStructures()
+    {
+    	return structures; 
+    }
+    
     /**
      * Determines if the player can purchase a PieceType
      * 
@@ -43,6 +48,43 @@ public class PlayerBank extends Bank
      *         if there are insufficient resources to buy a DevCard
      */
     public boolean canBuyDevCard() throws InsufficientFundsException
+    {
+        return false;
+    }
+    
+    /**
+     * Determines if the player can purchase a Road
+     * 
+     * @return true if game conditions are met
+     * @throws InsufficientFundsException
+     *         if there are insufficient resources to buy a Road
+     */
+    public boolean canBuyRoad() throws InsufficientFundsException
+    {
+        return false;
+    }
+    
+    /**
+     * Determines if the player can purchase a Settlement
+     * 
+     * @return true if game conditions are met
+     * @throws InsufficientFundsException
+     *         if there are insufficient resources to buy a Settlement
+     */
+    public boolean canBuySettlement() throws InsufficientFundsException
+    {
+        return false;
+    }
+    
+    
+    /**
+     * Determines if the player can purchase a City
+     * 
+     * @return true if game conditions are met
+     * @throws InsufficientFundsException
+     *         if there are insufficient resources to buy a City
+     */
+    public boolean canBuyDevCity() throws InsufficientFundsException
     {
         return false;
     }
