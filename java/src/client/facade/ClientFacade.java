@@ -370,13 +370,13 @@ public class ClientFacade
     {
         return false;
     }
-    /**
-     * Checks to see if the player meets the condition to place a settlement
-     * @pre place settlement is called
-     * @post place settlement continues
-     * @param vertLoc
-     * @return boolean - true if player has the required resources and the location is 2 edges or more from another settlement
-     */
+/**
+ * Checks to see if the player meets the condition to place a settlement
+ * @pre place settlement is called
+ * @post place settlement continues
+ * @param vertLoc
+ * @return boolean - true if player has the required resources and the location is 2 edges or more from another settlement
+ */
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         return false;
@@ -512,10 +512,10 @@ public class ClientFacade
     {
 
     }
-    /**
-     * Initializes the turn tracker using the model
-     * @post the turn is now initialized
-     */
+/**
+ * Initializes the turn tracker using the model
+ * @post the turn is now initialized
+ */
     public void initTurnFromModel()
     {
 
