@@ -10,16 +10,10 @@ import shared.model.bank.resource.Resources;
 import shared.model.player.*;
 
 /**
-<<<<<<< HEAD
  * The Facade for the Controllers/Views interacting with the Model classes. The
  * only class to directly touch the Model classes will be the Facade. Everything
  * else will call the Facade to do actions. This class contains all available
  * communications with the model.
-=======
- * The facade, containing all communication with the model
- * @author dtaylor
- *
->>>>>>> branch 'phase1' of https://bitbucket.org/thesettlers/the-settlers-of-catan.git
  */
 public class ClientFacade
 {
