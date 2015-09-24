@@ -3,6 +3,14 @@ package server.proxy;
 import shared.communication.moveCommands.*;
 import shared.model.ClientModel;
 
+/**
+ * The commands the the Proxy can use while playing a game. <br>
+ * <br>
+ * This is implemented by IProxy
+ * 
+ * @author cstaheli
+ *
+ */
 public interface IProxyPlayingCommands
 {
     /**
