@@ -1,11 +1,11 @@
 package shared.model.bank;
 
 import shared.model.card.DevCardHand;
-import shared.model.resource.ResourceList;
+import shared.model.resource.Resources;
 
 public class Bank
 {
-    private ResourceList resources;
+    private Resources resources;
     private DevCardHand devCards;
 
     /**
@@ -13,7 +13,7 @@ public class Bank
      * 
      * @return the ResourceList in this Bank
      */
-    public ResourceList getResources()
+    public Resources getResources()
     {
         return resources;
     };

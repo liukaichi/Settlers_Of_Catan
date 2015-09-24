@@ -8,7 +8,7 @@ import shared.definitions.ResourceType;
  * @author amandafisher
  *
  */
-public class ResourceList
+public class Resources
 {
     private Resource brick, ore, sheep, wheat, wood;
 

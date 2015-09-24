@@ -1,14 +1,13 @@
 package client.facade;
 
-import client.data.RobPlayerInfo;
+import client.data.*;
 import server.proxy.*;
 import shared.communication.AIType;
 import shared.definitions.*;
-import shared.definitions.exceptions.DiscardException;
 import shared.locations.*;
 import shared.model.ClientModel;
-import shared.model.player.Credentials;
-import shared.model.resource.ResourceList;
+import shared.model.player.*;
+import shared.model.resource.Resources;
 
 public class ClientFacade
 {
@@ -66,6 +65,16 @@ public class ClientFacade
      * Dev Card Controller Methods
      */
     /**
+     * Determines if the player can buy a dev card.
+     * 
+     * @return whether or not the player can buy a dev card.
+     */
+    public boolean canBuyDevCard()
+    {
+        return false;
+    }
+
+    /**
      * Purchases a Development Card. This will take the card from the bank, and
      * adds it to the player' hand.
      */
@@ -86,30 +95,6 @@ public class ClientFacade
     }
 
     /**
-     * Plays a Monument Card.
-     */
-    public void playMonumentCard()
-    {
-
-    }
-
-    /**
-     * Plays a Road Building Card.
-     */
-    public void playRoadBuildCard()
-    {
-
-    }
-
-    /**
-     * Plays a Soldier Card.
-     */
-    public void playSoldierCard()
-    {
-
-    }
-
-    /**
      * Plays a Year of Plenty Card.
      * 
      * @param resource1
@@ -122,31 +107,17 @@ public class ClientFacade
 
     }
 
+    /**
+     * Plays any other kind of Development Card.
+     */
+    public void playOtherDevCard(DevCardType type)
+    {
+
+    }
+
     /*
      * Discard Controller methods
      */
-    /**
-     * Increases the amount of resources to be discarded of a certain type.
-     * 
-     * @param resource
-     *        the resource to increase the amount of.
-     * @throws DiscardException
-     */
-    public void increaseResourceAmountDiscarded(ResourceType resource)
-    {
-
-    }
-
-    /**
-     * Decreases the amount of resources to be discarded of a certain type.
-     * 
-     * @param resource
-     *        the resource to decrease the amount of.
-     */
-    public void decreaseResourceAmountDiscarded(ResourceType resource)
-    {
-
-    }
 
     /**
      * Discards the amount of resources set with the increase/decrease methods
@@ -154,7 +125,7 @@ public class ClientFacade
      * @param discardedResources
      *        the list of resources to discard.
      */
-    public void discardResources(ResourceList discardedResources)
+    public void discardResources(Resources discardedResources)
     {
 
     }
@@ -162,83 +133,11 @@ public class ClientFacade
     /*
      * Domestic trade controller methods
      */
-    /**
-     * Decreases the amount of a type of resource to trade.
-     * 
-     * @param resource
-     *        The type of resource to decrease the amount of.
-     */
-    public void decreaseTradeResourceAmount(ResourceType resource)
-    {
-
-    }
-
-    /**
-     * Increases the amount of a type of resource to trade.
-     * 
-     * @param resource
-     *        The type of resource to increase the amount of.
-     */
-    public void increaseTradeResourceAmount(ResourceType resource)
-    {
-
-    }
 
     /**
      * Sends a trade offer to a player.
      */
-    public void sendTradeOffer()
-    {
-    }
-
-    /**
-     * Sets the player to trade with.
-     * 
-     * @param playerIndex
-     *        the index of the player to trade with.
-     */
-    public void setPlayerToTradeWith(int playerIndex)
-    {
-
-    }
-
-    /**
-     * Sets the desired resource for the trade.
-     * 
-     * @param resource
-     *        the resource to receive.
-     */
-    public void setResourceToReceive(ResourceType resource)
-    {
-
-    }
-
-    /**
-     * Sets the resource to send for the trade.
-     * 
-     * @param resource
-     *        the resource to send.
-     */
-    public void setResourceToSend(ResourceType resource)
-    {
-
-    }
-
-    /**
-     * Removes the specified resource from the trade.
-     * 
-     * @param resource
-     *        the resource to remove.
-     */
-    public void unsetTradeResource(ResourceType resource)
-    {
-
-    }
-
-    /**
-     * Cancels the trade.
-     */
-    public void cancelTrade()
+    public void sendTradeOffer(TradeOffer offer)
     {
 
     }
@@ -260,7 +159,7 @@ public class ClientFacade
     /**
      * Creates a new game.
      */
-    public void createNewGame()
+    public void createNewGame(GameInfo gameInfo)
     {
 
     }
@@ -268,7 +167,7 @@ public class ClientFacade
     /**
      * Joins an already existent game.
      */
-    public void joinGame()
+    public void joinGame(GameInfo gameInfo)
     {
 
     }
@@ -447,7 +346,7 @@ public class ClientFacade
      * Completes a maritime trade
      * 
      */
-    public void makeTrade()
+    public void makeMaritimeTrade(TradeOffer offer)
     {
 
     }

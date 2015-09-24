@@ -1,7 +1,7 @@
 package shared.model.player;
 
 import shared.definitions.PlayerIndex;
-import shared.model.resource.ResourceList;
+import shared.model.resource.Resources;
 
 /**
  * This class represents a tradeOffer made by one of the four players
@@ -17,5 +17,5 @@ public class TradeOffer
     /**
      * Object that represents the trade offer made by a player
      */
-    private ResourceList offer;
+    private Resources offer;
 }
