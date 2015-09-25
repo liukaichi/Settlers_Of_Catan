@@ -1,4 +1,4 @@
-package shared.model.player;
+package shared.communication;
 
 /**
  * Object that holds the player's password for the Catan game

@@ -6,8 +6,8 @@ import java.util.logging.Level;
 import client.data.GameInfo;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
+import shared.definitions.AIType;
 import shared.model.ClientModel;
-import shared.model.player.Credentials;
 
 /**
  * ServerProxy is used in Dependency injection, along with MockProxy, to return
@@ -94,14 +94,14 @@ public class ServerProxy implements IProxy
     }
 
     @Override
-    public List<Command> getCommands()
+    public List<MoveCommand> getCommands()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ClientModel postCommands(List<Command> commands)
+    public ClientModel postCommands(List<MoveCommand> commands)
     {
         // TODO Auto-generated method stub
         return null;

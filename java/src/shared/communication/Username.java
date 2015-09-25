@@ -1,4 +1,4 @@
-package shared.model.player;
+package shared.communication;
 
 /**
  * Object that represents a string holding the username of the player.

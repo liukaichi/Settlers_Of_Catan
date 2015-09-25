@@ -1,4 +1,4 @@
-package shared.model.player;
+package shared.communication;
 
 /**
  * Credentials class holds the login information for each player. This validates

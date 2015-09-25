@@ -2,7 +2,7 @@ package server.proxy;
 
 import java.util.logging.Level;
 
-import shared.model.player.Credentials;
+import shared.communication.Credentials;
 
 /**
  * All operations that have to do with users as well as server utility methods

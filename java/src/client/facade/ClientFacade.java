@@ -2,10 +2,10 @@ package client.facade;
 
 import client.data.*;
 import server.proxy.*;
-import shared.communication.AIType;
+import shared.communication.Credentials;
 import shared.definitions.*;
 import shared.locations.*;
-import shared.model.ClientModel;
+import shared.model.*;
 import shared.model.bank.resource.Resources;
 import shared.model.player.*;
 

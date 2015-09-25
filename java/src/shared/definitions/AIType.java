@@ -1,4 +1,4 @@
-package shared.communication;
+package shared.definitions;
 
 /**
  * The allowed AI player types. <br>

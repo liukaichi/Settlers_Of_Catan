@@ -4,6 +4,8 @@ import java.util.List;
 
 import client.data.GameInfo;
 import shared.communication.*;
+import shared.communication.moveCommands.MoveCommand;
+import shared.definitions.AIType;
 import shared.model.ClientModel;
 
 /**
@@ -296,7 +298,7 @@ public interface IProxyGameCommands
      *       </ul>
      * @return List of Commands used in the game so far.
      */
-    List<Command> getCommands();
+    List<MoveCommand> getCommands();
 
     /**
      * Executes the specified command list in the current game. <br>
@@ -331,7 +333,7 @@ public interface IProxyGameCommands
      *        The list of commands to be executed.
      * @return updated Game model after the commands are executed.
      */
-    ClientModel postCommands(List<Command> commands);
+    ClientModel postCommands(List<MoveCommand> commands);
 
     /**
      * Returns a list of supported AI player types. <br>
