@@ -78,7 +78,7 @@ catan.resources.Controller = (function resources_namespace() {
 		/**
 		 * The action to take on clicking the resource bar city button. Brings up the map 
 		 * overlay and allows you to place a city.
-		 * 
+		 *
 		 * @method buildCity
 		 * @return void
 		 */
