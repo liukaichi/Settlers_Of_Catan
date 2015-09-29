@@ -29,7 +29,7 @@ public class Poller
         poll = new Poll(this.proxy);
         Timer timer;
         timer = new Timer();
-        timer.schedule(poll, 0, 2000);
+        timer.schedule(poll, 0, 3000);
     }
 
     public void setPollProxy(IProxy newProxy)
