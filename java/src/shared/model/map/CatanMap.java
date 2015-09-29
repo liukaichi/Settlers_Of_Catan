@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class CatanMap
 {
-    private List<Hex> hexes;
+    private Map<HexLocation, Hex> hexes;
     private List<Port> ports;
     private Map<EdgeLocation, Road> roads;
     private Map<VertexLocation, Structure> structures;
@@ -41,7 +41,24 @@ public class CatanMap
      */
     public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
     {
-        return false;
+    	Structure atLocation = structures.get(location);
+    	//check if location exists, and is empty
+        if(structures.containsKey(location) && atLocation == null)
+        {
+        	for(VertexLocation vertex : location.getNeighboringVertices())
+        	{
+        		if(structures.get(vertex) != null)
+    			{
+    				return false;
+    			}
+        	}
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
+        
     }
 
     /**
@@ -58,7 +75,15 @@ public class CatanMap
      */
     public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
     {
-        return false;
+    	Structure structure = structures.get(location);
+        if(structure != null && structure.getOwner().equals(player))
+        {
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
     }
 
     /**
@@ -76,7 +101,23 @@ public class CatanMap
      */
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
     {
-        return false;
+    	if(roads.get(location) == null)
+    	{
+    		for(VertexLocation vertex : location.getVertices())
+            {
+    	    	Structure structure = structures.get(vertex);
+    			if(structure != null && structure.getOwner().equals(player))
+		        {
+		        	return true;
+		        }
+            }
+    		return false;
+    	}
+    	else
+    	{
+    		return false;
+    	}
+        
     }
 
     /**
@@ -93,6 +134,10 @@ public class CatanMap
      */
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
+        if(hexes.get(location) != null && !robberLocation.equals(location))
+        {
+        	return true;
+        }
         return false;
     }
 
@@ -106,7 +151,16 @@ public class CatanMap
      */
     public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
-
+    	try
+    	{
+    		Road road = new Road(player, location);
+    		roads.put(location, road);
+    	} 
+    	catch(Exception e)
+    	{
+    		throw new PlacementException();
+    	}
+    	
     }
 
     /**
@@ -119,7 +173,15 @@ public class CatanMap
      */
     public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-        
+    	try
+    	{
+    		Settlement settlement = new Settlement(player, location);
+    		structures.put(location, settlement);
+    	} 
+    	catch(Exception e)
+    	{
+    		throw new PlacementException();
+    	}
     }
 
     /**
@@ -132,7 +194,15 @@ public class CatanMap
      */
     public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-
+    	try
+    	{
+    		City city = new City(player, location);
+    		structures.put(location, city);
+    	} 
+    	catch(Exception e)
+    	{
+    		throw new PlacementException();
+    	}
     }
 
     /**
@@ -145,6 +215,13 @@ public class CatanMap
      */
     public void moveRobber(PlayerIndex player, HexLocation location) throws PlacementException
     {
-
+    	try
+    	{
+        	this.robberLocation = location;
+    	}
+    	catch(Exception e)
+    	{
+    		throw new PlacementException();
+    	}
     }
 }
