@@ -1,16 +1,23 @@
 package shared.model.map;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
+import shared.model.ClientModel;
 import shared.model.map.structure.*;
 import shared.locations.*;
 import shared.model.map.structure.*;
 
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 /**
  * Represents the board game map of the Catan game
@@ -227,5 +234,13 @@ public class CatanMap
     	{
     		throw new PlacementException();
     	}
+    }
+    
+    public CatanMap deserialize(JsonElement json, Type type,
+            JsonDeserializationContext context) throws JsonParseException 
+    {
+    	JsonObject jobject = (JsonObject) json;
+    	return new CatanMap();
+    	
     }
 }

@@ -1,5 +1,12 @@
 package shared.model;
 
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 import client.data.GameInfo;
 import shared.definitions.PlayerIndex;
 import shared.model.bank.Bank;
@@ -35,7 +42,14 @@ public class ClientModel
         winner = PlayerIndex.NONE;
     }
 
-    public GameInfo getGameInfo()
+    /**
+	 * @param asString
+	 */
+	public ClientModel(String asString) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public GameInfo getGameInfo()
     {
         return gameInfo;
     }
@@ -88,6 +102,14 @@ public class ClientModel
     public void setWinner(PlayerIndex winner)
     {
         this.winner = winner;
+    }
+    
+    public ClientModel deserialize(JsonElement json, Type type,
+            JsonDeserializationContext context) throws JsonParseException 
+    {
+    	JsonObject jobject = (JsonObject) json;
+    	return new ClientModel();
+    	
     }
 
 }
