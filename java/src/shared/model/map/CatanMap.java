@@ -27,6 +27,10 @@ public class CatanMap
     private int radius;
     private HexLocation robberLocation;
 
+    public CatanMap()
+    {
+    	
+    }
     /**
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
