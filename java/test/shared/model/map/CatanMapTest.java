@@ -35,9 +35,24 @@ public class CatanMapTest {
 	@Test
 	public void testCanPlaceSettlement() {
 		testCanPlaceSettlementEmptySet();
+		testCanPlaceSettlementVacantVertexStructureNearBy();
 	}
 	
-	@Test
+	/**
+	 * 
+	 */
+	private void testCanPlaceSettlementVacantVertexStructureNearBy() {
+		CatanMap map = new CatanMap();
+		HashMap<HexLocation, Hex> hexMap = new HashMap<HexLocation, Hex>();
+		hexMap.put(new HexLocation(0,0), new Hex());
+		
+		HashMap<VertexLocation, Structure> structureMap = new HashMap<VertexLocation, Structure>();
+		map.setHexes(hexMap);
+		map.setStructures(structureMap);
+		assertFalse(map.canPlaceSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,0),VertexDirection.West)));
+	}
+
+	
 	public void testCanPlaceSettlementEmptySet() {
 		CatanMap map = new CatanMap();
 		HashMap<HexLocation, Hex> hexMap = new HashMap<HexLocation, Hex>();

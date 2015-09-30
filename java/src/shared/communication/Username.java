@@ -2,13 +2,19 @@ package shared.communication;
 
 /**
  * Object that represents a string holding the username of the player.
+ * 
  * @author amandafisher
  *
  */
 public class Username
 {
 
-    String username;
+    private String username;
+
+    private Username()
+    {
+
+    }
 
     public Username(String username)
     {
@@ -23,11 +29,13 @@ public class Username
 
     public void setUsername(String username)
     {
+        validateUsername();
         this.username = username;
     }
 
-    private Username()
+    private void validateUsername()
     {
-        setUsername("username");
+
     }
+
 }
