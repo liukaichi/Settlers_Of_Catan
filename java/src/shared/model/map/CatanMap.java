@@ -228,4 +228,22 @@ public class CatanMap
     		throw new PlacementException();
     	}
     }
+	public void setHexes(Map<HexLocation, Hex> hexes) {
+		this.hexes = hexes;
+	}
+	public void setPorts(List<Port> ports) {
+		this.ports = ports;
+	}
+	public void setRoads(Map<EdgeLocation, Road> roads) {
+		this.roads = roads;
+	}
+	public void setStructures(Map<VertexLocation, Structure> structures) {
+		this.structures = structures;
+	}
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
+	public void setRobberLocation(HexLocation robberLocation) {
+		this.robberLocation = robberLocation;
+	}
 }
