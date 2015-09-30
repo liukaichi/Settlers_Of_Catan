@@ -6,6 +6,7 @@ import client.data.GameInfo;
 import shared.communication.*;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.AIType;
+import shared.definitions.exceptions.*;
 import shared.model.ClientModel;
 
 /**
@@ -104,8 +105,10 @@ public interface IProxyGameCommands
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
      *      How the Catan Server Uses HTTP Cookies</a>
+     * @throws GameQueryException
+     *         if game is not successfully joined.
      */
-    void joinGame(JoinGameRequest joinGameRequest);
+    void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException;
 
     /**
      * This method is for testing and debugging purposes. When a bug is found,
@@ -136,8 +139,10 @@ public interface IProxyGameCommands
      * @param saveGameRequest
      *        The id of the game to save and the save file name (no extensions
      *        please).
+     * @throws GameQueryException
+     *         if the request fails
      */
-    void saveGame(SaveGameRequest saveGameRequest);
+    void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException;
 
     /**
      * This method is for testing and debugging purposes. When a bug is found,
@@ -164,8 +169,10 @@ public interface IProxyGameCommands
      * 
      * @param loadGameRequest
      *        The game file to load that is saved on the server.
+     * @throws GameQueryException
+     *         if the request fails
      */
-    void loadGame(LoadGameRequest loadGameRequest);
+    void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException;
 
     // Game operations for games you are already in (requires cookie)
     /**
@@ -380,6 +387,13 @@ public interface IProxyGameCommands
      * @param aiType
      *        The type of AI player to add (currently, LARGEST_ARMY is the only
      *        supported type)
+     * @throws IllegalArgumentException
+     *         if the aiType is invalid
+     * @throws GameQueryException
+     *         if the aiType cannot be added (if the user has not joined a game,
+     *         or if the game is full).
+     * @throws AddAIException
+     *         if the aiType cannot be added because the game is full.
      */
-    void addAI(AIType aiType);
+    void addAI(AIType aiType) throws IllegalArgumentException, GameQueryException, AddAIException;
 }

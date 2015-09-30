@@ -7,5 +7,18 @@ package shared.definitions;
  */
 public enum AIType
 {
-    LARGEST_ARMY;
+    LARGEST_ARMY("LARGEST_ARMY");
+
+    private String type;
+
+    private AIType(String type)
+    {
+        this.type = type;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "[ \" " + type + "\" ]";
+    }
 }

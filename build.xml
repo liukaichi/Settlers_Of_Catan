@@ -11,6 +11,7 @@
     <!-- Input folders -->
     <property name="java.dir" value="java"/>
     <property name="java.src.dir" value="${java.dir}/src"/>
+	<property name="java.test.dir" value="${java.dir}/test"/>
     <property name="java.lib.dir" value="${java.dir}/lib"/>
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
@@ -155,6 +156,17 @@
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
-  
+	
+	<target name="test" depends="package" description="runs the JUnit tests">
+		<java classname="main.AllTests" fork="yes">
+			<classpath>
+				<path refid="java.lib.classpath" />
+			</classpath>
+			<assertions>
+				<enable/>
+			</assertions>
+  		</java>
+	</target>
+		
 </project>
 
