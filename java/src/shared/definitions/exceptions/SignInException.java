@@ -17,4 +17,12 @@ public class SignInException extends CatanException
         super(string);
     }
 
+    /**
+     * 
+     */
+    public SignInException()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
 }

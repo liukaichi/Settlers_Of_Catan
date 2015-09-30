@@ -19,4 +19,12 @@ public class GameQueryException extends CatanException
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * 
+     */
+    public GameQueryException()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
 }

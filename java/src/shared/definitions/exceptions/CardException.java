@@ -18,4 +18,11 @@ public class CardException extends CatanException
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * 
+     */
+    public CardException()
+    {
+        // TODO Auto-generated constructor stub
+    }
 }
