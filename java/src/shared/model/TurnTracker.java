@@ -43,22 +43,34 @@ public class TurnTracker
         
     }
 
-	public PlayerIndex getCurrentTurn() {
+	public PlayerIndex getCurrentTurn() 
+	{
 		return currentTurn;
 	}
 
-	public PlayerIndex getLongestRoad() {
+	public PlayerIndex getLongestRoad() 
+	{
 		return longestRoad;
 	}
 
-	public PlayerIndex getLargestArmy() {
+	public PlayerIndex getLargestArmy() 
+	{
 		return largestArmy;
 	}
 
-	public TurnStatus getStatus() {
+	public TurnStatus getStatus() 
+	{
 		return status;
 	}
     
+	@Override
+	public String toString()
+	{
+		String returnString = "\"turnTracker\":{";
+		returnString += "\"status\":\""+ status + "\",";
+		returnString += "\"currentTurn\": "+ currentTurn;
+		return returnString; 
+	}
     
     
 }
