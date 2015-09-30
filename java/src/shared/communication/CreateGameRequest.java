@@ -11,4 +11,12 @@ public class CreateGameRequest
 {
     private boolean randomTiles, randomNumbers, randomPorts;
     private String name;
+
+    public CreateGameRequest(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+    {
+        this.randomTiles = randomTiles;
+        this.randomNumbers = randomNumbers;
+        this.randomPorts = randomPorts;
+        this.name = name;
+    }
 }

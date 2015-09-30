@@ -7,6 +7,7 @@ import client.data.GameInfo;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
+import shared.definitions.exceptions.GameQueryException;
 import shared.model.ClientModel;
 
 /**
@@ -60,21 +61,21 @@ public class MockProxy implements IProxy
     }
 
     @Override
-    public void joinGame(JoinGameRequest joinGameRequest)
+    public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
     {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void saveGame(SaveGameRequest saveGameRequest)
+    public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
     {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void loadGame(LoadGameRequest loadGameRequest)
+    public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
     {
         // TODO Auto-generated method stub
 

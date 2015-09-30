@@ -15,6 +15,13 @@ public abstract class Structure
     // private EdgeLocation location; // what is this? Why in the VertexObject?
     private VertexLocation location; // I think they meant this one.
     private int victoryPointValue;
+    
+    public Structure(PlayerIndex owner, VertexLocation location)
+    {
+    	this.owner = owner;
+    	this.location = location;
+    }
+    
 	public PlayerIndex getOwner() {
 		return owner;
 	}
