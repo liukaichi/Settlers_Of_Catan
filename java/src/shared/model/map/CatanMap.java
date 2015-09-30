@@ -20,8 +20,12 @@ import java.util.Map;
  */
 public class CatanMap
 {
-    private Map<HexLocation, Hex> hexes;
+	//populated on map initialization
     private List<Port> ports;
+    private Map<HexLocation, Hex> hexes;
+    private Map<EdgeLocation, List<VertexLocation> > edgeVertices;
+    private Map<VertexLocation, List<EdgeLocation> > vertexEdges;
+    //populated on buy
     private Map<EdgeLocation, Road> roads;
     private Map<VertexLocation, Structure> structures;
     private int radius;
@@ -45,16 +49,21 @@ public class CatanMap
      */
     public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
     {
-    	Structure atLocation = structures.get(location);
+    	VertexLocation normalizedVertex = location.getNormalizedLocation();
+    	Structure atLocation = structures.get(normalizedVertex);
     	//check if location exists, and is empty
-        if(structures.containsKey(location) && atLocation == null)
+        if(structures.containsKey(normalizedVertex) && atLocation == null)
         {
-        	for(VertexLocation vertex : location.getNeighboringVertices())
+        	for(EdgeLocation edge : vertexEdges.get(normalizedVertex))
         	{
-        		if(structures.get(vertex) != null)
-    			{
-    				return false;
-    			}
+        		for(VertexLocation vertex : edgeVertices.get(edge))
+        		{
+        			if(structures.get(vertex) != null)
+        			{
+        				return false;
+        			}
+        		}
+        		
         	}
         	return true;
         }
@@ -105,22 +114,28 @@ public class CatanMap
      */
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
     {
-    	if(roads.get(location) == null)
-    	{
-    		for(VertexLocation vertex : location.getVertices())
-            {
-    	    	Structure structure = structures.get(vertex);
-    			if(structure != null && structure.getOwner().equals(player))
-		        {
-		        	return true;
-		        }
-            }
-    		return false;
-    	}
-    	else
-    	{
-    		return false;
-    	}
+    	EdgeLocation normalizedEdge = location.getNormalizedLocation();
+    	Structure atLocation = structures.get(normalizedEdge);
+    	//check if location exists, and is empty
+        if(roads.containsKey(normalizedEdge) && atLocation == null)
+        {
+        	for(VertexLocation vertex : edgeVertices.get(normalizedEdge))
+        	{
+        		for(EdgeLocation edge : vertexEdges.get(vertex))
+        		{
+        			if(roads.get(edge) != null)
+        			{
+        				return false;
+        			}
+        		}
+        		
+        	}
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
         
     }
 
