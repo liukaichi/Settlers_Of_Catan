@@ -3,6 +3,7 @@ package server.proxy;
 import java.util.logging.Level;
 
 import shared.communication.Credentials;
+import shared.definitions.exceptions.SignInException;
 
 /**
  * All operations that have to do with users as well as server utility methods
@@ -42,13 +43,16 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       If the passed­in (username, password) pair is not valid, or the
      *       operation fails for any other reason, The server returns an HTTP
      *       400 error response, and the body contains an error message.
+     * @throws SignInException
+     *         if the login fails.
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
      *      How the Catan Server Uses HTTP Cookies</a>
      * 
+     * 
      */
     // Or just Username/Password. We should discuss this, probably.
-    void userLogin(Credentials credentials);
+    void userLogin(Credentials credentials) throws SignInException;
 
     /**
      * Logs into the server and sets the user's HTTP cookie. <br>
@@ -80,11 +84,13 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       If there is already an existing user with the specified name, or
      *       the operation fails for any other reason, the server returns an
      *       HTTP 400 error response, and the body contains an error message.
+     * @throws SignInException
+     *         if the login/registration fails.
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
      *      How the Catan Server Uses HTTP Cookies</a>
      */
-    void userRegister(Credentials credentials);
+    void userRegister(Credentials credentials) throws SignInException;
 
     // Util Method
     /**

@@ -1,5 +1,7 @@
 package server.proxy;
 
+import java.io.*;
+import java.net.*;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -7,6 +9,7 @@ import client.data.GameInfo;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
+import shared.definitions.exceptions.*;
 import shared.model.ClientModel;
 
 /**
@@ -22,19 +25,77 @@ import shared.model.ClientModel;
  */
 public class ServerProxy implements IProxy
 {
+    /**
+     * Contexts
+     * 
+     */
+    /* user : Operations about users */
+    // POST
+    private static final String USER_LOGIN = "user/login";
+    private static final String USER_REGISTER = "user/register";
+
+    /* games : Game queries/actions (pre-joining) */
+    // GET
+    private static final String LIST_GAMES = "games/list";
+    // POST
+    private static final String CREATE_GAME = "games/create";
+    private static final String JOIN_GAME = "games/join";
+    private static final String SAVE_GAME = "games/save";
+    private static final String LOAD_GAME = "games/load";
+
+    /* game : Operations for the game you're in. (requires cookie) */
+    // GET
+    private static final String GET_GAME_STATE = "game/model";
+    private static final String LIST_AI = "game/listAI";
+    // POST
+    private static final String RESET_GAME = "game/reset";
+    private static final String ADD_AI = "game/addAI";
+    // GET/POST
+    private static final String COMMANDS = "game/commands";
+
+    /* moves : Actions you can take mid game. (requires cookie) */
+    // POST
+    private static final String SEND_CHAT = "moves/sendChat";
+    private static final String ROLL_NUMBER = "moves/rollNumber";
+    private static final String ROB_PLAYER = "moves/robPlayer";
+    private static final String FINISH_TURN = "moves/finishTurn";
+    private static final String BUY_DEV_CARD = "moves/buyDevCard";
+    private static final String YEAR_OF_PLENTY = "moves/Year_of_Plenty";
+    private static final String ROAD_BUILDING = "moves/Road_Building";
+    private static final String SOLDIER = "moves/Soldier";
+    private static final String MONOPOLY = "moves/monopoly";
+    private static final String MONUMENT = "moves/monument";
+    private static final String BUILD_ROAD = "moves/buildRoad";
+    private static final String BUILD_SETTLEMENT = "moves/buildSettlement";
+    private static final String BUILD_CITY = "moves/buildCity";
+    private static final String OFFER_TRADE = "moves/offerTrade";
+    private static final String ACCEPT_TRADE = "moves/acceptTrade";
+    private static final String MARITIME_TRADE = "moves/maritimeTrade";
+    private static final String DISCARD_CARDS = "moves/discardCards";
+
+    /* util : Change how the server runs */
+    // POST
+    private static final String CHANGE_LOG_LEVEL = "util/changeLogLevel";
+
+    /* HTML request type */
+    private static final String HTTP_POST = "POST";
+    private static final String HTTP_GET = "GET";
+    private String URLPrefix = "http://localhost:8081/";
 
     @Override
-    public void userLogin(Credentials credentials)
+    public void userLogin(Credentials credentials) throws SignInException
     {
-        // TODO Auto-generated method stub
-
+        doPost(USER_LOGIN, credentials.toString());
     }
 
     @Override
-    public void userRegister(Credentials credentials)
+    public void userRegister(Credentials credentials) throws SignInException
     {
-        // TODO Auto-generated method stub
-
+        String response = doPost(USER_REGISTER, credentials.toString());
+        if (response == null)
+        {
+            throw new SignInException(response);
+        }
     }
 
     @Override
@@ -59,21 +120,21 @@ public class ServerProxy implements IProxy
     }
 
     @Override
-    public void joinGame(JoinGameRequest joinGameRequest)
+    public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
     {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void saveGame(SaveGameRequest saveGameRequest)
+    public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
     {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void loadGame(LoadGameRequest loadGameRequest)
+    public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
     {
         // TODO Auto-generated method stub
 
@@ -82,8 +143,15 @@ public class ServerProxy implements IProxy
     @Override
     public ClientModel getGameState(int versionNumber)
     {
-        // TODO Auto-generated method stub
-        return null;
+        String query = String.format("version=%s", versionNumber);
+        String responseJSON = doGet(GET_GAME_STATE, query);
+        ClientModel responseModel = null;
+        /* If the model has changed */
+        if (!responseJSON.equals("\"true\""))
+        {
+            responseModel = (ClientModel) deserializeJSON(responseJSON);
+        }
+        return responseModel;
     }
 
     @Override
@@ -115,7 +183,7 @@ public class ServerProxy implements IProxy
     }
 
     @Override
-    public void addAI(AIType aiType)
+    public void addAI(AIType aiType) throws IllegalArgumentException, GameQueryException, AddAIException
     {
         // TODO Auto-generated method stub
 
@@ -262,6 +330,53 @@ public class ServerProxy implements IProxy
     private Object deserializeJSON(String json)
     {
         return null;
+    }
+
+    private String doPost(String commandName, String postDataJson)
+    {
+        String result = null;
+        try
+        {
+            URL url = new URL(URLPrefix + commandName);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Accept", "application/json");
+            // connection.setRequestProperty("Content-Type",
+            // "application/json");
+            connection.setRequestMethod(HTTP_POST);
+            connection.setDoOutput(true);
+            connection.connect();
+            OutputStream stream = connection.getOutputStream();
+            stream.write(postDataJson.getBytes());
+            stream.flush();
+            stream.close();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
+            {
+                result = connection.getInputStream().toString();
+            }
+            return result;
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String doGet(String commandName, String query)
+    {
+        String response = null;
+        try
+        {
+            URL url = new URL(URLPrefix + commandName + "?" + query);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Content-Type", "application/json");
+            InputStream stream = connection.getInputStream();
+            response = stream.toString();
+            return response;
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
