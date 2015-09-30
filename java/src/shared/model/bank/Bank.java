@@ -12,6 +12,14 @@ public class Bank
     private Resources resources;
     private DevCards devCards;
 
+    public Bank(){
+        initialize();
+    }
+
+    private void initialize(){
+        resources = new Resources();
+        devCards = new DevCards();
+    }
 
     /**
      * Returns a Resources object

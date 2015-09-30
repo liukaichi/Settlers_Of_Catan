@@ -1,5 +1,10 @@
 package shared.model.bank.resource;
 
+import shared.definitions.ResourceType;
+import shared.definitions.exceptions.CatanException;
+import shared.model.bank.structure.Structure;
+import sun.security.tools.keytool.Resources_it;
+
 /**
  * List of the resource objects
  * 
@@ -10,23 +15,32 @@ public class Resources
 {
     private Resource brick, ore, sheep, wheat, wood;
 
-    public Resource getBrick() {
-        return brick;
+    public Resources(){
+        initialize();
     }
 
-    public Resource getOre() {
-        return ore;
+    private void initialize(){
+        brick = new Resource(ResourceType.BRICK);
+        ore = new Resource(ResourceType.ORE);
+        sheep = new Resource(ResourceType.SHEEP);
+        wheat = new Resource(ResourceType.WHEAT);
+        wood = new Resource(ResourceType.WOOD);
     }
 
-    public Resource getSheep() {
-        return sheep;
-    }
+    public Resource getResource(ResourceType type) throws CatanException{
+        switch (type){
+            case BRICK:
+                return brick;
+            case ORE:
+                return ore;
+            case SHEEP:
+                return sheep;
+            case WHEAT:
+                return wheat;
+            case WOOD:
+                return wood;
+        }
 
-    public Resource getWheat() {
-        return wheat;
-    }
-
-    public Resource getWood() {
-        return wood;
+        throw new CatanException();
     }
 }
