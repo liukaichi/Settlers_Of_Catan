@@ -35,6 +35,9 @@ public class MessageLine
     @Override
     public String toString()
     {
-        return "\"lines\":[" + message + "]";
+    	String returnString = "\"lines\":[{";
+        returnString += "\"message\":"  + message + "\",";
+        returnString += "\"source\":"  + source.toString() + "\"}]";
+        return returnString; 
     }
 }

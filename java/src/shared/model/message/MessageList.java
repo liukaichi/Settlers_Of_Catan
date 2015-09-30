@@ -59,7 +59,7 @@ public class MessageList
         for (MessageLine messageLine : lines) {
 			returnValue += messageLine.toString();
 		}
-        returnValue += "}";
+        returnValue += "},";
         return returnValue; 
     }
 

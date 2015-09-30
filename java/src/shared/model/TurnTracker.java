@@ -68,7 +68,9 @@ public class TurnTracker
 	{
 		String returnString = "\"turnTracker\":{";
 		returnString += "\"status\":\""+ status + "\",";
-		returnString += "\"currentTurn\": "+ currentTurn;
+		returnString += "\"currentTurn\": "+ currentTurn + "\",";
+		returnString += "\"longestRoad\": "+ getLongestRoad().toString() + "\",";
+		returnString += "\"longestArmy\": "+ getLargestArmy().toString() + "\"},";
 		return returnString; 
 	}
     
