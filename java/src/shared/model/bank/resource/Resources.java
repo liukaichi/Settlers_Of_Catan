@@ -27,7 +27,7 @@ public class Resources
         wood = new Resource(ResourceType.WOOD);
     }
 
-    public Resource getResource(ResourceType type) throws CatanException{
+    public Resource getResource(ResourceType type){
         switch (type){
             case BRICK:
                 return brick;
@@ -41,6 +41,6 @@ public class Resources
                 return wood;
         }
 
-        throw new CatanException();
+        return null;
     }
 }

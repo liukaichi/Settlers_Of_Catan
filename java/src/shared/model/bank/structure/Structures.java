@@ -1,7 +1,6 @@
 package shared.model.bank.structure;
 
 import shared.definitions.StructureType;
-import shared.definitions.exceptions.CatanException;
 
 /**
  * This class represents a list of Structure in the Catan game
@@ -10,17 +9,17 @@ public class Structures
 {
     private Structure road, settlement, city;
 
-    public Structures() throws CatanException{
+    public Structures(){
         initialize();
     }
 
-    private void initialize() throws CatanException{
+    private void initialize(){
         road = new Structure(StructureType.ROAD);
         settlement = new Structure(StructureType.SETTLEMENT);
         city = new Structure(StructureType.CITY);
     }
 
-    public Structure getStructure(StructureType type) throws CatanException {
+    public Structure getStructure(StructureType type) {
         switch (type){
             case ROAD:
                 return road;
@@ -28,8 +27,8 @@ public class Structures
                 return settlement;
             case CITY:
                 return city;
+            default:
+                return null;
         }
-
-        throw new CatanException();
     }
 }

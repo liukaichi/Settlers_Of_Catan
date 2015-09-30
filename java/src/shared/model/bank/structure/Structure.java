@@ -15,7 +15,7 @@ public class Structure {
         BUILT, MAX
     }
 
-    public Structure(StructureType type) throws CatanException{
+    public Structure(StructureType type){
         this.type = type;
         amountBuilt = 0;
         switch (type){
@@ -29,7 +29,7 @@ public class Structure {
                 amountMax = 15;
                 break;
             default:
-                throw new CatanException();
+                amountMax = -1;
         }
     }
 
@@ -37,14 +37,14 @@ public class Structure {
         return type;
     }
 
-    public int getAmount(AmountType type) throws CatanException {
+    public int getAmount(AmountType type){
         switch (type){
             case BUILT:
                 return amountBuilt;
             case MAX:
                 return amountMax;
             default:
-                throw new CatanException();
+                return -1;
         }
     }
 

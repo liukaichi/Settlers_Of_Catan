@@ -3,6 +3,8 @@ package shared.model.bank.card;
 import shared.definitions.DevCardType;
 import shared.definitions.exceptions.CatanException;
 
+import java.util.Stack;
+
 /**
  * This class represents a list of Development Cards
  */
@@ -54,7 +56,7 @@ public class DevCards {
         };
     }
 
-    public DevCard getCard(DevCardType type) throws CatanException {
+    public DevCard getCard(DevCardType type) {
         switch (type){
             case MONOPOLY:
                 return monopoly;
@@ -68,6 +70,14 @@ public class DevCards {
                 return monument;
         }
 
-        throw new CatanException();
+        return null;
+    }
+
+    public int totalCards(){
+        return monopoly.total()
+                + monument.total()
+                + yearOfPlenty.total()
+                + soldier.total()
+                + roadBuilding.total();
     }
 }

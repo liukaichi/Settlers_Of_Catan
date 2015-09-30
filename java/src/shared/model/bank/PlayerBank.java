@@ -1,8 +1,10 @@
 package shared.model.bank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import client.main.Catan;
+import com.sun.javafx.geom.AreaOp;
 import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
@@ -22,45 +24,34 @@ public class PlayerBank extends Bank
     private int knights, victoryPoints, monuments;
     private DevCards devCards;
     private Resources resources;
-    private int sheep, wheat, wood, ore, brick;
-    private DevCard monopoly, monument, roadBuilding, soldier, yearOfPlenty;
     /**
      * List of ports owned by player
      */
-    private List<Port> ports;
+    private List<PortType> ports;
 
     public PlayerBank() throws CatanException
     {
-        super();
+        super(false);
         knights = 0;
         victoryPoints = 0;
         monuments = 0;
-        ports = null;
+        ports = new ArrayList<>();
         devCards = super.getDevCards();
         resources = super.getResources();
         structures = new Structures();
-        initResources();
     }
 
-    public Structures getStructures()
-    {
+    public Structures getStructures() {
         return structures;
     }
 
-    private void initDevCards() throws CatanException{
-        monument = devCards.getCard(DevCardType.MONUMENT);
-        monopoly = devCards.getCard(DevCardType.MONOPOLY);
-
+    private int amountOf(ResourceType type){
+        return resources.getResource(type).getAmount();
     }
 
-    private void initResources() throws CatanException{
-        sheep = resources.getResource(ResourceType.SHEEP).getAmount();
-        wood = resources.getResource(ResourceType.WOOD).getAmount();
-        wheat = resources.getResource(ResourceType.WHEAT).getAmount();
-        ore = resources.getResource(ResourceType.ORE).getAmount();
-        brick = resources.getResource(ResourceType.BRICK).getAmount();
+    private int amountOf(DevCardType cardType, DevCard.AmountType amountType){
+        return devCards.getCard(cardType).getAmount(amountType);
     }
-
 
     /**
      * Determines if PlayerBank has the resources to purchase a DevCard
@@ -68,7 +59,10 @@ public class PlayerBank extends Bank
      * @return true if the condition is met
      */
     public boolean canBuyDevCard() {
-        if ((sheep > 0) && (wood > 0) && (wheat > 0)){
+        if ((amountOf(ResourceType.SHEEP) > 0)
+                && (amountOf(ResourceType.ORE) > 0)
+                && (amountOf(ResourceType.WHEAT) > 0)
+                && (!super.getDevCardDeck().empty())){
             return true;
         }
         return false;
@@ -82,6 +76,12 @@ public class PlayerBank extends Bank
      */
     public void buyDevCard() throws InsufficientResourcesException
     {
+        if (canBuyDevCard()){
+            devCards.getCard(super.getDevCardDeck().pop()).addCard(DevCard.AmountType.UNPLAYABLE, 1);
+        }
+        else {
+            //cant buy card message
+        }
 
     }
 
@@ -92,7 +92,7 @@ public class PlayerBank extends Bank
      */
     public boolean canBuyRoad()
     {
-        if ((brick > 0) && (wood > 0)){
+        if ((amountOf(ResourceType.BRICK) > 0) && (amountOf(ResourceType.WOOD) > 0)){
             return true;
         }
         return false;
@@ -101,12 +101,21 @@ public class PlayerBank extends Bank
     /**
      * Increments the road count in PlayerBank and decrements appropriate
      * resources
-     * 
+     *
      * @throws InsufficientResourcesException
      */
     public void buyRoad() throws InsufficientResourcesException
     {
-
+        if (canBuyRoad()){
+            try{
+                resources.getResource(ResourceType.BRICK).subResource(1);
+                resources.getResource(ResourceType.WOOD).subResource(1);
+                structures.getStructure(StructureType.ROAD).addAmount(1);
+            }
+            catch (CatanException e){
+                e.getMessage();
+            }
+        }
     }
 
     /**
@@ -116,7 +125,10 @@ public class PlayerBank extends Bank
      */
     public boolean canBuySettlement()
     {
-        if((sheep > 0) && (wood > 0) && (wheat > 0) && (brick > 0)){
+        if((amountOf(ResourceType.SHEEP) > 0)
+                && (amountOf(ResourceType.WOOD) > 0)
+                && (amountOf(ResourceType.WHEAT) > 0)
+                && (amountOf(ResourceType.BRICK) > 0)){
             return true;
         }
         return false;
@@ -130,7 +142,19 @@ public class PlayerBank extends Bank
      */
     public void buySettlement() throws InsufficientResourcesException
     {
+        if (canBuySettlement()){
 
+            try{
+                resources.getResource(ResourceType.SHEEP).subResource(1);
+                resources.getResource(ResourceType.WOOD).subResource(1);
+                resources.getResource(ResourceType.WHEAT).subResource(1);
+                resources.getResource(ResourceType.BRICK).subResource(1);
+                structures.getStructure(StructureType.SETTLEMENT).addAmount(1);
+            }
+            catch (CatanException e){
+                e.getMessage();
+            }
+        }
     }
 
     /**
@@ -140,7 +164,7 @@ public class PlayerBank extends Bank
      */
     public boolean canBuyCity()
     {
-        if ((ore > 3) && (wheat > 2)){
+        if ((amountOf(ResourceType.ORE) > 2) && (amountOf(ResourceType.WHEAT) > 1)){
             return true;
         }
         return false;
@@ -154,7 +178,17 @@ public class PlayerBank extends Bank
      */
     public void buyCity() throws InsufficientResourcesException
     {
-
+        if (canBuyCity()){
+            try{
+                resources.getResource(ResourceType.ORE).subResource(3);
+                resources.getResource(ResourceType.WHEAT).subResource(2);
+                structures.getStructure(StructureType.CITY).addAmount(1);
+                structures.getStructure(StructureType.SETTLEMENT).subAmount(1);
+            }
+            catch (CatanException e){
+                e.getMessage();
+            }
+        }
     }
 
     /**
@@ -167,7 +201,10 @@ public class PlayerBank extends Bank
      */
     public boolean canPlayDevCard(DevCardType type)
     {
-//        if ()
+        if (amountOf(type, DevCard.AmountType.PLAYABLE) > 0){
+            return true;
+        }
+
         return false;
     }
 
@@ -180,7 +217,15 @@ public class PlayerBank extends Bank
      */
     public void playDevCard(DevCardType type) throws InsufficientResourcesException
     {
-
+        if (canPlayDevCard(type)){
+            DevCard card = devCards.getCard(type);
+            card.subCard(DevCard.AmountType.PLAYABLE, 1);
+            card.addCard(DevCard.AmountType.PLAYED, 1);
+            card.playAction();
+        }
+        else{
+            //cannot play
+        }
     }
 
     /**
@@ -192,6 +237,9 @@ public class PlayerBank extends Bank
      */
     public boolean canAccessPort(PortType type)
     {
+        if (ports.contains(type)){
+            return true;
+        }
         return false;
     }
 

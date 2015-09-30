@@ -18,7 +18,7 @@ public abstract class DevCard {
         return type;
     }
 
-    public int getAmount(AmountType type) throws CatanException{
+    public int getAmount(AmountType type){
         switch (type){
             case PLAYABLE:
                 return amountPlayable;
@@ -27,8 +27,7 @@ public abstract class DevCard {
             case PLAYED:
                 return amountPlayed;
         }
-
-        throw new CatanException();
+        return -1;
     }
 
     public DevCard(DevCardType inType){

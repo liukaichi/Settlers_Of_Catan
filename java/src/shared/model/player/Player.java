@@ -2,6 +2,7 @@ package shared.model.player;
 
 import client.data.PlayerInfo;
 import shared.definitions.DevCardType;
+import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.*;
 
@@ -24,7 +25,7 @@ public class Player
     /**
      * A player bank is instantiated with the creation of each new player
      */
-    public Player()
+    public Player() throws CatanException
     {
         bank = new PlayerBank();
     }
