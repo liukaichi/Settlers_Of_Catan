@@ -19,4 +19,12 @@ public class InsufficientResourcesException extends CatanException
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * 
+     */
+    public InsufficientResourcesException()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
 }

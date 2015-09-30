@@ -18,4 +18,12 @@ public class TradingException extends CatanException
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * 
+     */
+    public TradingException()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
 }

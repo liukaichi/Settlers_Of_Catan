@@ -18,4 +18,11 @@ public class DiscardException extends CatanException
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * 
+     */
+    public DiscardException()
+    {
+        // TODO Auto-generated constructor stub
+    }
 }

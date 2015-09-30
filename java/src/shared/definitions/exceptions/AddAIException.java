@@ -19,4 +19,12 @@ public class AddAIException extends CatanException
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * 
+     */
+    public AddAIException()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
 }
