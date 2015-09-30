@@ -8,6 +8,8 @@ import static org.junit.Assert.*;
 import java.util.HashMap;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+
 import shared.definitions.PlayerIndex;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
@@ -36,6 +38,15 @@ public class CatanMapTest {
 	public void testCanPlaceSettlement() {
 		testCanPlaceSettlementEmptySet();
 		testCanPlaceSettlementVacantVertexStructureNearBy();
+	}
+	
+	@Test
+	public void testSerializeClassToJson()
+	{
+		CatanMap map = new CatanMap();
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+		System.out.println(json);
 	}
 	
 	/**
