@@ -1,13 +1,35 @@
 package shared.locations;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import shared.model.map.Hex;
+import shared.model.map.structure.Road;
+
 /**
  * Represents the location of a vertex on a hex map
  */
 public class VertexLocation
 {
-	
+	List<EdgeLocation> edges;
 	private HexLocation hexLoc;
 	private VertexDirection dir;
+	
+	public List<VertexLocation> getNeighboringVertices()
+	{
+		ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
+		for(EdgeLocation edge : edges)
+		{
+			vertices.addAll(edge.getVertices());
+		}
+		return vertices;
+	}
+	
+	public List<EdgeLocation> getEdges()
+	{
+		return edges;
+	}
 	
 	public VertexLocation(HexLocation hexLoc, VertexDirection dir)
 	{
