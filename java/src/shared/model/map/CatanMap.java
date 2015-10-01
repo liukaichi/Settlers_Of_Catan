@@ -1,5 +1,7 @@
 package shared.model.map;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import shared.definitions.PlayerIndex;
@@ -17,6 +19,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.stream.JsonReader;
 
 /**
  * Represents the board game map of the Catan game
@@ -49,51 +52,61 @@ public class CatanMap
     	{
 	    	JsonObject map = new JsonObject();
 	    	{
-	    		//hexGrid
-	        	JsonObject hexGrid = new JsonObject();
-	        	{
-	        		//hexes
-	        		JsonArray hexes = new JsonArray();
-	            	{
-	            		for(Hex hex : this.hexes.values())
-	            		{
-	            			hexes.add(parser.parse(hex.toString()));
-	            		}
-	            	}
-	            	hexGrid.add("hexes", hexes);
-	            	//offsets
-	            	JsonArray offsets = new JsonArray();
-	            	{
-	            		offsets.add(new JsonPrimitive(1));
-	            		offsets.add(new JsonPrimitive(0));
-	            		offsets.add(new JsonPrimitive(0));
-	            	}
-	            	hexGrid.add("offsets", offsets);
-	            	//radius
-	            	JsonPrimitive radius = new JsonPrimitive(this.radius);
-	            	hexGrid.add("radius", radius);
-	            	//x0
-	            	JsonPrimitive x0 = new JsonPrimitive(1);
-	            	hexGrid.add("x0", x0);
-	            	//y0
-	            	JsonPrimitive y0 = new JsonPrimitive(1);
-	            	hexGrid.add("y0", y0);
-	        	}
+        		//hexes
+        		JsonArray hexes = new JsonArray();
+            	{
+            		for(Hex hex : this.hexes.values())
+            		{
+            			hexes.add(parser.parse(hex.toString()));
+            		}
+            	}
+            	map.add("hexes", hexes);
+                //roads
+                JsonArray roads = new JsonArray();
+                {
+                    for(Road road : this.roads.values())
+                    {
+                        roads.add(parser.parse(road.toString()));
+                    }
+                }
+                map.add("roads", roads);
+                //cities
+                JsonArray cities = new JsonArray();
+                {
+                    for(Structure city : this.structures.values())
+                    {
+                        if(city.getClass().equals(City.class))
+                            cities.add(parser.parse(city.toString()));
+                    }
+                }
+                map.add("cities", cities);
+                //settlements
+                JsonArray settlements = new JsonArray();
+                {
+                    for(Structure settlement : this.structures.values())
+                    {
+                        if(settlement.getClass().equals(Settlement.class))
+                            cities.add(parser.parse(settlement.toString()));
+                    }
+                }
+                map.add("settlements", settlements);
 	        	//radius
 	        	JsonPrimitive radius = new JsonPrimitive(this.radius);
 	        	map.add("radius", radius);
-	        	//numbers
-	        	JsonObject numbers = new JsonObject();
-	        	{
-	            	numbers.add(property, value);
-	        	}
-	        	map.add("numbers", numbers);
-	        	//ports
-	        	JsonObject ports = new JsonObject();
-	        	{
-	        		
-	        	}
+                //ports
+                JsonArray ports = new JsonArray();
+                {
+                    for(Port port : this.ports)
+                    {
+                        ports.add(parser.parse(port.toString()));
+                    }
+                }
 	        	map.add("ports", ports);
+	        	//robber
+	        	JsonObject robber = new JsonObject();
+	        	robber.addProperty("x", robberLocation.getX());
+                robber.addProperty("y", robberLocation.getY());
+                map.add("robber", robber);
 	    	}
 	    	obj.add("map", map);
     	}
