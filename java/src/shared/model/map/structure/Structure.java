@@ -1,5 +1,7 @@
 package shared.model.map.structure;
 
+import com.google.gson.JsonObject;
+
 import shared.definitions.PlayerIndex;
 import shared.locations.VertexLocation;
 
@@ -39,5 +41,22 @@ public abstract class Structure
 	}
 	public void setVictoryPointValue(int victoryPointValue) {
 		this.victoryPointValue = victoryPointValue;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+	    JsonObject structure = new JsonObject();
+	    structure.addProperty("owner", this.owner.getIndex());
+	    JsonObject location = new JsonObject();
+	    {
+	        location.addProperty("direction", this.location.getDir().toString());
+	        location.addProperty("x", this.location.getHexLoc().getX());
+	        location.addProperty("y", this.location.getHexLoc().getY()); 
+	    }
+	    structure.add("location", location);
+	    return structure.toString();
 	}
 }

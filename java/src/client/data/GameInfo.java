@@ -56,7 +56,10 @@ public class GameInfo
 
     public void addPlayer(PlayerInfo newPlayer)
     {
-        players.add(newPlayer);
+        if (players.size() < 4)
+        {
+            players.add(newPlayer);
+        }
     }
 
     public List<PlayerInfo> getPlayers()

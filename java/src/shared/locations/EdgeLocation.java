@@ -11,22 +11,6 @@ public class EdgeLocation
 	
 	private HexLocation hexLoc;
 	private EdgeDirection dir;
-    private List<VertexLocation> vertices;
-	
-	public List<EdgeLocation> getNeighboringEdges()
-	{
-		ArrayList<EdgeLocation> edges = new ArrayList<EdgeLocation>();
-		for(VertexLocation vertex : vertices)
-		{
-			edges.addAll(vertex.getEdges());
-		}
-		return edges;
-	}
-    
-	public List<VertexLocation> getVertices()
-	{
-		return vertices;
-	}
 	
 	public EdgeLocation(HexLocation hexLoc, EdgeDirection dir)
 	{

@@ -1,5 +1,7 @@
 package shared.model.map.structure;
 
+import com.google.gson.JsonObject;
+
 import shared.definitions.*;
 import shared.locations.*;
 
@@ -51,5 +53,25 @@ public class Port
 	}
 	public void setRatio(TradeRatio ratio) {
 		this.ratio = ratio;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+	    JsonObject port = new JsonObject();
+	    {
+	        port.addProperty("ratio", 2);
+	        port.addProperty("resource", this.resource.toString());
+	        port.addProperty("direction", this.direction.toString());
+	        JsonObject location = new JsonObject();
+	        {
+	            location.addProperty("x", this.location.getX());
+	            location.addProperty("y", this.location.getY());
+	        }
+	        port.add("location", location);
+	    }
+	    return port.getAsString();
 	}
 }

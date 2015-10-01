@@ -5,7 +5,8 @@ import java.net.*;
 import java.util.List;
 import java.util.logging.Level;
 
-import client.data.GameInfo;
+import com.google.gson.*;
+
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
@@ -105,42 +106,58 @@ public class ServerProxy implements IProxy
     @Override
     public void changeLogLevel(Level level)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(CHANGE_LOG_LEVEL, level.toString());
+        if (response == null)
+        {
+
+        }
 
     }
 
     @Override
-    public List<GameInfo> listGames()
+    public ListGamesResponse listGames()
     {
-        // TODO Auto-generated method stub
-        return null;
+        String reponse = doGet(LIST_GAMES, "");
+        return new ListGamesResponse(reponse);
     }
 
     @Override
     public CreateGameResponse createGame(CreateGameRequest createGameRequest)
     {
-        // TODO Auto-generated method stub
-        return null;
+        Gson gson = new GsonBuilder().create();
+        gson.toJson(createGameRequest);
+        String response = doPost(CREATE_GAME, gson.toJson(createGameRequest));
+        return new CreateGameResponse(response);
     }
 
     @Override
     public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
-
+        String response = doPost(JOIN_GAME, serializeObject(joinGameRequest));
+        if (response == null)
+        {
+            throw new GameQueryException();
+        }
     }
 
     @Override
     public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
-
+        String response = doPost(SAVE_GAME, serializeObject(saveGameRequest));
+        if (response == null)
+        {
+            throw new GameQueryException();
+        }
     }
 
     @Override
     public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
+        String response = doPost(LOAD_GAME, serializeObject(loadGameRequest));
+        if (response == null)
+        {
+            throw new GameQueryException();
+        }
 
     }
 
@@ -180,135 +197,140 @@ public class ServerProxy implements IProxy
     }
 
     @Override
-    public List<AIType> listAI()
+    public ListAIResponse listAI()
     {
-        // TODO Auto-generated method stub
-        return null;
+        String response = doGet(LIST_AI, "");
+        return new ListAIResponse(response);
     }
 
     @Override
     public void addAI(AIType aiType) throws IllegalArgumentException, GameQueryException, AddAIException
     {
-        // TODO Auto-generated method stub
+        String response = doPost(ADD_AI, aiType.toString());
+        if (response == null)
+        {
+            throw new AddAIException();
+        }
 
     }
 
     @Override
     public ClientModel sendChat(SendChatCommand sendChat)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(SEND_CHAT, sendChat.toString());
         return null;
     }
 
     @Override
     public ClientModel rollNumber(RollNumberCommand rollNumber)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(ROLL_NUMBER, rollNumber.toString());
         return null;
     }
 
     @Override
     public ClientModel acceptTrade(AcceptTradeCommand acceptTrade)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(ACCEPT_TRADE, acceptTrade.toString());
         return null;
     }
 
     @Override
     public ClientModel discardCards(DiscardCardsCommand discardCards)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(DISCARD_CARDS, discardCards.toString());
         return null;
     }
 
     @Override
     public ClientModel buildRoad(BuildRoadCommand buildRoad)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(BUILD_ROAD, buildRoad.toString());
         return null;
     }
 
     @Override
     public ClientModel buildSettlement(BuildSettlementCommand buildSettlement)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(BUILD_SETTLEMENT,
+                ""/* serializeObject(buildSettlement) */);
         return null;
     }
 
     @Override
     public ClientModel buildCity(BuildCityCommand buildCity)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(BUILD_CITY, buildCity.toString());
         return null;
     }
 
     @Override
     public ClientModel offerTrade(OfferTradeCommand offerTrade)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(OFFER_TRADE, offerTrade.toString());
         return null;
     }
 
     @Override
     public ClientModel maritimeTrade(MaritimeTradeCommand maritimeTrade)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(MARITIME_TRADE, maritimeTrade.toString());
         return null;
     }
 
     @Override
     public ClientModel robPlayer(RobPlayerCommand robPlayer)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(ROB_PLAYER, robPlayer.toString());
         return null;
     }
 
     @Override
     public ClientModel finishTurn(FinishTurnCommand finishTurn)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(FINISH_TURN, finishTurn.toString());
         return null;
     }
 
     @Override
     public ClientModel buyDevCard(BuyDevCardCommand buyDevCard)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(BUY_DEV_CARD, buyDevCard.toString());
         return null;
     }
 
     @Override
     public ClientModel soldier(SoldierCommand soldier)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(SOLDIER, soldier.toString());
         return null;
     }
 
     @Override
     public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(YEAR_OF_PLENTY, yearOfPlenty.toString());
         return null;
     }
 
     @Override
     public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(ROAD_BUILDING, roadBuilding.toString());
         return null;
     }
 
     @Override
     public ClientModel monopoly(MonopolyCommand monopoly)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(MONOPOLY, monopoly.toString());
         return null;
     }
 
     @Override
     public ClientModel monument(MonumentCommand monument)
     {
-        // TODO Auto-generated method stub
+        String response = doPost(MONUMENT, monument.toString());
         return null;
     }
 
@@ -319,9 +341,12 @@ public class ServerProxy implements IProxy
      *        the object to serialize
      * @return The Formatted JSON from the object.
      */
-    private String serializeClass(Object object)
+    private String serializeObject(Object object)
     {
-        return null;
+        // Gson gson = new
+        // GsonBuilder().setPrettyPrinting().registerTypeAdapter(object.class,
+        // arg1).create();
+        return "";
     }
 
     /**
@@ -338,7 +363,7 @@ public class ServerProxy implements IProxy
 
     private String doPost(String commandName, String postDataJson)
     {
-        String result = null;
+        String response = null;
         try
         {
             URL url = new URL(URLPrefix + commandName);
@@ -355,9 +380,19 @@ public class ServerProxy implements IProxy
             stream.close();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
             {
-                result = connection.getInputStream().toString();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder builder = new StringBuilder();
+                String string;
+                while ((string = reader.readLine()) != null)
+                {
+                    builder.append(string);
+                }
+                response = builder.toString();
+            } else
+            {
+                System.out.println("Forget about it");
             }
-            return result;
+            return response;
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -373,8 +408,17 @@ public class ServerProxy implements IProxy
             URL url = new URL(URLPrefix + commandName + "?" + query);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
-            InputStream stream = connection.getInputStream();
-            response = stream.toString();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
+            {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder builder = new StringBuilder();
+                String string;
+                while ((string = reader.readLine()) != null)
+                {
+                    builder.append(string);
+                }
+                response = builder.toString();
+            }
             return response;
         } catch (IOException e)
         {

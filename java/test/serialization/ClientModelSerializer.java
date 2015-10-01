@@ -1,6 +1,3 @@
-/**
- * 
- */
 package serialization;
 
 import java.lang.reflect.Type;
@@ -10,7 +7,7 @@ import com.google.gson.*;
 import shared.model.ClientModel;
 
 /**
- * @author cstaheli
+ * @author dtaylor
  *
  */
 public class ClientModelSerializer implements JsonSerializer<ClientModel>

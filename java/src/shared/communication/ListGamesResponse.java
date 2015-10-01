@@ -3,12 +3,17 @@
  */
 package shared.communication;
 
-import java.util.*;
-
-import com.google.gson.*;
-
-import client.data.*;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.CatanColor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author cstaheli

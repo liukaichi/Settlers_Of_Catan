@@ -54,7 +54,7 @@ public class Credentials
     @Override
     public String toString()
     {
-        return "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
+        return "{\"username\":\"" + username.getUsername() + "\",\"password\":\"" + password.getPassword() + "\"}";
     }
 
     @Override

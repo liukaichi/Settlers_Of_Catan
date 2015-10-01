@@ -1,7 +1,6 @@
 package client.data;
 
-import shared.definitions.CatanColor;
-import shared.definitions.PlayerIndex;
+import shared.definitions.*;
 
 /**
  * Used to pass player information into views<br>
@@ -30,6 +29,19 @@ public class PlayerInfo
         setPlayerIndex(-1);
         setName("");
         setColor(CatanColor.WHITE);
+    }
+
+    /**
+     * @param id
+     * @param name
+     * @param color
+     */
+    public PlayerInfo(int id, String name, CatanColor color)
+    {
+        this();
+        this.id = id;
+        this.name = name;
+        this.color = color;
     }
 
     public int getId()

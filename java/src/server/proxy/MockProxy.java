@@ -1,6 +1,5 @@
 package server.proxy;
 
-import client.data.GameInfo;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
@@ -25,9 +24,6 @@ import java.util.logging.Level;
 public class MockProxy implements IProxy
 {
 
-
-
-
     @Override
     public void userLogin(Credentials credentials)
     {
@@ -50,7 +46,7 @@ public class MockProxy implements IProxy
     }
 
     @Override
-    public List<GameInfo> listGames()
+    public ListGamesResponse listGames()
     {
         // TODO Auto-generated method stub
         return null;
@@ -117,7 +113,7 @@ public class MockProxy implements IProxy
     }
 
     @Override
-    public List<AIType> listAI()
+    public ListAIResponse listAI()
     {
         // TODO Auto-generated method stub
         return null;
