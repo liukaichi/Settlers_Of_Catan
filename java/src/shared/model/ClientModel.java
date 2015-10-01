@@ -4,7 +4,8 @@ import client.data.GameInfo;
 import shared.definitions.PlayerIndex;
 import shared.model.bank.Bank;
 import shared.model.map.CatanMap;
-import shared.model.message.MessageList;
+import shared.model.message.Chat;
+import shared.model.message.Log;
 import shared.model.player.TradeOffer;
 
 /**
@@ -16,7 +17,8 @@ public class ClientModel
 {
     private GameInfo gameInfo;
     private Bank bank;
-    private MessageList chat, log;
+    private Chat chat;
+    private Log log;
     private CatanMap map;
     private TradeOffer tradeOffer;
     private TurnTracker turnTracker;
@@ -50,12 +52,12 @@ public class ClientModel
         return bank;
     }
 
-    public MessageList getChat()
+    public Chat getChat()
     {
         return chat;
     }
 
-    public MessageList getLog()
+    public Log getLog()
     {
         return log;
     }

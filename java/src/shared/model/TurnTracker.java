@@ -32,14 +32,16 @@ public class TurnTracker
     * Updates the largest army counter
     * A player has the largest army if he or she has at least 3 knights
     */    
-    public void updateLargestArmy(){
+    public void updateLargestArmy()
+    {
         
     }
     
     /**
     * Updates the status string based on the current phase of the player's turn
     */   
-    public void updateStatus(){
+    public void updateStatus()
+    {
         
     }
 

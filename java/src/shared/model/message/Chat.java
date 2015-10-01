@@ -9,7 +9,7 @@ import shared.definitions.PlayerIndex;
  * 
  * @see MessageLine
  */
-public class MessageList
+public class Chat
 {
     /**
      * An array of MessageLine.
