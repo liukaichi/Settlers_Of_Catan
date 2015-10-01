@@ -9,7 +9,7 @@ import shared.definitions.PlayerIndex;
  * 
  * @see MessageLine
  */
-public class MessageList
+public class Chat
 {
     /**
      * An array of MessageLine.
@@ -50,6 +50,17 @@ public class MessageList
     public void addMessageLine(MessageLine message)
     {
         lines.add(message);
+    }
+    
+    @Override
+    public String toString()
+    {
+        String returnValue = "\"chat\":{";
+        for (MessageLine messageLine : lines) {
+			returnValue += messageLine.toString();
+		}
+        returnValue += "},";
+        return returnValue; 
     }
 
 }
