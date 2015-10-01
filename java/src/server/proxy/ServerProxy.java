@@ -3,7 +3,7 @@ package server.proxy;
 import java.io.*;
 import java.net.*;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.logging.*;
 
 import com.google.gson.*;
 
@@ -83,10 +83,18 @@ public class ServerProxy implements IProxy
     private static final String HTTP_GET = "GET";
     private String URLPrefix = "http://localhost:8081/";
 
+    private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
+
+    public ServerProxy()
+    {
+        LOGGER.setLevel(Level.ALL);
+    }
+
     @Override
     public void userLogin(Credentials credentials) throws SignInException
     {
         String response = doPost(USER_LOGIN, credentials.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
             throw new SignInException(response);
@@ -97,6 +105,7 @@ public class ServerProxy implements IProxy
     public void userRegister(Credentials credentials) throws SignInException
     {
         String response = doPost(USER_REGISTER, credentials.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
             throw new SignInException(response);
@@ -107,6 +116,7 @@ public class ServerProxy implements IProxy
     public void changeLogLevel(Level level)
     {
         String response = doPost(CHANGE_LOG_LEVEL, level.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
 
@@ -117,23 +127,27 @@ public class ServerProxy implements IProxy
     @Override
     public ListGamesResponse listGames()
     {
-        String reponse = doGet(LIST_GAMES, "");
-        return new ListGamesResponse(reponse);
+        String response = doGet(LIST_GAMES, "");
+        LOGGER.log(Level.INFO, "Response:" + response);
+        return new ListGamesResponse(response);
     }
 
     @Override
     public CreateGameResponse createGame(CreateGameRequest createGameRequest)
     {
         Gson gson = new GsonBuilder().create();
-        gson.toJson(createGameRequest);
         String response = doPost(CREATE_GAME, gson.toJson(createGameRequest));
+        LOGGER.log(Level.INFO, "Response:" + response);
         return new CreateGameResponse(response);
     }
 
     @Override
     public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
     {
-        String response = doPost(JOIN_GAME, serializeObject(joinGameRequest));
+        Gson gson = new GsonBuilder().create();
+        String request = gson.toJson(joinGameRequest);
+        String response = doPost(JOIN_GAME, request);
+        LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
             throw new GameQueryException();
@@ -144,6 +158,7 @@ public class ServerProxy implements IProxy
     public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
     {
         String response = doPost(SAVE_GAME, serializeObject(saveGameRequest));
+        LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
             throw new GameQueryException();
@@ -154,6 +169,7 @@ public class ServerProxy implements IProxy
     public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
     {
         String response = doPost(LOAD_GAME, serializeObject(loadGameRequest));
+        LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
             throw new GameQueryException();
@@ -165,12 +181,13 @@ public class ServerProxy implements IProxy
     public ClientModel getGameState(int versionNumber)
     {
         String query = String.format("version=%s", versionNumber);
-        String responseJSON = doGet(GET_GAME_STATE, query);
+        String response = doGet(GET_GAME_STATE, query);
+        LOGGER.log(Level.INFO, "Response:" + response);
         ClientModel responseModel = null;
         /* If the model has changed */
-        if (!responseJSON.equals("\"true\""))
+        if (!response.equals("\"true\""))
         {
-            responseModel = (ClientModel) deserializeJSON(responseJSON);
+            responseModel = (ClientModel) deserializeJSON(response);
         }
         return responseModel;
     }
@@ -200,6 +217,7 @@ public class ServerProxy implements IProxy
     public ListAIResponse listAI()
     {
         String response = doGet(LIST_AI, "");
+        LOGGER.log(Level.INFO, "Response:" + response);
         return new ListAIResponse(response);
     }
 
@@ -207,6 +225,7 @@ public class ServerProxy implements IProxy
     public void addAI(AIType aiType) throws IllegalArgumentException, GameQueryException, AddAIException
     {
         String response = doPost(ADD_AI, aiType.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
             throw new AddAIException();
@@ -218,6 +237,7 @@ public class ServerProxy implements IProxy
     public ClientModel sendChat(SendChatCommand sendChat)
     {
         String response = doPost(SEND_CHAT, sendChat.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -225,6 +245,7 @@ public class ServerProxy implements IProxy
     public ClientModel rollNumber(RollNumberCommand rollNumber)
     {
         String response = doPost(ROLL_NUMBER, rollNumber.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -232,6 +253,7 @@ public class ServerProxy implements IProxy
     public ClientModel acceptTrade(AcceptTradeCommand acceptTrade)
     {
         String response = doPost(ACCEPT_TRADE, acceptTrade.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -239,6 +261,7 @@ public class ServerProxy implements IProxy
     public ClientModel discardCards(DiscardCardsCommand discardCards)
     {
         String response = doPost(DISCARD_CARDS, discardCards.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -246,6 +269,7 @@ public class ServerProxy implements IProxy
     public ClientModel buildRoad(BuildRoadCommand buildRoad)
     {
         String response = doPost(BUILD_ROAD, buildRoad.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -254,6 +278,7 @@ public class ServerProxy implements IProxy
     {
         String response = doPost(BUILD_SETTLEMENT,
                 ""/* serializeObject(buildSettlement) */);
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -261,6 +286,7 @@ public class ServerProxy implements IProxy
     public ClientModel buildCity(BuildCityCommand buildCity)
     {
         String response = doPost(BUILD_CITY, buildCity.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -268,6 +294,7 @@ public class ServerProxy implements IProxy
     public ClientModel offerTrade(OfferTradeCommand offerTrade)
     {
         String response = doPost(OFFER_TRADE, offerTrade.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -275,6 +302,7 @@ public class ServerProxy implements IProxy
     public ClientModel maritimeTrade(MaritimeTradeCommand maritimeTrade)
     {
         String response = doPost(MARITIME_TRADE, maritimeTrade.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -282,6 +310,7 @@ public class ServerProxy implements IProxy
     public ClientModel robPlayer(RobPlayerCommand robPlayer)
     {
         String response = doPost(ROB_PLAYER, robPlayer.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -289,6 +318,7 @@ public class ServerProxy implements IProxy
     public ClientModel finishTurn(FinishTurnCommand finishTurn)
     {
         String response = doPost(FINISH_TURN, finishTurn.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -296,6 +326,7 @@ public class ServerProxy implements IProxy
     public ClientModel buyDevCard(BuyDevCardCommand buyDevCard)
     {
         String response = doPost(BUY_DEV_CARD, buyDevCard.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -303,6 +334,7 @@ public class ServerProxy implements IProxy
     public ClientModel soldier(SoldierCommand soldier)
     {
         String response = doPost(SOLDIER, soldier.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -310,6 +342,7 @@ public class ServerProxy implements IProxy
     public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
     {
         String response = doPost(YEAR_OF_PLENTY, yearOfPlenty.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -317,6 +350,7 @@ public class ServerProxy implements IProxy
     public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
     {
         String response = doPost(ROAD_BUILDING, roadBuilding.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -324,6 +358,7 @@ public class ServerProxy implements IProxy
     public ClientModel monopoly(MonopolyCommand monopoly)
     {
         String response = doPost(MONOPOLY, monopoly.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -331,6 +366,7 @@ public class ServerProxy implements IProxy
     public ClientModel monument(MonumentCommand monument)
     {
         String response = doPost(MONUMENT, monument.toString());
+        LOGGER.log(Level.INFO, "Response:" + response);
         return null;
     }
 
@@ -364,6 +400,7 @@ public class ServerProxy implements IProxy
     private String doPost(String commandName, String postDataJson)
     {
         String response = null;
+        LOGGER.log(Level.INFO, commandName + "/" + postDataJson);
         try
         {
             URL url = new URL(URLPrefix + commandName);
@@ -378,6 +415,7 @@ public class ServerProxy implements IProxy
             stream.write(postDataJson.getBytes());
             stream.flush();
             stream.close();
+
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
             {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -388,12 +426,22 @@ public class ServerProxy implements IProxy
                     builder.append(string);
                 }
                 response = builder.toString();
-            } else
+                LOGGER.log(Level.FINE, response);
+            }
+            else
             {
-                System.out.println("Forget about it");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                StringBuilder builder = new StringBuilder();
+                String string;
+                while ((string = reader.readLine()) != null)
+                {
+                    builder.append(string);
+                }
+                LOGGER.log(Level.WARNING, builder.toString());
             }
             return response;
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
             return null;
@@ -418,9 +466,22 @@ public class ServerProxy implements IProxy
                     builder.append(string);
                 }
                 response = builder.toString();
+                LOGGER.log(Level.FINE, response);
+            }
+            else
+            {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                StringBuilder builder = new StringBuilder();
+                String string;
+                while ((string = reader.readLine()) != null)
+                {
+                    builder.append(string);
+                }
+                LOGGER.log(Level.WARNING, builder.toString());
             }
             return response;
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
             return null;

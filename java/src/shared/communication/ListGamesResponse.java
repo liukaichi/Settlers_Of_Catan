@@ -38,12 +38,16 @@ public class ListGamesResponse
             for (JsonElement elem : playerArray)
             {
                 JsonObject player = (JsonObject) elem;
-                CatanColor color = CatanColor.valueOf(player.get("color").getAsString().toUpperCase());
-                String name = player.get("name").getAsString();
-                int playerID = player.get("id").getAsInt();
-                PlayerInfo playerInfo = new PlayerInfo(playerID, name, color);
-                gameInfo.addPlayer(playerInfo);
+                if (player.has("id"))
+                {
+                    CatanColor color = CatanColor.valueOf(player.get("color").getAsString().toUpperCase());
+                    String name = player.get("name").getAsString();
+                    int playerID = player.get("id").getAsInt();
+                    PlayerInfo playerInfo = new PlayerInfo(playerID, name, color);
+                    gameInfo.addPlayer(playerInfo);
+                }
             }
+            games.add(gameInfo);
         }
 
     }
