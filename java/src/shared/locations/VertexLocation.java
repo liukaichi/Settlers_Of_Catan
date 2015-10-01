@@ -12,24 +12,8 @@ import shared.model.map.structure.Road;
  */
 public class VertexLocation
 {
-	List<EdgeLocation> edges;
 	private HexLocation hexLoc;
 	private VertexDirection dir;
-	
-	public List<VertexLocation> getNeighboringVertices()
-	{
-		ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
-		for(EdgeLocation edge : edges)
-		{
-			vertices.addAll(edge.getVertices());
-		}
-		return vertices;
-	}
-	
-	public List<EdgeLocation> getEdges()
-	{
-		return edges;
-	}
 	
 	public VertexLocation(HexLocation hexLoc, VertexDirection dir)
 	{
