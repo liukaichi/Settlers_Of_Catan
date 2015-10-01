@@ -88,4 +88,24 @@ public class Hex
     {
         return robberPresent;
     }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        JsonObject hex = new JsonObject();
+        {
+            hex.addProperty("resource", this.resourceType.toString().toLowerCase());
+            JsonObject location = new JsonObject();
+            {
+                location.addProperty("x", this.location.getX());
+                location.addProperty("y", this.location.getY());
+            }
+            hex.add("location", location);
+            hex.addProperty("number", this.numberTile);
+        }
+        return hex.toString();
+    }
 }
