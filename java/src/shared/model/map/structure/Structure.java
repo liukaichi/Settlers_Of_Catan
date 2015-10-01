@@ -49,6 +49,14 @@ public abstract class Structure
 	public String toString()
 	{
 	    JsonObject structure = new JsonObject();
-	    
+	    structure.addProperty("owner", this.owner.getIndex());
+	    JsonObject location = new JsonObject();
+	    {
+	        location.addProperty("direction", this.location.getDir().toString());
+	        location.addProperty("x", this.location.getHexLoc().getX());
+	        location.addProperty("y", this.location.getHexLoc().getY()); 
+	    }
+	    structure.add("location", location);
+	    return structure.toString();
 	}
 }
