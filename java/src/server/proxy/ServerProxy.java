@@ -83,7 +83,11 @@ public class ServerProxy implements IProxy
     private static final String HTTP_GET = "GET";
     private String URLPrefix = "http://localhost:8081/";
 
+    /* Logger */
     private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
+
+    /* Cookies */
+    private String catanUserCookie, catanGameCookie;
 
     public ServerProxy()
     {
@@ -116,12 +120,8 @@ public class ServerProxy implements IProxy
     public void changeLogLevel(Level level)
     {
         String response = doPost(CHANGE_LOG_LEVEL, level.toString());
+        LOGGER.setLevel(level);
         LOGGER.log(Level.INFO, "Response:" + response);
-        if (response == null)
-        {
-
-        }
-
     }
 
     @Override
@@ -409,6 +409,19 @@ public class ServerProxy implements IProxy
             // connection.setRequestProperty("Content-Type",
             // "application/json");
             connection.setRequestMethod(HTTP_POST);
+            if (catanUserCookie != null)
+            {
+                String cookieRequest = "";
+                if (catanGameCookie != null)
+                {
+                    cookieRequest = catanUserCookie + "; " + catanGameCookie;
+                }
+                else
+                {
+                    cookieRequest = catanUserCookie;
+                }
+                connection.setRequestProperty("Cookie", cookieRequest);
+            }
             connection.setDoOutput(true);
             connection.connect();
             OutputStream stream = connection.getOutputStream();
@@ -418,6 +431,11 @@ public class ServerProxy implements IProxy
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
             {
+                String cookie = connection.getHeaderField("Set-cookie");
+                if (cookie != null)
+                {
+                    parseCookie(cookie);
+                }
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder builder = new StringBuilder();
                 String string;
@@ -426,7 +444,7 @@ public class ServerProxy implements IProxy
                     builder.append(string);
                 }
                 response = builder.toString();
-                LOGGER.log(Level.FINE, response);
+                LOGGER.log(Level.INFO, response + ", Cookie: " + cookie);
             }
             else
             {
@@ -448,6 +466,27 @@ public class ServerProxy implements IProxy
         }
     }
 
+    /**
+     * Parses a cookie to set the ServerProxy's catan.user cookie, or the
+     * catan.game cookie.
+     * 
+     * @param cookieHeader
+     *        the cookie to be parsed
+     */
+    private void parseCookie(String cookieHeader)
+    {
+        HttpCookie httpCookie = HttpCookie.parse(cookieHeader).get(0);
+        String cookie = httpCookie.toString();
+        if (cookie.indexOf("catan.user") != -1)
+        {
+            this.catanUserCookie = cookie;
+        }
+        else if (cookie.indexOf("catan.game") != -1)
+        {
+            this.catanGameCookie = cookie;
+        }
+    }
+
     private String doGet(String commandName, String query)
     {
         String response = null;
@@ -466,7 +505,7 @@ public class ServerProxy implements IProxy
                     builder.append(string);
                 }
                 response = builder.toString();
-                LOGGER.log(Level.FINE, response);
+                LOGGER.log(Level.INFO, response);
             }
             else
             {

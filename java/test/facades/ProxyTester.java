@@ -158,11 +158,11 @@ public class ProxyTester
     }
 
     @Test
-    public void run1()
+    public void customTest()
     {
         try
         {
-            proxy.userRegister(new Credentials("sheila", "parker"));
+            proxy.userLogin(new Credentials("Sam", "sam"));
         }
         catch (SignInException e)
         {
@@ -346,7 +346,6 @@ public class ProxyTester
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
             proxy.joinGame(new JoinGameRequest(id, CatanColor.PUCE));
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
-
         }
         catch (GameQueryException e)
         {
