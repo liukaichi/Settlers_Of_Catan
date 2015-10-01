@@ -2,7 +2,6 @@ package server.proxy;
 
 import java.util.List;
 
-import client.data.GameInfo;
 import shared.communication.*;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.AIType;
@@ -37,7 +36,7 @@ public interface IProxyGameCommands
      *       </ul>
      * @return Information about all of the current games on the server.
      */
-    List<GameInfo> listGames();
+    ListGamesResponse listGames();
 
     /**
      * Creates a new game.
@@ -357,7 +356,7 @@ public interface IProxyGameCommands
      * 
      * @return A list of supported AI player types.
      */
-    List<AIType> listAI();
+    ListAIResponse listAI();
 
     /**
      * Adds an AI player to the current game.<br>

@@ -1,5 +1,7 @@
 package shared.communication;
 
+import com.google.gson.*;
+
 import client.data.GameInfo;
 
 /**
@@ -15,6 +17,18 @@ public class CreateGameResponse
     public CreateGameResponse(int id, String title)
     {
         gameInfo = new GameInfo(id, title);
+    }
+
+    /**
+     * @param response
+     */
+    public CreateGameResponse(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject obj = (JsonObject) parser.parse(json);
+        String title = obj.get("title").getAsString();
+        int id = obj.get("id").getAsInt();
+        this.gameInfo = new GameInfo(id, title);
     }
 
     public GameInfo getGameInfo()

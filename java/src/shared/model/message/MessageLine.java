@@ -31,4 +31,13 @@ public class MessageLine
         this.source = source;
         this.message = message;
     }
+    
+    @Override
+    public String toString()
+    {
+    	String returnString = "\"lines\":[{";
+        returnString += "\"message\":"  + message + "\",";
+        returnString += "\"source\":"  + source.toString() + "\"}]";
+        return returnString; 
+    }
 }
