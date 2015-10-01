@@ -1,0 +1,745 @@
+{
+  "deck": {
+    "yearOfPlenty": 1,
+    "monopoly": 2,
+    "soldier": 14,
+    "roadBuilding": 2,
+    "monument": 5
+  },
+  "map": {
+    "hexes": [
+      {
+        "resource": "sheep",
+        "location": {
+          "x": 0,
+          "y": -2
+        },
+        "number": 12
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": 1,
+          "y": -2
+        },
+        "number": 9
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": 2,
+          "y": -2
+        },
+        "number": 10
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": -1,
+          "y": -1
+        },
+        "number": 11
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": 0,
+          "y": -1
+        },
+        "number": 4
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": 1,
+          "y": -1
+        },
+        "number": 6
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 2,
+          "y": -1
+        },
+        "number": 2
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": -2,
+          "y": 0
+        },
+        "number": 9
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": -1,
+          "y": 0
+        },
+        "number": 5
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": 0,
+          "y": 0
+        },
+        "number": 8
+      },
+      {
+        "resource": "ore",
+        "location": {
+          "x": 1,
+          "y": 0
+        },
+        "number": 3
+      },
+      {
+        "resource": "sheep",
+        "location": {
+          "x": 2,
+          "y": 0
+        },
+        "number": 10
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": -2,
+          "y": 1
+        },
+        "number": 8
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": -1,
+          "y": 1
+        },
+        "number": 5
+      },
+      {
+        "resource": "brick",
+        "location": {
+          "x": 0,
+          "y": 1
+        },
+        "number": 4
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 1,
+          "y": 1
+        },
+        "number": 6
+      },
+      {
+        "resource": "wood",
+        "location": {
+          "x": -2,
+          "y": 2
+        },
+        "number": 3
+      },
+      {
+        "location": {
+          "x": -1,
+          "y": 2
+        }
+      },
+      {
+        "resource": "wheat",
+        "location": {
+          "x": 0,
+          "y": 2
+        },
+        "number": 11
+      }
+    ],
+    "roads": [
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SE",
+          "x": 0,
+          "y": -1
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SW",
+          "x": 2,
+          "y": -1
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SE",
+          "x": -1,
+          "y": 1
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "S",
+          "x": 0,
+          "y": -1
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SW",
+          "x": 1,
+          "y": -1
+        }
+      },
+      {
+        "owner": 0,
+        "location": {
+          "direction": "SE",
+          "x": -2,
+          "y": 0
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SW",
+          "x": 1,
+          "y": -2
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SW",
+          "x": 0,
+          "y": 1
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SE",
+          "x": -1,
+          "y": 0
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SW",
+          "x": -1,
+          "y": 1
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SW",
+          "x": 2,
+          "y": -2
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SW",
+          "x": 0,
+          "y": -1
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "S",
+          "x": 1,
+          "y": -1
+        }
+      },
+      {
+        "owner": 0,
+        "location": {
+          "direction": "SW",
+          "x": 1,
+          "y": 0
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "S",
+          "x": 0,
+          "y": 1
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SE",
+          "x": -2,
+          "y": 1
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SE",
+          "x": 1,
+          "y": -1
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SE",
+          "x": 0,
+          "y": 1
+        }
+      }
+    ],
+    "cities": [
+      {
+        "owner": 0,
+        "location": {
+          "direction": "SE",
+          "x": 0,
+          "y": 0
+        }
+      }
+    ],
+    "settlements": [
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SW",
+          "x": 1,
+          "y": -2
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SE",
+          "x": -1,
+          "y": 1
+        }
+      },
+      {
+        "owner": 3,
+        "location": {
+          "direction": "SW",
+          "x": 0,
+          "y": -1
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SE",
+          "x": -2,
+          "y": 1
+        }
+      },
+      {
+        "owner": 2,
+        "location": {
+          "direction": "SE",
+          "x": 1,
+          "y": -1
+        }
+      },
+      {
+        "owner": 0,
+        "location": {
+          "direction": "SE",
+          "x": -2,
+          "y": 0
+        }
+      },
+      {
+        "owner": 1,
+        "location": {
+          "direction": "SE",
+          "x": 0,
+          "y": 1
+        }
+      }
+    ],
+    "radius": 3,
+    "ports": [
+      {
+        "ratio": 2,
+        "resource": "brick",
+        "direction": "NE",
+        "location": {
+          "x": -2,
+          "y": 3
+        }
+      },
+      {
+        "ratio": 2,
+        "resource": "wood",
+        "direction": "NW",
+        "location": {
+          "x": 2,
+          "y": 1
+        }
+      },
+      {
+        "ratio": 3,
+        "direction": "S",
+        "location": {
+          "x": -1,
+          "y": -2
+        }
+      },
+      {
+        "ratio": 2,
+        "resource": "wheat",
+        "direction": "S",
+        "location": {
+          "x": 1,
+          "y": -3
+        }
+      },
+      {
+        "ratio": 2,
+        "resource": "sheep",
+        "direction": "SE",
+        "location": {
+          "x": -3,
+          "y": 0
+        }
+      },
+      {
+        "ratio": 3,
+        "direction": "SW",
+        "location": {
+          "x": 3,
+          "y": -3
+        }
+      },
+      {
+        "ratio": 3,
+        "direction": "N",
+        "location": {
+          "x": 0,
+          "y": 3
+        }
+      },
+      {
+        "ratio": 3,
+        "direction": "NE",
+        "location": {
+          "x": -3,
+          "y": 2
+        }
+      },
+      {
+        "ratio": 2,
+        "resource": "ore",
+        "direction": "NW",
+        "location": {
+          "x": 3,
+          "y": -1
+        }
+      }
+    ],
+    "robber": {
+      "x": -1,
+      "y": 0
+    }
+  },
+  "players": [
+    {
+      "resources": {
+        "brick": 2,
+        "wood": 0,
+        "sheep": 0,
+        "wheat": 0,
+        "ore": 2
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 1,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 13,
+      "cities": 3,
+      "settlements": 4,
+      "soldiers": 0,
+      "victoryPoints": 3,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": 12,
+      "playerIndex": 0,
+      "name": "sheila",
+      "color": "puce"
+    },
+    {
+      "resources": {
+        "brick": 0,
+        "wood": 0,
+        "sheep": 1,
+        "wheat": 3,
+        "ore": 2
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 10,
+      "cities": 4,
+      "settlements": 3,
+      "soldiers": 0,
+      "victoryPoints": 2,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": -2,
+      "playerIndex": 1,
+      "name": "Hannah",
+      "color": "white"
+    },
+    {
+      "resources": {
+        "brick": 1,
+        "wood": 1,
+        "sheep": 0,
+        "wheat": 5,
+        "ore": 1
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 9,
+      "cities": 4,
+      "settlements": 3,
+      "soldiers": 0,
+      "victoryPoints": 2,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": -3,
+      "playerIndex": 2,
+      "name": "Ken",
+      "color": "blue"
+    },
+    {
+      "resources": {
+        "brick": 1,
+        "wood": 1,
+        "sheep": 0,
+        "wheat": 0,
+        "ore": 2
+      },
+      "oldDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "newDevCards": {
+        "yearOfPlenty": 0,
+        "monopoly": 0,
+        "soldier": 0,
+        "roadBuilding": 0,
+        "monument": 0
+      },
+      "roads": 10,
+      "cities": 4,
+      "settlements": 3,
+      "soldiers": 0,
+      "victoryPoints": 2,
+      "monuments": 0,
+      "playedDevCard": false,
+      "discarded": false,
+      "playerID": -4,
+      "playerIndex": 3,
+      "name": "Squall",
+      "color": "orange"
+    }
+  ],
+  "log": {
+    "lines": [
+      {
+        "source": "Hannah",
+        "message": "Hannah rolled a 8."
+      },
+      {
+        "source": "Hannah",
+        "message": "Hannah built a road"
+      },
+      {
+        "source": "Hannah",
+        "message": "Hannah's turn just ended"
+      },
+      {
+        "source": "Ken",
+        "message": "Ken rolled a 7."
+      },
+      {
+        "source": "Ken",
+        "message": "Ken moved the robber and robbed sheila."
+      },
+      {
+        "source": "Ken",
+        "message": "Ken built a road"
+      },
+      {
+        "source": "Ken",
+        "message": "Ken's turn just ended"
+      },
+      {
+        "source": "Squall",
+        "message": "Squall rolled a 6."
+      },
+      {
+        "source": "Squall",
+        "message": "Squall's turn just ended"
+      },
+      {
+        "source": "sheila",
+        "message": "sheila rolled a 2."
+      },
+      {
+        "source": "sheila",
+        "message": "sheila's turn just ended"
+      },
+      {
+        "source": "Hannah",
+        "message": "Hannah rolled a 7."
+      },
+      {
+        "source": "Hannah",
+        "message": "Hannah moved the robber and robbed sheila."
+      },
+      {
+        "source": "Hannah",
+        "message": "Hannah's turn just ended"
+      },
+      {
+        "source": "Ken",
+        "message": "Ken rolled a 7."
+      },
+      {
+        "source": "Ken",
+        "message": "Ken moved the robber and robbed Squall."
+      },
+      {
+        "source": "Ken",
+        "message": "Ken's turn just ended"
+      },
+      {
+        "source": "Squall",
+        "message": "Squall rolled a 5."
+      },
+      {
+        "source": "Squall",
+        "message": "Squall's turn just ended"
+      },
+      {
+        "source": "sheila",
+        "message": "sheila rolled a 9."
+      },
+      {
+        "source": "sheila",
+        "message": "sheila's turn just ended"
+      },
+      {
+        "source": "Hannah",
+        "message": "Hannah rolled a 8."
+      },
+      {
+        "source": "Hannah",
+        "message": "Hannah's turn just ended"
+      },
+      {
+        "source": "Ken",
+        "message": "Ken rolled a 8."
+      },
+      {
+        "source": "Ken",
+        "message": "Ken built a road"
+      },
+      {
+        "source": "Ken",
+        "message": "Ken's turn just ended"
+      },
+      {
+        "source": "Squall",
+        "message": "Squall rolled a 3."
+      },
+      {
+        "source": "Squall",
+        "message": "Squall's turn just ended"
+      },
+      {
+        "source": "sheila",
+        "message": "sheila rolled a 11."
+      },
+      {
+        "source": "sheila",
+        "message": "sheila upgraded to a city"
+      }
+    ]
+  },
+  "chat": {
+    "lines": []
+  },
+  "bank": {
+    "brick": 20,
+    "wood": 22,
+    "sheep": 23,
+    "wheat": 16,
+    "ore": 17
+  },
+  "turnTracker": {
+    "status": "Playing",
+    "currentTurn": 0,
+    "longestRoad": -1,
+    "largestArmy": -1
+  },
+  "winner": -1,
+  "version": 140
+}
