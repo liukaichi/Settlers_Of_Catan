@@ -15,7 +15,8 @@ public class City extends Structure
 	 * @param owner
 	 * @param location
 	 */
-	public City(PlayerIndex owner, VertexLocation location) {
+	public City(PlayerIndex owner, VertexLocation location) 
+	{
 		super(owner, location);
 		// TODO Auto-generated constructor stub
 	}
