@@ -19,4 +19,12 @@ public class PlacementException extends CatanException
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * 
+     */
+    public PlacementException()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
 }

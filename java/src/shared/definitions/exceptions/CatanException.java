@@ -17,4 +17,9 @@ public class CatanException extends Exception
         super(string);
     }
 
+    public CatanException()
+    {
+
+    }
+
 }

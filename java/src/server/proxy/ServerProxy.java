@@ -85,7 +85,11 @@ public class ServerProxy implements IProxy
     @Override
     public void userLogin(Credentials credentials) throws SignInException
     {
-        doPost(USER_LOGIN, credentials.toString());
+        String response = doPost(USER_LOGIN, credentials.toString());
+        if (response == null)
+        {
+            throw new SignInException(response);
+        }
     }
 
     @Override
