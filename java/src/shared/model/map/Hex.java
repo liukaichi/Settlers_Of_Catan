@@ -49,12 +49,13 @@ public class Hex
      */
     public Hex(String json)
     {
-        this();
-        JsonElement jElement = new JsonParser().parse(json);
-        JsonObject jObject = jElement.getAsJsonObject();
-        jObject = jObject.getAsJsonObject("hexes");
-        JsonArray jArray = jObject.getAsJsonArray();
-
+        JsonParser parser = new JsonParser();
+        JsonObject hex = (JsonObject)parser.parse(json);
+        this.resourceType = ResourceType.valueOf(hex.get("resource").getAsString());
+        this.hexType = HexType.valueOf(hex.get("resource").getAsString());
+        JsonObject location = (JsonObject) hex.get("location");
+        this.location = new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt());
+        this.numberTile = hex.get("number").getAsInt();
     }
 
     /**
