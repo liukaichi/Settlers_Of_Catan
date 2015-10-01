@@ -51,5 +51,16 @@ public class MessageList
     {
         lines.add(message);
     }
+    
+    @Override
+    public String toString()
+    {
+        String returnValue = "\"chat\":{";
+        for (MessageLine messageLine : lines) {
+			returnValue += messageLine.toString();
+		}
+        returnValue += "},";
+        return returnValue; 
+    }
 
 }
