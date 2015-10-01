@@ -131,7 +131,8 @@ public class ProxyTester
         {
             proxy.userLogin(credentials);
             fail("Shouldn't have reached this.");
-        } catch (SignInException e1)
+        }
+        catch (SignInException e1)
         {
             assertTrue(true);
         }
@@ -141,7 +142,8 @@ public class ProxyTester
             assertTrue(true);
             proxy.userLogin(credentials);
             assertTrue(true);
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail("Login failed");
         }
@@ -149,7 +151,8 @@ public class ProxyTester
         {
             proxy.userLogin(credentials);
             fail("Shouldn't have reached this.");
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             assertTrue(true);
         }
@@ -161,10 +164,12 @@ public class ProxyTester
         try
         {
             proxy.userRegister(new Credentials("sheila", "parker"));
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail(e.getMessage());
-        } catch (Exception e1)
+        }
+        catch (Exception e1)
         {
             assertTrue(true);
         }
@@ -183,7 +188,8 @@ public class ProxyTester
         {
             proxy.userRegister(credentials);
             assertTrue(true);
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail("Login failed");
         }
@@ -191,7 +197,8 @@ public class ProxyTester
         {
             proxy.userRegister(credentials);
             fail("Shouldn't have reached this.");
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             assertTrue(true);
         }
@@ -202,10 +209,12 @@ public class ProxyTester
             assertTrue(true);
             proxy.userRegister(new Credentials("mel", "blanc"));
             assertTrue(true);
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail("Registration failed");
-        } finally
+        }
+        finally
         {
             fail("");
         }
@@ -230,16 +239,17 @@ public class ProxyTester
         try
         {
             proxy.userRegister(new Credentials("list", "games"));
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail("Registration failed");
         }
 
-        ArrayList<GameInfo> games = (ArrayList<GameInfo>) proxy.listGames().getGames();
+        List<GameInfo> games = proxy.listGames().getGames();
         int size = games.size();
         assertTrue(games.size() > 0);
         proxy.createGame(new CreateGameRequest(true, true, true, "list1"));
-        games = (ArrayList<GameInfo>) proxy.listGames().getGames();
+        games = proxy.listGames().getGames();
         assertTrue(games.size() > size);
         boolean found = false;
         for (int i = 0; i < games.size(); ++i)
@@ -254,7 +264,7 @@ public class ProxyTester
 
         proxy.createGame(new CreateGameRequest(true, true, true, "list1"));
         int count = 0;
-        games = (ArrayList<GameInfo>) proxy.listGames().getGames();
+        games = proxy.listGames().getGames();
         for (int i = 0; i < games.size(); ++i)
         {
             GameInfo info = games.get(i);
@@ -267,7 +277,7 @@ public class ProxyTester
 
         found = false;
         proxy.createGame(new CreateGameRequest(true, true, true, "list2"));
-        games = (ArrayList<GameInfo>) proxy.listGames().getGames();
+        games = proxy.listGames().getGames();
         for (int i = 0; i < games.size(); ++i)
         {
             GameInfo info = games.get(i);
@@ -290,7 +300,8 @@ public class ProxyTester
         try
         {
             proxy.userRegister(new Credentials("create", "game"));
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail("Registration failed");
         }
@@ -326,7 +337,8 @@ public class ProxyTester
         try
         {
             proxy.userRegister(new Credentials("join", "game"));
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail("Registration failed");
         }
@@ -340,7 +352,8 @@ public class ProxyTester
             proxy.joinGame(new JoinGameRequest(id, CatanColor.PUCE));
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
 
-        } catch (GameQueryException e)
+        }
+        catch (GameQueryException e)
         {
             fail("Join game failed");
         }
@@ -358,7 +371,8 @@ public class ProxyTester
         try
         {
             proxy.saveGame(null);
-        } catch (GameQueryException e)
+        }
+        catch (GameQueryException e)
         {
         }
     }
@@ -374,7 +388,8 @@ public class ProxyTester
         try
         {
             proxy.loadGame(null);
-        } catch (GameQueryException e)
+        }
+        catch (GameQueryException e)
         {
         }
     }
@@ -426,7 +441,8 @@ public class ProxyTester
         try
         {
             proxy.userRegister(new Credentials("join", "game"));
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail("Registration failed");
         }
@@ -442,7 +458,8 @@ public class ProxyTester
             assertNotNull(aiTypes);
             assertTrue(aiTypes.size() == 1);
             assertTrue(aiTypes.get(0).LARGEST_ARMY.toString().equals("[ \"LARGEST_ARMY\" ]"));
-        } catch (GameQueryException e)
+        }
+        catch (GameQueryException e)
         {
             fail("Join Game Failed");
         }
@@ -459,7 +476,8 @@ public class ProxyTester
         try
         {
             proxy.userRegister(new Credentials("join", "game"));
-        } catch (SignInException e)
+        }
+        catch (SignInException e)
         {
             fail("Registration failed");
         }
@@ -468,10 +486,12 @@ public class ProxyTester
         {
             proxy.addAI(AIType.LARGEST_ARMY);
             fail("Shouldn't have gotten here");
-        } catch (GameQueryException e)
+        }
+        catch (GameQueryException e)
         {
             assertTrue("Properly couldn't add AI.", true);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             fail("Shouldn't have gotten here");
         }
@@ -481,17 +501,20 @@ public class ProxyTester
         try
         {
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
-        } catch (GameQueryException e)
+        }
+        catch (GameQueryException e)
         {
             fail("Join Game Failed");
         }
         try
         {
             proxy.addAI(AIType.LARGEST_ARMY);
-        } catch (AddAIException e)
+        }
+        catch (AddAIException e)
         {
             fail("Couldn't validly add AI");
-        } catch (GameQueryException | IllegalArgumentException e1)
+        }
+        catch (GameQueryException | IllegalArgumentException e1)
         {
             fail("Shouldn't have gotten here");
         }
@@ -503,10 +526,12 @@ public class ProxyTester
             assertTrue(true);
             proxy.addAI(AIType.LARGEST_ARMY);
             fail("Shouldn't have added the last AI properly");
-        } catch (AddAIException e)
+        }
+        catch (AddAIException e)
         {
             assertTrue("validly couldn't add AI", true);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             fail("Shouldn't have gotten here");
         }
