@@ -22,6 +22,7 @@ public class Poller
 
     private IProxy proxy;
     private Poll poll;
+    private int currentVersion = 0;
 
     Poller(IProxy proxy)
     {
@@ -37,6 +38,9 @@ public class Poller
         poll.setProxy(newProxy);
     }
 
+    public int getCurrentVersion(){
+        return currentVersion;
+    }
 
 
     /*---------POLL INNER CLASS----------*/
@@ -46,7 +50,7 @@ public class Poller
      */
     class Poll extends TimerTask
     {
-        private int currentVersion = 0;
+
         private IProxy proxy;
 
         Poll(IProxy proxy)
@@ -59,9 +63,12 @@ public class Poller
             this.proxy = proxy;
         }
 
+
         /**
          * Goes through the Proxy to check for updates in the server's model.
          * Executes updateModel() if model has changed.
+         * @pre When the model changes it must update the version number.
+         * @post The ClientFacade will hold an updated model.
          */
         public void poll()
         {

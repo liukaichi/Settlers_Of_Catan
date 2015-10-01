@@ -1,5 +1,7 @@
 package server.proxy;
 
+import client.data.GameInfo;
+import client.facade.ClientFacade;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
@@ -23,6 +25,34 @@ import java.util.logging.Level;
  */
 public class MockProxy implements IProxy
 {
+    ClientModel serverModel;
+    public MockProxy(){
+        /*File file = new File("sample\\realJSONSampleFoReal.json");
+        BufferedReader reader = null;
+        try
+        {
+            reader = new BufferedReader(new FileReader(file));
+            String string;
+            StringBuilder builder = new StringBuilder();
+            while ((string = reader.readLine()) != null)
+            {
+                builder.append(string);
+            }
+            String modelJson = builder.toString();
+
+            ClientModel model = new ClientModel();
+        } catch (Exception e){
+        }*/
+        serverModel = new ClientModel();
+        serverModel.setVersion(1);
+        serverModel.setGameInfo(new GameInfo(1, "gameTitle"));
+        ClientFacade.getInstance().setModel(serverModel);
+
+    }
+
+    public ClientModel getServerModel(){
+        return serverModel;
+    }
 
     @Override
     public void userLogin(Credentials credentials)
@@ -83,12 +113,7 @@ public class MockProxy implements IProxy
     @Override
     public ClientModel getGameState(int versionNumber)
     {
-        if (versionNumber == 1){
-
-        }
-        ClientModel model = new ClientModel();
-        model.setVersion(1);
-        return model;
+        return serverModel;
     }
 
     @Override
