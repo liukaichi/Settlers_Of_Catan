@@ -5,11 +5,16 @@ package shared.model.map;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.HashMap;
 import org.junit.Test;
+
+import com.google.gson.Gson;
+
+import shared.definitions.PlayerIndex;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
+import shared.model.map.structure.Structure;
 
 /**
  * @author dtaylor
@@ -17,34 +22,6 @@ import org.junit.Test;
  */
 public class CatanMapTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	/**
 	 * Test method for {@link shared.model.map.CatanMap#CatanMap()}.
@@ -59,9 +36,44 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testCanPlaceSettlement() {
-		CatanMap map = new CatanMap();
-		fail("Not yet implemented"); // TODO
+		testCanPlaceSettlementEmptySet();
+		testCanPlaceSettlementVacantVertexStructureNearBy();
 	}
+	
+	@Test
+	public void testSerializeClassToJson()
+	{
+		CatanMap map = new CatanMap();
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+		System.out.println(json);
+	}
+	
+	/**
+	 * 
+	 */
+	private void testCanPlaceSettlementVacantVertexStructureNearBy() {
+		CatanMap map = new CatanMap();
+		HashMap<HexLocation, Hex> hexMap = new HashMap<HexLocation, Hex>();
+		hexMap.put(new HexLocation(0,0), new Hex());
+		
+		HashMap<VertexLocation, Structure> structureMap = new HashMap<VertexLocation, Structure>();
+		map.setHexes(hexMap);
+		map.setStructures(structureMap);
+		assertFalse(map.canPlaceSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,0),VertexDirection.West)));
+	}
+
+	
+	public void testCanPlaceSettlementEmptySet() {
+		CatanMap map = new CatanMap();
+		HashMap<HexLocation, Hex> hexMap = new HashMap<HexLocation, Hex>();
+		HashMap<VertexLocation, Structure> structureMap = new HashMap<VertexLocation, Structure>();
+		map.setHexes(hexMap);
+		map.setStructures(structureMap);
+		//testCanPlaceSettlementEmptySets(map, hexMap, structureMap);
+		assertFalse(map.canPlaceSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,0),VertexDirection.West)));
+	}
+
 
 	/**
 	 * Test method for {@link shared.model.map.CatanMap#canPlaceCity(shared.definitions.PlayerIndex, shared.locations.VertexLocation)}.

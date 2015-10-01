@@ -19,4 +19,14 @@ public class Password
     {
         this.password = password;
     }
+
+    /**
+     * Returns the password.
+     * 
+     * @return the password.
+     */
+    public String getPassword()
+    {
+        return password;
+    }
 }

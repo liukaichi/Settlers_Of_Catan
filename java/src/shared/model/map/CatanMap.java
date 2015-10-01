@@ -1,5 +1,7 @@
 package shared.model.map;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import shared.definitions.PlayerIndex;
@@ -12,6 +14,13 @@ import shared.model.map.structure.*;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.stream.JsonReader;
+
 /**
  * Represents the board game map of the Catan game
  * 
@@ -20,18 +29,125 @@ import java.util.Map;
  */
 public class CatanMap
 {
-    private Map<HexLocation, Hex> hexes;
+	//populated on map initialization
     private List<Port> ports;
+    private Map<HexLocation, Hex> hexes;
+    private Map<EdgeLocation, List<VertexLocation> > edgeVertices;
+    private Map<VertexLocation, List<EdgeLocation> > vertexEdges;
+    //populated on buy
     private Map<EdgeLocation, Road> roads;
     private Map<VertexLocation, Structure> structures;
     private int radius;
     private HexLocation robberLocation;
 
-    public CatanMap()
-    {
-    	
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+    	JsonParser parser = new JsonParser();
+    	//map
+
+    	JsonObject obj = new JsonObject();
+    	{
+	    	JsonObject map = new JsonObject();
+	    	{
+        		//hexes
+        		JsonArray hexes = new JsonArray();
+            	{
+            		for(Hex hex : this.hexes.values())
+            		{
+            			hexes.add(parser.parse(hex.toString()));
+            		}
+            	}
+            	map.add("hexes", hexes);
+                //roads
+                JsonArray roads = new JsonArray();
+                {
+                    for(Road road : this.roads.values())
+                    {
+                        roads.add(parser.parse(road.toString()));
+                    }
+                }
+                map.add("roads", roads);
+                //cities
+                JsonArray cities = new JsonArray();
+                {
+                    for(Structure city : this.structures.values())
+                    {
+                        if(city.getClass().equals(City.class))
+                            cities.add(parser.parse(city.toString()));
+                    }
+                }
+                map.add("cities", cities);
+                //settlements
+                JsonArray settlements = new JsonArray();
+                {
+                    for(Structure settlement : this.structures.values())
+                    {
+                        if(settlement.getClass().equals(Settlement.class))
+                            cities.add(parser.parse(settlement.toString()));
+                    }
+                }
+                map.add("settlements", settlements);
+	        	//radius
+	        	JsonPrimitive radius = new JsonPrimitive(this.radius);
+	        	map.add("radius", radius);
+                //ports
+                JsonArray ports = new JsonArray();
+                {
+                    for(Port port : this.ports)
+                    {
+                        ports.add(parser.parse(port.toString()));
+                    }
+                }
+	        	map.add("ports", ports);
+	        	//robber
+	        	JsonObject robber = new JsonObject();
+	        	robber.addProperty("x", robberLocation.getX());
+                robber.addProperty("y", robberLocation.getY());
+                map.add("robber", robber);
+	    	}
+	    	obj.add("map", map);
+    	}
+    	return obj.toString();
     }
+    
+public CatanMap() {
+	ports = new ArrayList<Port>();
+	hexes = new HashMap<HexLocation, Hex>();
+	edgeVertices = new HashMap<EdgeLocation, List<VertexLocation> >();
+	vertexEdges = new HashMap<VertexLocation, List<EdgeLocation> >();
+	roads = new HashMap<EdgeLocation, Road>();
+	structures = new HashMap<VertexLocation, Structure>();
+	radius = 2;
+	robberLocation = new HexLocation(0,0);
+}
     /**
+	 * @param ports
+	 * @param hexes
+	 * @param edgeVertices
+	 * @param vertexEdges
+	 * @param roads
+	 * @param structures
+	 * @param radius
+	 * @param robberLocation
+	 */
+	public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, List<VertexLocation>> edgeVertices,
+			Map<VertexLocation, List<EdgeLocation>> vertexEdges, Map<EdgeLocation, Road> roads,
+			Map<VertexLocation, Structure> structures, int radius, HexLocation robberLocation) {
+		super();
+		this.ports = ports;
+		this.hexes = hexes;
+		this.edgeVertices = edgeVertices;
+		this.vertexEdges = vertexEdges;
+		this.roads = roads;
+		this.structures = structures;
+		this.radius = radius;
+		this.robberLocation = robberLocation;
+	}
+
+	/**
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
      * 
@@ -45,16 +161,21 @@ public class CatanMap
      */
     public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
     {
-    	Structure atLocation = structures.get(location);
+    	VertexLocation normalizedVertex = location.getNormalizedLocation();
+    	Structure atLocation = structures.get(normalizedVertex);
     	//check if location exists, and is empty
-        if(structures.containsKey(location) && atLocation == null)
+        if(structures.containsKey(normalizedVertex) && atLocation == null)
         {
-        	for(VertexLocation vertex : location.getNeighboringVertices())
+        	for(EdgeLocation edge : vertexEdges.get(normalizedVertex))
         	{
-        		if(structures.get(vertex) != null)
-    			{
-    				return false;
-    			}
+        		for(VertexLocation vertex : edgeVertices.get(edge))
+        		{
+        			if(structures.get(vertex) != null)
+        			{
+        				return false;
+        			}
+        		}
+        		
         	}
         	return true;
         }
@@ -105,22 +226,28 @@ public class CatanMap
      */
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
     {
-    	if(roads.get(location) == null)
-    	{
-    		for(VertexLocation vertex : location.getVertices())
-            {
-    	    	Structure structure = structures.get(vertex);
-    			if(structure != null && structure.getOwner().equals(player))
-		        {
-		        	return true;
-		        }
-            }
-    		return false;
-    	}
-    	else
-    	{
-    		return false;
-    	}
+    	EdgeLocation normalizedEdge = location.getNormalizedLocation();
+    	Structure atLocation = structures.get(normalizedEdge);
+    	//check if location exists, and is empty
+        if(roads.containsKey(normalizedEdge) && atLocation == null)
+        {
+        	for(VertexLocation vertex : edgeVertices.get(normalizedEdge))
+        	{
+        		for(EdgeLocation edge : vertexEdges.get(vertex))
+        		{
+        			if(roads.get(edge) != null)
+        			{
+        				return false;
+        			}
+        		}
+        		
+        	}
+        	return true;
+        }
+        else
+        {
+        	return false;
+        }
         
     }
 
@@ -228,4 +355,22 @@ public class CatanMap
     		throw new PlacementException();
     	}
     }
+	public void setHexes(Map<HexLocation, Hex> hexes) {
+		this.hexes = hexes;
+	}
+	public void setPorts(List<Port> ports) {
+		this.ports = ports;
+	}
+	public void setRoads(Map<EdgeLocation, Road> roads) {
+		this.roads = roads;
+	}
+	public void setStructures(Map<VertexLocation, Structure> structures) {
+		this.structures = structures;
+	}
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
+	public void setRobberLocation(HexLocation robberLocation) {
+		this.robberLocation = robberLocation;
+	}
 }
