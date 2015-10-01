@@ -1,14 +1,14 @@
 package server.proxy;
 
-import java.util.List;
-import java.util.logging.Level;
-
 import client.data.GameInfo;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
 import shared.definitions.exceptions.GameQueryException;
 import shared.model.ClientModel;
+
+import java.util.List;
+import java.util.logging.Level;
 
 /**
  * MockProxy is used in Dependency injection, along with ServerProxy, to return
@@ -24,6 +24,9 @@ import shared.model.ClientModel;
  */
 public class MockProxy implements IProxy
 {
+
+
+
 
     @Override
     public void userLogin(Credentials credentials)
@@ -84,8 +87,12 @@ public class MockProxy implements IProxy
     @Override
     public ClientModel getGameState(int versionNumber)
     {
-        // TODO Auto-generated method stub
-        return null;
+        if (versionNumber == 1){
+
+        }
+        ClientModel model = new ClientModel();
+        model.setVersion(1);
+        return model;
     }
 
     @Override
