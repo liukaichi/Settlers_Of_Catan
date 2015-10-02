@@ -1,21 +1,12 @@
 package shared.model.map;
 
 import java.util.HashMap;
-import java.util.Map;
-
-import com.google.gson.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 
-import shared.definitions.*;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
 import java.util.Map;
 
 /**

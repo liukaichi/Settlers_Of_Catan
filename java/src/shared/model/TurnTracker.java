@@ -5,7 +5,6 @@ import shared.definitions.PlayerIndex;
 import shared.definitions.StructureType;
 import shared.definitions.TurnStatus;
 import shared.model.bank.PlayerBank;
-import shared.model.player.Player;
 
 /**
  * This class manages player's turns during the Catan game
@@ -36,7 +35,7 @@ public class TurnTracker
     */    
     public void updateLongestRoad(PlayerBank playerLongestRoad)
     {
-//    	if (playerLongestRoad.getAmount(ROAD) > longestRoad.getClass().)
+    	//if (playerLongestRoad.amountOf(type))
     }
     
     /**

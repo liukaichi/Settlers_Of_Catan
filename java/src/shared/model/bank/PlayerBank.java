@@ -13,7 +13,7 @@ import shared.model.bank.structure.Structure;
 import shared.model.bank.structure.Structures;
 
 /**
- * This class extends Bank with properties and methods specific to the Player
+ * This class extends Bank with properties and methods specific to the player
  */
 public class PlayerBank extends Bank
 {
@@ -280,7 +280,7 @@ public class PlayerBank extends Bank
     }
 
     /**
-     * Determines if a Player has control over a Port
+     * Determines if a player has control over a Port
      * 
      * @param type
      *        the type of Port to check
