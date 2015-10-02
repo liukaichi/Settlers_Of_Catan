@@ -1,13 +1,20 @@
 package server.proxy;
 
-import java.util.List;
-import java.util.logging.Level;
-
+import client.data.GameInfo;
+import client.facade.ClientFacade;
+import client.utils.BufferedReaderParser;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
 import shared.definitions.exceptions.GameQueryException;
 import shared.model.ClientModel;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.List;
+import java.util.logging.Level;
 
 /**
  * MockProxy is used in Dependency injection, along with ServerProxy, to return
@@ -23,75 +30,112 @@ import shared.model.ClientModel;
  */
 public class MockProxy implements IProxy
 {
+    String jsonFileDir = "sample" + File.separator + "mockproxy" + File.separator;
+    ClientModel serverModel;
+    public MockProxy(){
+        serverModel = new ClientModel();
+        serverModel.setVersion(1);
+        serverModel.setGameInfo(new GameInfo(1, "gameTitle"));
+        ClientFacade.getInstance().setModel(serverModel);
+
+    }
+
+    public ClientModel getServerModel(){
+        return serverModel;
+    }
 
     @Override
     public void userLogin(Credentials credentials)
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void userRegister(Credentials credentials)
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void changeLogLevel(Level level)
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public ListGamesResponse listGames()
     {
-        // TODO Auto-generated method stub
-        return null;
+        String json = "";
+
+        File file = new File(jsonFileDir + "listGamesResponse.json");
+        try
+        {
+            json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        ListGamesResponse listGamesResponse = new ListGamesResponse(json);
+
+
+        return listGamesResponse;
     }
 
     @Override
     public CreateGameResponse createGame(CreateGameRequest createGameRequest)
     {
-        // TODO Auto-generated method stub
-        return null;
+        String json = "";
+        File file = new File(jsonFileDir + "createGameResponse.json");
+        try
+        {
+            json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        CreateGameResponse createGameResponse = new CreateGameResponse(json);
+        return createGameResponse;
     }
 
     @Override
     public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public ClientModel getGameState(int versionNumber)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return serverModel;
     }
 
     @Override
     public ClientModel resetGame()
     {
-        // TODO Auto-generated method stub
-        return null;
+        String json = "";
+        File file = new File(jsonFileDir + "resetGame.json");
+        try
+        {
+            json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        ClientModel clientModel = new ClientModel(json);
+        return clientModel;
     }
 
     @Override
@@ -104,7 +148,7 @@ public class MockProxy implements IProxy
     @Override
     public ClientModel postCommands(List<MoveCommand> commands)
     {
-        // TODO Auto-generated method stub
+        //shouldn't need to be done. Used only when debugging the the server running.
         return null;
     }
 
