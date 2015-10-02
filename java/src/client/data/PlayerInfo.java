@@ -8,9 +8,9 @@ import shared.definitions.*;
  * PROPERTIES:<br>
  * <ul>
  * <li>Id: Unique player ID</li>
- * <li>PlayerIndex: Player's order in the game [0-3]</li>
- * <li>Name: Player's name (non-empty string)</li>
- * <li>Color: Player's color (cannot be null)</li>
+ * <li>PlayerIndex: player's order in the game [0-3]</li>
+ * <li>Name: player's name (non-empty string)</li>
+ * <li>Color: player's color (cannot be null)</li>
  * </ul>
  * 
  */
@@ -54,9 +54,14 @@ public class PlayerInfo
         this.id = id;
     }
 
-    public int getPlayerIndex()
+    public int getNormalizedPlayerIndex()
     {
         return playerIndex.getIndex();
+    }
+    
+    public PlayerIndex getPlayerIndex()
+    {
+    	return playerIndex; 
     }
 
     public void setPlayerIndex(int playerIndex)

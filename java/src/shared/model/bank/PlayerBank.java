@@ -13,7 +13,7 @@ import shared.model.bank.structure.Structure;
 import shared.model.bank.structure.Structures;
 
 /**
- * This class extends Bank with properties and methods specific to the Player
+ * This class extends Bank with properties and methods specific to the player
  */
 public class PlayerBank extends Bank
 {
@@ -81,15 +81,15 @@ public class PlayerBank extends Bank
         return structures;
     }
 
-    private int amountOf(ResourceType type){
+    public int amountOf(ResourceType type){
         return playerResources.getResource(type).getAmount();
     }
 
-    private int amountOf(DevCardType cardType, DevCard.AmountType amountType){
+    public int amountOf(DevCardType cardType, DevCard.AmountType amountType){
         return playerDevCards.getCard(cardType).getAmount(amountType);
     }
 
-    private int amountOf(StructureType type){
+    public int amountOf(StructureType type){
         return structures.getStructure(type).getAmount(Structure.AmountType.BUILT);
     }
 
@@ -280,7 +280,7 @@ public class PlayerBank extends Bank
     }
 
     /**
-     * Determines if a Player has control over a Port
+     * Determines if a player has control over a Port
      * 
      * @param type
      *        the type of Port to check

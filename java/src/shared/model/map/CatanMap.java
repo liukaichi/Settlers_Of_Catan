@@ -1,25 +1,18 @@
 package shared.model.map;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-
+import com.google.gson.*;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
-import shared.locations.*;
-import shared.model.map.structure.*;
-import shared.locations.*;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.model.map.structure.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.stream.JsonReader;
 
 /**
  * Represents the board game map of the Catan game
@@ -32,8 +25,6 @@ public class CatanMap
 	//populated on map initialization
     private List<Port> ports;
     private Map<HexLocation, Hex> hexes;
-    private Map<EdgeLocation, List<VertexLocation> > edgeVertices;
-    private Map<VertexLocation, List<EdgeLocation> > vertexEdges;
     //populated on buy
     private Map<EdgeLocation, Road> roads;
     private Map<VertexLocation, Structure> structures;
@@ -43,6 +34,49 @@ public class CatanMap
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+    public CatanMap(String json)
+    {
+    	JsonParser parser = new JsonParser();
+    	JsonObject map = (JsonObject) parser.parse(json);
+    	JsonArray hexes = map.getAsJsonArray("hexes");
+    	for(JsonElement elem : hexes)
+    	{
+    		JsonObject hexObj = (JsonObject) elem;
+    		Hex hex = new Hex(hexObj.toString());
+    		this.hexes.put(hex.getLocation(), hex);
+    	}
+    	JsonArray roads = map.getAsJsonArray("roads");
+    	for(JsonElement elem : roads)
+    	{
+    		JsonObject roadObj = (JsonObject) elem;
+    		Road road = new Road(roadObj.toString());
+    		this.roads.put(road.getLocation(), road);
+    	}
+    	JsonArray cities = map.getAsJsonArray("cities");
+    	for(JsonElement elem : cities)
+    	{
+    		JsonObject roadObj = (JsonObject) elem;
+    		City city = new City(roadObj.toString());
+    		this.structures.put(city.getLocation(), city);
+    	}
+    	JsonArray settlements = map.getAsJsonArray("settlements");
+    	for(JsonElement elem : settlements)
+    	{
+    		JsonObject settlementObj = (JsonObject) elem;
+    		Settlement settlement = new Settlement(settlementObj.toString());
+    		this.structures.put(settlement.getLocation(), settlement);
+    	}
+    	this.radius = map.get("radius").getAsInt();
+    	JsonArray portsArray = map.getAsJsonArray("ports");
+    	this.ports = new ArrayList<Port>();
+    	for(JsonElement elem : portsArray)
+    	{
+    		JsonObject port = (JsonObject) elem;
+    		this.ports.add(new Port(port.toString()));
+    	}
+    	JsonObject robber = map.getAsJsonObject("robber");
+    	this.hexes.get(new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt())).setHasRobber(true);
+    }
     @Override
     public String toString() {
     	JsonParser parser = new JsonParser();
@@ -116,31 +150,26 @@ public class CatanMap
 public CatanMap() {
 	ports = new ArrayList<Port>();
 	hexes = new HashMap<HexLocation, Hex>();
-	edgeVertices = new HashMap<EdgeLocation, List<VertexLocation> >();
-	vertexEdges = new HashMap<VertexLocation, List<EdgeLocation> >();
 	roads = new HashMap<EdgeLocation, Road>();
 	structures = new HashMap<VertexLocation, Structure>();
-	radius = 2;
+	radius = -1;
 	robberLocation = new HexLocation(0,0);
 }
-    /**
+
+	/**
+	 *
 	 * @param ports
 	 * @param hexes
-	 * @param edgeVertices
-	 * @param vertexEdges
 	 * @param roads
 	 * @param structures
 	 * @param radius
 	 * @param robberLocation
 	 */
-	public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, List<VertexLocation>> edgeVertices,
-			Map<VertexLocation, List<EdgeLocation>> vertexEdges, Map<EdgeLocation, Road> roads,
+	public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, Road> roads,
 			Map<VertexLocation, Structure> structures, int radius, HexLocation robberLocation) {
 		super();
 		this.ports = ports;
 		this.hexes = hexes;
-		this.edgeVertices = edgeVertices;
-		this.vertexEdges = vertexEdges;
 		this.roads = roads;
 		this.structures = structures;
 		this.radius = radius;
@@ -166,17 +195,6 @@ public CatanMap() {
     	//check if location exists, and is empty
         if(structures.containsKey(normalizedVertex) && atLocation == null)
         {
-        	for(EdgeLocation edge : vertexEdges.get(normalizedVertex))
-        	{
-        		for(VertexLocation vertex : edgeVertices.get(edge))
-        		{
-        			if(structures.get(vertex) != null)
-        			{
-        				return false;
-        			}
-        		}
-        		
-        	}
         	return true;
         }
         else
@@ -231,17 +249,6 @@ public CatanMap() {
     	//check if location exists, and is empty
         if(roads.containsKey(normalizedEdge) && atLocation == null)
         {
-        	for(VertexLocation vertex : edgeVertices.get(normalizedEdge))
-        	{
-        		for(EdgeLocation edge : vertexEdges.get(vertex))
-        		{
-        			if(roads.get(edge) != null)
-        			{
-        				return false;
-        			}
-        		}
-        		
-        	}
         	return true;
         }
         else
@@ -373,4 +380,18 @@ public CatanMap() {
 	public void setRobberLocation(HexLocation robberLocation) {
 		this.robberLocation = robberLocation;
 	}
+    public List<VertexLocation> getNearbyVertices(VertexLocation location) {
+        VertexLocation normalized = location.getNormalizedLocation();
+        ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
+        if(normalized.getDir().equals(VertexDirection.NorthEast))
+        {
+            Hex hex = hexes.get(normalized.getHexLoc());
+            
+        }
+        else if(normalized.getDir().equals(VertexDirection.NorthWest))
+        {
+            
+        }
+        return null;
+    }
 }

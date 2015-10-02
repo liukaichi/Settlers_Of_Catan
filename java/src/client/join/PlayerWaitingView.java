@@ -38,7 +38,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
 		
 		//set the heading at the top of the pane
-		label = new JLabel("Player Waiting View");
+		label = new JLabel("player Waiting View");
 		FontUtils.setFont(label, LABEL_TEXT_SIZE);
 		this.add(label, BorderLayout.NORTH);
 		

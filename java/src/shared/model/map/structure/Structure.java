@@ -3,6 +3,7 @@ package shared.model.map.structure;
 import com.google.gson.JsonObject;
 
 import shared.definitions.PlayerIndex;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 /**
@@ -18,6 +19,10 @@ public abstract class Structure
     private VertexLocation location; // I think they meant this one.
     private int victoryPointValue;
     
+    public Structure()
+    {
+    	
+    }
     public Structure(PlayerIndex owner, VertexLocation location)
     {
     	this.owner = owner;
@@ -52,7 +57,7 @@ public abstract class Structure
 	    structure.addProperty("owner", this.owner.getIndex());
 	    JsonObject location = new JsonObject();
 	    {
-	        location.addProperty("direction", this.location.getDir().toString());
+	        location.addProperty("direction", VertexDirection.toAbreviation(this.location.getDir()));
 	        location.addProperty("x", this.location.getHexLoc().getX());
 	        location.addProperty("y", this.location.getHexLoc().getY()); 
 	    }
