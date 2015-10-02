@@ -54,9 +54,14 @@ public class PlayerInfo
         this.id = id;
     }
 
-    public int getPlayerIndex()
+    public int getNormalizedPlayerIndex()
     {
         return playerIndex.getIndex();
+    }
+    
+    public PlayerIndex getPlayerIndex()
+    {
+    	return playerIndex; 
     }
 
     public void setPlayerIndex(int playerIndex)

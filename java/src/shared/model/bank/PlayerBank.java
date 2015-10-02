@@ -81,15 +81,15 @@ public class PlayerBank extends Bank
         return structures;
     }
 
-    private int amountOf(ResourceType type){
+    public int amountOf(ResourceType type){
         return playerResources.getResource(type).getAmount();
     }
 
-    private int amountOf(DevCardType cardType, DevCard.AmountType amountType){
+    public int amountOf(DevCardType cardType, DevCard.AmountType amountType){
         return playerDevCards.getCard(cardType).getAmount(amountType);
     }
 
-    private int amountOf(StructureType type){
+    public int amountOf(StructureType type){
         return structures.getStructure(type).getAmount(Structure.AmountType.BUILT);
     }
 
