@@ -1,6 +1,7 @@
 package shared.model.map.structure;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import shared.definitions.*;
 import shared.locations.*;
@@ -30,6 +31,18 @@ public class Port
     private TradeRatio ratio;
 
 
+	/**
+	 * @param json
+	 */
+	public Port(String json) {
+		JsonParser parser = new JsonParser();
+		JsonObject port = (JsonObject) parser.parse(json);
+		this.ratio = TradeRatio.fromInt(port.get("ratio").getAsInt());
+		this.resource = PortType.valueOf(port.get("resource").getAsString());
+		this.direction = EdgeDirection.fromAbreviation(port.get("direction").getAsString());
+		JsonObject location = port.getAsJsonObject("location");
+		this.location = new HexLocation(location.get("x").getAsInt(), location.get("y").getAsInt());
+	}
 	public PortType getResource() {
 		return resource;
 	}
