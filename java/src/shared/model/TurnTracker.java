@@ -32,33 +32,49 @@ public class TurnTracker
     * Updates the largest army counter
     * A player has the largest army if he or she has at least 3 knights
     */    
-    public void updateLargestArmy(){
+    public void updateLargestArmy()
+    {
         
     }
     
     /**
     * Updates the status string based on the current phase of the player's turn
     */   
-    public void updateStatus(){
+    public void updateStatus()
+    {
         
     }
 
-	public PlayerIndex getCurrentTurn() {
+	public PlayerIndex getCurrentTurn() 
+	{
 		return currentTurn;
 	}
 
-	public PlayerIndex getLongestRoad() {
+	public PlayerIndex getLongestRoad() 
+	{
 		return longestRoad;
 	}
 
-	public PlayerIndex getLargestArmy() {
+	public PlayerIndex getLargestArmy() 
+	{
 		return largestArmy;
 	}
 
-	public TurnStatus getStatus() {
+	public TurnStatus getStatus() 
+	{
 		return status;
 	}
     
+	@Override
+	public String toString()
+	{
+		String returnString = "\"turnTracker\":{";
+		returnString += "\"status\":\""+ status + "\",";
+		returnString += "\"currentTurn\": "+ currentTurn + "\",";
+		returnString += "\"longestRoad\": "+ getLongestRoad().toString() + "\",";
+		returnString += "\"longestArmy\": "+ getLargestArmy().toString() + "\"},";
+		return returnString; 
+	}
     
     
 }

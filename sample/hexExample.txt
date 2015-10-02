@@ -1,0 +1,159 @@
+"hexes": [
+[
+  {
+    "isLand": false,
+    "location": {
+      "x": 0,
+      "y": -1
+    },
+    "vertexes": [
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "worth": 1,
+          "ownerID": 0
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      }
+    ],
+    "edges": [
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": 0
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      }
+    ]
+  },
+  {
+    "landtype": "Wood",
+    "isLand": true,
+    "location": {
+      "x": 1,
+      "y": -1
+    },
+    "vertexes": [
+      {
+        "value": {
+          "worth": 1,
+          "ownerID": 0
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "worth": 0,
+          "ownerID": -1
+        }
+      }
+    ],
+    "edges": [
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      },
+      {
+        "value": {
+          "ownerID": -1
+        }
+      }
+    ]
+  }
+]
+]
