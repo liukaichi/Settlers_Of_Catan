@@ -49,6 +49,7 @@ public class ListGamesResponse
                 PlayerInfo playerInfo = new PlayerInfo(playerID, name, color);
                 gameInfo.addPlayer(playerInfo);
             }
+            games.add(gameInfo);
         }
 
     }

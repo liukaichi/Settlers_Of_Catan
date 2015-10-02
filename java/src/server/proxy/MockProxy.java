@@ -85,7 +85,9 @@ public class MockProxy implements IProxy
     {
         String json = "";
 
-        File file = new File("sample\\mockproxy\\listGamesResponse.json");
+        File file = new File("sample" + File.separator +
+                "mockproxy" + File.separator +
+                "listGamesResponse.json");
         try
         {
             json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
@@ -103,8 +105,21 @@ public class MockProxy implements IProxy
     @Override
     public CreateGameResponse createGame(CreateGameRequest createGameRequest)
     {
-        // TODO Auto-generated method stub
-        return null;
+        String json = "";
+        File file = new File("sample" + File.separator +
+                "mockproxy" + File.separator +
+                "createGameResponse.json");
+        try
+        {
+            json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        CreateGameResponse createGameResponse = new CreateGameResponse(json);
+        return createGameResponse;
     }
 
     @Override
