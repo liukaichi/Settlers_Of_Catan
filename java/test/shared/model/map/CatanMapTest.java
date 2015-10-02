@@ -3,18 +3,18 @@
  */
 package shared.model.map;
 
-import static org.junit.Assert.*;
-
-import java.util.HashMap;
-import org.junit.Test;
-
 import com.google.gson.Gson;
-
+import org.junit.Test;
 import shared.definitions.PlayerIndex;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.map.structure.Structure;
+
+import java.util.HashMap;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 /**
  * @author dtaylor
@@ -48,7 +48,6 @@ public class CatanMapTest {
 		String json = gson.toJson(map);
 		System.out.println(json);
 	}
-	
 	/**
 	 * 
 	 */
