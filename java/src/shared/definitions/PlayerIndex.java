@@ -1,5 +1,8 @@
 package shared.definitions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Defines the indexs that can be used for players. <br>
  * <br>
@@ -12,6 +15,20 @@ public enum PlayerIndex
     NONE(-1), PLAYER_0(0), PLAYER_1(1), PLAYER_2(2), PLAYER_3(3);
 
     private final int index;
+    private static final Map<Integer, PlayerIndex> intToTypeMap = new HashMap<Integer, PlayerIndex>();
+    
+    static {
+        for (PlayerIndex type : PlayerIndex.values()) {
+            intToTypeMap.put(type.getIndex(), type);
+        }
+    }
+
+    public static PlayerIndex fromInt(int i) {
+    	PlayerIndex type = intToTypeMap.get(Integer.valueOf(i));
+        if (type == null) 
+            return PlayerIndex.NONE;
+        return type;
+    }
 
     private PlayerIndex(int index)
     {

@@ -42,6 +42,76 @@ public class Hex
     }
 
     /**
+	 * @return the location
+	 */
+	public HexLocation getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(HexLocation location) {
+		this.location = location;
+	}
+
+	/**
+	 * @return the hexType
+	 */
+	public HexType getHexType() {
+		return hexType;
+	}
+
+	/**
+	 * @param hexType the hexType to set
+	 */
+	public void setHexType(HexType hexType) {
+		this.hexType = hexType;
+	}
+
+	/**
+	 * @return the resourceType
+	 */
+	public ResourceType getResourceType() {
+		return resourceType;
+	}
+
+	/**
+	 * @param resourceType the resourceType to set
+	 */
+	public void setResourceType(ResourceType resourceType) {
+		this.resourceType = resourceType;
+	}
+
+	/**
+	 * @return the numberTile
+	 */
+	public int getNumberTile() {
+		return numberTile;
+	}
+
+	/**
+	 * @param numberTile the numberTile to set
+	 */
+	public void setNumberTile(int numberTile) {
+		this.numberTile = numberTile;
+	}
+
+	/**
+	 * @return the robberPresent
+	 */
+	public boolean isRobberPresent() {
+		return robberPresent;
+	}
+
+	/**
+	 * @param robberPresent the robberPresent to set
+	 */
+	public void setRobberPresent(boolean robberPresent) {
+		this.robberPresent = robberPresent;
+	}
+
+	/**
      * Parses a JSON object into a Hex
      * 
      * @param json

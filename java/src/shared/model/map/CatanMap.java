@@ -16,6 +16,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -43,6 +44,49 @@ public class CatanMap
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+    public CatanMap(String json)
+    {
+    	JsonParser parser = new JsonParser();
+    	JsonObject map = (JsonObject) parser.parse(json);
+    	JsonArray hexes = map.getAsJsonArray("hexes");
+    	for(JsonElement elem : hexes)
+    	{
+    		JsonObject hexObj = (JsonObject) elem;
+    		Hex hex = new Hex(hexObj.toString());
+    		this.hexes.put(hex.getLocation(), hex);
+    	}
+    	JsonArray roads = map.getAsJsonArray("roads");
+    	for(JsonElement elem : roads)
+    	{
+    		JsonObject roadObj = (JsonObject) elem;
+    		Road road = new Road(roadObj.toString());
+    		this.roads.put(road.getLocation(), road);
+    	}
+    	JsonArray cities = map.getAsJsonArray("cities");
+    	for(JsonElement elem : cities)
+    	{
+    		JsonObject roadObj = (JsonObject) elem;
+    		City city = new City(roadObj.toString());
+    		this.structures.put(city.getLocation(), city);
+    	}
+    	JsonArray settlements = map.getAsJsonArray("settlements");
+    	for(JsonElement elem : settlements)
+    	{
+    		JsonObject settlementObj = (JsonObject) elem;
+    		Settlement settlement = new Settlement(settlementObj.toString());
+    		this.structures.put(settlement.getLocation(), settlement);
+    	}
+    	this.radius = map.get("radius").getAsInt();
+    	JsonArray portsArray = map.getAsJsonArray("ports");
+    	this.ports = new ArrayList<Port>();
+    	for(JsonElement elem : portsArray)
+    	{
+    		JsonObject port = (JsonObject) elem;
+    		this.ports.add(new Port(port.toString()));
+    	}
+    	JsonObject robber = map.getAsJsonObject("robber");
+    	this.hexes.get(new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt())).setHasRobber(true);
+    }
     @Override
     public String toString() {
     	JsonParser parser = new JsonParser();

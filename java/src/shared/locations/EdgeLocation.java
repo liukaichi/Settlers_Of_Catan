@@ -3,6 +3,8 @@ package shared.locations;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 /**
  * Represents the location of an edge on a hex map
  */
