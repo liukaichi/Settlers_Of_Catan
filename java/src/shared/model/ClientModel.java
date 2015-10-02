@@ -37,6 +37,11 @@ public class ClientModel
         winner = PlayerIndex.NONE;
     }
 
+    public ClientModel(String json)
+    {
+
+    }
+
     public GameInfo getGameInfo()
     {
         return gameInfo;
@@ -90,6 +95,9 @@ public class ClientModel
     public void setWinner(PlayerIndex winner)
     {
         this.winner = winner;
+    }
+    public void setVersion(int version){
+        this.version = version;
     }
 
 }

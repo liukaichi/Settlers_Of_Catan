@@ -1,21 +1,34 @@
 package shared.model.bank.structure;
 
+import shared.definitions.StructureType;
+
 /**
  * This class represents a list of Structure in the Catan game
  */
-public class Structures 
+public class Structures
 {
-	private Structure road, settlement, city;
+    private Structure road, settlement, city;
 
-    public Structure getRoad() {
-        return road;
+    public Structures(){
+        initialize();
     }
 
-    public Structure getSettlement() {
-        return settlement;
+    private void initialize(){
+        road = new Structure(StructureType.ROAD);
+        settlement = new Structure(StructureType.SETTLEMENT);
+        city = new Structure(StructureType.CITY);
     }
 
-    public Structure getCity() {
-        return city;
+    public Structure getStructure(StructureType type) {
+        switch (type){
+            case ROAD:
+                return road;
+            case SETTLEMENT:
+                return settlement;
+            case CITY:
+                return city;
+            default:
+                return null;
+        }
     }
 }

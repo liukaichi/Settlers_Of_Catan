@@ -1,9 +1,15 @@
 package shared.model.map;
 
+import java.util.Map;
+
 import com.google.gson.*;
 
 import shared.definitions.*;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 /**
  * Represents a Hex tile on the map.
