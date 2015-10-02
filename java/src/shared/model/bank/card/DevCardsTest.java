@@ -2,8 +2,13 @@ package shared.model.bank.card;
 
 import static org.junit.Assert.*;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Test;
 import shared.definitions.DevCardType;
+
+import java.awt.dnd.DropTargetDropEvent;
+import java.util.ArrayDeque;
 
 /**
  * Created by Adrian on 9/28/2015.
@@ -27,7 +32,7 @@ public class DevCardsTest {
         DevCard test = list.getCard(DevCardType.MONOPOLY);
 
         assertEquals(test.getType(), DevCardType.MONOPOLY);
-        assertEquals(test.getAmount(DevCard.AmountType.PLAYABLE),3);
+        assertEquals(test.getAmount(DevCard.AmountType.PLAYABLE), 3);
         assertEquals(test.getAmount(DevCard.AmountType.UNPLAYABLE), 0);
     }
 
@@ -67,4 +72,31 @@ public class DevCardsTest {
         assertEquals(test.getAmount(DevCard.AmountType.PLAYABLE),2);
         assertEquals(test.getAmount(DevCard.AmountType.UNPLAYABLE), 3);
     }
+
+//    @Test
+//    public void testSerialization(){
+//        GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(DevCards.class, new DevCards.OldDevCardsAdapter());
+//        Gson gson = gsonBuilder.create();
+//        assertEquals("{\"monopoly\":3,\"monument\":2,\"roadBuilding\":0,\"soldier\":0,\"yearOfPlenty\":5}", gson.toJson(list));
+//
+//        gsonBuilder = new GsonBuilder().registerTypeAdapter(DevCards.class, new DevCards.NewDevCardsAdapter());
+//        gson = gsonBuilder.create();
+//        assertEquals("{\"monopoly\":0,\"monument\":3,\"roadBuilding\":4,\"soldier\":2,\"yearOfPlenty\":0}", gson.toJson(list));
+//    }
+
+    @Test
+    public void testSerialization(){
+        String json = list.toString(DevCard.AmountType.PLAYABLE);
+        assertEquals("{\"monopoly\":3,\"monument\":2,\"roadBuilding\":0,\"soldier\":0,\"yearOfPlenty\":5}", json);
+
+        json = list.toString(DevCard.AmountType.UNPLAYABLE);
+        assertEquals("{\"monopoly\":0,\"monument\":3,\"roadBuilding\":4,\"soldier\":2,\"yearOfPlenty\":0}", json);
+
+        DevCards first = new DevCards();
+        assertEquals(0, first.totalCards());
+
+        first = new DevCards(json, DevCard.AmountType.UNPLAYABLE);
+        assertEquals(9, first.totalCards());
+    }
+
 }

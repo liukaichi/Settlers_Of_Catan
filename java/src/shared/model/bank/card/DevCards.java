@@ -1,5 +1,7 @@
 package shared.model.bank.card;
 
+import com.google.gson.*;
+import jdk.nashorn.internal.parser.JSONParser;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
@@ -7,6 +9,7 @@ import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.PlayerBank;
 import shared.model.player.Player;
 
+import java.lang.reflect.Type;
 import java.util.Stack;
 
 /**
@@ -18,6 +21,36 @@ public class DevCards {
 
     public DevCards(){
         initialize();
+    }
+
+    public DevCards(String json, DevCard.AmountType type){
+        this();
+        JsonElement jele = new JsonParser().parse(json);
+        JsonObject jobj = jele.getAsJsonObject();
+
+        switch (type){
+            case UNPLAYABLE:
+                this.yearOfPlenty.setAmountUnplayable(jobj.get("yearOfPlenty").getAsInt());
+                this.monopoly.setAmountUnplayable(jobj.get("monopoly").getAsInt());
+                this.roadBuilding.setAmountUnplayable(jobj.get("roadBuilding").getAsInt());
+                this.soldier.setAmountUnplayable(jobj.get("soldier").getAsInt());
+                this.monopoly.setAmountUnplayable(jobj.get("monument").getAsInt());
+                break;
+            case PLAYABLE:
+                this.yearOfPlenty.setAmountPlayable(jobj.get("yearOfPlenty").getAsInt());
+                this.monopoly.setAmountPlayable(jobj.get("monopoly").getAsInt());
+                this.roadBuilding.setAmountPlayable(jobj.get("roadBuilding").getAsInt());
+                this.soldier.setAmountPlayable(jobj.get("soldier").getAsInt());
+                this.monopoly.setAmountPlayable(jobj.get("monument").getAsInt());
+                break;
+            case PLAYED:
+                this.yearOfPlenty.setAmountPlayed(jobj.get("yearOfPlenty").getAsInt());
+                this.monopoly.setAmountPlayed(jobj.get("monopoly").getAsInt());
+                this.roadBuilding.setAmountPlayed(jobj.get("roadBuilding").getAsInt());
+                this.soldier.setAmountPlayed(jobj.get("soldier").getAsInt());
+                this.monopoly.setAmountPlayed(jobj.get("monument").getAsInt());
+                break;
+        }
     }
 
     private void initialize(){
@@ -100,4 +133,52 @@ public class DevCards {
                 + soldier.total()
                 + roadBuilding.total();
     }
+
+    public String toString(DevCard.AmountType type){
+        JsonObject devCards = new JsonObject();
+        {
+            devCards.addProperty("monopoly", monopoly.getAmount(type));
+            devCards.addProperty("monument", monument.getAmount(type));
+            devCards.addProperty("roadBuilding", roadBuilding.getAmount(type));
+            devCards.addProperty("soldier", soldier.getAmount(type));
+            devCards.addProperty("yearOfPlenty", yearOfPlenty.getAmount(type));
+        }
+
+        return devCards.toString();
+    }
+
+
+//    public static class OldDevCardsAdapter implements JsonSerializer<DevCards> {
+//
+//        @Override
+//        public JsonElement serialize(DevCards src, Type type, JsonSerializationContext jsonSerializationContext) {
+//            JsonObject oldDevCards = new JsonObject();
+//            {
+//                oldDevCards.addProperty("monopoly", src.getCard(DevCardType.MONOPOLY).getAmount(DevCard.AmountType.PLAYABLE));
+//                oldDevCards.addProperty("monument", src.getCard(DevCardType.MONUMENT).getAmount(DevCard.AmountType.PLAYABLE));
+//                oldDevCards.addProperty("roadBuilding", src.getCard(DevCardType.ROAD_BUILD).getAmount(DevCard.AmountType.PLAYABLE));
+//                oldDevCards.addProperty("soldier", src.getCard(DevCardType.SOLDIER).getAmount(DevCard.AmountType.PLAYABLE));
+//                oldDevCards.addProperty("yearOfPlenty", src.getCard(DevCardType.YEAR_OF_PLENTY).getAmount(DevCard.AmountType.PLAYABLE));
+//            }
+//
+//            return oldDevCards;
+//        }
+//    }
+//
+//    public static class NewDevCardsAdapter implements JsonSerializer<DevCards> {
+//
+//        @Override
+//        public JsonElement serialize(DevCards src, Type type, JsonSerializationContext jsonSerializationContext) {
+//            JsonObject newDevCards = new JsonObject();
+//            {
+//                 newDevCards.addProperty("monopoly", src.getCard(DevCardType.MONOPOLY).getAmount(DevCard.AmountType.UNPLAYABLE));
+//                 newDevCards.addProperty("monument", src.getCard(DevCardType.MONUMENT).getAmount(DevCard.AmountType.UNPLAYABLE));
+//                 newDevCards.addProperty("roadBuilding", src.getCard(DevCardType.ROAD_BUILD).getAmount(DevCard.AmountType.UNPLAYABLE));
+//                 newDevCards.addProperty("soldier", src.getCard(DevCardType.SOLDIER).getAmount(DevCard.AmountType.UNPLAYABLE));
+//                 newDevCards.addProperty("yearOfPlenty", src.getCard(DevCardType.YEAR_OF_PLENTY).getAmount(DevCard.AmountType.UNPLAYABLE));
+//            }
+//
+//            return  newDevCards;
+//        }
+//    }
 }

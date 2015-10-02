@@ -1,7 +1,10 @@
 package shared.model;
 
+import client.data.PlayerInfo;
 import shared.definitions.PlayerIndex;
 import shared.definitions.TurnStatus;
+import shared.model.bank.PlayerBank;
+import shared.model.player.Player;
 
 /**
  * This class manages player's turns during the Catan game
@@ -13,26 +16,33 @@ public class TurnTracker
     private PlayerIndex currentTurn, longestRoad, largestArmy;
     private TurnStatus status;
     
+    public TurnTracker()
+    {
+    	
+    }
+    
     /**
     * Updates the currentTurn counter
     */
-    public void updateCurrentTurn(){
-        
+    public void updateCurrentTurn(PlayerInfo playerCurrentTurn)
+    {
+        currentTurn = playerCurrentTurn.getPlayerIndex(); 
     }
     
     /**
     * Updates the longestRoad counter.
     * A player has the longest road if he or she has at least 5 roads
     */    
-    public void updateLongestRoad(){
-        
+    public void updateLongestRoad(PlayerBank playerLongestRoad)
+    {
+    	if (playerLongestRoad.amountOf(type))
     }
     
     /**
     * Updates the largest army counter
     * A player has the largest army if he or she has at least 3 knights
     */    
-    public void updateLargestArmy()
+    public void updateLargestArmy(PlayerIndex playerLargestArmy)
     {
         
     }
@@ -40,7 +50,7 @@ public class TurnTracker
     /**
     * Updates the status string based on the current phase of the player's turn
     */   
-    public void updateStatus()
+    public void updateStatus(TurnStatus playerTurnStatus)
     {
         
     }
@@ -75,6 +85,4 @@ public class TurnTracker
 		returnString += "\"longestArmy\": "+ getLargestArmy().toString() + "\"},";
 		return returnString; 
 	}
-    
-    
 }
