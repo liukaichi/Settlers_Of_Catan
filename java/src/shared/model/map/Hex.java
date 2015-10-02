@@ -10,6 +10,8 @@ import shared.locations.HexLocation;
  */
 public class Hex
 {
+    private Map<VertexDirection, VertexLocation> vertices;
+    private Map<EdgeDirection, EdgeLocation> edges;
     /**
      * @see shared.definitions.ResourceType
      */

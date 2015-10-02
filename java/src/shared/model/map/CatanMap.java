@@ -11,9 +11,6 @@ import shared.model.map.structure.*;
 import shared.locations.*;
 import shared.model.map.structure.*;
 
-import java.util.List;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -410,4 +407,18 @@ public CatanMap() {
 	public void setRobberLocation(HexLocation robberLocation) {
 		this.robberLocation = robberLocation;
 	}
+    public List<VertexLocation> getNearbyVertices(VertexLocation location) {
+        VertexLocation normalized = location.getNormalizedLocation();
+        ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
+        if(normalized.getDir().equals(VertexDirection.NorthEast))
+        {
+            Hex hex = hexes.get(normalized.getHexLoc());
+            
+        }
+        else if(normalized.getDir().equals(VertexDirection.NorthWest))
+        {
+            
+        }
+        return null;
+    }
 }
