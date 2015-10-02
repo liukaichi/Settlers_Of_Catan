@@ -174,6 +174,15 @@ public class Player
     {
     	return info.getName();
     }
+
+	/**
+	 * @return
+	 */
+	public PlayerIndex getIndex()
+	{	
+		// TODO Auto-generated method stub
+		return null;
+	}
     
     
 }
