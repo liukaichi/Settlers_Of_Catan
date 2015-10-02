@@ -30,7 +30,6 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     public JsonElement serialize(OfferTradeCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
-        obj.add(", value);
         return obj;
     }
 }

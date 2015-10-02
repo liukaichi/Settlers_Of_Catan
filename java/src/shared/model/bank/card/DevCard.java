@@ -37,6 +37,29 @@ public abstract class DevCard {
         amountPlayable = 0;
         amountPlayed = 0;
     }
+
+    public void setType(DevCardType type) {
+        this.type = type;
+    }
+
+    public void setAmounts(int playable, int unplayable, int played){
+        setAmountPlayable(playable);
+        setAmountPlayed(played);
+        setAmountUnplayable(unplayable);
+    }
+
+    public void setAmountPlayable(int amountPlayable) {
+        this.amountPlayable = amountPlayable;
+    }
+
+    public void setAmountUnplayable(int amountUnplayable) {
+        this.amountUnplayable = amountUnplayable;
+    }
+
+    public void setAmountPlayed(int amountPlayed) {
+        this.amountPlayed = amountPlayed;
+    }
+
     /**
      * Plays the action on a specified DevCard
      */

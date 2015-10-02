@@ -53,7 +53,9 @@ public class PlayerTest {
     @Test
     public void createOffer() {
         try{
+            player.getPlayerInfo().setPlayerIndex(0);
             Player player2 = new Player();
+            player2.getPlayerInfo().setPlayerIndex(1);
             player.createOffer(player2);
         } catch (CatanException e){
 

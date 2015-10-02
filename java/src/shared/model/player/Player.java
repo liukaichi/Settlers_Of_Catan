@@ -25,14 +25,13 @@ public class Player
      */
     private PlayerInfo info;
 
-    private TradeOffer offer;
-
     /**
      * A player bank is instantiated with the creation of each new player
      */
     public Player() throws CatanException
     {
         bank = new PlayerBank();
+        info = new PlayerInfo();
     }
 
     public PlayerInfo getPlayerInfo()
@@ -41,16 +40,8 @@ public class Player
     }
     public PlayerBank getBank() {return bank;}
 
-    public void createOffer(Player receiver){
-        this.offer = new TradeOffer(this, receiver);
-    }
-
-    public void addToOffer(ResourceType type){
-        this.offer.addToOffer(type);
-    }
-
-    public void subFromOffer(ResourceType type){
-        this.offer.subFromOffer(type);
+    public TradeOffer createOffer(Player receiver){
+        return new TradeOffer(this, receiver);
     }
     
     boolean canBuyRoad()

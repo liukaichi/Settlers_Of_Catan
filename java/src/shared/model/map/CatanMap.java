@@ -11,11 +11,9 @@ import shared.model.map.structure.*;
 import shared.locations.*;
 import shared.model.map.structure.*;
 
-import java.util.List;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -32,8 +30,6 @@ public class CatanMap
 	//populated on map initialization
     private List<Port> ports;
     private Map<HexLocation, Hex> hexes;
-    private Map<EdgeLocation, List<VertexLocation> > edgeVertices;
-    private Map<VertexLocation, List<EdgeLocation> > vertexEdges;
     //populated on buy
     private Map<EdgeLocation, Road> roads;
     private Map<VertexLocation, Structure> structures;
@@ -43,6 +39,49 @@ public class CatanMap
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+    public CatanMap(String json)
+    {
+    	JsonParser parser = new JsonParser();
+    	JsonObject map = (JsonObject) parser.parse(json);
+    	JsonArray hexes = map.getAsJsonArray("hexes");
+    	for(JsonElement elem : hexes)
+    	{
+    		JsonObject hexObj = (JsonObject) elem;
+    		Hex hex = new Hex(hexObj.toString());
+    		this.hexes.put(hex.getLocation(), hex);
+    	}
+    	JsonArray roads = map.getAsJsonArray("roads");
+    	for(JsonElement elem : roads)
+    	{
+    		JsonObject roadObj = (JsonObject) elem;
+    		Road road = new Road(roadObj.toString());
+    		this.roads.put(road.getLocation(), road);
+    	}
+    	JsonArray cities = map.getAsJsonArray("cities");
+    	for(JsonElement elem : cities)
+    	{
+    		JsonObject roadObj = (JsonObject) elem;
+    		City city = new City(roadObj.toString());
+    		this.structures.put(city.getLocation(), city);
+    	}
+    	JsonArray settlements = map.getAsJsonArray("settlements");
+    	for(JsonElement elem : settlements)
+    	{
+    		JsonObject settlementObj = (JsonObject) elem;
+    		Settlement settlement = new Settlement(settlementObj.toString());
+    		this.structures.put(settlement.getLocation(), settlement);
+    	}
+    	this.radius = map.get("radius").getAsInt();
+    	JsonArray portsArray = map.getAsJsonArray("ports");
+    	this.ports = new ArrayList<Port>();
+    	for(JsonElement elem : portsArray)
+    	{
+    		JsonObject port = (JsonObject) elem;
+    		this.ports.add(new Port(port.toString()));
+    	}
+    	JsonObject robber = map.getAsJsonObject("robber");
+    	this.hexes.get(new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt())).setHasRobber(true);
+    }
     @Override
     public String toString() {
     	JsonParser parser = new JsonParser();
@@ -116,11 +155,9 @@ public class CatanMap
 public CatanMap() {
 	ports = new ArrayList<Port>();
 	hexes = new HashMap<HexLocation, Hex>();
-	edgeVertices = new HashMap<EdgeLocation, List<VertexLocation> >();
-	vertexEdges = new HashMap<VertexLocation, List<EdgeLocation> >();
 	roads = new HashMap<EdgeLocation, Road>();
 	structures = new HashMap<VertexLocation, Structure>();
-	radius = 2;
+	radius = -1;
 	robberLocation = new HexLocation(0,0);
 }
     /**
@@ -133,14 +170,11 @@ public CatanMap() {
 	 * @param radius
 	 * @param robberLocation
 	 */
-	public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, List<VertexLocation>> edgeVertices,
-			Map<VertexLocation, List<EdgeLocation>> vertexEdges, Map<EdgeLocation, Road> roads,
+	public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, Road> roads,
 			Map<VertexLocation, Structure> structures, int radius, HexLocation robberLocation) {
 		super();
 		this.ports = ports;
 		this.hexes = hexes;
-		this.edgeVertices = edgeVertices;
-		this.vertexEdges = vertexEdges;
 		this.roads = roads;
 		this.structures = structures;
 		this.radius = radius;
@@ -164,19 +198,16 @@ public CatanMap() {
     	VertexLocation normalizedVertex = location.getNormalizedLocation();
     	Structure atLocation = structures.get(normalizedVertex);
     	//check if location exists, and is empty
-        if(structures.containsKey(normalizedVertex) && atLocation == null)
+        if(atLocation == null)
         {
-        	for(EdgeLocation edge : vertexEdges.get(normalizedVertex))
-        	{
-        		for(VertexLocation vertex : edgeVertices.get(edge))
-        		{
-        			if(structures.get(vertex) != null)
-        			{
-        				return false;
-        			}
-        		}
-        		
-        	}
+            List<VertexLocation> vertices = getNearbyVertices(normalizedVertex);
+            for(VertexLocation vertex : vertices)
+            {
+                if(structures.get(vertex.getNormalizedLocation()) != null)
+                {
+                    return false;
+                }
+            }
         	return true;
         }
         else
@@ -229,28 +260,56 @@ public CatanMap() {
     	EdgeLocation normalizedEdge = location.getNormalizedLocation();
     	Structure atLocation = structures.get(normalizedEdge);
     	//check if location exists, and is empty
-        if(roads.containsKey(normalizedEdge) && atLocation == null)
+        if(atLocation == null)
         {
-        	for(VertexLocation vertex : edgeVertices.get(normalizedEdge))
-        	{
-        		for(EdgeLocation edge : vertexEdges.get(vertex))
-        		{
-        			if(roads.get(edge) != null)
-        			{
-        				return false;
-        			}
-        		}
-        		
-        	}
-        	return true;
+            List<VertexLocation> vertices = getNearbyVertices(normalizedEdge);
+            for(VertexLocation vertex : vertices)
+            {
+                Structure structure = structures.get(vertex.getNormalizedLocation());
+                if(structure != null && structure.getOwner().equals(player))
+                {
+                    return true;
+                }
+            }
+            List<EdgeLocation> edges = getNearbyEdges(normalizedEdge);
+            for(EdgeLocation edge : edges)
+            {
+                Road road = roads.get(edge.getNormalizedLocation());
+                if(road != null && road.getOwner().equals(player))
+                {
+                    return true;
+                }
+            }
         }
-        else
-        {
-        	return false;
-        }
+        return false;
         
     }
-
+    /**
+     * @param normalizedEdge
+     * @return
+     */
+    private List<VertexLocation> getNearbyVertices(EdgeLocation location)
+    {
+        EdgeLocation normalized = location.getNormalizedLocation();
+        ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
+        Hex hex = hexes.get(normalized.getHexLoc());
+        if(normalized.getDir().equals(EdgeDirection.NorthWest))
+        {
+            vertices.add(hex.getVertexLocation(VertexDirection.West));
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
+        }
+        else if(normalized.getDir().equals(EdgeDirection.North))
+        {
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
+        }
+        else if(normalized.getDir().equals(EdgeDirection.NorthEast))
+        {
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
+            vertices.add(hex.getVertexLocation(VertexDirection.East));
+        }
+        return vertices;
+    }
     /**
      * Method that indicates whether a player has the ability to move a robber
      * on a certain Hex
@@ -373,4 +432,62 @@ public CatanMap() {
 	public void setRobberLocation(HexLocation robberLocation) {
 		this.robberLocation = robberLocation;
 	}
+    private List<VertexLocation> getNearbyVertices(VertexLocation location) {
+        VertexLocation normalized = location.getNormalizedLocation();
+        ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
+        if(normalized.getDir().equals(VertexDirection.NorthEast))
+        {
+            Hex hex = hexes.get(normalized.getHexLoc());
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
+            vertices.add(hex.getVertexLocation(VertexDirection.East));
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
+            return vertices;
+        }
+        else if(normalized.getDir().equals(VertexDirection.NorthWest))
+        {
+            Hex hex = hexes.get(normalized.getHexLoc());
+            vertices.add(hex.getVertexLocation(VertexDirection.West));
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
+            return vertices;
+        }
+        return null;
+    }
+
+    /**
+     * @param normalizedEdge
+     * @return
+     */
+    private List<EdgeLocation> getNearbyEdges(EdgeLocation location)
+    {
+        EdgeLocation normalized = location.getNormalizedLocation();
+        ArrayList<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+        
+        Hex hex = hexes.get(normalized.getHexLoc());
+        if(normalized.getDir().equals(EdgeDirection.NorthWest))
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.North));
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+        }
+        else if(normalized.getDir().equals(EdgeDirection.North))
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+        }
+        else if(normalized.getDir().equals(EdgeDirection.NorthEast))
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+            edges.add(hex.getEdgeLocation(EdgeDirection.North));
+        }
+        else
+        {
+            return null;
+        }
+        hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.North));
+        edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
+        edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
+        return edges;
+    }
 }

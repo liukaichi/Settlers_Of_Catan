@@ -377,7 +377,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         {
             JToggleButton button = (JToggleButton) e.getSource();
             PlayerInfo pi = getPlayerByName(button.getText());
-            getController().setPlayerToTradeWith(pi.getPlayerIndex());
+            getController().setPlayerToTradeWith(pi.getPlayerIndex().getIndex());
         }
 
     };

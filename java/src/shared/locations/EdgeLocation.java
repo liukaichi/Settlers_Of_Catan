@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import com.google.gson.JsonObject;
+
 /**
  * Represents the location of an edge on a hex map
  */

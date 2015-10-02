@@ -26,7 +26,7 @@ public class ListAIResponse
     }
 
     /**
-     * Parses the Json to create a List of AIType.
+     * Parses the Json to create a List of AIType. Fix conflicts.
      * 
      * @param json
      *        the json to parse

@@ -22,6 +22,10 @@ public class Resource
         return amount;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public ResourceType getType()
     {
         return type;

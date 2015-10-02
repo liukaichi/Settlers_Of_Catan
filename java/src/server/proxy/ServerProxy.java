@@ -361,7 +361,6 @@ public class ServerProxy implements IProxy
         String response = doPost(BUY_DEV_CARD, request);
         LOGGER.log(Level.INFO, "Response:" + response);
         return new ClientModel(response);
-        ;
     }
 
     @Override

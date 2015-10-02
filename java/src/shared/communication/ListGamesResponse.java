@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -9,10 +10,6 @@ import com.google.gson.*;
 
 import client.data.*;
 import shared.definitions.CatanColor;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author cstaheli
