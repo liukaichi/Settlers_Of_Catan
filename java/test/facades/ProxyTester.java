@@ -5,7 +5,7 @@ package facades;
 
 import static org.junit.Assert.*;
 
-import java.util.*;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.junit.*;
@@ -394,7 +394,7 @@ public class ProxyTester
     @Test
     public void testGetGameState()
     {
-        fail("Not yet implemented");
+        ClientModel model = proxy.getGameState(0);
     }
 
     /**
@@ -440,18 +440,18 @@ public class ProxyTester
         {
             fail("Login failed");
         }
-        ArrayList<AIType> aiTypes = (ArrayList<AIType>) proxy.listAI().getAITypes();
-        assertNull(aiTypes);
+        List<AIType> aiTypes = proxy.listAI().getAITypes();
+        // Aparently you don't need to be in a game.
 
         CreateGameResponse response = proxy.createGame(new CreateGameRequest(true, true, true, "listAI"));
         int id = response.getGameID();
         try
         {
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
-            aiTypes = (ArrayList<AIType>) proxy.listAI().getAITypes();
+            aiTypes = proxy.listAI().getAITypes();
             assertNotNull(aiTypes);
             assertTrue(aiTypes.size() == 1);
-            assertTrue(aiTypes.get(0).LARGEST_ARMY.toString().equals("[ \"LARGEST_ARMY\" ]"));
+            assertTrue(aiTypes.get(0).LARGEST_ARMY.toString().equals("LARGEST_ARMY"));
         }
         catch (GameQueryException e)
         {
@@ -554,7 +554,7 @@ public class ProxyTester
     @Test
     public void testRollNumber()
     {
-        fail("Not yet implemented");
+
     }
 
     /**

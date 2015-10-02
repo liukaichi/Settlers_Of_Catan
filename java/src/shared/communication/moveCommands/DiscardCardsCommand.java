@@ -1,18 +1,40 @@
 package shared.communication.moveCommands;
 
+import java.lang.reflect.Type;
+
+import com.google.gson.*;
+
 import shared.model.bank.resource.Resources;
-
-
+ 
 /**
  * discardCards command object.
  * 
  * @author Cache Staheli
  * @see Resources
  */
-public class DiscardCardsCommand extends MoveCommand
+public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<DiscardCardsCommand>
 {
     /**
      * List of discarded cards.
      */
     private Resources discardedCards;
+
+    public DiscardCardsCommand(int brick, int ore, int sheep, int wheat, int wood)
+    {
+        discardedCards = new Resources(brick, ore, sheep, wheat, wood);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
+     * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+     */
+    @Override
+    public JsonElement serialize(DiscardCardsCommand src, Type srcType, JsonSerializationContext context)
+    {
+        JsonObject obj = (JsonObject) serializeCommand(src);
+        obj.add("discardedCards", context.serialize(src.discardedCards));
+        return obj;
+    }
 }

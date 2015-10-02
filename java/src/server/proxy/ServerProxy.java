@@ -2,7 +2,6 @@ package server.proxy;
 
 import java.io.*;
 import java.net.*;
-import java.util.List;
 import java.util.logging.*;
 
 import com.google.gson.*;
@@ -97,7 +96,9 @@ public class ServerProxy implements IProxy
     @Override
     public void userLogin(Credentials credentials) throws SignInException
     {
-        String response = doPost(USER_LOGIN, credentials.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
+        String request = gson.toJson(credentials);
+        String response = doPost(USER_LOGIN, request);
         LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
@@ -108,7 +109,9 @@ public class ServerProxy implements IProxy
     @Override
     public void userRegister(Credentials credentials) throws SignInException
     {
-        String response = doPost(USER_REGISTER, credentials.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
+        String request = gson.toJson(credentials);
+        String response = doPost(USER_REGISTER, request);
         LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
@@ -136,7 +139,8 @@ public class ServerProxy implements IProxy
     public CreateGameResponse createGame(CreateGameRequest createGameRequest)
     {
         Gson gson = new GsonBuilder().create();
-        String response = doPost(CREATE_GAME, gson.toJson(createGameRequest));
+        String request = gson.toJson(createGameRequest);
+        String response = doPost(CREATE_GAME, request);
         LOGGER.log(Level.INFO, "Response:" + response);
         return new CreateGameResponse(response);
     }
@@ -157,7 +161,9 @@ public class ServerProxy implements IProxy
     @Override
     public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
     {
-        String response = doPost(SAVE_GAME, serializeObject(saveGameRequest));
+        Gson gson = new GsonBuilder().create();
+        String request = gson.toJson(saveGameRequest);
+        String response = doPost(SAVE_GAME, request);
         LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
@@ -168,7 +174,9 @@ public class ServerProxy implements IProxy
     @Override
     public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
     {
-        String response = doPost(LOAD_GAME, serializeObject(loadGameRequest));
+        Gson gson = new GsonBuilder().create();
+        String request = gson.toJson(loadGameRequest);
+        String response = doPost(LOAD_GAME, request);
         LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
@@ -195,21 +203,21 @@ public class ServerProxy implements IProxy
     @Override
     public ClientModel resetGame()
     {
-        // TODO Auto-generated method stub
+        // Unecessary
         return null;
     }
 
     @Override
-    public List<MoveCommand> getCommands()
+    public GetCommandsResponse getCommands()
     {
-        // TODO Auto-generated method stub
+        // Unecessary
         return null;
     }
 
     @Override
-    public ClientModel postCommands(List<MoveCommand> commands)
+    public ClientModel postCommands(PostCommandsRequest request)
     {
-        // TODO Auto-generated method stub
+        // Unecessary
         return null;
     }
 
@@ -224,7 +232,9 @@ public class ServerProxy implements IProxy
     @Override
     public void addAI(AIType aiType) throws IllegalArgumentException, GameQueryException, AddAIException
     {
-        String response = doPost(ADD_AI, aiType.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(AIType.class, aiType).create();
+        String request = gson.toJson(aiType);
+        String response = doPost(ADD_AI, request);
         LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
@@ -236,138 +246,172 @@ public class ServerProxy implements IProxy
     @Override
     public ClientModel sendChat(SendChatCommand sendChat)
     {
-        String response = doPost(SEND_CHAT, sendChat.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(SendChatCommand.class, sendChat).create();
+        String request = gson.toJson(sendChat);
+        String response = doPost(SEND_CHAT, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel rollNumber(RollNumberCommand rollNumber)
     {
-        String response = doPost(ROLL_NUMBER, rollNumber.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(RollNumberCommand.class, rollNumber).create();
+        String request = gson.toJson(rollNumber);
+        String response = doPost(ROLL_NUMBER, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel acceptTrade(AcceptTradeCommand acceptTrade)
     {
-        String response = doPost(ACCEPT_TRADE, acceptTrade.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(AcceptTradeCommand.class, acceptTrade).create();
+        String request = gson.toJson(acceptTrade);
+        String response = doPost(ACCEPT_TRADE, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel discardCards(DiscardCardsCommand discardCards)
     {
-        String response = doPost(DISCARD_CARDS, discardCards.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(DiscardCardsCommand.class, discardCards).create();
+        String request = gson.toJson(discardCards);
+        String response = doPost(DISCARD_CARDS, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel buildRoad(BuildRoadCommand buildRoad)
     {
-        String response = doPost(BUILD_ROAD, buildRoad.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(BuildRoadCommand.class, buildRoad).create();
+        String request = gson.toJson(buildRoad);
+        String response = doPost(BUILD_ROAD, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel buildSettlement(BuildSettlementCommand buildSettlement)
     {
-        String response = doPost(BUILD_SETTLEMENT,
-                ""/* serializeObject(buildSettlement) */);
+        Gson gson = new GsonBuilder().registerTypeAdapter(BuildSettlementCommand.class, buildSettlement).create();
+        String request = gson.toJson(buildSettlement);
+        String response = doPost(BUILD_SETTLEMENT, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel buildCity(BuildCityCommand buildCity)
     {
-        String response = doPost(BUILD_CITY, buildCity.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(BuildCityCommand.class, buildCity).create();
+        String request = gson.toJson(buildCity);
+        String response = doPost(BUILD_CITY, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel offerTrade(OfferTradeCommand offerTrade)
     {
-        String response = doPost(OFFER_TRADE, offerTrade.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(OfferTradeCommand.class, offerTrade).create();
+        String request = gson.toJson(offerTrade);
+        String response = doPost(OFFER_TRADE, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel maritimeTrade(MaritimeTradeCommand maritimeTrade)
     {
-        String response = doPost(MARITIME_TRADE, maritimeTrade.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(MaritimeTradeCommand.class, maritimeTrade).create();
+        String request = gson.toJson(maritimeTrade);
+        String response = doPost(MARITIME_TRADE, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel robPlayer(RobPlayerCommand robPlayer)
     {
-        String response = doPost(ROB_PLAYER, robPlayer.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(RobPlayerCommand.class, robPlayer).create();
+        String request = gson.toJson(robPlayer);
+        String response = doPost(ROB_PLAYER, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel finishTurn(FinishTurnCommand finishTurn)
     {
-        String response = doPost(FINISH_TURN, finishTurn.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(FinishTurnCommand.class, finishTurn).create();
+        String request = gson.toJson(finishTurn);
+        String response = doPost(FINISH_TURN, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel buyDevCard(BuyDevCardCommand buyDevCard)
     {
-        String response = doPost(BUY_DEV_CARD, buyDevCard.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(BuyDevCardCommand.class, buyDevCard).create();
+        String request = gson.toJson(buyDevCard);
+        String response = doPost(BUY_DEV_CARD, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
+        ;
     }
 
     @Override
     public ClientModel soldier(SoldierCommand soldier)
     {
-        String response = doPost(SOLDIER, soldier.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(SoldierCommand.class, soldier).create();
+        String request = gson.toJson(soldier);
+        String response = doPost(SOLDIER, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
     {
-        String response = doPost(YEAR_OF_PLENTY, yearOfPlenty.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(YearOfPlentyCommand.class, yearOfPlenty).create();
+        String request = gson.toJson(yearOfPlenty);
+        String response = doPost(YEAR_OF_PLENTY, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
     {
-        String response = doPost(ROAD_BUILDING, roadBuilding.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(RoadBuildingCommand.class, roadBuilding).create();
+        String request = gson.toJson(roadBuilding);
+        String response = doPost(ROAD_BUILDING, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel monopoly(MonopolyCommand monopoly)
     {
-        String response = doPost(MONOPOLY, monopoly.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(MonopolyCommand.class, monopoly).create();
+        String request = gson.toJson(monopoly);
+        String response = doPost(MONOPOLY, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     @Override
     public ClientModel monument(MonumentCommand monument)
     {
-        String response = doPost(MONUMENT, monument.toString());
+        Gson gson = new GsonBuilder().registerTypeAdapter(MonumentCommand.class, monument).create();
+        String request = gson.toJson(monument);
+        String response = doPost(MONUMENT, request);
         LOGGER.log(Level.INFO, "Response:" + response);
-        return null;
+        return new ClientModel(response);
     }
 
     /**

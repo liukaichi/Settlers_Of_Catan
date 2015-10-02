@@ -1,5 +1,7 @@
 package shared.communication.moveCommands;
 
+import com.google.gson.*;
+
 import shared.definitions.*;
 
 /**
@@ -15,29 +17,24 @@ public abstract class MoveCommand
     /**
      * The type of the moveCommand
      */
-    private MoveType type;
+    protected MoveType type;
     /**
      * The Index of the player performing the command.
      */
-    private PlayerIndex playerIndex;
+    protected PlayerIndex playerIndex;
 
-    protected MoveType getType()
+    /**
+     * Custom Serializer method, based off of interface JsonSerializer<T>
+     * 
+     * @param src
+     *        this command
+     * @return a JsonElement representing this command
+     */
+    public JsonElement serializeCommand(MoveCommand src)
     {
-        return type;
-    }
-
-    protected void setType(MoveType type)
-    {
-        this.type = type;
-    }
-
-    protected PlayerIndex getPlayerIndex()
-    {
-        return playerIndex;
-    }
-
-    protected void setPlayerIndex(PlayerIndex playerIndex)
-    {
-        this.playerIndex = playerIndex;
+        JsonObject obj = new JsonObject();
+        obj.addProperty("type", src.type.toString());
+        obj.addProperty("playerIndex", src.playerIndex.getIndex());
+        return obj;
     }
 }
