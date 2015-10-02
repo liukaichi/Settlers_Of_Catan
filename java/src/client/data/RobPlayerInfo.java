@@ -6,9 +6,9 @@ package client.data;
  * PROPERTIES:<br>
  * <ul>
  * <li>Id: Unique player ID</li>
- * <li>PlayerIndex: Player's order in the game [0-3]</li>
- * <li>Name: Player's name (non-empty string)</li>
- * <li>Color: Player's color (cannot be null)</li>
+ * <li>PlayerIndex: player's order in the game [0-3]</li>
+ * <li>Name: player's name (non-empty string)</li>
+ * <li>Color: player's color (cannot be null)</li>
  * <li>NumCards: Number of development cards the player has (less than 0)</li>
  * </ul>
  * 

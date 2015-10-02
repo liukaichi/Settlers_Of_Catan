@@ -77,7 +77,7 @@ public class DevCards {
                 } catch (CatanException e) {
                     e.printStackTrace();
                 }
-                // Player can build 2 roads
+                // player can build 2 roads
             }
         };
 

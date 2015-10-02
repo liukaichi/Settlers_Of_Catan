@@ -179,7 +179,7 @@ public class ClientFacade
     }
 
     /*
-     * Player Waiting Controller methods
+     * player Waiting Controller methods
      */
     /**
      * Adds an AI to the game.
@@ -281,7 +281,7 @@ public class ClientFacade
     }
 
     /**
-     * Player purchases and places a road
+     * player purchases and places a road
      * 
      * @pre player clicks on a location to place road
      * @post player met conditions and road is on map
@@ -294,7 +294,7 @@ public class ClientFacade
     }
 
     /**
-     * Player purchases and places a settlement
+     * player purchases and places a settlement
      * 
      * @pre player clicks on a location to place a settlement
      * @post player met conditions and settlement is now on map
@@ -307,7 +307,7 @@ public class ClientFacade
     }
 
     /**
-     * Player purchases and places a city at a location specified
+     * player purchases and places a city at a location specified
      * 
      * @post a city is now owned by the player
      * @pre player clicks to build on a location
