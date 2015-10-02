@@ -30,24 +30,9 @@ import java.util.logging.Level;
  */
 public class MockProxy implements IProxy
 {
+    String jsonFileDir = "sample" + File.separator + "mockproxy" + File.separator;
     ClientModel serverModel;
     public MockProxy(){
-        /*File file = new File("sample\\realJSONSampleFoReal.json");
-        BufferedReader reader = null;
-        try
-        {
-            reader = new BufferedReader(new FileReader(file));
-            String string;
-            StringBuilder builder = new StringBuilder();
-            while ((string = reader.readLine()) != null)
-            {
-                builder.append(string);
-            }
-            String modelJson = builder.toString();
-
-            ClientModel model = new ClientModel();
-        } catch (Exception e){
-        }*/
         serverModel = new ClientModel();
         serverModel.setVersion(1);
         serverModel.setGameInfo(new GameInfo(1, "gameTitle"));
@@ -62,21 +47,16 @@ public class MockProxy implements IProxy
     @Override
     public void userLogin(Credentials credentials)
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void userRegister(Credentials credentials)
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void changeLogLevel(Level level)
     {
-        // TODO Auto-generated method stub
 
     }
 
@@ -85,9 +65,7 @@ public class MockProxy implements IProxy
     {
         String json = "";
 
-        File file = new File("sample" + File.separator +
-                "mockproxy" + File.separator +
-                "listGamesResponse.json");
+        File file = new File(jsonFileDir + "listGamesResponse.json");
         try
         {
             json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
@@ -106,9 +84,7 @@ public class MockProxy implements IProxy
     public CreateGameResponse createGame(CreateGameRequest createGameRequest)
     {
         String json = "";
-        File file = new File("sample" + File.separator +
-                "mockproxy" + File.separator +
-                "createGameResponse.json");
+        File file = new File(jsonFileDir + "createGameResponse.json");
         try
         {
             json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
@@ -125,22 +101,17 @@ public class MockProxy implements IProxy
     @Override
     public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -152,8 +123,19 @@ public class MockProxy implements IProxy
     @Override
     public ClientModel resetGame()
     {
-        // TODO Auto-generated method stub
-        return null;
+        String json = "";
+        File file = new File(jsonFileDir + "resetGame.json");
+        try
+        {
+            json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        ClientModel clientModel = new ClientModel(json);
+        return clientModel;
     }
 
     @Override
@@ -166,7 +148,7 @@ public class MockProxy implements IProxy
     @Override
     public ClientModel postCommands(List<MoveCommand> commands)
     {
-        // TODO Auto-generated method stub
+        //shouldn't need to be done. Used only when debugging the the server running.
         return null;
     }
 

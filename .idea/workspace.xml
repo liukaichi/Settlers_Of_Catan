@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d08fecce-1c0d-466a-9f33-7a80c6e43eaa" name="Default" comment="CreateGame and ListGames is working and tested">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/java/test/facades/MockProxyTester.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sample/mockproxy/createGameResponse.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/shared/communication/ListGamesResponse.java" afterPath="$PROJECT_DIR$/java/src/shared/communication/ListGamesResponse.java" />
+    <list default="true" id="d08fecce-1c0d-466a-9f33-7a80c6e43eaa" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sample/mockproxy/resetGame.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/shared/model/ClientModel.java" afterPath="$PROJECT_DIR$/java/src/shared/model/ClientModel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/java/src/server/proxy/MockProxy.java" afterPath="$PROJECT_DIR$/java/src/server/proxy/MockProxy.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/The-Settlers-of-Catan.iml" afterPath="$PROJECT_DIR$/The-Settlers-of-Catan.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="The-Settlers-of-Catan.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,14 +40,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MockProxy.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/java/src/server/proxy/MockProxy.java">
+      <file leaf-file-name="ServerProxy.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/java/src/server/proxy/ServerProxy.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="120" column="37" selection-start-line="120" selection-start-column="37" selection-end-line="120" selection-end-column="37" />
+              <caret line="178" column="23" selection-start-line="178" selection-start-column="23" selection-end-line="178" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MockProxy.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/java/src/server/proxy/MockProxy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.22563177">
+              <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="37" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MoveCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/java/src/shared/communication/moveCommands/MoveCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MockProxyTester.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/java/test/facades/MockProxyTester.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="123" column="7" selection-start-line="123" selection-start-column="7" selection-end-line="123" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -58,10 +86,10 @@
         <entry file="file://$PROJECT_DIR$/java/src/shared/model/ClientModel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+              <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
               <folding>
-                <element signature="e#1599#1600#0" expanded="true" />
-                <element signature="e#1635#1636#0" expanded="true" />
+                <element signature="e#1649#1650#0" expanded="true" />
+                <element signature="e#1685#1686#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -77,48 +105,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PollTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/java/src/client/poller/PollTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ListGamesResponse.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/java/src/shared/communication/ListGamesResponse.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameInfo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/java/src/client/data/GameInfo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MockProxyTester.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/java/test/facades/MockProxyTester.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6498195">
-              <caret line="332" column="4" selection-start-line="332" selection-start-column="4" selection-end-line="332" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="listGamesResponse.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sample/mockproxy/listGamesResponse.json">
           <provider selected="true" editor-type-id="text-editor">
@@ -129,14 +115,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProxyTester.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/java/test/facades/ProxyTester.java">
+      <file leaf-file-name="resetGame.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sample/mockproxy/resetGame.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-217.45454">
+              <caret line="299" column="16" selection-start-line="299" selection-start-column="16" selection-end-line="299" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IProxyGameCommands.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/java/src/server/proxy/IProxyGameCommands.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <caret line="238" column="11" selection-start-line="238" selection-start-column="11" selection-end-line="238" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -175,7 +169,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/java/src/client/poller/poller.java" />
         <option value="$PROJECT_DIR$/java/src/shared/locations/EdgeLocation.java" />
         <option value="$PROJECT_DIR$/java/src/shared/locations/HexLocation.java" />
         <option value="$PROJECT_DIR$/java/src/shared/locations/VertexDirection.java" />
@@ -211,7 +204,6 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/java/src/client/facade/ClientFacade.java" />
         <option value="$PROJECT_DIR$/java/src/server/proxy/ServerProxy.java" />
-        <option value="$PROJECT_DIR$/java/src/shared/model/ClientModel.java" />
         <option value="$PROJECT_DIR$/java/src/client/poller/Poller.java" />
         <option value="$PROJECT_DIR$/java/src/client/poller/PollTest.java" />
         <option value="$PROJECT_DIR$/sample/listGamesResponse.txt" />
@@ -224,8 +216,10 @@
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/java/src/shared/communication/ListGamesResponse.java" />
         <option value="$PROJECT_DIR$/sample/mockproxy/createGameResponse.json" />
-        <option value="$PROJECT_DIR$/java/src/server/proxy/MockProxy.java" />
         <option value="$PROJECT_DIR$/java/test/facades/MockProxyTester.java" />
+        <option value="$PROJECT_DIR$/sample/mockproxy/resetGame.json" />
+        <option value="$PROJECT_DIR$/java/src/shared/model/ClientModel.java" />
+        <option value="$PROJECT_DIR$/java/src/server/proxy/MockProxy.java" />
       </list>
     </option>
   </component>
@@ -900,7 +894,13 @@
       <option name="project" value="LOCAL" />
       <updated>1443760344343</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="CreateGame and ListGames is working and tested">
+      <created>1443764969525</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1443764969525</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -982,18 +982,6 @@
           <properties />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/java/src/server/proxy/MockProxy.java</url>
-          <line>34</line>
-          <properties />
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/java/src/server/proxy/MockProxy.java</url>
-          <line>45</line>
-          <properties />
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/java/src/client/poller/PollTest.java</url>
           <line>28</line>
           <properties />
@@ -1019,13 +1007,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/java/src/server/proxy/MockProxy.java</url>
-          <line>98</line>
+          <line>76</line>
           <properties />
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/java/src/server/proxy/MockProxy.java</url>
-          <line>83</line>
+          <line>63</line>
           <properties class="server.proxy.MockProxy" method="listGames" />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
@@ -1058,20 +1046,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/java/src/shared/definitions/exceptions/CatanException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2357019">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/shared/definitions/exceptions/PlacementException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20623916">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/java/src/shared/definitions/TradeRatio.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.23407917">
@@ -1247,18 +1221,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/server/proxy/IProxyGameCommands.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="188" column="11" selection-start-line="188" selection-start-column="11" selection-end-line="188" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/java/src/shared/communication/ListAIResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#251#252#0" expanded="false" />
+            <element signature="e#294#295#0" expanded="false" />
+            <element signature="e#466#467#0" expanded="false" />
+            <element signature="e#488#489#0" expanded="false" />
+            <element signature="e#532#533#0" expanded="false" />
+            <element signature="e#592#593#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1325,17 +1300,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/server/proxy/ServerProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="419" column="46" selection-start-line="419" selection-start-column="46" selection-end-line="419" selection-end-column="46" />
-          <folding>
-            <element signature="e#10364#10365#0" expanded="false" />
-            <element signature="e#10391#10392#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/java/src/client/facade/ClientFacade.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1359,13 +1323,13 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1443764850629" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1443764850629" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1443764850629" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1443764850629" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1443764850629" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1443764850629" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1443764850629" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1443766380967" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1443766380967" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1443766380967" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1443766380967" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1443766380967" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1443766380967" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1443766380967" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1430,14 +1394,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sample/mockproxy/listGamesResponse.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.72727275">
-          <caret line="60" column="15" selection-start-line="60" selection-start-column="15" selection-end-line="60" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sample/mockproxy/createGameResponse.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3243243">
@@ -1446,42 +1402,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/shared/model/ClientModel.java">
+    <entry file="file://$PROJECT_DIR$/java/test/facades/MockProxyTester.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-          <folding>
-            <element signature="e#1599#1600#0" expanded="true" />
-            <element signature="e#1635#1636#0" expanded="true" />
-          </folding>
+          <caret line="123" column="7" selection-start-line="123" selection-start-column="7" selection-end-line="123" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/src/server/proxy/MockProxy.java">
+    <entry file="file://$PROJECT_DIR$/java/src/server/proxy/ServerProxy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="120" column="37" selection-start-line="120" selection-start-column="37" selection-end-line="120" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="178" column="23" selection-start-line="178" selection-start-column="23" selection-end-line="178" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/server/proxy/IProxyGameCommands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="238" column="11" selection-start-line="238" selection-start-column="11" selection-end-line="238" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample/mockproxy/resetGame.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-217.45454">
+          <caret line="299" column="16" selection-start-line="299" selection-start-column="16" selection-end-line="299" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/java/test/facades/ProxyTester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.46209386">
+          <caret line="411" column="14" selection-start-line="411" selection-start-column="14" selection-end-line="411" selection-end-column="14" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="e#10047#10048#0" expanded="true" />
+            <element signature="e#10080#10081#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/java/test/facades/MockProxyTester.java">
+    <entry file="file://$PROJECT_DIR$/sample/mockproxy/listGamesResponse.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6498195">
-          <caret line="332" column="4" selection-start-line="332" selection-start-column="4" selection-end-line="332" selection-end-column="4" />
+        <state vertical-scroll-proportion="-0.72727275">
+          <caret line="60" column="15" selection-start-line="60" selection-start-column="15" selection-end-line="60" selection-end-column="15" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/shared/model/ClientModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
+          <folding>
+            <element signature="e#1649#1650#0" expanded="true" />
+            <element signature="e#1685#1686#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/shared/communication/moveCommands/MoveCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/java/src/server/proxy/MockProxy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22563177">
+          <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="37" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
