@@ -2,12 +2,17 @@ package server.proxy;
 
 import client.data.GameInfo;
 import client.facade.ClientFacade;
+import client.utils.BufferedReaderParser;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
 import shared.definitions.exceptions.GameQueryException;
 import shared.model.ClientModel;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -78,8 +83,21 @@ public class MockProxy implements IProxy
     @Override
     public ListGamesResponse listGames()
     {
-        // TODO Auto-generated method stub
-        return null;
+        String json = "";
+
+        File file = new File("sample\\mockproxy\\listGamesResponse.json");
+        try
+        {
+            json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        ListGamesResponse listGamesResponse = new ListGamesResponse(json);
+
+
+        return listGamesResponse;
     }
 
     @Override
