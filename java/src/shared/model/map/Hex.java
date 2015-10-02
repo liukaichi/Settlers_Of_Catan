@@ -10,6 +10,8 @@ import shared.locations.HexLocation;
  */
 public class Hex
 {
+    private Map<VertexDirection, VertexLocation> vertices;
+    private Map<EdgeDirection, EdgeLocation> edges;
     /**
      * @see shared.definitions.ResourceType
      */
@@ -42,6 +44,76 @@ public class Hex
     }
 
     /**
+	 * @return the location
+	 */
+	public HexLocation getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(HexLocation location) {
+		this.location = location;
+	}
+
+	/**
+	 * @return the hexType
+	 */
+	public HexType getHexType() {
+		return hexType;
+	}
+
+	/**
+	 * @param hexType the hexType to set
+	 */
+	public void setHexType(HexType hexType) {
+		this.hexType = hexType;
+	}
+
+	/**
+	 * @return the resourceType
+	 */
+	public ResourceType getResourceType() {
+		return resourceType;
+	}
+
+	/**
+	 * @param resourceType the resourceType to set
+	 */
+	public void setResourceType(ResourceType resourceType) {
+		this.resourceType = resourceType;
+	}
+
+	/**
+	 * @return the numberTile
+	 */
+	public int getNumberTile() {
+		return numberTile;
+	}
+
+	/**
+	 * @param numberTile the numberTile to set
+	 */
+	public void setNumberTile(int numberTile) {
+		this.numberTile = numberTile;
+	}
+
+	/**
+	 * @return the robberPresent
+	 */
+	public boolean isRobberPresent() {
+		return robberPresent;
+	}
+
+	/**
+	 * @param robberPresent the robberPresent to set
+	 */
+	public void setRobberPresent(boolean robberPresent) {
+		this.robberPresent = robberPresent;
+	}
+
+	/**
      * Parses a JSON object into a Hex
      * 
      * @param json
@@ -49,12 +121,13 @@ public class Hex
      */
     public Hex(String json)
     {
-        this();
-        JsonElement jElement = new JsonParser().parse(json);
-        JsonObject jObject = jElement.getAsJsonObject();
-        jObject = jObject.getAsJsonObject("hexes");
-        JsonArray jArray = jObject.getAsJsonArray();
-
+        JsonParser parser = new JsonParser();
+        JsonObject hex = (JsonObject)parser.parse(json);
+        this.resourceType = ResourceType.valueOf(hex.get("resource").getAsString());
+        this.hexType = HexType.valueOf(hex.get("resource").getAsString());
+        JsonObject location = (JsonObject) hex.get("location");
+        this.location = new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt());
+        this.numberTile = hex.get("number").getAsInt();
     }
 
     /**
