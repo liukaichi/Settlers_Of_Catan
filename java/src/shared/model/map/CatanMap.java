@@ -200,17 +200,6 @@ public CatanMap() {
     	//check if location exists, and is empty
         if(structures.containsKey(normalizedVertex) && atLocation == null)
         {
-        	for(EdgeLocation edge : vertexEdges.get(normalizedVertex))
-        	{
-        		for(VertexLocation vertex : edgeVertices.get(edge))
-        		{
-        			if(structures.get(vertex) != null)
-        			{
-        				return false;
-        			}
-        		}
-        		
-        	}
         	return true;
         }
         else
@@ -265,17 +254,6 @@ public CatanMap() {
     	//check if location exists, and is empty
         if(roads.containsKey(normalizedEdge) && atLocation == null)
         {
-        	for(VertexLocation vertex : edgeVertices.get(normalizedEdge))
-        	{
-        		for(EdgeLocation edge : vertexEdges.get(vertex))
-        		{
-        			if(roads.get(edge) != null)
-        			{
-        				return false;
-        			}
-        		}
-        		
-        	}
         	return true;
         }
         else
