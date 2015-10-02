@@ -2,6 +2,7 @@ package shared.model.bank.card;
 
 import junit.framework.TestCase;
 import shared.definitions.DevCardType;
+import shared.model.bank.PlayerBank;
 
 /**
  * Created by Adrian on 9/28/2015.
@@ -11,7 +12,7 @@ public class DevCardTest extends TestCase {
     private DevCard setCardWithoutAmount(){
         return new DevCard(DevCardType.MONUMENT) {
             @Override
-            public void playAction() {
+            public void playAction(PlayerBank context) {
                 //vp ++
             }
         };
@@ -20,7 +21,7 @@ public class DevCardTest extends TestCase {
     private DevCard setCardWithAmount(int playable, int unplayable, int played){
         DevCard test =  new DevCard(DevCardType.ROAD_BUILD) {
             @Override
-            public void playAction() {
+            public void playAction(PlayerBank context) {
                 //road +2
             }
         };

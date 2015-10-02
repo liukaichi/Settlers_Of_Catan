@@ -1,18 +1,18 @@
 package shared.model.bank.card;
 
-import junit.framework.TestCase;
-import org.junit.BeforeClass;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 import shared.definitions.DevCardType;
 
 /**
  * Created by Adrian on 9/28/2015.
  */
-public class DevCardsTest extends TestCase {
+public class DevCardsTest {
 
     DevCards list = new DevCards();
 
-    @BeforeClass
-    public void setUp() throws Exception {
+    public DevCardsTest() {
         list.getCard(DevCardType.MONOPOLY).addCard(DevCard.AmountType.PLAYABLE, 3);
         list.getCard(DevCardType.SOLDIER).addCard(DevCard.AmountType.UNPLAYABLE, 2);
         list.getCard(DevCardType.ROAD_BUILD).addCard(DevCard.AmountType.UNPLAYABLE, 4);
@@ -22,7 +22,8 @@ public class DevCardsTest extends TestCase {
         list.getCard(DevCardType.MONUMENT).addCard(DevCard.AmountType.PLAYABLE,2);
     }
 
-    public void testGetMonopoly() throws Exception {
+    @Test
+    public void testGetMonopoly() {
         DevCard test = list.getCard(DevCardType.MONOPOLY);
 
         assertEquals(test.getType(), DevCardType.MONOPOLY);
@@ -30,7 +31,8 @@ public class DevCardsTest extends TestCase {
         assertEquals(test.getAmount(DevCard.AmountType.UNPLAYABLE), 0);
     }
 
-    public void testGetRoadBuilding() throws Exception {
+    @Test
+    public void testGetRoadBuilding() {
         DevCard test = list.getCard(DevCardType.ROAD_BUILD);
 
         assertEquals(test.getType(), DevCardType.ROAD_BUILD);
@@ -39,7 +41,8 @@ public class DevCardsTest extends TestCase {
         assertEquals(test.getAmount(DevCard.AmountType.UNPLAYABLE), 4);
     }
 
-    public void testGetYearOfPlenty() throws Exception {
+    @Test
+    public void testGetYearOfPlenty() {
         DevCard test = list.getCard(DevCardType.YEAR_OF_PLENTY);
 
         assertEquals(test.getType(), DevCardType.YEAR_OF_PLENTY);
@@ -47,7 +50,8 @@ public class DevCardsTest extends TestCase {
         assertEquals(test.getAmount(DevCard.AmountType.UNPLAYABLE), 0);
     }
 
-    public void testGetKnight() throws Exception {
+    @Test
+    public void testGetKnight() {
         DevCard test = list.getCard(DevCardType.SOLDIER);
 
         assertEquals(test.getType(), DevCardType.SOLDIER);
@@ -55,7 +59,8 @@ public class DevCardsTest extends TestCase {
         assertEquals(test.getAmount(DevCard.AmountType.UNPLAYABLE), 2);
     }
 
-    public void testGetMonument() throws Exception {
+    @Test
+    public void testGetMonument() {
         DevCard test = list.getCard(DevCardType.MONUMENT);
 
         assertEquals(test.getType(), DevCardType.MONUMENT);

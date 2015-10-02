@@ -3,6 +3,7 @@ package shared.model.bank.card;
 import client.main.Catan;
 import shared.definitions.DevCardType;
 import shared.definitions.exceptions.CatanException;
+import shared.model.bank.PlayerBank;
 
 /**
  * This class represents a Development Card
@@ -39,7 +40,7 @@ public abstract class DevCard {
     /**
      * Plays the action on a specified DevCard
      */
-    public abstract void playAction();
+    public abstract void playAction(PlayerBank context);
 
     /**
      * Increments the specified amount for this DevCard

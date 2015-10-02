@@ -2,9 +2,12 @@ package shared.model.player;
 
 import client.data.PlayerInfo;
 import shared.definitions.DevCardType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.*;
+import shared.model.bank.resource.Resource;
 
 /**
  * Represents a player playing the game. There can be up to 4 players in a
@@ -22,6 +25,8 @@ public class Player
      */
     private PlayerInfo info;
 
+    private TradeOffer offer;
+
     /**
      * A player bank is instantiated with the creation of each new player
      */
@@ -34,6 +39,19 @@ public class Player
     {
         return info;
     }
+    public PlayerBank getBank() {return bank;}
+
+    public void createOffer(Player receiver){
+        this.offer = new TradeOffer(this, receiver);
+    }
+
+    public void addToOffer(ResourceType type){
+        this.offer.addToOffer(type);
+    }
+
+    public void subFromOffer(ResourceType type){
+        this.offer.subFromOffer(type);
+    }
     
     boolean canBuyRoad()
     {
@@ -43,8 +61,14 @@ public class Player
     /**
      * Updates the PlayerBank to decrement resources used and increment road count
      */
-    public void buyRoad() throws InsufficientResourcesException {
-    	bank.buyRoad();
+    public void buyRoad() {
+        try {
+            bank.buyRoad();
+        } catch (InsufficientResourcesException e) {
+            e.printStackTrace();
+        } catch (CatanException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -66,6 +90,8 @@ public class Player
             bank.buySettlement();
         } catch (InsufficientResourcesException e) {
             e.printStackTrace();
+        } catch (CatanException e) {
+            e.printStackTrace();
         }
     }
 
@@ -83,8 +109,14 @@ public class Player
      * Updates the PlayerBank to decrement resources used and increment city count
      * @throws InsufficientResourcesException
      */
-    public void buyCity() throws InsufficientResourcesException {
-    	bank.buyCity();
+    public void buyCity() {
+        try {
+            bank.buyCity();
+        } catch (InsufficientResourcesException e) {
+            e.printStackTrace();
+        } catch (CatanException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -101,8 +133,12 @@ public class Player
      * Updates the PlayerBank to decrement resources used and increment the appropriate DevCard count
      * @throws InsufficientResourcesException
      */
-    public void buyDevCard() throws InsufficientResourcesException {
-        bank.buyDevCard();
+    public void buyDevCard() {
+        try {
+            bank.buyDevCard();
+        } catch (InsufficientResourcesException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -122,8 +158,12 @@ public class Player
      * @param type -- the type of DevCard to play
      * @throws InsufficientResourcesException
      */
-    public void playDevCard(DevCardType type) throws InsufficientResourcesException {
-        bank.playDevCard(type);
+    public void playDevCard(DevCardType type) {
+        try {
+            bank.playDevCard(type);
+        } catch (InsufficientResourcesException e) {
+            e.printStackTrace();
+        }
     }
     
     /**

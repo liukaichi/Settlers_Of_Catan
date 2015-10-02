@@ -1,7 +1,9 @@
 package shared.model.bank;
 
 import shared.definitions.DevCardType;
-import shared.model.bank.card.DevCard;
+import shared.definitions.ResourceType;
+import shared.definitions.exceptions.CatanException;
+import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
 
@@ -15,15 +17,12 @@ import java.util.Stack;
  */
 public class Bank
 {
-    private Resources resources;
+    private static Resources resources;
     private DevCards devCards;
-    private Stack<DevCardType> devCardDeck;
+    private static Stack<DevCardType> devCardDeck;
 
-    public Bank(Boolean isGameBank){
-        initialize();
-        if (isGameBank){
-            initializeDevCardDeck();
-        }
+    public Bank(boolean isGameBank){
+        initialize(isGameBank);
     }
 
     private void initializeDevCardDeck(){
@@ -45,9 +44,13 @@ public class Bank
         Collections.shuffle(devCardDeck);
     }
 
-    private void initialize(){
-        resources = new Resources();
+    private void initialize(boolean isGameBank){
+        resources = new Resources(isGameBank);
         devCards = new DevCards();
+        if (devCardDeck == null){
+            devCardDeck = new Stack<>();
+            initializeDevCardDeck();
+        }
     }
 
     public Stack<DevCardType> getDevCardDeck(){ return devCardDeck; }
@@ -70,5 +73,23 @@ public class Bank
     public DevCards getDevCards()
     {
         return devCards;
+    }
+
+    public void giveResource(ResourceType type, int num) throws InsufficientResourcesException {
+        if ((resources.getResource(type).getAmount() - num) < 0){
+            throw new InsufficientResourcesException();
+        }
+        else{
+            resources.getResource(type).subResource(num);
+        }
+    }
+
+    public void takeResource(ResourceType type, int num) throws CatanException {
+        if ((resources.getResource(type).getAmount() + num) > 19){
+            throw new CatanException();
+        }
+        else{
+            resources.getResource(type).addResource(num);
+        }
     }
 }

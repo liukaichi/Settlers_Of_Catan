@@ -1,5 +1,6 @@
 package shared.model.bank.structure;
 
+import org.junit.Before;
 import org.junit.Test;
 import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
@@ -14,7 +15,8 @@ public class StructuresTest {
     private Structures list;
 
     // Used a constructor so that an Exception can be thrown
-    public StructuresTest() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         list = new Structures();
     }
 
