@@ -1,9 +1,12 @@
 package shared.model.map;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import shared.definitions.HexType;
+import shared.definitions.ResourceType;
+import shared.locations.*;
 
-import shared.definitions.*;
-import shared.locations.HexLocation;
+import java.util.Map;
 
 /**
  * Represents a Hex tile on the map.
