@@ -1,5 +1,6 @@
 package shared.model.map;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.*;
@@ -52,7 +53,67 @@ public class Hex
 
     public Hex()
     {
+        //populate maps for lookup
+        vertices = new HashMap<VertexDirection, VertexLocation>();
+        for(VertexDirection dir : VertexDirection.values())
+        {
+            vertices.put(dir, new VertexLocation(location,dir));
+        }
+        edges = new HashMap<EdgeDirection, EdgeLocation>();
+        for(EdgeDirection dir : EdgeDirection.values())
+        {
+            edges.put(dir, new EdgeLocation(location,dir));
+        }
+    }
 
+    /**
+     * Parses a JSON object into a Hex
+     * 
+     * @param json
+     *        the JSON to parse.
+     */
+    public Hex(String json)
+    {
+        this();
+        JsonParser parser = new JsonParser();
+        JsonObject hex = (JsonObject)parser.parse(json);
+        this.resourceType = ResourceType.valueOf(hex.get("resource").getAsString());
+        this.hexType = HexType.valueOf(hex.get("resource").getAsString());
+        JsonObject location = (JsonObject) hex.get("location");
+        this.location = new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt());
+        this.numberTile = hex.get("number").getAsInt();
+    }
+
+    /**
+     * @param location
+     *        the location of the hex
+     * @param hexType
+     *        the type of the hex
+     * @param resourceType
+     *        the resource type of the hex
+     * @param numberTile
+     *        the number tile on the hex
+     * @param robberPresent
+     *        if the robber is present on the hex
+     */
+    public Hex(HexLocation location, HexType hexType, ResourceType resourceType, int numberTile, boolean robberPresent)
+    {
+        this();
+        this.location = location;
+        this.hexType = hexType;
+        this.resourceType = resourceType;
+        this.numberTile = numberTile;
+        this.robberPresent = robberPresent;
+    }
+    
+    public VertexLocation getVertexLocation(VertexDirection dir)
+    {
+        return vertices.get(dir).getNormalizedLocation();
+    }
+    
+    public EdgeLocation getEdgeLocation(EdgeDirection dir)
+    {
+        return edges.get(dir).getNormalizedLocation();
     }
 
     /**
@@ -124,45 +185,6 @@ public class Hex
 	public void setRobberPresent(boolean robberPresent) {
 		this.robberPresent = robberPresent;
 	}
-
-	/**
-     * Parses a JSON object into a Hex
-     * 
-     * @param json
-     *        the JSON to parse.
-     */
-    public Hex(String json)
-    {
-        JsonParser parser = new JsonParser();
-        JsonObject hex = (JsonObject)parser.parse(json);
-        this.resourceType = ResourceType.valueOf(hex.get("resource").getAsString());
-        this.hexType = HexType.valueOf(hex.get("resource").getAsString());
-        JsonObject location = (JsonObject) hex.get("location");
-        this.location = new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt());
-        this.numberTile = hex.get("number").getAsInt();
-    }
-
-    /**
-     * @param location
-     *        the location of the hex
-     * @param hexType
-     *        the type of the hex
-     * @param resourceType
-     *        the resource type of the hex
-     * @param numberTile
-     *        the number tile on the hex
-     * @param robberPresent
-     *        if the robber is present on the hex
-     */
-    public Hex(HexLocation location, HexType hexType, ResourceType resourceType, int numberTile, boolean robberPresent)
-    {
-        this();
-        this.location = location;
-        this.hexType = hexType;
-        this.resourceType = resourceType;
-        this.numberTile = numberTile;
-        this.robberPresent = robberPresent;
-    }
 
     public void setHasRobber(boolean newHasRobber)
     {
