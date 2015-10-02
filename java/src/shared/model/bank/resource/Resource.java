@@ -12,6 +12,11 @@ public class Resource
     private ResourceType type;
     private int amount;
 
+    public Resource(ResourceType inType){
+        type = inType;
+        amount = 0;
+    }
+
     public int getAmount()
     {
         return amount;
@@ -28,7 +33,7 @@ public class Resource
      */
     public void addResource(int num)
     {
-
+        amount += num;
     }
 
     /**
@@ -37,6 +42,6 @@ public class Resource
      */
     public void subResource(int num)
     {
-
+        amount -= num;
     }
 }
