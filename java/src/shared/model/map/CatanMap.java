@@ -33,8 +33,6 @@ public class CatanMap
 	//populated on map initialization
     private List<Port> ports;
     private Map<HexLocation, Hex> hexes;
-    private Map<EdgeLocation, List<VertexLocation> > edgeVertices;
-    private Map<VertexLocation, List<EdgeLocation> > vertexEdges;
     //populated on buy
     private Map<EdgeLocation, Road> roads;
     private Map<VertexLocation, Structure> structures;
@@ -160,11 +158,9 @@ public class CatanMap
 public CatanMap() {
 	ports = new ArrayList<Port>();
 	hexes = new HashMap<HexLocation, Hex>();
-	edgeVertices = new HashMap<EdgeLocation, List<VertexLocation> >();
-	vertexEdges = new HashMap<VertexLocation, List<EdgeLocation> >();
 	roads = new HashMap<EdgeLocation, Road>();
 	structures = new HashMap<VertexLocation, Structure>();
-	radius = 2;
+	radius = -1;
 	robberLocation = new HexLocation(0,0);
 }
     /**
@@ -177,14 +173,11 @@ public CatanMap() {
 	 * @param radius
 	 * @param robberLocation
 	 */
-	public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, List<VertexLocation>> edgeVertices,
-			Map<VertexLocation, List<EdgeLocation>> vertexEdges, Map<EdgeLocation, Road> roads,
+	public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, Road> roads,
 			Map<VertexLocation, Structure> structures, int radius, HexLocation robberLocation) {
 		super();
 		this.ports = ports;
 		this.hexes = hexes;
-		this.edgeVertices = edgeVertices;
-		this.vertexEdges = vertexEdges;
 		this.roads = roads;
 		this.structures = structures;
 		this.radius = radius;

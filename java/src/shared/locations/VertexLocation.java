@@ -127,5 +127,15 @@ public class VertexLocation
 				return null;
 		}
 	}
+
+	/**
+	 * @return
+	 */
+	public List<VertexLocation> getNearbyVertices() {
+		VertexLocation normalized = this.getNormalizedLocation();
+		ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
+		normalized.get
+		return null;
+	}
 }
 
