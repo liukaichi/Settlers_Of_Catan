@@ -24,6 +24,7 @@ public class MessageLineTest
 	MessageLine messageLine; 
 	Player player; 
 	PlayerIndex index;
+	String message; 
 
 	/**
 	 * @throws java.lang.Exception
@@ -33,7 +34,7 @@ public class MessageLineTest
 	{
 		player = new Player(); 
 		index = player.getIndex(); 
-		String message = "Let's play Catan";
+		message = "Let's play Catan";
 		messageLine = new MessageLine(index, message);
 	}
 
