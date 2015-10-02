@@ -23,8 +23,8 @@ public class TradeOffer
     private Resources send, receive;
 
     public TradeOffer(Player sender, Player receiver){
-        this.sender = sender.getPlayerInfo().getPlayerIndex();
-        this.receiver = receiver.getPlayerInfo().getPlayerIndex();
+        this.sender = sender.getPlayerInfo().getPlayerIndex().getIndex();
+        this.receiver = receiver.getPlayerInfo().getPlayerIndex().getIndex();
         this.send = new Resources(false);
         this.receive = new Resources(false);
     }
