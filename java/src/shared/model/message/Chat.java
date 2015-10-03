@@ -16,7 +16,7 @@ import shared.definitions.PlayerIndex;
  */
 public class Chat {
 
-	private Chat(String json)
+	public Chat(String json)
 	{
 		JsonParser parser = new JsonParser();
 		JsonObject chat = (JsonObject) parser.parse(json);
