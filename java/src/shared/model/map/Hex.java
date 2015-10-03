@@ -249,20 +249,37 @@ public class Hex
             return false;
         
         Hex other = (Hex) obj;
-        if (!this.edges.equals(other.edges))
+        if(this.edges.keySet().size() != other.edges.keySet().size())
             return false;
+        for(EdgeDirection key : this.edges.keySet())
+        {
+            if(!this.edges.get(key).equals(other.edges.get(key)))
+                return false;
+        }
         if (!this.hexType.equals(other.hexType))
             return false;
-        if (this.location != other.location)
+        if (!this.location.equals(other.location))
             return false;
         if (this.numberTile != other.numberTile)
             return false;
-        if (!this.resourceType.equals(other.resourceType))
+        if(this.resourceType == null)
+        {
+        	if(other.resourceType != null)
+        		return false;
+        }
+        else if (!this.resourceType.equals(other.resourceType))
+        {
             return false;
+        }
         if (this.robberPresent != other.robberPresent)
             return false;
-        if (!this.vertices.equals(other.vertices))
+        if(this.vertices.keySet().size() != other.vertices.keySet().size())
             return false;
+        for(VertexDirection key : this.vertices.keySet())
+        {
+            if(!this.vertices.get(key).equals(other.vertices.get(key)))
+                return false;
+        }
         return true;
     }
 }

@@ -540,7 +540,8 @@ public class CatanMap
             return false;
         for(int i = 0; i < this.ports.size(); i++)
         {
-            if(this.ports.get(i).equals(other.ports.get(i)));
+            if(!this.ports.get(i).equals(other.ports.get(i)))
+            	return false;
         }
         if (this.radius != other.radius)
             return false;

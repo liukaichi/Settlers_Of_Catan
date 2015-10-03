@@ -123,9 +123,9 @@ public class Port
             return false;
         if (!this.location.equals(other.location))
             return false;
-        if (this.ratio.equals(other.ratio))
+        if (this.ratio.getRatio() != other.ratio.getRatio())
             return false;
-        if (this.resource.equals(other.resource))
+        if (this.resource.ordinal() != other.resource.ordinal())
             return false;
         return true;
 	}

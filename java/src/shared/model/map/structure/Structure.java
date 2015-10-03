@@ -80,9 +80,9 @@ public abstract class Structure
         Structure other = (Structure) obj;
         if (!this.location.equals(other.location))
             return false;
-        if (!this.owner.equals(other.owner))
+        if (this.owner.getIndex() !=other.owner.getIndex())
             return false;
-        if (this.victoryPointValue == other.victoryPointValue)
+        if (this.victoryPointValue != other.victoryPointValue)
             return false;
         return true;
 	}
