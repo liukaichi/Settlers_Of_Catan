@@ -21,7 +21,7 @@ import shared.model.player.Player;
 public class ChatTest 
 {
 	Player player; 
-	PlayerIndex index = player.getIndex();
+	PlayerIndex index = player.getPlayerInfo().getPlayerIndex();
 	Chat chat; 
 	MessageLine messageLine;
 	String message;
@@ -51,7 +51,7 @@ public class ChatTest
 		chat.addMessageLine(messageLine); 
 		List<MessageLine> messageLines = chat.getMessages();
 		
-        //assert(returnValue.equals(chat.toString())); 
+		  //assert(returnValue.equals(chat.toString()));
 	}
 
 }

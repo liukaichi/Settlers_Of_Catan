@@ -39,4 +39,10 @@ public enum PlayerIndex
     {
         return index;
     }
+    
+    @Override
+    public String toString()
+    {
+
+    }
 }
