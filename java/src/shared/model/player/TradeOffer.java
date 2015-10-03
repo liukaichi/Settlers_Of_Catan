@@ -1,9 +1,7 @@
 package shared.model.player;
 
-import com.sun.org.apache.regexp.internal.RESyntaxException;
-import shared.definitions.PlayerIndex;
+import com.google.gson.JsonObject;
 import shared.definitions.ResourceType;
-import shared.model.bank.resource.Resource;
 import shared.model.bank.resource.Resources;
 
 /**
@@ -14,23 +12,58 @@ import shared.model.bank.resource.Resources;
 public class TradeOffer
 {
 	/**
-	 * Player objects of the sender and receiver of player trade
+	 * player index of the sender and receiver of player trade
 	 */
     private int sender, receiver;
     /**
      * Object that represents the trade offer made by a player
      */
-    private Resources send, receive;
+    private Resources offer;
 
     public TradeOffer(Player sender, Player receiver){
         this.sender = sender.getPlayerInfo().getPlayerIndex().getIndex();
         this.receiver = receiver.getPlayerInfo().getPlayerIndex().getIndex();
-        this.send = new Resources(false);
-        this.receive = new Resources(false);
+        this.offer = new Resources(false);
     }
 
     public int getSender() {
         return sender;
+    }
+
+    @Override
+    public String toString()
+    {
+        /*
+        {
+  "type": "offerTrade",
+  "playerIndex": "integer",
+  "offer": {
+    "brick": "integer",
+    "ore": "integer",
+    "sheep": "integer",
+    "wheat": "integer",
+    "wood": "integer"
+  },
+  "receiver": "integer"
+}
+*/
+        JsonObject tradeOffer = new JsonObject();
+        {
+            tradeOffer.addProperty("type", "offerTrade");
+            tradeOffer.addProperty("playerIndex", this.sender);
+
+            JsonObject jsonOffer = new JsonObject();
+            {
+                jsonOffer.addProperty("brick", offer.getResource(ResourceType.BRICK).getAmount());
+                jsonOffer.addProperty("ore", offer.getResource(ResourceType.ORE).getAmount());
+                jsonOffer.addProperty("sheep", offer.getResource(ResourceType.SHEEP).getAmount());
+                jsonOffer.addProperty("wheat", offer.getResource(ResourceType.WHEAT).getAmount());
+                jsonOffer.addProperty("wood", offer.getResource(ResourceType.WOOD).getAmount());
+            }
+            tradeOffer.add("offer", jsonOffer);
+            tradeOffer.addProperty("receiver", this.receiver);
+        }
+        return tradeOffer.toString();
     }
 
     public void setSender(int sender) {
@@ -45,35 +78,16 @@ public class TradeOffer
         this.receiver = receiver;
     }
 
-    public Resources getSend() {
-        return send;
+    public void addToOffer(ResourceType type, int num){
+        offer.getResource(type).addResource(num);
     }
 
-    public void setSend(Resources send) {
-        this.send = send;
+    public void subFromOffer(ResourceType type, int num){
+        offer.getResource(type).subResource(num);
     }
 
-    public Resources getReceive() {
-        return receive;
-    }
-
-    public void setReceive(Resources receive) {
-        this.receive = receive;
-    }
-
-    public void addToSend(ResourceType type, int num){
-        send.getResource(type).addResource(num);
-    }
-
-    public void subFromSend(ResourceType type, int num){
-        send.getResource(type).subResource(num);
-    }
-
-    public void addToReceive(ResourceType type, int num){
-        receive.getResource(type).addResource(num);
-    }
-
-    public void subFromReceive(ResourceType type, int num){
-        receive.getResource(type).subResource(num);
+    public Resources getOffer()
+    {
+        return offer;
     }
 }

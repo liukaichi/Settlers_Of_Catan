@@ -17,8 +17,8 @@ public class GameInfo
 {
     private int id;
     private String title;
-    private List<PlayerInfo> players; // Use list of Player.
-    // private List<Player> players;
+    private List<PlayerInfo> players; // Use list of player.
+    // private List<player> players;
 
     public GameInfo()
     {

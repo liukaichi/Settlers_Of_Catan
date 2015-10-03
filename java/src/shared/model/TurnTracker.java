@@ -2,7 +2,6 @@ package shared.model;
 
 import client.data.PlayerInfo;
 import shared.definitions.PlayerIndex;
-import shared.definitions.StructureType;
 import shared.definitions.TurnStatus;
 import shared.model.bank.PlayerBank;
 import shared.model.player.Player;
@@ -36,16 +35,16 @@ public class TurnTracker
     */    
     public void updateLongestRoad(PlayerBank playerLongestRoad)
     {
-//    	if (playerLongestRoad.getAmount(ROAD) > longestRoad.getClass().)
+//    	if (playerLongestRoad.amountOf(type))
     }
     
     /**
     * Updates the largest army counter
     * A player has the largest army if he or she has at least 3 knights
     */    
-    public void updateLargestArmy(PlayerBank playerLargestArmy)
+    public void updateLargestArmy(PlayerIndex playerLargestArmy)
     {
-//        if (playerLargestArmy.getKnights() > largestArmy.)
+        
     }
     
     /**
@@ -53,7 +52,7 @@ public class TurnTracker
     */   
     public void updateStatus(TurnStatus playerTurnStatus)
     {
-        status = playerTurnStatus; 
+        
     }
 
 	public PlayerIndex getCurrentTurn() 

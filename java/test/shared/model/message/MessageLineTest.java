@@ -33,7 +33,7 @@ public class MessageLineTest
 	public void setUp() throws Exception 
 	{
 		player = new Player(); 
-		index = player.getIndex(); 
+		index = player.getPlayerInfo().getPlayerIndex();
 		message = "Let's play Catan";
 		messageLine = new MessageLine(index, message);
 	}

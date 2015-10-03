@@ -24,18 +24,27 @@ public class TradeOfferTest {
 
             assertEquals(0, offer.getSender());
             assertEquals(1, offer.getReceiver());
-            assertEquals(0, offer.getReceive().totalResources());
-            assertEquals(0, offer.getSend().totalResources());
+            assertEquals(0, offer.getOffer().totalResources());
 
-            offer.addToReceive(ResourceType.SHEEP, 2);
-            offer.addToSend(ResourceType.BRICK, 2);
+            offer.addToOffer(ResourceType.SHEEP, 2);
+            offer.addToOffer(ResourceType.BRICK, -2);
 
-            assertEquals(2, offer.getSend().getResource(ResourceType.BRICK).getAmount());
-            assertEquals(2, offer.getReceive().getResource(ResourceType.SHEEP).getAmount());
+            assertEquals(-2, offer.getOffer().getResource(ResourceType.BRICK).getAmount());
+            assertEquals(2, offer.getOffer().getResource(ResourceType.SHEEP).getAmount());
 
         } catch (CatanException e) {
             e.printStackTrace();
         }
+
+    }
+    /**
+     *
+     * Method: toString()
+     *
+     */
+    @Test
+    public void testSerialize() throws Exception {
+
 
     }
 }

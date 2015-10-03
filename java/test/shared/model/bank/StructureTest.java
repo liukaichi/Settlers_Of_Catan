@@ -1,4 +1,4 @@
-package shared.model.bank.structure;
+package shared.model.bank;
 
 import junit.framework.TestCase;
 import static org.junit.Assert.*;
@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
+import shared.model.bank.structure.Structure;
 
 /**
  * Created by Adrian on 9/28/2015.

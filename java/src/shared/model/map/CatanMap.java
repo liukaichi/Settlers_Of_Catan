@@ -1,23 +1,15 @@
 package shared.model.map;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
-
+import com.google.gson.*;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
-import shared.locations.*;
-import shared.model.map.structure.*;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.stream.JsonReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the board game map of the Catan game
@@ -156,11 +148,11 @@ public CatanMap() {
 	radius = -1;
 	robberLocation = new HexLocation(0,0);
 }
-    /**
+
+	/**
+	 *
 	 * @param ports
 	 * @param hexes
-	 * @param edgeVertices
-	 * @param vertexEdges
 	 * @param roads
 	 * @param structures
 	 * @param radius
