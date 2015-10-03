@@ -55,7 +55,7 @@ public class ClientModel
         gameInfo = new GameInfo();
         JsonArray players = model.getAsJsonArray("players");
         // TODO Should be: for(Player player : gameinfo.getPlayers();
-        for (PlayerInfo player : gameInfo.getPlayers()){
+        for (Player player : gameInfo.getPlayers()){
             gameInfo.addPlayer(new Player(player.toString()));
         }
 
@@ -144,7 +144,7 @@ public class ClientModel
         JsonArray players = new JsonArray();
 
         // TODO Should be: for(Player player : gameinfo.getPlayers();
-        for (PlayerInfo player : gameInfo.getPlayers()){
+        for (Player player : gameInfo.getPlayers()){
             players.add(parser.parse(player.toString()));
         }
         model.add("players", players);

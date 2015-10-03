@@ -1,6 +1,10 @@
 package client.data;
 
-import java.util.*;
+import shared.model.player.Player;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Used to pass game information into views<br>
@@ -17,14 +21,14 @@ public class GameInfo
 {
     private int id;
     private String title;
-    private List<PlayerInfo> players; // Use list of player.
+    private List<Player> players; // Use list of player.
     // private List<player> players;
 
     public GameInfo()
     {
         setId(-1);
         setTitle("");
-        players = new ArrayList<PlayerInfo>();
+        players = new ArrayList<Player>();
     }
 
     public GameInfo(int id, String title)
@@ -54,15 +58,22 @@ public class GameInfo
         this.title = title;
     }
 
-    public void addPlayer(PlayerInfo newPlayer)
+    public void addPlayer(Player newPlayer)
     {
         if (players.size() < 4)
         {
             players.add(newPlayer);
         }
     }
+    public void addPlayer(PlayerInfo newPlayer)
+    {
+        if (players.size() < 4)
+        {
+            players.add(new Player(newPlayer));
+        }
+    }
 
-    public List<PlayerInfo> getPlayers()
+    public List<Player> getPlayers()
     {
         return Collections.unmodifiableList(players);
     }

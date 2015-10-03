@@ -9,20 +9,11 @@ import shared.definitions.DevCardType;
 import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
-import shared.model.bank.*;
-import shared.model.bank.card.DevCard;
-import shared.model.bank.card.DevCards;
-import shared.model.bank.resource.Resource;
-import shared.model.bank.resource.Resources;
-import shared.model.bank.structure.Structure;
-import shared.model.map.structure.Road;
 import shared.model.bank.Bank;
 import shared.model.bank.PlayerBank;
 import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
-import shared.model.bank.structure.Structure;
-import shared.model.map.structure.Road;
 
 /**
  * Represents a player playing the game. There can be up to 4 players in a
@@ -61,6 +52,9 @@ public class Player
         playedDev = false;
     }
 
+    public Player(PlayerInfo playerInfo){
+        info = playerInfo;
+    }
     public Player(String json){
         JsonElement jele = new JsonParser().parse(json);
         JsonObject jobj = jele.getAsJsonObject();
