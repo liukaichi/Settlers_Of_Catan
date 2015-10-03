@@ -2,6 +2,11 @@ package shared.model.message;
 
 import java.util.List;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import shared.definitions.PlayerIndex;
 
 /**
@@ -9,8 +14,22 @@ import shared.definitions.PlayerIndex;
  * 
  * @see MessageLine
  */
-public class Chat
-{
+public class Chat {
+
+	private Chat(String json)
+	{
+		JsonParser parser = new JsonParser();
+		JsonObject chat = (JsonObject) parser.parse(json);
+		JsonArray messageLines = chat.getAsJsonArray("lines");
+		for(JsonElement messageLine : messageLines)
+		{
+			JsonObject messageLineObj = (JsonObject) messageLine;
+			
+			MessageLine newMessageLine = new MessageLine(messageLineObj.toString());
+			lines.add(newMessageLine);
+		}
+	}
+
     /**
      * An array of MessageLine.
      */
