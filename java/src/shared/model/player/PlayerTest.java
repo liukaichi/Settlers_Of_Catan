@@ -9,7 +9,7 @@ import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 import shared.model.bank.Bank;
 import shared.model.bank.card.DevCard;
-import shared.model.bank.resource.ResourceType;
+import shared.model.bank.resource.Resource;
 
 import static org.junit.Assert.*;
 
@@ -22,19 +22,19 @@ public class PlayerTest {
     Bank gameBank;
 
     // Helper methods
-    public ResourceType sheep(){
+    public Resource sheep(){
         return player.getBank().getResources().getResource(ResourceType.SHEEP);
     }
-    public ResourceType wheat(){
+    public Resource wheat(){
         return player.getBank().getResources().getResource(ResourceType.WHEAT);
     }
-    public ResourceType wood(){
+    public Resource wood(){
         return player.getBank().getResources().getResource(ResourceType.WOOD);
     }
-    public ResourceType brick(){
+    public Resource brick(){
         return player.getBank().getResources().getResource(ResourceType.BRICK);
     }
-    public ResourceType ore(){
+    public Resource ore(){
         return player.getBank().getResources().getResource(ResourceType.ORE);
     }
 
