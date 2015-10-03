@@ -5,10 +5,17 @@ package shared.model.map;
 
 import static org.junit.Assert.*;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import org.junit.Test;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 
 import shared.definitions.PlayerIndex;
 import shared.locations.HexLocation;
@@ -28,7 +35,22 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testCatanMap() {
-		fail("Not yet implemented"); // TODO
+	    String json = null;
+        try
+        {
+            json = new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json")));
+        } catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+		CatanMap map = new CatanMap(json);
+		JsonParser parser = new JsonParser();
+		JsonObject obj1 = (JsonObject)parser.parse(map.toString());
+        JsonObject obj2 = (JsonObject)parser.parse(json);
+		boolean same = obj1.equals(obj2);
+		assertTrue(same);
+		
 	}
 
 	/**
