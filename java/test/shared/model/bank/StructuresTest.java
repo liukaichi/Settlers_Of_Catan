@@ -1,9 +1,11 @@
-package shared.model.bank.structure;
+package shared.model.bank;
 
 import org.junit.Before;
 import org.junit.Test;
 import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
+import shared.model.bank.structure.Structure;
+import shared.model.bank.structure.Structures;
 
 import static org.junit.Assert.*;
 

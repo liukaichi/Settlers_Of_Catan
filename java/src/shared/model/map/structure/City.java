@@ -34,7 +34,7 @@ public class City extends Structure
 		JsonObject city = (JsonObject) parser.parse(json);
 		super.setOwner(PlayerIndex.fromInt(city.get("owner").getAsInt()));
 		JsonObject location = (JsonObject) city.get("location");
-		super.setLocation(new VertexLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), VertexDirection.valueOf(location.get("direction").getAsString())));
+		super.setLocation(new VertexLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), VertexDirection.fromAbreviation(location.get("direction").getAsString())));
 	}
 
 }

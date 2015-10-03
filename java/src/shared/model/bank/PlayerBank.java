@@ -13,7 +13,7 @@ import shared.model.bank.structure.Structure;
 import shared.model.bank.structure.Structures;
 
 /**
- * This class extends Bank with properties and methods specific to the Player
+ * This class extends Bank with properties and methods specific to the player
  */
 public class PlayerBank extends Bank
 {
@@ -47,6 +47,26 @@ public class PlayerBank extends Bank
     @Override
     public Resources getResources() {
         return playerResources;
+    }
+
+    public void setKnights(int knights) {
+        this.knights = knights;
+    }
+
+    public void setVictoryPoints(int victoryPoints) {
+        this.victoryPoints = victoryPoints;
+    }
+
+    public void setMonuments(int monuments) {
+        this.monuments = monuments;
+    }
+
+    public void setPlayerResources(Resources playerResources) {
+        this.playerResources = playerResources;
+    }
+
+    public void setPlayerDevCards(DevCards playerDevCards) {
+        this.playerDevCards = playerDevCards;
     }
 
     public int getKnights() {
@@ -280,7 +300,7 @@ public class PlayerBank extends Bank
     }
 
     /**
-     * Determines if a Player has control over a Port
+     * Determines if a player has control over a Port
      * 
      * @param type
      *        the type of Port to check
