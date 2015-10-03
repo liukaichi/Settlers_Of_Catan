@@ -5,7 +5,6 @@ import java.lang.reflect.Type;
 import com.google.gson.*;
 
 import shared.definitions.*;
-import shared.model.bank.resource.ResourceType;
 
 /**
  * Year_of_Plenty command object.
