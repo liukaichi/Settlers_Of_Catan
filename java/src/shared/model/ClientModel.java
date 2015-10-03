@@ -168,5 +168,6 @@ public class ClientModel
         model.addProperty("winner", winner.getIndex());
         model.addProperty("version",version);
 
+        return model.toString();
     }
 }
