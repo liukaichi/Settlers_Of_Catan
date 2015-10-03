@@ -38,7 +38,14 @@ public class Port
 		JsonParser parser = new JsonParser();
 		JsonObject port = (JsonObject) parser.parse(json);
 		this.ratio = TradeRatio.fromInt(port.get("ratio").getAsInt());
-		this.resource = PortType.valueOf(port.get("resource").getAsString());
+		if(port.has("resource"))
+		{
+	        this.resource = PortType.valueOf(port.get("resource").getAsString().toUpperCase());
+		}
+		else
+		{
+		    this.resource = PortType.THREE;
+		}
 		this.direction = EdgeDirection.fromAbreviation(port.get("direction").getAsString());
 		JsonObject location = port.getAsJsonObject("location");
 		this.location = new HexLocation(location.get("x").getAsInt(), location.get("y").getAsInt());
@@ -75,9 +82,19 @@ public class Port
 	{
 	    JsonObject port = new JsonObject();
 	    {
-	        port.addProperty("ratio", 2);
-	        port.addProperty("resource", this.resource.toString());
-	        port.addProperty("direction", this.direction.toString());
+	        port.addProperty("ratio", this.ratio.getRatio());
+	        if(this.resource != null)
+	        {
+	            if(this.resource.equals(PortType.THREE))
+	            {
+	                //do nothing
+	            }
+	            else
+	            {
+	                port.addProperty("resource", this.resource.toString().toLowerCase());
+	            }
+	        }
+	        port.addProperty("direction", EdgeDirection.toAbreviation(this.direction));
 	        JsonObject location = new JsonObject();
 	        {
 	            location.addProperty("x", this.location.getX());
@@ -85,6 +102,6 @@ public class Port
 	        }
 	        port.add("location", location);
 	    }
-	    return port.getAsString();
+	    return port.toString();
 	}
 }

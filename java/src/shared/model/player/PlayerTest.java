@@ -64,12 +64,30 @@ public class PlayerTest {
     }
 
     @Test
-    public void testGetPlayerInfo() throws Exception {
+    public void testSerialization(){
+        try {
+            Player player = new Player();
+            player.getPlayerInfo().setName("Wazowski");
+            String json = player.toString();
+            String expected = "{\"cities\":0,\"color\":\"white\",\"discarded\":false,\"monuments\":0,\"name\":\"Wazowski\"," +
+                    "\"newDevCards\":{\"monopoly\":0,\"monument\":0,\"roadBuilding\":0,\"soldier\":0,\"yearOfPlenty\":0}," +
+                    "\"oldDevCards\":{\"monopoly\":0,\"monument\":0,\"roadBuilding\":0,\"soldier\":0,\"yearOfPlenty\":0}," +
+                    "\"playerIndex\":-1,\"playedDevCard\":false,\"playerID\":-1," +
+                    "\"resources\":{\"brick\":0,\"ore\":0,\"sheep\":0,\"wheat\":0,\"wood\":0}," +
+                    "\"roads\":0,\"settlements\":0,\"soldiers\":0,\"victoryPoints\":0}";
+            assertEquals(expected, json);
 
+            Player player2 = new Player();
+            String json2 = player2.toString();
+            assertNotEquals(json, json2);
+
+            player2 = new Player(json);
+            json2 = player2.toString();
+            assertEquals(json, json2);
+
+        } catch (CatanException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Test
-    public void testGetName() throws Exception {
-
-    }
 }

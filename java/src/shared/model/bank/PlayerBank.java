@@ -49,6 +49,26 @@ public class PlayerBank extends Bank
         return playerResources;
     }
 
+    public void setKnights(int knights) {
+        this.knights = knights;
+    }
+
+    public void setVictoryPoints(int victoryPoints) {
+        this.victoryPoints = victoryPoints;
+    }
+
+    public void setMonuments(int monuments) {
+        this.monuments = monuments;
+    }
+
+    public void setPlayerResources(Resources playerResources) {
+        this.playerResources = playerResources;
+    }
+
+    public void setPlayerDevCards(DevCards playerDevCards) {
+        this.playerDevCards = playerDevCards;
+    }
+
     public int getKnights() {
         return knights;
     }
