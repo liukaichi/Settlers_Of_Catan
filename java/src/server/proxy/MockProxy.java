@@ -1,5 +1,6 @@
 package server.proxy;
 
+
 import client.data.GameInfo;
 import client.facade.ClientFacade;
 import client.utils.BufferedReaderParser;
@@ -139,14 +140,14 @@ public class MockProxy implements IProxy
     }
 
     @Override
-    public List<MoveCommand> getCommands()
+    public GetCommandsResponse getCommands()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ClientModel postCommands(List<MoveCommand> commands)
+    public ClientModel postCommands(PostCommandsRequest commands)
     {
         //shouldn't need to be done. Used only when debugging the the server running.
         return null;

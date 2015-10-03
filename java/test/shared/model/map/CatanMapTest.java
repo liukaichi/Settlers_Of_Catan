@@ -3,6 +3,9 @@
  */
 package shared.model.map;
 
+import com.google.gson.Gson;
+import org.junit.Test;
+import com.google.gson.Gson;
 import static org.junit.Assert.*;
 
 import java.io.FileReader;
@@ -11,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import org.junit.Test;
+
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
