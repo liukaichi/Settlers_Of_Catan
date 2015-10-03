@@ -1,9 +1,7 @@
 package shared.model;
 
 import client.data.GameInfo;
-import client.data.PlayerInfo;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.PlayerIndex;
@@ -18,8 +16,8 @@ import shared.model.player.TradeOffer;
 
 /**
  * The client model for the Catan game
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public class ClientModel
 {
@@ -55,7 +53,8 @@ public class ClientModel
         gameInfo = new GameInfo();
         JsonArray players = model.getAsJsonArray("players");
         // TODO Should be: for(Player player : gameinfo.getPlayers();
-        for (Player player : gameInfo.getPlayers()){
+        for (Player player : gameInfo.getPlayers())
+        {
             gameInfo.addPlayer(new Player(player.toString()));
         }
 
@@ -68,12 +67,10 @@ public class ClientModel
         winner = PlayerIndex.fromInt(model.getAsJsonPrimitive("winner").getAsInt());
         version = model.getAsJsonPrimitive("version").getAsInt();
 
-        model.add("log", parser.parse(log.toString()));
-        model.add("chat", parser.parse(chat.toString()));
-        model.add("bank", parser.parse(bank.getResources().toString()));
-        model.add("turnTracker", parser.parse(turnTracker.toString()));
-        model.addProperty("winner", winner.getIndex());
-        model.addProperty("version",version);
+        if (model.has("tradeOffer"))
+        {
+            tradeOffer = new TradeOffer(model.getAsJsonObject("tradeOffer").toString());
+        }
 
     }
 
@@ -131,12 +128,14 @@ public class ClientModel
     {
         this.winner = winner;
     }
-    public void setVersion(int version){
+
+    public void setVersion(int version)
+    {
         this.version = version;
     }
 
-    @Override
-    public String toString(){
+    @Override public String toString()
+    {
         JsonParser parser = new JsonParser();
         JsonObject model = new JsonObject();
         model.add("deck", parser.parse(bank.getDevCards().toString(DevCard.AmountType.PLAYABLE)));
@@ -144,20 +143,23 @@ public class ClientModel
         JsonArray players = new JsonArray();
 
         // TODO Should be: for(Player player : gameinfo.getPlayers();
-        for (Player player : gameInfo.getPlayers()){
+        for (Player player : gameInfo.getPlayers())
+        {
             players.add(parser.parse(player.toString()));
         }
         model.add("players", players);
 
         JsonArray logLines = new JsonArray();
         // TODO The line toString needs to be changed according to how chats are structured.
-        for (MessageLine line : getLog().getMessages()){
+        for (MessageLine line : getLog().getMessages())
+        {
             logLines.add(parser.parse(line.toString()));
         }
 
         JsonArray chatLines = new JsonArray();
         // TODO The chat toString needs to be changed according to how chats are structured.
-        for (MessageLine line : getLog().getMessages()){
+        for (MessageLine line : getLog().getMessages())
+        {
             chatLines.add(parser.parse(line.toString()));
         }
 
@@ -166,7 +168,11 @@ public class ClientModel
         model.add("bank", parser.parse(bank.getResources().toString()));
         model.add("turnTracker", parser.parse(turnTracker.toString()));
         model.addProperty("winner", winner.getIndex());
-        model.addProperty("version",version);
+        model.addProperty("version", version);
+
+        if (tradeOffer != null){
+            model.add("tradeOffer", parser.parse(tradeOffer.toString()));
+        }
 
         return model.toString();
     }
