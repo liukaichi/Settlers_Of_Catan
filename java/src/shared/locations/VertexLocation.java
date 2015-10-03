@@ -1,131 +1,137 @@
 package shared.locations;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Type;
 
-import shared.model.map.Hex;
-import shared.model.map.structure.Road;
+import com.google.gson.*;
 
 /**
  * Represents the location of a vertex on a hex map
  */
-public class VertexLocation
+public class VertexLocation implements JsonSerializer<VertexLocation>
 {
-	private HexLocation hexLoc;
-	private VertexDirection dir;
-	
-	public VertexLocation(HexLocation hexLoc, VertexDirection dir)
-	{
-		setHexLoc(hexLoc);
-		setDir(dir);
-	}
-	
-	public HexLocation getHexLoc()
-	{
-		return hexLoc;
-	}
-	
-	private void setHexLoc(HexLocation hexLoc)
-	{
-		if(hexLoc == null)
-		{
-			throw new IllegalArgumentException("hexLoc cannot be null");
-		}
-		this.hexLoc = hexLoc;
-	}
-	
-	public VertexDirection getDir()
-	{
-		return dir;
-	}
-	
-	private void setDir(VertexDirection direction)
-	{
-		this.dir = direction;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return "VertexLocation [hexLoc=" + hexLoc + ", dir=" + dir + "]";
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((dir == null) ? 0 : dir.hashCode());
-		result = prime * result + ((hexLoc == null) ? 0 : hexLoc.hashCode());
-		return result;
-	}
+    private HexLocation hexLoc;
+    private VertexDirection dir;
 
-	/** Equals function comparing direction and hex location
-	 *
-	 * @param obj Object to be compared to
-	 * @return True if equal, otherwise false.
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if(this == obj)
-			return true;
-		if(obj == null)
-			return false;
-		if(getClass() != obj.getClass())
-			return false;
-		VertexLocation other = (VertexLocation)obj;
-		if(dir != other.dir)
-			return false;
-		if(hexLoc == null)
-		{
-			if(other.hexLoc != null)
-				return false;
-		}
-		else if(!hexLoc.equals(other.hexLoc))
-			return false;
-		return true;
-	}
-	
-	/**
-	 * Returns a canonical (i.e., unique) value for this vertex location. Since
-	 * each vertex has three different locations on a map, this method converts
-	 * a vertex location to a single canonical form. This is useful for using
-	 * vertex locations as map keys.
-	 * 
-	 * @return Normalized vertex location
-	 */
-	public VertexLocation getNormalizedLocation()
-	{
-		
-		// Return location that has direction NW or NE
-		
-		switch (dir)
-		{
-			case NorthWest:
-			case NorthEast:
-				return this;
-			case West:
-				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.SouthWest),
-										  VertexDirection.NorthEast);
-			case SouthWest:
-				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.South),
-										  VertexDirection.NorthWest);
-			case SouthEast:
-				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.South),
-										  VertexDirection.NorthEast);
-			case East:
-				return new VertexLocation(
-										  hexLoc.getNeighborLoc(EdgeDirection.SouthEast),
-										  VertexDirection.NorthWest);
-			default:
-				assert false;
-				return null;
-		}
-	}
+    public VertexLocation(HexLocation hexLoc, VertexDirection dir)
+    {
+        setHexLoc(hexLoc);
+        setDir(dir);
+    }
+
+    public HexLocation getHexLoc()
+    {
+        return hexLoc;
+    }
+
+    private void setHexLoc(HexLocation hexLoc)
+    {
+        if (hexLoc == null)
+        {
+            throw new IllegalArgumentException("hexLoc cannot be null");
+        }
+        this.hexLoc = hexLoc;
+    }
+
+    public VertexDirection getDir()
+    {
+        return dir;
+    }
+
+    private void setDir(VertexDirection direction)
+    {
+        this.dir = direction;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "VertexLocation [hexLoc=" + hexLoc + ", dir=" + dir + "]";
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((dir == null) ? 0 : dir.hashCode());
+        result = prime * result + ((hexLoc == null) ? 0 : hexLoc.hashCode());
+        return result;
+    }
+
+    /**
+     * Equals function comparing direction and hex location
+     *
+     * @param obj
+     *        Object to be compared to
+     * @return True if equal, otherwise false.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        VertexLocation other = (VertexLocation) obj;
+        if (dir != other.dir)
+            return false;
+        if (hexLoc == null)
+        {
+            if (other.hexLoc != null)
+                return false;
+        }
+        else if (!hexLoc.equals(other.hexLoc))
+            return false;
+        return true;
+    }
+
+    /**
+     * Returns a canonical (i.e., unique) value for this vertex location. Since
+     * each vertex has three different locations on a map, this method converts
+     * a vertex location to a single canonical form. This is useful for using
+     * vertex locations as map keys.
+     * 
+     * @return Normalized vertex location
+     */
+    public VertexLocation getNormalizedLocation()
+    {
+
+        // Return location that has direction NW or NE
+
+        switch (dir)
+        {
+        case NorthWest:
+        case NorthEast:
+            return this;
+        case West:
+            return new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.SouthWest), VertexDirection.NorthEast);
+        case SouthWest:
+            return new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.South), VertexDirection.NorthWest);
+        case SouthEast:
+            return new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.South), VertexDirection.NorthEast);
+        case East:
+            return new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.SouthEast), VertexDirection.NorthWest);
+        default:
+            assert false;
+            return null;
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
+     * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+     */
+    @Override
+    public JsonElement serialize(VertexLocation src, Type srcType, JsonSerializationContext context)
+    {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("x", src.getNormalizedLocation().getHexLoc().getX());
+        obj.addProperty("y", src.getNormalizedLocation().getHexLoc().getY());
+        obj.addProperty("direction", src.dir.toString());
+        return obj;
+    }
 }
-

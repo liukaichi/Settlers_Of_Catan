@@ -5,6 +5,8 @@ package shared.communication;
 
 import java.util.*;
 
+import com.google.gson.*;
+
 import shared.definitions.AIType;
 
 /**
@@ -32,6 +34,14 @@ public class ListAIResponse
     public ListAIResponse(String json)
     {
         this();
+        JsonParser parser = new JsonParser();
+        JsonArray array = (JsonArray) parser.parse(json);
+        for (JsonElement element : array)
+        {
+            JsonPrimitive prim = (JsonPrimitive) element;
+            AIType type = AIType.valueOf(prim.getAsString());
+            aiTypes.add(type);
+        }
     }
 
     public List<AIType> getAITypes()

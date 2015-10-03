@@ -1,5 +1,9 @@
 package shared.communication;
 
+import java.lang.reflect.Type;
+
+import com.google.gson.*;
+
 /**
  * Credentials class holds the login information for each player. This validates
  * that the user can login and begin game play.
@@ -7,7 +11,7 @@ package shared.communication;
  * @author amandafisher
  *
  */
-public class Credentials
+public class Credentials implements JsonSerializer<Credentials>
 {
 
     private Username username;
@@ -26,9 +30,9 @@ public class Credentials
         setPassword(password);
     }
 
-    public Username getUsername()
+    public String getUsername()
     {
-        return username;
+        return username.getUsername();
     }
 
     public void setUsername(String username)
@@ -54,7 +58,8 @@ public class Credentials
     @Override
     public String toString()
     {
-        return "{\"username\":\"" + username.getUsername() + "\",\"password\":\"" + password.getPassword() + "\"}";
+        return "{\"username\":\"" + username.getUsername() + "\",\"password\":\"" + password.getPasswordPlainText()
+                + "\"}";
     }
 
     @Override
@@ -81,15 +86,32 @@ public class Credentials
         {
             if (other.password != null)
                 return false;
-        } else if (!password.equals(other.password))
+        }
+        else if (!password.equals(other.password))
             return false;
         if (username == null)
         {
             if (other.username != null)
                 return false;
-        } else if (!username.equals(other.username))
+        }
+        else if (!username.equals(other.username))
             return false;
         return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
+     * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+     */
+    @Override
+    public JsonElement serialize(Credentials src, Type srcType, JsonSerializationContext context)
+    {
+        JsonObject creds = new JsonObject();
+        creds.addProperty("username", src.getUsername());
+        creds.addProperty("password", src.password.getPasswordPlainText());
+        return creds;
     }
 
 }

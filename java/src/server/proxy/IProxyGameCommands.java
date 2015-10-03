@@ -1,9 +1,6 @@
 package server.proxy;
 
-import java.util.List;
-
 import shared.communication.*;
-import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.AIType;
 import shared.definitions.exceptions.*;
 import shared.model.ClientModel;
@@ -304,7 +301,7 @@ public interface IProxyGameCommands
      *       </ul>
      * @return List of Commands used in the game so far.
      */
-    List<MoveCommand> getCommands();
+    GetCommandsResponse getCommands();
 
     /**
      * Executes the specified command list in the current game. <br>
@@ -339,7 +336,7 @@ public interface IProxyGameCommands
      *        The list of commands to be executed.
      * @return updated Game model after the commands are executed.
      */
-    ClientModel postCommands(List<MoveCommand> commands);
+    ClientModel postCommands(PostCommandsRequest commands);
 
     /**
      * Returns a list of supported AI player types. <br>
