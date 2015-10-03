@@ -16,15 +16,6 @@ import shared.locations.VertexLocation;
  */
 public class BuildCityCommand extends MoveCommand implements JsonSerializer<BuildCityCommand>
 {
-    /**
-     * @param playerIndex
-     * @param cityLocation
-     */
-    public BuildCityCommand(PlayerIndex playerIndex, VertexLocation cityLocation)
-    {
-        super(MoveType.buildCity, playerIndex);
-        this.cityLocation = cityLocation;
-    }
 
     /**
      * Location of the city.

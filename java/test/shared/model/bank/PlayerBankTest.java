@@ -9,7 +9,7 @@ import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.card.DevCard;
-import shared.model.bank.resource.ResourceType;
+import shared.model.bank.resource.Resource;
 import shared.model.bank.structure.Structure;
 import shared.model.player.Player;
 
@@ -44,32 +44,32 @@ public class PlayerBankTest {
     }
 
     // Helper methods to get playerResources
-    public ResourceType sheep(){
+    public Resource sheep(){
         return test.getResources().getResource(ResourceType.SHEEP);
     }
 
-    public ResourceType ore(){
+    public Resource ore(){
         return test.getResources().getResource(ResourceType.ORE);
     }
 
-    public ResourceType wood(){
+    public Resource wood(){
         return test.getResources().getResource(ResourceType.WOOD);
     }
 
-    public ResourceType wheat(){
+    public Resource wheat(){
         return test.getResources().getResource(ResourceType.WHEAT);
     }
 
-    public ResourceType brick(){
+    public Resource brick(){
         return test.getResources().getResource(ResourceType.BRICK);
     }
 
     // Helper methods to get global bank resources
-    public ResourceType gameSheep() { return bank.getResources().getResource(ResourceType.SHEEP);}
-    public ResourceType gameBrick() { return bank.getResources().getResource(ResourceType.BRICK);}
-    public ResourceType gameOre() { return bank.getResources().getResource(ResourceType.ORE);}
-    public ResourceType gameWheat() { return bank.getResources().getResource(ResourceType.WHEAT);}
-    public ResourceType gameWood() { return bank.getResources().getResource(ResourceType.WOOD);}
+    public Resource gameSheep() { return bank.getResources().getResource(ResourceType.SHEEP);}
+    public Resource gameBrick() { return bank.getResources().getResource(ResourceType.BRICK);}
+    public Resource gameOre() { return bank.getResources().getResource(ResourceType.ORE);}
+    public Resource gameWheat() { return bank.getResources().getResource(ResourceType.WHEAT);}
+    public Resource gameWood() { return bank.getResources().getResource(ResourceType.WOOD);}
 
     @Test
     public void testCanBuyDevCard() {

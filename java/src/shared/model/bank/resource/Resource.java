@@ -7,12 +7,12 @@ import shared.definitions.ResourceType;
  * @author amandafisher
  *
  */
-public class ResourceType
+public class Resource
 {
     private ResourceType type;
     private int amount;
 
-    public ResourceType(ResourceType inType){
+    public Resource(ResourceType inType){
         type = inType;
         amount = 0;
     }

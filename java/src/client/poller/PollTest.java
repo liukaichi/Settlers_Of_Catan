@@ -22,14 +22,14 @@ public class PollTest extends TestCase
         clientModel.setVersion(0);
         ClientFacade.getInstance().setModel(clientModel);
         MockProxy proxy = new MockProxy();
+
         proxy.getServerModel().setVersion(1);
         Poller poller = new Poller(proxy);
         assertFalse(poller.getCurrentVersion() == 1);
         Thread.sleep(3100);
         assertTrue(poller.getCurrentVersion() == 1);
-        proxy.getServerModel().setVersion(2);
         Thread.sleep(3100);
-        assertTrue(poller.getCurrentVersion() == 2);
+        assertTrue(poller.getCurrentVersion() == 1);
 
     }
 
