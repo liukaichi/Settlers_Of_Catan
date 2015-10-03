@@ -25,11 +25,11 @@ import java.util.Map;
 public class CatanMap
 {
     // populated on map initialization
-    private List<Port> ports;
-    private Map<HexLocation, Hex> hexes;
+    private List<Port> ports = new ArrayList<Port>();
+    private Map<HexLocation, Hex> hexes = new HashMap<HexLocation, Hex>();
     // populated on buy
-    private Map<EdgeLocation, Road> roads;
-    private Map<VertexLocation, Structure> structures;
+    private Map<EdgeLocation, Road> roads = new HashMap<EdgeLocation, Road>();
+    private Map<VertexLocation, Structure> structures = new HashMap<VertexLocation, Structure>();
     private int radius;
     private HexLocation robberLocation;
 
@@ -514,5 +514,53 @@ public class CatanMap
         edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
         edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
         return edges;
+    }
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        
+        CatanMap other = (CatanMap) obj;
+        if(this.hexes.keySet().size() != other.hexes.keySet().size())
+            return false;
+        for(HexLocation key : this.hexes.keySet())
+        {
+            if(!this.hexes.get(key).equals(other.hexes.get(key)))
+                return false;
+        }
+        if(this.ports.size() != other.ports.size())
+            return false;
+        for(int i = 0; i < this.ports.size(); i++)
+        {
+            if(!this.ports.get(i).equals(other.ports.get(i)))
+            	return false;
+        }
+        if (this.radius != other.radius)
+            return false;
+        if(this.roads.keySet().size() != other.roads.keySet().size())
+            return false;
+        for(EdgeLocation key : this.roads.keySet())
+        {
+            if(!this.roads.get(key).equals(other.roads.get(key)))
+                return false;
+        }
+        if (!this.robberLocation.equals(other.robberLocation))
+            return false;
+        if(this.structures.keySet().size() != other.structures.keySet().size())
+            return false;
+        for(VertexLocation key : this.structures.keySet())
+        {
+            if(!this.structures.get(key).equals(other.structures.get(key)))
+                return false;
+        }
+        return true;
     }
 }
