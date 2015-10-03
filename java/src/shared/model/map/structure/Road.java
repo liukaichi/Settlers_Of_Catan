@@ -59,4 +59,24 @@ public class Road
 		road.add("location", location);
 		return road.toString();
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        
+        Road other = (Road) obj;
+        if (!this.location.equals(other.location))
+            return false;
+        if (!this.owner.equals(other.owner))
+            return false;
+        return true;
+	}
 }

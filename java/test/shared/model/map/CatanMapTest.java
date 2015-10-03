@@ -155,5 +155,25 @@ public class CatanMapTest {
 	public void testMoveRobber() {
 		fail("Not yet implemented"); // TODO
 	}
+	
+	@Test
+	public void mapEqualsMethod()
+	{
+        String json = null;
+        try
+        {
+            json = new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json")));
+        } catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        CatanMap map1 = new CatanMap(json);
+        CatanMap map2 = new CatanMap(json);
+        boolean test1 = map1.equals(map2);
+        boolean test2 = map2.equals(map1);
+        assertTrue(test1);
+        assertTrue(test2);
+	}
 
 }

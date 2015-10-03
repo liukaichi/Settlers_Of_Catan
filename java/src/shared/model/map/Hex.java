@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public class Hex
 {
-    private Map<VertexDirection, VertexLocation> vertices;
-    private Map<EdgeDirection, EdgeLocation> edges;
+    private Map<VertexDirection, VertexLocation> vertices = new HashMap<VertexDirection, VertexLocation>();;
+    private Map<EdgeDirection, EdgeLocation> edges = new HashMap<EdgeDirection, EdgeLocation>();
     /**
      * @see shared.definitions.ResourceType
      */
@@ -44,17 +44,6 @@ public class Hex
 
     public Hex()
     {
-        //populate maps for lookup
-        vertices = new HashMap<VertexDirection, VertexLocation>();
-        for(VertexDirection dir : VertexDirection.values())
-        {
-            vertices.put(dir, new VertexLocation(location,dir));
-        }
-        edges = new HashMap<EdgeDirection, EdgeLocation>();
-        for(EdgeDirection dir : EdgeDirection.values())
-        {
-            edges.put(dir, new EdgeLocation(location,dir));
-        }
     }
 
     /**
@@ -245,5 +234,35 @@ public class Hex
                 hex.addProperty("number", this.numberTile);
         }
         return hex.toString();
+    }
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        
+        Hex other = (Hex) obj;
+        if (!this.edges.equals(other.edges))
+            return false;
+        if (!this.hexType.equals(other.hexType))
+            return false;
+        if (this.location != other.location)
+            return false;
+        if (this.numberTile != other.numberTile)
+            return false;
+        if (!this.resourceType.equals(other.resourceType))
+            return false;
+        if (this.robberPresent != other.robberPresent)
+            return false;
+        if (!this.vertices.equals(other.vertices))
+            return false;
+        return true;
     }
 }
