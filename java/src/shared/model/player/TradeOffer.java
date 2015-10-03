@@ -1,7 +1,10 @@
 package shared.model.player;
 
+import java.lang.reflect.Type;
+
 import com.google.gson.*;
 
+import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.ResourceType;
 import shared.model.bank.resource.Resources;
 
@@ -11,7 +14,7 @@ import shared.model.bank.resource.Resources;
  * @author amandafisher
  *
  */
-public class TradeOffer
+public class TradeOffer extends MoveCommand implements JsonSerializer<TradeOffer>
 {
     /**
      * player index of the sender and receiver of player trade
@@ -33,33 +36,27 @@ public class TradeOffer
     {
         this.sender = sender;
         this.receiver = reciever;
-        this.offer = new Resources(false);
-        offer.getResource(ResourceType.BRICK).setAmount(brick);
-        offer.getResource(ResourceType.ORE).setAmount(ore);
-        offer.getResource(ResourceType.SHEEP).setAmount(sheep);
-        offer.getResource(ResourceType.WHEAT).setAmount(wheat);
-        offer.getResource(ResourceType.WOOD).setAmount(wood);
+        this.offer = new Resources(brick, ore, sheep, wheat, wood);
     }
 
     @Override
     public String toString()
     {
-    //@formatter.off
+        //@formatter:off
         /*
-        {
-  			"type": "offerTrade",
-  			"playerIndex": "integer",
-  			"offer": {
-    			"brick": "integer",
-    			"ore": "integer",
-    			"sheep": "integer",
-    			"wheat": "integer",
-    			"wood": "integer"
-  			},
-  			"receiver": "integer"
-		}
-		*/
-//@formatter.on
+         * { 
+         *  "type": "offerTrade",
+         *  "playerIndex": "integer", 
+         *  "offer": { 
+         *      "brick": "integer", 
+         *      "ore": "integer", 
+         *      "sheep": "integer", 
+         *      "wheat": "integer",
+         *      "wood": "integer" 
+         *  }, "receiver": "integer" 
+         * }
+         */
+        // @formatter:on
         JsonObject tradeOffer = new JsonObject();
         {
             tradeOffer.addProperty("type", "offerTrade");
@@ -95,8 +92,6 @@ public class TradeOffer
         return sender;
     }
 
- 
-
     public void setSender(int sender)
     {
         this.sender = sender;
@@ -115,5 +110,28 @@ public class TradeOffer
     public Resources getOffer()
     {
         return offer;
+    }
+
+    public void addToOffer(ResourceType type, int num)
+    {
+        offer.getResource(type).addResource(num);
+    }
+
+    public void subFromOffer(ResourceType type, int num)
+    {
+        offer.getResource(type).subResource(num);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
+     * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
+     */
+    @Override
+    public JsonElement serialize(TradeOffer src, Type srcType, JsonSerializationContext context)
+    {
+        JsonObject obj = (JsonObject) serializeCommand(src);
+        return obj;
     }
 }

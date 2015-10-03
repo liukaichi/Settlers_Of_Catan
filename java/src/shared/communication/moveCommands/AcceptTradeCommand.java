@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import shared.definitions.*;
+
 /**
  * acceptTrade command object.
  * 
@@ -16,6 +18,16 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
      * Whether you accept the trade or not.
      */
     private boolean willAccept;
+
+    /**
+     * @param playerIndex
+     * @param willAccept
+     */
+    public AcceptTradeCommand(PlayerIndex playerIndex, boolean willAccept)
+    {
+        super(MoveType.acceptTrade, playerIndex);
+        this.willAccept = willAccept;
+    }
 
     /*
      * (non-Javadoc)

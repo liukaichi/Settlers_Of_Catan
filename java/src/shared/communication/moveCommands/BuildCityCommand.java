@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import shared.definitions.*;
 import shared.locations.VertexLocation;
 
 /**
@@ -19,6 +20,16 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
      * Location of the city.
      */
     private VertexLocation cityLocation;
+
+    /**
+     * @param playerIndex
+     * @param cityLocation
+     */
+    public BuildCityCommand(PlayerIndex playerIndex, VertexLocation cityLocation)
+    {
+        super(MoveType.buildCity, playerIndex);
+        this.cityLocation = cityLocation;
+    }
 
     /*
      * (non-Javadoc)
