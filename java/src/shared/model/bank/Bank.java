@@ -4,6 +4,7 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
+import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
 
@@ -46,7 +47,7 @@ public class Bank
 
     private void initialize(boolean isGameBank){
         resources = new Resources(isGameBank);
-        devCards = new DevCards();
+        devCards = new DevCards(isGameBank);
         if (devCardDeck == null){
             devCardDeck = new Stack<>();
             initializeDevCardDeck();
@@ -74,6 +75,13 @@ public class Bank
     {
         return devCards;
     }
+    public void initDevCards(String json){
+        devCards = new DevCards(json, DevCard.AmountType.PLAYABLE);
+    }
+
+    public void initResources(String json){
+        resources = new Resources(json);
+    }
 
     public void giveResource(ResourceType type, int num) throws InsufficientResourcesException {
         if ((resources.getResource(type).getAmount() - num) < 0){
@@ -92,4 +100,5 @@ public class Bank
             resources.getResource(type).addResource(num);
         }
     }
+
 }

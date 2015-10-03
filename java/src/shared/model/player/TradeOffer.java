@@ -1,6 +1,7 @@
 package shared.model.player;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.ResourceType;
 import shared.model.bank.resource.Resources;
 
@@ -24,6 +25,27 @@ public class TradeOffer
         this.sender = sender.getPlayerInfo().getPlayerIndex().getIndex();
         this.receiver = receiver.getPlayerInfo().getPlayerIndex().getIndex();
         this.offer = new Resources(false);
+    }
+
+    public TradeOffer(int sender, int reciever, int brick, int ore, int sheep, int wheat, int wood){
+        this.sender = sender;
+        this.receiver = reciever;
+        this.offer = new Resources(false);
+        offer.getResource(ResourceType.BRICK).setAmount(brick);
+        offer.getResource(ResourceType.ORE).setAmount(ore);
+        offer.getResource(ResourceType.SHEEP).setAmount(sheep);
+        offer.getResource(ResourceType.WHEAT).setAmount(wheat);
+        offer.getResource(ResourceType.WOOD).setAmount(wood);
+    }
+
+    public TradeOffer(String json){
+        JsonParser parser = new JsonParser();
+        JsonObject tradeObject = (JsonObject)parser.parse(json);
+        this.sender = tradeObject.get("playerIndex").getAsInt();
+        this.receiver = tradeObject.get("receiver").getAsInt();
+        JsonObject newOffer = (JsonObject) tradeObject.get("offer");
+        this.offer = new Resources(newOffer.toString());
+
     }
 
     public int getSender() {
