@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import shared.definitions.*;
 import shared.locations.EdgeLocation;
 
 /**
@@ -14,6 +15,18 @@ import shared.locations.EdgeLocation;
  */
 public class BuildRoadCommand extends MoveCommand implements JsonSerializer<BuildRoadCommand>
 {
+    /**
+     * @param playerIndex
+     * @param roadLocation
+     * @param isFree
+     */
+    public BuildRoadCommand(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean isFree)
+    {
+        super(MoveType.buildRoad, playerIndex);
+        this.roadLocation = roadLocation;
+        this.isFree = isFree;
+    }
+
     /**
      * Location of the Road.
      */

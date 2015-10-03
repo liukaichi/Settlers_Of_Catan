@@ -10,9 +10,10 @@ import java.util.logging.Level;
 
 import org.junit.*;
 
-import client.data.*;
+import client.data.GameInfo;
 import server.proxy.*;
 import shared.communication.*;
+import shared.communication.moveCommands.*;
 import shared.definitions.*;
 import shared.definitions.exceptions.*;
 import shared.model.ClientModel;
@@ -109,13 +110,13 @@ public class ProxyTester
     // {
     // fail(e.toString());
     // }
-    // fail("Not yet implemented");
+    // startGame("");
     // }
     //
     // @Test
     // public void testDeserialize()
     // {
-    // fail("Not yet implemented");
+    // startGame("");
     // }
 
     /**
@@ -157,8 +158,7 @@ public class ProxyTester
         }
     }
 
-    @Test
-    public void customTest()
+    public void logUserIn()
     {
         try
         {
@@ -167,10 +167,6 @@ public class ProxyTester
         catch (SignInException e)
         {
             fail(e.getMessage());
-        }
-        catch (Exception e1)
-        {
-            assertTrue(true);
         }
     }
 
@@ -222,6 +218,7 @@ public class ProxyTester
     @Test
     public void testChangeLogLevel()
     {
+        startGame("logLevel");
         proxy.changeLogLevel(Level.ALL);
     }
 
@@ -231,14 +228,7 @@ public class ProxyTester
     @Test
     public void testListGames()
     {
-        try
-        {
-            proxy.userLogin(new Credentials("Sam", "sam"));
-        }
-        catch (SignInException e)
-        {
-            fail("Login failed");
-        }
+        logUserIn();
 
         List<GameInfo> games = proxy.listGames().getGames();
         int size = games.size();
@@ -292,18 +282,11 @@ public class ProxyTester
     @Test
     public void testCreateGame()
     {
-        try
-        {
-            proxy.userLogin(new Credentials("Sam", "sam"));
-        }
-        catch (SignInException e)
-        {
-            fail("Login failed");
-        }
+        logUserIn();
 
         CreateGameResponse response = proxy.createGame(new CreateGameRequest(true, true, true, "create1"));
         GameInfo info = response.getGameInfo();
-        List<PlayerInfo> players = info.getPlayers();
+        // List<PlayerInfo> players = info.getPlayers();
         // assertTrue(players.size() <= 4);
         assertTrue(info.getTitle().equals("create1"));
         int id = info.getId();
@@ -312,7 +295,7 @@ public class ProxyTester
         for (int i = 0; i < games.size(); ++i)
         {
             GameInfo gameInfo = games.get(i);
-            if (id == info.getId())
+            if (id == gameInfo.getId())
             {
                 found = true;
             }
@@ -329,14 +312,7 @@ public class ProxyTester
     @Test
     public void testJoinGame()
     {
-        try
-        {
-            proxy.userLogin(new Credentials("Sam", "sam"));
-        }
-        catch (SignInException e)
-        {
-            fail("Login failed");
-        }
+        logUserIn();
 
         CreateGameResponse response = proxy.createGame(new CreateGameRequest(true, true, true, "join1"));
         int id = response.getGameID();
@@ -394,7 +370,7 @@ public class ProxyTester
     @Test
     public void testGetGameState()
     {
-        ClientModel model = proxy.getGameState(0);
+        testingModel = proxy.getGameState(0);
     }
 
     /**
@@ -431,15 +407,8 @@ public class ProxyTester
     @Test
     public void testListAI()
     {
+        logUserIn();
 
-        try
-        {
-            proxy.userLogin(new Credentials("Sam", "sam"));
-        }
-        catch (SignInException e)
-        {
-            fail("Login failed");
-        }
         List<AIType> aiTypes = proxy.listAI().getAITypes();
         // Aparently you don't need to be in a game.
 
@@ -451,7 +420,7 @@ public class ProxyTester
             aiTypes = proxy.listAI().getAITypes();
             assertNotNull(aiTypes);
             assertTrue(aiTypes.size() == 1);
-            assertTrue(aiTypes.get(0).LARGEST_ARMY.toString().equals("LARGEST_ARMY"));
+            assertTrue(aiTypes.get(0).toString().equals("LARGEST_ARMY"));
         }
         catch (GameQueryException e)
         {
@@ -467,14 +436,7 @@ public class ProxyTester
     @Test
     public void testAddAI()
     {
-        try
-        {
-            proxy.userLogin(new Credentials("Sam", "sam"));
-        }
-        catch (SignInException e)
-        {
-            fail("Login failed");
-        }
+        logUserIn();
 
         try
         {
@@ -536,6 +498,41 @@ public class ProxyTester
     }
 
     /**
+     * A method to create log a user in, create and join a game. Since these
+     * processes will be called many, many times, this method is here to reduce
+     * code duplication.
+     * 
+     * @param gameName
+     *        the name of the game to create.
+     */
+    private void startGame(String gameName)
+    {
+        logUserIn();
+
+        CreateGameResponse response = proxy.createGame(new CreateGameRequest(true, true, true, gameName));
+        int id = response.getGameID();
+        try
+        {
+            proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
+        }
+        catch (GameQueryException e)
+        {
+            fail("shouldn't have failed");
+        }
+        try
+        {
+            for (int i = 0; i < 3; ++i)
+            {
+                proxy.addAI(AIType.LARGEST_ARMY);
+            }
+        }
+        catch (AddAIException | IllegalArgumentException | GameQueryException e)
+        {
+            fail("shouldn't have failed to add AI players");
+        }
+    }
+
+    /**
      * Test method for
      * {@link server.proxy.ServerProxy#sendChat(shared.communication.moveCommands.SendChatCommand)}
      * .
@@ -543,7 +540,8 @@ public class ProxyTester
     @Test
     public void testSendChat()
     {
-
+        startGame("sendChat");
+        testingModel = proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_0, "Test"));
     }
 
     /**
@@ -554,6 +552,12 @@ public class ProxyTester
     @Test
     public void testRollNumber()
     {
+        startGame("rollNumber");
+        testingModel = proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_0, 8));
+        proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_0, 8));
+        proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_1, 2));
+        proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_2, 3));
+        proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_3, 12));
 
     }
 
@@ -565,7 +569,10 @@ public class ProxyTester
     @Test
     public void testAcceptTrade()
     {
-        fail("Not yet implemented");
+        startGame("acceptTrade");
+        proxy.offerTrade(new OfferTradeCommand(0, 3, 1, 0, -1, 0, 0));
+        proxy.acceptTrade(new AcceptTradeCommand(PlayerIndex.PLAYER_3, false));
+
     }
 
     /**
@@ -576,7 +583,7 @@ public class ProxyTester
     @Test
     public void testDiscardCards()
     {
-        fail("Not yet implemented");
+        startGame("DiscardCards");
     }
 
     /**
@@ -587,7 +594,7 @@ public class ProxyTester
     @Test
     public void testBuildRoad()
     {
-        fail("Not yet implemented");
+        startGame("BuildRoad");
     }
 
     /**
@@ -598,7 +605,7 @@ public class ProxyTester
     @Test
     public void testBuildSettlement()
     {
-        fail("Not yet implemented");
+        startGame("BuildSettlement");
     }
 
     /**
@@ -609,7 +616,7 @@ public class ProxyTester
     @Test
     public void testBuildCity()
     {
-        fail("Not yet implemented");
+        startGame("BuildCity");
     }
 
     /**
@@ -620,7 +627,7 @@ public class ProxyTester
     @Test
     public void testOfferTrade()
     {
-        fail("Not yet implemented");
+        startGame("OfferTrade");
     }
 
     /**
@@ -631,7 +638,7 @@ public class ProxyTester
     @Test
     public void testMaritimeTrade()
     {
-        fail("Not yet implemented");
+        startGame("MaritimeTrade");
     }
 
     /**
@@ -642,7 +649,7 @@ public class ProxyTester
     @Test
     public void testRobPlayer()
     {
-        fail("Not yet implemented");
+        startGame("RobPlayer");
     }
 
     /**
@@ -653,7 +660,7 @@ public class ProxyTester
     @Test
     public void testFinishTurn()
     {
-        fail("Not yet implemented");
+        startGame("FinishTurn");
     }
 
     /**
@@ -664,7 +671,7 @@ public class ProxyTester
     @Test
     public void testBuyDevCard()
     {
-        fail("Not yet implemented");
+        startGame("BuyDevCard");
     }
 
     /**
@@ -675,7 +682,7 @@ public class ProxyTester
     @Test
     public void testSoldier()
     {
-        fail("Not yet implemented");
+        startGame("Soldier");
     }
 
     /**
@@ -686,7 +693,7 @@ public class ProxyTester
     @Test
     public void testYearOfPlenty()
     {
-        fail("Not yet implemented");
+        startGame("YearOfPlenty");
     }
 
     /**
@@ -697,7 +704,7 @@ public class ProxyTester
     @Test
     public void testRoadBuilding()
     {
-        fail("Not yet implemented");
+        startGame("RoadBuilding");
     }
 
     /**
@@ -708,7 +715,7 @@ public class ProxyTester
     @Test
     public void testMonopoly()
     {
-        fail("Not yet implemented");
+        startGame("Monopoly");
     }
 
     /**
@@ -719,7 +726,7 @@ public class ProxyTester
     @Test
     public void testMonument()
     {
-        fail("Not yet implemented");
+        startGame("Monument");
     }
 
 }

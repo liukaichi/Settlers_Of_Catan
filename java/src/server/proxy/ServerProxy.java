@@ -93,6 +93,19 @@ public class ServerProxy implements IProxy
         LOGGER.setLevel(Level.ALL);
     }
 
+    /**
+     * @param uRLPrefix
+     * @param catanUserCookie
+     * @param catanGameCookie
+     */
+    public ServerProxy(String URLPrefix, String catanUserCookie, String catanGameCookie)
+    {
+        this();
+        this.URLPrefix = URLPrefix;
+        this.catanUserCookie = catanUserCookie;
+        this.catanGameCookie = catanGameCookie;
+    }
+
     @Override
     public void userLogin(Credentials credentials) throws SignInException
     {
@@ -195,7 +208,7 @@ public class ServerProxy implements IProxy
         /* If the model has changed */
         if (!response.equals("\"true\""))
         {
-            responseModel = (ClientModel) deserializeJSON(response);
+            responseModel = new ClientModel(response);
         }
         return responseModel;
     }
@@ -230,7 +243,7 @@ public class ServerProxy implements IProxy
     }
 
     @Override
-    public void addAI(AIType aiType) throws IllegalArgumentException, GameQueryException, AddAIException
+    public void addAI(AIType aiType) throws AddAIException
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(AIType.class, aiType).create();
         String request = gson.toJson(aiType);
@@ -366,7 +379,8 @@ public class ServerProxy implements IProxy
     @Override
     public ClientModel soldier(SoldierCommand soldier)
     {
-        Gson gson = new GsonBuilder().registerTypeAdapter(SoldierCommand.class, soldier).create();
+        // Use Robber's type adapter. Holds same things as RobPlayer
+        Gson gson = new GsonBuilder().registerTypeAdapter(RobPlayerCommand.class, soldier).create();
         String request = gson.toJson(soldier);
         String response = doPost(SOLDIER, request);
         LOGGER.log(Level.INFO, "Response:" + response);
@@ -411,33 +425,6 @@ public class ServerProxy implements IProxy
         String response = doPost(MONUMENT, request);
         LOGGER.log(Level.INFO, "Response:" + response);
         return new ClientModel(response);
-    }
-
-    /**
-     * Takes an object and turns it into JSON.
-     * 
-     * @param object
-     *        the object to serialize
-     * @return The Formatted JSON from the object.
-     */
-    private String serializeObject(Object object)
-    {
-        // Gson gson = new
-        // GsonBuilder().setPrettyPrinting().registerTypeAdapter(object.class,
-        // arg1).create();
-        return "";
-    }
-
-    /**
-     * Takes JSON and turns it into an object
-     * 
-     * @param json
-     *        the JSON to deserialize.
-     * @return the Object from the JSON.
-     */
-    private Object deserializeJSON(String json)
-    {
-        return null;
     }
 
     private String doPost(String commandName, String postDataJson)

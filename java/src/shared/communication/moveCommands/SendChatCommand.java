@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import shared.definitions.*;
+
 /**
  * sendChat command object.
  * 
@@ -16,6 +18,17 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
      * The content of the message.
      */
     private String content;
+
+    /**
+     * 
+     * @param sender
+     * @param content
+     */
+    public SendChatCommand(PlayerIndex sender, String content)
+    {
+        super(MoveType.sendChat, sender);
+        this.content = content;
+    }
 
     /*
      * (non-Javadoc)

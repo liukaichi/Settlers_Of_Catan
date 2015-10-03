@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import shared.definitions.*;
 import shared.locations.VertexLocation;
 
 /**
@@ -15,6 +16,18 @@ import shared.locations.VertexLocation;
  */
 public class BuildSettlementCommand extends MoveCommand implements JsonSerializer<BuildSettlementCommand>
 {
+    /**
+     * @param playerIndex
+     * @param settlementLocation
+     * @param isFree
+     */
+    public BuildSettlementCommand(PlayerIndex playerIndex, VertexLocation settlementLocation, boolean isFree)
+    {
+        super(MoveType.buildSettlement, playerIndex);
+        this.settlementLocation = settlementLocation;
+        this.isFree = isFree;
+    }
+
     /**
      * Location of the Settlement.
      */

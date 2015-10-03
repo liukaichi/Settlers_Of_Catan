@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import shared.definitions.*;
+
 /**
  * rollNumber command object.
  * 
@@ -16,6 +18,16 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
      * The number rolled.
      */
     private int number;
+
+    /**
+     * @param playerIndex
+     * @param number
+     */
+    public RollNumberCommand(PlayerIndex playerIndex, int number)
+    {
+        super(MoveType.rollNumber, playerIndex);
+        this.number = number;
+    }
 
     /*
      * (non-Javadoc)

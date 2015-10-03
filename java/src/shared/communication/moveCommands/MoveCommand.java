@@ -24,6 +24,26 @@ public abstract class MoveCommand
     protected PlayerIndex playerIndex;
 
     /**
+     * 
+     */
+    private MoveCommand()
+    {
+        playerIndex = PlayerIndex.NONE;
+        type = null;
+    }
+
+    /**
+     * @param type
+     * @param playerIndex
+     */
+    public MoveCommand(MoveType type, PlayerIndex playerIndex)
+    {
+        this();
+        this.type = type;
+        this.playerIndex = playerIndex;
+    }
+
+    /**
      * Custom Serializer method, based off of interface JsonSerializer<T>
      * 
      * @param src

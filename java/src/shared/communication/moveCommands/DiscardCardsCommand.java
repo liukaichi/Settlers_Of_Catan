@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import shared.definitions.*;
 import shared.model.bank.resource.Resources;
 
 /**
@@ -19,9 +20,21 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      */
     private Resources discardedCards;
 
-    public DiscardCardsCommand(int brick, int ore, int sheep, int wheat, int wood)
+    /**
+     * 
+     * @param index
+     * @param brickAmount
+     * @param oreAmount
+     * @param sheepAmount
+     * @param wheatAmount
+     * @param woodAmount
+     */
+    public DiscardCardsCommand(PlayerIndex index, int brickAmount, int oreAmount, int sheepAmount, int wheatAmount,
+            int woodAmount)
     {
-        // discardedCards = new Resources(brick, ore, sheep, wheat, wood);
+        super(MoveType.discardCards, index);
+        // discardedCards = new Resources(brickAmount, oreAmount, sheepAmount,
+        // wheatAmount, woodAmount);
     }
 
     /*

@@ -4,8 +4,6 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import com.google.gson.JsonObject;
-
 /**
  * Represents the location of an edge on a hex map
  */
@@ -130,8 +128,8 @@ public class EdgeLocation implements JsonSerializer<EdgeLocation>
     {
         JsonObject obj = new JsonObject();
         obj.addProperty("direction", src.dir.toString());
-        obj.addProperty("x", src.hexLoc.getX());
-        obj.addProperty("y", src.hexLoc.getY());
+        obj.addProperty("x", src.getNormalizedLocation().hexLoc.getX());
+        obj.addProperty("y", src.getNormalizedLocation().hexLoc.getY());
         return obj;
     }
 }

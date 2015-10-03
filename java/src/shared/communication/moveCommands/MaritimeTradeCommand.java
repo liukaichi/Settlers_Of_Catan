@@ -17,6 +17,21 @@ import shared.model.player.TradeOffer;
 public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<MaritimeTradeCommand>
 {
     /**
+     * @param playerIndex
+     * @param ratio
+     * @param inputResource
+     * @param outputResource
+     */
+    public MaritimeTradeCommand(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
+            ResourceType outputResource)
+    {
+        super(MoveType.maritimeTrade, playerIndex);
+        this.ratio = ratio;
+        this.inputResource = inputResource;
+        this.outputResource = outputResource;
+    }
+
+    /**
      * The ratio at which the maritime offer is being extended.
      * 
      */
@@ -37,8 +52,8 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.addProperty("ratio", src.ratio.getRatio());
-        obj.addProperty("inputResource", inputResource.toString().toLowerCase());
-        obj.addProperty("outputResource", outputResource.toString().toLowerCase());
+        obj.addProperty("inputResource", src.inputResource.toString().toLowerCase());
+        obj.addProperty("outputResource", src.outputResource.toString().toLowerCase());
         return obj;
     }
 }

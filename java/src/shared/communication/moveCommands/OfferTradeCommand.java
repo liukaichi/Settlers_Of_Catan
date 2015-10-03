@@ -4,13 +4,14 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import shared.definitions.*;
 import shared.model.player.TradeOffer;
 
 /**
  * offerTrade command object.
  * 
  * @author Cache Staheli
- * @see TradeOffer
+ * @see OfferTradeCommand
  *
  */
 public class OfferTradeCommand extends MoveCommand implements JsonSerializer<OfferTradeCommand>
@@ -18,7 +19,25 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     /**
      * What you get (+) and what you give (-), as well as with whom.
      */
-    private TradeOffer offer;
+    private OfferTradeCommand offer;
+
+    /**
+     * 
+     * @param sender
+     * @param reciever
+     * @param brick
+     * @param ore
+     * @param sheep
+     * @param wheat
+     * @param wood
+     */
+    public OfferTradeCommand(int sender, int reciever, int brick, int ore, int sheep, int wheat, int wood)
+    {
+        // TODO fix this. This is not correct.
+        super(MoveType.offerTrade, PlayerIndex.NONE);
+        offer = new OfferTradeCommand(sender, reciever, brick, ore, sheep, wheat, wood);
+        this.type = MoveType.offerTrade;
+    }
 
     /*
      * (non-Javadoc)
