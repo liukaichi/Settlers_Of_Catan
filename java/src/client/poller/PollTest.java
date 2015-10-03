@@ -23,13 +23,26 @@ public class PollTest extends TestCase
         ClientFacade.getInstance().setModel(clientModel);
         MockProxy proxy = new MockProxy();
 
+        testTimedUpdate(proxy);
+
+
+    }
+
+    private void testTimedUpdate(MockProxy proxy) throws Exception{
         proxy.getServerModel().setVersion(1);
         Poller poller = new Poller(proxy);
         assertFalse(poller.getCurrentVersion() == 1);
         Thread.sleep(3100);
         assertTrue(poller.getCurrentVersion() == 1);
+    }
+
+    private void testSameVersion(MockProxy proxy)throws Exception{
+        proxy.getServerModel().setVersion(1);
+        Poller poller = new Poller(proxy);
         Thread.sleep(3100);
         assertTrue(poller.getCurrentVersion() == 1);
+        Thread.sleep(3100);
+
 
     }
 

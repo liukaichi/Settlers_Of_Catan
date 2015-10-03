@@ -73,7 +73,7 @@ public class Poller
         public void poll()
         {
             ClientModel serverModel = proxy.getGameState(currentVersion);
-            if (serverModel.getVersion() != currentVersion)
+            if (serverModel != null)
             {
                 updateModel(serverModel);
             }
