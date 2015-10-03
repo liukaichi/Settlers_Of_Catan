@@ -29,12 +29,11 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      * @param wheatAmount
      * @param woodAmount
      */
-    public DiscardCardsCommand(PlayerIndex index, int brickAmount, int oreAmount, int sheepAmount, int wheatAmount,
-            int woodAmount)
+    public DiscardCardsCommand(PlayerIndex index, int brickAmount, int woodAmount, int sheepAmount, int wheatAmount,
+            int oreAmount)
     {
         super(MoveType.discardCards, index);
-        // discardedCards = new Resources(brickAmount, oreAmount, sheepAmount,
-        // wheatAmount, woodAmount);
+        discardedCards = new Resources(brickAmount, woodAmount, sheepAmount, wheatAmount, oreAmount);
     }
 
     /*

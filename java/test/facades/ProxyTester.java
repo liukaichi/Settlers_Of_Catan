@@ -542,6 +542,7 @@ public class ProxyTester
     {
         startGame("sendChat");
         testingModel = proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_0, "Test"));
+
     }
 
     /**
@@ -570,7 +571,7 @@ public class ProxyTester
     public void testAcceptTrade()
     {
         startGame("acceptTrade");
-        proxy.offerTrade(new OfferTradeCommand(0, 3, 1, 0, -1, 0, 0));
+        proxy.offerTrade(new OfferTradeCommand(PlayerIndex.fromInt(0), PlayerIndex.fromInt(3), 1, 0, -1, 0, 0));
         proxy.acceptTrade(new AcceptTradeCommand(PlayerIndex.PLAYER_3, false));
 
     }

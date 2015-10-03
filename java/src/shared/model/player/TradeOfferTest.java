@@ -1,20 +1,24 @@
 package shared.model.player;
 
-import org.junit.Test;
-import shared.definitions.ResourceType;
-import shared.definitions.exceptions.CatanException;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import shared.definitions.*;
+import shared.definitions.exceptions.CatanException;
 
 /**
  * Created by Adrian on 10/1/2015.
  */
-public class TradeOfferTest {
+public class TradeOfferTest
+{
 
     @Test
-    public void createTradeOffer(){
-        try {
-            //FIRST CONSTRUCTOR
+    public void createTradeOffer()
+    {
+        try
+        {
+            // FIRST CONSTRUCTOR
             Player player = new Player();
             Player player2 = new Player();
 
@@ -33,9 +37,8 @@ public class TradeOfferTest {
             assertEquals(-2, offer.getOffer().getResource(ResourceType.BRICK).getAmount());
             assertEquals(2, offer.getOffer().getResource(ResourceType.SHEEP).getAmount());
 
-
-            //SECOND CONSTRUCTOR
-            TradeOffer offer2 = new TradeOffer(0,1,1,1,-1,-1,1);
+            // SECOND CONSTRUCTOR
+            TradeOffer offer2 = new TradeOffer(PlayerIndex.fromInt(0), PlayerIndex.fromInt(1), 1, 1, -1, -1, 1);
             assertEquals(0, offer2.getSender());
             assertEquals(1, offer2.getReceiver());
             assertEquals(1, offer2.getOffer().getResource(ResourceType.BRICK).getAmount());
@@ -44,18 +47,22 @@ public class TradeOfferTest {
             assertEquals(-1, offer2.getOffer().getResource(ResourceType.WHEAT).getAmount());
             assertEquals(1, offer2.getOffer().getResource(ResourceType.WOOD).getAmount());
 
-        } catch (CatanException e) {
+        }
+        catch (CatanException e)
+        {
             e.printStackTrace();
         }
 
     }
+
     /**
      *
      * Method: toString()
      *
      */
     @Test
-    public void testSerialize() throws Exception {
+    public void testSerialize() throws Exception
+    {
         Player player = new Player();
         Player player2 = new Player();
 
@@ -64,8 +71,10 @@ public class TradeOfferTest {
 
         TradeOffer offer = player.createOffer(player2);
 
-        /*Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(offer.toString());*/
+        /*
+         * Gson gson = new GsonBuilder().setPrettyPrinting().create(); String
+         * json = gson.toJson(offer.toString());
+         */
         System.out.println(offer.toString());
 
         offer.addToOffer(ResourceType.SHEEP, 2);
@@ -73,14 +82,15 @@ public class TradeOfferTest {
 
         System.out.println(offer.toString());
 
-        //Second offer to print
-        TradeOffer offer2 = new TradeOffer(0,1,1,1,-1,-1,1);
+        // Second offer to print
+        TradeOffer offer2 = new TradeOffer(PlayerIndex.fromInt(0), PlayerIndex.fromInt(1), 1, 1, -1, -1, 1);
         System.out.println(offer2.toString());
     }
 
     @Test
-    public void testDeserialize() throws Exception{
-        TradeOffer offer = new TradeOffer(0,1,1,1,-1,-1,1);
+    public void testDeserialize() throws Exception
+    {
+        TradeOffer offer = new TradeOffer(PlayerIndex.fromInt(0), PlayerIndex.fromInt(1), 1, 1, -1, -1, 1);
         String json = offer.toString();
         TradeOffer offer2 = new TradeOffer(json);
 
