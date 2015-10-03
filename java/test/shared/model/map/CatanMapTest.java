@@ -5,7 +5,6 @@ package shared.model.map;
 
 import com.google.gson.Gson;
 import org.junit.Test;
-=======
 import com.google.gson.Gson;
 import static org.junit.Assert.*;
 

@@ -32,21 +32,14 @@ public class ClientFacade
         proxy = new ServerProxy();
     }
 
-    private void setupPlayersFromGame()
+    private void setupPlayersFromGame() throws CatanException
     {
-        List<PlayerInfo> playerInfos = model.getGameInfo().getPlayers();
+        List<Player> playerInfos = model.getGameInfo().getPlayers();
         players = new ArrayList<Player>();
         for (int i = 0; i < 4; ++i)
         {
-            try
-            {
-                Player player = new Player(playerInfos.get(i));
-                players.add(player);
-            }
-            catch (CatanException e)
-            {
-                e.printStackTrace();
-            }
+            Player player = playerInfos.get(i);
+            players.add(player);
         }
     }
 

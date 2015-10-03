@@ -1,7 +1,5 @@
 package shared.model.bank.resource;
 
-import shared.definitions.ResourceType;
-
 /**
  * Object representing a resource in the Catan game
  * @author amandafisher
@@ -9,11 +7,11 @@ import shared.definitions.ResourceType;
  */
 public class ResourceType
 {
-    private ResourceType type;
+    private shared.definitions.ResourceType type;
     private int amount;
 
-    public ResourceType(ResourceType inType){
-        type = inType;
+    public ResourceType(shared.definitions.ResourceType sheep){
+        type = sheep;
         amount = 0;
     }
 
@@ -26,7 +24,7 @@ public class ResourceType
         this.amount = amount;
     }
 
-    public ResourceType getType()
+    public shared.definitions.ResourceType getType()
     {
         return type;
     }

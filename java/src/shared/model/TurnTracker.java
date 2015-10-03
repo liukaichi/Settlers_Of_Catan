@@ -55,8 +55,6 @@ public class TurnTracker
     public void updateLongestRoad(PlayerBank playerLongestRoad)
     {
 //    	if (playerLongestRoad.amountOf(type))
->>>>>>> Temporary merge branch 2
-//    	if (playerLongestRoad.amountOf(type))
     }
     
     /**

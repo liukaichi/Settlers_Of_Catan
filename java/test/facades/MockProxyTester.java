@@ -10,6 +10,7 @@ import server.proxy.MockProxy;
 import shared.communication.CreateGameRequest;
 import shared.communication.CreateGameResponse;
 import shared.communication.ListGamesResponse;
+import shared.model.player.Player;
 
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class MockProxyTester extends TestCase
         for (GameInfo info : games){
             String title = info.getTitle();
             assertTrue(title != null && !title.equals(""));
-            List<PlayerInfo> players = info.getPlayers();
+            List<Player> players = info.getPlayers();
             assertTrue(players != null);
         }
 

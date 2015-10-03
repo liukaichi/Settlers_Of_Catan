@@ -1,8 +1,8 @@
 package shared.model.bank;
 
 import junit.framework.TestCase;
-import shared.definitions.ResourceType;
 import shared.model.bank.resource.Resource;
+import shared.model.bank.resource.ResourceType;
 
 /**
  * Created by Adrian on 9/28/2015.
@@ -10,11 +10,11 @@ import shared.model.bank.resource.Resource;
 public class ResourceTest extends TestCase {
 
     public ResourceType setResourceWithoutAmount(){
-        return new ResourceType(ResourceType.SHEEP);
+        return new ResourceType(shared.definitions.ResourceType.SHEEP);
     }
 
     public ResourceType setResourceWithAmount(int amount){
-        ResourceType test = new ResourceType(ResourceType.BRICK);
+        ResourceType test = new ResourceType(shared.definitions.ResourceType.BRICK);
         test.addResource(amount);
         return test;
     }
