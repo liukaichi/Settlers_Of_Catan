@@ -1,7 +1,5 @@
 package shared.model;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -9,8 +7,6 @@ import client.data.PlayerInfo;
 import shared.definitions.PlayerIndex;
 import shared.definitions.TurnStatus;
 import shared.model.bank.PlayerBank;
-import shared.model.message.MessageLine;
-import shared.model.player.Player;
 
 /**
  * This class manages player's turns during the Catan game
@@ -37,7 +33,6 @@ public class TurnTracker
     	
     	int largestArmyInt = tracker.getAsJsonObject("largestArmy").getAsInt();
     	largestArmy = PlayerIndex.fromInt(largestArmyInt);
-    	
     }
     
     /**
@@ -54,7 +49,7 @@ public class TurnTracker
     */    
     public void updateLongestRoad(PlayerBank playerLongestRoad)
     {
-//    	if (playerLongestRoad.amountOf(type))
+    	
     }
     
     /**
@@ -63,7 +58,7 @@ public class TurnTracker
     */    
     public void updateLargestArmy(PlayerIndex playerLargestArmy)
     {
-//        if (playerLargestArmy.getKnights() > largestArmy.)
+
     }
     
     /**
