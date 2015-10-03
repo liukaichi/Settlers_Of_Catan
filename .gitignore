@@ -4,3 +4,5 @@ doc/
 .idea/
 *.xml
 /docs/
+.idea/workspace.xml
+
