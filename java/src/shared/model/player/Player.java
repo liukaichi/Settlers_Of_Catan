@@ -4,9 +4,16 @@ import client.data.PlayerInfo;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import shared.definitions.DevCardType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.StructureType;
+import com.google.gson.JsonPrimitive;
+import javafx.scene.paint.Color;
+import jdk.nashorn.internal.parser.JSONParser;
+import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.Bank;
@@ -14,6 +21,8 @@ import shared.model.bank.PlayerBank;
 import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
+import shared.model.bank.structure.Structure;
+import shared.model.map.structure.Road;
 
 /**
  * Represents a player playing the game. There can be up to 4 players in a
@@ -226,6 +235,16 @@ public class Player
 
         JsonObject player = new JsonObject();
         {
+            player.addProperty("cities", bank.amountOf(StructureType.CITY));
+            player.addProperty("color", info.getColor().toString().toLowerCase());
+            player.addProperty("discarded", discarded);
+            player.addProperty("monuments", bank.getMonuments());
+            player.addProperty("name", getName());
+            player.add("newDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.UNPLAYABLE));
+            player.add("oldDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.PLAYABLE));
+            player.addProperty("playerIndex", info.getNormalizedPlayerIndex());
+            player.addProperty("playedDevCard", playedDev);
+            player.addProperty("playerID", info.getId());
             player.add("resources", bank.getResources().toJsonObject());
             player.add("oldDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.PLAYABLE));
             player.add("newDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.UNPLAYABLE));
@@ -242,6 +261,7 @@ public class Player
             player.addProperty("name", getName());
             player.addProperty("color", info.getColor().toString().toLowerCase());
             }
+        }
 
         return player.toString();
 
