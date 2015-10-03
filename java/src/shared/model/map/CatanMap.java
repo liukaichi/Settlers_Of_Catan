@@ -88,70 +88,65 @@ public class CatanMap
     {
         JsonParser parser = new JsonParser();
         // map
-
-        JsonObject obj = new JsonObject();
+        JsonObject map = new JsonObject();
         {
-            JsonObject map = new JsonObject();
+            // hexes
+            JsonArray hexes = new JsonArray();
             {
-                // hexes
-                JsonArray hexes = new JsonArray();
+                for (Hex hex : this.hexes.values())
                 {
-                    for (Hex hex : this.hexes.values())
-                    {
-                        hexes.add(parser.parse(hex.toString()));
-                    }
+                    hexes.add(parser.parse(hex.toString()));
                 }
-                map.add("hexes", hexes);
-                // roads
-                JsonArray roads = new JsonArray();
-                {
-                    for (Road road : this.roads.values())
-                    {
-                        roads.add(parser.parse(road.toString()));
-                    }
-                }
-                map.add("roads", roads);
-                // cities
-                JsonArray cities = new JsonArray();
-                {
-                    for (Structure city : this.structures.values())
-                    {
-                        if (city.getClass().equals(City.class))
-                            cities.add(parser.parse(city.toString()));
-                    }
-                }
-                map.add("cities", cities);
-                // settlements
-                JsonArray settlements = new JsonArray();
-                {
-                    for (Structure settlement : this.structures.values())
-                    {
-                        if (settlement.getClass().equals(Settlement.class))
-                            cities.add(parser.parse(settlement.toString()));
-                    }
-                }
-                map.add("settlements", settlements);
-                // radius
-                JsonPrimitive radius = new JsonPrimitive(this.radius);
-                map.add("radius", radius);
-                // ports
-                JsonArray ports = new JsonArray();
-                {
-                    for (Port port : this.ports)
-                    {
-                        ports.add(parser.parse(port.toString()));
-                    }
-                }
-                map.add("ports", ports);
-                // robber
-                JsonObject robber = new JsonObject();
-                robber.addProperty("x", robberLocation.getX());
-                robber.addProperty("y", robberLocation.getY());
-                map.add("robber", robber);
             }
-            obj.add("map", map);
+            map.add("hexes", hexes);
+            // roads
+            JsonArray roads = new JsonArray();
+            {
+                for (Road road : this.roads.values())
+                {
+                    roads.add(parser.parse(road.toString()));
+                }
+            }
+            map.add("roads", roads);
+            // cities
+            JsonArray cities = new JsonArray();
+            {
+                for (Structure city : this.structures.values())
+                {
+                    if (city.getClass().equals(City.class))
+                        cities.add(parser.parse(city.toString()));
+                }
+            }
+            map.add("cities", cities);
+            // settlements
+            JsonArray settlements = new JsonArray();
+            {
+                for (Structure settlement : this.structures.values())
+                {
+                    if (settlement.getClass().equals(Settlement.class))
+                        settlements.add(parser.parse(settlement.toString()));
+                }
+            }
+            map.add("settlements", settlements);
+            // radius
+            JsonPrimitive radius = new JsonPrimitive(this.radius);
+            map.add("radius", radius);
+            // ports
+            JsonArray ports = new JsonArray();
+            {
+                for (Port port : this.ports)
+                {
+                    ports.add(parser.parse(port.toString()));
+                }
+            }
+            map.add("ports", ports);
+            // robber
+            JsonObject robber = new JsonObject();
+            robber.addProperty("x", robberLocation.getX());
+            robber.addProperty("y", robberLocation.getY());
+            map.add("robber", robber);
         }
-        return obj.toString();
+        return map.toString();
     }
 
     public CatanMap()

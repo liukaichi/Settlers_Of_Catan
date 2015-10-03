@@ -169,7 +169,7 @@ public class CatanMapTest {
             e.printStackTrace();
         }
         CatanMap map1 = new CatanMap(json);
-        CatanMap map2 = new CatanMap(json);
+        CatanMap map2 = new CatanMap(map1.toString());
         boolean test1 = map1.equals(map2);
         boolean test2 = map2.equals(map1);
         assertTrue(test1);
