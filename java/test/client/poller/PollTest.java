@@ -5,6 +5,8 @@ import junit.framework.TestCase;
 import server.proxy.MockProxy;
 import shared.model.ClientModel;
 
+import java.lang.reflect.Method;
+
 /**
  * Created by liukaichi on 9/26/2015.
  */
@@ -24,6 +26,7 @@ public class PollTest extends TestCase
         MockProxy proxy = new MockProxy();
 
         testTimedUpdate(proxy);
+        testSameVersion(proxy);
 
 
     }
@@ -39,10 +42,16 @@ public class PollTest extends TestCase
     private void testSameVersion(MockProxy proxy)throws Exception{
         proxy.getServerModel().setVersion(1);
         Poller poller = new Poller(proxy);
+
+        Method method = Poller.class.getDeclaredMethod("getPollTask", null);
+        method.setAccessible(true);
+
         Thread.sleep(3100);
         assertTrue(poller.getCurrentVersion() == 1);
         Thread.sleep(3100);
 
+        boolean updated = ((Poller.PollTask)method.invoke(poller, null)).poll();
+        assertFalse(updated);
 
     }
 
