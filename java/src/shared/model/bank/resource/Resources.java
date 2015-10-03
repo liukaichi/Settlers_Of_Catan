@@ -1,9 +1,9 @@
 package shared.model.bank.resource;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.ResourceType;
-
-import java.lang.reflect.Type;
 
 /**
  * List of the resource objects

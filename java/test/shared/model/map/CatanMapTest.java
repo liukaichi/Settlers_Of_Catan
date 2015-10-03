@@ -4,6 +4,9 @@
 package shared.model.map;
 
 import com.google.gson.Gson;
+import org.junit.Test;
+=======
+import com.google.gson.Gson;
 import static org.junit.Assert.*;
 
 import java.io.FileReader;
@@ -24,11 +27,6 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.map.structure.Structure;
-
-import java.util.HashMap;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
 
 /**
  * @author dtaylor
