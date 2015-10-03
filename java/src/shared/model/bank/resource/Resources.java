@@ -1,9 +1,9 @@
 package shared.model.bank.resource;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.ResourceType;
-
-import java.lang.reflect.Type;
 
 /**
  * List of the resource objects
@@ -74,6 +74,11 @@ public class Resources
 
     @Override
     public String toString() {
+        JsonObject resources = toJsonObject();
+        return resources.toString();
+    }
+
+    public JsonObject toJsonObject(){
         JsonObject resources = new JsonObject();
         {
             resources.addProperty("brick", brick.getAmount());
@@ -82,7 +87,8 @@ public class Resources
             resources.addProperty("wheat", wheat.getAmount());
             resources.addProperty("wood", wood.getAmount());
         }
-        return resources.toString();
+
+        return resources;
     }
 //
 //    public static class ResourcesSerializer implements JsonSerializer<Resources> {

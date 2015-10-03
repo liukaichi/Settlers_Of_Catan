@@ -1,4 +1,4 @@
-package shared.model.bank.card;
+package shared.model.bank;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.Test;
 import shared.definitions.DevCardType;
+import shared.model.bank.card.DevCard;
+import shared.model.bank.card.DevCards;
 
 import java.awt.dnd.DropTargetDropEvent;
 import java.util.ArrayDeque;

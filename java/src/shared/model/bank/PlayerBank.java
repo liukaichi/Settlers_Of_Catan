@@ -1,9 +1,9 @@
 package shared.model.bank;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import shared.definitions.*;
+import shared.definitions.DevCardType;
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
+import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.card.DevCard;
@@ -11,6 +11,9 @@ import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
 import shared.model.bank.structure.Structure;
 import shared.model.bank.structure.Structures;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class extends Bank with properties and methods specific to the player
@@ -47,6 +50,26 @@ public class PlayerBank extends Bank
     @Override
     public Resources getResources() {
         return playerResources;
+    }
+
+    public void setKnights(int knights) {
+        this.knights = knights;
+    }
+
+    public void setVictoryPoints(int victoryPoints) {
+        this.victoryPoints = victoryPoints;
+    }
+
+    public void setMonuments(int monuments) {
+        this.monuments = monuments;
+    }
+
+    public void setPlayerResources(Resources playerResources) {
+        this.playerResources = playerResources;
+    }
+
+    public void setPlayerDevCards(DevCards playerDevCards) {
+        this.playerDevCards = playerDevCards;
     }
 
     public int getKnights() {

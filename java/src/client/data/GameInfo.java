@@ -67,4 +67,6 @@ public class GameInfo
         return Collections.unmodifiableList(players);
     }
 
+    public void setPlayers(String json){
+    }
 }

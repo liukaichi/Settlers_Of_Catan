@@ -1,16 +1,13 @@
 package shared.model.bank.card;
 
-import com.google.gson.*;
-import jdk.nashorn.internal.parser.JSONParser;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.PlayerBank;
-import shared.model.player.Player;
-
-import java.lang.reflect.Type;
-import java.util.Stack;
 
 /**
  * This class represents a list of Development Cards
@@ -22,36 +19,50 @@ public class DevCards {
     public DevCards(){
         initialize();
     }
+    public DevCards(boolean isBank){
+        if (isBank){
+            monopoly.setAmountPlayable(2);
+            roadBuilding.setAmountPlayable(2);
+            yearOfPlenty.setAmountPlayable(2);
+            soldier.setAmountPlayable(14);
+            monument.setAmountPlayable(5);
+        }
+    }
 
     public DevCards(String json, DevCard.AmountType type){
         this();
+        setDevCards(json, type);
+    }
+
+    public void setDevCards(String json, DevCard.AmountType type){
+
         JsonElement jele = new JsonParser().parse(json);
         JsonObject jobj = jele.getAsJsonObject();
 
         switch (type){
-            case UNPLAYABLE:
-                this.yearOfPlenty.setAmountUnplayable(jobj.get("yearOfPlenty").getAsInt());
-                this.monopoly.setAmountUnplayable(jobj.get("monopoly").getAsInt());
-                this.roadBuilding.setAmountUnplayable(jobj.get("roadBuilding").getAsInt());
-                this.soldier.setAmountUnplayable(jobj.get("soldier").getAsInt());
-                this.monopoly.setAmountUnplayable(jobj.get("monument").getAsInt());
-                break;
-            case PLAYABLE:
-                this.yearOfPlenty.setAmountPlayable(jobj.get("yearOfPlenty").getAsInt());
-                this.monopoly.setAmountPlayable(jobj.get("monopoly").getAsInt());
-                this.roadBuilding.setAmountPlayable(jobj.get("roadBuilding").getAsInt());
-                this.soldier.setAmountPlayable(jobj.get("soldier").getAsInt());
-                this.monopoly.setAmountPlayable(jobj.get("monument").getAsInt());
-                break;
-            case PLAYED:
-                this.yearOfPlenty.setAmountPlayed(jobj.get("yearOfPlenty").getAsInt());
-                this.monopoly.setAmountPlayed(jobj.get("monopoly").getAsInt());
-                this.roadBuilding.setAmountPlayed(jobj.get("roadBuilding").getAsInt());
-                this.soldier.setAmountPlayed(jobj.get("soldier").getAsInt());
-                this.monopoly.setAmountPlayed(jobj.get("monument").getAsInt());
-                break;
-        }
-    }
+        case UNPLAYABLE:
+            this.yearOfPlenty.setAmountUnplayable(jobj.get("yearOfPlenty").getAsInt());
+            this.monopoly.setAmountUnplayable(jobj.get("monopoly").getAsInt());
+            this.roadBuilding.setAmountUnplayable(jobj.get("roadBuilding").getAsInt());
+            this.soldier.setAmountUnplayable(jobj.get("soldier").getAsInt());
+            this.monopoly.setAmountUnplayable(jobj.get("monument").getAsInt());
+            break;
+        case PLAYABLE:
+            this.yearOfPlenty.setAmountPlayable(jobj.get("yearOfPlenty").getAsInt());
+            this.monopoly.setAmountPlayable(jobj.get("monopoly").getAsInt());
+            this.roadBuilding.setAmountPlayable(jobj.get("roadBuilding").getAsInt());
+            this.soldier.setAmountPlayable(jobj.get("soldier").getAsInt());
+            this.monopoly.setAmountPlayable(jobj.get("monument").getAsInt());
+            break;
+        case PLAYED:
+            this.yearOfPlenty.setAmountPlayed(jobj.get("yearOfPlenty").getAsInt());
+            this.monopoly.setAmountPlayed(jobj.get("monopoly").getAsInt());
+            this.roadBuilding.setAmountPlayed(jobj.get("roadBuilding").getAsInt());
+            this.soldier.setAmountPlayed(jobj.get("soldier").getAsInt());
+            this.monopoly.setAmountPlayed(jobj.get("monument").getAsInt());
+            break;
+    }}
+
 
     private void initialize(){
         monopoly = new DevCard(DevCardType.MONOPOLY) {
@@ -134,7 +145,14 @@ public class DevCards {
                 + roadBuilding.total();
     }
 
+
     public String toString(DevCard.AmountType type){
+        JsonObject devCards = toJsonObject(type);
+
+        return devCards.toString();
+    }
+
+    public JsonObject toJsonObject(DevCard.AmountType type){
         JsonObject devCards = new JsonObject();
         {
             devCards.addProperty("monopoly", monopoly.getAmount(type));
@@ -143,8 +161,7 @@ public class DevCards {
             devCards.addProperty("soldier", soldier.getAmount(type));
             devCards.addProperty("yearOfPlenty", yearOfPlenty.getAmount(type));
         }
-
-        return devCards.toString();
+        return devCards;
     }
 
 

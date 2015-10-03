@@ -33,6 +33,18 @@ public class Structure {
         }
     }
 
+    public int getAmountBuilt() {
+        return amountBuilt;
+    }
+
+    public void setAmountBuilt(int amountBuilt) {
+        this.amountBuilt = amountBuilt;
+    }
+
+    public int getAmountMax() {
+        return amountMax;
+    }
+
     public StructureType getType() {
         return type;
     }
