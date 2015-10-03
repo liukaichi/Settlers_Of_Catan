@@ -41,30 +41,25 @@ public class TradeOffer
         offer.getResource(ResourceType.WOOD).setAmount(wood);
     }
 
-    public TradeOffer(String json)
-    {
-        JsonParser parser = new JsonParser();
-        JsonObject tradeObject = (JsonObject) parser.parse(json);
-        this.sender = tradeObject.get("playerIndex").getAsInt();
-        this.receiver = tradeObject.get("receiver").getAsInt();
-        JsonObject newOffer = (JsonObject) tradeObject.get("offer");
-        this.offer = new Resources(newOffer.toString());
-
-    }
-
-    public int getSender()
-    {
-        return sender;
-    }
-
     @Override
     public String toString()
     {
+    //@formatter.off
         /*
-         * { "type": "offerTrade", "playerIndex": "integer", "offer": { "brick":
-         * "integer", "ore": "integer", "sheep": "integer", "wheat": "integer",
-         * "wood": "integer" }, "receiver": "integer" }
-         */
+        {
+  			"type": "offerTrade",
+  			"playerIndex": "integer",
+  			"offer": {
+    			"brick": "integer",
+    			"ore": "integer",
+    			"sheep": "integer",
+    			"wheat": "integer",
+    			"wood": "integer"
+  			},
+  			"receiver": "integer"
+		}
+		*/
+//@formatter.on
         JsonObject tradeOffer = new JsonObject();
         {
             tradeOffer.addProperty("type", "offerTrade");
@@ -84,6 +79,24 @@ public class TradeOffer
         return tradeOffer.toString();
     }
 
+    public TradeOffer(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject tradeObject = (JsonObject) parser.parse(json);
+        this.sender = tradeObject.get("playerIndex").getAsInt();
+        this.receiver = tradeObject.get("receiver").getAsInt();
+        JsonObject newOffer = (JsonObject) tradeObject.get("offer");
+        this.offer = new Resources(newOffer.toString());
+
+    }
+
+    public int getSender()
+    {
+        return sender;
+    }
+
+ 
+
     public void setSender(int sender)
     {
         this.sender = sender;
@@ -97,16 +110,6 @@ public class TradeOffer
     public void setReceiver(int receiver)
     {
         this.receiver = receiver;
-    }
-
-    public void addToOffer(ResourceType type, int num)
-    {
-        offer.getResource(type).addResource(num);
-    }
-
-    public void subFromOffer(ResourceType type, int num)
-    {
-        offer.getResource(type).subResource(num);
     }
 
     public Resources getOffer()

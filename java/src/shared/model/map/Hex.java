@@ -68,11 +68,38 @@ public class Hex
         this();
         JsonParser parser = new JsonParser();
         JsonObject hex = (JsonObject)parser.parse(json);
-        this.resourceType = ResourceType.valueOf(hex.get("resource").getAsString());
-        this.hexType = HexType.valueOf(hex.get("resource").getAsString());
+        if(hex.has("resource"))
+        {
+            this.resourceType = ResourceType.valueOf(hex.get("resource").getAsString().toUpperCase());
+            this.hexType = HexType.valueOf(hex.get("resource").getAsString().toUpperCase());
+        }
+        else
+        {
+            this.resourceType = null;
+            this.hexType = HexType.DESERT;
+        }
+        
         JsonObject location = (JsonObject) hex.get("location");
         this.location = new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt());
-        this.numberTile = hex.get("number").getAsInt();
+        if(hex.has("number"))
+        {
+            this.numberTile = hex.get("number").getAsInt();
+        }
+        else
+        {
+            this.numberTile = -1;
+        }
+        if(this.location != null)
+        {
+            for(VertexDirection dir : VertexDirection.values())
+            {
+                vertices.put(dir, new VertexLocation(this.location,dir));
+            }
+            for(EdgeDirection dir : EdgeDirection.values())
+            {
+                edges.put(dir, new EdgeLocation(this.location,dir));
+            }
+        }
     }
 
     /**
@@ -95,6 +122,17 @@ public class Hex
         this.resourceType = resourceType;
         this.numberTile = numberTile;
         this.robberPresent = robberPresent;
+        if(location != null)
+        {
+            for(VertexDirection dir : VertexDirection.values())
+            {
+                vertices.put(dir, new VertexLocation(location,dir));
+            }
+            for(EdgeDirection dir : EdgeDirection.values())
+            {
+                edges.put(dir, new EdgeLocation(location,dir));
+            }
+        }
     }
     
     public VertexLocation getVertexLocation(VertexDirection dir)
@@ -195,14 +233,16 @@ public class Hex
     {
         JsonObject hex = new JsonObject();
         {
-            hex.addProperty("resource", this.resourceType.toString().toLowerCase());
+            if(this.resourceType != null)
+                hex.addProperty("resource", this.resourceType.toString().toLowerCase());
             JsonObject location = new JsonObject();
             {
                 location.addProperty("x", this.location.getX());
                 location.addProperty("y", this.location.getY());
             }
             hex.add("location", location);
-            hex.addProperty("number", this.numberTile);
+            if(this.numberTile != -1)
+                hex.addProperty("number", this.numberTile);
         }
         return hex.toString();
     }

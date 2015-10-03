@@ -1,8 +1,9 @@
-package shared.model.bank.card;
+package shared.model.bank;
 
 import junit.framework.TestCase;
 import shared.definitions.DevCardType;
 import shared.model.bank.PlayerBank;
+import shared.model.bank.card.DevCard;
 
 /**
  * Created by Adrian on 9/28/2015.

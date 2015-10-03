@@ -1,7 +1,8 @@
-package shared.model.bank.resource;
+package shared.model.bank;
 
 import junit.framework.TestCase;
 import shared.definitions.ResourceType;
+import shared.model.bank.resource.Resource;
 
 /**
  * Created by Adrian on 9/28/2015.

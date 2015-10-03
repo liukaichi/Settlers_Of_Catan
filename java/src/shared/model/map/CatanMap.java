@@ -3,11 +3,18 @@ package shared.model.map;
 import java.util.*;
 
 import com.google.gson.*;
+import com.google.gson.*;
 
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the board game map of the Catan game
@@ -73,6 +80,7 @@ public class CatanMap
         }
         JsonObject robber = map.getAsJsonObject("robber");
         this.hexes.get(new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt())).setHasRobber(true);
+    	this.robberLocation = new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt());
     }
 
     @Override
