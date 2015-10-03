@@ -3,6 +3,7 @@
  */
 package shared.model.map;
 
+import com.google.gson.Gson;
 import static org.junit.Assert.*;
 
 import java.io.FileReader;
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import org.junit.Test;
+
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -22,6 +24,11 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.map.structure.Structure;
+
+import java.util.HashMap;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 /**
  * @author dtaylor
@@ -70,7 +77,6 @@ public class CatanMapTest {
 		String json = gson.toJson(map);
 		System.out.println(json);
 	}
-	
 	/**
 	 * 
 	 */

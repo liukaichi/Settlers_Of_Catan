@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
  */
 public class Resources
 {
-    private Resource brick, ore, sheep, wheat, wood;
+    private ResourceType brick, ore, sheep, wheat, wood;
 
     public Resources(boolean isGameBank){
         initialize(isGameBank);
@@ -32,11 +32,11 @@ public class Resources
     }
 
     private void initialize(boolean isGameBank){
-        brick = new Resource(ResourceType.BRICK);
-        ore = new Resource(ResourceType.ORE);
-        sheep = new Resource(ResourceType.SHEEP);
-        wheat = new Resource(ResourceType.WHEAT);
-        wood = new Resource(ResourceType.WOOD);
+        brick = new ResourceType(ResourceType.BRICK);
+        ore = new ResourceType(ResourceType.ORE);
+        sheep = new ResourceType(ResourceType.SHEEP);
+        wheat = new ResourceType(ResourceType.WHEAT);
+        wood = new ResourceType(ResourceType.WOOD);
 
         if(isGameBank){
             brick.addResource(19);
@@ -47,7 +47,7 @@ public class Resources
         }
     }
 
-    public Resource getResource(ResourceType type){
+    public ResourceType getResource(ResourceType type){
         switch (type){
             case BRICK:
                 return brick;
@@ -74,11 +74,6 @@ public class Resources
 
     @Override
     public String toString() {
-        JsonObject resources = toJsonObject();
-        return resources.toString();
-    }
-
-    public JsonObject toJsonObject(){
         JsonObject resources = new JsonObject();
         {
             resources.addProperty("brick", brick.getAmount());
@@ -87,8 +82,7 @@ public class Resources
             resources.addProperty("wheat", wheat.getAmount());
             resources.addProperty("wood", wood.getAmount());
         }
-
-        return resources;
+        return resources.toString();
     }
 //
 //    public static class ResourcesSerializer implements JsonSerializer<Resources> {

@@ -54,7 +54,7 @@ public class TurnTracker
     */    
     public void updateLongestRoad(PlayerBank playerLongestRoad)
     {
-//    	if (playerLongestRoad.amountOf(type))
+    	//if (playerLongestRoad.amountOf(type))
     }
     
     /**
@@ -63,7 +63,7 @@ public class TurnTracker
     */    
     public void updateLargestArmy(PlayerIndex playerLargestArmy)
     {
-        
+//        if (playerLargestArmy.getKnights() > largestArmy.)
     }
     
     /**

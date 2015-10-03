@@ -1,11 +1,15 @@
 package client.facade;
 
+import java.util.*;
+
 import client.data.*;
 import server.proxy.*;
 import shared.communication.Credentials;
+import shared.communication.moveCommands.*;
 import shared.definitions.*;
+import shared.definitions.exceptions.CatanException;
 import shared.locations.*;
-import shared.model.*;
+import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.*;
 
@@ -20,11 +24,30 @@ public class ClientFacade
     private static ClientFacade _instance = null;
     private ClientModel model;
     private IProxy proxy;
+    private List<Player> players;
 
     private ClientFacade()
     {
         model = new ClientModel();
         proxy = new ServerProxy();
+    }
+
+    private void setupPlayersFromGame()
+    {
+        List<PlayerInfo> playerInfos = model.getGameInfo().getPlayers();
+        players = new ArrayList<Player>();
+        for (int i = 0; i < 4; ++i)
+        {
+            try
+            {
+                Player player = new Player(playerInfos.get(i));
+                players.add(player);
+            }
+            catch (CatanException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -51,9 +74,10 @@ public class ClientFacade
      * @param message
      *        the message to send.
      */
-    public void sendMessage(String message)
+    public void sendMessage(PlayerIndex player, String message)
     {
-
+        // model.sendMessage(player, message);
+        proxy.sendChat(new SendChatCommand(player, message));
     }
 
     /*
@@ -62,9 +86,9 @@ public class ClientFacade
     /**
      * Initializes the game history from a model.
      */
-    public void initHistoryFromModel()
+    public void initHistoryFromModel(ClientModel model)
     {
-
+        this.model = model;
     }
 
     /*
@@ -75,8 +99,9 @@ public class ClientFacade
      * 
      * @return whether or not the player can buy a dev card.
      */
-    public boolean canBuyDevCard()
+    public boolean canBuyDevCard(PlayerIndex player)
     {
+        // model.canBuyDevCard();
         return false;
     }
 
@@ -84,9 +109,9 @@ public class ClientFacade
      * Purchases a Development Card. This will take the card from the bank, and
      * adds it to the player' hand.
      */
-    public void buyDevCard()
+    public void buyDevCard(PlayerIndex player)
     {
-
+        proxy.buyDevCard(new BuyDevCardCommand(player));
     }
 
     /**
@@ -95,9 +120,9 @@ public class ClientFacade
      * @param resource
      *        the type of resource the player is getting the monopoly on.
      */
-    public void playMonopolyCard(ResourceType resource)
+    public void playMonopolyCard(PlayerIndex player, ResourceType resource)
     {
-
+        // proxy.monopoly(new MonopolyCommand(player, resource))
     }
 
     /**
@@ -108,7 +133,7 @@ public class ClientFacade
      * @param resource2
      *        The second resource.
      */
-    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
+    public void playYearOfPlentyCard(PlayerIndex player, ResourceType resource1, ResourceType resource2)
     {
 
     }
@@ -116,7 +141,7 @@ public class ClientFacade
     /**
      * Plays any other kind of Development Card.
      */
-    public void playOtherDevCard(DevCardType type)
+    public void playOtherDevCard(PlayerIndex player, DevCardType type)
     {
 
     }
@@ -131,7 +156,7 @@ public class ClientFacade
      * @param discardedResources
      *        the list of resources to discard.
      */
-    public void discardResources(Resources discardedResources)
+    public void discardResources(PlayerIndex player, Resources discardedResources)
     {
 
     }
@@ -143,7 +168,7 @@ public class ClientFacade
     /**
      * Sends a trade offer to a player.
      */
-    public void sendTradeOffer(TradeOffer offer)
+    public void sendTradeOffer(PlayerIndex player)
     {
 
     }
@@ -154,7 +179,7 @@ public class ClientFacade
      * @param willAccept
      *        Whether or not the player will accept the trade.
      */
-    public void acceptTrade(boolean willAccept)
+    public void acceptTrade(PlayerIndex player, boolean willAccept)
     {
 
     }

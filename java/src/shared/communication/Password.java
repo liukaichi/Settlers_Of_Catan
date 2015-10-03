@@ -17,6 +17,11 @@ public class Password
 
     public void setPassword(String password)
     {
+        validatePassword(password);
+    }
+
+    private void validatePassword(String password)
+    {
         this.password = password;
     }
 
@@ -25,7 +30,7 @@ public class Password
      * 
      * @return the password.
      */
-    public String getPassword()
+    public String getPasswordPlainText()
     {
         return password;
     }

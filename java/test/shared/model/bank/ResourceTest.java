@@ -9,25 +9,25 @@ import shared.model.bank.resource.Resource;
  */
 public class ResourceTest extends TestCase {
 
-    public Resource setResourceWithoutAmount(){
-        return new Resource(ResourceType.SHEEP);
+    public ResourceType setResourceWithoutAmount(){
+        return new ResourceType(ResourceType.SHEEP);
     }
 
-    public Resource setResourceWithAmount(int amount){
-        Resource test = new Resource(ResourceType.BRICK);
+    public ResourceType setResourceWithAmount(int amount){
+        ResourceType test = new ResourceType(ResourceType.BRICK);
         test.addResource(amount);
         return test;
     }
 
     public void testAddResource() throws Exception {
-        Resource test = setResourceWithoutAmount();
+        ResourceType test = setResourceWithoutAmount();
 
         test.addResource(23);
         assertEquals(test.getAmount(), 23);
     }
 
     public void testSubResource() throws Exception {
-        Resource test = setResourceWithAmount(54);
+        ResourceType test = setResourceWithAmount(54);
 
         test.subResource(24);
         assertEquals(test.getAmount(), 30);
