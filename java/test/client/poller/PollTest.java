@@ -31,6 +31,11 @@ public class PollTest extends TestCase
 
     }
 
+    /**
+     * Tests the timer feature of the poll to update the model.
+     * @param proxy
+     * @throws Exception
+     */
     private void testTimedUpdate(MockProxy proxy) throws Exception{
         proxy.getServerModel().setVersion(1);
         Poller poller = new Poller(proxy);
@@ -39,18 +44,22 @@ public class PollTest extends TestCase
         assertTrue(poller.getCurrentVersion() == 1);
     }
 
+    /**
+     * Tests that the model is not updated if the version is the same.
+     * @param proxy
+     * @throws Exception
+     */
     private void testSameVersion(MockProxy proxy)throws Exception{
         proxy.getServerModel().setVersion(1);
         Poller poller = new Poller(proxy);
 
-        Method method = Poller.class.getDeclaredMethod("getPollTask", null);
-        method.setAccessible(true);
+        Method getPollTask = Poller.class.getDeclaredMethod("getPollTask", null);
+        getPollTask.setAccessible(true);
 
-        Thread.sleep(3100);
-        assertTrue(poller.getCurrentVersion() == 1);
-        Thread.sleep(3100);
+        boolean updated = ((Poller.PollTask)getPollTask.invoke(poller, null)).poll();
+        assertTrue(updated);
 
-        boolean updated = ((Poller.PollTask)method.invoke(poller, null)).poll();
+        updated = ((Poller.PollTask)getPollTask.invoke(poller, null)).poll();
         assertFalse(updated);
 
     }
