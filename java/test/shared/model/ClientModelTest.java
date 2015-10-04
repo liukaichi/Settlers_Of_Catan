@@ -43,7 +43,7 @@ public class ClientModelTest
 
     @Test public void testToString() throws Exception
     {
-        ClientModel model1 = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+        ClientModel model1 = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/complexJSONModel.json"))));
         ClientModel model2 = new ClientModel(model1.toString());
         assertTrue(model1.equals(model2));
         assertTrue(model2.equals(model1));
