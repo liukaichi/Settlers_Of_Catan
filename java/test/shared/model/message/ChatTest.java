@@ -3,16 +3,13 @@
  */
 package shared.model.message;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-
 import shared.definitions.PlayerIndex;
 import shared.model.player.Player;
+
+import java.util.List;
 
 /**
  * @author amandafisher
@@ -21,7 +18,7 @@ import shared.model.player.Player;
 public class ChatTest 
 {
 	Player player; 
-	PlayerIndex index = player.getPlayerInfo().getPlayerIndex();
+	String sourceName = player.getPlayerInfo().getName();
 	Chat chat; 
 	MessageLine messageLine;
 	String message;
@@ -40,14 +37,14 @@ public class ChatTest
 	public void setUp() throws Exception 
 	{
 		message = "Let's play Catan!";
-		messageLine = new MessageLine(index, message);; 
+		messageLine = new MessageLine(sourceName, message);;
 		
 	}
 
 	@Test
 	public void test() 
 	{
-		chat.addMessageLine(index, message); 
+		chat.addMessageLine(sourceName, message);
 		chat.addMessageLine(messageLine); 
 		List<MessageLine> messageLines = chat.getMessages();
 		

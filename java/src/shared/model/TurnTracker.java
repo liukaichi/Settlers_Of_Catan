@@ -1,16 +1,11 @@
 package shared.model;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import client.data.PlayerInfo;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import client.data.PlayerInfo;
 import shared.definitions.PlayerIndex;
 import shared.definitions.TurnStatus;
 import shared.model.bank.PlayerBank;
-import shared.model.message.MessageLine;
-import shared.model.player.Player;
 
 /**
  * This class manages player's turns during the Catan game
@@ -26,16 +21,16 @@ public class TurnTracker
     {
     	JsonParser parser = new JsonParser();
     	JsonObject tracker = (JsonObject) parser.parse(json);
-    	int currentTurnInt = tracker.getAsJsonObject("currentTurn").getAsInt();
+    	int currentTurnInt = tracker.getAsJsonPrimitive("currentTurn").getAsInt();
     	currentTurn = PlayerIndex.fromInt(currentTurnInt);
     	
-    	String statusString = tracker.getAsJsonObject("status").getAsString();
-    	status = TurnStatus.valueOf(statusString.toUpperCase()); 
+    	String statusString = tracker.getAsJsonPrimitive("status").getAsString();
+    	status = TurnStatus.valueOf(statusString);
     	
-    	int longestRoadInt = tracker.getAsJsonObject("longestRoad").getAsInt();
+    	int longestRoadInt = tracker.getAsJsonPrimitive("longestRoad").getAsInt();
     	longestRoad = PlayerIndex.fromInt(longestRoadInt);
     	
-    	int largestArmyInt = tracker.getAsJsonObject("largestArmy").getAsInt();
+    	int largestArmyInt = tracker.getAsJsonPrimitive("largestArmy").getAsInt();
     	largestArmy = PlayerIndex.fromInt(largestArmyInt);
     }
     

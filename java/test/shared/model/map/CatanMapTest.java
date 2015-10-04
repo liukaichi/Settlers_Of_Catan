@@ -3,33 +3,19 @@
  */
 package shared.model.map;
 
-import com.google.gson.Gson;
 import org.junit.Test;
-import com.google.gson.Gson;
-import static org.junit.Assert.*;
+import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.PlacementException;
+import shared.locations.*;
+import shared.model.map.structure.Road;
+import shared.model.map.structure.Structure;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import org.junit.Test;
 
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-
-import shared.definitions.PlayerIndex;
-import shared.definitions.exceptions.PlacementException;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
-import shared.model.map.structure.Road;
-import shared.model.map.structure.Structure;
+import static org.junit.Assert.*;
 
 /**
  * @author dtaylor

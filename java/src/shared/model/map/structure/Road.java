@@ -1,15 +1,11 @@
 package shared.model.map.structure;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import shared.definitions.PlayerIndex;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 
 /**
  * Object representing a road or a hex edge in the Catan game
@@ -26,7 +22,7 @@ public class Road
     }
     
 	/**
-	 * @param string
+	 * @param json
 	 */
 	public Road(String json) {
 		JsonParser parser = new JsonParser();
