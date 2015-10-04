@@ -80,8 +80,8 @@ public class TradeOffer
     public TradeOffer(String json){
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject)parser.parse(json);
-        this.sender = tradeObject.get("playerIndex").getAsInt();
-        this.receiver = tradeObject.get("receiver").getAsInt();
+        this.sender = tradeObject.getAsJsonPrimitive("sender").getAsInt();
+        this.receiver = tradeObject.getAsJsonPrimitive("receiver").getAsInt();
         JsonObject newOffer = (JsonObject) tradeObject.get("offer");
         this.offer = new Resources(newOffer.toString());
 
