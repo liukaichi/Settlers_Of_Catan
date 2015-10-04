@@ -89,7 +89,33 @@ public class Resources
 
         return resources;
     }
-//
+
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Resources resources = (Resources) o;
+
+        if (brick != null ? !brick.equals(resources.brick) : resources.brick != null)
+            return false;
+        if (ore != null ? !ore.equals(resources.ore) : resources.ore != null)
+            return false;
+        if (sheep != null ? !sheep.equals(resources.sheep) : resources.sheep != null)
+            return false;
+        if (wheat != null ? !wheat.equals(resources.wheat) : resources.wheat != null)
+            return false;
+        return !(wood != null ? !wood.equals(resources.wood) : resources.wood != null);
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
+    //
 //    public static class ResourcesSerializer implements JsonSerializer<Resources> {
 //
 //        @Override

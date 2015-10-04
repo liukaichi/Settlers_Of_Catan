@@ -48,4 +48,24 @@ public class Resource
     {
         amount -= num;
     }
+
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Resource resource = (Resource) o;
+
+        if (amount != resource.amount)
+            return false;
+        return type == resource.type;
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
 }

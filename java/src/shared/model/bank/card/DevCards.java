@@ -164,8 +164,33 @@ public class DevCards {
         return devCards;
     }
 
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
-//    public static class OldDevCardsAdapter implements JsonSerializer<DevCards> {
+        DevCards devCards = (DevCards) o;
+
+        if (monopoly != null ? !monopoly.equals(devCards.monopoly) : devCards.monopoly != null)
+            return false;
+        if (roadBuilding != null ? !roadBuilding.equals(devCards.roadBuilding) : devCards.roadBuilding != null)
+            return false;
+        if (yearOfPlenty != null ? !yearOfPlenty.equals(devCards.yearOfPlenty) : devCards.yearOfPlenty != null)
+            return false;
+        if (soldier != null ? !soldier.equals(devCards.soldier) : devCards.soldier != null)
+            return false;
+        return !(monument != null ? !monument.equals(devCards.monument) : devCards.monument != null);
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
+
+    //    public static class OldDevCardsAdapter implements JsonSerializer<DevCards> {
 //
 //        @Override
 //        public JsonElement serialize(DevCards src, Type type, JsonSerializationContext jsonSerializationContext) {

@@ -1,8 +1,6 @@
 package shared.model.bank.card;
 
-import client.main.Catan;
 import shared.definitions.DevCardType;
-import shared.definitions.exceptions.CatanException;
 import shared.model.bank.PlayerBank;
 
 /**
@@ -11,6 +9,31 @@ import shared.model.bank.PlayerBank;
 public abstract class DevCard {
     private DevCardType type;
     private int amountPlayable, amountUnplayable, amountPlayed;
+
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        DevCard devCard = (DevCard) o;
+
+        if (amountPlayable != devCard.amountPlayable)
+            return false;
+        if (amountUnplayable != devCard.amountUnplayable)
+            return false;
+        if (amountPlayed != devCard.amountPlayed)
+            return false;
+        return type == devCard.type;
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
+
     public enum AmountType {
         PLAYABLE, UNPLAYABLE, PLAYED
     }

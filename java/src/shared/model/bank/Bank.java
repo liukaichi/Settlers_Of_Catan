@@ -101,4 +101,21 @@ public class Bank
         }
     }
 
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Bank bank = (Bank) o;
+
+        return !(devCards != null ? !devCards.equals(bank.devCards) : bank.devCards != null);
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
 }
