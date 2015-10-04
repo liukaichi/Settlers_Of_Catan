@@ -8,8 +8,6 @@ import com.google.gson.JsonParser;
 import java.util.ArrayList;
 import java.util.List;
 
-import shared.model.map.Hex;
-
 /**
  * Represents the log of messages in the chat.
  * 
@@ -76,6 +74,7 @@ public class Log
                     lines.add(parser.parse(line.toString()));
                 }
             }
+			log.add("lines", lines);
         }
         return log.toString(); 
     }
