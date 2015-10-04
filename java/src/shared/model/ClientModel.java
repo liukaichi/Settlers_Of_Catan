@@ -323,4 +323,34 @@ public class ClientModel
 
         return model.toString();
     }
+
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        ClientModel that = (ClientModel) o;
+
+        if (version != that.version)
+            return false;
+        if (gameInfo != null ? !gameInfo.equals(that.gameInfo) : that.gameInfo != null)
+            return false;
+        if (bank != null ? !bank.equals(that.bank) : that.bank != null)
+            return false;
+        if (chat != null ? !chat.equals(that.chat) : that.chat != null)
+            return false;
+        if (log != null ? !log.equals(that.log) : that.log != null)
+            return false;
+        if (map != null ? !map.equals(that.map) : that.map != null)
+            return false;
+        if (tradeOffer != null ? !tradeOffer.equals(that.tradeOffer) : that.tradeOffer != null)
+            return false;
+        if (turnTracker != null ? !turnTracker.equals(that.turnTracker) : that.turnTracker != null)
+            return false;
+        return winner == that.winner;
+
+    }
+
 }
