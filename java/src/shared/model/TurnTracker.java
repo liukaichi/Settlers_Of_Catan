@@ -1,8 +1,10 @@
 package shared.model;
 
 import client.data.PlayerInfo;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import shared.definitions.PlayerIndex;
 import shared.definitions.TurnStatus;
 import shared.model.bank.PlayerBank;
@@ -98,4 +100,48 @@ public class TurnTracker
 		returnString += "\"longestArmy\": "+ getLargestArmy().toString() + "\"},";
 		return returnString; 
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((currentTurn == null) ? 0 : currentTurn.hashCode());
+		result = prime * result
+				+ ((largestArmy == null) ? 0 : largestArmy.hashCode());
+		result = prime * result
+				+ ((longestRoad == null) ? 0 : longestRoad.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		
+		TurnTracker other = (TurnTracker) obj;
+		if (currentTurn.getIndex() != other.currentTurn.getIndex())
+			return false;
+		if (largestArmy.getIndex() != other.largestArmy.getIndex())
+			return false;
+		if (longestRoad.getIndex() != other.longestRoad.getIndex())
+			return false;
+		if (status!= other.status)
+			return false;
+		return true;
+	}
+	
+	
 }
