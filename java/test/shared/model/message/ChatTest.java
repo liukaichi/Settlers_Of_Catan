@@ -45,7 +45,6 @@ public class ChatTest
 	public void test() 
 	{
 		chat.addMessageLine(sourceName, message);
-		chat.addMessageLine(messageLine); 
 		List<MessageLine> messageLines = chat.getMessages();
 		
 		  //assert(returnValue.equals(chat.toString()));
