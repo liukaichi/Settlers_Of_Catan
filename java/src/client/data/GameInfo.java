@@ -80,4 +80,26 @@ public class GameInfo
 
     public void setPlayers(String json){
     }
+
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        GameInfo gameInfo = (GameInfo) o;
+
+        if (id != gameInfo.id)
+            return false;
+        if (title != null ? !title.equals(gameInfo.title) : gameInfo.title != null)
+            return false;
+        return !(players != null ? !players.equals(gameInfo.players) : gameInfo.players != null);
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
 }

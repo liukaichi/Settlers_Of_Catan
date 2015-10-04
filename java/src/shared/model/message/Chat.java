@@ -60,26 +60,60 @@ public class Chat {
         lines.add(line);
     }
 
-    /**
-     * Adds the message to the list.
-     * 
-     * @param message
-     *        the message to add.
-     */
-    public void addMessageLine(MessageLine message)
+    public void addMessageLine(MessageLine messageLine)
     {
-        lines.add(message);
+        lines.add(messageLine);
     }
-    
-    @Override
-    public String toString()
+
+    @Override public String toString()
     {
-        String returnValue = "\"chat\":{";
-        for (MessageLine messageLine : lines) {
-			returnValue += messageLine.toString();
-		}
-        returnValue += "},";
-        return returnValue; 
+        JsonParser parser = new JsonParser();
+        // map
+        JsonObject chat = new JsonObject();
+        {
+            JsonArray lines = new JsonArray();
+
+            for (MessageLine line : this.lines)
+            {
+                lines.add(parser.parse(line.toString()));
+            }
+
+            chat.add("lines", lines);
+        }
+        return chat.toString();
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((lines == null) ? 0 : lines.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+
+        Chat other = (Chat) obj;
+        if (lines == null)
+        {
+            if (other.lines.toString() != null)
+                return false;
+        } else if (!(lines.toString()).equals(other.lines.toString()))
+            return false;
+        return true;
     }
 
 }

@@ -339,12 +339,12 @@ public class CatanMap
      */
     public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
-        try
+        if(canPlaceRoad(player, location))
         {
             Road road = new Road(player, location.getNormalizedLocation());
             roads.put(location.getNormalizedLocation(), road);
         }
-        catch (Exception e)
+        else
         {
             throw new PlacementException();
         }
@@ -363,15 +363,15 @@ public class CatanMap
      */
     public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-        try
-        {
-            Settlement settlement = new Settlement(player, location.getNormalizedLocation());
-            structures.put(location.getNormalizedLocation(), settlement);
-        }
-        catch (Exception e)
-        {
-            throw new PlacementException();
-        }
+            if(canPlaceSettlement(player, location))
+            {
+                Settlement settlement = new Settlement(player, location.getNormalizedLocation());
+                structures.put(location.getNormalizedLocation(), settlement);
+            }
+            else
+            {
+                throw new PlacementException();
+            }
     }
 
     /**
@@ -385,12 +385,12 @@ public class CatanMap
      */
     public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-        try
+        if(canPlaceCity(player,location))
         {
             City city = new City(player, location.getNormalizedLocation());
             structures.put(location.getNormalizedLocation(), city);
         }
-        catch (Exception e)
+        else
         {
             throw new PlacementException();
         }
@@ -407,11 +407,11 @@ public class CatanMap
      */
     public void moveRobber(PlayerIndex player, HexLocation location) throws PlacementException
     {
-        try
+        if(canMoveRobber(player, location))
         {
             this.robberLocation = location;
         }
-        catch (Exception e)
+        else
         {
             throw new PlacementException();
         }

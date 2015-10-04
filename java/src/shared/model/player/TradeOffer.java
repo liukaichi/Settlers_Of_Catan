@@ -24,6 +24,52 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
      */
     private Resources offer;
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((offer == null) ? 0 : offer.hashCode());
+        result = prime * result + receiver.hashCode();
+        result = prime * result + sender.hashCode();
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+
+        TradeOffer other = (TradeOffer) obj;
+        if (offer == null)
+        {
+            if (other.offer != null)
+                return false;
+        }
+        else if (!offer.equals(other.offer))
+            return false;
+        if (receiver != other.receiver)
+            return false;
+        if (sender != other.sender)
+            return false;
+        return true;
+    }
+
     public TradeOffer(Player sender, Player receiver)
     {
         this.sender = sender.getPlayerInfo().getPlayerIndex();

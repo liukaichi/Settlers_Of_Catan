@@ -322,4 +322,33 @@ public class PlayerBank extends Bank
         ports.add(type);
     }
 
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        PlayerBank that = (PlayerBank) o;
+
+        if (knights != that.knights)
+            return false;
+        if (victoryPoints != that.victoryPoints)
+            return false;
+        if (monuments != that.monuments)
+            return false;
+        if (structures != null ? !structures.equals(that.structures) : that.structures != null)
+            return false;
+        if (playerResources != null ? !playerResources.equals(that.playerResources) : that.playerResources != null)
+            return false;
+        if (playerDevCards != null ? !playerDevCards.equals(that.playerDevCards) : that.playerDevCards != null)
+            return false;
+        return !(ports != null ? !ports.equals(that.ports) : that.ports != null);
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
 }

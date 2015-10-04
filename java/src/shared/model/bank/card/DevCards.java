@@ -45,21 +45,21 @@ public class DevCards {
             this.monopoly.setAmountUnplayable(jobj.get("monopoly").getAsInt());
             this.roadBuilding.setAmountUnplayable(jobj.get("roadBuilding").getAsInt());
             this.soldier.setAmountUnplayable(jobj.get("soldier").getAsInt());
-            this.monopoly.setAmountUnplayable(jobj.get("monument").getAsInt());
+            this.monument.setAmountUnplayable(jobj.get("monument").getAsInt());
             break;
         case PLAYABLE:
             this.yearOfPlenty.setAmountPlayable(jobj.get("yearOfPlenty").getAsInt());
             this.monopoly.setAmountPlayable(jobj.get("monopoly").getAsInt());
             this.roadBuilding.setAmountPlayable(jobj.get("roadBuilding").getAsInt());
             this.soldier.setAmountPlayable(jobj.get("soldier").getAsInt());
-            this.monopoly.setAmountPlayable(jobj.get("monument").getAsInt());
+            this.monument.setAmountPlayable(jobj.get("monument").getAsInt());
             break;
         case PLAYED:
             this.yearOfPlenty.setAmountPlayed(jobj.get("yearOfPlenty").getAsInt());
             this.monopoly.setAmountPlayed(jobj.get("monopoly").getAsInt());
             this.roadBuilding.setAmountPlayed(jobj.get("roadBuilding").getAsInt());
             this.soldier.setAmountPlayed(jobj.get("soldier").getAsInt());
-            this.monopoly.setAmountPlayed(jobj.get("monument").getAsInt());
+            this.monument.setAmountPlayed(jobj.get("monument").getAsInt());
             break;
     }}
 
@@ -164,8 +164,33 @@ public class DevCards {
         return devCards;
     }
 
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
-//    public static class OldDevCardsAdapter implements JsonSerializer<DevCards> {
+        DevCards devCards = (DevCards) o;
+
+        if (monopoly != null ? !monopoly.equals(devCards.monopoly) : devCards.monopoly != null)
+            return false;
+        if (roadBuilding != null ? !roadBuilding.equals(devCards.roadBuilding) : devCards.roadBuilding != null)
+            return false;
+        if (yearOfPlenty != null ? !yearOfPlenty.equals(devCards.yearOfPlenty) : devCards.yearOfPlenty != null)
+            return false;
+        if (soldier != null ? !soldier.equals(devCards.soldier) : devCards.soldier != null)
+            return false;
+        return !(monument != null ? !monument.equals(devCards.monument) : devCards.monument != null);
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
+
+    //    public static class OldDevCardsAdapter implements JsonSerializer<DevCards> {
 //
 //        @Override
 //        public JsonElement serialize(DevCards src, Type type, JsonSerializationContext jsonSerializationContext) {

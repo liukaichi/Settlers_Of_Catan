@@ -4,8 +4,6 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import shared.definitions.ResourceType;
 
 /**
@@ -30,8 +28,6 @@ public class Resources implements JsonSerializer<Resources>
         JsonObject jobj = (JsonObject) parser.parse(json);
 
         this.brick.setAmount(jobj.get("brick").getAsInt());
-        this.brick.setAmount(jobj.getAsJsonPrimitive("brick").getAsInt());
-        this.wheat.setAmount(jobj.getAsJsonPrimitive("wheat").getAsInt());
         this.wood.setAmount(jobj.get("wood").getAsInt());
         this.sheep.setAmount(jobj.get("sheep").getAsInt());
         this.wheat.setAmount(jobj.get("wheat").getAsInt());
@@ -182,5 +178,27 @@ public class Resources implements JsonSerializer<Resources>
             jsonOffer.addProperty("wood", src.wood.getAmount());
         }
         return jsonOffer;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Resources resources = (Resources) o;
+
+        if (brick != null ? !brick.equals(resources.brick) : resources.brick != null)
+            return false;
+        if (ore != null ? !ore.equals(resources.ore) : resources.ore != null)
+            return false;
+        if (sheep != null ? !sheep.equals(resources.sheep) : resources.sheep != null)
+            return false;
+        if (wheat != null ? !wheat.equals(resources.wheat) : resources.wheat != null)
+            return false;
+        return !(wood != null ? !wood.equals(resources.wood) : resources.wood != null);
+
     }
 }

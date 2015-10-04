@@ -1,7 +1,9 @@
 package shared.model.message;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import shared.definitions.PlayerIndex;
 
 /**
@@ -45,9 +47,17 @@ public class MessageLine
     @Override
     public String toString()
     {
-    	String returnString = "\"lines\":[{";
-        returnString += "\"message\":"  + message + "\",";
-        returnString += "\"source\":"  + sourceName + "\"}]";
-        return returnString; 
+    	JsonParser parser = new JsonParser();
+//@formatter.off    	
+//        "lines": [
+//    	 {
+//    		 "message": "string",
+//    		 "source": "string"
+//    		 }
+//@formatter.on
+        JsonObject line = new JsonObject();
+        line.addProperty("message", message);
+        line.addProperty("source", sourceName); 
+        return line.toString(); 
     }
 }

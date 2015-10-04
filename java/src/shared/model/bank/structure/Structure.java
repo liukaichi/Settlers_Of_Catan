@@ -2,7 +2,6 @@ package shared.model.bank.structure;
 
 import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
-import shared.model.bank.card.DevCard;
 
 /**
  * This class represents a Structure in the Catan game
@@ -11,6 +10,29 @@ public class Structure {
     private StructureType type;
     private int amountBuilt;
     private final int amountMax;
+
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Structure structure = (Structure) o;
+
+        if (amountBuilt != structure.amountBuilt)
+            return false;
+        if (amountMax != structure.amountMax)
+            return false;
+        return type == structure.type;
+
+    }
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
+
     public enum AmountType{
         BUILT, MAX
     }
