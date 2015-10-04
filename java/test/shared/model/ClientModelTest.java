@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Created by liukaichi on 10/3/2015.
@@ -39,6 +41,7 @@ public class ClientModelTest
 
     @Test public void testToString() throws Exception
     {
-
+        String test = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json")))).toString();
+        assert(test != null);
     }
 }
