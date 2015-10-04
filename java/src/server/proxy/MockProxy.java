@@ -14,7 +14,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -118,6 +117,9 @@ public class MockProxy implements IProxy
     @Override
     public ClientModel getGameState(int versionNumber)
     {
+        if (versionNumber == serverModel.getVersion()){
+            return null;
+        }
         return serverModel;
     }
 

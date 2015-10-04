@@ -1,40 +1,26 @@
 package shared.model;
 
 import client.data.GameInfo;
-import client.data.PlayerInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
-import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.model.bank.Bank;
 import shared.model.bank.card.DevCard;
 import shared.model.map.CatanMap;
-import shared.model.map.Hex;
-import shared.model.map.structure.City;
-import shared.model.map.structure.Road;
-import shared.model.map.structure.Settlement;
-import shared.model.map.structure.Structure;
 import shared.model.message.Chat;
 import shared.model.message.Log;
-import shared.model.message.MessageLine;
 import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
 /**
  * The client model for the Catan game
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public class ClientModel
 {
@@ -64,13 +50,14 @@ public class ClientModel
     {
         JsonParser parser = new JsonParser();
         JsonObject model = (JsonObject) parser.parse(json);
-        bank.initDevCards(model.getAsJsonObject("deck").toString());
+        bank.initDevCards(model.get("deck").toString());
         map = new CatanMap(model.getAsJsonObject("map").toString());
 
         gameInfo = new GameInfo();
         JsonArray players = model.getAsJsonArray("players");
         // TODO Should be: for(Player player : gameinfo.getPlayers();
-        for (Player player : gameInfo.getPlayers()){
+        for (Player player : gameInfo.getPlayers())
+        {
             gameInfo.addPlayer(new Player(player.toString()));
         }
 
@@ -83,12 +70,10 @@ public class ClientModel
         winner = PlayerIndex.fromInt(model.getAsJsonPrimitive("winner").getAsInt());
         version = model.getAsJsonPrimitive("version").getAsInt();
 
-        model.add("log", parser.parse(log.toString()));
-        model.add("chat", parser.parse(chat.toString()));
-        model.add("bank", parser.parse(bank.getResources().toString()));
-        model.add("turnTracker", parser.parse(turnTracker.toString()));
-        model.addProperty("winner", winner.getIndex());
-        model.addProperty("version",version);
+        if (model.has("tradeOffer"))
+        {
+            tradeOffer = new TradeOffer(model.getAsJsonObject("tradeOffer").toString());
+        }
 
     }
 
@@ -146,10 +131,12 @@ public class ClientModel
     {
         this.winner = winner;
     }
-    public void setVersion(int version){
+
+    public void setVersion(int version)
+    {
         this.version = version;
     }
-
+    
     /**
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
@@ -304,6 +291,11 @@ public class ClientModel
             throw new PlacementException();
         }
     }
+
+    /**
+     * returns a serialized json representation of the object.
+     * @return a string of json
+     */
     @Override
     public String toString(){
         JsonParser parser = new JsonParser();
@@ -311,31 +303,21 @@ public class ClientModel
         model.add("deck", parser.parse(bank.getDevCards().toString(DevCard.AmountType.PLAYABLE)));
         model.add("map", parser.parse(map.toString()));
         JsonArray players = new JsonArray();
-
-        // TODO Should be: for(Player player : gameinfo.getPlayers();
-        for (Player player : gameInfo.getPlayers()){
+        for (Player player : gameInfo.getPlayers())
+        {
             players.add(parser.parse(player.toString()));
         }
         model.add("players", players);
-
-        JsonArray logLines = new JsonArray();
-        // TODO The line toString needs to be changed according to how chats are structured.
-        for (MessageLine line : getLog().getMessages()){
-            logLines.add(parser.parse(line.toString()));
-        }
-
-        JsonArray chatLines = new JsonArray();
-        // TODO The chat toString needs to be changed according to how chats are structured.
-        for (MessageLine line : getLog().getMessages()){
-            chatLines.add(parser.parse(line.toString()));
-        }
-
         model.add("log", parser.parse(log.toString()));
         model.add("chat", parser.parse(chat.toString()));
         model.add("bank", parser.parse(bank.getResources().toString()));
         model.add("turnTracker", parser.parse(turnTracker.toString()));
         model.addProperty("winner", winner.getIndex());
-        model.addProperty("version",version);
+        model.addProperty("version", version);
+
+        if (tradeOffer != null){
+            model.add("tradeOffer", parser.parse(tradeOffer.toString()));
+        }
 
         return model.toString();
     }
