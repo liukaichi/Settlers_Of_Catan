@@ -6,6 +6,7 @@ package shared.model.message;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
+import shared.definitions.PlayerIndex;
 import shared.model.player.Player;
 
 import java.util.List;
@@ -44,7 +45,6 @@ public class ChatTest
 	public void test() 
 	{
 		chat.addMessageLine(sourceName, message);
-		chat.addMessageLine(messageLine);
 		List<MessageLine> messageLines = chat.getMessages();
 		
 		  //assert(returnValue.equals(chat.toString()));
