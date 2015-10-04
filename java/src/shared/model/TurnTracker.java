@@ -97,9 +97,9 @@ public class TurnTracker
 		// map
 		JsonObject turnTracker = new JsonObject();
 		turnTracker.addProperty("status", status.toString());
-		turnTracker.addProperty("currentTurn", currentTurn.toString());
-		turnTracker.addProperty("longestRoad", longestRoad.toString());
-		turnTracker.addProperty("longestArmy", getLargestArmy().toString());
+		turnTracker.addProperty("currentTurn", currentTurn.getIndex());
+		turnTracker.addProperty("longestRoad", longestRoad.getIndex());
+		turnTracker.addProperty("largestArmy", largestArmy.getIndex());
 
 		return turnTracker.toString(); 
 	}

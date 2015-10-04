@@ -101,6 +101,13 @@ public class Bank
         }
     }
 
+
+
+    @Override public int hashCode()
+    {
+        return 0;
+    }
+
     @Override public boolean equals(Object o)
     {
         if (this == o)
@@ -112,10 +119,5 @@ public class Bank
 
         return !(devCards != null ? !devCards.equals(bank.devCards) : bank.devCards != null);
 
-    }
-
-    @Override public int hashCode()
-    {
-        return 0;
     }
 }
