@@ -22,9 +22,13 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.PlacementException;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import shared.model.map.structure.Road;
 import shared.model.map.structure.Structure;
 
 /**
@@ -32,71 +36,38 @@ import shared.model.map.structure.Structure;
  *
  */
 public class CatanMapTest {
-
-
-	/**
-	 * Test method for {@link shared.model.map.CatanMap#CatanMap()}.
-	 */
-	@Test
-	public void testCatanMap() {
-	    String json = null;
-        try
-        {
-            json = new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json")));
-        } catch (IOException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-		CatanMap map = new CatanMap(json);
-		JsonParser parser = new JsonParser();
-		JsonObject obj1 = (JsonObject)parser.parse(map.toString());
-        JsonObject obj2 = (JsonObject)parser.parse(json);
-		boolean same = obj1.equals(obj2);
-		assertTrue(same);
-		
-	}
+	private static CatanMap catanMap;
 
 	/**
 	 * Test method for {@link shared.model.map.CatanMap#canPlaceSettlement(shared.definitions.PlayerIndex, shared.locations.VertexLocation)}.
 	 */
 	@Test
 	public void testCanPlaceSettlement() {
-		testCanPlaceSettlementEmptySet();
-		testCanPlaceSettlementVacantVertexStructureNearBy();
-	}
-	
-	@Test
-	public void testSerializeClassToJson()
-	{
-		CatanMap map = new CatanMap();
-		Gson gson = new Gson();
-		String json = gson.toJson(map);
-		System.out.println(json);
-	}
-	/**
-	 * 
-	 */
-	private void testCanPlaceSettlementVacantVertexStructureNearBy() {
-		CatanMap map = new CatanMap();
-		HashMap<HexLocation, Hex> hexMap = new HashMap<HexLocation, Hex>();
-		hexMap.put(new HexLocation(0,0), new Hex());
-		
-		HashMap<VertexLocation, Structure> structureMap = new HashMap<VertexLocation, Structure>();
-		map.setHexes(hexMap);
-		map.setStructures(structureMap);
-		assertFalse(map.canPlaceSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,0),VertexDirection.West)));
-	}
-
-	
-	public void testCanPlaceSettlementEmptySet() {
-		CatanMap map = new CatanMap();
-		HashMap<HexLocation, Hex> hexMap = new HashMap<HexLocation, Hex>();
-		HashMap<VertexLocation, Structure> structureMap = new HashMap<VertexLocation, Structure>();
-		map.setHexes(hexMap);
-		map.setStructures(structureMap);
-		//testCanPlaceSettlementEmptySets(map, hexMap, structureMap);
-		assertFalse(map.canPlaceSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,0),VertexDirection.West)));
+		try {
+			catanMap = new CatanMap(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//vacant
+		catanMap.setStructures(new HashMap<VertexLocation,Structure>());
+		assertTrue(catanMap.canPlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
+		//Nearby settlement
+		try {
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+		} catch (PlacementException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		assertFalse(catanMap.canPlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
+		//existing settlement
+		try {
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
+		} catch (PlacementException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		assertFalse(catanMap.canPlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
 	}
 
 
@@ -105,7 +76,31 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testCanPlaceCity() {
-		fail("Not yet implemented"); // TODO
+		try {
+			catanMap = new CatanMap(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//vacant
+		catanMap.setStructures(new HashMap<VertexLocation,Structure>());
+		assertFalse(catanMap.canPlaceCity(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
+		//existing settlement
+		try {
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
+		} catch (PlacementException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		assertTrue(catanMap.canPlaceCity(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
+		//existing city
+		try {
+			catanMap.placeCity(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
+		} catch (PlacementException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		assertTrue(catanMap.canPlaceCity(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
 	}
 
 	/**
@@ -113,7 +108,46 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testCanPlaceRoad() {
-		fail("Not yet implemented"); // TODO
+		try {
+			catanMap = new CatanMap(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//vacant no settlement
+		catanMap.setStructures(new HashMap<VertexLocation,Structure>());
+		catanMap.setRoads(new HashMap<EdgeLocation,Road>());
+		assertFalse(catanMap.canPlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)));
+		//vacant and has settlement
+		try {
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+		} catch (PlacementException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		assertTrue(catanMap.canPlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)));
+		//vacant and not his settlement
+		try {
+			catanMap.placeSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+		} catch (PlacementException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		assertFalse(catanMap.canPlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)));
+		//existing road
+		try {
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+		} catch (PlacementException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		try {
+			catanMap.placeRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
+		} catch (PlacementException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		assertFalse(catanMap.canPlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)));
 	}
 
 	/**
@@ -121,7 +155,26 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testCanMoveRobber() {
-		fail("Not yet implemented"); // TODO
+		try {
+			catanMap = new CatanMap(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//can move on sheep
+		assertTrue(catanMap.canMoveRobber(PlayerIndex.PLAYER_1, new HexLocation(0,-2)));
+		//can move on wood
+		assertTrue(catanMap.canMoveRobber(PlayerIndex.PLAYER_1, new HexLocation(-1,-1)));
+		//can move on wheat
+		assertTrue(catanMap.canMoveRobber(PlayerIndex.PLAYER_1, new HexLocation(2,-1)));
+		//can move on ore
+		assertTrue(catanMap.canMoveRobber(PlayerIndex.PLAYER_1, new HexLocation(-2,0)));
+		//can move on desert
+		assertTrue(catanMap.canMoveRobber(PlayerIndex.PLAYER_1, new HexLocation(-1,2)));
+		//can't move on port
+		assertFalse(catanMap.canMoveRobber(PlayerIndex.PLAYER_1, new HexLocation(-2,3)));
+		//can't move on same hex
+		assertFalse(catanMap.canMoveRobber(PlayerIndex.PLAYER_1, new HexLocation(-1,0)));
 	}
 
 	/**
@@ -129,7 +182,17 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testPlaceRoad() {
-		fail("Not yet implemented"); // TODO
+		try {
+			catanMap = new CatanMap(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		try {
+			catanMap.placeRoad(PlayerIndex.PLAYER_0, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
+		} catch (PlacementException e) {
+			//passed
+		}
 	}
 
 	/**
@@ -137,7 +200,17 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testPlaceSettlement() {
-		fail("Not yet implemented"); // TODO
+		try {
+			catanMap = new CatanMap(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		try {
+			catanMap.placeSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
+		} catch (PlacementException e) {
+			//passed
+		}
 	}
 
 	/**
@@ -145,7 +218,17 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testPlaceCity() {
-		fail("Not yet implemented"); // TODO
+		try {
+			catanMap = new CatanMap(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		try {
+			catanMap.placeCity(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
+		} catch (PlacementException e) {
+			//passed
+		}
 	}
 
 	/**
@@ -153,11 +236,21 @@ public class CatanMapTest {
 	 */
 	@Test
 	public void testMoveRobber() {
-		fail("Not yet implemented"); // TODO
+		try {
+			catanMap = new CatanMap(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		try {
+			catanMap.moveRobber(PlayerIndex.PLAYER_0, new HexLocation(0,-1));
+		} catch (PlacementException e) {
+			//passed
+		}
 	}
 	
 	@Test
-	public void mapEqualsMethod()
+	public void testSerializeDeserialize()
 	{
         String json = null;
         try

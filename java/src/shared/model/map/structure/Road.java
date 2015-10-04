@@ -33,7 +33,7 @@ public class Road
 		JsonObject road = (JsonObject) parser.parse(json);
 		this.owner = PlayerIndex.fromInt(road.get("owner").getAsInt());
 		JsonObject location = (JsonObject) road.get("location");
-		this.location = new EdgeLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), EdgeDirection.fromAbreviation((location.get("direction").getAsString())));
+		this.location = new EdgeLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), EdgeDirection.fromAbreviation((location.get("direction").getAsString()))).getNormalizedLocation();
 	}
 
 	public PlayerIndex getOwner() {

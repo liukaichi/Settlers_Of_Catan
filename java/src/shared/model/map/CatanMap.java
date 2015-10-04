@@ -54,21 +54,21 @@ public class CatanMap
         {
             JsonObject roadObj = (JsonObject) elem;
             Road road = new Road(roadObj.toString());
-            this.roads.put(road.getLocation(), road);
+            this.roads.put(road.getLocation().getNormalizedLocation(), road);
         }
         JsonArray cities = map.getAsJsonArray("cities");
         for (JsonElement elem : cities)
         {
             JsonObject roadObj = (JsonObject) elem;
             City city = new City(roadObj.toString());
-            this.structures.put(city.getLocation(), city);
+            this.structures.put(city.getLocation().getNormalizedLocation(), city);
         }
         JsonArray settlements = map.getAsJsonArray("settlements");
         for (JsonElement elem : settlements)
         {
             JsonObject settlementObj = (JsonObject) elem;
             Settlement settlement = new Settlement(settlementObj.toString());
-            this.structures.put(settlement.getLocation(), settlement);
+            this.structures.put(settlement.getLocation().getNormalizedLocation(), settlement);
         }
         this.radius = map.get("radius").getAsInt();
         JsonArray portsArray = map.getAsJsonArray("ports");
@@ -230,8 +230,8 @@ public class CatanMap
      */
     public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
     {
-        Structure structure = structures.get(location);
-        if (structure != null && structure.getOwner().equals(player))
+        Structure structure = structures.get(location.getNormalizedLocation());
+        if (structure != null && structure.getOwner().getIndex() == player.getIndex())
         {
             return true;
         }
@@ -257,7 +257,7 @@ public class CatanMap
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
     {
         EdgeLocation normalizedEdge = location.getNormalizedLocation();
-        Structure atLocation = structures.get(normalizedEdge);
+        Road atLocation = roads.get(normalizedEdge);
         // check if location exists, and is empty
         if (atLocation == null)
         {
@@ -265,11 +265,12 @@ public class CatanMap
             for (VertexLocation vertex : vertices)
             {
                 Structure structure = structures.get(vertex.getNormalizedLocation());
-                if (structure != null && structure.getOwner().equals(player))
+                if (structure != null && structure.getOwner().getIndex() == player.getIndex())
                 {
                     return true;
                 }
             }
+            //if no settlement then check for connecting road
             List<EdgeLocation> edges = getNearbyEdges(normalizedEdge);
             for (EdgeLocation edge : edges)
             {
@@ -345,8 +346,8 @@ public class CatanMap
     {
         try
         {
-            Road road = new Road(player, location);
-            roads.put(location, road);
+            Road road = new Road(player, location.getNormalizedLocation());
+            roads.put(location.getNormalizedLocation(), road);
         }
         catch (Exception e)
         {
@@ -369,8 +370,8 @@ public class CatanMap
     {
         try
         {
-            Settlement settlement = new Settlement(player, location);
-            structures.put(location, settlement);
+            Settlement settlement = new Settlement(player, location.getNormalizedLocation());
+            structures.put(location.getNormalizedLocation(), settlement);
         }
         catch (Exception e)
         {
@@ -391,8 +392,8 @@ public class CatanMap
     {
         try
         {
-            City city = new City(player, location);
-            structures.put(location, city);
+            City city = new City(player, location.getNormalizedLocation());
+            structures.put(location.getNormalizedLocation(), city);
         }
         catch (Exception e)
         {
