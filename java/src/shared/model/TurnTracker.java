@@ -40,7 +40,7 @@ public class TurnTracker
     */
     public void updateCurrentTurn(PlayerInfo playerCurrentTurn)
     {
-        currentTurn = playerCurrentTurn.getPlayerIndex(); 
+
     }
     
     /**
@@ -56,7 +56,7 @@ public class TurnTracker
     * Updates the largest army counter
     * A player has the largest army if he or she has at least 3 knights
     */    
-    public void updateLargestArmy(PlayerIndex playerLargestArmy)
+    public void updateLargestArmy(PlayerBank playerLargestArmy)
     {
 
     }
@@ -93,8 +93,8 @@ public class TurnTracker
 	public String toString()
 	{
 		String returnString = "\"turnTracker\":{";
-		returnString += "\"status\":\""+ status + "\",";
-		returnString += "\"currentTurn\": "+ currentTurn + "\",";
+		returnString += "\"status\":\""+ status.toString() + "\",";
+		returnString += "\"currentTurn\": "+ currentTurn.toString() + "\",";
 		returnString += "\"longestRoad\": "+ getLongestRoad().toString() + "\",";
 		returnString += "\"longestArmy\": "+ getLargestArmy().toString() + "\"},";
 		return returnString; 
