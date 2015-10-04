@@ -3,6 +3,8 @@ package shared.model;
 import client.utils.BufferedReaderParser;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,7 +43,9 @@ public class ClientModelTest
 
     @Test public void testToString() throws Exception
     {
-        String test = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json")))).toString();
-        assert(test != null);
+        ClientModel model1 = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/complexMapModel.json"))));
+        ClientModel model2 = new ClientModel(model1.toString());
+        assertTrue(model1.equals(model2));
+        assertTrue(model2.equals(model1));
     }
 }
