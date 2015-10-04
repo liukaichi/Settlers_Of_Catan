@@ -59,16 +59,27 @@ public class Chat {
         MessageLine line = new MessageLine(sourceName, message);
         lines.add(line);
     }
+	public void addMessageLine(MessageLine messageLine)
+	{
+		lines.add(messageLine);
+	}
     
     @Override
     public String toString()
     {
-        String returnValue = "\"chat\":{";
-        for (MessageLine messageLine : lines) {
-			returnValue += messageLine.toString();
-		}
-        returnValue += "},";
-        return returnValue; 
+    	JsonParser parser = new JsonParser();
+        // map
+        JsonObject chat = new JsonObject();
+        {
+            JsonArray lines = new JsonArray();
+            {
+                for ( MessageLine line : this.lines)
+                {
+                    lines.add(parser.parse(line.toString()));
+                }
+            }
+        }
+        return chat.toString(); 
     }
 
 	/* (non-Javadoc)

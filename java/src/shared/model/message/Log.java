@@ -8,6 +8,8 @@ import com.google.gson.JsonParser;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.model.map.Hex;
+
 /**
  * Represents the log of messages in the chat.
  * 
@@ -63,12 +65,19 @@ public class Log
     @Override
     public String toString()
     {
-        String returnValue = "\"log\":{";
-        for (MessageLine messageLine : lines) {
-			returnValue += messageLine.toString();
-		}
-        returnValue += "},";
-        return returnValue; 
+    	JsonParser parser = new JsonParser();
+        // map
+        JsonObject log = new JsonObject();
+        {
+            JsonArray lines = new JsonArray();
+            {
+                for ( MessageLine line : this.lines)
+                {
+                    lines.add(parser.parse(line.toString()));
+                }
+            }
+        }
+        return log.toString(); 
     }
 
 	/* (non-Javadoc)
