@@ -16,8 +16,7 @@ import shared.model.message.*;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ ClientFacadeTester.class, ProxyTester.class, CatanMapTest.class, ChatTest.class,
-        MessageLineTest.class })
+@SuiteClasses({ MockProxyTester.class, ProxyTester.class, CatanMapTest.class })
 public class AllTests
 {
     public static void main(String[] args)
