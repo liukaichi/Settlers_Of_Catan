@@ -156,17 +156,22 @@
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
-	
-	<target name="test" depends="package" description="runs the JUnit tests">
-		<java classname="main.AllTests" fork="yes">
-			<classpath>
-				<path refid="java.lib.classpath" />
-			</classpath>
-			<assertions>
-				<enable/>
-			</assertions>
-  		</java>
+	<target name="test">
+	    <mkdir dir="${junit.output.dir}"/>
+	    <junit fork="yes" printsummary="withOutAndErr">
+	        <formatter type="xml"/>
+	        <test name="main.AllTests" todir="${junit.output.dir}"/>
+	        <classpath refid="java.lib.classpath"/>
+	    </junit>
 	</target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
 		
 </project>
 
