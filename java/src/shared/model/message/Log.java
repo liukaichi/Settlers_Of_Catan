@@ -82,4 +82,38 @@ public class Log
         return returnValue; 
     }
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((lines == null) ? 0 : lines.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Log other = (Log) obj;
+		
+		if (lines == null) 
+		{
+			if (other.lines.toString() != null)
+				return false;
+		} else if (!(lines.toString()).equals(other.lines.toString()))
+			return false;
+		return true;
+	}
+
+    
 }
