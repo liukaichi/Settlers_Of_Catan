@@ -1,15 +1,10 @@
 package shared.model.map;
 
-import java.util.*;
-
 import com.google.gson.*;
-import com.google.gson.*;
-
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -286,7 +281,7 @@ public class CatanMap
     }
 
     /**
-     * @param normalizedEdge
+     * @param location
      * @return
      */
     private List<VertexLocation> getNearbyVertices(EdgeLocation location)
@@ -478,7 +473,7 @@ public class CatanMap
     }
 
     /**
-     * @param normalizedEdge
+     * @param location
      * @return
      */
     private List<EdgeLocation> getNearbyEdges(EdgeLocation location)

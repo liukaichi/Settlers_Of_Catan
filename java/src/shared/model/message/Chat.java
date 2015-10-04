@@ -1,13 +1,12 @@
 package shared.model.message;
 
-import java.util.List;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import shared.definitions.PlayerIndex;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the list of messages in the chat.
@@ -18,6 +17,7 @@ public class Chat {
 
 	public Chat(String json)
 	{
+        lines = new ArrayList<>();
 		JsonParser parser = new JsonParser();
 		JsonObject chat = (JsonObject) parser.parse(json);
 		JsonArray messageLines = chat.getAsJsonArray("lines");
@@ -48,15 +48,15 @@ public class Chat {
     /**
      * Adds the message to the list.
      * 
-     * @param source
+     * @param sourceName
      *        the player from whom this message originates, or NONE, if the
      *        server.
      * @param message
      *        the message to add.
      */
-    public void addMessageLine(PlayerIndex source, String message)
+    public void addMessageLine(String sourceName, String message)
     {
-        MessageLine line = new MessageLine(source, message);
+        MessageLine line = new MessageLine(sourceName, message);
         lines.add(line);
     }
 

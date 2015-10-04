@@ -50,7 +50,9 @@ public class ClientModel
     {
         JsonParser parser = new JsonParser();
         JsonObject model = (JsonObject) parser.parse(json);
-        bank.initDevCards(model.get("deck").toString());
+        String resourceJson = model.get("deck").toString();
+        bank = new Bank(true);
+        bank.initDevCards(resourceJson);
         map = new CatanMap(model.getAsJsonObject("map").toString());
 
         gameInfo = new GameInfo();

@@ -1,10 +1,7 @@
 package shared.model.message;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import shared.definitions.PlayerIndex;
 
 /**
@@ -20,29 +17,28 @@ public class MessageLine
     /**
      * The index of the player, or NONE if the server.
      */
-    private PlayerIndex source;
+    private String sourceName;
   
     public MessageLine(String json)
     {
     	JsonParser parser = new JsonParser();
     	JsonObject messageObj = (JsonObject) parser.parse(json);
-    	message = messageObj.getAsJsonObject("message").getAsString();
-    	int sourceInt = messageObj.getAsJsonObject("source").getAsInt();
-    	source = PlayerIndex.fromInt(sourceInt); 
+    	message = messageObj.getAsJsonPrimitive("message").getAsString();
+    	sourceName = messageObj.getAsJsonPrimitive("source").getAsString();
     }
 
     /**
      * Builds the Message Line.
      * 
-     * @param source
+     * @param sourceName
      *        the player's index, or NONE if from the server.
      * @param message
      *        the text body of this message.
      * @see PlayerIndex
      */
-    public MessageLine(PlayerIndex source, String message)
+    public MessageLine(String sourceName, String message)
     {
-        this.source = source;
+        this.sourceName = sourceName;
         this.message = message;
     }
     
@@ -51,7 +47,7 @@ public class MessageLine
     {
     	String returnString = "\"lines\":[{";
         returnString += "\"message\":"  + message + "\",";
-        returnString += "\"source\":"  + source.toString() + "\"}]";
+        returnString += "\"source\":"  + sourceName + "\"}]";
         return returnString; 
     }
 }

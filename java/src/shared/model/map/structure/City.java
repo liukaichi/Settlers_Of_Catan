@@ -27,7 +27,7 @@ public class City extends Structure
 	}
 
 	/**
-	 * @param string
+	 * @param json json String
 	 */
 	public City(String json) {
 		JsonParser parser = new JsonParser();
