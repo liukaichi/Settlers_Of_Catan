@@ -25,11 +25,11 @@ import java.util.Map;
 public class CatanMap
 {
     // populated on map initialization
-    private List<Port> ports;
-    private Map<HexLocation, Hex> hexes;
+    private List<Port> ports = new ArrayList<Port>();
+    private Map<HexLocation, Hex> hexes = new HashMap<HexLocation, Hex>();
     // populated on buy
-    private Map<EdgeLocation, Road> roads;
-    private Map<VertexLocation, Structure> structures;
+    private Map<EdgeLocation, Road> roads = new HashMap<EdgeLocation, Road>();
+    private Map<VertexLocation, Structure> structures = new HashMap<VertexLocation, Structure>();
     private int radius;
     private HexLocation robberLocation;
 
@@ -54,21 +54,21 @@ public class CatanMap
         {
             JsonObject roadObj = (JsonObject) elem;
             Road road = new Road(roadObj.toString());
-            this.roads.put(road.getLocation(), road);
+            this.roads.put(road.getLocation().getNormalizedLocation(), road);
         }
         JsonArray cities = map.getAsJsonArray("cities");
         for (JsonElement elem : cities)
         {
             JsonObject roadObj = (JsonObject) elem;
             City city = new City(roadObj.toString());
-            this.structures.put(city.getLocation(), city);
+            this.structures.put(city.getLocation().getNormalizedLocation(), city);
         }
         JsonArray settlements = map.getAsJsonArray("settlements");
         for (JsonElement elem : settlements)
         {
             JsonObject settlementObj = (JsonObject) elem;
             Settlement settlement = new Settlement(settlementObj.toString());
-            this.structures.put(settlement.getLocation(), settlement);
+            this.structures.put(settlement.getLocation().getNormalizedLocation(), settlement);
         }
         this.radius = map.get("radius").getAsInt();
         JsonArray portsArray = map.getAsJsonArray("ports");
@@ -88,70 +88,65 @@ public class CatanMap
     {
         JsonParser parser = new JsonParser();
         // map
-
-        JsonObject obj = new JsonObject();
+        JsonObject map = new JsonObject();
         {
-            JsonObject map = new JsonObject();
+            // hexes
+            JsonArray hexes = new JsonArray();
             {
-                // hexes
-                JsonArray hexes = new JsonArray();
+                for (Hex hex : this.hexes.values())
                 {
-                    for (Hex hex : this.hexes.values())
-                    {
-                        hexes.add(parser.parse(hex.toString()));
-                    }
+                    hexes.add(parser.parse(hex.toString()));
                 }
-                map.add("hexes", hexes);
-                // roads
-                JsonArray roads = new JsonArray();
-                {
-                    for (Road road : this.roads.values())
-                    {
-                        roads.add(parser.parse(road.toString()));
-                    }
-                }
-                map.add("roads", roads);
-                // cities
-                JsonArray cities = new JsonArray();
-                {
-                    for (Structure city : this.structures.values())
-                    {
-                        if (city.getClass().equals(City.class))
-                            cities.add(parser.parse(city.toString()));
-                    }
-                }
-                map.add("cities", cities);
-                // settlements
-                JsonArray settlements = new JsonArray();
-                {
-                    for (Structure settlement : this.structures.values())
-                    {
-                        if (settlement.getClass().equals(Settlement.class))
-                            cities.add(parser.parse(settlement.toString()));
-                    }
-                }
-                map.add("settlements", settlements);
-                // radius
-                JsonPrimitive radius = new JsonPrimitive(this.radius);
-                map.add("radius", radius);
-                // ports
-                JsonArray ports = new JsonArray();
-                {
-                    for (Port port : this.ports)
-                    {
-                        ports.add(parser.parse(port.toString()));
-                    }
-                }
-                map.add("ports", ports);
-                // robber
-                JsonObject robber = new JsonObject();
-                robber.addProperty("x", robberLocation.getX());
-                robber.addProperty("y", robberLocation.getY());
-                map.add("robber", robber);
             }
-            obj.add("map", map);
+            map.add("hexes", hexes);
+            // roads
+            JsonArray roads = new JsonArray();
+            {
+                for (Road road : this.roads.values())
+                {
+                    roads.add(parser.parse(road.toString()));
+                }
+            }
+            map.add("roads", roads);
+            // cities
+            JsonArray cities = new JsonArray();
+            {
+                for (Structure city : this.structures.values())
+                {
+                    if (city.getClass().equals(City.class))
+                        cities.add(parser.parse(city.toString()));
+                }
+            }
+            map.add("cities", cities);
+            // settlements
+            JsonArray settlements = new JsonArray();
+            {
+                for (Structure settlement : this.structures.values())
+                {
+                    if (settlement.getClass().equals(Settlement.class))
+                        settlements.add(parser.parse(settlement.toString()));
+                }
+            }
+            map.add("settlements", settlements);
+            // radius
+            JsonPrimitive radius = new JsonPrimitive(this.radius);
+            map.add("radius", radius);
+            // ports
+            JsonArray ports = new JsonArray();
+            {
+                for (Port port : this.ports)
+                {
+                    ports.add(parser.parse(port.toString()));
+                }
+            }
+            map.add("ports", ports);
+            // robber
+            JsonObject robber = new JsonObject();
+            robber.addProperty("x", robberLocation.getX());
+            robber.addProperty("y", robberLocation.getY());
+            map.add("robber", robber);
         }
-        return obj.toString();
+        return map.toString();
     }
 
     public CatanMap()
@@ -235,8 +230,8 @@ public class CatanMap
      */
     public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
     {
-        Structure structure = structures.get(location);
-        if (structure != null && structure.getOwner().equals(player))
+        Structure structure = structures.get(location.getNormalizedLocation());
+        if (structure != null && structure.getOwner().getIndex() == player.getIndex())
         {
             return true;
         }
@@ -262,7 +257,7 @@ public class CatanMap
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
     {
         EdgeLocation normalizedEdge = location.getNormalizedLocation();
-        Structure atLocation = structures.get(normalizedEdge);
+        Road atLocation = roads.get(normalizedEdge);
         // check if location exists, and is empty
         if (atLocation == null)
         {
@@ -270,11 +265,12 @@ public class CatanMap
             for (VertexLocation vertex : vertices)
             {
                 Structure structure = structures.get(vertex.getNormalizedLocation());
-                if (structure != null && structure.getOwner().equals(player))
+                if (structure != null && structure.getOwner().getIndex() == player.getIndex())
                 {
                     return true;
                 }
             }
+            //if no settlement then check for connecting road
             List<EdgeLocation> edges = getNearbyEdges(normalizedEdge);
             for (EdgeLocation edge : edges)
             {
@@ -350,8 +346,8 @@ public class CatanMap
     {
         try
         {
-            Road road = new Road(player, location);
-            roads.put(location, road);
+            Road road = new Road(player, location.getNormalizedLocation());
+            roads.put(location.getNormalizedLocation(), road);
         }
         catch (Exception e)
         {
@@ -374,8 +370,8 @@ public class CatanMap
     {
         try
         {
-            Settlement settlement = new Settlement(player, location);
-            structures.put(location, settlement);
+            Settlement settlement = new Settlement(player, location.getNormalizedLocation());
+            structures.put(location.getNormalizedLocation(), settlement);
         }
         catch (Exception e)
         {
@@ -396,8 +392,8 @@ public class CatanMap
     {
         try
         {
-            City city = new City(player, location);
-            structures.put(location, city);
+            City city = new City(player, location.getNormalizedLocation());
+            structures.put(location.getNormalizedLocation(), city);
         }
         catch (Exception e)
         {
@@ -514,5 +510,53 @@ public class CatanMap
         edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
         edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
         return edges;
+    }
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        
+        CatanMap other = (CatanMap) obj;
+        if(this.hexes.keySet().size() != other.hexes.keySet().size())
+            return false;
+        for(HexLocation key : this.hexes.keySet())
+        {
+            if(!this.hexes.get(key).equals(other.hexes.get(key)))
+                return false;
+        }
+        if(this.ports.size() != other.ports.size())
+            return false;
+        for(int i = 0; i < this.ports.size(); i++)
+        {
+            if(!this.ports.get(i).equals(other.ports.get(i)))
+            	return false;
+        }
+        if (this.radius != other.radius)
+            return false;
+        if(this.roads.keySet().size() != other.roads.keySet().size())
+            return false;
+        for(EdgeLocation key : this.roads.keySet())
+        {
+            if(!this.roads.get(key).equals(other.roads.get(key)))
+                return false;
+        }
+        if (!this.robberLocation.equals(other.robberLocation))
+            return false;
+        if(this.structures.keySet().size() != other.structures.keySet().size())
+            return false;
+        for(VertexLocation key : this.structures.keySet())
+        {
+            if(!this.structures.get(key).equals(other.structures.get(key)))
+                return false;
+        }
+        return true;
     }
 }
