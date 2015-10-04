@@ -26,16 +26,16 @@ public class TurnTracker
     {
     	JsonParser parser = new JsonParser();
     	JsonObject tracker = (JsonObject) parser.parse(json);
-    	int currentTurnInt = tracker.getAsJsonObject("currentTurn").getAsInt();
+    	int currentTurnInt = tracker.getAsJsonPrimitive("currentTurn").getAsInt();
     	currentTurn = PlayerIndex.fromInt(currentTurnInt);
     	
-    	String statusString = tracker.getAsJsonObject("status").getAsString();
-    	status = TurnStatus.valueOf(statusString.toUpperCase()); 
+    	String statusString = tracker.getAsJsonPrimitive("status").getAsString();
+    	status = TurnStatus.valueOf(statusString); 
     	
-    	int longestRoadInt = tracker.getAsJsonObject("longestRoad").getAsInt();
+    	int longestRoadInt = tracker.getAsJsonPrimitive("longestRoad").getAsInt();
     	longestRoad = PlayerIndex.fromInt(longestRoadInt);
     	
-    	int largestArmyInt = tracker.getAsJsonObject("largestArmy").getAsInt();
+    	int largestArmyInt = tracker.getAsJsonPrimitive("largestArmy").getAsInt();
     	largestArmy = PlayerIndex.fromInt(largestArmyInt);
     }
     
