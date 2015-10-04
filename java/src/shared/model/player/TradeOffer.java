@@ -88,8 +88,8 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
     {
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
-        this.sender = PlayerIndex.fromInt(tradeObject.get("playerIndex").getAsInt());
-        this.receiver = PlayerIndex.fromInt(tradeObject.get("receiver").getAsInt());
+        this.sender = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("sender").getAsInt());
+        this.receiver = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("receiver").getAsInt());
         JsonObject newOffer = (JsonObject) tradeObject.get("offer");
         this.offer = new Resources(newOffer.toString());
 

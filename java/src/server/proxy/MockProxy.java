@@ -10,10 +10,9 @@ import shared.definitions.AIType;
 import shared.definitions.exceptions.GameQueryException;
 import shared.model.ClientModel;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 
 /**
@@ -32,10 +31,19 @@ public class MockProxy implements IProxy
 {
     String jsonFileDir = "sample" + File.separator + "mockproxy" + File.separator;
     ClientModel serverModel;
-    public MockProxy(){
-        serverModel = new ClientModel();
+    public MockProxy()
+    {
+        try
+        {
+            serverModel = new ClientModel(new String(
+                    Files.readAllBytes(Paths.get("sample/modelWithTradeOffer.json"))));
+
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         serverModel.setVersion(1);
-        serverModel.setGameInfo(new GameInfo(1, "gameTitle"));
         ClientFacade.getInstance().setModel(serverModel);
 
     }

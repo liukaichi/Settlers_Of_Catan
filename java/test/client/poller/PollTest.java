@@ -6,13 +6,15 @@ import server.proxy.MockProxy;
 import shared.model.ClientModel;
 
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Created by liukaichi on 9/26/2015.
  */
 public class PollTest extends TestCase
 {
-
+    ClientModel clientModel;
     /**
      * Tests the ability to update through a test before the Poller is able to poll and after.
      * The version number on the client is checked to verify correct changes are made.
@@ -20,7 +22,8 @@ public class PollTest extends TestCase
      */
     public void testPoll() throws Exception
     {
-        ClientModel clientModel = new ClientModel();
+        clientModel = new ClientModel(new String(
+            Files.readAllBytes(Paths.get("sample/complexJSONModel.json"))));
         clientModel.setVersion(0);
         ClientFacade.getInstance().setModel(clientModel);
         MockProxy proxy = new MockProxy();
@@ -39,9 +42,11 @@ public class PollTest extends TestCase
     private void testTimedUpdate(MockProxy proxy) throws Exception{
         proxy.getServerModel().setVersion(1);
         Poller poller = new Poller(proxy);
-        assertFalse(poller.getCurrentVersion() == 1);
-        Thread.sleep(3100);
-        assertTrue(poller.getCurrentVersion() == 1);
+        assertFalse(clientModel.equals(proxy.getServerModel()));
+
+        Thread.sleep(4000);
+
+        assertTrue(ClientFacade.getInstance().getModel().equals(proxy.getServerModel()));
     }
 
     /**

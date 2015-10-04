@@ -1,17 +1,24 @@
 package client.facade;
 
-import java.util.*;
-
-import client.data.*;
-import server.proxy.*;
+import client.data.GameInfo;
+import client.data.RobPlayerInfo;
+import server.proxy.IProxy;
+import server.proxy.ServerProxy;
 import shared.communication.Credentials;
-import shared.communication.moveCommands.*;
+import shared.communication.moveCommands.BuyDevCardCommand;
+import shared.communication.moveCommands.SendChatCommand;
 import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
-import shared.locations.*;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
-import shared.model.player.*;
+import shared.model.player.Player;
+import shared.model.player.TradeOffer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Facade for the Controllers/Views interacting with the Model classes. The
@@ -430,5 +437,8 @@ public class ClientFacade
     public void setModel(ClientModel newModel)
     {
         model = newModel;
+    }
+    public ClientModel getModel(){
+        return model;
     }
 }
