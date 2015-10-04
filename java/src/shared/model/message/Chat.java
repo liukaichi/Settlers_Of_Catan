@@ -59,6 +59,10 @@ public class Chat {
         MessageLine line = new MessageLine(sourceName, message);
         lines.add(line);
     }
+	public void addMessageLine(MessageLine messageLine)
+	{
+		lines.add(messageLine);
+	}
     
     @Override
     public String toString()

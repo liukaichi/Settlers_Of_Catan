@@ -438,8 +438,8 @@ public class ClientModel
             players.add(parser.parse(player.toString()));
         }
         model.add("players", players);
-        model.add("log", parser.parse(log.toString()));
-        model.add("chat", parser.parse(chat.toString()));
+        //model.add("log", parser.parse(log.toString()));
+        //model.add("chat", parser.parse(chat.toString()));
         model.add("bank", parser.parse(bank.getResources().toString()));
         model.add("turnTracker", parser.parse(turnTracker.toString()));
         model.addProperty("winner", winner.getIndex());

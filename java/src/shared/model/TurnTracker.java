@@ -93,12 +93,15 @@ public class TurnTracker
 	@Override
 	public String toString()
 	{
-		String returnString = "\"turnTracker\":{";
-		returnString += "\"status\":\""+ status.toString() + "\",";
-		returnString += "\"currentTurn\": "+ currentTurn.toString() + "\",";
-		returnString += "\"longestRoad\": "+ getLongestRoad().toString() + "\",";
-		returnString += "\"longestArmy\": "+ getLargestArmy().toString() + "\"},";
-		return returnString; 
+		JsonParser parser = new JsonParser();
+		// map
+		JsonObject turnTracker = new JsonObject();
+		turnTracker.addProperty("status", status.toString());
+		turnTracker.addProperty("currentTurn", currentTurn.toString());
+		turnTracker.addProperty("longestRoad", longestRoad.toString());
+		turnTracker.addProperty("longestArmy", getLargestArmy().toString());
+
+		return turnTracker.toString(); 
 	}
 
 	/* (non-Javadoc)
