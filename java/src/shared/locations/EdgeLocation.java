@@ -127,7 +127,7 @@ public class EdgeLocation implements JsonSerializer<EdgeLocation>
     public JsonElement serialize(EdgeLocation src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = new JsonObject();
-        obj.addProperty("direction", src.dir.toString());
+        obj.addProperty("direction", EdgeDirection.toAbreviation(src.dir));
         obj.addProperty("x", src.getNormalizedLocation().hexLoc.getX());
         obj.addProperty("y", src.getNormalizedLocation().hexLoc.getY());
         return obj;

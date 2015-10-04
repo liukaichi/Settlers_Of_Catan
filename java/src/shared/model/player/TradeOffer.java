@@ -124,7 +124,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         {
             tradeOffer.addProperty("sender", this.sender.getIndex());
             tradeOffer.addProperty("receiver", this.receiver.getIndex());
-            tradeOffer.add("offer", context.serialize(src.offer));
+            tradeOffer.add("offer", src.offer.serialize(src.offer, src.offer.getClass(), context));
         }
         return tradeOffer;
     }

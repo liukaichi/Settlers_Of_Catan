@@ -11,7 +11,7 @@ import shared.model.player.TradeOffer;
  * offerTrade command object.
  * 
  * @author Cache Staheli
- * @see OfferTradeCommand
+ * @see TradeOffer
  *
  */
 public class OfferTradeCommand extends MoveCommand implements JsonSerializer<OfferTradeCommand>
@@ -49,9 +49,10 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     @Override
     public JsonElement serialize(OfferTradeCommand src, Type srcType, JsonSerializationContext context)
     {
-        JsonObject obj = (JsonObject) context.serialize(src.offer);
+        JsonObject obj = (JsonObject) src.offer.serialize(src.offer, src.offer.getClass(), context);
         obj.remove("sender");
-        obj.addProperty("playerIndex", this.playerIndex.getIndex());
+        obj.addProperty("playerIndex", src.playerIndex.getIndex());
+        obj.addProperty("type", src.type.toString());
         return obj;
     }
 }

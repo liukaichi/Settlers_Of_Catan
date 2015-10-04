@@ -46,7 +46,9 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
     public JsonElement serialize(DiscardCardsCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
-        obj.add("discardedCards", context.serialize(src.discardedCards));
+        // obj.add("discardedCards", context.serialize(src.discardedCards));
+        obj.add("discardedCards",
+                src.discardedCards.serialize(src.discardedCards, src.discardedCards.getClass(), context));
         return obj;
     }
 }

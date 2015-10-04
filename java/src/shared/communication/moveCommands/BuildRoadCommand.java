@@ -46,7 +46,7 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
     public JsonElement serialize(BuildRoadCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
-        obj.add("roadLocation", context.serialize(src.roadLocation));
+        obj.add("roadLocation", src.roadLocation.serialize(src.roadLocation, src.roadLocation.getClass(), context));
         obj.addProperty("free", isFree);
         return obj;
     }

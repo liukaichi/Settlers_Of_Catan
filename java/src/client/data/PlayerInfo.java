@@ -58,10 +58,10 @@ public class PlayerInfo
     {
         return playerIndex.getIndex();
     }
-    
+
     public PlayerIndex getPlayerIndex()
     {
-    	return playerIndex; 
+        return playerIndex;
     }
 
     public void setPlayerIndex(int playerIndex)
@@ -84,6 +84,11 @@ public class PlayerInfo
         default:
             this.playerIndex = PlayerIndex.NONE;
         }
+    }
+
+    public void setPlayerIndex(PlayerIndex playerIndex)
+    {
+        this.playerIndex = playerIndex;
     }
 
     public String getName()

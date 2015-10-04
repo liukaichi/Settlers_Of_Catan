@@ -1,5 +1,7 @@
 package client.data;
 
+import shared.definitions.PlayerIndex;
+
 /**
  * Used to pass player information into the rob view<br>
  * <br>
@@ -21,6 +23,13 @@ public class RobPlayerInfo extends PlayerInfo
     public RobPlayerInfo()
     {
         super();
+    }
+
+    public RobPlayerInfo(PlayerIndex victim, int numCards)
+    {
+        this.setPlayerIndex(victim);
+        this.numCards = numCards;
+
     }
 
     public int getNumCards()
