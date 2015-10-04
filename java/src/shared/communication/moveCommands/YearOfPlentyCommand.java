@@ -27,7 +27,7 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
      */
     public YearOfPlentyCommand(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
     {
-        super(MoveType.Year_Of_Plenty, playerIndex);
+        super(MoveType.Year_of_Plenty, playerIndex);
         this.resource1 = resource1;
         this.resource2 = resource2;
     }

@@ -1,6 +1,7 @@
 package server.proxy;
 
 
+import client.data.GameInfo;
 import client.facade.ClientFacade;
 import client.utils.BufferedReaderParser;
 import shared.communication.*;

@@ -48,11 +48,13 @@ public class MessageLine
     public String toString()
     {
     	JsonParser parser = new JsonParser();
+//@formatter.off    	
 //        "lines": [
 //    	 {
 //    		 "message": "string",
 //    		 "source": "string"
 //    		 }
+//@formatter.on
         JsonObject line = new JsonObject();
         line.addProperty("message", message);
         line.addProperty("source", sourceName); 

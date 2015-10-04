@@ -47,7 +47,8 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
     public JsonElement serialize(BuildSettlementCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
-        obj.add("vertexLocation", context.serialize(src.settlementLocation));
+        obj.add("vertexLocation",
+                src.settlementLocation.serialize(src.settlementLocation, src.settlementLocation.getClass(), context));
         obj.addProperty("free", isFree);
         return obj;
     }

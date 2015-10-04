@@ -131,7 +131,7 @@ public class VertexLocation implements JsonSerializer<VertexLocation>
         JsonObject obj = new JsonObject();
         obj.addProperty("x", src.getNormalizedLocation().getHexLoc().getX());
         obj.addProperty("y", src.getNormalizedLocation().getHexLoc().getY());
-        obj.addProperty("direction", src.dir.toString());
+        obj.addProperty("direction", VertexDirection.toAbreviation(src.dir));
         return obj;
     }
 }

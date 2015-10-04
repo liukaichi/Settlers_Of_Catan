@@ -42,7 +42,7 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
     public JsonElement serialize(BuildCityCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
-        obj.add("vertexLocation", context.serialize(src.cityLocation));
+        obj.add("vertexLocation", src.cityLocation.serialize(src.cityLocation, src.cityLocation.getClass(), context));
         return obj;
     }
 

@@ -10,12 +10,13 @@ import java.util.logging.Level;
 
 import org.junit.*;
 
-import client.data.GameInfo;
+import client.data.*;
 import server.proxy.*;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;
 import shared.definitions.exceptions.*;
+import shared.locations.*;
 import shared.model.ClientModel;
 
 /**
@@ -370,6 +371,7 @@ public class ProxyTester
     @Test
     public void testGetGameState()
     {
+        startGame("gameState");
         testingModel = proxy.getGameState(0);
     }
 
@@ -542,6 +544,7 @@ public class ProxyTester
     {
         startGame("sendChat");
         testingModel = proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_0, "Test"));
+
     }
 
     /**
@@ -554,10 +557,15 @@ public class ProxyTester
     {
         startGame("rollNumber");
         testingModel = proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_0, 8));
-        proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_0, 8));
-        proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_1, 2));
-        proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_2, 3));
-        proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_3, 12));
+        assertNotNull(testingModel);
+        testingModel = proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_0, 8));
+        assertNotNull(testingModel);
+        testingModel = proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_1, 2));
+        assertNotNull(testingModel);
+        testingModel = proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_2, 3));
+        assertNotNull(testingModel);
+        testingModel = proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_3, 12));
+        assertNotNull(testingModel);
 
     }
 
@@ -570,8 +578,13 @@ public class ProxyTester
     public void testAcceptTrade()
     {
         startGame("acceptTrade");
-        proxy.offerTrade(new OfferTradeCommand(0, 3, 1, 0, -1, 0, 0));
-        proxy.acceptTrade(new AcceptTradeCommand(PlayerIndex.PLAYER_3, false));
+        testingModel = proxy
+                .offerTrade(new OfferTradeCommand(PlayerIndex.fromInt(0), PlayerIndex.fromInt(3), 1, 0, -1, 0, 0));
+        assertNotNull(testingModel);
+        testingModel = proxy.finishTurn(new FinishTurnCommand(PlayerIndex.PLAYER_0));
+        assertNotNull(testingModel);
+        testingModel = proxy.acceptTrade(new AcceptTradeCommand(PlayerIndex.PLAYER_3, false));
+        assertNotNull(testingModel);
 
     }
 
@@ -584,6 +597,9 @@ public class ProxyTester
     public void testDiscardCards()
     {
         startGame("DiscardCards");
+        testingModel = proxy.discardCards(new DiscardCardsCommand(PlayerIndex.PLAYER_0, 0, 1, 0, 0, 0));
+        assertNotNull(testingModel);
+
     }
 
     /**
@@ -595,6 +611,8 @@ public class ProxyTester
     public void testBuildRoad()
     {
         startGame("BuildRoad");
+        testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
+                new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthWest), true));
     }
 
     /**
@@ -606,6 +624,18 @@ public class ProxyTester
     public void testBuildSettlement()
     {
         startGame("BuildSettlement");
+        testingModel = proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_0,
+                new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest), true));
+        assertNotNull(testingModel);
+        try
+        {
+            testingModel.getMap().placeSettlement(PlayerIndex.PLAYER_0,
+                    new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest));
+        }
+        catch (PlacementException e)
+        {
+            assert(true);
+        }
     }
 
     /**
@@ -617,6 +647,9 @@ public class ProxyTester
     public void testBuildCity()
     {
         startGame("BuildCity");
+        testingModel = proxy.buildCity(new BuildCityCommand(PlayerIndex.PLAYER_0,
+                new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest)));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -628,6 +661,9 @@ public class ProxyTester
     public void testOfferTrade()
     {
         startGame("OfferTrade");
+        testingModel = proxy
+                .offerTrade(new OfferTradeCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_2, 1, 0, -1, 0, 1));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -639,6 +675,9 @@ public class ProxyTester
     public void testMaritimeTrade()
     {
         startGame("MaritimeTrade");
+        testingModel = proxy.maritimeTrade(
+                new MaritimeTradeCommand(PlayerIndex.PLAYER_0, TradeRatio.THREE, ResourceType.BRICK, ResourceType.ORE));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -650,6 +689,9 @@ public class ProxyTester
     public void testRobPlayer()
     {
         startGame("RobPlayer");
+        testingModel = proxy.robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_0,
+                new RobPlayerInfo(PlayerIndex.PLAYER_2, 1), new HexLocation(0, 1)));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -661,6 +703,8 @@ public class ProxyTester
     public void testFinishTurn()
     {
         startGame("FinishTurn");
+        testingModel = proxy.finishTurn(new FinishTurnCommand(PlayerIndex.PLAYER_0));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -672,6 +716,8 @@ public class ProxyTester
     public void testBuyDevCard()
     {
         startGame("BuyDevCard");
+        testingModel = proxy.buyDevCard(new BuyDevCardCommand(PlayerIndex.PLAYER_0));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -683,6 +729,9 @@ public class ProxyTester
     public void testSoldier()
     {
         startGame("Soldier");
+        testingModel = proxy.soldier(new SoldierCommand(PlayerIndex.PLAYER_0,
+                new RobPlayerInfo(PlayerIndex.PLAYER_2, 1), new HexLocation(0, 1)));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -694,6 +743,9 @@ public class ProxyTester
     public void testYearOfPlenty()
     {
         startGame("YearOfPlenty");
+        testingModel = proxy
+                .yearOfPlenty(new YearOfPlentyCommand(PlayerIndex.PLAYER_0, ResourceType.BRICK, ResourceType.ORE));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -705,6 +757,10 @@ public class ProxyTester
     public void testRoadBuilding()
     {
         startGame("RoadBuilding");
+        testingModel = proxy.roadBuilding(new RoadBuildingCommand(PlayerIndex.PLAYER_0,
+                new EdgeLocation(new HexLocation(0, 1), EdgeDirection.NorthEast),
+                new EdgeLocation(new HexLocation(-1, 2), EdgeDirection.South)));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -716,6 +772,8 @@ public class ProxyTester
     public void testMonopoly()
     {
         startGame("Monopoly");
+        testingModel = proxy.monopoly(new MonopolyCommand(PlayerIndex.PLAYER_0, ResourceType.WHEAT));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -727,6 +785,8 @@ public class ProxyTester
     public void testMonument()
     {
         startGame("Monument");
+        testingModel = proxy.monument(new MonumentCommand(PlayerIndex.PLAYER_0));
+        assertNotNull(testingModel);
     }
 
 }

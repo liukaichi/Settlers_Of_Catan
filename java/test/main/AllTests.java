@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import facades.*;
+import shared.model.bank.*;
 import shared.model.map.CatanMapTest;
 import shared.model.message.*;
 
