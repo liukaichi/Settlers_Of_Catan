@@ -92,22 +92,17 @@ public class Player
         return new TradeOffer(this, receiver);
     }
     
-    boolean canBuyRoad()
+    public boolean canBuyRoad()
     {
     	return bank.canBuyRoad();
     }
 
     /**
      * Updates the PlayerBank to decrement resources used and increment road count
+     * @throws CatanException 
      */
-    public void buyRoad() {
-        try {
+    public void buyRoad() throws CatanException {
             bank.buyRoad();
-        } catch (InsufficientResourcesException e) {
-            e.printStackTrace();
-        } catch (CatanException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -122,16 +117,11 @@ public class Player
 
     /**
      * Updates the PlayerBank to decrement resources used and increment settlement count
+     * @throws CatanException 
      */
-    public void buySettlement()
+    public void buySettlement() throws CatanException
     {
-        try {
             bank.buySettlement();
-        } catch (InsufficientResourcesException e) {
-            e.printStackTrace();
-        } catch (CatanException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -146,16 +136,11 @@ public class Player
 
     /**
      * Updates the PlayerBank to decrement resources used and increment city count
+     * @throws CatanException 
      * @throws InsufficientResourcesException
      */
-    public void buyCity() {
-        try {
+    public void buyCity() throws CatanException {
             bank.buyCity();
-        } catch (InsufficientResourcesException e) {
-            e.printStackTrace();
-        } catch (CatanException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -172,12 +157,9 @@ public class Player
      * Updates the PlayerBank to decrement resources used and increment the appropriate DevCard count
      * @throws InsufficientResourcesException
      */
-    public void buyDevCard() {
-        try {
+    public void buyDevCard() throws InsufficientResourcesException
+    {
             bank.buyDevCard();
-        } catch (InsufficientResourcesException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -247,8 +229,6 @@ public class Player
             }
 
         return player.toString();
-
-
     }
 
     @Override public boolean equals(Object o)

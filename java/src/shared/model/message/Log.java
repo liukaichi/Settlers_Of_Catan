@@ -59,17 +59,6 @@ public class Log
         MessageLine line = new MessageLine(sourceName, message);
         lines.add(line);
     }
-
-    /**
-     * Adds the message to the list.
-     * 
-     * @param message
-     *        the message to add.
-     */
-    public void addMessageLine(MessageLine message)
-    {
-        lines.add(message);
-    }
     
     @Override
     public String toString()

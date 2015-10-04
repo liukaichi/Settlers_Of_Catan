@@ -24,6 +24,7 @@ public class ClientModelTest
             ClientModel model = new ClientModel(json);
 
             assert(model.getBank() != null);
+            assert(model.getMap() != null);
             assert(model.getChat() != null);
             assert(model.getGameInfo() != null);
             assert(model.getLog() != null);
