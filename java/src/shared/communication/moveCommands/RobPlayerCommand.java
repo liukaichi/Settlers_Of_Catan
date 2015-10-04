@@ -50,8 +50,8 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.addProperty("victimIndex", src.robberInfo.getNormalizedPlayerIndex());
         JsonObject location = new JsonObject();
-        location.addProperty("x", src.location.getX());
-        location.addProperty("y", src.location.getY());
+        location.addProperty("x", Integer.toString(src.location.getX()));
+        location.addProperty("y", Integer.toString(src.location.getY()));
         obj.add("location", location);
         return obj;
     }
