@@ -350,6 +350,12 @@ public class CatanMap
         }
 
     }
+    public void forcePlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
+    {
+            Road road = new Road(player, location.getNormalizedLocation());
+            roads.put(location.getNormalizedLocation(), road);
+
+    }
 
     /**
      * Method that places a settlement on the map
@@ -373,6 +379,11 @@ public class CatanMap
                 throw new PlacementException();
             }
     }
+    public void forcePlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
+    {
+                Settlement settlement = new Settlement(player, location.getNormalizedLocation());
+                structures.put(location.getNormalizedLocation(), settlement);
+    }
 
     /**
      * Method that places a city on the map
@@ -394,6 +405,11 @@ public class CatanMap
         {
             throw new PlacementException();
         }
+    }
+    public void forcePlaceCity(PlayerIndex player, VertexLocation location) throws PlacementException
+    {
+            City city = new City(player, location.getNormalizedLocation());
+            structures.put(location.getNormalizedLocation(), city);
     }
 
     /**

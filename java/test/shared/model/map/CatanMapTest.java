@@ -40,7 +40,7 @@ public class CatanMapTest {
 		assertTrue(catanMap.canPlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
 		//Nearby settlement
 		try {
-			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
@@ -48,7 +48,7 @@ public class CatanMapTest {
 		assertFalse(catanMap.canPlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
 		//existing settlement
 		try {
-			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
+			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
@@ -106,7 +106,7 @@ public class CatanMapTest {
 		assertFalse(catanMap.canPlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)));
 		//vacant and has settlement
 		try {
-			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
@@ -114,7 +114,7 @@ public class CatanMapTest {
 		assertTrue(catanMap.canPlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)));
 		//vacant and not his settlement
 		try {
-			catanMap.placeSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
@@ -122,13 +122,13 @@ public class CatanMapTest {
 		assertFalse(catanMap.canPlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)));
 		//existing road
 		try {
-			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
 		}
 		try {
-			catanMap.placeRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
+			catanMap.forcePlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
