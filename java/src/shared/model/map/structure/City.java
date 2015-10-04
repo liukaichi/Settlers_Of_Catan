@@ -27,14 +27,14 @@ public class City extends Structure
 	}
 
 	/**
-	 * @param string
+	 * @param json json String
 	 */
 	public City(String json) {
 		JsonParser parser = new JsonParser();
 		JsonObject city = (JsonObject) parser.parse(json);
 		super.setOwner(PlayerIndex.fromInt(city.get("owner").getAsInt()));
 		JsonObject location = (JsonObject) city.get("location");
-		super.setLocation(new VertexLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), VertexDirection.fromAbreviation(location.get("direction").getAsString())));
+		super.setLocation(new VertexLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), VertexDirection.fromAbreviation(location.get("direction").getAsString())).getNormalizedLocation());
 	}
 
 }

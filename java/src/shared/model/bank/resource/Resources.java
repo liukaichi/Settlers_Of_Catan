@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.ResourceType;
 
 /**
@@ -24,10 +26,12 @@ public class Resources implements JsonSerializer<Resources>
     public Resources(String json)
     {
         this(false);
-        JsonElement jele = new JsonParser().parse(json);
-        JsonObject jobj = jele.getAsJsonObject();
+        JsonParser parser = new JsonParser();
+        JsonObject jobj = (JsonObject) parser.parse(json);
 
         this.brick.setAmount(jobj.get("brick").getAsInt());
+        this.brick.setAmount(jobj.getAsJsonPrimitive("brick").getAsInt());
+        this.wheat.setAmount(jobj.getAsJsonPrimitive("wheat").getAsInt());
         this.wood.setAmount(jobj.get("wood").getAsInt());
         this.sheep.setAmount(jobj.get("sheep").getAsInt());
         this.wheat.setAmount(jobj.get("wheat").getAsInt());

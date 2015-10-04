@@ -16,6 +16,7 @@ import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;
 import shared.definitions.exceptions.*;
+import shared.locations.*;
 import shared.model.ClientModel;
 
 /**
@@ -607,6 +608,17 @@ public class ProxyTester
     public void testBuildSettlement()
     {
         startGame("BuildSettlement");
+        testingModel = proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_0,
+                new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest), true));
+        try
+        {
+            testingModel.getMap().placeSettlement(PlayerIndex.PLAYER_0,
+                    new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest));
+        }
+        catch (PlacementException e)
+        {
+            assert(true);
+        }
     }
 
     /**

@@ -1,20 +1,12 @@
 package shared.model.message;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import shared.definitions.PlayerIndex;
-import shared.locations.HexLocation;
-import shared.model.map.Hex;
-import shared.model.map.structure.City;
-import shared.model.map.structure.Port;
-import shared.model.map.structure.Road;
-import shared.model.map.structure.Settlement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the log of messages in the chat.
@@ -33,7 +25,8 @@ public class Log
     	JsonParser parser = new JsonParser();
     	JsonObject log = (JsonObject) parser.parse(json);
     	JsonArray messageLines = log.getAsJsonArray("lines");
-    	for(JsonElement messageLine : messageLines)
+    	this.lines = new ArrayList<>();
+        for(JsonElement messageLine : messageLines)
     	{
     		JsonObject messageLineObj = (JsonObject) messageLine;
     		
@@ -55,15 +48,15 @@ public class Log
     /**
      * Adds the message to the list.
      * 
-     * @param source
+     * @param sourceName
      *        the player from whom this message originates, or NONE, if the
      *        server.
      * @param message
      *        the message to add.
      */
-    public void addMessageLine(PlayerIndex source, String message)
+    public void addMessageLine(String sourceName, String message)
     {
-        MessageLine line = new MessageLine(source, message);
+        MessageLine line = new MessageLine(sourceName, message);
         lines.add(line);
     }
 

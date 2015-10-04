@@ -1,15 +1,11 @@
 package shared.model.map.structure;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import shared.definitions.PlayerIndex;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 
 /**
  * Object representing a road or a hex edge in the Catan game
@@ -26,14 +22,14 @@ public class Road
     }
     
 	/**
-	 * @param string
+	 * @param json
 	 */
 	public Road(String json) {
 		JsonParser parser = new JsonParser();
 		JsonObject road = (JsonObject) parser.parse(json);
 		this.owner = PlayerIndex.fromInt(road.get("owner").getAsInt());
 		JsonObject location = (JsonObject) road.get("location");
-		this.location = new EdgeLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), EdgeDirection.fromAbreviation((location.get("direction").getAsString())));
+		this.location = new EdgeLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), EdgeDirection.fromAbreviation((location.get("direction").getAsString()))).getNormalizedLocation();
 	}
 
 	public PlayerIndex getOwner() {
@@ -58,5 +54,25 @@ public class Road
 		location.addProperty("y", this.getLocation().getHexLoc().getY());
 		road.add("location", location);
 		return road.toString();
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        
+        Road other = (Road) obj;
+        if (!this.location.equals(other.location))
+            return false;
+        if (!this.owner.equals(other.owner))
+            return false;
+        return true;
 	}
 }

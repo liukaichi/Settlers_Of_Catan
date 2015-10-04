@@ -33,7 +33,7 @@ public class Settlement extends Structure
 		JsonObject settlement = (JsonObject) parser.parse(json);
 		super.setOwner(PlayerIndex.fromInt(settlement.get("owner").getAsInt()));
 		JsonObject location = (JsonObject) settlement.get("location");
-		super.setLocation(new VertexLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), VertexDirection.fromAbreviation(location.get("direction").getAsString())));
+		super.setLocation(new VertexLocation(new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt()), VertexDirection.fromAbreviation(location.get("direction").getAsString())).getNormalizedLocation());
 	}
 	
 }

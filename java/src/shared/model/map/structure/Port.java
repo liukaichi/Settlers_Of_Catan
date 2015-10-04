@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 
 import shared.definitions.*;
 import shared.locations.*;
+import shared.model.map.Hex;
 
 /**
  * Object representing a port in the Catan game
@@ -103,5 +104,29 @@ public class Port
 	        port.add("location", location);
 	    }
 	    return port.toString();
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj)
+	{
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        
+        Port other = (Port) obj;
+        if (!this.direction.equals(other.direction))
+            return false;
+        if (!this.location.equals(other.location))
+            return false;
+        if (this.ratio.getRatio() != other.ratio.getRatio())
+            return false;
+        if (this.resource.ordinal() != other.resource.ordinal())
+            return false;
+        return true;
 	}
 }

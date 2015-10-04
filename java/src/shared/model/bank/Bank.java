@@ -47,7 +47,6 @@ public class Bank
 
     private void initialize(boolean isGameBank){
         resources = new Resources(isGameBank);
-        devCards = new DevCards(isGameBank);
         if (devCardDeck == null){
             devCardDeck = new Stack<>();
             initializeDevCardDeck();
@@ -75,6 +74,7 @@ public class Bank
     {
         return devCards;
     }
+
     public void initDevCards(String json){
         devCards = new DevCards(json, DevCard.AmountType.PLAYABLE);
     }
