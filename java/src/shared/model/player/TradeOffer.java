@@ -115,11 +115,11 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
 
             JsonObject jsonOffer = new JsonObject();
             {
-                jsonOffer.addProperty("brick", offer.getResource(ResourceType.BRICK).getAmount());
-                jsonOffer.addProperty("ore", offer.getResource(ResourceType.ORE).getAmount());
-                jsonOffer.addProperty("sheep", offer.getResource(ResourceType.SHEEP).getAmount());
-                jsonOffer.addProperty("wheat", offer.getResource(ResourceType.WHEAT).getAmount());
-                jsonOffer.addProperty("wood", offer.getResource(ResourceType.WOOD).getAmount());
+                jsonOffer.addProperty("brick", offer.getAmount(ResourceType.BRICK));
+                jsonOffer.addProperty("ore", offer.getAmount(ResourceType.ORE));
+                jsonOffer.addProperty("sheep", offer.getAmount(ResourceType.SHEEP));
+                jsonOffer.addProperty("wheat", offer.getAmount(ResourceType.WHEAT));
+                jsonOffer.addProperty("wood", offer.getAmount(ResourceType.WOOD));
             }
             tradeOffer.add("offer", jsonOffer);
             tradeOffer.addProperty("receiver", this.receiver.getIndex());

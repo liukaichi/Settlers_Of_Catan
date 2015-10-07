@@ -1,37 +1,24 @@
 package shared.model;
 
-import client.data.GameInfo;
-import client.data.PlayerInfo;
+import com.google.gson.*;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import shared.definitions.DevCardType;
-import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceType;
-import shared.definitions.TurnStatus;
-import shared.definitions.exceptions.CatanException;
-import shared.definitions.exceptions.InsufficientResourcesException;
-import shared.definitions.exceptions.PlacementException;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
-import shared.model.bank.Bank;
-import shared.model.bank.PlayerBank;
+import client.data.*;
+import javafx.beans.Observable;
+import shared.definitions.*;
+import shared.definitions.exceptions.*;
+import shared.locations.*;
+import shared.model.bank.*;
 import shared.model.bank.card.DevCard;
 import shared.model.map.CatanMap;
-import shared.model.message.Chat;
-import shared.model.message.Log;
-import shared.model.player.Player;
-import shared.model.player.TradeOffer;
+import shared.model.message.*;
+import shared.model.player.*;
 
 /**
  * The client model for the Catan game
  *
  * @author amandafisher
  */
-public class ClientModel
+public class ClientModel implements Observable
 {
     private GameInfo gameInfo;
     private Bank bank;
@@ -147,7 +134,7 @@ public class ClientModel
     {
         this.version = version;
     }
-    
+
     /**
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
@@ -228,7 +215,7 @@ public class ClientModel
      */
     public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
-            map.placeRoad(player, location);
+        map.placeRoad(player, location);
 
     }
 
@@ -244,7 +231,7 @@ public class ClientModel
      */
     public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-            map.placeSettlement(player, location);
+        map.placeSettlement(player, location);
     }
 
     /**
@@ -258,7 +245,7 @@ public class ClientModel
      */
     public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-            map.placeCity(player, location);
+        map.placeCity(player, location);
     }
 
     /**
@@ -272,7 +259,7 @@ public class ClientModel
      */
     public void moveRobber(PlayerIndex player, HexLocation location) throws PlacementException
     {
-            map.moveRobber(player, location);
+        map.moveRobber(player, location);
     }
 
     boolean canBuyRoad(Player player)
@@ -281,16 +268,20 @@ public class ClientModel
     }
 
     /**
-     * Updates the PlayerBank to decrement resources used and increment road count
-     * @throws CatanException 
+     * Updates the PlayerBank to decrement resources used and increment road
+     * count
+     * 
+     * @throws CatanException
      */
-    public void buyRoad(Player player) throws CatanException {
-            player.buyRoad();
+    public void buyRoad(Player player) throws CatanException
+    {
+        player.buyRoad();
     }
 
     /**
      * Determines if the PlayerBank has Settlements left to purchase AND if the
      * resources required are available
+     * 
      * @return true if both conditions are met
      */
     public boolean canBuySettlement(Player player)
@@ -299,36 +290,43 @@ public class ClientModel
     }
 
     /**
-     * Updates the PlayerBank to decrement resources used and increment settlement count
-     * @throws CatanException 
+     * Updates the PlayerBank to decrement resources used and increment
+     * settlement count
+     * 
+     * @throws CatanException
      */
     public void buySettlement(Player player) throws CatanException
     {
-            player.buySettlement();
+        player.buySettlement();
     }
 
     /**
      * Determines if the PlayerBank has Cities left to purchase AND if the
      * resources required are available
+     * 
      * @return true if both conditions are met
      */
-    public  boolean canBuyCity(Player player)
+    public boolean canBuyCity(Player player)
     {
         return player.canBuyCity();
     }
 
     /**
-     * Updates the PlayerBank to decrement resources used and increment city count
-     * @throws CatanException 
+     * Updates the PlayerBank to decrement resources used and increment city
+     * count
+     * 
+     * @throws CatanException
      * @throws InsufficientResourcesException
      */
-    public void buyCity(Player player) throws CatanException {
-            player.buyCity();
+    public void buyCity(Player player) throws CatanException
+    {
+        player.buyCity();
     }
 
     /**
      * Determines if the PlayerBank has Settlements left to purchase AND if the
      * resources required are available
+     * 
      * @return true if both conditions are met
      */
     public boolean canBuyDevCard(Player player)
@@ -337,17 +335,22 @@ public class ClientModel
     }
 
     /**
-     * Updates the PlayerBank to decrement resources used and increment the appropriate DevCard count
+     * Updates the PlayerBank to decrement resources used and increment the
+     * appropriate DevCard count
+     * 
      * @throws InsufficientResourcesException
      */
-    public void buyDevCard(Player player) throws InsufficientResourcesException {
-            player.buyDevCard();
+    public void buyDevCard(Player player) throws InsufficientResourcesException
+    {
+        player.buyDevCard();
     }
 
     /**
-     * Determines if the PlayerBank has the specified DevCard to play AND if the DevCard is playable
-     * during the turn
-     * @param type the type of DevCard being checked
+     * Determines if the PlayerBank has the specified DevCard to play AND if the
+     * DevCard is playable during the turn
+     * 
+     * @param type
+     *        the type of DevCard being checked
      * @throws InsufficientResourcesException
      * @return true if both conditions are met
      */
@@ -358,18 +361,23 @@ public class ClientModel
 
     /**
      * Plays the action of the specified DevCard
-     * @param type -- the type of DevCard to play
+     * 
+     * @param type
+     *        -- the type of DevCard to play
      * @throws InsufficientResourcesException
      */
-    public void playDevCard(Player player, DevCardType type) throws CatanException {
+    public void playDevCard(Player player, DevCardType type) throws CatanException
+    {
         player.playDevCard(type);
     }
 
-    public void giveResource(ResourceType type, int num) throws InsufficientResourcesException {
+    public void giveResource(ResourceType type, int num) throws InsufficientResourcesException
+    {
         bank.giveResource(type, num);
     }
 
-    public void takeResource(ResourceType type, int num) throws CatanException {
+    public void takeResource(ResourceType type, int num) throws CatanException
+    {
         bank.takeResource(type, num);
     }
 
@@ -386,48 +394,49 @@ public class ClientModel
     {
         chat.addMessageLine(sourceName, message);
     }
-    
+
     /**
-    * Updates the currentTurn counter
-    */
+     * Updates the currentTurn counter
+     */
     public void updateCurrentTurn(PlayerInfo playerCurrentTurn)
     {
         turnTracker.updateCurrentTurn(playerCurrentTurn);
     }
-    
+
     /**
-    * Updates the longestRoad counter.
-    * A player has the longest road if he or she has at least 5 roads
-    */    
+     * Updates the longestRoad counter. A player has the longest road if he or
+     * she has at least 5 roads
+     */
     public void updateLongestRoad(PlayerBank playerLongestRoad)
     {
         turnTracker.updateLongestRoad(playerLongestRoad);
     }
-    
+
     /**
-    * Updates the largest army counter
-    * A player has the largest army if he or she has at least 3 knights
-    */    
+     * Updates the largest army counter A player has the largest army if he or
+     * she has at least 3 knights
+     */
     public void updateLargestArmy(PlayerBank playerLargestArmy)
     {
         turnTracker.updateLargestArmy(playerLargestArmy);
     }
-    
+
     /**
-    * Updates the status string based on the current phase of the player's turn
-    */   
+     * Updates the status string based on the current phase of the player's turn
+     */
     public void updateStatus(TurnStatus playerTurnStatus)
     {
         turnTracker.updateStatus(playerTurnStatus);
     }
-    
 
     /**
      * returns a serialized json representation of the object.
+     * 
      * @return a string of json
      */
     @Override
-    public String toString(){
+    public String toString()
+    {
         JsonParser parser = new JsonParser();
         JsonObject model = new JsonObject();
         model.add("deck", parser.parse(bank.getDevCards().toString(DevCard.AmountType.PLAYABLE)));
@@ -445,14 +454,16 @@ public class ClientModel
         model.addProperty("winner", winner.getIndex());
         model.addProperty("version", version);
 
-        if (tradeOffer != null){
+        if (tradeOffer != null)
+        {
             model.add("tradeOffer", parser.parse(tradeOffer.toString()));
         }
 
         return model.toString();
     }
 
-    @Override public boolean equals(Object o)
+    @Override
+    public boolean equals(Object o)
     {
         if (this == o)
             return true;

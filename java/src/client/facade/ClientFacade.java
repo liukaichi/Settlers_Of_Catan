@@ -1,24 +1,17 @@
 package client.facade;
 
-import client.data.GameInfo;
-import client.data.RobPlayerInfo;
-import server.proxy.IProxy;
-import server.proxy.ServerProxy;
+import java.util.*;
+
+import client.data.*;
+import server.proxy.*;
 import shared.communication.Credentials;
-import shared.communication.moveCommands.BuyDevCardCommand;
-import shared.communication.moveCommands.SendChatCommand;
+import shared.communication.moveCommands.*;
 import shared.definitions.*;
-import shared.definitions.exceptions.CatanException;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.definitions.exceptions.*;
+import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
-import shared.model.player.Player;
-import shared.model.player.TradeOffer;
-
-import java.util.ArrayList;
-import java.util.List;
+import shared.model.player.*;
 
 /**
  * The Facade for the Controllers/Views interacting with the Model classes. The
@@ -76,8 +69,9 @@ public class ClientFacade
      */
     public void sendMessage(PlayerIndex player, String message)
     {
-        // model.sendMessage(player, message);
+        // Call the proxy and model to send a chat
         proxy.sendChat(new SendChatCommand(player, message));
+        model.sendChat(new SendChatCommand(player, message));
     }
 
     /*
@@ -256,9 +250,9 @@ public class ClientFacade
      *         location is vacant and the player owns a settlement or city at a
      *         neighboring vertex location
      */
-    public boolean canPlaceRoad(EdgeLocation edgeLoc)
+    public boolean canPlaceRoad(PlayerIndex player, EdgeLocation edgeLoc)
     {
-        return false;
+        return model.canPlaceRoad(player, edgeLoc);
     }
 
     /**
@@ -313,9 +307,17 @@ public class ClientFacade
      * @param edgeLoc
      *        the location of the road
      */
-    public void placeRoad(EdgeLocation edgeLoc)
+    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc, boolean isFree)
     {
-
+        try
+        {
+            model.placeRoad(player, edgeLoc);
+        }
+        catch (PlacementException e)
+        {
+            e.printStackTrace();
+        }
+        proxy.buildRoad(new BuildRoadCommand(player, edgeLoc, isFree));
     }
 
     /**
@@ -438,7 +440,9 @@ public class ClientFacade
     {
         model = newModel;
     }
-    public ClientModel getModel(){
+
+    public ClientModel getModel()
+    {
         return model;
     }
 }
