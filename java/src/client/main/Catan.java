@@ -26,6 +26,7 @@ public class Catan extends JFrame
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         catanPanel = new CatanPanel();
+        catanPanel.
         this.setContentPane(catanPanel);
 
         display();

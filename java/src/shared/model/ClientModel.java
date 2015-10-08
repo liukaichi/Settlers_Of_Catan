@@ -55,6 +55,19 @@ public class ClientModel
         winner = PlayerIndex.NONE;
     }
 
+    public void updateModel(ClientModel model)
+    {
+        this.gameInfo = model.gameInfo;
+        this.bank = model.bank;
+        this.chat = model.chat;
+        this.log = model.log;
+        this.map = model.map;
+        this.tradeOffer = model.tradeOffer;
+        this.turnTracker = model.turnTracker;
+        this.version = model.version;
+        this.winner = model.winner;
+    }
+
     public ClientModel(String json)
     {
         JsonParser parser = new JsonParser();
