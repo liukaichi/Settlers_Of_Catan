@@ -1,18 +1,27 @@
 package client.facade;
 
-import java.util.*;
-
 import client.ICatanGameMethods;
-import client.data.*;
-import server.proxy.*;
+import client.data.GameInfo;
+import client.data.RobPlayerInfo;
+import server.proxy.IProxy;
+import server.proxy.ServerProxy;
 import shared.communication.Credentials;
-import shared.communication.moveCommands.*;
+import shared.communication.moveCommands.BuildRoadCommand;
+import shared.communication.moveCommands.BuyDevCardCommand;
+import shared.communication.moveCommands.SendChatCommand;
 import shared.definitions.*;
-import shared.definitions.exceptions.*;
-import shared.locations.*;
+import shared.definitions.exceptions.CatanException;
+import shared.definitions.exceptions.PlacementException;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
-import shared.model.player.*;
+import shared.model.player.Player;
+import shared.model.player.TradeOffer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Facade for the Controllers/Views interacting with the Model classes. The
@@ -26,6 +35,7 @@ public class ClientFacade implements ICatanGameMethods
     private ClientModel model;
     private IProxy proxy;
     private List<Player> players;
+    private PlayerIndex player;
 
     private ClientFacade()
     {
@@ -64,12 +74,12 @@ public class ClientFacade implements ICatanGameMethods
      */
     /**
      * Sends a message to another player.
-     * 
+     *
      * @param message
      *        the message to send.
      */
     @Override
-    public void sendMessage(PlayerIndex player, String message)
+    public void sendMessage(String message)
     {
         // Call the proxy and model to send a chat
         proxy.sendChat(new SendChatCommand(player, message));
@@ -96,7 +106,7 @@ public class ClientFacade implements ICatanGameMethods
      * @return whether or not the player can buy a dev card.
      */
     @Override
-    public boolean canBuyDevCard(PlayerIndex player)
+    public boolean canBuyDevCard()
     {
         // model.canBuyDevCard();
         return false;
@@ -107,33 +117,31 @@ public class ClientFacade implements ICatanGameMethods
      * adds it to the player' hand.
      */
     @Override
-    public void buyDevCard(PlayerIndex player)
+    public void buyDevCard()
     {
         proxy.buyDevCard(new BuyDevCardCommand(player));
     }
 
     /**
      * Plays a Monopoly Card.
-     * 
+     *
      * @param resource
      *        the type of resource the player is getting the monopoly on.
      */
     @Override
-    public void playMonopolyCard(PlayerIndex player, ResourceType resource)
+    public void playMonopolyCard(ResourceType resource)
     {
         // proxy.monopoly(new MonopolyCommand(player, resource))
     }
 
     /**
      * Plays a Year of Plenty Card.
-     * 
-     * @param resource1
+     *  @param resource1
      *        The first resource.
      * @param resource2
-     *        The second resource.
      */
     @Override
-    public void playYearOfPlentyCard(PlayerIndex player, ResourceType resource1, ResourceType resource2)
+    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
 
     }
@@ -142,7 +150,7 @@ public class ClientFacade implements ICatanGameMethods
      * Plays any other kind of Development Card.
      */
     @Override
-    public void playOtherDevCard(PlayerIndex player, DevCardType type)
+    public void playOtherDevCard(DevCardType type)
     {
 
     }
@@ -153,12 +161,12 @@ public class ClientFacade implements ICatanGameMethods
 
     /**
      * Discards the amount of resources set with the increase/decrease methods
-     * 
+     *
      * @param discardedResources
      *        the list of resources to discard.
      */
     @Override
-    public void discardResources(PlayerIndex player, Resources discardedResources)
+    public void discardResources(Resources discardedResources)
     {
 
     }
@@ -171,19 +179,19 @@ public class ClientFacade implements ICatanGameMethods
      * Sends a trade offer to a player.
      */
     @Override
-    public void sendTradeOffer(PlayerIndex player)
+    public void sendTradeOffer()
     {
 
     }
 
     /**
      * Used for accepting/rejecting a trade.
-     * 
+     *
      * @param willAccept
      *        Whether or not the player will accept the trade.
      */
     @Override
-    public void acceptTrade(PlayerIndex player, boolean willAccept)
+    public void acceptTrade(boolean willAccept)
     {
 
     }
@@ -266,7 +274,7 @@ public class ClientFacade implements ICatanGameMethods
      *         neighboring vertex location
      */
     @Override
-    public boolean canPlaceRoad(PlayerIndex player, EdgeLocation edgeLoc)
+    public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return model.canPlaceRoad(player, edgeLoc);
     }
@@ -473,5 +481,9 @@ public class ClientFacade implements ICatanGameMethods
     public ClientModel getModel()
     {
         return model;
+    }
+
+    public PlayerIndex getClientPlayer(){
+        return player;
     }
 }

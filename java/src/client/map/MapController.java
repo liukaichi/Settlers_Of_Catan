@@ -1,12 +1,17 @@
 package client.map;
 
-import java.util.*;
-
 import client.base.Controller;
-import client.data.*;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
 import client.state.GameplayState;
-import shared.definitions.*;
+import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
 import shared.locations.*;
+
+import java.util.Observable;
+import java.util.Random;
 
 /**
  * Implementation for the map controller
@@ -114,7 +119,7 @@ public class MapController extends Controller implements IMapController
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return state.canPlaceRoad(PlayerIndex.NONE, edgeLoc);
+        return state.canPlaceRoad(edgeLoc);
     }
 
     @Override

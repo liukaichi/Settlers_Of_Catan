@@ -23,11 +23,11 @@ public interface ICatanGameMethods
      */
     /**
      * Sends a message to another player.
-     * 
+     *
      * @param message
      *        the message to send.
      */
-    void sendMessage(PlayerIndex player, String message);
+    void sendMessage(String message);
 
     /*
      * Game History Controller
@@ -45,57 +45,55 @@ public interface ICatanGameMethods
      * 
      * @return whether or not the player can buy a dev card.
      */
-    boolean canBuyDevCard(PlayerIndex player);
+    boolean canBuyDevCard();
 
     /**
      * Purchases a Development Card. This will take the card from the bank, and
      * adds it to the player' hand.
      */
-    void buyDevCard(PlayerIndex player);
+    void buyDevCard();
 
     /**
      * Plays a Monopoly Card.
-     * 
+     *
      * @param resource
      *        the type of resource the player is getting the monopoly on.
      */
-    void playMonopolyCard(PlayerIndex player, ResourceType resource);
+    void playMonopolyCard(ResourceType resource);
 
     /**
      * Plays a Year of Plenty Card.
-     * 
-     * @param resource1
+     *  @param resource1
      *        The first resource.
      * @param resource2
-     *        The second resource.
      */
-    void playYearOfPlentyCard(PlayerIndex player, ResourceType resource1, ResourceType resource2);
+    void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2);
 
     /**
      * Plays any other kind of Development Card.
      */
-    void playOtherDevCard(PlayerIndex player, DevCardType type);
+    void playOtherDevCard(DevCardType type);
 
     /**
      * Discards the amount of resources set with the increase/decrease methods
-     * 
+     *
      * @param discardedResources
      *        the list of resources to discard.
      */
-    void discardResources(PlayerIndex player, Resources discardedResources);
+    void discardResources(Resources discardedResources);
 
     /**
      * Sends a trade offer to a player.
      */
-    void sendTradeOffer(PlayerIndex player);
+    void sendTradeOffer();
 
     /**
      * Used for accepting/rejecting a trade.
-     * 
+     *
      * @param willAccept
      *        Whether or not the player will accept the trade.
      */
-    void acceptTrade(PlayerIndex player, boolean willAccept);
+    void acceptTrade(boolean willAccept);
 
     /*
      * Join Game Controller methods
@@ -154,7 +152,7 @@ public interface ICatanGameMethods
      *         location is vacant and the player owns a settlement or city at a
      *         neighboring vertex location
      */
-    boolean canPlaceRoad(PlayerIndex player, EdgeLocation edgeLoc);
+    boolean canPlaceRoad(EdgeLocation edgeLoc);
 
     /**
      * Checks to see if the player meets the condition to place a settlement

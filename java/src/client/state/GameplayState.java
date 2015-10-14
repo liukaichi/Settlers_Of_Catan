@@ -29,7 +29,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex, java.lang.String)
      */
     @Override
-    public void sendMessage(PlayerIndex player, String message)
+    public void sendMessage(String message)
     {
     }
 
@@ -58,7 +58,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex)
      */
     @Override
-    public boolean canBuyDevCard(PlayerIndex player)
+    public boolean canBuyDevCard()
     {
         // model.canBuyDevCard();
         return false;
@@ -71,7 +71,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * client.state.ICatanGameMethods#buyDevCard(shared.definitions.PlayerIndex)
      */
     @Override
-    public void buyDevCard(PlayerIndex player)
+    public void buyDevCard()
     {
 
     }
@@ -83,7 +83,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex, shared.definitions.ResourceType)
      */
     @Override
-    public void playMonopolyCard(PlayerIndex player, ResourceType resource)
+    public void playMonopolyCard(ResourceType resource)
     {
         // proxy.monopoly(new MonopolyCommand(player, resource))
     }
@@ -97,7 +97,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * shared.definitions.ResourceType)
      */
     @Override
-    public void playYearOfPlentyCard(PlayerIndex player, ResourceType resource1, ResourceType resource2)
+    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
 
     }
@@ -109,7 +109,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex, shared.definitions.DevCardType)
      */
     @Override
-    public void playOtherDevCard(PlayerIndex player, DevCardType type)
+    public void playOtherDevCard(DevCardType type)
     {
 
     }
@@ -125,7 +125,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex, shared.model.bank.resource.Resources)
      */
     @Override
-    public void discardResources(PlayerIndex player, Resources discardedResources)
+    public void discardResources(Resources discardedResources)
     {
 
     }
@@ -141,7 +141,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex)
      */
     @Override
-    public void sendTradeOffer(PlayerIndex player)
+    public void sendTradeOffer()
     {
 
     }
@@ -153,7 +153,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex, boolean)
      */
     @Override
-    public void acceptTrade(PlayerIndex player, boolean willAccept)
+    public void acceptTrade(boolean willAccept)
     {
 
     }
@@ -234,7 +234,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex, shared.locations.EdgeLocation)
      */
     @Override
-    public boolean canPlaceRoad(PlayerIndex player, EdgeLocation edgeLoc)
+    public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return false;
     }
