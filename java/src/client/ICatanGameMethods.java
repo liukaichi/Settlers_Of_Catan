@@ -197,7 +197,7 @@ public interface ICatanGameMethods
      * @param edgeLoc
      *        the location of the road
      */
-    void placeRoad(PlayerIndex player, EdgeLocation edgeLoc, boolean isFree);
+    void placeRoad(PlayerIndex player, EdgeLocation edgeLoc);
 
     /**
      * player purchases and places a settlement

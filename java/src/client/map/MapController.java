@@ -126,27 +126,27 @@ public class MapController extends Controller implements IMapController
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
 
-        return true;
+        return state.canPlaceSettlement(vertLoc);
     }
 
     @Override
     public boolean canPlaceCity(VertexLocation vertLoc)
     {
 
-        return true;
+        return state.canPlaceCity(vertLoc);
     }
 
     @Override
     public boolean canPlaceRobber(HexLocation hexLoc)
     {
 
-        return true;
+        return state.canPlaceRobber(hexLoc);
     }
 
     @Override
     public void placeRoad(EdgeLocation edgeLoc)
     {
-
+        state.placeRoad(currentPlayer.getPlayerIndex(), edgeLoc, state.canPlaceRoad(edgeLoc));
         getView().placeRoad(edgeLoc, CatanColor.ORANGE);
     }
 
