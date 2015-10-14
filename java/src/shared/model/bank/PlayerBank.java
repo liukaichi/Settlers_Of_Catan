@@ -1,19 +1,12 @@
 package shared.model.bank;
 
-import shared.definitions.DevCardType;
-import shared.definitions.PortType;
-import shared.definitions.ResourceType;
-import shared.definitions.StructureType;
-import shared.definitions.exceptions.CatanException;
-import shared.definitions.exceptions.InsufficientResourcesException;
-import shared.model.bank.card.DevCard;
-import shared.model.bank.card.DevCards;
-import shared.model.bank.resource.Resources;
-import shared.model.bank.structure.Structure;
-import shared.model.bank.structure.Structures;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import shared.definitions.*;
+import shared.definitions.exceptions.*;
+import shared.model.bank.card.*;
+import shared.model.bank.resource.Resources;
+import shared.model.bank.structure.*;
 
 /**
  * This class extends Bank with properties and methods specific to the player
@@ -43,102 +36,132 @@ public class PlayerBank extends Bank
     }
 
     @Override
-    public DevCards getDevCards() {
+    public DevCards getDevCards()
+    {
         return playerDevCards;
     }
 
     @Override
-    public Resources getResources() {
+    public Resources getResources()
+    {
         return playerResources;
     }
 
-    public void setKnights(int knights) {
+    public void setKnights(int knights)
+    {
         this.knights = knights;
     }
 
-    public void setVictoryPoints(int victoryPoints) {
+    public void setVictoryPoints(int victoryPoints)
+    {
         this.victoryPoints = victoryPoints;
     }
 
-    public void setMonuments(int monuments) {
+    public void setMonuments(int monuments)
+    {
         this.monuments = monuments;
     }
 
-    public void setPlayerResources(Resources playerResources) {
+    public void setPlayerResources(Resources playerResources)
+    {
         this.playerResources = playerResources;
     }
 
-    public void setPlayerDevCards(DevCards playerDevCards) {
+    public void setPlayerDevCards(DevCards playerDevCards)
+    {
         this.playerDevCards = playerDevCards;
     }
 
-    public int getKnights() {
+    public int getKnights()
+    {
         return knights;
     }
 
-    public void addKnights(int knights) {
+    public void addKnights(int knights)
+    {
         this.knights += knights;
     }
 
-    public int getVictoryPoints() {
+    public int getVictoryPoints()
+    {
         return victoryPoints;
     }
 
-    public void addVictoryPoints(int victoryPoints) {
+    public void addVictoryPoints(int victoryPoints)
+    {
         this.victoryPoints += victoryPoints;
     }
 
-    public int getMonuments() {
+    public int getMonuments()
+    {
         return monuments;
     }
 
-    public void addMonuments(int monuments) {
+    public void addMonuments(int monuments)
+    {
         this.monuments += monuments;
     }
 
-    public Resources gameResources(){
+    public Resources gameResources()
+    {
         return super.getResources();
     }
 
-    public Structures getStructures() {
+    public Structures getStructures()
+    {
         return structures;
     }
 
-    public int amountOf(ResourceType type){
+    public int amountOf(ResourceType type)
+    {
         return playerResources.getResource(type).getAmount();
     }
 
-    public int amountOf(DevCardType cardType, DevCard.AmountType amountType){
+    public int amountOf(DevCardType cardType, DevCard.AmountType amountType)
+    {
         return playerDevCards.getCard(cardType).getAmount(amountType);
     }
 
-    public int amountOf(StructureType type){
+    public int amountOf(StructureType type)
+    {
         return structures.getStructure(type).getAmount(Structure.AmountType.BUILT);
     }
 
-    public void giveResource(ResourceType type, int num) throws InsufficientResourcesException {
-        if ((playerResources.getResource(type).getAmount() - num) < 0){
+    @Override
+    public void giveResource(ResourceType type, int num) throws InsufficientResourcesException
+    {
+        if ((playerResources.getResource(type).getAmount() - num) < 0)
+        {
             throw new InsufficientResourcesException();
         }
-        else{
+        else
+        {
             playerResources.getResource(type).subResource(num);
         }
     }
 
-    public void takeResource(ResourceType type, int num) throws CatanException {
-        if ((playerResources.getResource(type).getAmount() + num) > 19){
+    @Override
+    public void takeResource(ResourceType type, int num) throws CatanException
+    {
+        if ((playerResources.getResource(type).getAmount() + num) > 19)
+        {
             throw new CatanException();
         }
-        else{
+        else
+        {
             playerResources.getResource(type).addResource(num);
         }
     }
 
-    public void payResource(ResourceType type, int num){
-        try {
+    public void payResource(ResourceType type, int num)
+    {
+        try
+        {
             this.giveResource(type, num);
             super.takeResource(type, num);
-        } catch (CatanException e) {
+        }
+        catch (CatanException e)
+        {
             e.printStackTrace();
         }
     }
@@ -148,11 +171,11 @@ public class PlayerBank extends Bank
      * 
      * @return true if the condition is met
      */
-    public boolean canBuyDevCard() {
-        if ((amountOf(ResourceType.SHEEP) > 0)
-                && (amountOf(ResourceType.ORE) > 0)
-                && (amountOf(ResourceType.WHEAT) > 0)
-                && (!super.getDevCardDeck().empty())){
+    public boolean canBuyDevCard()
+    {
+        if ((amountOf(ResourceType.SHEEP) > 0) && (amountOf(ResourceType.ORE) > 0) && (amountOf(ResourceType.WHEAT) > 0)
+                && (!super.getDevCardDeck().empty()))
+        {
             return true;
         }
         return false;
@@ -166,7 +189,8 @@ public class PlayerBank extends Bank
      */
     public void buyDevCard() throws InsufficientResourcesException
     {
-        if (canBuyDevCard()){
+        if (canBuyDevCard())
+        {
             payResource(ResourceType.SHEEP, 1);
             payResource(ResourceType.ORE, 1);
             payResource(ResourceType.WHEAT, 1);
@@ -182,7 +206,8 @@ public class PlayerBank extends Bank
      */
     public boolean canBuyRoad()
     {
-        if ((amountOf(ResourceType.BRICK) > 0) && (amountOf(ResourceType.WOOD) > 0)){
+        if ((amountOf(ResourceType.BRICK) > 0) && (amountOf(ResourceType.WOOD) > 0))
+        {
             return true;
         }
         return false;
@@ -196,7 +221,8 @@ public class PlayerBank extends Bank
      */
     public void buyRoad() throws CatanException
     {
-        if (canBuyRoad()){
+        if (canBuyRoad())
+        {
             payResource(ResourceType.BRICK, 1);
             payResource(ResourceType.WOOD, 1);
             structures.getStructure(StructureType.ROAD).addAmount(1);
@@ -210,10 +236,9 @@ public class PlayerBank extends Bank
      */
     public boolean canBuySettlement()
     {
-        if((amountOf(ResourceType.SHEEP) > 0)
-                && (amountOf(ResourceType.WOOD) > 0)
-                && (amountOf(ResourceType.WHEAT) > 0)
-                && (amountOf(ResourceType.BRICK) > 0)){
+        if ((amountOf(ResourceType.SHEEP) > 0) && (amountOf(ResourceType.WOOD) > 0)
+                && (amountOf(ResourceType.WHEAT) > 0) && (amountOf(ResourceType.BRICK) > 0))
+        {
             return true;
         }
         return false;
@@ -227,7 +252,8 @@ public class PlayerBank extends Bank
      */
     public void buySettlement() throws CatanException
     {
-        if (canBuySettlement()){
+        if (canBuySettlement())
+        {
             payResource(ResourceType.SHEEP, 1);
             payResource(ResourceType.WOOD, 1);
             payResource(ResourceType.WHEAT, 1);
@@ -244,9 +270,9 @@ public class PlayerBank extends Bank
      */
     public boolean canBuyCity()
     {
-        if ((amountOf(ResourceType.ORE) > 2)
-                && (amountOf(ResourceType.WHEAT) > 1)
-                && (amountOf(StructureType.SETTLEMENT) > 0)){
+        if ((amountOf(ResourceType.ORE) > 2) && (amountOf(ResourceType.WHEAT) > 1)
+                && (amountOf(StructureType.SETTLEMENT) > 0))
+        {
             return true;
         }
         return false;
@@ -260,7 +286,8 @@ public class PlayerBank extends Bank
      */
     public void buyCity() throws CatanException
     {
-        if (canBuyCity()){
+        if (canBuyCity())
+        {
             payResource(ResourceType.ORE, 3);
             payResource(ResourceType.WHEAT, 2);
             structures.getStructure(StructureType.CITY).addAmount(1);
@@ -278,7 +305,8 @@ public class PlayerBank extends Bank
      */
     public boolean canPlayDevCard(DevCardType type)
     {
-        if (amountOf(type, DevCard.AmountType.PLAYABLE) > 0){
+        if (amountOf(type, DevCard.AmountType.PLAYABLE) > 0)
+        {
             return true;
         }
 
@@ -294,7 +322,8 @@ public class PlayerBank extends Bank
      */
     public void playDevCard(DevCardType type) throws InsufficientResourcesException
     {
-        if (canPlayDevCard(type)) {
+        if (canPlayDevCard(type))
+        {
             DevCard card = playerDevCards.getCard(type);
             card.subCard(DevCard.AmountType.PLAYABLE, 1);
             card.addCard(DevCard.AmountType.PLAYED, 1);
@@ -311,7 +340,8 @@ public class PlayerBank extends Bank
      */
     public boolean canAccessPort(PortType type)
     {
-        if (ports.contains(type)){
+        if (ports.contains(type))
+        {
             return true;
         }
         return false;
@@ -322,7 +352,8 @@ public class PlayerBank extends Bank
         ports.add(type);
     }
 
-    @Override public boolean equals(Object o)
+    @Override
+    public boolean equals(Object o)
     {
         if (this == o)
             return true;
@@ -347,7 +378,8 @@ public class PlayerBank extends Bank
 
     }
 
-    @Override public int hashCode()
+    @Override
+    public int hashCode()
     {
         return 0;
     }
