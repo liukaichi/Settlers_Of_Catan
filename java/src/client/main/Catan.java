@@ -26,7 +26,6 @@ public class Catan extends JFrame
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         catanPanel = new CatanPanel();
-        catanPanel.
         this.setContentPane(catanPanel);
 
         display();
@@ -47,7 +46,8 @@ public class Catan extends JFrame
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }

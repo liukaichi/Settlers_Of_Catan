@@ -71,7 +71,6 @@ public class ClientFacade
     {
         // Call the proxy and model to send a chat
         proxy.sendChat(new SendChatCommand(player, message));
-        model.sendChat(new SendChatCommand(player, message));
     }
 
     /*

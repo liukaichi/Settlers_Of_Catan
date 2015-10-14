@@ -1,21 +1,18 @@
 package client.domestic;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 import client.base.OverlayView;
 import client.data.PlayerInfo;
 import client.utils.FontUtils;
 import shared.definitions.ResourceType;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Implementation of the domestic trade overlay, which allows the user to
@@ -270,7 +267,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
                     new Dimension((int) (RESOURCE_IMAGE_WIDTH * 1.6), (int) (RESOURCE_IMAGE_WIDTH * 1.7)));
 
             return tile;
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw new RuntimeException("Failed to setup resource tile for image path: " + imageFilePath + ", error: "
                     + e.getLocalizedMessage());
@@ -330,7 +328,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
             upDownButtonsPanel.add(resourceCountLabel);
             upDownButtonsPanel.add(downButton);
 
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw new RuntimeException("error possibly with image path, error: " + e.getLocalizedMessage());
         }
@@ -358,7 +357,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         {
             factor = ((double) src.getHeight() / (double) src.getWidth());
             finalh = (int) (finalw * factor);
-        } else
+        }
+        else
         {
             factor = ((double) src.getWidth() / (double) src.getHeight());
             finalw = (int) (finalh * factor);
