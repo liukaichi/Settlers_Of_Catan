@@ -1,18 +1,21 @@
 package client.domestic;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 import client.base.OverlayView;
 import client.data.PlayerInfo;
 import client.utils.FontUtils;
 import shared.definitions.ResourceType;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Implementation of the domestic trade overlay, which allows the user to

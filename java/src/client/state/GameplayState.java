@@ -4,10 +4,13 @@
 package client.state;
 
 import client.ICatanGameMethods;
-import client.data.*;
+import client.data.GameInfo;
+import client.data.RobPlayerInfo;
 import shared.communication.Credentials;
 import shared.definitions.*;
-import shared.locations.*;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.TradeOffer;
@@ -16,8 +19,10 @@ import shared.model.player.TradeOffer;
  * @author cstaheli
  *
  */
+
 public abstract class GameplayState implements ICatanGameMethods
 {
+
     /*
      * Chat Controller methods
      */
@@ -27,6 +32,7 @@ public abstract class GameplayState implements ICatanGameMethods
     @Override
     public void sendMessage(PlayerIndex player, String message)
     {
+
     }
 
     /*
