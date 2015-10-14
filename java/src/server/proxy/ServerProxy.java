@@ -1,16 +1,25 @@
 package server.proxy;
 
-import java.io.*;
-import java.net.*;
-import java.util.logging.*;
-
-import com.google.gson.*;
-
+import client.facade.ClientFacade;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
-import shared.definitions.exceptions.*;
+import shared.definitions.exceptions.AddAIException;
+import shared.definitions.exceptions.GameQueryException;
+import shared.definitions.exceptions.SignInException;
 import shared.model.ClientModel;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpCookie;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * ServerProxy is used in Dependency injection, along with MockProxy, to return
@@ -510,6 +519,7 @@ public class ServerProxy implements IProxy
         if (cookie.indexOf("catan.user") != -1)
         {
             this.catanUserCookie = cookie;
+            ClientFacade.getInstance().setClientPlayer(cookie.indexOf("catan.user"));
         }
         else if (cookie.indexOf("catan.game") != -1)
         {

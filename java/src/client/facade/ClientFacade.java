@@ -43,6 +43,11 @@ public class ClientFacade implements ICatanGameMethods
         proxy = new ServerProxy();
     }
 
+    public void setClientPlayer(int clientPlayer)
+    {
+        player = PlayerIndex.fromInt(clientPlayer);
+    }
+
     private void setupPlayersFromGame() throws CatanException
     {
         List<Player> playerInfos = model.getGameInfo().getPlayers();
