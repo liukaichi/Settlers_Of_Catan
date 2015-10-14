@@ -1,36 +1,53 @@
 package client.join;
 
-import client.base.*;
+import java.util.Observable;
 
+import client.base.Controller;
 
 /**
  * Implementation for the player waiting controller
  */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
+public class PlayerWaitingController extends Controller implements IPlayerWaitingController
+{
 
-	public PlayerWaitingController(IPlayerWaitingView view) {
+    public PlayerWaitingController(IPlayerWaitingView view)
+    {
 
-		super(view);
-	}
+        super(view);
+    }
 
-	@Override
-	public IPlayerWaitingView getView() {
+    @Override
+    public IPlayerWaitingView getView()
+    {
 
-		return (IPlayerWaitingView)super.getView();
-	}
+        return (IPlayerWaitingView) super.getView();
+    }
 
-	@Override
-	public void start() {
+    @Override
+    public void start()
+    {
 
-		getView().showModal();
-	}
+        getView().showModal();
+    }
 
-	@Override
-	public void addAI() {
+    @Override
+    public void addAI()
+    {
 
-		// TEMPORARY
-		getView().closeModal();
-	}
+        // TEMPORARY
+        getView().closeModal();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        // TODO Auto-generated method stub
+
+    }
 
 }
-

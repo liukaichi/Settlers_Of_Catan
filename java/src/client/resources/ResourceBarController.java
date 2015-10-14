@@ -4,70 +4,94 @@ import java.util.*;
 
 import client.base.*;
 
-
 /**
  * Implementation for the resource bar controller
  */
-public class ResourceBarController extends Controller implements IResourceBarController {
+public class ResourceBarController extends Controller implements IResourceBarController
+{
 
-	private Map<ResourceBarElement, IAction> elementActions;
-	
-	public ResourceBarController(IResourceBarView view) {
+    private Map<ResourceBarElement, IAction> elementActions;
 
-		super(view);
-		
-		elementActions = new HashMap<ResourceBarElement, IAction>();
-	}
+    public ResourceBarController(IResourceBarView view)
+    {
 
-	@Override
-	public IResourceBarView getView() {
-		return (IResourceBarView)super.getView();
-	}
+        super(view);
 
-	/**
-	 * Sets the action to be executed when the specified resource bar element is clicked by the user
-	 * 
-	 * @param element The resource bar element with which the action is associated
-	 * @param action The action to be executed
-	 */
-	public void setElementAction(ResourceBarElement element, IAction action) {
+        elementActions = new HashMap<ResourceBarElement, IAction>();
+    }
 
-		elementActions.put(element, action);
-	}
+    @Override
+    public IResourceBarView getView()
+    {
+        return (IResourceBarView) super.getView();
+    }
 
-	@Override
-	public void buildRoad() {
-		executeElementAction(ResourceBarElement.ROAD);
-	}
+    /**
+     * Sets the action to be executed when the specified resource bar element is
+     * clicked by the user
+     * 
+     * @param element
+     *        The resource bar element with which the action is associated
+     * @param action
+     *        The action to be executed
+     */
+    public void setElementAction(ResourceBarElement element, IAction action)
+    {
 
-	@Override
-	public void buildSettlement() {
-		executeElementAction(ResourceBarElement.SETTLEMENT);
-	}
+        elementActions.put(element, action);
+    }
 
-	@Override
-	public void buildCity() {
-		executeElementAction(ResourceBarElement.CITY);
-	}
+    @Override
+    public void buildRoad()
+    {
+        executeElementAction(ResourceBarElement.ROAD);
+    }
 
-	@Override
-	public void buyCard() {
-		executeElementAction(ResourceBarElement.BUY_CARD);
-	}
+    @Override
+    public void buildSettlement()
+    {
+        executeElementAction(ResourceBarElement.SETTLEMENT);
+    }
 
-	@Override
-	public void playCard() {
-		executeElementAction(ResourceBarElement.PLAY_CARD);
-	}
-	
-	private void executeElementAction(ResourceBarElement element) {
-		
-		if (elementActions.containsKey(element)) {
-			
-			IAction action = elementActions.get(element);
-			action.execute();
-		}
-	}
+    @Override
+    public void buildCity()
+    {
+        executeElementAction(ResourceBarElement.CITY);
+    }
+
+    @Override
+    public void buyCard()
+    {
+        executeElementAction(ResourceBarElement.BUY_CARD);
+    }
+
+    @Override
+    public void playCard()
+    {
+        executeElementAction(ResourceBarElement.PLAY_CARD);
+    }
+
+    private void executeElementAction(ResourceBarElement element)
+    {
+
+        if (elementActions.containsKey(element))
+        {
+
+            IAction action = elementActions.get(element);
+            action.execute();
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        // TODO Auto-generated method stub
+
+    }
 
 }
-
