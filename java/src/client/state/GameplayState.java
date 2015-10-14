@@ -283,7 +283,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * shared.locations.EdgeLocation, boolean)
      */
     @Override
-    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc, boolean isFree)
+    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc)
     {
 
     }
