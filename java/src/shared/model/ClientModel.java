@@ -1,9 +1,10 @@
 package shared.model;
 
+import java.util.Observable;
+
 import com.google.gson.*;
 
 import client.data.*;
-import javafx.beans.Observable;
 import shared.definitions.*;
 import shared.definitions.exceptions.*;
 import shared.locations.*;
@@ -18,7 +19,7 @@ import shared.model.player.*;
  *
  * @author amandafisher
  */
-public class ClientModel implements Observable
+public class ClientModel extends Observable
 {
     private GameInfo gameInfo;
     private Bank bank;
