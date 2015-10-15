@@ -340,7 +340,7 @@ public class ClientFacade implements ICatanGameMethods
      *        the location of the road
      */
     @Override
-    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc, boolean isFree)
+    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc)
     {
         try
         {
@@ -350,7 +350,7 @@ public class ClientFacade implements ICatanGameMethods
         {
             e.printStackTrace();
         }
-        proxy.buildRoad(new BuildRoadCommand(player, edgeLoc, isFree));
+        proxy.buildRoad(new BuildRoadCommand(player, edgeLoc, true));
     }
 
     /**
@@ -491,4 +491,5 @@ public class ClientFacade implements ICatanGameMethods
     public PlayerIndex getClientPlayer(){
         return player;
     }
+
 }
