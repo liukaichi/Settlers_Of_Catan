@@ -17,6 +17,7 @@ import shared.model.player.TradeOffer;
  *
  */
 public abstract class GameplayState
+{
 
     /*
      * Chat Controller methods
@@ -27,7 +28,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#sendMessage(shared.definitions.
      * PlayerIndex, java.lang.String)
      */
-    
+
     public void sendMessage(String message)
     {
     }
@@ -41,7 +42,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#initHistoryFromModel(shared.model.
      * ClientModel)
      */
-    
+
     public void initHistoryFromModel(ClientModel model)
     {
 
@@ -56,7 +57,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#canBuyDevCard(shared.definitions.
      * PlayerIndex)
      */
-    
+
     public boolean canBuyDevCard()
     {
         // model.canBuyDevCard();
@@ -69,7 +70,7 @@ public abstract class GameplayState
      * @see
      * client.state.ICatanGameMethods#buyDevCard(shared.definitions.PlayerIndex)
      */
-    
+
     public void buyDevCard()
     {
 
@@ -81,7 +82,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#playMonopolyCard(shared.definitions.
      * PlayerIndex, shared.definitions.ResourceType)
      */
-    
+
     public void playMonopolyCard(ResourceType resource)
     {
         // proxy.monopoly(new MonopolyCommand(player, resource))
@@ -95,7 +96,7 @@ public abstract class GameplayState
      * PlayerIndex, shared.definitions.ResourceType,
      * shared.definitions.ResourceType)
      */
-    
+
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
 
@@ -107,7 +108,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#playOtherDevCard(shared.definitions.
      * PlayerIndex, shared.definitions.DevCardType)
      */
-    
+
     public void playOtherDevCard(DevCardType type)
     {
 
@@ -123,7 +124,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#discardResources(shared.definitions.
      * PlayerIndex, shared.model.bank.resource.Resources)
      */
-    
+
     public void discardResources(Resources discardedResources)
     {
 
@@ -139,7 +140,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#sendTradeOffer(shared.definitions.
      * PlayerIndex)
      */
-    
+
     public void sendTradeOffer()
     {
 
@@ -151,7 +152,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#acceptTrade(shared.definitions.
      * PlayerIndex, boolean)
      */
-    
+
     public void acceptTrade(boolean willAccept)
     {
 
@@ -165,7 +166,7 @@ public abstract class GameplayState
      * 
      * @see client.state.ICatanGameMethods#createNewGame(client.data.GameInfo)
      */
-    
+
     public void createNewGame(GameInfo gameInfo)
     {
 
@@ -176,7 +177,7 @@ public abstract class GameplayState
      * 
      * @see client.state.ICatanGameMethods#joinGame(client.data.GameInfo)
      */
-    
+
     public void joinGame(GameInfo gameInfo)
     {
 
@@ -190,7 +191,7 @@ public abstract class GameplayState
      * 
      * @see client.state.ICatanGameMethods#addAI(shared.definitions.AIType)
      */
-    
+
     public void addAI(AIType type)
     {
 
@@ -205,7 +206,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#signInUser(shared.communication.
      * Credentials)
      */
-    
+
     public void signInUser(Credentials credentials)
     {
 
@@ -217,7 +218,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#registerUser(shared.communication.
      * Credentials)
      */
-    
+
     public void registerUser(Credentials credentials)
     {
 
@@ -232,7 +233,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#canPlaceRoad(shared.definitions.
      * PlayerIndex, shared.locations.EdgeLocation)
      */
-    
+
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return false;
@@ -244,7 +245,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#canPlaceSettlement(shared.locations.
      * VertexLocation)
      */
-    
+
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         return false;
@@ -256,7 +257,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#canPlaceCity(shared.locations.
      * VertexLocation)
      */
-    
+
     public boolean canPlaceCity(VertexLocation vertLoc)
     {
         return false;
@@ -268,7 +269,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#canPlaceRobber(shared.locations.
      * HexLocation)
      */
-    
+
     public boolean canPlaceRobber(HexLocation hexLoc)
     {
         return false;
@@ -281,8 +282,8 @@ public abstract class GameplayState
      * client.state.ICatanGameMethods#placeRoad(shared.definitions.PlayerIndex,
      * shared.locations.EdgeLocation, boolean)
      */
-    
-    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc)
+
+    public void placeRoad(EdgeLocation edgeLoc)
     {
 
     }
@@ -293,7 +294,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#placeSettlement(shared.locations.
      * VertexLocation)
      */
-    
+
     public void placeSettlement(VertexLocation vertLoc)
     {
 
@@ -305,7 +306,7 @@ public abstract class GameplayState
      * @see
      * client.state.ICatanGameMethods#placeCity(shared.locations.VertexLocation)
      */
-    
+
     public void placeCity(VertexLocation vertLoc)
     {
 
@@ -317,7 +318,7 @@ public abstract class GameplayState
      * @see
      * client.state.ICatanGameMethods#placeRobber(shared.locations.HexLocation)
      */
-    
+
     public void placeRobber(HexLocation hexLoc)
     {
 
@@ -328,7 +329,7 @@ public abstract class GameplayState
      * 
      * @see client.state.ICatanGameMethods#robPlayer(client.data.RobPlayerInfo)
      */
-    
+
     public void robPlayer(RobPlayerInfo victim)
     {
 
@@ -344,7 +345,7 @@ public abstract class GameplayState
      * client.state.ICatanGameMethods#makeMaritimeTrade(shared.model.player.
      * TradeOffer)
      */
-    
+
     public void makeMaritimeTrade(TradeOffer offer)
     {
 
@@ -358,7 +359,7 @@ public abstract class GameplayState
      * 
      * @see client.state.ICatanGameMethods#initPointsFromModel()
      */
-    
+
     public void initPointsFromModel()
     {
 
@@ -372,7 +373,7 @@ public abstract class GameplayState
      * 
      * @see client.state.ICatanGameMethods#rollDice()
      */
-    
+
     public Dice rollDice()
     {
         // roll dice
@@ -387,7 +388,7 @@ public abstract class GameplayState
      * 
      * @see client.state.ICatanGameMethods#endTurn()
      */
-    
+
     public void endTurn()
     {
 
@@ -398,7 +399,7 @@ public abstract class GameplayState
      * 
      * @see client.state.ICatanGameMethods#initTurnFromModel()
      */
-    
+
     public void initTurnFromModel()
     {
 
