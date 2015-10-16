@@ -1,17 +1,13 @@
 package client.map;
 
-import client.base.Controller;
-import client.data.PlayerInfo;
-import client.data.RobPlayerInfo;
-import client.state.GameplayState;
-import shared.definitions.CatanColor;
-import shared.definitions.HexType;
-import shared.definitions.PieceType;
-import shared.definitions.PortType;
-import shared.locations.*;
+import java.util.*;
 
-import java.util.Observable;
-import java.util.Random;
+import client.base.Controller;
+import client.data.*;
+import client.state.*;
+import shared.definitions.*;
+import shared.locations.*;
+import shared.model.ClientModel;
 
 /**
  * Implementation for the map controller
@@ -31,6 +27,8 @@ public class MapController extends Controller implements IMapController
         setRobView(robView);
 
         initFromModel();
+
+        state = new SetupState();
     }
 
     @Override
@@ -212,8 +210,8 @@ public class MapController extends Controller implements IMapController
     @Override
     public void update(Observable o, Object arg)
     {
-        // TODO Auto-generated method stub
-
+        ClientModel model = (ClientModel) o;
+        state.update(this, model, arg);
     }
 
 }

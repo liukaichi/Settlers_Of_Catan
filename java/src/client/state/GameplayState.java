@@ -3,7 +3,7 @@
  */
 package client.state;
 
-import client.ICatanGameMethods;
+import client.base.Controller;
 import client.data.*;
 import shared.communication.Credentials;
 import shared.definitions.*;
@@ -16,8 +16,7 @@ import shared.model.player.TradeOffer;
  * @author cstaheli
  *
  */
-public abstract class GameplayState implements ICatanGameMethods
-{
+public abstract class GameplayState
 
     /*
      * Chat Controller methods
@@ -28,7 +27,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#sendMessage(shared.definitions.
      * PlayerIndex, java.lang.String)
      */
-    @Override
+    
     public void sendMessage(String message)
     {
     }
@@ -42,7 +41,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#initHistoryFromModel(shared.model.
      * ClientModel)
      */
-    @Override
+    
     public void initHistoryFromModel(ClientModel model)
     {
 
@@ -57,7 +56,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#canBuyDevCard(shared.definitions.
      * PlayerIndex)
      */
-    @Override
+    
     public boolean canBuyDevCard()
     {
         // model.canBuyDevCard();
@@ -70,7 +69,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see
      * client.state.ICatanGameMethods#buyDevCard(shared.definitions.PlayerIndex)
      */
-    @Override
+    
     public void buyDevCard()
     {
 
@@ -82,7 +81,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#playMonopolyCard(shared.definitions.
      * PlayerIndex, shared.definitions.ResourceType)
      */
-    @Override
+    
     public void playMonopolyCard(ResourceType resource)
     {
         // proxy.monopoly(new MonopolyCommand(player, resource))
@@ -96,7 +95,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * PlayerIndex, shared.definitions.ResourceType,
      * shared.definitions.ResourceType)
      */
-    @Override
+    
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
 
@@ -108,7 +107,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#playOtherDevCard(shared.definitions.
      * PlayerIndex, shared.definitions.DevCardType)
      */
-    @Override
+    
     public void playOtherDevCard(DevCardType type)
     {
 
@@ -124,7 +123,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#discardResources(shared.definitions.
      * PlayerIndex, shared.model.bank.resource.Resources)
      */
-    @Override
+    
     public void discardResources(Resources discardedResources)
     {
 
@@ -140,7 +139,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#sendTradeOffer(shared.definitions.
      * PlayerIndex)
      */
-    @Override
+    
     public void sendTradeOffer()
     {
 
@@ -152,7 +151,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#acceptTrade(shared.definitions.
      * PlayerIndex, boolean)
      */
-    @Override
+    
     public void acceptTrade(boolean willAccept)
     {
 
@@ -166,7 +165,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * 
      * @see client.state.ICatanGameMethods#createNewGame(client.data.GameInfo)
      */
-    @Override
+    
     public void createNewGame(GameInfo gameInfo)
     {
 
@@ -177,7 +176,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * 
      * @see client.state.ICatanGameMethods#joinGame(client.data.GameInfo)
      */
-    @Override
+    
     public void joinGame(GameInfo gameInfo)
     {
 
@@ -191,7 +190,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * 
      * @see client.state.ICatanGameMethods#addAI(shared.definitions.AIType)
      */
-    @Override
+    
     public void addAI(AIType type)
     {
 
@@ -206,7 +205,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#signInUser(shared.communication.
      * Credentials)
      */
-    @Override
+    
     public void signInUser(Credentials credentials)
     {
 
@@ -218,7 +217,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#registerUser(shared.communication.
      * Credentials)
      */
-    @Override
+    
     public void registerUser(Credentials credentials)
     {
 
@@ -233,7 +232,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#canPlaceRoad(shared.definitions.
      * PlayerIndex, shared.locations.EdgeLocation)
      */
-    @Override
+    
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return false;
@@ -245,7 +244,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#canPlaceSettlement(shared.locations.
      * VertexLocation)
      */
-    @Override
+    
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         return false;
@@ -257,7 +256,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#canPlaceCity(shared.locations.
      * VertexLocation)
      */
-    @Override
+    
     public boolean canPlaceCity(VertexLocation vertLoc)
     {
         return false;
@@ -269,7 +268,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#canPlaceRobber(shared.locations.
      * HexLocation)
      */
-    @Override
+    
     public boolean canPlaceRobber(HexLocation hexLoc)
     {
         return false;
@@ -282,7 +281,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * client.state.ICatanGameMethods#placeRoad(shared.definitions.PlayerIndex,
      * shared.locations.EdgeLocation, boolean)
      */
-    @Override
+    
     public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc)
     {
 
@@ -294,7 +293,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see client.state.ICatanGameMethods#placeSettlement(shared.locations.
      * VertexLocation)
      */
-    @Override
+    
     public void placeSettlement(VertexLocation vertLoc)
     {
 
@@ -306,7 +305,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see
      * client.state.ICatanGameMethods#placeCity(shared.locations.VertexLocation)
      */
-    @Override
+    
     public void placeCity(VertexLocation vertLoc)
     {
 
@@ -318,7 +317,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * @see
      * client.state.ICatanGameMethods#placeRobber(shared.locations.HexLocation)
      */
-    @Override
+    
     public void placeRobber(HexLocation hexLoc)
     {
 
@@ -329,7 +328,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * 
      * @see client.state.ICatanGameMethods#robPlayer(client.data.RobPlayerInfo)
      */
-    @Override
+    
     public void robPlayer(RobPlayerInfo victim)
     {
 
@@ -345,7 +344,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * client.state.ICatanGameMethods#makeMaritimeTrade(shared.model.player.
      * TradeOffer)
      */
-    @Override
+    
     public void makeMaritimeTrade(TradeOffer offer)
     {
 
@@ -359,7 +358,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * 
      * @see client.state.ICatanGameMethods#initPointsFromModel()
      */
-    @Override
+    
     public void initPointsFromModel()
     {
 
@@ -373,7 +372,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * 
      * @see client.state.ICatanGameMethods#rollDice()
      */
-    @Override
+    
     public Dice rollDice()
     {
         // roll dice
@@ -388,7 +387,7 @@ public abstract class GameplayState implements ICatanGameMethods
      * 
      * @see client.state.ICatanGameMethods#endTurn()
      */
-    @Override
+    
     public void endTurn()
     {
 
@@ -399,8 +398,18 @@ public abstract class GameplayState implements ICatanGameMethods
      * 
      * @see client.state.ICatanGameMethods#initTurnFromModel()
      */
-    @Override
+    
     public void initTurnFromModel()
+    {
+
+    }
+
+    /**
+     * @param mapController
+     * @param model
+     * @param arg
+     */
+    public void update(Controller mapController, ClientModel model, Object arg)
     {
 
     }
