@@ -1,6 +1,7 @@
 package client.map;
 
 import java.util.Observable;
+import java.util.Observable;
 
 import client.base.Controller;
 import client.data.*;

@@ -438,6 +438,11 @@ public class CatanMap
         this.hexes = hexes;
     }
 
+    public Map<HexLocation, Hex> getHexes()
+    {
+        return hexes;
+    }
+
     public void setPorts(List<Port> ports)
     {
         this.ports = ports;
