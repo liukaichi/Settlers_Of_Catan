@@ -330,8 +330,13 @@ public class ClientFacade
      * @param edgeLoc
      *        the location of the road
      */
+<<<<<<< HEAD
 
     public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc, boolean isFree)
+=======
+    @Override
+    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc)
+>>>>>>> fdf9683af505a942f571f6c06f23b6ca8d571b59
     {
         try
         {
@@ -341,7 +346,7 @@ public class ClientFacade
         {
             e.printStackTrace();
         }
-        proxy.buildRoad(new BuildRoadCommand(player, edgeLoc, isFree));
+        proxy.buildRoad(new BuildRoadCommand(player, edgeLoc, true));
     }
 
     /**
@@ -483,4 +488,5 @@ public class ClientFacade
     {
         return player;
     }
+
 }
