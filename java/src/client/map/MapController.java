@@ -144,11 +144,7 @@ public class MapController extends Controller implements IMapController
     @Override
     public void placeRoad(EdgeLocation edgeLoc)
     {
-<<<<<<< HEAD
         state.placeRoad(edgeLoc);
-=======
-        state.placeRoad(currentPlayer.getPlayerIndex(), edgeLoc);
->>>>>>> fdf9683af505a942f571f6c06f23b6ca8d571b59
         getView().placeRoad(edgeLoc, CatanColor.ORANGE);
     }
 

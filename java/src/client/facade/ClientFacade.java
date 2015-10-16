@@ -7,7 +7,7 @@ import server.proxy.*;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;
-import shared.definitions.exceptions.*;
+import shared.definitions.exceptions.CatanException;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
@@ -25,7 +25,7 @@ public class ClientFacade
     private ClientModel model;
     private IProxy proxy;
     private List<Player> players;
-    private PlayerIndex player;
+    private PlayerIndex currentPlayer;
 
     private ClientFacade()
     {
@@ -35,7 +35,7 @@ public class ClientFacade
 
     public void setClientPlayer(int clientPlayer)
     {
-        player = PlayerIndex.fromInt(clientPlayer);
+        currentPlayer = PlayerIndex.fromInt(clientPlayer);
     }
 
     private void setupPlayersFromGame() throws CatanException
@@ -77,7 +77,7 @@ public class ClientFacade
     public void sendMessage(String message)
     {
         // Call the proxy and model to send a chat
-        proxy.sendChat(new SendChatCommand(player, message));
+        proxy.sendChat(new SendChatCommand(currentPlayer, message));
     }
 
     /*
@@ -114,7 +114,7 @@ public class ClientFacade
 
     public void buyDevCard()
     {
-        proxy.buyDevCard(new BuyDevCardCommand(player));
+        proxy.buyDevCard(new BuyDevCardCommand(currentPlayer));
     }
 
     /**
@@ -272,7 +272,7 @@ public class ClientFacade
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return model.canPlaceRoad(player, edgeLoc);
+        return model.canPlaceRoad(currentPlayer, edgeLoc);
     }
 
     /**
@@ -330,23 +330,10 @@ public class ClientFacade
      * @param edgeLoc
      *        the location of the road
      */
-<<<<<<< HEAD
 
-    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc, boolean isFree)
-=======
-    @Override
-    public void placeRoad(PlayerIndex player, EdgeLocation edgeLoc)
->>>>>>> fdf9683af505a942f571f6c06f23b6ca8d571b59
+    public void placeRoad(EdgeLocation edgeLoc, boolean isFree)
     {
-        try
-        {
-            model.placeRoad(player, edgeLoc);
-        }
-        catch (PlacementException e)
-        {
-            e.printStackTrace();
-        }
-        proxy.buildRoad(new BuildRoadCommand(player, edgeLoc, true));
+        proxy.buildRoad(new BuildRoadCommand(currentPlayer, edgeLoc, isFree));
     }
 
     /**
@@ -486,7 +473,7 @@ public class ClientFacade
 
     public PlayerIndex getClientPlayer()
     {
-        return player;
+        return currentPlayer;
     }
 
 }
