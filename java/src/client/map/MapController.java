@@ -1,13 +1,19 @@
 package client.map;
 
-import java.util.*;
-
 import client.base.Controller;
-import client.data.*;
-import client.state.*;
-import shared.definitions.*;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
+import client.state.GameplayState;
+import client.state.SetupState;
+import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
 import shared.locations.*;
 import shared.model.ClientModel;
+
+import java.util.Observable;
+import java.util.Random;
 
 /**
  * Implementation for the map controller
