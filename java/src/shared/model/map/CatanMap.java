@@ -6,10 +6,7 @@ import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents the board game map of the Catan game
@@ -21,10 +18,10 @@ public class CatanMap
 {
     // populated on map initialization
     private List<Port> ports = new ArrayList<Port>();
-    private Map<HexLocation, Hex> hexes = new HashMap<HexLocation, Hex>();
+    private Map<HexLocation, Hex> hexes = new TreeMap<HexLocation, Hex>();
     // populated on buy
-    private Map<EdgeLocation, Road> roads = new HashMap<EdgeLocation, Road>();
-    private Map<VertexLocation, Structure> structures = new HashMap<VertexLocation, Structure>();
+    private Map<EdgeLocation, Road> roads = new TreeMap<EdgeLocation, Road>();
+    private Map<VertexLocation, Structure> structures = new TreeMap<VertexLocation, Structure>();
     private int radius;
     private HexLocation robberLocation;
 
