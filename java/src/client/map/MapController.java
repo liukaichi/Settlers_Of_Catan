@@ -1,6 +1,6 @@
 package client.map;
 
-import java.util.*;
+import java.util.Observable;
 
 import client.base.Controller;
 import client.data.*;
@@ -26,8 +26,6 @@ public class MapController extends Controller implements IMapController
 
         setRobView(robView);
 
-        initFromModel();
-
         state = new SetupState();
     }
 
@@ -48,11 +46,11 @@ public class MapController extends Controller implements IMapController
         this.robView = robView;
     }
 
-    protected void initFromModel()
+    private void initFromModel(ClientModel model)
     {
 
         // <temp>
-
+        /* @formatter:off
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x)
@@ -111,7 +109,10 @@ public class MapController extends Controller implements IMapController
         getView().addNumber(new HexLocation(2, -1), 11);
         getView().addNumber(new HexLocation(2, 0), 12);
 
-        // </temp>
+        // </temp>     
+         * @formatter:on    
+         */
+
     }
 
     @Override
@@ -212,6 +213,7 @@ public class MapController extends Controller implements IMapController
     {
         ClientModel model = (ClientModel) o;
         state.update(this, model, arg);
+        this.initFromModel(model);
     }
 
 }
