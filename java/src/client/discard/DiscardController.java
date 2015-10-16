@@ -1,75 +1,73 @@
 package client.discard;
 
-import java.util.Observable;
+import shared.definitions.*;
+import client.base.*;
+import client.misc.*;
 
-import client.base.Controller;
-import client.misc.IWaitView;
-import shared.definitions.ResourceType;
+import java.util.Observable;
 
 /**
  * Discard controller implementation
  */
-public class DiscardController extends Controller implements IDiscardController
-{
+public class DiscardController extends Controller implements IDiscardController {
 
     private IWaitView waitView;
 
     /**
      * DiscardController constructor
-     * 
-     * @param view
-     *        View displayed to let the user select cards to discard
-     * @param waitView
-     *        View displayed to notify the user that they are waiting for other
-     *        players to discard
+     *
+     * @param view View displayed to let the user select cards to discard
+     * @param waitView View displayed to notify the user that they are waiting for other players to discard
+     *disable discardbutton in the getDiscardView()
+     *
      */
-    public DiscardController(IDiscardView view, IWaitView waitView)
-    {
+    public DiscardController(IDiscardView view, IWaitView waitView) {
 
         super(view);
 
         this.waitView = waitView;
     }
 
-    public IDiscardView getDiscardView()
-    {
-        return (IDiscardView) super.getView();
+    public IDiscardView getDiscardView() {
+        return (IDiscardView)super.getView();
     }
 
-    public IWaitView getWaitView()
-    {
+    public IWaitView getWaitView() {
         return waitView;
     }
 
+
+    /**
+     * add recource to a list to be discarded
+     * getDiscardView().setStateMessage(message); where message is
+     * how many out of required amount have been selected
+     * enable discard button if enough cards (but not more) have been selected
+     */
     @Override
-    public void increaseAmount(ResourceType resource)
-    {
+    public void increaseAmount(ResourceType resource) {
 
     }
 
+    /**
+     * undoes things you did in increase function
+     */
     @Override
-    public void decreaseAmount(ResourceType resource)
-    {
+    public void decreaseAmount(ResourceType resource) {
 
     }
 
+    /**
+     * send request to server with a map of resource types and how many of each are discarded
+     */
     @Override
-    public void discard()
-    {
+    public void discard() {
 
         getDiscardView().closeModal();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    @Override
-    public void update(Observable o, Object arg)
+    @Override public void update(Observable o, Object arg)
     {
-        // TODO Auto-generated method stub
 
     }
-
 }
+

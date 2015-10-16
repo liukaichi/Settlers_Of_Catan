@@ -1,18 +1,16 @@
 package client.turntracker;
 
-import java.util.Observable;
-
-import client.base.Controller;
 import shared.definitions.CatanColor;
+import client.base.*;
+
+import java.util.Observable;
 
 /**
  * Implementation for the turn tracker controller
  */
-public class TurnTrackerController extends Controller implements ITurnTrackerController
-{
+public class TurnTrackerController extends Controller implements ITurnTrackerController {
 
-    public TurnTrackerController(ITurnTrackerView view)
-    {
+    public TurnTrackerController(ITurnTrackerView view) {
 
         super(view);
 
@@ -20,35 +18,33 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
     }
 
     @Override
-    public ITurnTrackerView getView()
-    {
+    public ITurnTrackerView getView() {
 
-        return (ITurnTrackerView) super.getView();
+        return (ITurnTrackerView)super.getView();
     }
 
-    @Override
-    public void endTurn()
-    {
 
-    }
-
-    private void initFromModel()
-    {
-        // <temp>
-        getView().setLocalPlayerColor(CatanColor.RED);
-        // </temp>
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+    /**
+     * verify you can end turn
+     * send server request to end turn,
+     * setGameStateButton("waiting for other player", false);
      */
     @Override
-    public void update(Observable o, Object arg)
-    {
-        // TODO Auto-generated method stub
+    public void endTurn() {
 
     }
 
+    /**
+     * getView().setLocalPlayerColor( your Player's color);
+     * call getView().updatePlayer(...) to update the player's acheivements and score.
+     */
+    private void initFromModel() {
+
+    }
+
+    @Override public void update(Observable o, Object arg)
+    {
+
+    }
 }
+

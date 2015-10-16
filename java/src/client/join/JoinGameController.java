@@ -1,17 +1,16 @@
 package client.join;
 
-import java.util.Observable;
-
-import client.base.*;
-import client.data.GameInfo;
-import client.misc.IMessageView;
 import shared.definitions.CatanColor;
+import client.base.*;
+import client.data.*;
+import client.misc.*;
+
+import java.util.Observable;
 
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController
-{
+public class JoinGameController extends Controller implements IJoinGameController {
 
     private INewGameView newGameView;
     private ISelectColorView selectColorView;
@@ -20,20 +19,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     /**
      * JoinGameController constructor
-     * 
-     * @param view
-     *        Join game view
-     * @param newGameView
-     *        New game view
-     * @param selectColorView
-     *        Select color view
-     * @param messageView
-     *        Message view (used to display error messages that occur while the
-     *        user is joining a game)
+     *
+     * @param view Join game view
+     * @param newGameView New game view
+     * @param selectColorView Select color view
+     * @param messageView Message view (used to display error messages that occur while the user is joining a game)
      */
-    public JoinGameController(IJoinGameView view, INewGameView newGameView, ISelectColorView selectColorView,
-            IMessageView messageView)
-    {
+    public JoinGameController(IJoinGameView view, INewGameView newGameView,
+            ISelectColorView selectColorView, IMessageView messageView) {
 
         super(view);
 
@@ -42,116 +35,120 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         setMessageView(messageView);
     }
 
-    public IJoinGameView getJoinGameView()
-    {
+    public IJoinGameView getJoinGameView() {
 
-        return (IJoinGameView) super.getView();
+        return (IJoinGameView)super.getView();
     }
 
     /**
      * Returns the action to be executed when the user joins a game
-     * 
+     *
      * @return The action to be executed when the user joins a game
      */
-    public IAction getJoinAction()
-    {
+    public IAction getJoinAction() {
 
         return joinAction;
     }
 
     /**
      * Sets the action to be executed when the user joins a game
-     * 
-     * @param value
-     *        The action to be executed when the user joins a game
+     *
+     * @param value The action to be executed when the user joins a game
      */
-    public void setJoinAction(IAction value)
-    {
+    public void setJoinAction(IAction value) {
 
         joinAction = value;
     }
 
-    public INewGameView getNewGameView()
-    {
+    public INewGameView getNewGameView() {
 
         return newGameView;
     }
 
-    public void setNewGameView(INewGameView newGameView)
-    {
+    public void setNewGameView(INewGameView newGameView) {
 
         this.newGameView = newGameView;
     }
 
-    public ISelectColorView getSelectColorView()
-    {
+    public ISelectColorView getSelectColorView() {
 
         return selectColorView;
     }
-
-    public void setSelectColorView(ISelectColorView selectColorView)
-    {
+    public void setSelectColorView(ISelectColorView selectColorView) {
 
         this.selectColorView = selectColorView;
     }
 
-    public IMessageView getMessageView()
-    {
+    public IMessageView getMessageView() {
 
         return messageView;
     }
-
-    public void setMessageView(IMessageView messageView)
-    {
+    public void setMessageView(IMessageView messageView) {
 
         this.messageView = messageView;
     }
 
+    /**
+     * get list of games from server, save them into your pre-game model
+     * JoinGameView().setGames(list of games, your player info)
+     * showModal
+     */
     @Override
-    public void start()
-    {
+    public void start() {
 
         getJoinGameView().showModal();
     }
 
     @Override
-    public void startCreateNewGame()
-    {
+    public void startCreateNewGame() {
 
         getNewGameView().showModal();
     }
 
     @Override
-    public void cancelCreateNewGame()
-    {
+    public void cancelCreateNewGame() {
 
         getNewGameView().closeModal();
     }
 
+
+    /**
+     * Create a new Game board based on the options in the View(Random or not)
+     * Send create game request to server
+     * update Game List
+     * closeModal
+     */
     @Override
-    public void createNewGame()
-    {
+    public void createNewGame() {
 
         getNewGameView().closeModal();
     }
 
+
+    /**
+     * Iterate through player in GameInfo and
+     * disable each color that has already been used in ColorSelectView
+     * check if you are already in
+     * if so,call JoinGame with the color you had already picked
+     */
     @Override
-    public void startJoinGame(GameInfo game)
-    {
+    public void startJoinGame(GameInfo game) {
 
         getSelectColorView().showModal();
     }
 
     @Override
-    public void cancelJoinGame()
-    {
+    public void cancelJoinGame() {
 
         getJoinGameView().closeModal();
     }
 
+
+    /**
+     * call join game on server
+     */
     @Override
-    public void joinGame(CatanColor color)
-    {
+    public void joinGame(CatanColor color) {
 
         // If join succeeded
         getSelectColorView().closeModal();
@@ -159,16 +156,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         joinAction.execute();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    @Override
-    public void update(Observable o, Object arg)
+    @Override public void update(Observable o, Object arg)
     {
-        // TODO Auto-generated method stub
 
     }
-
 }
+
