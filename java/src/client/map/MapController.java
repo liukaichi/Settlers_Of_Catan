@@ -12,6 +12,7 @@ import shared.definitions.*;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.map.*;
+import shared.model.map.structure.Road;
 
 /**
  * Implementation for the map controller
@@ -22,6 +23,7 @@ public class MapController extends Controller implements IMapController
     private IRobView robView;
     private GameplayState state;
     private PlayerInfo currentPlayer;
+    private static final Logger LOGGER = Logger.getLogger(MapController.class.getName());
 
     public MapController(IMapView view, IRobView robView)
     {
@@ -34,13 +36,11 @@ public class MapController extends Controller implements IMapController
 
         try
         {
-            Logger LOGGER = Logger.getLogger(MapController.class.getName());
             initFromModel(new ClientModel(new String(Files.readAllBytes(
                     Paths.get("C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json")))));
         }
         catch (IOException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -70,6 +70,17 @@ public class MapController extends Controller implements IMapController
         {
             getView().addHex(hex.getLocation(), hex.getHexType());
         }
+        HashMap<EdgeLocation, Road> roads = (HashMap<EdgeLocation, Road>) map.getRoads();
+        GameInfo game = model.getGameInfo();
+        LOGGER.info(model.toString());
+
+        for (Road road : roads.values())
+        {
+            CatanColor playerColor = game.getPlayerColor(road.getOwner());
+            getView().placeRoad(road.getLocation(), playerColor);
+            LOGGER.info("building Road." + road);
+        }
+
         // <temp>
         /* @formatter:off
         Random rand = new Random();

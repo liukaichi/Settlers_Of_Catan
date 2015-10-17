@@ -579,4 +579,9 @@ public class CatanMap
         }
         return true;
     }
+
+    public Map<EdgeLocation, Road> getRoads()
+    {
+        return roads;
+    }
 }

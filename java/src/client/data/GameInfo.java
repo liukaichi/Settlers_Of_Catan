@@ -1,10 +1,9 @@
 package client.data;
 
-import shared.model.player.Player;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import shared.definitions.*;
+import shared.model.player.Player;
 
 /**
  * Used to pass game information into views<br>
@@ -65,6 +64,7 @@ public class GameInfo
             players.add(newPlayer);
         }
     }
+
     public void addPlayer(PlayerInfo newPlayer)
     {
         if (players.size() < 4)
@@ -78,10 +78,12 @@ public class GameInfo
         return Collections.unmodifiableList(players);
     }
 
-    public void setPlayers(String json){
+    public void setPlayers(String json)
+    {
     }
 
-    @Override public boolean equals(Object o)
+    @Override
+    public boolean equals(Object o)
     {
         if (this == o)
             return true;
@@ -98,8 +100,14 @@ public class GameInfo
 
     }
 
-    @Override public int hashCode()
+    @Override
+    public int hashCode()
     {
         return 0;
+    }
+
+    public CatanColor getPlayerColor(PlayerIndex index)
+    {
+        return players.get(index.getIndex()).getPlayerColor();
     }
 }
