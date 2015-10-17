@@ -1,7 +1,10 @@
 package client.login;
 
 import client.base.*;
+import client.facade.ClientFacade;
 import client.misc.IMessageView;
+import shared.communication.Credentials;
+import shared.definitions.exceptions.SignInException;
 
 /**
  * Implementation for the login controller
@@ -72,7 +75,7 @@ public class LoginController extends Controller implements ILoginController
     }
 
     /**
-     * get username and password from the view Send verification request to
+     * get username and password from the view. Send verification request to
      * server if it works: Create any data objects you need for a player in the
      * pre-game state close theModal, loginAction.execute else show a dialogue
      * to reprompt user for info
@@ -80,12 +83,22 @@ public class LoginController extends Controller implements ILoginController
     @Override
     public void signIn()
     {
+        String username = getLoginView().getLoginUsername();
+        String password = getLoginView().getLoginPassword();
+        Credentials credentials = new Credentials(username, password);
+        try
+        {
+            ClientFacade.getInstance().signInUser(credentials);
 
-        // TODO: log in user
+        }
+        catch (SignInException e)
+        {
 
+        }
         // If log in succeeded
         getLoginView().closeModal();
         loginAction.execute();
+
     }
 
     /**
@@ -95,7 +108,17 @@ public class LoginController extends Controller implements ILoginController
     public void register()
     {
 
-        // TODO: register new user (which, if successful, also logs them in)
+        String username = getLoginView().getRegisterUsername();
+        String password = getLoginView().getRegisterPassword();
+        Credentials credentials = new Credentials(username, password);
+        try
+        {
+            ClientFacade.getInstance().registerUser(credentials);
+        }
+        catch (SignInException e)
+        {
+
+        }
 
         // If register succeeded
         getLoginView().closeModal();

@@ -1,13 +1,14 @@
 package client.facade;
 
 import java.util.*;
+import java.util.logging.*;
 
 import client.data.*;
 import server.proxy.*;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;
-import shared.definitions.exceptions.CatanException;
+import shared.definitions.exceptions.*;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
@@ -26,6 +27,7 @@ public class ClientFacade
     private IProxy proxy;
     private List<Player> players;
     private PlayerIndex currentPlayer;
+    private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
 
     private ClientFacade()
     {
@@ -236,11 +238,20 @@ public class ClientFacade
      * 
      * @param credentials
      *        the player's credentials
+     * @throws SignInException
      */
 
-    public void signInUser(Credentials credentials)
+    public void signInUser(Credentials credentials) throws SignInException
     {
-
+        try
+        {
+            proxy.userLogin(credentials);
+        }
+        catch (SignInException e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to Login", e);
+            throw e;
+        }
     }
 
     /**
@@ -248,11 +259,20 @@ public class ClientFacade
      * 
      * @param credentials
      *        the credentials of the user registering.
+     * @throws SignInException
      */
 
-    public void registerUser(Credentials credentials)
+    public void registerUser(Credentials credentials) throws SignInException
     {
-
+        try
+        {
+            proxy.userRegister(credentials);
+        }
+        catch (SignInException e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to Login", e);
+            throw e;
+        }
     }
 
     /*
@@ -474,6 +494,15 @@ public class ClientFacade
     public PlayerIndex getClientPlayer()
     {
         return currentPlayer;
+    }
+
+    /**
+     * @param string
+     */
+    public void setProxy(String host, String port)
+    {
+        proxy = new ServerProxy(host, port);
+
     }
 
 }

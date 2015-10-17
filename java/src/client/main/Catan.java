@@ -1,9 +1,12 @@
 package client.main;
 
+import java.util.logging.Logger;
+
 import javax.swing.*;
 
 import client.base.IAction;
 import client.catan.CatanPanel;
+import client.facade.ClientFacade;
 import client.join.*;
 import client.login.*;
 import client.misc.MessageView;
@@ -58,6 +61,14 @@ public class Catan extends JFrame
             public void run()
             {
                 new Catan();
+                if (args.length == 2)
+                {
+                    String host = args[0];
+                    String port = args[1];
+                    ClientFacade.getInstance().setProxy(host, port);
+                    Logger LOGGER = Logger.getLogger(Catan.class.getName());
+                    LOGGER.info("host: " + host + ", port: " + port);
+                }
 
                 PlayerWaitingView playerWaitingView = new PlayerWaitingView();
                 final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);

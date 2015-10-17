@@ -1,25 +1,17 @@
 package server.proxy;
 
+import java.io.*;
+import java.net.*;
+import java.util.logging.*;
+
+import com.google.gson.*;
+
 import client.facade.ClientFacade;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
-import shared.definitions.exceptions.AddAIException;
-import shared.definitions.exceptions.GameQueryException;
-import shared.definitions.exceptions.SignInException;
+import shared.definitions.exceptions.*;
 import shared.model.ClientModel;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpCookie;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * ServerProxy is used in Dependency injection, along with MockProxy, to return
@@ -89,7 +81,7 @@ public class ServerProxy implements IProxy
     /* HTML request type */
     private static final String HTTP_POST = "POST";
     private static final String HTTP_GET = "GET";
-    private String URLPrefix = "http://localhost:8081/";
+    private String URLPrefix, host, port;
 
     /* Logger */
     private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
@@ -100,6 +92,14 @@ public class ServerProxy implements IProxy
     public ServerProxy()
     {
         LOGGER.setLevel(Level.ALL);
+        host = "localhost";
+        port = "8081";
+        setURLPrefix(host, port);
+    }
+
+    public void setURLPrefix(String host, String port)
+    {
+        URLPrefix = "http://" + host + ":" + port + "/";
     }
 
     /**
@@ -107,12 +107,10 @@ public class ServerProxy implements IProxy
      * @param catanUserCookie
      * @param catanGameCookie
      */
-    public ServerProxy(String URLPrefix, String catanUserCookie, String catanGameCookie)
+    public ServerProxy(String host, String port)
     {
         this();
-        this.URLPrefix = URLPrefix;
-        this.catanUserCookie = catanUserCookie;
-        this.catanGameCookie = catanGameCookie;
+        setURLPrefix(host, port);
     }
 
     @Override
