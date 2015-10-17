@@ -19,7 +19,7 @@ public interface IProxyPlayingCommands
      * @pre General Preconditions:
      *      <ul>
      *      <li>It is your turn.
-     *      <li>The client model’s status is 'Playing'.
+     *      <li>The client model's status is 'Playing'.
      *      </ul>
      *      Others:
      *      <ul>
@@ -36,7 +36,7 @@ public interface IProxyPlayingCommands
      *       <li>You lost the resources required to build a road (1 wood, 1
      *       brick; 1 road).
      *       <li>The road is on the map at the specified location.
-     *       <li>If applicable, “longest road” has been awarded to the player
+     *       <li>If applicable, 'longest road' has been awarded to the player
      *       with the longest road.
      *       </ul>
      * @param buildRoad
@@ -52,7 +52,7 @@ public interface IProxyPlayingCommands
      * @pre General Preconditions:
      *      <ul>
      *      <li>It is your turn.
-     *      <li>The client model’s status is 'Playing'.
+     *      <li>The client model's status is 'Playing'.
      *      </ul>
      *      Others:
      *      <ul>
@@ -83,7 +83,7 @@ public interface IProxyPlayingCommands
      * @pre General Preconditions:
      *      <ul>
      *      <li>It is your turn.
-     *      <li>The client model’s status is 'Playing'.
+     *      <li>The client model's status is 'Playing'.
      *      </ul>
      *      Others:
      *      <ul>
@@ -109,7 +109,7 @@ public interface IProxyPlayingCommands
      * @pre General Preconditions:
      *      <ul>
      *      <li>It is your turn.
-     *      <li>The client model’s status is 'Playing'.
+     *      <li>The client model's status is 'Playing'.
      *      </ul>
      *      Others:
      *      <ul>
@@ -131,7 +131,7 @@ public interface IProxyPlayingCommands
      * @pre General Preconditions:
      *      <ul>
      *      <li>It is your turn.
-     *      <li>The client model’s status is 'Playing'.
+     *      <li>The client model's status is 'Playing'.
      *      </ul>
      *      Others:
      *      <ul>
@@ -155,11 +155,11 @@ public interface IProxyPlayingCommands
      * 
      * @pre
      *      <ul>
-     *      <li>All /move/* methods also have a common pre­condition in that
+     *      <li>All /move/* methods also have a common pre'condition in that
      *      they assume that the caller has already logged in to the server and
      *      joined a game.
      *      <li>The robber is not being kept in the same location.
-     *      <li>If a player is being robbed (i.e., victimIndex != ­1), the
+     *      <li>If a player is being robbed (i.e., victimIndex != '1), the
      *      player being robbed has resource cards.
      *      </ul>
      * @post
@@ -177,14 +177,14 @@ public interface IProxyPlayingCommands
     /**
      * Calls the server to finish a player's turn.
      * 
-     * @pre All /move/* methods also have a common pre­condition in that they
+     * @pre All /move/* methods also have a common pre'condition in that they
      *      assume that the caller has already logged in to the server and
      *      joined a game.
      * @post
      *       <ul>
      *       <li>The cards in your new dev card hand have been transferred to
      *       your old dev card hand.
-     *       <li>It is the next player’s turn.
+     *       <li>It is the next player's turn.
      *       </ul>
      * @param finishTurn
      *        finishTurn command object.
@@ -197,7 +197,7 @@ public interface IProxyPlayingCommands
      * 
      * @pre
      *      <ul>
-     *      <li>All /move/* methods also have a common pre­condition in that
+     *      <li>All /move/* methods also have a common pre'condition in that
      *      they assume that the caller has already logged in to the server and
      *      joined a game.
      *      <li>You have the required resources (1 ore, 1 wheat, 1 sheep).
@@ -207,7 +207,7 @@ public interface IProxyPlayingCommands
      *       <ul>
      *       <li>If it is a monument card, it has been added to your old devcard
      *       hand.
-     *       <li>If it is a non­monument card, it has been added to your new
+     *       <li>If it is a non'monument card, it has been added to your new
      *       devcard hand (unplayable this turn).
      *       </ul>
      * @param buyDevCard

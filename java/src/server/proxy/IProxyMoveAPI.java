@@ -18,7 +18,7 @@ public interface IProxyMoveAPI extends IProxyPlayingCommands, IProxyDevCardComma
     /**
      * Tells the server to send a chat.
      * 
-     * @pre All /move/* methods also have a common pre­condition in that they
+     * @pre All /move/* methods also have a common pre"condition in that they
      *      assume that the caller has already logged in to the server and
      *      joined a game.
      * @post The chat contains your message at the end.
@@ -34,14 +34,14 @@ public interface IProxyMoveAPI extends IProxyPlayingCommands, IProxyDevCardComma
      * 
      * @pre
      *      <ul>
-     *      <li>All /move/* methods also have a common pre­condition in that
+     *      <li>All /move/* methods also have a common pre-condition in that
      *      they assume that the caller has already logged in to the server and
      *      joined a game.
      *      <li>It is your turn.
-     *      <li>The client model’s status is ‘Rolling’
+     *      <li>The client model's status is "Rolling"
      *      </ul>
-     * @post The client model’s status is now in ‘Discarding’ or ‘Robbing’ or
-     *       ‘Playing’
+     * @post The client model's status is now in "Discarding" or "Robbing" or
+     *       "Playing"
      * 
      * @param rollNumber
      *        rollNumber command object.

@@ -30,7 +30,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
      * setGameStateButton("waiting for other player", false);
      */
     @Override
-    public void endTurn() {
+    public void endTurn() 
+    {
 
     }
 
@@ -38,8 +39,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
      * getView().setLocalPlayerColor( your Player's color);
      * call getView().updatePlayer(...) to update the player's acheivements and score.
      */
-    private void initFromModel() {
-
+    private void initFromModel() 
+    {
+    	
     }
 
     @Override public void update(Observable o, Object arg)

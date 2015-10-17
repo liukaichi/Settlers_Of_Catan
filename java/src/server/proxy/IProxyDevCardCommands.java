@@ -24,13 +24,13 @@ public interface IProxyDevCardCommands
      *      <li>The client model status is 'Playing.'
      *      <li>You have the specific card you want to play in your old
      *      Development Card hand
-     *      <li>You have not yet played a non­monument Development Card this
+     *      <li>You have not yet played a non-monument Development Card this
      *      turn
      *      </ul>
      *      Others:
      *      <ul>
      *      <li>The robber is not being kept in the same location.
-     *      <li>If a player is being robbed (i.e., victimIndex != ­1), the
+     *      <li>If a player is being robbed (i.e., victimIndex != -1), the
      *      player being robbed has resource cards.
      *      </ul>
      * @post
@@ -38,7 +38,7 @@ public interface IProxyDevCardCommands
      *       <li>The robber is in the new location.
      *       <li>The player being robbed (if any) gave you one of his resource
      *       cards (randomly selected.
-     *       <li>If applicable, “largest army” has been awarded to the player
+     *       <li>If applicable, "largest army" has been awarded to the player
      *       who has played the most soldier cards.
      *       <li>You are not allowed to play other development cards during this
      *       turn (except for monument cards, which may still be played).
@@ -59,7 +59,7 @@ public interface IProxyDevCardCommands
      *      <li>The client model status is 'Playing.'
      *      <li>You have the specific card you want to play in your old
      *      Development Card hand
-     *      <li>You have not yet played a non­monument Development Card this
+     *      <li>You have not yet played a non-monument Development Card this
      *      turn
      *      </ul>
      *      Others:
@@ -82,7 +82,7 @@ public interface IProxyDevCardCommands
      *      <li>The client model status is 'Playing.'
      *      <li>You have the specific card you want to play in your old
      *      Development Card hand.
-     *      <li>You have not yet played a non­monument Development Card this
+     *      <li>You have not yet played a non-monument Development Card this
      *      turn.
      *      </ul>
      *      Others:
@@ -98,7 +98,7 @@ public interface IProxyDevCardCommands
      *       <ul>
      *       <li>You have two fewer unused roads.
      *       <li>Two new roads appear on the map at the specified locations.
-     *       <li>If applicable, “longest road” has been awarded to the player
+     *       <li>If applicable, "longest road" has been awarded to the player
      *       with the longest road.
      *       </ul>
      * @param roadBuilding
@@ -116,7 +116,7 @@ public interface IProxyDevCardCommands
      *      <li>The client model status is 'Playing.'
      *      <li>You have the specific card you want to play in your old
      *      Development Card hand.
-     *      <li>You have not yet played a non­monument Development Card this
+     *      <li>You have not yet played a non-monument Development Card this
      *      turn.
      *      </ul>
      *      Others:
@@ -141,7 +141,7 @@ public interface IProxyDevCardCommands
      *      <li>The client model status is 'Playing.'
      *      <li>You have the specific card you want to play in your old
      *      Development Card hand.
-     *      <li>You have not yet played a non­monument Development Card this
+     *      <li>You have not yet played a non-monument Development Card this
      *      turn.
      *      </ul>
      *      Others:

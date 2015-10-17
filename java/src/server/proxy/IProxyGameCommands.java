@@ -24,7 +24,7 @@ public interface IProxyGameCommands
      *       <ol>
      *       <li>The server returns an HTTP 200 success response.
      *       <li>The body contains a JSON array containing a list of objects
-     *       that contain information about the server’s games.
+     *       that contain information about the server's games.
      *       </ol>
      *       If the operation fails,
      *       <ul>
@@ -82,12 +82,12 @@ public interface IProxyGameCommands
      *      </ol>
      * @post If the operation succeeds,
      *       <ol>
-     *       <li>The server returns an HTTP 200 success response with “Success”
+     *       <li>The server returns an HTTP 200 success response with "Success"
      *       in the body.
      *       <li>The player is in the game with the specified color (i.e. calls
      *       to /games/list method will show the player in the game with the
      *       chosen color).
-     *       <li>The server response includes the “Set­cookie” response header
+     *       <li>The server response includes the "Set-cookie" response header
      *       setting the catan.game HTTP cookie
      *       </ol>
      *       If the operation fails,
@@ -121,10 +121,10 @@ public interface IProxyGameCommands
      *      </ol>
      * @post If the operation succeeds,
      *       <ol>
-     *       <li>The server returns an HTTP 200 success response with “Success”
+     *       <li>The server returns an HTTP 200 success response with "Success"
      *       in the body.
      *       <li>The current state of the specified game (including its ID) has
-     *       been saved to the specified file name in the server’s saves/
+     *       been saved to the specified file name in the server's saves/
      *       directory
      *       </ol>
      *       If the operation fails,
@@ -149,10 +149,10 @@ public interface IProxyGameCommands
      * loaded from the server's saves/ directory.
      * 
      * @pre A previously saved game file with the specified name exists in the
-     *      server’s saves/ directory.
+     *      server's saves/ directory.
      * @post If the operation succeeds,
      *       <ol>
-     *       <li>The server returns an HTTP 200 success response with “Success”
+     *       <li>The server returns an HTTP 200 success response with "Success"
      *       in the body.</li>
      *       <li>The game in the specified file has been loaded into the server
      *       and its state restored(including its ID).</li>
@@ -175,25 +175,25 @@ public interface IProxyGameCommands
      * Returns the current state of the game in JSON format.<br>
      * <br>
      * In addition to the current game state, the returned JSON also includes a
-     * “version” number for the client model. The next time /game/model is
+     * "version" number for the client model. The next time /game/model is
      * called, the version number from the previously retrieved model may
      * optionally be included as a query parameter in the request
      * (/game/model?version=N). The server will only return the full JSON game
      * state if its version number is not equal to N. If it is equal to N, the
-     * server returns “true” to indicate that the caller already has the latest
+     * server returns "true" to indicate that the caller already has the latest
      * game state. This is merely an optimization. If the version number is not
      * included in the request URL, the server will return the full game state.
      * <br>
      * <br>
-     * The format of the returned JSON can be found on the server’s Swagger
-     * page, or in the document titled “Client Model JSON Documentation”.
+     * The format of the returned JSON can be found on the server"s Swagger
+     * page, or in the document titled "Client Model JSON Documentation".
      * 
      * 
      * @pre
      *      <ol>
      *      <li>The caller has previously logged in to the server and joined a
      *      game (i.e., they have valid catan.user and catan.game HTTP cookies).
-     *      <li>If specified, the version number is included as the “version”
+     *      <li>If specified, the version number is included as the "version"
      *      query parameter in the request URL, and its value is a valid
      *      integer.
      *      </ol>
@@ -205,7 +205,7 @@ public interface IProxyGameCommands
      *       <li>The full client model JSON is returned if the caller does not
      *       provide a version number, or the provide version number does not
      *       match the version on the server
-     *       <li>“true” (true in double quotes) is returned if the caller
+     *       <li>"true" (true in double quotes) is returned if the caller
      *       provided a version number, and the version number matched the
      *       version number on the server.
      *       </ol>
@@ -228,7 +228,7 @@ public interface IProxyGameCommands
      * <br>
      * For the default games created by the server, this method reverts the game
      * to the state immediately after the initial placement round. For
-     * user­created games, this method reverts the game to the very beginning
+     * user-created games, this method reverts the game to the very beginning
      * (i.e., before the initial placement round).<br>
      * <br>
      * This method returns the client model JSON for the game after it has been
@@ -245,10 +245,10 @@ public interface IProxyGameCommands
      *      </ul>
      * @post If the operation succeeds,
      *       <ol>
-     *       <li>The game’s command history has been cleared out
-     *       <li>The game’s players have NOT been cleared out
+     *       <li>The game's command history has been cleared out
+     *       <li>The game's players have NOT been cleared out
      *       <li>The server returns an HTTP 200 success response.
-     *       <li>The body contains the game’s updated client model JSON
+     *       <li>The body contains the game's updated client model JSON
      *       </ol>
      *       If the operation fails,
      *       <ul>
@@ -256,7 +256,7 @@ public interface IProxyGameCommands
      *       contains an error message.
      *       </ul>
      * 
-     * @return Returns the cli ent model of the reset game.
+     * @return Returns the client model of the reset game.
      */
     ClientModel resetGame();
 
@@ -266,15 +266,15 @@ public interface IProxyGameCommands
      * <br>
      * This method can be used for testing and debugging. The command list
      * returned by this method can be passed to the /game/command (POST) method
-     * to re­execute the commands in the game. This would typically be done
-     * after calling /game/reset to clear out the game’s command history. This
+     * to re-execute the commands in the game. This would typically be done
+     * after calling /game/reset to clear out the game's command history. This
      * is one way to capture the state of a game and restore it later. (See the
      * /games/save and /games/load methods which provide another way to save and
      * restore the state of a game.) <br>
      * <br>
      * For the default games created by the server, this method returns a list
      * of all commands that have been executed after the initial placement
-     * round. For user­created games, this method returns a list of all commands
+     * round. For user=created games, this method returns a list of all commands
      * that have been executed since the very beginning of the game (i.e.,
      * before the initial placement round). <br>
      * <br>
@@ -322,9 +322,9 @@ public interface IProxyGameCommands
      *      </ul>
      * @post If the operation succeeds,
      *       <ol>
-     *       <li>The passed­in command list has been applied to the game.
+     *       <li>The passed-in command list has been applied to the game.
      *       <li>The server returns an HTTP 200 success response.
-     *       <li>The body contains the game’s updated client model JSON
+     *       <li>The body contains the game's updated client model JSON
      *       </ol>
      *       If the operation fails,
      *       <ul>
@@ -363,13 +363,13 @@ public interface IProxyGameCommands
      *      <li>The caller has previously logged in to the server and joined a
      *      game (i.e., they have valid catan.user and catan.game HTTP cookies).
      *      <li>There is space in the game for another player (i.e., the game is
-     *      not “full”).
-     *      <li>The specified “AIType” is valid (i.e., one of the values
+     *      not "full").
+     *      <li>The specified "AIType" is valid (i.e., one of the values
      *      returned by the /game/listAI method).
      *      </ol>
      * @post On success:
      *       <ol>
-     *       <li>The server returns an HTTP 200 success response with “Success”
+     *       <li>The server returns an HTTP 200 success response with "Success"
      *       in the body.
      *       <li>A new AI player of the specified type has been added to the
      *       current game. The server selected a name and color for the player.

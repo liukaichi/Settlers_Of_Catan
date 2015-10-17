@@ -20,7 +20,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
     /**
      * Logs the caller in to the server, and sets their catan.user HTTP cookie.
      * <br>
-     * The passed­in username and password may correspond to the credentials of
+     * The passed"in username and password may correspond to the credentials of
      * any registered user. The server starts with four users: Sam, Brooke, Pete
      * and Mark. Their passwords are sam, brooke, pete and mark respectively.
      * Any additional registered users should also work with this call.
@@ -29,18 +29,18 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      * @param credentials
      *        The player's username and password.
      * @pre username and password in userParameter are not null.
-     * @post If the passed­in (username, password) pair is valid,
+     * @post If the passed"in (username, password) pair is valid,
      *       <ul>
      *       <li>1. The server returns an HTTP 200 success response with
-     *       “Success” in the body.
+     *       "Success" in the body.
      *       <li>2. The HTTP response headers set the catan.user cookie to
-     *       contain the identity of the logged­in player. The cookie uses
-     *       ”Path=/”, and its value contains a url­encoded JSON object of the
-     *       following form: { “name”: STRING, “password”: STRING, “playerID”:
-     *       INTEGER }. For example, { “name”: “Rick”, “password”: “secret”,
-     *       “playerID”: 14 }.
+     *       contain the identity of the logged"in player. The cookie uses
+     *       "Path=/", and its value contains a url"encoded JSON object of the
+     *       following form: { "name": STRING, "password": STRING, "playerID":
+     *       INTEGER }. For example, { "name": "Rick", "password": "secret",
+     *       "playerID": 14 }.
      *       </ul>
-     *       If the passed­in (username, password) pair is not valid, or the
+     *       If the passed"in (username, password) pair is not valid, or the
      *       operation fails for any other reason, The server returns an HTTP
      *       400 error response, and the body contains an error message.
      * @throws SignInException
@@ -73,13 +73,13 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       <li>1. A new user account has been created with the specified
      *       username and password.
      *       <li>2. The server returns an HTTP 200 success response with
-     *       “Success” in the body.
+     *       "Success" in the body.
      *       <li>3. The HTTP response headers set the <b>catan.user</b> cookie
-     *       to contain the identity of the logged­in player. The cookie uses
-     *       ”Path=/”, and its value contains a url­encoded JSON object of the
-     *       following form: { “name”: STRING, “password”: STRING, “playerID”:
-     *       INTEGER }. For example, { “name”: “Rick”, “password”: “secret”,
-     *       “playerID”: 14 }.
+     *       to contain the identity of the logged"in player. The cookie uses
+     *       "Path=/", and its value contains a url"encoded JSON object of the
+     *       following form: { "name": STRING, "password": STRING, "playerID":
+     *       INTEGER }. For example, { "name": "Rick", "password": "secret",
+     *       "playerID": 14 }.
      *       </ul>
      *       If there is already an existing user with the specified name, or
      *       the operation fails for any other reason, the server returns an
@@ -94,13 +94,13 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
 
     // Util Method
     /**
-     * Sets the server’s logging level.
+     * Sets the server"s logging level.
      * 
      * @pre The caller specifies a valid logging level. Valid values include:
      *      <i>SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST.</i>
      * @post On success:
      *       <ol>
-     *       <li>The server returns an HTTP 200 success response with “Success”
+     *       <li>The server returns an HTTP 200 success response with "Success"
      *       in the body.
      *       <li>The Server is using the specified logging level
      *       </ol>
