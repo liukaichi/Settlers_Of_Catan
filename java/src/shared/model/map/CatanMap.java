@@ -1,12 +1,13 @@
 package shared.model.map;
 
+import java.util.*;
+
 import com.google.gson.*;
+
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
-
-import java.util.*;
 
 /**
  * Represents the board game map of the Catan game
@@ -18,10 +19,10 @@ public class CatanMap
 {
     // populated on map initialization
     private List<Port> ports = new ArrayList<Port>();
-    private Map<HexLocation, Hex> hexes = new TreeMap<HexLocation, Hex>();
+    private Map<HexLocation, Hex> hexes = new HashMap<HexLocation, Hex>();
     // populated on buy
-    private Map<EdgeLocation, Road> roads = new TreeMap<EdgeLocation, Road>();
-    private Map<VertexLocation, Structure> structures = new TreeMap<VertexLocation, Structure>();
+    private Map<EdgeLocation, Road> roads = new HashMap<EdgeLocation, Road>();
+    private Map<VertexLocation, Structure> structures = new HashMap<VertexLocation, Structure>();
     private int radius;
     private HexLocation robberLocation;
 
@@ -72,7 +73,7 @@ public class CatanMap
         }
         JsonObject robber = map.getAsJsonObject("robber");
         this.hexes.get(new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt())).setHasRobber(true);
-    	this.robberLocation = new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt());
+        this.robberLocation = new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt());
     }
 
     @Override
@@ -262,7 +263,7 @@ public class CatanMap
                     return true;
                 }
             }
-            //if no settlement then check for connecting road
+            // if no settlement then check for connecting road
             List<EdgeLocation> edges = getNearbyEdges(normalizedEdge);
             for (EdgeLocation edge : edges)
             {
@@ -336,7 +337,7 @@ public class CatanMap
      */
     public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
-        if(canPlaceRoad(player, location))
+        if (canPlaceRoad(player, location))
         {
             Road road = new Road(player, location.getNormalizedLocation());
             roads.put(location.getNormalizedLocation(), road);
@@ -347,10 +348,11 @@ public class CatanMap
         }
 
     }
+
     public void forcePlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
-            Road road = new Road(player, location.getNormalizedLocation());
-            roads.put(location.getNormalizedLocation(), road);
+        Road road = new Road(player, location.getNormalizedLocation());
+        roads.put(location.getNormalizedLocation(), road);
 
     }
 
@@ -366,20 +368,21 @@ public class CatanMap
      */
     public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-            if(canPlaceSettlement(player, location))
-            {
-                Settlement settlement = new Settlement(player, location.getNormalizedLocation());
-                structures.put(location.getNormalizedLocation(), settlement);
-            }
-            else
-            {
-                throw new PlacementException();
-            }
+        if (canPlaceSettlement(player, location))
+        {
+            Settlement settlement = new Settlement(player, location.getNormalizedLocation());
+            structures.put(location.getNormalizedLocation(), settlement);
+        }
+        else
+        {
+            throw new PlacementException();
+        }
     }
+
     public void forcePlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-                Settlement settlement = new Settlement(player, location.getNormalizedLocation());
-                structures.put(location.getNormalizedLocation(), settlement);
+        Settlement settlement = new Settlement(player, location.getNormalizedLocation());
+        structures.put(location.getNormalizedLocation(), settlement);
     }
 
     /**
@@ -393,7 +396,7 @@ public class CatanMap
      */
     public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-        if(canPlaceCity(player,location))
+        if (canPlaceCity(player, location))
         {
             City city = new City(player, location.getNormalizedLocation());
             structures.put(location.getNormalizedLocation(), city);
@@ -403,10 +406,11 @@ public class CatanMap
             throw new PlacementException();
         }
     }
+
     public void forcePlaceCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
-            City city = new City(player, location.getNormalizedLocation());
-            structures.put(location.getNormalizedLocation(), city);
+        City city = new City(player, location.getNormalizedLocation());
+        structures.put(location.getNormalizedLocation(), city);
     }
 
     /**
@@ -420,7 +424,7 @@ public class CatanMap
      */
     public void moveRobber(PlayerIndex player, HexLocation location) throws PlacementException
     {
-        if(canMoveRobber(player, location))
+        if (canMoveRobber(player, location))
         {
             this.robberLocation = location;
         }
@@ -524,7 +528,10 @@ public class CatanMap
         edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
         return edges;
     }
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -536,38 +543,38 @@ public class CatanMap
             return false;
         if (getClass() != obj.getClass())
             return false;
-        
+
         CatanMap other = (CatanMap) obj;
-        if(this.hexes.keySet().size() != other.hexes.keySet().size())
+        if (this.hexes.keySet().size() != other.hexes.keySet().size())
             return false;
-        for(HexLocation key : this.hexes.keySet())
+        for (HexLocation key : this.hexes.keySet())
         {
-            if(!this.hexes.get(key).equals(other.hexes.get(key)))
+            if (!this.hexes.get(key).equals(other.hexes.get(key)))
                 return false;
         }
-        if(this.ports.size() != other.ports.size())
+        if (this.ports.size() != other.ports.size())
             return false;
-        for(int i = 0; i < this.ports.size(); i++)
+        for (int i = 0; i < this.ports.size(); i++)
         {
-            if(!this.ports.get(i).equals(other.ports.get(i)))
-            	return false;
+            if (!this.ports.get(i).equals(other.ports.get(i)))
+                return false;
         }
         if (this.radius != other.radius)
             return false;
-        if(this.roads.keySet().size() != other.roads.keySet().size())
+        if (this.roads.keySet().size() != other.roads.keySet().size())
             return false;
-        for(EdgeLocation key : this.roads.keySet())
+        for (EdgeLocation key : this.roads.keySet())
         {
-            if(!this.roads.get(key).equals(other.roads.get(key)))
+            if (!this.roads.get(key).equals(other.roads.get(key)))
                 return false;
         }
         if (!this.robberLocation.equals(other.robberLocation))
             return false;
-        if(this.structures.keySet().size() != other.structures.keySet().size())
+        if (this.structures.keySet().size() != other.structures.keySet().size())
             return false;
-        for(VertexLocation key : this.structures.keySet())
+        for (VertexLocation key : this.structures.keySet())
         {
-            if(!this.structures.get(key).equals(other.structures.get(key)))
+            if (!this.structures.get(key).equals(other.structures.get(key)))
                 return false;
         }
         return true;

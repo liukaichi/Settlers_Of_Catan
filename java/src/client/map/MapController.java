@@ -1,7 +1,9 @@
 package client.map;
 
-import java.util.Observable;
-import java.util.Observable;
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.*;
+import java.util.logging.Logger;
 
 import client.base.Controller;
 import client.data.*;
@@ -9,6 +11,7 @@ import client.state.*;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.ClientModel;
+import shared.model.map.*;
 
 /**
  * Implementation for the map controller
@@ -28,6 +31,21 @@ public class MapController extends Controller implements IMapController
         setRobView(robView);
 
         state = new SetupState();
+
+        try
+        {
+            Logger LOGGER = Logger.getLogger(MapController.class.getName());
+            String string = Paths.get("C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json")
+                    .toString();
+            LOGGER.severe(string);
+            initFromModel(new ClientModel(new String(Files.readAllBytes(
+                    Paths.get("C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json")))));
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -49,7 +67,12 @@ public class MapController extends Controller implements IMapController
 
     private void initFromModel(ClientModel model)
     {
-
+        CatanMap map = model.getMap();
+        HashMap<HexLocation, Hex> hexes = (HashMap<HexLocation, Hex>) map.getHexes();
+        for (Hex hex : hexes.values())
+        {
+            getView().addHex(hex.getLocation(), hex.getHexType());
+        }
         // <temp>
         /* @formatter:off
         Random rand = new Random();
