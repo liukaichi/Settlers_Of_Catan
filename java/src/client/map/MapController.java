@@ -35,9 +35,6 @@ public class MapController extends Controller implements IMapController
         try
         {
             Logger LOGGER = Logger.getLogger(MapController.class.getName());
-            String string = Paths.get("C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json")
-                    .toString();
-            LOGGER.severe(string);
             initFromModel(new ClientModel(new String(Files.readAllBytes(
                     Paths.get("C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json")))));
         }
