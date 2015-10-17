@@ -2,14 +2,14 @@ package client.domestic;
 
 import java.util.Observable;
 
-import client.base.Controller;
+import client.base.ObserverController;
 import client.misc.IWaitView;
 import shared.definitions.ResourceType;
 
 /**
  * Domestic trade controller implementation
  */
-public class DomesticTradeController extends Controller implements IDomesticTradeController
+public class DomesticTradeController extends ObserverController implements IDomesticTradeController
 {
 
     private IDomesticTradeOverlay tradeOverlay;

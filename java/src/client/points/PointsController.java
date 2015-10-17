@@ -2,12 +2,12 @@ package client.points;
 
 import java.util.Observable;
 
-import client.base.Controller;
+import client.base.ObserverController;
 
 /**
  * Implementation for the points controller
  */
-public class PointsController extends Controller implements IPointsController
+public class PointsController extends ObserverController implements IPointsController
 {
 
     private IGameFinishedView finishedView;

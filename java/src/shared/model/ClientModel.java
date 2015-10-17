@@ -68,7 +68,7 @@ public class ClientModel extends Observable
         gameInfo = new GameInfo();
         JsonArray players = model.getAsJsonArray("players");
         // TODO Should be: for(Player player : gameinfo.getPlayers();
-        for (Player player : gameInfo.getPlayers())
+        for (JsonElement player : players)
         {
             gameInfo.addPlayer(new Player(player.toString()));
         }

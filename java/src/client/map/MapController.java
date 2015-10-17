@@ -1,23 +1,21 @@
 package client.map;
 
-import java.io.IOException;
-import java.nio.file.*;
 import java.util.*;
 import java.util.logging.Logger;
 
-import client.base.Controller;
+import client.base.ObserverController;
 import client.data.*;
 import client.state.*;
 import shared.definitions.*;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.map.*;
-import shared.model.map.structure.Road;
+import shared.model.map.structure.*;
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController
+public class MapController extends ObserverController implements IMapController
 {
 
     private IRobView robView;
@@ -32,17 +30,47 @@ public class MapController extends Controller implements IMapController
 
         setRobView(robView);
 
+        setupWater();
+
         state = new SetupState();
 
-        try
+        /*
+         * try { initFromModel(new ClientModel(new String(Files.readAllBytes(
+         * Paths.get(
+         * "C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json"
+         * ))))); } catch (IOException e) { e.printStackTrace(); }
+         */
+    }
+
+    /**
+     * Builds a map completely out of water. The initFromModel() will replace
+     * tiles that aren't water.
+     */
+    private void setupWater()
+    {
+        for (int x = 0; x <= 3; ++x)
         {
-            initFromModel(new ClientModel(new String(Files.readAllBytes(
-                    Paths.get("C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json")))));
+
+            int maxY = 3 - x;
+            for (int y = -3; y <= maxY; ++y)
+            {
+                HexType hexType = HexType.WATER;
+                HexLocation hexLoc = new HexLocation(x, y);
+                getView().addHex(hexLoc, hexType);
+            }
+
+            if (x != 0)
+            {
+                int minY = x - 3;
+                for (int y = minY; y <= 3; ++y)
+                {
+                    HexType hexType = HexType.WATER;
+                    HexLocation hexLoc = new HexLocation(-x, y);
+                    getView().addHex(hexLoc, hexType);
+                }
+            }
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
@@ -64,25 +92,51 @@ public class MapController extends Controller implements IMapController
 
     private void initFromModel(ClientModel model)
     {
+
         CatanMap map = model.getMap();
         HashMap<HexLocation, Hex> hexes = (HashMap<HexLocation, Hex>) map.getHexes();
         for (Hex hex : hexes.values())
         {
             getView().addHex(hex.getLocation(), hex.getHexType());
+            // getView().addNumber(hex.getLocation(), hex.getNumberTile());
+            LOGGER.fine("Adding Hex." + hex);
         }
+
         HashMap<EdgeLocation, Road> roads = (HashMap<EdgeLocation, Road>) map.getRoads();
         GameInfo game = model.getGameInfo();
-        LOGGER.info(model.toString());
-
         for (Road road : roads.values())
         {
             CatanColor playerColor = game.getPlayerColor(road.getOwner());
             getView().placeRoad(road.getLocation(), playerColor);
-            LOGGER.info("building Road." + road);
+            LOGGER.fine("building Road." + road);
         }
 
+        HashMap<VertexLocation, Structure> structures = (HashMap<VertexLocation, Structure>) map.getStructures();
+        for (Structure structure : structures.values())
+        {
+            CatanColor color = game.getPlayerColor(structure.getOwner());
+            if (structure instanceof Settlement)
+            {
+                getView().placeSettlement(structure.getLocation(), color);
+                LOGGER.fine("PlaceSettlement. " + structure);
+            }
+            else if (structure instanceof City)
+            {
+                getView().placeCity(structure.getLocation(), color);
+                LOGGER.fine("PlaceCity. " + structure);
+            }
+        }
+
+        ArrayList<Port> ports = (ArrayList<Port>) map.getPorts();
+        for (Port port : ports)
+        {
+            getView().addPort(port.getEdgeLocation(), port.getResource());
+            LOGGER.info("Adding port. " + port);
+        }
+
+        /*
         // <temp>
-        /* @formatter:off
+        //@formatter:off
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x)
@@ -142,7 +196,8 @@ public class MapController extends Controller implements IMapController
         getView().addNumber(new HexLocation(2, 0), 12);
 
         // </temp>     
-         * @formatter:on    
+        // @formatter:on
+         *     
          */
 
     }

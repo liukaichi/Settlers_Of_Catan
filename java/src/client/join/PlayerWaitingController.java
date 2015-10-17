@@ -1,52 +1,46 @@
 package client.join;
 
-import client.base.*;
-
-import java.util.Observable;
+import client.base.Controller;
 
 /**
  * Implementation for the player waiting controller
  */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
+public class PlayerWaitingController extends Controller implements IPlayerWaitingController
+{
 
-    public PlayerWaitingController(IPlayerWaitingView view) {
+    public PlayerWaitingController(IPlayerWaitingView view)
+    {
 
         super(view);
     }
 
     @Override
-    public IPlayerWaitingView getView() {
+    public IPlayerWaitingView getView()
+    {
 
-        return (IPlayerWaitingView)super.getView();
+        return (IPlayerWaitingView) super.getView();
     }
 
-
     /**
-     * make a list of players from the current game
-     * getView().setPlayers(that list)
-     * getView().setAIChoices(if you happen to hve AI)
-     * showModal
+     * make a list of players from the current game getView().setPlayers(that
+     * list) getView().setAIChoices(if you happen to hve AI) showModal
      */
     @Override
-    public void start() {
+    public void start()
+    {
 
         getView().showModal();
     }
 
-
     /**
-     * Do whatever you need to do to generate an AI and and it to the player list;
+     * Do whatever you need to do to generate an AI and and it to the player
+     * list;
      */
     @Override
-    public void addAI() {
+    public void addAI()
+    {
 
         // TEMPORARY
         getView().closeModal();
     }
-
-    @Override public void update(Observable o, Object arg)
-    {
-
-    }
 }
-

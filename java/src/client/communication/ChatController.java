@@ -2,12 +2,12 @@ package client.communication;
 
 import java.util.Observable;
 
-import client.base.Controller;
+import client.base.ObserverController;
 
 /**
  * Chat controller implementation
  */
-public class ChatController extends Controller implements IChatController
+public class ChatController extends ObserverController implements IChatController
 {
 
     public ChatController(IChatView view)

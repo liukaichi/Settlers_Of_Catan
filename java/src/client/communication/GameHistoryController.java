@@ -2,13 +2,13 @@ package client.communication;
 
 import java.util.*;
 
-import client.base.Controller;
+import client.base.ObserverController;
 import shared.definitions.CatanColor;
 
 /**
  * Game history controller implementation
  */
-public class GameHistoryController extends Controller implements IGameHistoryController
+public class GameHistoryController extends ObserverController implements IGameHistoryController
 {
 
     public GameHistoryController(IGameHistoryView view)

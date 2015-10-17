@@ -23,6 +23,27 @@ public class CatanMap
     // populated on buy
     private Map<EdgeLocation, Road> roads = new HashMap<EdgeLocation, Road>();
     private Map<VertexLocation, Structure> structures = new HashMap<VertexLocation, Structure>();
+
+    public List<Port> getPorts()
+    {
+        return ports;
+    }
+
+    public Map<VertexLocation, Structure> getStructures()
+    {
+        return structures;
+    }
+
+    public int getRadius()
+    {
+        return radius;
+    }
+
+    public HexLocation getRobberLocation()
+    {
+        return robberLocation;
+    }
+
     private int radius;
     private HexLocation robberLocation;
 

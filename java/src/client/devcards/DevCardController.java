@@ -8,7 +8,7 @@ import shared.definitions.ResourceType;
 /**
  * "Dev card" controller implementation
  */
-public class DevCardController extends Controller implements IDevCardController
+public class DevCardController extends ObserverController implements IDevCardController
 {
 
     private IBuyDevCardView buyCardView;

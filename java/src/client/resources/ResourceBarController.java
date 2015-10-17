@@ -8,7 +8,7 @@ import client.base.*;
 /**
  * Implementation for the resource bar controller
  */
-public class ResourceBarController extends Controller implements IResourceBarController {
+public class ResourceBarController extends ObserverController implements IResourceBarController {
 
     private Map<ResourceBarElement, IAction> elementActions;
 
