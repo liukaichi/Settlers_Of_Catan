@@ -5,7 +5,7 @@ import java.util.logging.*;
 
 import client.data.*;
 import server.proxy.*;
-import shared.communication.Credentials;
+import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;
 import shared.definitions.exceptions.*;
@@ -26,7 +26,7 @@ public class ClientFacade
     private ClientModel model;
     private IProxy proxy;
     private List<Player> players;
-    private PlayerIndex currentPlayer;
+    private PlayerInfo clientPlayer;
     private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
 
     private ClientFacade()
@@ -35,9 +35,14 @@ public class ClientFacade
         proxy = new ServerProxy();
     }
 
-    public void setClientPlayer(int clientPlayer)
+    private void setClientPlayer(PlayerInfo clientPlayer)
     {
-        currentPlayer = PlayerIndex.fromInt(clientPlayer);
+        this.clientPlayer = clientPlayer;
+    }
+
+    public PlayerInfo getClientPlayer()
+    {
+        return clientPlayer;
     }
 
     private void setupPlayersFromGame() throws CatanException
@@ -79,7 +84,7 @@ public class ClientFacade
     public void sendMessage(String message)
     {
         // Call the proxy and model to send a chat
-        proxy.sendChat(new SendChatCommand(currentPlayer, message));
+        proxy.sendChat(new SendChatCommand(clientPlayer.getPlayerIndex(), message));
     }
 
     /*
@@ -116,7 +121,7 @@ public class ClientFacade
 
     public void buyDevCard()
     {
-        proxy.buyDevCard(new BuyDevCardCommand(currentPlayer));
+        proxy.buyDevCard(new BuyDevCardCommand(clientPlayer.getPlayerIndex()));
     }
 
     /**
@@ -197,13 +202,21 @@ public class ClientFacade
     /*
      * Join Game Controller methods
      */
+
+    public ListGamesResponse listGames()
+    {
+        return proxy.listGames();
+    }
+
     /**
      * Creates a new game.
+     * 
+     * @param request
      */
 
-    public void createNewGame(GameInfo gameInfo)
+    public void createNewGame(CreateGameRequest request)
     {
-
+        proxy.createGame(request);
     }
 
     /**
@@ -245,7 +258,7 @@ public class ClientFacade
     {
         try
         {
-            proxy.userLogin(credentials);
+            setClientPlayer(proxy.userLogin(credentials));
         }
         catch (SignInException e)
         {
@@ -266,7 +279,7 @@ public class ClientFacade
     {
         try
         {
-            proxy.userRegister(credentials);
+            setClientPlayer(proxy.userRegister(credentials));
         }
         catch (SignInException e)
         {
@@ -292,7 +305,7 @@ public class ClientFacade
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return model.canPlaceRoad(currentPlayer, edgeLoc);
+        return model.canPlaceRoad(clientPlayer.getPlayerIndex(), edgeLoc);
     }
 
     /**
@@ -353,7 +366,7 @@ public class ClientFacade
 
     public void placeRoad(EdgeLocation edgeLoc, boolean isFree)
     {
-        proxy.buildRoad(new BuildRoadCommand(currentPlayer, edgeLoc, isFree));
+        proxy.buildRoad(new BuildRoadCommand(clientPlayer.getPlayerIndex(), edgeLoc, isFree));
     }
 
     /**
@@ -489,11 +502,6 @@ public class ClientFacade
     public ClientModel getModel()
     {
         return model;
-    }
-
-    public PlayerIndex getClientPlayer()
-    {
-        return currentPlayer;
     }
 
     /**

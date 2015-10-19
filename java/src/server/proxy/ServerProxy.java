@@ -6,7 +6,7 @@ import java.util.logging.*;
 
 import com.google.gson.*;
 
-import client.facade.ClientFacade;
+import client.data.PlayerInfo;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
@@ -113,8 +113,20 @@ public class ServerProxy implements IProxy
         setURLPrefix(host, port);
     }
 
+    /**
+     * Parses the Catan User Cookie to set the current player.
+     * 
+     * @return The info of the current player.
+     * @throws UnsupportedEncodingException
+     */
+    private PlayerInfo buildPlayerInfoFromCookie() throws UnsupportedEncodingException
+    {
+        LOGGER.info(URLDecoder.decode(catanUserCookie, "application/json"));
+        return new PlayerInfo(URLDecoder.decode(catanUserCookie, "application/json"));
+    }
+
     @Override
-    public void userLogin(Credentials credentials) throws SignInException
+    public PlayerInfo userLogin(Credentials credentials) throws SignInException
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
         String request = gson.toJson(credentials);
@@ -122,12 +134,20 @@ public class ServerProxy implements IProxy
         LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
-            throw new SignInException(response);
+            throw new SignInException("Login response returned null");
+        }
+        try
+        {
+            return buildPlayerInfoFromCookie();
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            throw new SignInException("Can't set client player from cookie");
         }
     }
 
     @Override
-    public void userRegister(Credentials credentials) throws SignInException
+    public PlayerInfo userRegister(Credentials credentials) throws SignInException
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
         String request = gson.toJson(credentials);
@@ -135,7 +155,15 @@ public class ServerProxy implements IProxy
         LOGGER.log(Level.INFO, "Response:" + response);
         if (response == null)
         {
-            throw new SignInException(response);
+            throw new SignInException("Register response returned null");
+        }
+        try
+        {
+            return buildPlayerInfoFromCookie();
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            throw new SignInException("Can't set client player from cookie");
         }
     }
 
@@ -517,7 +545,6 @@ public class ServerProxy implements IProxy
         if (cookie.indexOf("catan.user") != -1)
         {
             this.catanUserCookie = cookie;
-            ClientFacade.getInstance().setClientPlayer(cookie.indexOf("catan.user"));
         }
         else if (cookie.indexOf("catan.game") != -1)
         {

@@ -2,6 +2,7 @@ package server.proxy;
 
 import java.util.logging.Level;
 
+import client.data.PlayerInfo;
 import shared.communication.Credentials;
 import shared.definitions.exceptions.SignInException;
 
@@ -52,7 +53,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      * 
      */
     // Or just Username/Password. We should discuss this, probably.
-    void userLogin(Credentials credentials) throws SignInException;
+    PlayerInfo userLogin(Credentials credentials) throws SignInException;
 
     /**
      * Logs into the server and sets the user's HTTP cookie. <br>
@@ -90,7 +91,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
      *      How the Catan Server Uses HTTP Cookies</a>
      */
-    void userRegister(Credentials credentials) throws SignInException;
+    PlayerInfo userRegister(Credentials credentials) throws SignInException;
 
     // Util Method
     /**

@@ -1,7 +1,10 @@
 package server.proxy;
 
+import java.io.*;
+import java.nio.file.*;
+import java.util.logging.Level;
 
-import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import client.utils.BufferedReaderParser;
 import shared.communication.*;
@@ -9,11 +12,6 @@ import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
 import shared.definitions.exceptions.GameQueryException;
 import shared.model.ClientModel;
-
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.logging.Level;
 
 /**
  * MockProxy is used in Dependency injection, along with ServerProxy, to return
@@ -31,15 +29,15 @@ public class MockProxy implements IProxy
 {
     String jsonFileDir = "sample" + File.separator + "mockproxy" + File.separator;
     ClientModel serverModel;
+
     public MockProxy()
     {
         try
         {
-            serverModel = new ClientModel(new String(
-                    Files.readAllBytes(Paths.get("sample/modelWithTradeOffer.json"))));
+            serverModel = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/modelWithTradeOffer.json"))));
 
-
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -48,18 +46,27 @@ public class MockProxy implements IProxy
 
     }
 
-    public ClientModel getServerModel(){
+    public ClientModel getServerModel()
+    {
         return serverModel;
     }
 
     @Override
-    public void userLogin(Credentials credentials)
+    public PlayerInfo userLogin(Credentials credentials)
     {
+        PlayerInfo player = new PlayerInfo();
+        player.setId(3);
+        player.setName(credentials.getUsername());
+        return player;
     }
 
     @Override
-    public void userRegister(Credentials credentials)
+    public PlayerInfo userRegister(Credentials credentials)
     {
+        PlayerInfo player = new PlayerInfo();
+        player.setId(3);
+        player.setName(credentials.getUsername());
+        return player;
     }
 
     @Override
@@ -83,7 +90,6 @@ public class MockProxy implements IProxy
             e.printStackTrace();
         }
         ListGamesResponse listGamesResponse = new ListGamesResponse(json);
-
 
         return listGamesResponse;
     }
@@ -125,7 +131,8 @@ public class MockProxy implements IProxy
     @Override
     public ClientModel getGameState(int versionNumber)
     {
-        if (versionNumber == serverModel.getVersion()){
+        if (versionNumber == serverModel.getVersion())
+        {
             return null;
         }
         return serverModel;
@@ -159,7 +166,8 @@ public class MockProxy implements IProxy
     @Override
     public ClientModel postCommands(PostCommandsRequest commands)
     {
-        //shouldn't need to be done. Used only when debugging the the server running.
+        // shouldn't need to be done. Used only when debugging the the server
+        // running.
         return null;
     }
 

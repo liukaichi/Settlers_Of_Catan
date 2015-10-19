@@ -1,5 +1,7 @@
 package client.data;
 
+import com.google.gson.*;
+
 import shared.definitions.*;
 
 /**
@@ -42,6 +44,30 @@ public class PlayerInfo
         this.id = id;
         this.name = name;
         this.color = color;
+    }
+
+    /**
+     * Creates a PlayerInfo given the Json returned from a URLDecoder for the
+     * Catan User Cookie. This should only contain the name and ID of the
+     * player. The password is also returned, but the password is not currently
+     * stored locally.
+     * 
+     * @param json
+     *        the json representation of this. Invoked from
+     *        ServerProxy#buildPlayerInfoFromCookie().
+     */
+    public PlayerInfo(String json)
+    {
+        this();
+        JsonParser parser = new JsonParser();
+        JsonObject user = (JsonObject) parser.parse(json);
+        String name = user.get("name").getAsString();
+        int id = user.get("playerID").getAsInt();
+        // Password not used currently.
+        String password = user.get("password").getAsString();
+
+        this.name = name;
+        this.id = id;
     }
 
     public int getId()

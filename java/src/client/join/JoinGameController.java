@@ -2,7 +2,9 @@ package client.join;
 
 import client.base.*;
 import client.data.GameInfo;
+import client.facade.ClientFacade;
 import client.misc.IMessageView;
+import shared.communication.CreateGameRequest;
 import shared.definitions.CatanColor;
 
 /**
@@ -15,6 +17,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     private ISelectColorView selectColorView;
     private IMessageView messageView;
     private IAction joinAction;
+    private ClientFacade facade;
 
     /**
      * JoinGameController constructor
@@ -112,7 +115,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void start()
     {
-
+        // ListGamesResponse response = facade.listGames();
+        // getJoinGameView().setGames((GameInfo[])
+        // response.getGames().toArray(),
+        // ClientFacade.getInstance().getClientPlayer());
         getJoinGameView().showModal();
     }
 
@@ -131,20 +137,32 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     }
 
     /**
-     * Create a new Game board based on the options in the View(Random or not)
-     * Send create game request to server update Game List closeModal
+     * <ul>
+     * <li>Create a new Game board based on the options in the View(Random or
+     * not)
+     * <li>Send create game request to server
+     * <li>update Game List closeModal
+     * </ul>
      */
     @Override
     public void createNewGame()
     {
+        boolean randomTiles = getNewGameView().getRandomlyPlaceHexes();
+        boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
+        boolean randomPorts = getNewGameView().getUseRandomPorts();
+        String name = getNewGameView().getTitle();
 
+        facade.createNewGame(new CreateGameRequest(randomTiles, randomNumbers, randomPorts, name));
         getNewGameView().closeModal();
     }
 
     /**
-     * Iterate through player in GameInfo and disable each color that has
-     * already been used in ColorSelectView check if you are already in if
-     * so,call JoinGame with the color you had already picked
+     * <ul>
+     * <li>Iterate through player in GameInfo and disable each color that has
+     * already been used in ColorSelectView
+     * <li>check if you are already in
+     * <li>if so, call JoinGame with the color you had already picked
+     * </ul>
      */
     @Override
     public void startJoinGame(GameInfo game)
