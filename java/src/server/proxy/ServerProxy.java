@@ -121,8 +121,8 @@ public class ServerProxy implements IProxy
      */
     private PlayerInfo buildPlayerInfoFromCookie() throws UnsupportedEncodingException
     {
-        LOGGER.info(URLDecoder.decode(catanUserCookie, "application/json"));
-        return new PlayerInfo(URLDecoder.decode(catanUserCookie, "application/json"));
+        LOGGER.info(URLDecoder.decode(catanUserCookie, "UTF-8"));
+        return new PlayerInfo(URLDecoder.decode(catanUserCookie, "UTF-8"));
     }
 
     @Override
@@ -142,7 +142,8 @@ public class ServerProxy implements IProxy
         }
         catch (UnsupportedEncodingException e)
         {
-            throw new SignInException("Can't set client player from cookie");
+            LOGGER.log(Level.SEVERE, "Can't set client player from cookie", e);
+            throw new SignInException("Can't set client player from cookie", e);
         }
     }
 
@@ -479,11 +480,11 @@ public class ServerProxy implements IProxy
                 String cookieRequest = "";
                 if (catanGameCookie != null)
                 {
-                    cookieRequest = catanUserCookie + "; " + catanGameCookie;
+                    cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
                 }
                 else
                 {
-                    cookieRequest = catanUserCookie;
+                    cookieRequest = "catan.user=" + catanUserCookie;
                 }
                 connection.setRequestProperty("Cookie", cookieRequest);
             }
@@ -544,11 +545,11 @@ public class ServerProxy implements IProxy
         String cookie = httpCookie.toString();
         if (cookie.indexOf("catan.user") != -1)
         {
-            this.catanUserCookie = cookie;
+            this.catanUserCookie = cookie.substring(cookie.indexOf("=") + 1);
         }
         else if (cookie.indexOf("catan.game") != -1)
         {
-            this.catanGameCookie = cookie;
+            this.catanGameCookie = cookie.substring(cookie.indexOf("=") + 1);
         }
     }
 

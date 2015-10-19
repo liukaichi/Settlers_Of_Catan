@@ -1,10 +1,12 @@
 package client.join;
 
+import java.util.List;
+
 import client.base.*;
 import client.data.GameInfo;
 import client.facade.ClientFacade;
 import client.misc.IMessageView;
-import shared.communication.CreateGameRequest;
+import shared.communication.*;
 import shared.definitions.CatanColor;
 
 /**
@@ -41,6 +43,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         setNewGameView(newGameView);
         setSelectColorView(selectColorView);
         setMessageView(messageView);
+        facade = ClientFacade.getInstance();
     }
 
     public IJoinGameView getJoinGameView()
@@ -115,10 +118,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void start()
     {
-        // ListGamesResponse response = facade.listGames();
-        // getJoinGameView().setGames((GameInfo[])
-        // response.getGames().toArray(),
-        // ClientFacade.getInstance().getClientPlayer());
+        ListGamesResponse response = facade.listGames();
+        List<GameInfo> games = response.getGames();
+        getJoinGameView().setGames(response.getGames().toArray(new GameInfo[games.size()]),
+                ClientFacade.getInstance().getClientPlayer());
         getJoinGameView().showModal();
     }
 

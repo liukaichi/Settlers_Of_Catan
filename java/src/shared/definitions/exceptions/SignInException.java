@@ -25,4 +25,13 @@ public class SignInException extends CatanException
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * @param string
+     * @param e
+     */
+    public SignInException(String string, Exception e)
+    {
+        super(string, e);
+    }
+
 }
