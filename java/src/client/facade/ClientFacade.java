@@ -56,7 +56,8 @@ public class ClientFacade
         }
     }
 
-    public Player getPlayer(){
+    public Player getPlayer()
+    {
         return players.get(clientPlayer.getPlayerIndex().getIndex());
     }
 
@@ -503,7 +504,7 @@ public class ClientFacade
 
     public void rollDice(int diceRollResult)
     {
-    			proxy.rollNumber(new RollNumberCommand(clientPlayer.getPlayerIndex(), diceRollResult));
+        proxy.rollNumber(new RollNumberCommand(clientPlayer.getPlayerIndex(), diceRollResult));
     }
 
     /*
