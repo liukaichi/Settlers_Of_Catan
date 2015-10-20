@@ -78,6 +78,16 @@ public class GameInfo
         return Collections.unmodifiableList(players);
     }
 
+    public List<PlayerInfo> getPlayerInfos()
+    {
+        List<PlayerInfo> playerInfos = new ArrayList<>();
+        for (Player player : players)
+        {
+            playerInfos.add(player.getPlayerInfo());
+        }
+        return Collections.unmodifiableList(playerInfos);
+    }
+
     public void setPlayers(String json)
     {
     }
