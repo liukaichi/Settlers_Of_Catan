@@ -1,6 +1,7 @@
 package client.join;
 
 import java.util.List;
+import java.util.logging.*;
 
 import client.base.*;
 import client.data.GameInfo;
@@ -8,6 +9,8 @@ import client.facade.ClientFacade;
 import client.misc.IMessageView;
 import shared.communication.*;
 import shared.definitions.CatanColor;
+import shared.definitions.exceptions.GameQueryException;
+import shared.model.player.Player;
 
 /**
  * Implementation for the join game controller
@@ -20,6 +23,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     private IMessageView messageView;
     private IAction joinAction;
     private ClientFacade facade;
+    private GameInfo currentGame;
+    private static final Logger LOGGER = Logger.getLogger(JoinGameController.class.getName());
 
     /**
      * JoinGameController constructor
@@ -171,7 +176,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void startJoinGame(GameInfo game)
     {
-
+        this.currentGame = game;
+        List<Player> players = game.getPlayers();
+        for (Player player : players)
+        {
+            getSelectColorView().setColorEnabled(player.getPlayerColor(), false);
+            if (facade.getClientPlayer().equals(player.getPlayerInfo()))
+            {
+                this.joinGame(player.getPlayerColor());
+            }
+        }
         getSelectColorView().showModal();
     }
 
@@ -188,7 +202,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void joinGame(CatanColor color)
     {
-        facade.joinGame();
+        try
+        {
+            facade.joinGame(currentGame.getId(), color);
+        }
+        catch (GameQueryException e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to Join Game", e);
+        }
         // If join succeeded
         getSelectColorView().closeModal();
         getJoinGameView().closeModal();

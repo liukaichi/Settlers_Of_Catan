@@ -221,11 +221,13 @@ public class ClientFacade
 
     /**
      * Joins an already existent game.
+     * 
+     * @throws GameQueryException
      */
 
-    public void joinGame(GameInfo gameInfo)
+    public void joinGame(int id, CatanColor color) throws GameQueryException
     {
-
+        proxy.joinGame(new JoinGameRequest(id, color));
     }
 
     /*
