@@ -465,10 +465,9 @@ public class ClientFacade
      * @post Value of dice is changed
      */
 
-    public Dice rollDice()
+    public void rollDice(int diceRollResult)
     {
-        // roll dice
-        return null;
+    			proxy.rollNumber(new RollNumberCommand(clientPlayer.getPlayerIndex(), diceRollResult));
     }
 
     /*

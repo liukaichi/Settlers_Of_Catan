@@ -1,6 +1,8 @@
 package client.roll;
 
+import shared.definitions.Dice;
 import client.base.Controller;
+import client.facade.ClientFacade;
 
 /**
  * Implementation for the roll controller
@@ -9,6 +11,7 @@ public class RollController extends Controller implements IRollController
 {
 
     private IRollResultView resultView;
+    private Dice dice; 
 
     /**
      * RollController constructor
@@ -42,16 +45,22 @@ public class RollController extends Controller implements IRollController
     }
 
     /**
-     * Gets called by the view when the roll dice button is pressed To Do (not
-     * necessarily in this class): close the rollView Generate Dice results Send
-     * Roll Results to server set Result view value to roll value
+     * Gets called by the view when the roll dice button is pressed 
+     * To Do (not necessarily in this class): 
+     * close the rollView 
+     * Generate Dice results 
+     * Send Roll Results to server 
+     * set Result view value to roll value
      * getResultView.showModel()
      *
      */
     @Override
     public void rollDice()
     {
-
+    		getRollView().closeModal();
+    		int diceRollResult = dice.rollDice(); 
+    		ClientFacade.getInstance().rollDice(diceRollResult); 
+    		getResultView().setRollValue(diceRollResult); 
         getResultView().showModal();
     }
 }
