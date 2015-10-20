@@ -56,6 +56,10 @@ public class ClientFacade
         }
     }
 
+    public Player getPlayer(){
+        return players.get(clientPlayer.getPlayerIndex().getIndex());
+    }
+
     /**
      * Singleton Pattern to have a single instance of the Facade, since it
      * contains the models.
