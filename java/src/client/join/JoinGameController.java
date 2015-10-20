@@ -157,6 +157,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
         facade.createNewGame(new CreateGameRequest(randomTiles, randomNumbers, randomPorts, name));
         getNewGameView().closeModal();
+        this.start();
     }
 
     /**
@@ -187,7 +188,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void joinGame(CatanColor color)
     {
-
+        facade.joinGame();
         // If join succeeded
         getSelectColorView().closeModal();
         getJoinGameView().closeModal();
