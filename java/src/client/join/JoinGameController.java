@@ -205,15 +205,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         try
         {
             facade.joinGame(currentGame.getId(), color);
+            // If join succeeded
+            getSelectColorView().closeModal();
+            getJoinGameView().closeModal();
+            joinAction.execute();
         }
         catch (GameQueryException e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Join Game", e);
         }
-        // If join succeeded
-        getSelectColorView().closeModal();
-        getJoinGameView().closeModal();
-        joinAction.execute();
     }
 
 }
