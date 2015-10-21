@@ -426,7 +426,7 @@ public class ServerProxy implements IProxy
     public ClientModel soldier(SoldierCommand soldier)
     {
         // Use Robber's type adapter. Holds same things as RobPlayer
-        Gson gson = new GsonBuilder().registerTypeAdapter(RobPlayerCommand.class, soldier).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(SoldierCommand.class, soldier).create();
         String request = gson.toJson(soldier);
         String response = doPost(SOLDIER, request);
         LOGGER.log(Level.INFO, "Response:" + response);

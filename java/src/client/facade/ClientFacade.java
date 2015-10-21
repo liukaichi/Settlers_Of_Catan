@@ -1,8 +1,7 @@
 package client.facade;
 
 import client.base.ObserverController;
-import client.data.PlayerInfo;
-import client.data.RobPlayerInfo;
+import client.data.*;
 import server.proxy.IProxy;
 import server.proxy.ServerProxy;
 import shared.communication.*;
@@ -56,10 +55,29 @@ public class ClientFacade
         return clientPlayer;
     }
 
+    /**
+     * Used to fill in the clientPlayer's info from the list of PlayerInfos.
+     * @param players the info of each of the players. Typically, this is supplied by GameInfo#getPlayerInfos().
+     * @pre The clientPlayer has already been initialized with a name and an ID.
+     */
+    private void buildClientPlayerFromGameInfo(List<PlayerInfo> players)
+    {
+        for(PlayerInfo playerInfo : players)
+        {
+            if (playerInfo.getId() == clientPlayer.getId())
+            {
+                clientPlayer = playerInfo;
+            }
 
-    public Player getPlayerByName(String name){
-        for (Player player : ClientFacade.getInstance().getPlayers()){
-            if (player.getName().matches(name)){
+        }
+    }
+
+    public Player getPlayerByName(String name)
+    {
+        for (Player player : ClientFacade.getInstance().getPlayers())
+        {
+            if (player.getName().matches(name))
+            {
                 return player;
             }
         }
@@ -75,7 +93,7 @@ public class ClientFacade
     /**
      * Singleton Pattern to have a single instance of the Facade, since it
      * contains the models.
-     * 
+     *
      * @return the static instance of the Client Facade.
      */
     public static ClientFacade getInstance()
@@ -90,11 +108,11 @@ public class ClientFacade
     /*
      * Chat Controller methods
      */
+
     /**
      * Sends a message to another player.
      *
-     * @param message
-     *        the message to send.
+     * @param message the message to send.
      */
 
     public void sendMessage(String message)
@@ -106,6 +124,7 @@ public class ClientFacade
     /*
      * Game History Controller
      */
+
     /**
      * Initializes the game history from a model.
      */
@@ -118,9 +137,10 @@ public class ClientFacade
     /*
      * Dev Card Controller Methods
      */
+
     /**
      * Determines if the player can buy a dev card.
-     * 
+     *
      * @return whether or not the player can buy a dev card.
      */
 
@@ -143,8 +163,7 @@ public class ClientFacade
     /**
      * Plays a Monopoly Card.
      *
-     * @param resource
-     *        the type of resource the player is getting the monopoly on.
+     * @param resource the type of resource the player is getting the monopoly on.
      */
 
     public void playMonopolyCard(ResourceType resource)
@@ -154,9 +173,8 @@ public class ClientFacade
 
     /**
      * Plays a Year of Plenty Card.
-     * 
-     * @param resource1
-     *        The first resource.
+     *
+     * @param resource1 The first resource.
      * @param resource2
      */
 
@@ -181,8 +199,7 @@ public class ClientFacade
     /**
      * Discards the amount of resources set with the increase/decrease methods
      *
-     * @param discardedResources
-     *        the list of resources to discard.
+     * @param discardedResources the list of resources to discard.
      */
 
     public void discardResources(Resources discardedResources)
@@ -206,8 +223,7 @@ public class ClientFacade
     /**
      * Used for accepting/rejecting a trade.
      *
-     * @param willAccept
-     *        Whether or not the player will accept the trade.
+     * @param willAccept Whether or not the player will accept the trade.
      */
 
     public void acceptTrade(boolean willAccept)
@@ -226,24 +242,25 @@ public class ClientFacade
 
     /**
      * Creates a new game.
-     * 
+     *
      * @param request
      */
 
     public void createNewGame(CreateGameRequest request)
     {
-        proxy.createGame(request);
+        CreateGameResponse response = proxy.createGame(request);
     }
 
     /**
      * Joins an already existent game.
-     * 
+     *
      * @throws GameQueryException
      */
 
     public void joinGame(int id, CatanColor color) throws GameQueryException
     {
-        proxy.joinGame(new JoinGameRequest(id, color));
+         proxy.joinGame(new JoinGameRequest(id, color));
+
     }
 
     /*
@@ -253,15 +270,19 @@ public class ClientFacade
     public ClientModel getGameState(int version)
     {
         ClientModel model = proxy.getGameState(version);
+        if (clientPlayer.getNormalizedPlayerIndex() == -1)
+        {
+            List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
+            buildClientPlayerFromGameInfo(players);
+        }
         this.model.updateModel(model);
         return model;
     }
 
     /**
      * Adds an AI to the game.
-     * 
-     * @param type
-     *        the type of the AI (LARGEST_ARMY is the only supported value.)
+     *
+     * @param type the type of the AI (LARGEST_ARMY is the only supported value.)
      */
 
     public void addAI(AIType type)
@@ -269,20 +290,14 @@ public class ClientFacade
         try
         {
             proxy.addAI(type);
-        }
-        catch (IllegalArgumentException e)
+        } catch (IllegalArgumentException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-        catch (AddAIException e)
+        } catch (AddAIException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -296,11 +311,11 @@ public class ClientFacade
     /*
      * Login Controller methods
      */
+
     /**
      * Signs in the player with the given credentials.
-     * 
-     * @param credentials
-     *        the player's credentials
+     *
+     * @param credentials the player's credentials
      * @throws SignInException
      */
 
@@ -309,8 +324,7 @@ public class ClientFacade
         try
         {
             setClientPlayer(proxy.userLogin(credentials));
-        }
-        catch (SignInException e)
+        } catch (SignInException e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Login", e);
             throw e;
@@ -319,9 +333,8 @@ public class ClientFacade
 
     /**
      * Registers the user with the given credentials.
-     * 
-     * @param credentials
-     *        the credentials of the user registering.
+     *
+     * @param credentials the credentials of the user registering.
      * @throws SignInException
      */
 
@@ -330,8 +343,7 @@ public class ClientFacade
         try
         {
             setClientPlayer(proxy.userRegister(credentials));
-        }
-        catch (SignInException e)
+        } catch (SignInException e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Login", e);
             throw e;
@@ -341,16 +353,16 @@ public class ClientFacade
     /*
      * Map controller methods
      */
+
     /**
      * Checks to see if the player meets the conditions to place a road
-     * 
+     *
+     * @param edgeLoc the location of the Road
+     * @return boolean - true if the player has the required resources and the
+     * location is vacant and the player owns a settlement or city at a
+     * neighboring vertex location
      * @pre place road is called
      * @post place road continues
-     * @param edgeLoc
-     *        the location of the Road
-     * @return boolean - true if the player has the required resources and the
-     *         location is vacant and the player owns a settlement or city at a
-     *         neighboring vertex location
      */
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
@@ -360,13 +372,12 @@ public class ClientFacade
 
     /**
      * Checks to see if the player meets the condition to place a settlement
-     * 
+     *
+     * @param vertLoc the location of the Vertex
+     * @return boolean - true if player has the required resources and the
+     * location is 2 edges or more from another settlement
      * @pre place settlement is called
      * @post place settlement continues
-     * @param vertLoc
-     *        the location of the Vertex
-     * @return boolean - true if player has the required resources and the
-     *         location is 2 edges or more from another settlement
      */
 
     public boolean canPlaceSettlement(VertexLocation vertLoc)
@@ -376,13 +387,12 @@ public class ClientFacade
 
     /**
      * Checks to see if the player meets the condition to place a city
-     * 
+     *
+     * @param vertLoc the location of the Vertex
+     * @return boolean - true if player has the required resources and the
+     * player owns the settlement at that location
      * @pre place city is called
      * @post place city continues
-     * @param vertLoc
-     *        the location of the Vertex
-     * @return boolean - true if player has the required resources and the
-     *         player owns the settlement at that location
      */
 
     public boolean canPlaceCity(VertexLocation vertLoc)
@@ -392,12 +402,11 @@ public class ClientFacade
 
     /**
      * Checks to see if player meets the condition to move the robber
-     * 
+     *
+     * @param hexLoc the location of the hex
+     * @return true if a seven has been rolled and the location is viable
      * @pre place robber is called
      * @post place city continues
-     * @param hexLoc
-     *        the location of the hex
-     * @return true if a seven has been rolled and the location is viable
      */
 
     public boolean canPlaceRobber(HexLocation hexLoc)
@@ -407,11 +416,10 @@ public class ClientFacade
 
     /**
      * player purchases and places a road
-     * 
+     *
+     * @param edgeLoc the location of the road
      * @pre player clicks on a location to place road
      * @post player met conditions and road is on map
-     * @param edgeLoc
-     *        the location of the road
      */
 
     public void placeRoad(EdgeLocation edgeLoc, boolean isFree)
@@ -421,11 +429,10 @@ public class ClientFacade
 
     /**
      * player purchases and places a settlement
-     * 
+     *
+     * @param vertLoc the location of the Settlement
      * @pre player clicks on a location to place a settlement
      * @post player met conditions and settlement is now on map
-     * @param vertLoc
-     *        the location of the Settlement
      */
 
     public void placeSettlement(VertexLocation vertLoc)
@@ -435,11 +442,10 @@ public class ClientFacade
 
     /**
      * player purchases and places a city at a location specified
-     * 
+     *
+     * @param vertLoc the location of the City
      * @post a city is now owned by the player
      * @pre player clicks to build on a location
-     * @param vertLoc
-     *        the location of the City
      */
 
     public void placeCity(VertexLocation vertLoc)
@@ -449,11 +455,10 @@ public class ClientFacade
 
     /**
      * Changes the Robbers HexLocation
-     * 
+     *
+     * @param hexLoc the location of the Robber
      * @post player robs player
      * @pre player rolls a 7
-     * @param hexLoc
-     *        the location of the Robber
      */
 
     public void placeRobber(HexLocation hexLoc)
@@ -463,11 +468,10 @@ public class ClientFacade
 
     /**
      * Robs a player, player receives one resource from the player being robbed
-     * 
+     *
+     * @param victim the victim of the brutal armed robbery
      * @pre robber is placed
      * @post player has an extra resource
-     * @param victim
-     *        the victim of the brutal armed robbery
      */
 
     public void robPlayer(RobPlayerInfo victim)
@@ -478,9 +482,9 @@ public class ClientFacade
     /*
      * Martitime Trade Controller methods
      */
+
     /**
      * Completes a maritime trade
-     * 
      */
 
     public void makeMaritimeTrade(TradeOffer offer)
@@ -491,9 +495,10 @@ public class ClientFacade
     /*
      * Points Controller methods
      */
+
     /**
      * Updates the players victory points, getting the values from the model
-     * 
+     *
      * @post players points reflect the values from the model
      * @pre model changed
      */
@@ -506,9 +511,10 @@ public class ClientFacade
     /*
      * Roll Dice Controller methods
      */
+
     /**
      * Calls the roll method on the dice
-     * 
+     *
      * @return Dice - Returns a dice object containing the values of two dice.
      * @post Value of dice is changed
      */
@@ -521,6 +527,7 @@ public class ClientFacade
     /*
      * Turn tracker controller methods
      */
+
     /**
      * Ends the players turn
      *
@@ -534,7 +541,7 @@ public class ClientFacade
 
     /**
      * Initializes the turn tracker using the model
-     * 
+     *
      * @post the turn is now initialized
      */
 
