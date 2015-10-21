@@ -1,17 +1,23 @@
 package server.proxy;
 
-import java.io.*;
-import java.net.*;
-import java.util.logging.*;
-
-import com.google.gson.*;
-
 import client.data.PlayerInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
-import shared.definitions.exceptions.*;
+import shared.definitions.exceptions.AddAIException;
+import shared.definitions.exceptions.GameQueryException;
+import shared.definitions.exceptions.SignInException;
 import shared.model.ClientModel;
+
+import java.io.*;
+import java.net.HttpCookie;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * ServerProxy is used in Dependency injection, along with MockProxy, to return
@@ -242,10 +248,14 @@ public class ServerProxy implements IProxy
         LOGGER.log(Level.INFO, "Response:" + response);
         ClientModel responseModel = null;
         /* If the model has changed */
-        if (!response.equals("\"true\""))
+        if (response != null)
         {
-            responseModel = new ClientModel(response);
+            if (!response.equals("\"true\""))
+            {
+                responseModel = new ClientModel(response);
+            }
         }
+
         return responseModel;
     }
 
@@ -556,6 +566,7 @@ public class ServerProxy implements IProxy
     private String doGet(String commandName, String query)
     {
         String response = null;
+        LOGGER.info(commandName + query);
         try
         {
             URL url = new URL(URLPrefix + commandName + "?" + query);

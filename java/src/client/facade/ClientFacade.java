@@ -100,7 +100,7 @@ public class ClientFacade
     public void sendMessage(String message)
     {
         // Call the proxy and model to send a chat
-        model.updateModel(proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_1, message)));
+        model.updateModel(proxy.sendChat(new SendChatCommand(clientPlayer.getPlayerIndex(), message)));
     }
 
     /*
