@@ -1,12 +1,19 @@
 package shared.model.player;
 
-import com.google.gson.*;
-
 import client.data.PlayerInfo;
-import shared.definitions.*;
-import shared.definitions.exceptions.*;
-import shared.model.bank.*;
-import shared.model.bank.card.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.StructureType;
+import shared.definitions.exceptions.CatanException;
+import shared.definitions.exceptions.InsufficientResourcesException;
+import shared.model.bank.Bank;
+import shared.model.bank.PlayerBank;
+import shared.model.bank.card.DevCard;
+import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
 
 /**
@@ -73,8 +80,8 @@ public class Player
         this.bank.setPlayerResources(new Resources(jobj.get("resources").getAsJsonObject().toString()));
         this.bank.setPlayerDevCards(
                 new DevCards(jobj.get("oldDevCards").getAsJsonObject().toString(), DevCard.AmountType.PLAYABLE));
-        this.bank.getDevCards().setDevCards(jobj.get("newDevCards").getAsJsonObject().toString(),
-                DevCard.AmountType.UNPLAYABLE);
+        this.bank.getDevCards()
+                .setDevCards(jobj.get("newDevCards").getAsJsonObject().toString(), DevCard.AmountType.UNPLAYABLE);
 
         this.info.setName(jobj.get("name").getAsString());
         this.info.setPlayerIndex(jobj.get("playerIndex").getAsInt());
@@ -107,7 +114,7 @@ public class Player
     /**
      * Updates the PlayerBank to decrement resources used and increment road
      * count
-     * 
+     *
      * @throws CatanException
      */
     public void buyRoad() throws CatanException
@@ -118,7 +125,7 @@ public class Player
     /**
      * Determines if the PlayerBank has Settlements left to purchase AND if the
      * resources required are available
-     * 
+     *
      * @return true if both conditions are met
      */
     public boolean canBuySettlement()
@@ -129,7 +136,7 @@ public class Player
     /**
      * Updates the PlayerBank to decrement resources used and increment
      * settlement count
-     * 
+     *
      * @throws CatanException
      */
     public void buySettlement() throws CatanException
@@ -140,7 +147,7 @@ public class Player
     /**
      * Determines if the PlayerBank has Cities left to purchase AND if the
      * resources required are available
-     * 
+     *
      * @return true if both conditions are met
      */
     public boolean canBuyCity()
@@ -151,7 +158,7 @@ public class Player
     /**
      * Updates the PlayerBank to decrement resources used and increment city
      * count
-     * 
+     *
      * @throws CatanException
      * @throws InsufficientResourcesException
      */
@@ -163,7 +170,7 @@ public class Player
     /**
      * Determines if the PlayerBank has Settlements left to purchase AND if the
      * resources required are available
-     * 
+     *
      * @return true if both conditions are met
      */
     public boolean canBuyDevCard()
@@ -174,7 +181,7 @@ public class Player
     /**
      * Updates the PlayerBank to decrement resources used and increment the
      * appropriate DevCard count
-     * 
+     *
      * @throws InsufficientResourcesException
      */
     public void buyDevCard() throws InsufficientResourcesException
@@ -185,19 +192,17 @@ public class Player
     /**
      * Determines if the PlayerBank has the specified DevCard to play AND if the
      * DevCard is playable during the turn
-     * 
-     * @param type
-     *        the type of DevCard being checked
-     * @throws InsufficientResourcesException
+     *
+     * @param type the type of DevCard being checked
      * @return true if both conditions are met
+     * @throws InsufficientResourcesException
      */
     public boolean canPlayDevCard(DevCardType type)
     {
         if (!playedDev)
         {
             return bank.canPlayDevCard(type);
-        }
-        else
+        } else
         {
             return false;
         }
@@ -205,9 +210,8 @@ public class Player
 
     /**
      * Plays the action of the specified DevCard
-     * 
-     * @param type
-     *        -- the type of DevCard to play
+     *
+     * @param type -- the type of DevCard to play
      * @throws InsufficientResourcesException
      */
     public void playDevCard(DevCardType type) throws CatanException
@@ -217,13 +221,11 @@ public class Player
             try
             {
                 bank.playDevCard(type);
-            }
-            catch (InsufficientResourcesException e)
+            } catch (InsufficientResourcesException e)
             {
                 e.printStackTrace();
             }
-        }
-        else
+        } else
         {
             throw new CatanException();
         }
@@ -231,7 +233,7 @@ public class Player
 
     /**
      * Gets the players name from info
-     * 
+     *
      * @return string -- the name of the player
      */
     public String getName()
@@ -239,8 +241,7 @@ public class Player
         return info.getName();
     }
 
-    @Override
-    public String toString()
+    @Override public String toString()
     {
 
         JsonObject player = new JsonObject();
@@ -265,8 +266,7 @@ public class Player
         return player.toString();
     }
 
-    @Override
-    public boolean equals(Object o)
+    @Override public boolean equals(Object o)
     {
         if (this == o)
             return true;
@@ -285,8 +285,7 @@ public class Player
 
     }
 
-    @Override
-    public int hashCode()
+    @Override public int hashCode()
     {
         return 0;
     }
@@ -297,5 +296,13 @@ public class Player
     public CatanColor getPlayerColor()
     {
         return info.getColor();
+    }
+
+    public int getVictoryPoints()
+    {
+        return bank.getVictoryPoints();
+    }
+    public PlayerIndex getPlayerIndex(){
+        return getPlayerInfo().getPlayerIndex();
     }
 }

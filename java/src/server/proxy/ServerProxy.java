@@ -26,15 +26,13 @@ import java.util.logging.Logger;
  * the ServerProxy actually communicates with the server and gets the actual
  * server responses back, which it sends on to the Poller, or the Facade as
  * needed.
- * 
- * @author cstaheli
  *
+ * @author cstaheli
  */
 public class ServerProxy implements IProxy
 {
     /**
      * Contexts
-     * 
      */
     /* user : Operations about users */
     // POST
@@ -108,7 +106,6 @@ public class ServerProxy implements IProxy
         URLPrefix = "http://" + host + ":" + port + "/";
     }
 
-
     public ServerProxy(String host, String port)
     {
         this();
@@ -117,7 +114,7 @@ public class ServerProxy implements IProxy
 
     /**
      * Parses the Catan User Cookie to set the current player.
-     * 
+     *
      * @return The info of the current player.
      * @throws UnsupportedEncodingException
      */
@@ -127,8 +124,7 @@ public class ServerProxy implements IProxy
         return new PlayerInfo(URLDecoder.decode(catanUserCookie, "UTF-8"));
     }
 
-    @Override
-    public PlayerInfo userLogin(Credentials credentials) throws SignInException
+    @Override public PlayerInfo userLogin(Credentials credentials) throws SignInException
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
         String request = gson.toJson(credentials);
@@ -141,16 +137,14 @@ public class ServerProxy implements IProxy
         try
         {
             return buildPlayerInfoFromCookie();
-        }
-        catch (UnsupportedEncodingException e)
+        } catch (UnsupportedEncodingException e)
         {
             LOGGER.log(Level.SEVERE, "Can't set client player from cookie", e);
             throw new SignInException("Can't set client player from cookie", e);
         }
     }
 
-    @Override
-    public PlayerInfo userRegister(Credentials credentials) throws SignInException
+    @Override public PlayerInfo userRegister(Credentials credentials) throws SignInException
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
         String request = gson.toJson(credentials);
@@ -163,31 +157,27 @@ public class ServerProxy implements IProxy
         try
         {
             return buildPlayerInfoFromCookie();
-        }
-        catch (UnsupportedEncodingException e)
+        } catch (UnsupportedEncodingException e)
         {
             throw new SignInException("Can't set client player from cookie");
         }
     }
 
-    @Override
-    public void changeLogLevel(Level level)
+    @Override public void changeLogLevel(Level level)
     {
         String response = doPost(CHANGE_LOG_LEVEL, level.toString());
         LOGGER.setLevel(level);
         LOGGER.log(Level.INFO, "Response:" + response);
     }
 
-    @Override
-    public ListGamesResponse listGames()
+    @Override public ListGamesResponse listGames()
     {
         String response = doGet(LIST_GAMES, "");
         LOGGER.log(Level.INFO, "Response:" + response);
         return new ListGamesResponse(response);
     }
 
-    @Override
-    public CreateGameResponse createGame(CreateGameRequest createGameRequest)
+    @Override public CreateGameResponse createGame(CreateGameRequest createGameRequest)
     {
         Gson gson = new GsonBuilder().create();
         String request = gson.toJson(createGameRequest);
@@ -196,8 +186,7 @@ public class ServerProxy implements IProxy
         return new CreateGameResponse(response);
     }
 
-    @Override
-    public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
+    @Override public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
     {
         Gson gson = new GsonBuilder().create();
         String request = gson.toJson(joinGameRequest);
@@ -209,8 +198,7 @@ public class ServerProxy implements IProxy
         }
     }
 
-    @Override
-    public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
+    @Override public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
     {
         Gson gson = new GsonBuilder().create();
         String request = gson.toJson(saveGameRequest);
@@ -222,8 +210,7 @@ public class ServerProxy implements IProxy
         }
     }
 
-    @Override
-    public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
+    @Override public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
     {
         Gson gson = new GsonBuilder().create();
         String request = gson.toJson(loadGameRequest);
@@ -236,8 +223,7 @@ public class ServerProxy implements IProxy
 
     }
 
-    @Override
-    public ClientModel getGameState(int versionNumber)
+    @Override public ClientModel getGameState(int versionNumber)
     {
         String query = "";
         if (versionNumber != -1)
@@ -259,37 +245,32 @@ public class ServerProxy implements IProxy
         return responseModel;
     }
 
-    @Override
-    public ClientModel resetGame()
+    @Override public ClientModel resetGame()
     {
         // Unecessary
         return null;
     }
 
-    @Override
-    public GetCommandsResponse getCommands()
+    @Override public GetCommandsResponse getCommands()
     {
         // Unecessary
         return null;
     }
 
-    @Override
-    public ClientModel postCommands(PostCommandsRequest request)
+    @Override public ClientModel postCommands(PostCommandsRequest request)
     {
         // Unecessary
         return null;
     }
 
-    @Override
-    public ListAIResponse listAI()
+    @Override public ListAIResponse listAI()
     {
         String response = doGet(LIST_AI, "");
         LOGGER.log(Level.INFO, "Response:" + response);
         return new ListAIResponse(response);
     }
 
-    @Override
-    public void addAI(AIType aiType) throws AddAIException
+    @Override public void addAI(AIType aiType) throws AddAIException
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(AIType.class, aiType).create();
         String request = gson.toJson(aiType);
@@ -302,8 +283,7 @@ public class ServerProxy implements IProxy
 
     }
 
-    @Override
-    public ClientModel sendChat(SendChatCommand sendChat)
+    @Override public ClientModel sendChat(SendChatCommand sendChat)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(SendChatCommand.class, sendChat).create();
         String request = gson.toJson(sendChat);
@@ -312,8 +292,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel rollNumber(RollNumberCommand rollNumber)
+    @Override public ClientModel rollNumber(RollNumberCommand rollNumber)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(RollNumberCommand.class, rollNumber).create();
         String request = gson.toJson(rollNumber);
@@ -322,8 +301,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel acceptTrade(AcceptTradeCommand acceptTrade)
+    @Override public ClientModel acceptTrade(AcceptTradeCommand acceptTrade)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(AcceptTradeCommand.class, acceptTrade).create();
         String request = gson.toJson(acceptTrade);
@@ -332,8 +310,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel discardCards(DiscardCardsCommand discardCards)
+    @Override public ClientModel discardCards(DiscardCardsCommand discardCards)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(DiscardCardsCommand.class, discardCards).create();
         String request = gson.toJson(discardCards);
@@ -342,8 +319,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel buildRoad(BuildRoadCommand buildRoad)
+    @Override public ClientModel buildRoad(BuildRoadCommand buildRoad)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(BuildRoadCommand.class, buildRoad).create();
         String request = gson.toJson(buildRoad);
@@ -352,8 +328,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel buildSettlement(BuildSettlementCommand buildSettlement)
+    @Override public ClientModel buildSettlement(BuildSettlementCommand buildSettlement)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(BuildSettlementCommand.class, buildSettlement).create();
         String request = gson.toJson(buildSettlement);
@@ -362,8 +337,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel buildCity(BuildCityCommand buildCity)
+    @Override public ClientModel buildCity(BuildCityCommand buildCity)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(BuildCityCommand.class, buildCity).create();
         String request = gson.toJson(buildCity);
@@ -372,8 +346,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel offerTrade(OfferTradeCommand offerTrade)
+    @Override public ClientModel offerTrade(OfferTradeCommand offerTrade)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(OfferTradeCommand.class, offerTrade).create();
         String request = gson.toJson(offerTrade);
@@ -382,8 +355,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel maritimeTrade(MaritimeTradeCommand maritimeTrade)
+    @Override public ClientModel maritimeTrade(MaritimeTradeCommand maritimeTrade)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(MaritimeTradeCommand.class, maritimeTrade).create();
         String request = gson.toJson(maritimeTrade);
@@ -392,8 +364,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel robPlayer(RobPlayerCommand robPlayer)
+    @Override public ClientModel robPlayer(RobPlayerCommand robPlayer)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(RobPlayerCommand.class, robPlayer).create();
         String request = gson.toJson(robPlayer);
@@ -402,8 +373,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel finishTurn(FinishTurnCommand finishTurn)
+    @Override public ClientModel finishTurn(FinishTurnCommand finishTurn)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(FinishTurnCommand.class, finishTurn).create();
         String request = gson.toJson(finishTurn);
@@ -412,8 +382,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel buyDevCard(BuyDevCardCommand buyDevCard)
+    @Override public ClientModel buyDevCard(BuyDevCardCommand buyDevCard)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(BuyDevCardCommand.class, buyDevCard).create();
         String request = gson.toJson(buyDevCard);
@@ -422,8 +391,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel soldier(SoldierCommand soldier)
+    @Override public ClientModel soldier(SoldierCommand soldier)
     {
         // Use Robber's type adapter. Holds same things as RobPlayer
         Gson gson = new GsonBuilder().registerTypeAdapter(RobPlayerCommand.class, soldier).create();
@@ -433,8 +401,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
+    @Override public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(YearOfPlentyCommand.class, yearOfPlenty).create();
         String request = gson.toJson(yearOfPlenty);
@@ -443,8 +410,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
+    @Override public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(RoadBuildingCommand.class, roadBuilding).create();
         String request = gson.toJson(roadBuilding);
@@ -453,8 +419,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel monopoly(MonopolyCommand monopoly)
+    @Override public ClientModel monopoly(MonopolyCommand monopoly)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(MonopolyCommand.class, monopoly).create();
         String request = gson.toJson(monopoly);
@@ -463,8 +428,7 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override
-    public ClientModel monument(MonumentCommand monument)
+    @Override public ClientModel monument(MonumentCommand monument)
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(MonumentCommand.class, monument).create();
         String request = gson.toJson(monument);
@@ -491,8 +455,7 @@ public class ServerProxy implements IProxy
                 if (catanGameCookie != null)
                 {
                     cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
-                }
-                else
+                } else
                 {
                     cookieRequest = "catan.user=" + catanUserCookie;
                 }
@@ -521,8 +484,7 @@ public class ServerProxy implements IProxy
                 }
                 response = builder.toString();
                 LOGGER.log(Level.INFO, response + ", Cookie: " + cookie);
-            }
-            else
+            } else
             {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
                 StringBuilder builder = new StringBuilder();
@@ -534,8 +496,7 @@ public class ServerProxy implements IProxy
                 LOGGER.log(Level.WARNING, builder.toString());
             }
             return response;
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
             return null;
@@ -545,9 +506,8 @@ public class ServerProxy implements IProxy
     /**
      * Parses a cookie to set the ServerProxy's catan.user cookie, or the
      * catan.game cookie.
-     * 
-     * @param cookieHeader
-     *        the cookie to be parsed
+     *
+     * @param cookieHeader the cookie to be parsed
      */
     private void parseCookie(String cookieHeader)
     {
@@ -556,8 +516,7 @@ public class ServerProxy implements IProxy
         if (cookie.indexOf("catan.user") != -1)
         {
             this.catanUserCookie = cookie.substring(cookie.indexOf("=") + 1);
-        }
-        else if (cookie.indexOf("catan.game") != -1)
+        } else if (cookie.indexOf("catan.game") != -1)
         {
             this.catanGameCookie = cookie.substring(cookie.indexOf("=") + 1);
         }
@@ -578,8 +537,7 @@ public class ServerProxy implements IProxy
                 if (catanGameCookie != null)
                 {
                     cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
-                }
-                else
+                } else
                 {
                     cookieRequest = "catan.user=" + catanUserCookie;
                 }
@@ -596,8 +554,7 @@ public class ServerProxy implements IProxy
                 }
                 response = builder.toString();
                 LOGGER.log(Level.INFO, response);
-            }
-            else
+            } else
             {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
                 StringBuilder builder = new StringBuilder();
@@ -609,8 +566,7 @@ public class ServerProxy implements IProxy
                 LOGGER.log(Level.WARNING, builder.toString());
             }
             return response;
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
             return null;
