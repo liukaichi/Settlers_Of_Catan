@@ -45,6 +45,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         // String[] type = new
         getView().setAIChoices(new String[] { AIType.LARGEST_ARMY.toString() });
         getView().showModal();
+        if (players.size() == 4){
+            getView().closeModal();
+        }
     }
 
     /**

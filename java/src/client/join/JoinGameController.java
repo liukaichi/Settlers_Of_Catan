@@ -1,16 +1,19 @@
 package client.join;
 
-import java.util.List;
-import java.util.logging.*;
-
-import client.base.*;
+import client.base.Controller;
+import client.base.IAction;
 import client.data.GameInfo;
 import client.facade.ClientFacade;
 import client.misc.IMessageView;
-import shared.communication.*;
+import shared.communication.CreateGameRequest;
+import shared.communication.ListGamesResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.GameQueryException;
 import shared.model.player.Player;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementation for the join game controller
@@ -208,6 +211,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             // If join succeeded
             getSelectColorView().closeModal();
             getJoinGameView().closeModal();
+            facade.getGameState(-1);
             joinAction.execute();
         }
         catch (GameQueryException e)
