@@ -1,18 +1,28 @@
 package shared.model;
 
-import java.util.Observable;
-
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 import com.google.gson.*;
-
-import client.data.*;
-import shared.definitions.*;
-import shared.definitions.exceptions.*;
-import shared.locations.*;
-import shared.model.bank.*;
+import shared.definitions.DevCardType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+import shared.definitions.TurnStatus;
+import shared.definitions.exceptions.CatanException;
+import shared.definitions.exceptions.InsufficientResourcesException;
+import shared.definitions.exceptions.PlacementException;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+import shared.model.bank.Bank;
+import shared.model.bank.PlayerBank;
 import shared.model.bank.card.DevCard;
 import shared.model.map.CatanMap;
-import shared.model.message.*;
-import shared.model.player.*;
+import shared.model.message.Chat;
+import shared.model.message.Log;
+import shared.model.player.Player;
+import shared.model.player.TradeOffer;
+
+import java.util.Observable;
 
 /**
  * The client model for the Catan game
@@ -71,7 +81,11 @@ public class ClientModel extends Observable
         // TODO Should be: for(Player player : gameinfo.getPlayers();
         for (JsonElement player : players)
         {
-            gameInfo.addPlayer(new Player(player.toString()));
+            if (!(player instanceof JsonNull))
+            {
+                gameInfo.addPlayer(new Player(player.toString()));
+
+            }
         }
 
         // TODO these few need to have constructors using JSON.
