@@ -102,11 +102,7 @@ public class ServerProxy implements IProxy
         URLPrefix = "http://" + host + ":" + port + "/";
     }
 
-    /**
-     * @param uRLPrefix
-     * @param catanUserCookie
-     * @param catanGameCookie
-     */
+
     public ServerProxy(String host, String port)
     {
         this();
@@ -565,6 +561,19 @@ public class ServerProxy implements IProxy
             URL url = new URL(URLPrefix + commandName + "?" + query);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
+            if (catanUserCookie != null)
+            {
+                String cookieRequest = "";
+                if (catanGameCookie != null)
+                {
+                    cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
+                }
+                else
+                {
+                    cookieRequest = "catan.user=" + catanUserCookie;
+                }
+                connection.setRequestProperty("Cookie", cookieRequest);
+            }
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
             {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
