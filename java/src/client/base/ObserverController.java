@@ -3,6 +3,8 @@
  */
 package client.base;
 
+import client.facade.ClientFacade;
+
 import java.util.*;
 
 /**
@@ -18,6 +20,7 @@ public abstract class ObserverController extends Controller implements Observer
     protected ObserverController(IView view)
     {
         super(view);
+        ClientFacade.getInstance().addObserver(this);
     }
 
     /*

@@ -1,18 +1,30 @@
 package client.facade;
 
-import java.util.*;
-import java.util.logging.*;
-
-import client.data.*;
-import server.proxy.*;
+import client.base.ObserverController;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
+import server.proxy.IProxy;
+import server.proxy.ServerProxy;
 import shared.communication.*;
-import shared.communication.moveCommands.*;
+import shared.communication.moveCommands.BuildRoadCommand;
+import shared.communication.moveCommands.BuyDevCardCommand;
+import shared.communication.moveCommands.RollNumberCommand;
+import shared.communication.moveCommands.SendChatCommand;
 import shared.definitions.*;
-import shared.definitions.exceptions.*;
-import shared.locations.*;
+import shared.definitions.exceptions.AddAIException;
+import shared.definitions.exceptions.GameQueryException;
+import shared.definitions.exceptions.SignInException;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
-import shared.model.player.*;
+import shared.model.player.Player;
+import shared.model.player.TradeOffer;
+
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The Facade for the Controllers/Views interacting with the Model classes. The
@@ -25,7 +37,6 @@ public class ClientFacade
     private static ClientFacade _instance = null;
     private ClientModel model;
     private IProxy proxy;
-    private List<Player> players;
     private PlayerInfo clientPlayer;
     private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
 
@@ -45,20 +56,20 @@ public class ClientFacade
         return clientPlayer;
     }
 
-    private void setupPlayersFromGame() throws CatanException
-    {
-        List<Player> playerInfos = model.getGameInfo().getPlayers();
-        players = new ArrayList<Player>();
-        for (int i = 0; i < 4; ++i)
-        {
-            Player player = playerInfos.get(i);
-            players.add(player);
+
+    public Player getPlayerByName(String name){
+        for (Player player : ClientFacade.getInstance().getPlayers()){
+            if (player.getName().matches(name)){
+                return player;
+            }
         }
+        LOGGER.log(Level.WARNING, "Player's name could not be found in the ClientFacade.");
+        return null;
     }
 
     public Player getPlayer()
     {
-        return players.get(clientPlayer.getPlayerIndex().getIndex());
+        return getPlayers().get(clientPlayer.getPlayerIndex().getIndex());
     }
 
     /**
@@ -89,7 +100,7 @@ public class ClientFacade
     public void sendMessage(String message)
     {
         // Call the proxy and model to send a chat
-        proxy.sendChat(new SendChatCommand(clientPlayer.getPlayerIndex(), message));
+        model.updateModel(proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_1, message)));
     }
 
     /*
@@ -543,7 +554,7 @@ public class ClientFacade
     }
 
     /**
-     * @param string
+     * @param
      */
     public void setProxy(String host, String port)
     {
@@ -551,4 +562,13 @@ public class ClientFacade
 
     }
 
+    public void addObserver(ObserverController observerController)
+    {
+        model.addObserver(observerController);
+    }
+
+    public List<Player> getPlayers()
+    {
+        return model.getGameInfo().getPlayers();
+    }
 }
