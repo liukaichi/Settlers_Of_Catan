@@ -242,7 +242,7 @@ public class ServerProxy implements IProxy
         String query = "";
         if (versionNumber != -1)
         {
-            query = String.format("version=%s", versionNumber);
+            query = String.format("?version=%s", versionNumber);
         }
         String response = doGet(GET_GAME_STATE, query);
         LOGGER.log(Level.INFO, "Response:" + response);
@@ -569,7 +569,7 @@ public class ServerProxy implements IProxy
         LOGGER.info(commandName + query);
         try
         {
-            URL url = new URL(URLPrefix + commandName + "?" + query);
+            URL url = new URL(URLPrefix + commandName + query);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type", "application/json");
             if (catanUserCookie != null)
