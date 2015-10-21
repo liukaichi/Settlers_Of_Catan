@@ -237,7 +237,11 @@ public class ServerProxy implements IProxy
     @Override
     public ClientModel getGameState(int versionNumber)
     {
-        String query = String.format("version=%s", versionNumber);
+        String query = "";
+        if (versionNumber != -1)
+        {
+            query = String.format("version=%s", versionNumber);
+        }
         String response = doGet(GET_GAME_STATE, query);
         LOGGER.log(Level.INFO, "Response:" + response);
         ClientModel responseModel = null;

@@ -1,5 +1,7 @@
 package client.login;
 
+import javax.xml.bind.ValidationException;
+
 import client.base.*;
 import client.facade.ClientFacade;
 import client.misc.IMessageView;
@@ -89,15 +91,16 @@ public class LoginController extends Controller implements ILoginController
         try
         {
             ClientFacade.getInstance().signInUser(credentials);
-
+            // If log in succeeded
+            getLoginView().closeModal();
+            loginAction.execute();
         }
         catch (SignInException e)
         {
-
+            getMessageView().setTitle("Error Yo!");
+            getMessageView().setMessage("Yo Homie, that login shiz there aint gonna work!");
+            getMessageView().showModal();
         }
-        // If log in succeeded
-        getLoginView().closeModal();
-        loginAction.execute();
 
     }
 
@@ -108,20 +111,31 @@ public class LoginController extends Controller implements ILoginController
     public void register()
     {
 
-        String username = getLoginView().getRegisterUsername();
-        String password = getLoginView().getRegisterPassword();
-        Credentials credentials = new Credentials(username, password);
         try
         {
+            String username = getLoginView().getRegisterUsername();
+            if (username == "")
+            {
+                throw new ValidationException("Invalid Username/Password");
+            }
+            String password = getLoginView().getRegisterPassword();
+            Credentials credentials = new Credentials(username, password);
             ClientFacade.getInstance().registerUser(credentials);
+            // If register succeeded
+            getLoginView().closeModal();
+            loginAction.execute();
         }
         catch (SignInException e)
         {
-
+            getMessageView().setTitle("Error Homes!");
+            getMessageView().setMessage("Yo Homie, that register shiz there aint gonna work!");
+            getMessageView().showModal();
         }
-
-        // If register succeeded
-        getLoginView().closeModal();
-        loginAction.execute();
+        catch (ValidationException e1)
+        {
+            getMessageView().setTitle("Invalid!");
+            getMessageView().setMessage("Yo Homie, that name shiz is invalid!");
+            getMessageView().showModal();
+        }
     }
 }

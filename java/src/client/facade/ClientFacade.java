@@ -237,6 +237,14 @@ public class ClientFacade
     /*
      * player Waiting Controller methods
      */
+
+    public ClientModel getGameState(int version)
+    {
+        ClientModel model = proxy.getGameState(version);
+        this.model.updateModel(model);
+        return model;
+    }
+
     /**
      * Adds an AI to the game.
      * 
@@ -246,7 +254,31 @@ public class ClientFacade
 
     public void addAI(AIType type)
     {
+        try
+        {
+            proxy.addAI(type);
+        }
+        catch (IllegalArgumentException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (GameQueryException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (AddAIException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
+    public List<AIType> listAI()
+    {
+        ListAIResponse response = proxy.listAI();
+        return response.getAITypes();
     }
 
     /*

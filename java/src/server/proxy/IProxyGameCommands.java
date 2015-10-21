@@ -217,7 +217,8 @@ public interface IProxyGameCommands
      *       </ul>
      * 
      * @param versionNumber
-     *        The version number of the client.
+     *        The version number of the client. Input "-1" if you want to grab
+     *        the game state regardless of version.
      * @return returns the client model of the server's game state. If it
      *         already matches, it returns null.
      */

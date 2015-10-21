@@ -1,35 +1,19 @@
 package client.login;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import client.base.*;
-import java.awt.GridLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.event.*;
+
+import client.base.OverlayView;
 
 /**
  * Implementation for the login view, which lets the user create a new account
  * and login
  */
-@SuppressWarnings({"serial", "unused"})
+@SuppressWarnings({ "serial", "unused" })
 public class LoginView extends OverlayView implements ILoginView
 {
 
@@ -61,23 +45,25 @@ public class LoginView extends OverlayView implements ILoginView
         this.setOpaque(true);
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
-//
-//        label = new JLabel("Login View");
-//        Font labelFont = label.getFont();
-//        labelFont = labelFont.deriveFont(labelFont.getStyle(), LABEL_TEXT_SIZE);
-//        label.setFont(labelFont);
-//        this.add(label, BorderLayout.CENTER);
-//
-//        signInButton = new JButton("Sign in");
-//        signInButton.addActionListener(actionListener);
-//        Font buttonFont = signInButton.getFont();
-//        buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
-//        signInButton.setFont(buttonFont);
-//
-//        buttonPanel = new JPanel();
-//        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-//        buttonPanel.add(signInButton);
-//        this.add(buttonPanel, BorderLayout.SOUTH);
+        //
+        // label = new JLabel("Login View");
+        // Font labelFont = label.getFont();
+        // labelFont = labelFont.deriveFont(labelFont.getStyle(),
+        // LABEL_TEXT_SIZE);
+        // label.setFont(labelFont);
+        // this.add(label, BorderLayout.CENTER);
+        //
+        // signInButton = new JButton("Sign in");
+        // signInButton.addActionListener(actionListener);
+        // Font buttonFont = signInButton.getFont();
+        // buttonFont = buttonFont.deriveFont(buttonFont.getStyle(),
+        // BUTTON_TEXT_SIZE);
+        // signInButton.setFont(buttonFont);
+        //
+        // buttonPanel = new JPanel();
+        // buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        // buttonPanel.add(signInButton);
+        // this.add(buttonPanel, BorderLayout.SOUTH);
 
         initComponents();
     }
@@ -99,10 +85,10 @@ public class LoginView extends OverlayView implements ILoginView
     {
         JPanel leftPanel = new JPanel(new GridLayout(2, 1));
 
-        //Set an empty border to take up space.
+        // Set an empty border to take up space.
         leftPanel.setBorder(createBufferBorder());
 
-        //Create the title label, with the large font.
+        // Create the title label, with the large font.
         JLabel lblTitle = new JLabel("<html><body>Settlers<br>of Catan</body></html>");
         Font labelFont = lblTitle.getFont();
         labelFont = labelFont.deriveFont(labelFont.getStyle(), BIG_LABEL_TEXT_SIZE);
@@ -171,7 +157,17 @@ public class LoginView extends OverlayView implements ILoginView
     @Override
     public String getRegisterUsername()
     {
-        return registerPanel.txtUsername.getText();
+        /*
+         * Modification - Only return the username if it was properly validated.
+         */
+        if (isValidRegistration())
+        {
+            return registerPanel.txtUsername.getText();
+        }
+        else
+        {
+            return "";
+        }
     }
 
     @Override
@@ -184,6 +180,11 @@ public class LoginView extends OverlayView implements ILoginView
     public String getRegisterPasswordRepeat()
     {
         return registerPanel.txtPasswordAgain.getText();
+    }
+
+    private boolean isValidRegistration()
+    {
+        return registerPanel.isValidRegistration();
     }
 
     private class SignInPanel extends JPanel
@@ -229,7 +230,7 @@ public class LoginView extends OverlayView implements ILoginView
             this.add(Box.createVerticalGlue());
 
             JPanel internalInputBox = new JPanel(new GridLayout(4, 1));
-            //Change the font on the user entry labels.
+            // Change the font on the user entry labels.
             Font smallTextFont = lblUsername.getFont();
             smallTextFont = smallTextFont.deriveFont(smallTextFont.getStyle(), SMALL_LABEL_TEXT_SIZE);
             lblUsername.setFont(smallTextFont);
@@ -278,6 +279,7 @@ public class LoginView extends OverlayView implements ILoginView
         private JLabel lblPasswordAgain = null;
         private JTextField txtPasswordAgain = null;
         private JButton btnRegister = null;
+        private boolean isValidRegistration;
 
         public RegisterPanel()
         {
@@ -285,6 +287,11 @@ public class LoginView extends OverlayView implements ILoginView
             initTooltips();
             initLayout();
             initEventListeners();
+        }
+
+        public boolean isValidRegistration()
+        {
+            return isValidRegistration;
         }
 
         private void initComponents()
@@ -311,8 +318,7 @@ public class LoginView extends OverlayView implements ILoginView
             txtUsername.setToolTipText("The username must be between three and seven "
                     + "characters: letters, digits, underscore, or dash.");
             txtPassword.setToolTipText("Please match the requested format.  "
-                    + "The password must be five or more characters: "
-                    + "letters, digits, underscore, or dash.");
+                    + "The password must be five or more characters: " + "letters, digits, underscore, or dash.");
             txtPasswordAgain.setToolTipText("Make sure the two passwords match!");
         }
 
@@ -325,7 +331,7 @@ public class LoginView extends OverlayView implements ILoginView
             this.add(Box.createVerticalGlue());
 
             JPanel internalInputBox = new JPanel(new GridLayout(6, 1));
-            //Change the font on the user entry labels.
+            // Change the font on the user entry labels.
             Font smallTextFont = lblUsername.getFont();
             smallTextFont = smallTextFont.deriveFont(smallTextFont.getStyle(), SMALL_LABEL_TEXT_SIZE);
             lblUsername.setFont(smallTextFont);
@@ -366,7 +372,7 @@ public class LoginView extends OverlayView implements ILoginView
 
             });
 
-            //Code to check if the username length is correct!
+            // Code to check if the username length is correct!
             TextFieldValidator usernameValidator = new TextFieldValidator(txtUsername)
             {
                 @Override
@@ -375,24 +381,27 @@ public class LoginView extends OverlayView implements ILoginView
                     final int MIN_UNAME_LENGTH = 3;
                     final int MAX_UNAME_LENGTH = 7;
 
-                    if (username.length() < MIN_UNAME_LENGTH
-                            || username.length() > MAX_UNAME_LENGTH)
+                    isValidRegistration = true;
+
+                    if (username.length() < MIN_UNAME_LENGTH || username.length() > MAX_UNAME_LENGTH)
                     {
-                        return false;
+                        isValidRegistration = false;
+                        // return false;
                     }
                     else
                     {
                         for (char c : username.toCharArray())
                         {
-                            if (!Character.isLetterOrDigit(c)
-                                    && c != '_' && c != '-')
+                            if (!Character.isLetterOrDigit(c) && c != '_' && c != '-')
                             {
-                                return false;
+                                isValidRegistration = false;
+                                // return false;
                             }
                         }
                     }
 
-                    return true;
+                    return isValidRegistration;
+                    // return true;
                 }
 
             };
@@ -405,23 +414,27 @@ public class LoginView extends OverlayView implements ILoginView
                 {
                     final int MIN_PASS_LENGTH = 5;
 
+                    isValidRegistration = true;
+
                     if (input.length() < MIN_PASS_LENGTH)
                     {
-                        return false;
+                        isValidRegistration = false;
+                        // return false;
                     }
                     else
                     {
                         for (char c : input.toCharArray())
                         {
-                            if (!Character.isLetterOrDigit(c)
-                                    && c != '_' && c != '-')
+                            if (!Character.isLetterOrDigit(c) && c != '_' && c != '-')
                             {
-                                return false;
+                                isValidRegistration = false;
+                                // return false;
                             }
                         }
                     }
 
-                    return true;
+                    return isValidRegistration;
+                    // return true;
                 }
 
             };
@@ -432,17 +445,19 @@ public class LoginView extends OverlayView implements ILoginView
                 @Override
                 public boolean validateContents(String input)
                 {
-                    return input.equals(txtPassword.getText());
+                    isValidRegistration = input.equals(txtPassword.getText());
+                    // return input.equals(txtPassword.getText());
+                    return isValidRegistration;
                 }
-                
+
             };
-            
+
             txtUsername.addFocusListener(usernameValidator);
             txtUsername.getDocument().addDocumentListener(usernameValidator);
-            
+
             txtPassword.addFocusListener(passValidator);
             txtPassword.getDocument().addDocumentListener(passValidator);
-            
+
             txtPasswordAgain.addFocusListener(passAgainValidator);
             txtPasswordAgain.getDocument().addDocumentListener(passAgainValidator);
 
@@ -512,4 +527,3 @@ public class LoginView extends OverlayView implements ILoginView
     }
 
 }
-
