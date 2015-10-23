@@ -107,7 +107,6 @@ public class DevCardController extends ObserverController implements IDevCardCon
     @Override
     public void playSoldierCard()
     {
-
         soldierAction.execute();
     }
 
