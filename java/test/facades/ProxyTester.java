@@ -18,6 +18,8 @@ import shared.definitions.*;
 import shared.definitions.exceptions.*;
 import shared.locations.*;
 import shared.model.ClientModel;
+import shared.model.message.Chat;
+import shared.model.message.MessageLine;
 
 /**
  * @author cstaheli
@@ -372,7 +374,7 @@ public class ProxyTester
     public void testGetGameState()
     {
         startGame("gameState");
-        testingModel = proxy.getGameState(0);
+        testingModel = proxy.getGameState(-1);
     }
 
     /**
@@ -395,7 +397,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link server.proxy.ServerProxy#postCommands(java.util.List)}.
+     * {@link server.proxy.ServerProxy#postCommands(PostCommandsRequest)}.
      */
     @Test
     public void testPostCommands()
@@ -544,6 +546,20 @@ public class ProxyTester
     {
         startGame("sendChat");
         testingModel = proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_0, "Test"));
+        Chat chat = testingModel.getChat();
+        assertTrue(chat.getMessages().size() == 1);
+        for (MessageLine messageLine : chat.getMessages()) {
+            if (!messageLine.getMessage().equals("Test"))
+            {
+                fail("Should have been equal");
+            }
+        }
+        proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_0, "Test1"));
+        proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_0, "YoYoYo"));
+        testingModel = proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_3, "Different Player"));
+        chat = testingModel.getChat();
+        assertEquals(4,chat.getMessages().size());
+
 
     }
 
@@ -627,15 +643,6 @@ public class ProxyTester
         testingModel = proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_0,
                 new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest), true));
         assertNotNull(testingModel);
-        try
-        {
-            testingModel.getMap().placeSettlement(PlayerIndex.PLAYER_0,
-                    new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest));
-        }
-        catch (PlacementException e)
-        {
-            assert(true);
-        }
     }
 
     /**
