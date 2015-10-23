@@ -53,10 +53,10 @@ public class TurnTrackerTest
 		PlayerIndex longestRoad = turnTracker.getLongestRoad(); 
 		PlayerIndex largestArmy = turnTracker.getLargestArmy(); 
 		
-		assert(currentTurn.equals(0)); 
-		assert(status.equals("Playing"));
-		assert(longestRoad.equals(-1));
-		assert(largestArmy.equals(-1)); 			
+		assertEquals(currentTurn,PlayerIndex.PLAYER_0);
+		assertEquals(status,TurnStatus.Playing);
+		assertEquals(longestRoad,PlayerIndex.NONE);
+		assertEquals(largestArmy,PlayerIndex.NONE);
 	}
 
 }

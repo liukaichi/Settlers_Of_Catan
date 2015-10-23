@@ -45,10 +45,9 @@ public class MessageLine
     @Override
     public String toString()
     {
-    	JsonParser parser = new JsonParser();
 //@formatter.off    	
-//        "lines": [
-//    	 {
+//          "lines": [
+//    	    {
 //    		 "message": "string",
 //    		 "source": "string"
 //    		 }
