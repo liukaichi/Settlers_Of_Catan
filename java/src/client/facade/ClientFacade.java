@@ -578,4 +578,14 @@ public class ClientFacade
     {
         return model.getGameInfo().getPlayers();
     }
+
+    public int getPlayerPoints(PlayerIndex index){
+        for (Player player : getPlayers()){
+            if (player.getPlayerInfo().getPlayerIndex() == index){
+                return player.getBank().getVictoryPoints();
+            }
+        }
+        LOGGER.warning("Couldn't find that player index's points");
+        return -1;
+    }
 }

@@ -1,12 +1,13 @@
 package client.join;
 
-import java.util.List;
-
 import client.base.Controller;
-import client.data.*;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import shared.definitions.AIType;
 import shared.model.ClientModel;
+
+import java.util.List;
 
 /**
  * Implementation for the player waiting controller
