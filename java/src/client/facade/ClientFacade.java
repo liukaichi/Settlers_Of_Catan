@@ -515,7 +515,6 @@ public class ClientFacade
     /**
      * Calls the roll method on the dice
      *
-     * @return Dice - Returns a dice object containing the values of two dice.
      * @post Value of dice is changed
      */
 
