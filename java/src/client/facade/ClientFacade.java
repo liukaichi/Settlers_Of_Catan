@@ -175,7 +175,7 @@ public class ClientFacade
      * Plays a Year of Plenty Card.
      *
      * @param resource1 The first resource.
-     * @param resource2
+     * @param resource2 The second resource.
      */
 
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)

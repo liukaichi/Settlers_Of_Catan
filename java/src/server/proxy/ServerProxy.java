@@ -487,7 +487,7 @@ public class ServerProxy implements IProxy
             connection.setRequestMethod(HTTP_POST);
             if (catanUserCookie != null)
             {
-                String cookieRequest = "";
+                String cookieRequest;
                 if (catanGameCookie != null)
                 {
                     cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
@@ -553,11 +553,11 @@ public class ServerProxy implements IProxy
     {
         HttpCookie httpCookie = HttpCookie.parse(cookieHeader).get(0);
         String cookie = httpCookie.toString();
-        if (cookie.indexOf("catan.user") != -1)
+        if (cookie.contains("catan.user"))
         {
             this.catanUserCookie = cookie.substring(cookie.indexOf("=") + 1);
         }
-        else if (cookie.indexOf("catan.game") != -1)
+        else if (cookie.contains("catan.game"))
         {
             this.catanGameCookie = cookie.substring(cookie.indexOf("=") + 1);
         }
@@ -574,7 +574,7 @@ public class ServerProxy implements IProxy
             connection.setRequestProperty("Content-Type", "application/json");
             if (catanUserCookie != null)
             {
-                String cookieRequest = "";
+                String cookieRequest;
                 if (catanGameCookie != null)
                 {
                     cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
