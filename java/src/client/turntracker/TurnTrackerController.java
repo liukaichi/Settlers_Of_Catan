@@ -50,14 +50,16 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
         TurnTracker turnTracker = model.getTurnTracker();
         PlayerInfo clientPlayer = facade.getClientPlayer();
 
-        getView().initializePlayer(clientPlayer.getPlayerIndex().getIndex(), clientPlayer.getName(),
-                clientPlayer.getColor());
+
 
         getView().setLocalPlayerColor(clientPlayer.getColor());
 
 
         for (Player player : model.getGameInfo().getPlayers())
         {
+            getView().initializePlayer(player.getPlayerIndex().getIndex(), player.getName(),
+                    player.getPlayerColor());
+
             boolean hasLargestArmy = (turnTracker.getLargestArmy().equals(player.getPlayerIndex()));
             boolean hasLongestRoad = (turnTracker.getLargestArmy().equals(player.getPlayerIndex()));
             boolean isCurrentTurn = (turnTracker.getCurrentTurn().equals(player.getPlayerIndex()));

@@ -86,6 +86,10 @@ public class ClientFacade
         LOGGER.log(Level.WARNING, "Player's name could not be found in the ClientFacade.");
         return null;
     }
+    public CatanColor getColorByName(String name)
+    {
+        return getPlayerByName(name).getPlayerColor();
+    }
 
     /**
      * Gets the clientPlayer's Player Object, which holds their bank, as well as other things.

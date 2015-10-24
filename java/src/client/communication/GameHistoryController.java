@@ -1,7 +1,7 @@
 package client.communication;
 
 import client.base.ObserverController;
-import shared.definitions.CatanColor;
+import client.facade.ClientFacade;
 import shared.model.ClientModel;
 import shared.model.message.MessageLine;
 
@@ -31,12 +31,12 @@ public class GameHistoryController extends ObserverController implements IGameHi
 
     private void initFromModel(ClientModel model)
     {
-
+        ClientFacade facade = ClientFacade.getInstance();
         // <temp>
         List<MessageLine> messages =  model.getLog().getMessages();
         ArrayList<LogEntry> entries = new ArrayList<>();
         for (MessageLine messageLine : messages){
-            entries.add(new LogEntry(CatanColor.BROWN, messageLine.getMessage()));
+            entries.add(new LogEntry(facade.getColorByName(messageLine.getSourceName()), messageLine.getMessage()));
         }
 /*
 
