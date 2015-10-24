@@ -1,5 +1,8 @@
 package client.map;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -35,11 +38,18 @@ public class MapController extends ObserverController implements IMapController
         state = new SetupState();
 
         /*
-         * try { initFromModel(new ClientModel(new String(Files.readAllBytes(
-         * Paths.get(
-         * "C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json"
-         * ))))); } catch (IOException e) { e.printStackTrace(); }
-         */
+        // @formatter:off
+        try
+        {
+            initFromModel(new ClientModel(new String(Files.readAllBytes(
+                    Paths.get("C:\\Users\\cstaheli\\git\\the-settlers-of-catan\\sample\\complexJSONModel.json")))));
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        // @formatter:on
+        */
+
     }
 
     /**
@@ -73,8 +83,7 @@ public class MapController extends ObserverController implements IMapController
 
     }
 
-    @Override
-    public IMapView getView()
+    @Override public IMapView getView()
     {
 
         return (IMapView) super.getView();
@@ -119,8 +128,7 @@ public class MapController extends ObserverController implements IMapController
             {
                 getView().placeSettlement(structure.getLocation(), color);
                 LOGGER.fine("PlaceSettlement. " + structure);
-            }
-            else if (structure instanceof City)
+            } else if (structure instanceof City)
             {
                 getView().placeCity(structure.getLocation(), color);
                 LOGGER.fine("PlaceCity. " + structure);

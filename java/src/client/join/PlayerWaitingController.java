@@ -22,8 +22,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         facade = ClientFacade.getInstance();
     }
 
-    @Override
-    public IPlayerWaitingView getView()
+    @Override public IPlayerWaitingView getView()
     {
 
         return (IPlayerWaitingView) super.getView();
@@ -33,8 +32,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
      * make a list of players from the current game getView().setPlayers(that
      * list) getView().setAIChoices(if you happen to have AI) showModal
      */
-    @Override
-    public void start()
+    @Override public void start()
     {
         ClientModel model = facade.getGameState(-1);
         GameInfo game = model.getGameInfo();
@@ -45,7 +43,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         // String[] type = new
         getView().setAIChoices(new String[] { AIType.LARGEST_ARMY.toString() });
         getView().showModal();
-        if (players.size() == 4){
+        if (players.size() == 4)
+        {
             getView().closeModal();
         }
     }
@@ -54,8 +53,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
      * Do whatever you need to do to generate an AI and and it to the player
      * list;
      */
-    @Override
-    public void addAI()
+    @Override public void addAI()
     {
         facade.addAI(AIType.valueOf(getView().getSelectedAI()));
         this.start();
