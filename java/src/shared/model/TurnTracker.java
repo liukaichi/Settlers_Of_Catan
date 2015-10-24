@@ -93,8 +93,6 @@ public class TurnTracker
 	@Override
 	public String toString()
 	{
-		JsonParser parser = new JsonParser();
-		// map
 		JsonObject turnTracker = new JsonObject();
 		turnTracker.addProperty("status", status.toString());
 		turnTracker.addProperty("currentTurn", currentTurn.getIndex());

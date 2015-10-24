@@ -355,11 +355,14 @@ public class ClientModel extends Observable
     /**
      * Determines if the PlayerBank has Settlements left to purchase AND if the
      * resources required are available
+     *
+     * @param index the index of the clientPlayer
      * 
      * @return true if both conditions are met
      */
-    public boolean canBuyDevCard(Player player)
+    public boolean canBuyDevCard(PlayerIndex index)
     {
+        Player player = gameInfo.getPlayers().get(index.getIndex());
         return player.canBuyDevCard();
     }
 
@@ -380,7 +383,6 @@ public class ClientModel extends Observable
      * 
      * @param type
      *        the type of DevCard being checked
-     * @throws InsufficientResourcesException
      * @return true if both conditions are met
      */
     public boolean canPlayDevCard(Player player, DevCardType type)

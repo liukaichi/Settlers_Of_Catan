@@ -5,10 +5,7 @@ import client.data.*;
 import server.proxy.IProxy;
 import server.proxy.ServerProxy;
 import shared.communication.*;
-import shared.communication.moveCommands.BuildRoadCommand;
-import shared.communication.moveCommands.BuyDevCardCommand;
-import shared.communication.moveCommands.RollNumberCommand;
-import shared.communication.moveCommands.SendChatCommand;
+import shared.communication.moveCommands.*;
 import shared.definitions.*;
 import shared.definitions.exceptions.AddAIException;
 import shared.definitions.exceptions.GameQueryException;
@@ -19,7 +16,6 @@ import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.Player;
-import shared.model.player.TradeOffer;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -57,12 +53,13 @@ public class ClientFacade
 
     /**
      * Used to fill in the clientPlayer's info from the list of PlayerInfos.
+     *
      * @param players the info of each of the players. Typically, this is supplied by GameInfo#getPlayerInfos().
      * @pre The clientPlayer has already been initialized with a name and an ID.
      */
     private void buildClientPlayerFromGameInfo(List<PlayerInfo> players)
     {
-        for(PlayerInfo playerInfo : players)
+        for (PlayerInfo playerInfo : players)
         {
             if (playerInfo.getId() == clientPlayer.getId())
             {
@@ -72,9 +69,14 @@ public class ClientFacade
         }
     }
 
+    /**
+     * Gets the player that has the given name.
+     * @param name the name to search for.
+     * @return the player that matches the name.
+     */
     public Player getPlayerByName(String name)
     {
-        for (Player player : ClientFacade.getInstance().getPlayers())
+        for (Player player : getPlayers())
         {
             if (player.getName().matches(name))
             {
@@ -85,6 +87,10 @@ public class ClientFacade
         return null;
     }
 
+    /**
+     * Gets the clientPlayer's Player Object, which holds their bank, as well as other things.
+     * @return the Client Player's Player object.
+     */
     public Player getPlayer()
     {
         return getPlayers().get(clientPlayer.getPlayerIndex().getIndex());
@@ -100,6 +106,7 @@ public class ClientFacade
     {
         if (_instance == null)
         {
+            LOGGER.info("Creating new instance of ClientFacade");
             _instance = new ClientFacade();
         }
         return _instance;
@@ -117,21 +124,7 @@ public class ClientFacade
 
     public void sendMessage(String message)
     {
-        // Call the proxy and model to send a chat
         model.updateModel(proxy.sendChat(new SendChatCommand(clientPlayer.getPlayerIndex(), message)));
-    }
-
-    /*
-     * Game History Controller
-     */
-
-    /**
-     * Initializes the game history from a model.
-     */
-
-    public void initHistoryFromModel(ClientModel model)
-    {
-        this.model = model;
     }
 
     /*
@@ -146,8 +139,7 @@ public class ClientFacade
 
     public boolean canBuyDevCard()
     {
-        // model.canBuyDevCard();
-        return false;
+        return model.canBuyDevCard(clientPlayer.getPlayerIndex());
     }
 
     /**
@@ -157,7 +149,7 @@ public class ClientFacade
 
     public void buyDevCard()
     {
-        proxy.buyDevCard(new BuyDevCardCommand(clientPlayer.getPlayerIndex()));
+        model.updateModel(proxy.buyDevCard(new BuyDevCardCommand(clientPlayer.getPlayerIndex())));
     }
 
     /**
@@ -165,10 +157,9 @@ public class ClientFacade
      *
      * @param resource the type of resource the player is getting the monopoly on.
      */
-
     public void playMonopolyCard(ResourceType resource)
     {
-        // proxy.monopoly(new MonopolyCommand(player, resource))
+        model.updateModel(proxy.monopoly(new MonopolyCommand(clientPlayer.getPlayerIndex(), resource)));
     }
 
     /**
@@ -177,19 +168,40 @@ public class ClientFacade
      * @param resource1 The first resource.
      * @param resource2 The second resource.
      */
-
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
-
+        model.updateModel(
+                proxy.yearOfPlenty(new YearOfPlentyCommand(clientPlayer.getPlayerIndex(), resource1, resource2)));
     }
 
     /**
-     * Plays any other kind of Development Card.
+     * Plays a Monument Card.
      */
-
-    public void playOtherDevCard(DevCardType type)
+    public void playMonumentCard()
     {
+        model.updateModel(proxy.monument(new MonumentCommand(clientPlayer.getPlayerIndex())));
+    }
 
+    /**
+     * Plays a Road Building Card.
+     *
+     * @param edge1 the location of the first road.
+     * @param edge2 the location of the second road.
+     */
+    public void playRoadBuildingCard(EdgeLocation edge1, EdgeLocation edge2)
+    {
+        model.updateModel(proxy.roadBuilding(new RoadBuildingCommand(clientPlayer.getPlayerIndex(), edge1, edge2)));
+    }
+
+    /**
+     * Plays a Soldier Card.
+     *
+     * @param info     the info about the player being robbed.
+     * @param location the location that the robber is being placed.
+     */
+    public void playSoldierCard(RobPlayerInfo info, HexLocation location)
+    {
+        model.updateModel(proxy.soldier(new SoldierCommand(clientPlayer.getPlayerIndex(), info, location)));
     }
 
     /*
@@ -197,14 +209,29 @@ public class ClientFacade
      */
 
     /**
-     * Discards the amount of resources set with the increase/decrease methods
+     * Discards the amount of resources set in the Resources object.
      *
      * @param discardedResources the list of resources to discard.
+     * @see Resources
      */
-
     public void discardResources(Resources discardedResources)
     {
+        model.updateModel(proxy.discardCards(new DiscardCardsCommand(clientPlayer.getPlayerIndex(), discardedResources)));
+    }
 
+    /**
+     * Discards the amount of resources specified.
+     *
+     * @param brick the amount of brick
+     * @param ore   the amount of ore
+     * @param sheep the amount of sheep
+     * @param wheat the amount of wheat
+     * @param wood  the amount of wood
+     */
+    public void discardResources(int brick, int ore, int sheep, int wheat, int wood)
+    {
+        model.updateModel(proxy.discardCards(
+                new DiscardCardsCommand(clientPlayer.getPlayerIndex(), brick, ore, sheep, wheat, wood)));
     }
 
     /*
@@ -215,9 +242,10 @@ public class ClientFacade
      * Sends a trade offer to a player.
      */
 
-    public void sendTradeOffer()
+    public void sendTradeOffer(PlayerIndex receiver, int brick, int ore, int sheep, int wheat, int wood)
     {
-
+        model.updateModel(proxy.offerTrade(
+                new OfferTradeCommand(clientPlayer.getPlayerIndex(), receiver, brick, ore, sheep, wheat, wood)));
     }
 
     /**
@@ -228,7 +256,7 @@ public class ClientFacade
 
     public void acceptTrade(boolean willAccept)
     {
-
+        model.updateModel(proxy.acceptTrade(new AcceptTradeCommand(clientPlayer.getPlayerIndex(), willAccept)));
     }
 
     /*
@@ -243,12 +271,13 @@ public class ClientFacade
     /**
      * Creates a new game.
      *
-     * @param request
+     * @param request the information about the game to be created
      */
 
     public void createNewGame(CreateGameRequest request)
     {
         CreateGameResponse response = proxy.createGame(request);
+        model.setGameInfo(response.getGameInfo());
     }
 
     /**
@@ -259,8 +288,7 @@ public class ClientFacade
 
     public void joinGame(int id, CatanColor color) throws GameQueryException
     {
-         proxy.joinGame(new JoinGameRequest(id, color));
-
+        proxy.joinGame(new JoinGameRequest(id, color));
     }
 
     /*
@@ -290,13 +318,7 @@ public class ClientFacade
         try
         {
             proxy.addAI(type);
-        } catch (IllegalArgumentException e)
-        {
-            e.printStackTrace();
-        } catch (GameQueryException e)
-        {
-            e.printStackTrace();
-        } catch (AddAIException e)
+        } catch (IllegalArgumentException | GameQueryException | AddAIException e)
         {
             e.printStackTrace();
         }
@@ -382,88 +404,89 @@ public class ClientFacade
 
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
-        return false;
+        return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertLoc);
     }
 
     /**
      * Checks to see if the player meets the condition to place a city
      *
-     * @param vertLoc the location of the Vertex
+     * @param location the location of the City
      * @return boolean - true if player has the required resources and the
      * player owns the settlement at that location
      * @pre place city is called
      * @post place city continues
      */
 
-    public boolean canPlaceCity(VertexLocation vertLoc)
+    public boolean canPlaceCity(VertexLocation location)
     {
-        return false;
+        return model.canPlaceCity(clientPlayer.getPlayerIndex(), location);
     }
 
     /**
      * Checks to see if player meets the condition to move the robber
      *
-     * @param hexLoc the location of the hex
+     * @param location the location of the hex
      * @return true if a seven has been rolled and the location is viable
      * @pre place robber is called
      * @post place city continues
      */
 
-    public boolean canPlaceRobber(HexLocation hexLoc)
+    public boolean canPlaceRobber(HexLocation location)
     {
-        return false;
+        return model.canMoveRobber(clientPlayer.getPlayerIndex(), location);
     }
 
     /**
      * player purchases and places a road
      *
-     * @param edgeLoc the location of the road
+     * @param location the location of the road
      * @pre player clicks on a location to place road
      * @post player met conditions and road is on map
      */
 
-    public void placeRoad(EdgeLocation edgeLoc, boolean isFree)
+    public void placeRoad(EdgeLocation location, boolean isFree)
     {
-        proxy.buildRoad(new BuildRoadCommand(clientPlayer.getPlayerIndex(), edgeLoc, isFree));
+        model.updateModel(proxy.buildRoad(new BuildRoadCommand(clientPlayer.getPlayerIndex(), location, isFree)));
     }
 
     /**
      * player purchases and places a settlement
      *
-     * @param vertLoc the location of the Settlement
+     * @param location the location of the Settlement
      * @pre player clicks on a location to place a settlement
      * @post player met conditions and settlement is now on map
      */
 
-    public void placeSettlement(VertexLocation vertLoc)
+    public void placeSettlement(VertexLocation location, boolean isFree)
     {
-
+        model.updateModel(
+                proxy.buildSettlement(new BuildSettlementCommand(clientPlayer.getPlayerIndex(), location, isFree)));
     }
 
     /**
      * player purchases and places a city at a location specified
      *
-     * @param vertLoc the location of the City
+     * @param location the location of the City
      * @post a city is now owned by the player
      * @pre player clicks to build on a location
      */
 
-    public void placeCity(VertexLocation vertLoc)
+    public void placeCity(VertexLocation location)
     {
-
+        model.updateModel(proxy.buildCity(new BuildCityCommand(clientPlayer.getPlayerIndex(), location)));
     }
 
     /**
      * Changes the Robbers HexLocation
      *
-     * @param hexLoc the location of the Robber
+     * @param location the location of the Robber
      * @post player robs player
      * @pre player rolls a 7
      */
 
-    public void placeRobber(HexLocation hexLoc)
+    public void placeRobber(HexLocation location)
     {
-
+        // TODO implement placeRobber.
     }
 
     /**
@@ -474,9 +497,9 @@ public class ClientFacade
      * @post player has an extra resource
      */
 
-    public void robPlayer(RobPlayerInfo victim)
+    public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
-
+        model.updateModel(proxy.robPlayer(new RobPlayerCommand(clientPlayer.getPlayerIndex(), victim, location)));
     }
 
     /*
@@ -487,26 +510,12 @@ public class ClientFacade
      * Completes a maritime trade
      */
 
-    public void makeMaritimeTrade(TradeOffer offer)
+    public void makeMaritimeTrade(TradeRatio ratio, ResourceType inputResource, ResourceType outputResource)
     {
-
+        model.updateModel(proxy.maritimeTrade(
+                new MaritimeTradeCommand(clientPlayer.getPlayerIndex(), ratio, inputResource, outputResource)));
     }
 
-    /*
-     * Points Controller methods
-     */
-
-    /**
-     * Updates the players victory points, getting the values from the model
-     *
-     * @post players points reflect the values from the model
-     * @pre model changed
-     */
-
-    public void initPointsFromModel()
-    {
-
-    }
 
     /*
      * Roll Dice Controller methods
@@ -520,7 +529,7 @@ public class ClientFacade
 
     public void rollDice(int diceRollResult)
     {
-        proxy.rollNumber(new RollNumberCommand(clientPlayer.getPlayerIndex(), diceRollResult));
+        model.updateModel(proxy.rollNumber(new RollNumberCommand(clientPlayer.getPlayerIndex(), diceRollResult)));
     }
 
     /*
@@ -535,18 +544,7 @@ public class ClientFacade
 
     public void endTurn()
     {
-
-    }
-
-    /**
-     * Initializes the turn tracker using the model
-     *
-     * @post the turn is now initialized
-     */
-
-    public void initTurnFromModel()
-    {
-
+        model.updateModel(proxy.finishTurn(new FinishTurnCommand(clientPlayer.getPlayerIndex())));
     }
 
     public void setModel(ClientModel newModel)
@@ -560,7 +558,9 @@ public class ClientFacade
     }
 
     /**
-     * @param
+     * Sets the host and port of the proxy to send commands to.
+     * @param host the host to run the proxy on.
+     * @param port the port to run the proxy on.
      */
     public void setProxy(String host, String port)
     {
@@ -568,6 +568,12 @@ public class ClientFacade
 
     }
 
+    /**
+     * Adds an observer to the model to receive it's notifications whenever model.updateModel() is called.
+     * @param observerController the Observer to add.
+     * @see java.util.Observable
+     * @see java.util.Observer
+     */
     public void addObserver(ObserverController observerController)
     {
         model.addObserver(observerController);
@@ -578,13 +584,22 @@ public class ClientFacade
         return model.getGameInfo().getPlayers();
     }
 
-    public int getPlayerPoints(PlayerIndex index){
-        for (Player player : getPlayers()){
-            if (player.getPlayerInfo().getPlayerIndex() == index){
+    /**
+     * This does something, I'm pretty sure. Not sure of what. -Cache
+     * @param index
+     * @return
+     */
+    public int getPlayerPoints(PlayerIndex index)
+    {
+        for (Player player : getPlayers())
+        {
+            if (player.getPlayerInfo().getPlayerIndex() == index)
+            {
                 return player.getBank().getVictoryPoints();
             }
         }
         LOGGER.warning("Couldn't find that player index's points");
         return -1;
+        //TODO get this finished.
     }
 }

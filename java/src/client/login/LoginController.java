@@ -114,7 +114,7 @@ public class LoginController extends Controller implements ILoginController
         try
         {
             String username = getLoginView().getRegisterUsername();
-            if (username == "")
+            if (username.equals(""))
             {
                 throw new ValidationException("Invalid Username/Password");
             }

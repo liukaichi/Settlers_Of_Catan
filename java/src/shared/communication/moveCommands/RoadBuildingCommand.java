@@ -17,9 +17,9 @@ import shared.locations.EdgeLocation;
 public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<RoadBuildingCommand>
 {
     /**
-     * @param playerIndex
-     * @param spot1
-     * @param spot2
+     * @param playerIndex the index of the player playing the card.
+     * @param spot1 the first location to build a road.
+     * @param spot2 the second location to build a road.
      */
     public RoadBuildingCommand(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
     {

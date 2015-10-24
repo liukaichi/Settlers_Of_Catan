@@ -104,11 +104,7 @@ public class Port
             port.addProperty("ratio", this.ratio.getRatio());
             if (this.resource != null)
             {
-                if (this.resource.equals(PortType.THREE))
-                {
-                    // do nothing
-                }
-                else
+                if (!this.resource.equals(PortType.THREE))
                 {
                     port.addProperty("resource", this.resource.toString().toLowerCase());
                 }

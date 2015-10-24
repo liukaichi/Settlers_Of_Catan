@@ -17,10 +17,10 @@ import shared.model.player.TradeOffer;
 public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<MaritimeTradeCommand>
 {
     /**
-     * @param playerIndex
-     * @param ratio
-     * @param inputResource
-     * @param outputResource
+     * @param playerIndex the player sending the maritime trade.
+     * @param ratio the ratio at which the trade is being offered.
+     * @param inputResource the resource the player is sending.
+     * @param outputResource the resource the player is receiving.
      */
     public MaritimeTradeCommand(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
             ResourceType outputResource)
