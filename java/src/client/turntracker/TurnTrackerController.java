@@ -9,12 +9,14 @@ import shared.model.TurnTracker;
 import shared.model.player.Player;
 
 import java.util.Observable;
+import java.util.logging.Logger;
 
 /**
  * Implementation for the turn tracker controller
  */
 public class TurnTrackerController extends ObserverController implements ITurnTrackerController
 {
+    private static final Logger LOGGER = Logger.getLogger(TurnTrackerController.class.getName());
     private ClientFacade facade;
 
     public TurnTrackerController(ITurnTrackerView view)
@@ -50,15 +52,11 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
         TurnTracker turnTracker = model.getTurnTracker();
         PlayerInfo clientPlayer = facade.getClientPlayer();
 
-
-
         getView().setLocalPlayerColor(clientPlayer.getColor());
-
 
         for (Player player : model.getGameInfo().getPlayers())
         {
-            getView().initializePlayer(player.getPlayerIndex().getIndex(), player.getName(),
-                    player.getPlayerColor());
+            getView().initializePlayer(player.getPlayerIndex().getIndex(), player.getName(), player.getPlayerColor());
 
             boolean hasLargestArmy = (turnTracker.getLargestArmy().equals(player.getPlayerIndex()));
             boolean hasLongestRoad = (turnTracker.getLargestArmy().equals(player.getPlayerIndex()));
@@ -70,7 +68,31 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
 
         // TODO This might need to include more statuses
         boolean stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
-        getView().updateGameState(turnTracker.getStatus().toString(),stateButtonEnabled);
+        LOGGER.info(turnTracker.getStatus().toString());
+        String buttonText = turnTracker.getStatus().toString();
+
+        stateButtonEnabled = false;
+        switch (turnTracker.getStatus())
+        {
+        case Rolling:
+            buttonText = "Rolling the Dice, homeslice!";
+            break;
+
+        case Playing:
+            buttonText = "Finish this, homie!";
+            stateButtonEnabled = true;
+            break;
+
+        case Robbing:
+            buttonText = "Let's rob some stuff from people";
+            break;
+
+        default:
+            break;
+        }
+
+
+        getView().updateGameState(buttonText, stateButtonEnabled);
 
     }
 

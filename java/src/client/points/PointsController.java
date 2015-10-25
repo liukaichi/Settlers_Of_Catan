@@ -1,8 +1,10 @@
 package client.points;
 
-import java.util.Observable;
-
 import client.base.ObserverController;
+import client.facade.ClientFacade;
+import shared.model.ClientModel;
+
+import java.util.Observable;
 
 /**
  * Implementation for the points controller
@@ -27,7 +29,6 @@ public class PointsController extends ObserverController implements IPointsContr
 
         setFinishedView(finishedView);
 
-        initFromModel();
     }
 
     public IPointsView getPointsView()
@@ -46,11 +47,9 @@ public class PointsController extends ObserverController implements IPointsContr
         this.finishedView = finishedView;
     }
 
-    private void initFromModel()
+    private void initFromModel(ClientModel model)
     {
-        // <temp>
-        getPointsView().setPoints(5);
-        // </temp>
+
     }
 
     /*
@@ -61,8 +60,9 @@ public class PointsController extends ObserverController implements IPointsContr
     @Override
     public void update(Observable o, Object arg)
     {
-        // TODO Auto-generated method stub
-
+        ClientFacade facade = ClientFacade.getInstance();
+        int points = facade.getPlayerPoints(facade.getPlayer().getPlayerIndex());
+    getPointsView().setPoints(points);
     }
 
 }
