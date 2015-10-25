@@ -20,4 +20,11 @@ public class NotMyTurnState extends GameplayState
     {
         super(controller);
     }
+
+    @Override
+    public void acceptTrade(boolean willAccept)
+    {
+        LOGGER.fine("State calling facade willAccept(" + willAccept + ").");
+        facade.acceptTrade(willAccept);
+    }
 }

@@ -9,7 +9,7 @@ import shared.definitions.PlayerIndex;
 import shared.locations.EdgeLocation;
 
 /**
- * @author cstaheli
+ * This state is used for trading.
  *
  */
 public class SentTradeState extends GameplayState
