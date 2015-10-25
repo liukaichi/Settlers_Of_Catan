@@ -1,7 +1,7 @@
 package client.roll;
 
 import client.base.ObserverController;
-import client.state.NotMyTurnState;
+import client.state.InitialState;
 import shared.definitions.Dice;
 import shared.model.ClientModel;
 
@@ -30,7 +30,7 @@ public class RollController extends ObserverController implements IRollControlle
         setResultView(resultView);
 
         dice = new Dice();
-        state = new NotMyTurnState();
+        state = new InitialState();
 
     }
 

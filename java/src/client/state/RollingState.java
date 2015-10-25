@@ -20,6 +20,7 @@ public class RollingState extends GameplayState
     public RollingState(ObserverController controller)
     {
         super(controller);
+        showModal();
     }
 
     @Override public int rollDice(Dice dice)
