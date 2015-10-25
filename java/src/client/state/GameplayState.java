@@ -43,8 +43,8 @@ public abstract class GameplayState
 
     public GameplayState(ObserverController controller)
     {
+        this();
         this.controller = controller;
-        facade = ClientFacade.getInstance();
     }
 
     public void sendMessage(String message)

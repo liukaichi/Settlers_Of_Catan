@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package client.state;
 
@@ -39,7 +39,7 @@ public class SetupState extends GameplayState
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-    	return ClientFacade.getInstance().canPlaceRoad(edgeLoc); 
+        return ClientFacade.getInstance().canPlaceRoad(edgeLoc);
     }
 
     /*
@@ -51,7 +51,7 @@ public class SetupState extends GameplayState
     @Override
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
-        return ClientFacade.getInstance().canPlaceSettlement(vertLoc); 
+        return ClientFacade.getInstance().canPlaceSettlement(vertLoc);
     }
 
     @Override public void endTurn()

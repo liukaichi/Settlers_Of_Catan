@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Hex
 {
-    private Map<VertexDirection, VertexLocation> vertices = new HashMap<VertexDirection, VertexLocation>();;
+    private Map<VertexDirection, VertexLocation> vertices;
     private Map<EdgeDirection, EdgeLocation> edges = new HashMap<EdgeDirection, EdgeLocation>();
     /**
      * @see shared.definitions.ResourceType
@@ -35,7 +35,7 @@ public class Hex
      * The number assigned to this tile. Range of number is [2-12],
      * representative of the possible rolls of 2 dices
      */
-    private int numberTile; // Do we want this to be a separate class?
+    private int numberTile;
 
     /**
      * This is stored as true if the robber is on this hex.
@@ -44,6 +44,9 @@ public class Hex
 
     public Hex()
     {
+        vertices = new HashMap<>();
+        edges = new HashMap<>();
+        numberTile = -1;
     }
 
     /**
@@ -82,11 +85,11 @@ public class Hex
         {
             for(VertexDirection dir : VertexDirection.values())
             {
-                vertices.put(dir, new VertexLocation(this.location,dir));
+                vertices.put(dir, new VertexLocation(this.location,dir).getNormalizedLocation());
             }
             for(EdgeDirection dir : EdgeDirection.values())
             {
-                edges.put(dir, new EdgeLocation(this.location,dir));
+                edges.put(dir, new EdgeLocation(this.location,dir).getNormalizedLocation());
             }
         }
     }
@@ -105,12 +108,17 @@ public class Hex
      */
     public Hex(HexLocation location, HexType hexType, ResourceType resourceType, int numberTile, boolean robberPresent)
     {
-        this();
-        this.location = location;
-        this.hexType = hexType;
+        this(location, hexType);
         this.resourceType = resourceType;
         this.numberTile = numberTile;
         this.robberPresent = robberPresent;
+    }
+
+    public Hex(HexLocation location, HexType hexType)
+    {
+        this();
+        this.location = location;
+        this.hexType = hexType;
         if(location != null)
         {
             for(VertexDirection dir : VertexDirection.values())

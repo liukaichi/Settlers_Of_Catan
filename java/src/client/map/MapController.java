@@ -6,6 +6,8 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import client.state.GameplayState;
+import client.state.SetupState;
+import com.sun.deploy.util.SessionState;
 import client.state.InitialState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -226,7 +228,7 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return state.canPlaceRoad(edgeLoc);
+        return state.canPlaceRoad(edgeLoc.getNormalizedLocation());
     }
 
     @Override
@@ -253,8 +255,10 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void placeRoad(EdgeLocation edgeLoc)
     {
-        state.placeRoad(edgeLoc);
-        getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+        //state.placeRoad(edgeLoc);
+        ClientFacade.getInstance().placeRoad(edgeLoc, true);
+
+        getView().placeRoad(edgeLoc, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
     @Override
