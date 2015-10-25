@@ -29,10 +29,6 @@ public abstract class ObserverController extends Controller implements Observer
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     @Override
-    public void update(Observable arg0, Object arg1)
-    {
-        // TODO Auto-generated method stub
-
-    }
+    public abstract void update(Observable observable, Object o);
 
 }
