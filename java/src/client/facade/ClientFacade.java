@@ -1,7 +1,9 @@
 package client.facade;
 
 import client.base.ObserverController;
-import client.data.*;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
+import client.poller.Poller;
 import server.proxy.IProxy;
 import server.proxy.ServerProxy;
 import shared.communication.*;
@@ -34,11 +36,13 @@ public class ClientFacade
     private IProxy proxy;
     private PlayerInfo clientPlayer;
     private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
+    private Poller poller;
 
     private ClientFacade()
     {
         model = new ClientModel();
         proxy = new ServerProxy();
+        //poller = new Poller(proxy);
     }
 
     private void setClientPlayer(PlayerInfo clientPlayer)
@@ -572,7 +576,7 @@ public class ClientFacade
     public void setProxy(String host, String port)
     {
         proxy = new ServerProxy(host, port);
-
+        poller.setProxy(proxy);
     }
 
     /**
@@ -611,5 +615,10 @@ public class ClientFacade
         LOGGER.warning("Couldn't find that player index's points");
         return -1;
         //TODO get this finished.
+    }
+
+    public HexLocation getRobberLocation()
+    {
+        return getModel().getMap().getRobberLocation();
     }
 }

@@ -5,6 +5,7 @@ package client.state;
 
 import client.base.ObserverController;
 import client.roll.RollController;
+import client.turntracker.TurnTrackerController;
 import shared.definitions.Dice;
 
 import java.util.logging.Logger;
@@ -20,7 +21,6 @@ public class RollingState extends GameplayState
     public RollingState(ObserverController controller)
     {
         super(controller);
-        showModal();
     }
 
     @Override public int rollDice(Dice dice)
@@ -44,5 +44,11 @@ public class RollingState extends GameplayState
     @Override public void showModal()
     {
         ((RollController) controller).getRollView().showModal();
+    }
+
+    @Override public void setTurnTrackerInfo(ObserverController newController)
+    {
+        TurnTrackerController turnTrackerController = ((TurnTrackerController) newController);
+        turnTrackerController.getView().updateGameState("Rolling the Dice, homeslice!", false);
     }
 }

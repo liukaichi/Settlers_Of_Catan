@@ -4,6 +4,7 @@
 package client.state;
 
 import client.base.ObserverController;
+import client.turntracker.TurnTrackerController;
 
 import java.util.logging.Logger;
 
@@ -19,5 +20,11 @@ public class NotMyTurnState extends GameplayState
     public NotMyTurnState(ObserverController controller)
     {
         super(controller);
+    }
+
+    @Override public void setTurnTrackerInfo(ObserverController newController)
+    {
+        TurnTrackerController turnTrackerController = ((TurnTrackerController) newController);
+        turnTrackerController.getView().updateGameState("Just hangin' out.", false);
     }
 }

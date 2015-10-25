@@ -20,11 +20,16 @@ import java.util.TimerTask;
 public class Poller
 {
 
+    public void setProxy(IProxy proxy)
+    {
+        this.proxy = proxy;
+    }
+
     private IProxy proxy;
     private PollTask pollTask;
     private int currentVersion = 0;
 
-    Poller(IProxy proxy)
+    public Poller(IProxy proxy)
     {
         this.proxy = proxy;
         pollTask = new PollTask(this.proxy);

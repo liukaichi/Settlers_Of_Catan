@@ -472,6 +472,10 @@ public abstract class GameplayState
 
     }
 
+    public void setTurnTrackerInfo(ObserverController newController)
+    {
+
+    }
 }
 
 

@@ -54,4 +54,10 @@ public class SetupState extends GameplayState
         return ClientFacade.getInstance().canPlaceSettlement(vertLoc); 
     }
 
+    @Override public void endTurn()
+    {
+        LOGGER.info("Ending Turn");
+        facade.endTurn();
+    }
+
 }

@@ -70,5 +70,6 @@ public class RollController extends ObserverController implements IRollControlle
 
         ClientModel model = (ClientModel) observable;
         state.update(this, model, o);
+        state.showModal();
     }
 }

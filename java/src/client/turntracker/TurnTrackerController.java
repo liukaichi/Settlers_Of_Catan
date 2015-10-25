@@ -19,6 +19,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
 {
     private static final Logger LOGGER = Logger.getLogger(TurnTrackerController.class.getName());
     private ClientFacade facade;
+    private boolean stateButtonEnabled = false;
 
     public TurnTrackerController(ITurnTrackerView view)
     {
@@ -68,41 +69,20 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
         }
 
         // TODO This might need to include more statuses
-        boolean stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
+        stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
         LOGGER.info(turnTracker.getStatus().toString());
-        String buttonText = turnTracker.getStatus().toString();
+        LOGGER.info("My turn: " + (turnTracker.getCurrentTurn() == facade.getClientPlayer().getPlayerIndex()));
 
-        stateButtonEnabled = false;
-        switch (turnTracker.getStatus())
-        {
-        case Rolling:
-            buttonText = "Rolling the Dice, homeslice!";
-            break;
-
-        case Playing:
-            buttonText = "Finish this, homie!";
-            stateButtonEnabled = true;
-            break;
-
-        case Robbing:
-            buttonText = "Let's rob some stuff from people";
-            break;
-
-        default:
-            break;
-        }
-
-
-        getView().updateGameState(buttonText, stateButtonEnabled);
+        state.setTurnTrackerInfo(this);
 
     }
 
     @Override public void update(Observable o, Object arg)
     {
         ClientModel model = (ClientModel) o;
-
+        state.update(this, model, arg);
         this.initFromModel(model);
-        state.update(this, model, model.getTurnTracker().getStatus());
 
     }
+
 }

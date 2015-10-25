@@ -4,8 +4,9 @@ import client.base.ObserverController;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
+import client.facade.ClientFacade;
 import client.state.GameplayState;
-import client.state.SetupState;
+import client.state.InitialState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -31,6 +32,7 @@ public class MapController extends ObserverController implements IMapController
     private IRobView robView;
     private GameplayState state;
     private PlayerInfo currentPlayer;
+    private ClientFacade facade;
     private static final Logger LOGGER = Logger.getLogger(MapController.class.getName());
 
     public MapController(IMapView view, IRobView robView)
@@ -42,8 +44,9 @@ public class MapController extends ObserverController implements IMapController
 
         setupWater();
 
-        state = new SetupState(this, null);
+        state = new InitialState();
 
+        facade = ClientFacade.getInstance();
         /*
         // @formatter:off
         try
@@ -96,7 +99,7 @@ public class MapController extends ObserverController implements IMapController
         return (IMapView) super.getView();
     }
 
-    private IRobView getRobView()
+    public IRobView getRobView()
     {
         return robView;
     }
@@ -275,6 +278,7 @@ public class MapController extends ObserverController implements IMapController
         getView().placeRobber(hexLoc);
 
         getRobView().showModal();
+        facade.placeRobber(hexLoc);
     }
 
     @Override
@@ -305,7 +309,8 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void robPlayer(RobPlayerInfo victim)
     {
-
+        getRobView().closeModal();
+        facade.robPlayer(victim, facade.getRobberLocation());
     }
 
     /*
