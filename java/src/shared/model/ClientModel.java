@@ -65,7 +65,7 @@ public class ClientModel extends Observable
         this.version = model.version;
         this.winner = model.winner;
         this.setChanged();
-        this.notifyObservers();
+        this.notifyObservers(turnTracker.getStatus());
     }
 
     public ClientModel(String json)

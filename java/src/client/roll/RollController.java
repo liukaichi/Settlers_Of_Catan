@@ -1,9 +1,8 @@
 package client.roll;
 
 import client.base.ObserverController;
-import shared.definitions.Dice;
-import client.base.Controller;
 import client.facade.ClientFacade;
+import shared.definitions.Dice;
 
 import java.util.Observable;
 
