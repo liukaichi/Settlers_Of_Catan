@@ -3,6 +3,7 @@ package client.turntracker;
 import client.base.ObserverController;
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;
+import client.state.InitialState;
 import shared.definitions.TurnStatus;
 import shared.model.ClientModel;
 import shared.model.TurnTracker;
@@ -23,7 +24,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
     {
 
         super(view);
-
+        state = new InitialState();
         facade = ClientFacade.getInstance();
     }
 
@@ -39,7 +40,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
      */
     @Override public void endTurn()
     {
-
+        state.endTurn();
     }
 
     /**
@@ -101,6 +102,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
         ClientModel model = (ClientModel) o;
 
         this.initFromModel(model);
+        state.update(this, model, model.getTurnTracker().getStatus());
 
     }
 }

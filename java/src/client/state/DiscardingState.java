@@ -4,6 +4,7 @@
 package client.state;
 
 import client.base.ObserverController;
+import client.discard.DiscardController;
 
 import java.util.logging.Logger;
 
@@ -24,5 +25,6 @@ public class DiscardingState extends GameplayState
     @Override public void showModal()
     {
         super.showModal();
+        ((DiscardController) controller).getDiscardView().showModal();
     }
 }

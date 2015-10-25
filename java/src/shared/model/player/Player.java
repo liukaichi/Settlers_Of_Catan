@@ -68,11 +68,6 @@ public class Player
         bank = new PlayerBank();
         info = new PlayerInfo();
 
-        this.bank.getStructures().getStructure(StructureType.CITY).setAmountBuilt(jobj.get("cities").getAsInt());
-        this.bank.getStructures().getStructure(StructureType.SETTLEMENT)
-                .setAmountBuilt(jobj.get("settlements").getAsInt());
-        this.bank.getStructures().getStructure(StructureType.ROAD).setAmountBuilt(jobj.get("roads").getAsInt());
-
         this.bank.setKnights(jobj.get("soldiers").getAsInt());
         this.bank.setMonuments(jobj.get("monuments").getAsInt());
         this.bank.setVictoryPoints(jobj.get("victoryPoints").getAsInt());

@@ -97,6 +97,9 @@ public class ClientFacade
      */
     public Player getPlayer()
     {
+        if(getPlayers() == null){
+            return null;
+        }
         return getPlayers().get(clientPlayer.getPlayerIndex().getIndex());
     }
 
@@ -585,6 +588,9 @@ public class ClientFacade
 
     public List<Player> getPlayers()
     {
+        if(model.getGameInfo() == null){
+            return null;
+        }
         return model.getGameInfo().getPlayers();
     }
 

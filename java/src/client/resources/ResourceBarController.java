@@ -3,6 +3,20 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
+import client.facade.ClientFacade;
+import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
+import shared.definitions.StructureType;
+import shared.definitions.exceptions.InsufficientResourcesException;
+import shared.model.ClientModel;
+import shared.model.bank.Bank;
+import shared.model.bank.PlayerBank;
+import shared.model.bank.card.DevCards;
+import shared.model.bank.resource.Resource;
+import shared.model.bank.resource.Resources;
+import shared.model.bank.structure.Structure;
+import shared.model.bank.structure.Structures;
+import shared.model.player.Player;
 
 
 /**
@@ -11,12 +25,15 @@ import client.base.*;
 public class ResourceBarController extends ObserverController implements IResourceBarController {
 
     private Map<ResourceBarElement, IAction> elementActions;
+    private ClientFacade facade;
 
     public ResourceBarController(IResourceBarView view) {
 
         super(view);
 
         elementActions = new HashMap<ResourceBarElement, IAction>();
+        facade = ClientFacade.getInstance();
+        setResources();
     }
 
     @Override
@@ -42,6 +59,27 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     public void setResources()
     {
+        Player player = facade.getPlayer();
+        if(player != null) {
+            PlayerBank bank = player.getBank();
+
+            Resources resources = bank.getResources();
+            Structures structures = bank.getStructures();
+
+            // testing
+            resources.setAmount(ResourceType.WHEAT, 5);
+            structures.getStructure(StructureType.ROAD).setAmountBuilt(3);
+
+            getView().setElementAmount(ResourceBarElement.WHEAT, resources.getAmount(ResourceType.WHEAT));
+            getView().setElementAmount(ResourceBarElement.SHEEP, resources.getAmount(ResourceType.SHEEP));
+            getView().setElementAmount(ResourceBarElement.WOOD, resources.getAmount(ResourceType.WOOD));
+            getView().setElementAmount(ResourceBarElement.ORE, resources.getAmount(ResourceType.ORE));
+            getView().setElementAmount(ResourceBarElement.BRICK, resources.getAmount(ResourceType.BRICK));
+
+            getView().setElementAmount(ResourceBarElement.ROAD, structures.getStructure(StructureType.ROAD).getAmountBuilt());
+            getView().setElementAmount(ResourceBarElement.SETTLEMENT, structures.getStructure(StructureType.SETTLEMENT).getAmountBuilt());
+            getView().setElementAmount(ResourceBarElement.CITY, structures.getStructure(StructureType.CITY).getAmountBuilt());
+        }
 
 
     }
@@ -104,6 +142,7 @@ public class ResourceBarController extends ObserverController implements IResour
     @Override public void update(Observable o, Object arg)
     {
 
+        setResources();
     }
 }
 

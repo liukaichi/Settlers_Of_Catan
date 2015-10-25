@@ -1,13 +1,15 @@
 package client.turntracker;
 
-import java.awt.*;
+import client.base.IAction;
+import client.base.IController;
+import client.base.PanelView;
+import client.catan.GameStatePanel;
+import client.catan.TitlePanel;
+import client.utils.ImageUtils;
+import shared.definitions.CatanColor;
 
 import javax.swing.*;
-
-import shared.definitions.*;
-import client.base.*;
-import client.catan.*;
-import client.utils.ImageUtils;
+import java.awt.*;
 
 
 /**

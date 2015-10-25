@@ -16,6 +16,8 @@ import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.TradeOffer;
 
+import java.util.logging.Logger;
+
 /**
  * @author cstaheli
  */
@@ -23,7 +25,7 @@ public abstract class GameplayState
 {
     protected ClientFacade facade;
     protected ObserverController controller;
-    protected TurnStatus currentStatus;
+    private static final Logger LOGGER = Logger.getLogger(GameplayState.class.getName());
 
     public GameplayState()
     {
@@ -424,45 +426,52 @@ public abstract class GameplayState
     {
         if (state instanceof TurnStatus)
         {
-            boolean newState = true;
             TurnStatus newStatus = (TurnStatus) state;
-            if (newStatus.equals(currentStatus))
+            if (model.getTurnTracker().getCurrentTurn() != facade.getClientPlayer().getPlayerIndex())
             {
-                newState = false;
-            }
-            switch (newStatus)
+                switch (newStatus)
+                {
+                case Discarding:
+                    controller.setState(new DiscardingState(controller));
+                    break;
+                default:
+                    controller.setState(new NotMyTurnState(controller));
+                }
+            } else
             {
-            case Rolling:
-                controller.setState(new RollingState(controller));
-                break;
+                switch (newStatus)
+                {
+                case Rolling:
+                    controller.setState(new RollingState(controller));
+                    break;
 
-            case Playing:
-                controller.setState(new PlayingState(controller));
-                break;
+                case Playing:
+                    controller.setState(new PlayingState(controller));
+                    break;
 
-            case Robbing:
-                controller.setState(new RobbingState(controller));
-                break;
+                case Robbing:
+                    controller.setState(new RobbingState(controller));
+                    break;
 
-            case Discarding:
-                controller.setState(new DiscardingState(controller));
-                break;
+                case Discarding:
+                    controller.setState(new DiscardingState(controller));
+                    break;
 
-            case FirstRound:
-                controller.setState(new SetupState(controller, TurnStatus.FirstRound));
-                break;
+                case FirstRound:
+                    controller.setState(new SetupState(controller, TurnStatus.FirstRound));
+                    break;
 
-            case SecondRound:
-                controller.setState(new SetupState(controller, TurnStatus.SecondRound));
-                break;
-            default:
-                break;
-            }
-            if (newState){
-                showModal();
+                case SecondRound:
+                    controller.setState(new SetupState(controller, TurnStatus.SecondRound));
+                    break;
+                default:
+                    break;
+                }
             }
         }
 
     }
 
 }
+
+

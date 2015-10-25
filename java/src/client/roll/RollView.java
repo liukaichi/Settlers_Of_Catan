@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Implementation for the roll view, which allows the user to roll the dice
@@ -25,7 +26,7 @@ public class RollView extends OverlayView implements IRollView {
     private JLabel imageLabel;
 	private JButton rollButton;
 	private JPanel buttonPanel;
-
+	private Logger LOGGER = Logger.getLogger(RollView.class.getName());
 	public RollView() {
 		
 		this.setOpaque(true);
@@ -85,6 +86,7 @@ public class RollView extends OverlayView implements IRollView {
 
 	@Override public void showModal()
 	{
+		LOGGER.info("Showing Roll Dice Modal");
 		super.showModal();
 		RollTask rollTask = new RollTask(this);
 		java.util.Timer timer;
