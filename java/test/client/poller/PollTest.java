@@ -16,7 +16,7 @@ public class PollTest extends TestCase
 {
     ClientModel clientModel;
     /**
-     * Tests the ability to update through a test before the Poller is able to poll and after.
+     * Tests the ability to update through a test before the Poller is able to roll and after.
      * The version number on the client is checked to verify correct changes are made.
      * @throws Exception
      */
@@ -35,7 +35,7 @@ public class PollTest extends TestCase
     }
 
     /**
-     * Tests the timer feature of the poll to update the model.
+     * Tests the timer feature of the roll to update the model.
      * @param proxy
      * @throws Exception
      */

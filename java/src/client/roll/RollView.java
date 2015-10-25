@@ -1,19 +1,15 @@
 package client.roll;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+import client.base.OverlayView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import client.base.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Implementation for the roll view, which allows the user to roll the dice
@@ -48,7 +44,7 @@ public class RollView extends OverlayView implements IRollView {
             imageLabel = new JLabel(new ImageIcon(smallDiceImg));
             this.add(imageLabel, BorderLayout.CENTER);
         } catch (IOException ex) {
-            // Handle Exception Here
+            //handle exception
         }
 
 		rollButton = new JButton("Roll!");
@@ -87,6 +83,14 @@ public class RollView extends OverlayView implements IRollView {
 		label.setText(message);
 	}
 
+	@Override public void showModal()
+	{
+		super.showModal();
+		RollTask rollTask = new RollTask(this);
+		java.util.Timer timer;
+		timer = new java.util.Timer();
+		timer.schedule(rollTask, 3000);
+	}
 }
 
 

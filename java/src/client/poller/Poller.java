@@ -50,7 +50,7 @@ public class Poller
     /*---------POLL INNER CLASS----------*/
 
     /**
-     * This class extends TimerTask. This will allow for Poller to be able to run PollTask() on regular intervals
+     * This class extends TimerTask. This will allow for Poller to be able to run RollTask() on regular intervals
      */
     public class PollTask extends TimerTask
     {
