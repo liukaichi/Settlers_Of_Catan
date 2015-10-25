@@ -4,7 +4,9 @@
 package client.state;
 
 import client.base.Controller;
+import client.base.ObserverController;
 import client.data.*;
+import client.facade.ClientFacade;
 import shared.communication.Credentials;
 import shared.definitions.*;
 import shared.locations.*;
@@ -18,7 +20,12 @@ import shared.model.player.TradeOffer;
  */
 public abstract class GameplayState
 {
+    protected ClientFacade facade;
 
+    public GameplayState()
+    {
+        facade = ClientFacade.getInstance();
+    }
     /*
      * Chat Controller methods
      */
@@ -394,25 +401,20 @@ public abstract class GameplayState
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#initTurnFromModel()
-     */
-
-    public void initTurnFromModel()
-    {
-
-    }
 
     /**
-     * @param mapController
-     * @param model
-     * @param arg
+     * @param controller the controller that is calling this state.
+     * @param model the clientModel that was updated.
+     * @param state the state that the ClientModel's turnTracker contains.
      */
-    public void update(Controller mapController, ClientModel model, Object arg)
+    public void update(ObserverController controller, ClientModel model, Object state)
     {
+        if (state instanceof TurnStatus)
+        {
+            TurnStatus turnStatus = (TurnStatus) state;
+        }
 
+        controller.setState(new RollingState());
     }
 
 }

@@ -1,8 +1,11 @@
 package client.roll;
 
 import client.base.ObserverController;
-import client.facade.ClientFacade;
+import client.state.GameplayState;
 import shared.definitions.Dice;
+import client.base.Controller;
+import client.facade.ClientFacade;
+import shared.model.ClientModel;
 
 import java.util.Observable;
 
@@ -14,6 +17,7 @@ public class RollController extends ObserverController implements IRollControlle
 
     private IRollResultView resultView;
     private Dice dice;
+    private GameplayState state;
 
     /**
      * RollController constructor
@@ -31,6 +35,7 @@ public class RollController extends ObserverController implements IRollControlle
         setResultView(resultView);
 
         dice = new Dice();
+
     }
 
     public IRollResultView getResultView()
@@ -62,12 +67,15 @@ public class RollController extends ObserverController implements IRollControlle
     	getRollView().closeModal();
     	int diceRollResult = dice.rollDice();
     	ClientFacade.getInstance().rollDice(diceRollResult);
+        state.rollDice();
     	getResultView().setRollValue(diceRollResult);
         getResultView().showModal();
+
     }
 
     @Override public void update(Observable observable, Object o)
     {
-
+        ClientModel model = (ClientModel) observable;
+        state.update(this, model, o);
     }
 }

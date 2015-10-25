@@ -4,6 +4,7 @@
 package client.base;
 
 import client.facade.ClientFacade;
+import client.state.GameplayState;
 
 import java.util.*;
 
@@ -13,7 +14,7 @@ import java.util.*;
  */
 public abstract class ObserverController extends Controller implements Observer
 {
-
+    protected GameplayState state;
     /**
      * @param view
      */
@@ -21,6 +22,11 @@ public abstract class ObserverController extends Controller implements Observer
     {
         super(view);
         ClientFacade.getInstance().addObserver(this);
+    }
+
+    public void setState(GameplayState state)
+    {
+        this.state = state;
     }
 
     /*
