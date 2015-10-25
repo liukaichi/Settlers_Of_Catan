@@ -114,7 +114,10 @@ public class MapController extends ObserverController implements IMapController
         for (Hex hex : hexes.values())
         {
             getView().addHex(hex.getLocation(), hex.getHexType());
-            getView().addNumber(hex.getLocation(), hex.getNumberTile());
+            if(hex.getNumberTile() != -1)
+                getView().addNumber(hex.getLocation(), hex.getNumberTile());
+            else
+                getView().placeRobber(hex.getLocation());
             LOGGER.fine("Adding Hex." + hex);
         }
 
