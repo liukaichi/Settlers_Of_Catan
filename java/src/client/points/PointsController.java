@@ -47,11 +47,6 @@ public class PointsController extends ObserverController implements IPointsContr
         this.finishedView = finishedView;
     }
 
-    private void initFromModel(ClientModel model)
-    {
-
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -62,7 +57,12 @@ public class PointsController extends ObserverController implements IPointsContr
     {
         ClientFacade facade = ClientFacade.getInstance();
         int points = facade.getPlayerPoints(facade.getPlayer().getPlayerIndex());
-    getPointsView().setPoints(points);
+        getPointsView().setPoints(points);
+        
+        if (points == 10)
+        {
+        	getFinishedView(); 
+        }
     }
 
 }

@@ -45,22 +45,55 @@ public class GameStatePanel extends JPanel
 		
 		if (playerInfo != null)
 		{
-			CatanColor color = playerInfo.getColor();
-			//Color playerColor = Color.FromName(color.toString());
-			Color playerColor = new Color(0); 
-			try {
+			CatanColor catanColor = playerInfo.getColor();
+			String playerColor = catanColor.toString();
+			Color color;
 			
-			    Field field = Class.forName("java.awt.Color").getField(color.toString());
-			    playerColor = (Color)field.get(null);
-			} 
-			catch (Exception e) 
-			{
-			    color = null; // Not defined
-			}
-			
-			
-			button.setBorder(BorderFactory.createLineBorder(playerColor, 3));
-		
+			switch (playerColor)
+            {
+            case "YELLOW":
+            	color = new Color(253, 228, 123);
+            	break;
+            	
+            case "BLUE":
+            	color = new Color(111, 183, 246);
+            	break;
+            	
+            case "PURPLE":
+            	color = new Color(164, 148, 215);
+            	break;
+            	
+            case "PUCE":
+            	color = new Color(215, 163, 176);
+            	break;
+            	
+            case "BROWN":
+            	color = new Color(165, 148, 118);
+            	break;
+
+            case "ORANGE":
+            	color = new Color(255, 165, 0);
+            	break;
+            	
+            case "RED":
+            	color = new Color(227, 66, 52);
+            	break;
+            	
+            case "GREEN":
+            	color = new Color(109, 192, 102);
+            	break;
+            	
+            case "WHITE":
+            	color = new Color(255, 255, 255);
+            	break;
+            	
+            default:
+            	color = new Color(0, 0, 0);	
+            	break;
+            }
+			button.setBackground(color);
+			button.setBorder(BorderFactory.createLineBorder(color, 3));
+			this.repaint();
 		}
 		
 	}
