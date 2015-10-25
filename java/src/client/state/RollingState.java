@@ -1,26 +1,47 @@
 /**
- * 
+ *
  */
 package client.state;
 
-import java.util.logging.Logger;
-
+import client.base.ObserverController;
+import client.roll.RollController;
 import shared.definitions.Dice;
-import shared.definitions.PlayerIndex;
-import shared.locations.EdgeLocation;
+
+import java.util.logging.Logger;
 
 /**
  * @author cstaheli
- *
  */
 public class RollingState extends GameplayState
 {
     /* Logger */
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
-    @Override
-    public Dice rollDice()
+    public RollingState(ObserverController controller)
     {
-        return super.rollDice();
+        super(controller);
+    }
+
+    @Override public int rollDice(Dice dice)
+    {
+        int diceRollResult = -1;
+        if (controller instanceof RollController)
+        {
+            RollController rollController = (RollController) controller;
+            diceRollResult = dice.rollDice();
+            rollController.getResultView().setRollValue(diceRollResult);
+            facade.rollDice(diceRollResult);
+            rollController.getResultView().showModal();
+        }
+        else{
+            LOGGER.severe("The controller who called rollDice() was not RollController");
+        }
+
+        return diceRollResult;
+    }
+
+    @Override public void showModal()
+    {
+        ((RollController) controller).getRollView().showModal();
     }
 }

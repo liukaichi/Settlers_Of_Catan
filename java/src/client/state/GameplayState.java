@@ -1,26 +1,28 @@
 /**
- * 
+ *
  */
 package client.state;
 
-import client.base.Controller;
 import client.base.ObserverController;
-import client.data.*;
+import client.data.GameInfo;
+import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import shared.communication.Credentials;
 import shared.definitions.*;
-import shared.locations.*;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.TradeOffer;
 
 /**
  * @author cstaheli
- *
  */
 public abstract class GameplayState
 {
     protected ClientFacade facade;
+    protected ObserverController controller;
 
     public GameplayState()
     {
@@ -35,6 +37,12 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#sendMessage(shared.definitions.
      * PlayerIndex, java.lang.String)
      */
+
+    public GameplayState(ObserverController controller)
+    {
+        this.controller = controller;
+        facade = ClientFacade.getInstance();
+    }
 
     public void sendMessage(String message)
     {
@@ -381,10 +389,14 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#rollDice()
      */
 
-    public Dice rollDice()
+    public int rollDice(Dice dice)
     {
         // roll dice
-        return null;
+        return -1;
+    }
+
+    public void showModal(){
+        return;
     }
 
     /*
@@ -401,20 +413,46 @@ public abstract class GameplayState
 
     }
 
-
     /**
      * @param controller the controller that is calling this state.
-     * @param model the clientModel that was updated.
-     * @param state the state that the ClientModel's turnTracker contains.
+     * @param model      the clientModel that was updated.
+     * @param state      the state that the ClientModel's turnTracker contains.
      */
     public void update(ObserverController controller, ClientModel model, Object state)
     {
         if (state instanceof TurnStatus)
         {
             TurnStatus turnStatus = (TurnStatus) state;
+            switch (turnStatus)
+            {
+            case Rolling:
+                controller.setState(new RollingState(controller));
+                break;
+
+            case Playing:
+                controller.setState(new PlayingState(controller));
+                break;
+
+            case Robbing:
+                controller.setState(new RobbingState(controller));
+                break;
+
+            case Discarding:
+                controller.setState(new DiscardingState(controller));
+                break;
+
+            case FirstRound:
+                controller.setState(new SetupState(controller, TurnStatus.FirstRound));
+                break;
+
+            case SecondRound:
+                controller.setState(new SetupState(controller, TurnStatus.SecondRound));
+                break;
+            default:
+                break;
+            }
         }
 
-        controller.setState(new RollingState());
     }
 
 }

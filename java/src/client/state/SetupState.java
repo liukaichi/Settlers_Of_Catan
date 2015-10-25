@@ -3,12 +3,13 @@
  */
 package client.state;
 
-import java.util.logging.Logger;
-
+import client.base.ObserverController;
 import client.facade.ClientFacade;
-import shared.definitions.PlayerIndex;
+import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
+
+import java.util.logging.Logger;
 
 /**
  * @author cstaheli
@@ -18,7 +19,14 @@ public class SetupState extends GameplayState
 {
     /* Logger */
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
-    
+
+    private TurnStatus turnStatus;
+    public SetupState(ObserverController controller, TurnStatus firstRound)
+    {
+        super(controller);
+        turnStatus = firstRound;
+    }
+
     /*
      * Map controller methods
      */

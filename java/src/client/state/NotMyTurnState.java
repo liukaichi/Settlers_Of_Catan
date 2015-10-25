@@ -13,4 +13,5 @@ public class NotMyTurnState extends GameplayState
 {
     /* Logger */
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+
 }

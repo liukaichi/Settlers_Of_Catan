@@ -1,19 +1,26 @@
 package client.map;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.logging.Logger;
-
 import client.base.ObserverController;
-import client.data.*;
-import client.state.*;
-import shared.definitions.*;
-import shared.locations.*;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
+import client.state.GameplayState;
+import client.state.SetupState;
+import shared.definitions.CatanColor;
+import shared.definitions.HexType;
+import shared.definitions.PieceType;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
-import shared.model.map.*;
+import shared.model.map.CatanMap;
+import shared.model.map.Hex;
 import shared.model.map.structure.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Observable;
+import java.util.logging.Logger;
 
 /**
  * Implementation for the map controller
@@ -35,7 +42,7 @@ public class MapController extends ObserverController implements IMapController
 
         setupWater();
 
-        state = new SetupState();
+        state = new SetupState(this, null);
 
         /*
         // @formatter:off
@@ -107,7 +114,7 @@ public class MapController extends ObserverController implements IMapController
         for (Hex hex : hexes.values())
         {
             getView().addHex(hex.getLocation(), hex.getHexType());
-            // getView().addNumber(hex.getLocation(), hex.getNumberTile());
+            getView().addNumber(hex.getLocation(), hex.getNumberTile());
             LOGGER.fine("Adding Hex." + hex);
         }
 
