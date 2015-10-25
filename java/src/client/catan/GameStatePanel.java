@@ -109,6 +109,7 @@ public class GameStatePanel extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				action.execute();
+
 			}
 		};
 		button.addActionListener(actionListener);
