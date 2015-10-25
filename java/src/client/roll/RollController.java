@@ -2,7 +2,6 @@ package client.roll;
 
 import client.base.ObserverController;
 import client.state.NotMyTurnState;
-import client.state.RollingState;
 import shared.definitions.Dice;
 import shared.model.ClientModel;
 
@@ -70,14 +69,6 @@ public class RollController extends ObserverController implements IRollControlle
     {
 
         ClientModel model = (ClientModel) observable;
-        if (state instanceof RollingState)
-        {
-            state.update(this, model, o);
-        } else
-        {
-            state.update(this, model, o);
-            state.showModal();
-        }
-
+        state.update(this, model, o);
     }
 }

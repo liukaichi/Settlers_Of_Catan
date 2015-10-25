@@ -23,6 +23,7 @@ public abstract class GameplayState
 {
     protected ClientFacade facade;
     protected ObserverController controller;
+    protected TurnStatus currentStatus;
 
     public GameplayState()
     {
@@ -395,7 +396,8 @@ public abstract class GameplayState
         return -1;
     }
 
-    public void showModal(){
+    public void showModal()
+    {
         return;
     }
 
@@ -422,8 +424,13 @@ public abstract class GameplayState
     {
         if (state instanceof TurnStatus)
         {
-            TurnStatus turnStatus = (TurnStatus) state;
-            switch (turnStatus)
+            boolean newState = true;
+            TurnStatus newStatus = (TurnStatus) state;
+            if (newStatus.equals(currentStatus))
+            {
+                newState = false;
+            }
+            switch (newStatus)
             {
             case Rolling:
                 controller.setState(new RollingState(controller));
@@ -450,6 +457,9 @@ public abstract class GameplayState
                 break;
             default:
                 break;
+            }
+            if (newState){
+                showModal();
             }
         }
 

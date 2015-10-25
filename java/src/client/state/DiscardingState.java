@@ -20,4 +20,9 @@ public class DiscardingState extends GameplayState
     {
         super(controller);
     }
+
+    @Override public void showModal()
+    {
+        super.showModal();
+    }
 }
