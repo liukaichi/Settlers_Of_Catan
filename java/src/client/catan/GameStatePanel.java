@@ -3,7 +3,6 @@ package client.catan;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 
 import javax.swing.*;
 import shared.definitions.CatanColor;
