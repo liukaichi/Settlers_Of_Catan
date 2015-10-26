@@ -278,7 +278,7 @@ public class MapController extends ObserverController implements IMapController
     {
         state.placeRobber(hexLocation);
         getView().placeRobber(hexLocation);
-        getRobView().setPlayers(facade.getRobPlayerInfo());
+//        getRobView().setPlayers(facade.getRobPlayerInfo());
         getRobView().showModal();
     }
 
