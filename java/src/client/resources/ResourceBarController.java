@@ -110,10 +110,7 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     @Override public void buildRoad()
     {
-        if (state.canBuyRoad())
-        {
             executeElementAction(ResourceBarElement.ROAD);
-        }
     }
 
     /**
@@ -121,10 +118,7 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     @Override public void buildSettlement()
     {
-        if (state.canBuySettlement())
-        {
             executeElementAction(ResourceBarElement.SETTLEMENT);
-        }
     }
 
     /**
@@ -132,18 +126,12 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     @Override public void buildCity()
     {
-        if (state.canBuyCity())
-        {
             executeElementAction(ResourceBarElement.CITY);
-        }
     }
 
     @Override public void buyCard()
     {
-        if (state.canBuyDevCard())
-        {
             executeElementAction(ResourceBarElement.BUY_CARD);
-        }
     }
 
     /**

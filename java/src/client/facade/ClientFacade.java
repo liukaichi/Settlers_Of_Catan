@@ -647,7 +647,8 @@ public class ClientFacade
         List<RobPlayerInfo> robPlayerInfos = new ArrayList<>();
         for (PlayerIndex index : model.getMap().getHexPlayers(hexLocation))
         {
-            robPlayerInfos.add(new RobPlayerInfo(index, getPlayerByIndex(index).getResourceCount()));
+            if(!getClientPlayer().getPlayerIndex().equals(index))
+                robPlayerInfos.add(new RobPlayerInfo(index, getPlayerByIndex(index).getResourceCount()));
         }
 
         return robPlayerInfos.toArray(new RobPlayerInfo[robPlayerInfos.size()]);

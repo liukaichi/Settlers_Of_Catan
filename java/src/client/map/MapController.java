@@ -231,14 +231,14 @@ public class MapController extends ObserverController implements IMapController
     public boolean canPlaceSettlement(VertexLocation vertexLocation)
     {
 
-        return state.canPlaceSettlement(vertexLocation);
+        return state.canPlaceSettlement(vertexLocation.getNormalizedLocation());
     }
 
     @Override
     public boolean canPlaceCity(VertexLocation vertexLocation)
     {
 
-        return state.canPlaceCity(vertexLocation);
+        return state.canPlaceCity(vertexLocation.getNormalizedLocation());
     }
 
     @Override
@@ -251,22 +251,23 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void placeRoad(EdgeLocation edgeLocation)
     {
-        state.placeRoad(edgeLocation);
-        getView().placeRoad(edgeLocation, ClientFacade.getInstance().getClientPlayer().getColor());
+        state.placeRoad(edgeLocation.getNormalizedLocation());
+        //getView().placeRoad(edgeLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
     @Override
     public void placeSettlement(VertexLocation vertexLocation)
     {
-        state.placeSettlement(vertexLocation);
-        getView().placeSettlement(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
+        state.placeSettlement(vertexLocation.getNormalizedLocation());
+        //getView().placeSettlement(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
+
 
     @Override
     public void placeCity(VertexLocation vertexLocation)
     {
-        state.placeCity(vertexLocation);
-        getView().placeCity(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
+        state.placeCity(vertexLocation.getNormalizedLocation());
+        //getView().placeCity(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
     @Override
