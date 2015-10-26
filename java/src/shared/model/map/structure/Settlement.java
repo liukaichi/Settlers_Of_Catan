@@ -4,8 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import shared.definitions.PlayerIndex;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
@@ -15,7 +13,7 @@ import shared.locations.VertexLocation;
  * @author amandafisher
  *
  */
-public class Settlement extends Structure
+public class Settlement extends MapStructure
 {
 
 	/**

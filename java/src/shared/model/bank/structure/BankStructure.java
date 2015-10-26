@@ -4,9 +4,10 @@ import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
 
 /**
- * This class represents a Structure in the Catan game
+ * This class represents a MapStructure in the Catan game
  */
-public class Structure {
+public class BankStructure
+{
     private StructureType type;
     private int amountBuilt;
     private final int amountMax;
@@ -18,13 +19,13 @@ public class Structure {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        Structure structure = (Structure) o;
+        BankStructure bankStructure = (BankStructure) o;
 
-        if (amountBuilt != structure.amountBuilt)
+        if (amountBuilt != bankStructure.amountBuilt)
             return false;
-        if (amountMax != structure.amountMax)
+        if (amountMax != bankStructure.amountMax)
             return false;
-        return type == structure.type;
+        return type == bankStructure.type;
 
     }
 
@@ -42,7 +43,7 @@ public class Structure {
         BUILT, MAX
     }
 
-    public Structure(StructureType type){
+    public BankStructure(StructureType type){
         this.type = type;
         amountBuilt = 0;
         switch (type){
@@ -88,7 +89,7 @@ public class Structure {
     }
 
     /**
-     * Increments the specified amount from this Structure
+     * Increments the specified amount from this MapStructure
      * @param addAmount -- amount to increment by
      */
     public void addAmount(int addAmount) throws CatanException {
@@ -99,7 +100,7 @@ public class Structure {
     }
 
     /**
-     * Decrement the specified amount from this Structure
+     * Decrement the specified amount from this MapStructure
      * @param subAmount -- amount to decrement by
      */
     public void subAmount(int subAmount) throws CatanException {

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
-import shared.model.bank.structure.Structure;
+import shared.model.bank.structure.BankStructure;
 import shared.model.bank.structure.Structures;
 
 import static org.junit.Assert.*;
@@ -24,13 +24,13 @@ public class StructuresTest {
 
     @Test
     public void testGetStructure() throws CatanException {
-        Structure test = list.getStructure(StructureType.CITY);
+        BankStructure test = list.getStructure(StructureType.CITY);
 
         assertEquals(test.getType(), StructureType.CITY);
-        assertEquals(test.getAmount(Structure.AmountType.MAX), 4);
-        assertEquals(test.getAmount(Structure.AmountType.BUILT), 0);
+        assertEquals(test.getAmount(BankStructure.AmountType.MAX), 4);
+        assertEquals(test.getAmount(BankStructure.AmountType.BUILT), 0);
 
         test.addAmount(2);
-        assertEquals(test.getAmount(Structure.AmountType.BUILT), 2);
+        assertEquals(test.getAmount(BankStructure.AmountType.BUILT), 2);
     }
 }

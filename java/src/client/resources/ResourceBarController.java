@@ -70,19 +70,9 @@ public class ResourceBarController extends ObserverController implements IResour
 
             setResources(resources);
             setStructures(structures);
-
-
             disableActions();
-
         }
 
-    }
-
-    private  void disableActions(){
-        getView().setElementEnabled(ResourceBarElement.ROAD, state.canBuyRoad());
-        getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canBuySettlement());
-        getView().setElementEnabled(ResourceBarElement.CITY, state.canBuyCity());
-        getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
     }
 
     public void setResources(Resources resources)
@@ -102,6 +92,14 @@ public class ResourceBarController extends ObserverController implements IResour
                 structures.getStructure(StructureType.SETTLEMENT).getAmountRemaining());
         getView().setElementAmount(ResourceBarElement.CITY,
                 structures.getStructure(StructureType.CITY).getAmountRemaining());
+    }
+
+    private void disableActions()
+    {
+        getView().setElementEnabled(ResourceBarElement.ROAD, state.canBuyRoad());
+        getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canBuySettlement());
+        getView().setElementEnabled(ResourceBarElement.CITY, state.canBuyCity());
+        getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
     }
 
     /**

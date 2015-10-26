@@ -3,23 +3,23 @@ package shared.model.bank.structure;
 import shared.definitions.StructureType;
 
 /**
- * This class represents a list of Structure in the Catan game
+ * This class represents a list of MapStructure in the Catan game
  */
 public class Structures
 {
-    private Structure road, settlement, city;
+    private BankStructure road, settlement, city;
 
     public Structures(){
         initialize();
     }
 
     private void initialize(){
-        road = new Structure(StructureType.ROAD);
-        settlement = new Structure(StructureType.SETTLEMENT);
-        city = new Structure(StructureType.CITY);
+        road = new BankStructure(StructureType.ROAD);
+        settlement = new BankStructure(StructureType.SETTLEMENT);
+        city = new BankStructure(StructureType.CITY);
     }
 
-    public Structure getStructure(StructureType type) {
+    public BankStructure getStructure(StructureType type) {
         switch (type){
             case ROAD:
                 return road;

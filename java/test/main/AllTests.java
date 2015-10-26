@@ -13,7 +13,6 @@ import shared.model.ClientModelTest;
 import shared.model.TurnTrackerTest;
 import shared.model.bank.*;
 import shared.model.map.CatanMapTest;
-import shared.model.message.*;
 
 /**
  * @author cstaheli
@@ -22,7 +21,7 @@ import shared.model.message.*;
 @RunWith(Suite.class)
 @SuiteClasses({ TurnTrackerTest.class, ClientModelTest.class, PollTest.class, 
     BankTest.class, DevCardsTest.class, DevCardTest.class, PlayerBankTest.class, 
-    ResourcesTest.class, ResourceTest.class, StructuresTest.class, StructureTest.class, 
+    ResourcesTest.class, ResourceTest.class, StructuresTest.class, BankStructureTest.class,
     MockProxyTester.class, ProxyTester.class, CatanMapTest.class })
 public class AllTests
 {

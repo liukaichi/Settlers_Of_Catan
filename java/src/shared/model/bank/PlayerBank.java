@@ -124,7 +124,7 @@ public class PlayerBank extends Bank
 
     public int amountOf(StructureType type)
     {
-        return structures.getStructure(type).getAmount(Structure.AmountType.BUILT);
+        return structures.getStructure(type).getAmount(BankStructure.AmountType.BUILT);
     }
 
     @Override

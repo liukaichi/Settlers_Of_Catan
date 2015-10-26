@@ -13,7 +13,7 @@ import shared.locations.VertexLocation;
  * @author amandafisher
  *
  */
-public class City extends Structure
+public class City extends MapStructure
 {
 
 	/**
