@@ -70,7 +70,6 @@ public class GameHistoryController extends ObserverController implements IGameHi
     {
         ClientModel model = (ClientModel) o;
         this.initFromModel(model);
-        // TODO Auto-generated method stub
 
     }
 

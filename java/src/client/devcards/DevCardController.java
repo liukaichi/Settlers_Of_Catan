@@ -67,7 +67,7 @@ public class DevCardController extends ObserverController implements IDevCardCon
     @Override
     public void buyCard()
     {
-
+        state.buyDevCard();
         getBuyCardView().closeModal();
     }
 
@@ -88,13 +88,13 @@ public class DevCardController extends ObserverController implements IDevCardCon
     @Override
     public void playMonopolyCard(ResourceType resource)
     {
-
+        state.playMonopolyCard(resource);
     }
 
     @Override
     public void playMonumentCard()
     {
-
+        state.playMonumentCard();
     }
 
     @Override
@@ -113,7 +113,7 @@ public class DevCardController extends ObserverController implements IDevCardCon
     @Override
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
-
+        state.playYearOfPlentyCard(resource1, resource2);
     }
 
     /*
@@ -124,8 +124,7 @@ public class DevCardController extends ObserverController implements IDevCardCon
     @Override
     public void update(Observable o, Object arg)
     {
-        // TODO Auto-generated method stub
-
+        //Does nothing at the moment.
     }
 
 }

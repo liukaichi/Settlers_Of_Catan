@@ -23,7 +23,7 @@ public class City extends Structure
 	public City(PlayerIndex owner, VertexLocation location) 
 	{
 		super(owner, location);
-		// TODO Auto-generated constructor stub
+		setVictoryPointValue(2);
 	}
 
 	/**

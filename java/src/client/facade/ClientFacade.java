@@ -153,6 +153,11 @@ public class ClientFacade
         return model.canBuyDevCard(clientPlayer.getPlayerIndex());
     }
 
+    public boolean canPlayDevCard(DevCardType type)
+    {
+        return model.canPlayDevCard(getPlayer(), type);
+    }
+
     /**
      * Purchases a Development Card. This will take the card from the bank, and
      * adds it to the player' hand.
@@ -403,6 +408,11 @@ public class ClientFacade
         return model.canPlaceRoad(clientPlayer.getPlayerIndex(), edgeLoc);
     }
 
+    public boolean canBuyRoad()
+    {
+        return model.canBuyRoad(getPlayer());
+    }
+
     /**
      * Checks to see if the player meets the condition to place a settlement
      *
@@ -418,6 +428,11 @@ public class ClientFacade
         return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertLoc);
     }
 
+    public boolean canBuySettlement()
+    {
+        return model.canBuySettlement(getPlayer());
+    }
+
     /**
      * Checks to see if the player meets the condition to place a city
      *
@@ -431,6 +446,11 @@ public class ClientFacade
     public boolean canPlaceCity(VertexLocation location)
     {
         return model.canPlaceCity(clientPlayer.getPlayerIndex(), location);
+    }
+
+    public boolean canBuyCity()
+    {
+        return model.canBuyCity(getPlayer());
     }
 
     /**

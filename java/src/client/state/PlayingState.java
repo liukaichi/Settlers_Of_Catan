@@ -1,6 +1,7 @@
 package client.state;
 
 import client.base.ObserverController;
+import shared.definitions.DevCardType;
 import client.turntracker.TurnTrackerController;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -66,4 +67,23 @@ public class PlayingState extends GameplayState
         facade.placeSettlement(vertLoc, false);
     }
 
+    @Override public boolean canBuyCity()
+    {
+        return facade.canBuyCity();
+    }
+
+    @Override public boolean canBuyRoad()
+    {
+        return facade.canBuyRoad();
+    }
+
+    @Override public boolean canBuySettlement()
+    {
+        return facade.canBuySettlement();
+    }
+
+    @Override public boolean canPlayDevCard(DevCardType type)
+    {
+        return facade.canPlayDevCard(type);
+    }
 }

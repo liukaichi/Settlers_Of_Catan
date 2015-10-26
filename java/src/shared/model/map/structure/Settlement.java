@@ -24,7 +24,7 @@ public class Settlement extends Structure
 	 */
 	public Settlement(PlayerIndex owner, VertexLocation location) {
 		super(owner, location);
-		// TODO Auto-generated constructor stub
+		setVictoryPointValue(1);
 	}
 	
 	public Settlement(String json)

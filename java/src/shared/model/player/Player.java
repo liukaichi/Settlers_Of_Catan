@@ -190,7 +190,6 @@ public class Player
      *
      * @param type the type of DevCard being checked
      * @return true if both conditions are met
-     * @throws InsufficientResourcesException
      */
     public boolean canPlayDevCard(DevCardType type)
     {
@@ -202,6 +201,7 @@ public class Player
             return false;
         }
     }
+
 
     /**
      * Plays the action of the specified DevCard
@@ -300,4 +300,6 @@ public class Player
     public PlayerIndex getPlayerIndex(){
         return getPlayerInfo().getPlayerIndex();
     }
+
+
 }

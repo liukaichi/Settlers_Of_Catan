@@ -35,12 +35,6 @@ public abstract class GameplayState
     /*
      * Chat Controller methods
      */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#sendMessage(shared.definitions.
-     * PlayerIndex, java.lang.String)
-     */
 
     public GameplayState(ObserverController controller)
     {
@@ -55,65 +49,46 @@ public abstract class GameplayState
     /*
      * Dev Card Controller Methods
      */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#canBuyDevCard(shared.definitions.
-     * PlayerIndex)
-     */
 
     public boolean canBuyDevCard()
     {
-        // model.canBuyDevCard();
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * client.state.ICatanGameMethods#buyDevCard(shared.definitions.PlayerIndex)
-     */
+    public boolean canPlayDevCard(DevCardType type)
+    {
+        return false;
+    }
 
     public void buyDevCard()
     {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#playMonopolyCard(shared.definitions.
-     * PlayerIndex, shared.definitions.ResourceType)
-     */
-
     public void playMonopolyCard(ResourceType resource)
     {
-        // proxy.monopoly(new MonopolyCommand(player, resource))
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * client.state.ICatanGameMethods#playYearOfPlentyCard(shared.definitions.
-     * PlayerIndex, shared.definitions.ResourceType,
-     * shared.definitions.ResourceType)
-     */
+    }
 
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#playOtherDevCard(shared.definitions.
-     * PlayerIndex, shared.definitions.DevCardType)
+    /**
+     * Plays a Monument Card.
      */
+    public void playMonumentCard()
+    {
 
-    public void playOtherDevCard(DevCardType type)
+    }
+
+    public void playRoadBuildingCard(EdgeLocation edge1, EdgeLocation edge2)
+    {
+
+    }
+
+    public void playSoldierCard(RobPlayerInfo info, HexLocation location)
     {
 
     }
@@ -122,12 +97,6 @@ public abstract class GameplayState
      * Discard Controller methods
      */
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#discardResources(shared.definitions.
-     * PlayerIndex, shared.model.bank.resource.Resources)
-     */
 
     public void discardResources(Resources discardedResources)
     {
@@ -138,24 +107,12 @@ public abstract class GameplayState
      * Domestic trade controller methods
      */
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#sendTradeOffer(shared.definitions.
-     * PlayerIndex)
-     */
 
     public void sendTradeOffer()
     {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#acceptTrade(shared.definitions.
-     * PlayerIndex, boolean)
-     */
 
     public void acceptTrade(boolean willAccept)
     {
@@ -163,79 +120,7 @@ public abstract class GameplayState
     }
 
     /*
-     * Join Game Controller methods
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#createNewGame(client.data.GameInfo)
-     */
-
-    public void createNewGame(GameInfo gameInfo)
-    {
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#joinGame(client.data.GameInfo)
-     */
-
-    public void joinGame(GameInfo gameInfo)
-    {
-
-    }
-
-    /*
-     * player Waiting Controller methods
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#addAI(shared.definitions.AIType)
-     */
-
-    public void addAI(AIType type)
-    {
-
-    }
-
-    /*
-     * Login Controller methods
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#signInUser(shared.communication.
-     * Credentials)
-     */
-
-    public void signInUser(Credentials credentials)
-    {
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#registerUser(shared.communication.
-     * Credentials)
-     */
-
-    public void registerUser(Credentials credentials)
-    {
-
-    }
-
-    /*
      * Map controller methods
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#canPlaceRoad(shared.definitions.
-     * PlayerIndex, shared.locations.EdgeLocation)
      */
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc)
@@ -243,96 +128,55 @@ public abstract class GameplayState
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#canPlaceSettlement(shared.locations.
-     * VertexLocation)
-     */
+    public boolean canBuyRoad()
+    {
+        return false;
+    }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#canPlaceCity(shared.locations.
-     * VertexLocation)
-     */
+    public boolean canBuySettlement()
+    {
+        return false;
+    }
 
     public boolean canPlaceCity(VertexLocation vertLoc)
     {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#canPlaceRobber(shared.locations.
-     * HexLocation)
-     */
+    public boolean canBuyCity()
+    {
+        return false;
+    }
 
     public boolean canPlaceRobber(HexLocation hexLoc)
     {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * client.state.ICatanGameMethods#placeRoad(shared.definitions.PlayerIndex,
-     * shared.locations.EdgeLocation, boolean)
-     */
-
     public void placeRoad(EdgeLocation edgeLoc)
     {
 
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#placeSettlement(shared.locations.
-     * VertexLocation)
-     */
 
     public void placeSettlement(VertexLocation vertLoc)
     {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * client.state.ICatanGameMethods#placeCity(shared.locations.VertexLocation)
-     */
-
     public void placeCity(VertexLocation vertLoc)
     {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * client.state.ICatanGameMethods#placeRobber(shared.locations.HexLocation)
-     */
-
     public void placeRobber(HexLocation hexLoc)
     {
 
     }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#robPlayer(client.data.RobPlayerInfo)
-     */
 
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
@@ -342,13 +186,6 @@ public abstract class GameplayState
     /*
      * Martitime Trade Controller methods
      */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * client.state.ICatanGameMethods#makeMaritimeTrade(shared.model.player.
-     * TradeOffer)
-     */
 
     public void makeMaritimeTrade(TradeOffer offer)
     {
@@ -357,11 +194,6 @@ public abstract class GameplayState
 
     /*
      * Roll Dice Controller methods
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#rollDice()
      */
 
     public int rollDice(Dice dice)
@@ -378,13 +210,13 @@ public abstract class GameplayState
     /*
      * Turn tracker controller methods
      */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#endTurn()
-     */
 
     public void endTurn()
+    {
+
+    }
+
+    public void setTurnTrackerInfo(ObserverController newController)
     {
 
     }
@@ -444,10 +276,6 @@ public abstract class GameplayState
 
     }
 
-    public void setTurnTrackerInfo(ObserverController newController)
-    {
-
-    }
 }
 
 

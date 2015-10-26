@@ -292,7 +292,7 @@ public class ClientModel extends Observable
         map.moveRobber(player, location);
     }
 
-    boolean canBuyRoad(Player player)
+    public boolean canBuyRoad(Player player)
     {
         return player.canBuyRoad();
     }
@@ -354,8 +354,7 @@ public class ClientModel extends Observable
     }
 
     /**
-     * Determines if the PlayerBank has Settlements left to purchase AND if the
-     * resources required are available
+     * Determines if the PlayerBank has the resources required.
      *
      * @param index the index of the clientPlayer
      * 
@@ -390,6 +389,7 @@ public class ClientModel extends Observable
     {
         return player.canPlayDevCard(type);
     }
+
 
     /**
      * Plays the action of the specified DevCard
@@ -523,5 +523,6 @@ public class ClientModel extends Observable
         return winner == that.winner;
 
     }
+
 
 }

@@ -33,6 +33,11 @@ public class Structure {
         return 0;
     }
 
+    public int getAmountRemaining()
+    {
+        return amountMax - amountBuilt;
+    }
+
     public enum AmountType{
         BUILT, MAX
     }

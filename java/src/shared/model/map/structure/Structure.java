@@ -16,9 +16,9 @@ import shared.locations.*;
 public abstract class Structure
 {
     private PlayerIndex owner;
-    // private EdgeLocation location; // what is this? Why in the VertexObject?
-    private VertexLocation location; // I think they meant this one.
+    private VertexLocation location;
     private int victoryPointValue;
+    private int maxAmount;
 
     public Structure()
     {

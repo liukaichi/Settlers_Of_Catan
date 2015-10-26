@@ -280,7 +280,7 @@ public class MapController extends ObserverController implements IMapController
         getView().placeRobber(hexLocation);
 
         getRobView().showModal();
-        facade.placeRobber(hexLoc);
+        facade.placeRobber(hexLocation);
     }
 
     @Override
@@ -299,7 +299,7 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void playSoldierCard()
     {
-
+        //state.playSoldierCard();
     }
 
     @Override
