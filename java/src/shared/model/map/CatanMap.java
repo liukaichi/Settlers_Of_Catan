@@ -6,7 +6,6 @@ import com.google.gson.*;
 
 import shared.definitions.HexType;
 import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceType;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
@@ -24,14 +23,14 @@ public class CatanMap
     private Map<HexLocation, Hex> hexes = new HashMap<HexLocation, Hex>();
     // populated on buy
     private Map<EdgeLocation, Road> roads = new HashMap<EdgeLocation, Road>();
-    private Map<VertexLocation, Structure> structures = new HashMap<VertexLocation, Structure>();
+    private Map<VertexLocation, MapStructure> structures = new HashMap<VertexLocation, MapStructure>();
 
     public List<Port> getPorts()
     {
         return ports;
     }
 
-    public Map<VertexLocation, Structure> getStructures()
+    public Map<VertexLocation, MapStructure> getStructures()
     {
         return structures;
     }
@@ -160,7 +159,7 @@ public class CatanMap
             // cities
             JsonArray cities = new JsonArray();
             {
-                for (Structure city : this.structures.values())
+                for (MapStructure city : this.structures.values())
                 {
                     if (city.getClass().equals(City.class))
                         cities.add(parser.parse(city.toString()));
@@ -170,7 +169,7 @@ public class CatanMap
             // settlements
             JsonArray settlements = new JsonArray();
             {
-                for (Structure settlement : this.structures.values())
+                for (MapStructure settlement : this.structures.values())
                 {
                     if (settlement.getClass().equals(Settlement.class))
                         settlements.add(parser.parse(settlement.toString()));
@@ -203,7 +202,7 @@ public class CatanMap
         ports = new ArrayList<Port>();
         hexes = new HashMap<HexLocation, Hex>();
         roads = new HashMap<EdgeLocation, Road>();
-        structures = new HashMap<VertexLocation, Structure>();
+        structures = new HashMap<VertexLocation, MapStructure>();
         radius = -1;
         robberLocation = new HexLocation(0, 0);
     }
@@ -218,7 +217,7 @@ public class CatanMap
      * @param robberLocation
      */
     public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, Road> roads,
-            Map<VertexLocation, Structure> structures, int radius, HexLocation robberLocation)
+            Map<VertexLocation, MapStructure> structures, int radius, HexLocation robberLocation)
     {
         super();
         this.ports = ports;
@@ -247,7 +246,7 @@ public class CatanMap
         if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
         {
             VertexLocation normalizedVertex = location.getNormalizedLocation();
-            Structure atLocation = structures.get(normalizedVertex);
+            MapStructure atLocation = structures.get(normalizedVertex);
             // check if location exists, and is empty
             if (atLocation == null)
             {
@@ -283,10 +282,10 @@ public class CatanMap
         HexLocation hexLocation = location.getNormalizedLocation().getHexLoc();
         if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
         {
-            Structure structure = structures.get(location.getNormalizedLocation());
-            if (structure != null && structure.getOwner().getIndex() == player.getIndex())
+            MapStructure mapStructure = structures.get(location.getNormalizedLocation());
+            if (mapStructure != null && mapStructure.getOwner().getIndex() == player.getIndex())
             {
-                if (structure instanceof  Settlement)
+                if (mapStructure instanceof  Settlement)
                 {
                     return true;
                 }
@@ -330,8 +329,8 @@ public class CatanMap
                 List<VertexLocation> vertices = getNearbyVertices(normalizedEdge);
                 for (VertexLocation vertex : vertices)
                 {
-                    Structure structure = structures.get(vertex.getNormalizedLocation());
-                    if (structure != null && structure.getOwner().getIndex() == player.getIndex())
+                    MapStructure mapStructure = structures.get(vertex.getNormalizedLocation());
+                    if (mapStructure != null && mapStructure.getOwner().getIndex() == player.getIndex())
                     {
                         return true;
                     }
@@ -491,7 +490,7 @@ public class CatanMap
         this.roads = roads;
     }
 
-    public void setStructures(Map<VertexLocation, Structure> structures)
+    public void setStructures(Map<VertexLocation, MapStructure> structures)
     {
         this.structures = structures;
     }

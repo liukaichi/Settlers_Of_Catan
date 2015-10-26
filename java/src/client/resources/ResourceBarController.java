@@ -64,10 +64,13 @@ public class ResourceBarController extends ObserverController implements IResour
 
             // testing
             resources.setAmount(ResourceType.WHEAT, 5);
+            resources.setAmount(ResourceType.BRICK, 5);
+            resources.setAmount(ResourceType.WOOD, 5);
             structures.getStructure(StructureType.ROAD).setAmountBuilt(3);
 
             setResources(resources);
             setStructures(structures);
+            disableActions();
         }
 
     }
@@ -89,6 +92,14 @@ public class ResourceBarController extends ObserverController implements IResour
                 structures.getStructure(StructureType.SETTLEMENT).getAmountRemaining());
         getView().setElementAmount(ResourceBarElement.CITY,
                 structures.getStructure(StructureType.CITY).getAmountRemaining());
+    }
+
+    private void disableActions()
+    {
+        getView().setElementEnabled(ResourceBarElement.ROAD, state.canBuyRoad());
+        getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canBuySettlement());
+        getView().setElementEnabled(ResourceBarElement.CITY, state.canBuyCity());
+        getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
     }
 
     /**
@@ -140,7 +151,6 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     @Override public void playCard()
     {
-        //TODO this needs to check something.
         executeElementAction(ResourceBarElement.PLAY_CARD);
     }
 

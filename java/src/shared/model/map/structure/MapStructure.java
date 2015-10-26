@@ -13,19 +13,19 @@ import shared.locations.*;
  * @author amandafisher
  *
  */
-public abstract class Structure
+public abstract class MapStructure
 {
     private PlayerIndex owner;
     private VertexLocation location;
     private int victoryPointValue;
     private int maxAmount;
 
-    public Structure()
+    public MapStructure()
     {
 
     }
 
-    public Structure(PlayerIndex owner, VertexLocation location)
+    public MapStructure(PlayerIndex owner, VertexLocation location)
     {
         this.owner = owner;
         this.location = location;
@@ -96,7 +96,7 @@ public abstract class Structure
         if (getClass() != obj.getClass())
             return false;
 
-        Structure other = (Structure) obj;
+        MapStructure other = (MapStructure) obj;
         if (!this.location.equals(other.location))
             return false;
         if (this.owner.getIndex() != other.owner.getIndex())

@@ -131,18 +131,18 @@ public class MapController extends ObserverController implements IMapController
             LOGGER.fine("building Road." + road);
         }
 
-        HashMap<VertexLocation, Structure> structures = (HashMap<VertexLocation, Structure>) map.getStructures();
-        for (Structure structure : structures.values())
+        HashMap<VertexLocation, MapStructure> structures = (HashMap<VertexLocation, MapStructure>) map.getStructures();
+        for (MapStructure mapStructure : structures.values())
         {
-            CatanColor color = game.getPlayerColor(structure.getOwner());
-            if (structure instanceof Settlement)
+            CatanColor color = game.getPlayerColor(mapStructure.getOwner());
+            if (mapStructure instanceof Settlement)
             {
-                getView().placeSettlement(structure.getLocation(), color);
-                LOGGER.fine("PlaceSettlement. " + structure);
-            } else if (structure instanceof City)
+                getView().placeSettlement(mapStructure.getLocation(), color);
+                LOGGER.fine("PlaceSettlement. " + mapStructure);
+            } else if (mapStructure instanceof City)
             {
-                getView().placeCity(structure.getLocation(), color);
-                LOGGER.fine("PlaceCity. " + structure);
+                getView().placeCity(mapStructure.getLocation(), color);
+                LOGGER.fine("PlaceCity. " + mapStructure);
             }
         }
 

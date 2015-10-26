@@ -10,7 +10,7 @@ import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.card.DevCard;
 import shared.model.bank.resource.Resource;
-import shared.model.bank.structure.Structure;
+import shared.model.bank.structure.BankStructure;
 import shared.model.player.Player;
 
 import java.util.Stack;
@@ -157,7 +157,7 @@ public class PlayerBankTest
             test.buyRoad();
 
             assertEquals(1,
-                    test.getStructures().getStructure(StructureType.ROAD).getAmount(Structure.AmountType.BUILT));
+                    test.getStructures().getStructure(StructureType.ROAD).getAmount(BankStructure.AmountType.BUILT));
 
             assertEquals(2, brick().getAmount());
             assertEquals(1, wood().getAmount());
@@ -199,7 +199,7 @@ public class PlayerBankTest
             test.buySettlement();
 
             assertEquals(1,
-                    test.getStructures().getStructure(StructureType.SETTLEMENT).getAmount(Structure.AmountType.BUILT));
+                    test.getStructures().getStructure(StructureType.SETTLEMENT).getAmount(BankStructure.AmountType.BUILT));
 
             assertEquals(16, gameSheep().getAmount());
             assertEquals(16, gameWood().getAmount());
@@ -251,9 +251,9 @@ public class PlayerBankTest
             test.buyCity();
 
             assertEquals(1,
-                    test.getStructures().getStructure(StructureType.CITY).getAmount(Structure.AmountType.BUILT));
+                    test.getStructures().getStructure(StructureType.CITY).getAmount(BankStructure.AmountType.BUILT));
             assertEquals(0,
-                    test.getStructures().getStructure(StructureType.SETTLEMENT).getAmount(Structure.AmountType.BUILT));
+                    test.getStructures().getStructure(StructureType.SETTLEMENT).getAmount(BankStructure.AmountType.BUILT));
 
             assertEquals(1, wheat().getAmount());
             assertEquals(0, ore().getAmount());

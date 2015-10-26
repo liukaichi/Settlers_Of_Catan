@@ -150,12 +150,12 @@ public class ClientFacade
 
     public boolean canBuyDevCard()
     {
-        return model.canBuyDevCard(clientPlayer.getPlayerIndex());
+        return getPlayer().canBuyDevCard();
     }
 
     public boolean canPlayDevCard(DevCardType type)
     {
-        return model.canPlayDevCard(getPlayer(), type);
+        return getPlayer().canPlayDevCard(type);
     }
 
     /**
@@ -410,7 +410,7 @@ public class ClientFacade
 
     public boolean canBuyRoad()
     {
-        return model.canBuyRoad(getPlayer());
+        return getPlayer().canBuyRoad();
     }
 
     /**
@@ -430,7 +430,7 @@ public class ClientFacade
 
     public boolean canBuySettlement()
     {
-        return model.canBuySettlement(getPlayer());
+        return getPlayer().canBuySettlement();
     }
 
     /**
@@ -450,7 +450,7 @@ public class ClientFacade
 
     public boolean canBuyCity()
     {
-        return model.canBuyCity(getPlayer());
+        return getPlayer().canBuyCity();
     }
 
     /**
@@ -596,7 +596,7 @@ public class ClientFacade
     public void setProxy(String host, String port)
     {
         proxy = new ServerProxy(host, port);
-        poller.setProxy(proxy);
+        //poller.setProxy(proxy);
     }
 
     /**

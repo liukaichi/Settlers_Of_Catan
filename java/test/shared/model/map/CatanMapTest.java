@@ -7,8 +7,8 @@ import org.junit.Test;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
+import shared.model.map.structure.MapStructure;
 import shared.model.map.structure.Road;
-import shared.model.map.structure.Structure;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,7 +36,7 @@ public class CatanMapTest {
 			e.printStackTrace();
 		}
 		//vacant
-		catanMap.setStructures(new HashMap<VertexLocation,Structure>());
+		catanMap.setStructures(new HashMap<VertexLocation,MapStructure>());
 		assertTrue(catanMap.canPlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
 		//Nearby settlement
 		try {
@@ -69,7 +69,7 @@ public class CatanMapTest {
 			e.printStackTrace();
 		}
 		//vacant
-		catanMap.setStructures(new HashMap<VertexLocation,Structure>());
+		catanMap.setStructures(new HashMap<VertexLocation,MapStructure>());
 		assertFalse(catanMap.canPlaceCity(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast)));
 		//existing settlement
 		try {
@@ -101,7 +101,7 @@ public class CatanMapTest {
 			e.printStackTrace();
 		}
 		//vacant no settlement
-		catanMap.setStructures(new HashMap<VertexLocation,Structure>());
+		catanMap.setStructures(new HashMap<VertexLocation,MapStructure>());
 		catanMap.setRoads(new HashMap<EdgeLocation,Road>());
 		assertFalse(catanMap.canPlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast)));
 		//vacant and has settlement
