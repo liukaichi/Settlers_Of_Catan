@@ -4,8 +4,6 @@ import client.base.ObserverController;
 import client.data.*;
 import client.facade.ClientFacade;
 import client.state.GameplayState;
-import client.state.SetupState;
-import com.sun.deploy.util.SessionState;
 import client.state.InitialState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
