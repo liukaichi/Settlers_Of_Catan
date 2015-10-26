@@ -121,7 +121,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     /**
      * get list of games from server, save them into your pre-game model
-     * JoinGameView().setGames(list of games, your player info) showModal
+     * JoinGameView().setGames(list of games, your player info) updateView
      */
     @Override
     public void start()

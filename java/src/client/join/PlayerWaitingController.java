@@ -30,7 +30,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     /**
      * make a list of players from the current game getView().setPlayers(that
-     * list) getView().setAIChoices(if you happen to have AI) showModal
+     * list) getView().setAIChoices(if you happen to have AI) updateView
      */
     @Override public void start()
     {

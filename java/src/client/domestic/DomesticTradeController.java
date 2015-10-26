@@ -103,7 +103,7 @@ public class DomesticTradeController extends ObserverController implements IDome
     {
 
         getTradeOverlay().closeModal();
-        // getWaitOverlay().showModal();
+        // getWaitOverlay().updateView();
     }
 
     @Override

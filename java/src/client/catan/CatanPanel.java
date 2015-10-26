@@ -64,13 +64,13 @@ public class CatanPanel extends JPanel
 //			 @Override
 //			 public void actionPerformed(ActionEvent e) {
 //			
-//			 new client.points.GameFinishedView().showModal();
+//			 new client.points.GameFinishedView().updateView();
 //			 }
 //			
 //			 @Override
 //			 public void actionPerformed(ActionEvent e) {
 //			
-//			 rollView.showModal();
+//			 rollView.updateView();
 //			 }
 //			
 //			 @Override
@@ -86,7 +86,7 @@ public class CatanPanel extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-//				rollView.showModal();
+//				rollView.updateView();
 				
 				discardView.setResourceMaxAmount(ResourceType.WOOD, 1);
 				discardView.setResourceMaxAmount(ResourceType.BRICK, 0);

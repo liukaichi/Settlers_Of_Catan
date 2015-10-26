@@ -33,6 +33,7 @@ public class Player
     private PlayerInfo info;
     private boolean discarded;
     private boolean playedDev;
+    private int resourceNumber;
 
     public boolean isDiscarded()
     {
@@ -301,5 +302,8 @@ public class Player
         return getPlayerInfo().getPlayerIndex();
     }
 
-
+    public int getResourceCount()
+    {
+        return bank.getResources().totalResources();
+    }
 }

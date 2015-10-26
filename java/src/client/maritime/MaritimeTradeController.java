@@ -44,7 +44,7 @@ public class MaritimeTradeController extends ObserverController implements IMari
      * <li>Create and array of possible resource trade options (Resource types of a sufficent amount to trade)
      * <li>and pass them into the overlay in .showGiveOptions(resurce[]).
      * <li>disable trade button in view.
-     * <li>showModal on tradeOverlay.
+     * <li>updateView on tradeOverlay.
      * </ul>
      */
     @Override

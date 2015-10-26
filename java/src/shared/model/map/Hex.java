@@ -1,12 +1,13 @@
 package shared.model.map;
 
-import java.util.HashMap;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -289,5 +290,10 @@ public class Hex
                 return false;
         }
         return true;
+    }
+
+    public Collection<VertexLocation> getVertices()
+    {
+        return vertices.values();
     }
 }

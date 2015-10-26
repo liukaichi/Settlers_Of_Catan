@@ -1,20 +1,18 @@
 package shared.model.map;
 
-import java.util.*;
-
 import com.google.gson.*;
-
 import shared.definitions.HexType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
 
+import java.util.*;
+
 /**
  * Represents the board game map of the Catan game
- * 
- * @author davidtaylor
  *
+ * @author davidtaylor
  */
 public class CatanMap
 {
@@ -208,7 +206,6 @@ public class CatanMap
     }
 
     /**
-     *
      * @param ports
      * @param hexes
      * @param roads
@@ -231,14 +228,12 @@ public class CatanMap
     /**
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the settlement
-     * @param location
-     *        -- this will be the location of the settlement; must ensure that
-     *        this space on the map is empty
+     *
+     * @param player   -- this will be the player placing the settlement
+     * @param location -- this will be the location of the settlement; must ensure that
+     *                 this space on the map is empty
      * @return boolean -- returns true if the location is vacant and at least
-     *         two spaces away from another settlement otherwise returns false
+     * two spaces away from another settlement otherwise returns false
      */
     public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
     {
@@ -268,14 +263,12 @@ public class CatanMap
     /**
      * Method that indicates whether a player has the ability to place a city in
      * a certain location on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the city
-     * @param location
-     *        -- this will be the location of the city; must ensure that this
-     *        space already has a settlement located their owned by this player
+     *
+     * @param player   -- this will be the player placing the city
+     * @param location -- this will be the location of the city; must ensure that this
+     *                 space already has a settlement located their owned by this player
      * @return boolean -- returns true if there is a settlement at the specified
-     *         location and it is owned by the player otherwise returns false
+     * location and it is owned by the player otherwise returns false
      */
     public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
     {
@@ -297,15 +290,13 @@ public class CatanMap
     /**
      * Method that indicates whether a player has the ability to place a city on
      * a certain edge on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the road
-     * @param location
-     *        -- this will be the edge location where the road will be placed;
-     *        must ensure this space is empty on the map
+     *
+     * @param player   -- this will be the player placing the road
+     * @param location -- this will be the edge location where the road will be placed;
+     *                 must ensure this space is empty on the map
      * @return boolean -- returns true if the player owns a settlement or city
-     *         at the neighboring vertex locations and there is no current road
-     *         there otherwise returns false
+     * at the neighboring vertex locations and there is no current road
+     * there otherwise returns false
      */
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
     {
@@ -344,14 +335,12 @@ public class CatanMap
     /**
      * Method that indicates whether a player has the ability to move a robber
      * on a certain Hex
-     * 
-     * @param player
-     *        -- this will be the player placing the robber
-     * @param location
-     *        -- this will be the hex location where the robber will be placed;
-     *        cannot place on water or where the robber already is
+     *
+     * @param player   -- this will be the player placing the robber
+     * @param location -- this will be the hex location where the robber will be placed;
+     *                 cannot place on water or where the robber already is
      * @return boolean -- returns true if it is not moving to its current
-     *         location and it is not a sea piece otherwise returns false
+     * location and it is not a sea piece otherwise returns false
      */
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
@@ -364,11 +353,9 @@ public class CatanMap
 
     /**
      * Method that places a road on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the road
-     * @param location
-     *        -- this will be the hex location where the road will be placed
+     *
+     * @param player   -- this will be the player placing the road
+     * @param location -- this will be the hex location where the road will be placed
      * @throws PlacementException
      */
     public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
@@ -377,8 +364,7 @@ public class CatanMap
         {
             Road road = new Road(player, location.getNormalizedLocation());
             roads.put(location.getNormalizedLocation(), road);
-        }
-        else
+        } else
         {
             throw new PlacementException();
         }
@@ -394,12 +380,10 @@ public class CatanMap
 
     /**
      * Method that places a settlement on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the settlement
-     * @param location
-     *        -- this will be the vertex location where the settlement will be
-     *        placed
+     *
+     * @param player   -- this will be the player placing the settlement
+     * @param location -- this will be the vertex location where the settlement will be
+     *                 placed
      * @throws PlacementException
      */
     public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
@@ -408,8 +392,7 @@ public class CatanMap
         {
             Settlement settlement = new Settlement(player, location.getNormalizedLocation());
             structures.put(location.getNormalizedLocation(), settlement);
-        }
-        else
+        } else
         {
             throw new PlacementException();
         }
@@ -423,11 +406,9 @@ public class CatanMap
 
     /**
      * Method that places a city on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the city
-     * @param location
-     *        -- this will be the vertex location where the city will be placed
+     *
+     * @param player   -- this will be the player placing the city
+     * @param location -- this will be the vertex location where the city will be placed
      * @throws PlacementException
      */
     public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
@@ -436,8 +417,7 @@ public class CatanMap
         {
             City city = new City(player, location.getNormalizedLocation());
             structures.put(location.getNormalizedLocation(), city);
-        }
-        else
+        } else
         {
             throw new PlacementException();
         }
@@ -451,11 +431,9 @@ public class CatanMap
 
     /**
      * Method that moves the robber on the map
-     * 
-     * @param player
-     *        -- this will be the player moving the robber
-     * @param location
-     *        -- this will be the hex location where the robber will be placed
+     *
+     * @param player   -- this will be the player moving the robber
+     * @param location -- this will be the hex location where the robber will be placed
      * @throws PlacementException
      */
     public void moveRobber(PlayerIndex player, HexLocation location) throws PlacementException
@@ -463,8 +441,7 @@ public class CatanMap
         if (canMoveRobber(player, location))
         {
             this.robberLocation = location;
-        }
-        else
+        } else
         {
             throw new PlacementException();
         }
@@ -507,6 +484,7 @@ public class CatanMap
 
     /**
      * Gets vertices that are up to two vertices away.
+     *
      * @param location the current vertex to find neighbors for.
      * @return a list a vertices up to two spaces away.
      */
@@ -537,8 +515,7 @@ public class CatanMap
                 vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
                 vertices.add(hex.getVertexLocation(VertexDirection.West));
             }
-        }
-        else if (normalized.getDir().equals(VertexDirection.NorthWest))
+        } else if (normalized.getDir().equals(VertexDirection.NorthWest))
         {
             Hex hex = hexes.get(normalized.getHexLoc());
 
@@ -567,6 +544,7 @@ public class CatanMap
 
     /**
      * Gets the nearby vertices from an edge one distance away from the current road.
+     *
      * @param location the current location of the edge.
      * @return a list of vertices one distance away.
      */
@@ -596,6 +574,7 @@ public class CatanMap
 
     /**
      * Gets edges that are one edge distance away. Edges are added clockwise
+     *
      * @param location the current location of the edge.
      * @return a list of edges one distance away.
      */
@@ -647,13 +626,26 @@ public class CatanMap
         return edges;
     }
 
+    public Set<PlayerIndex> getHexPlayers(HexLocation hexLocation)
+    {
+        Set<PlayerIndex> players = new HashSet<>();
+        for (VertexLocation location : hexes.get(hexLocation).getVertices())
+        {
+
+            MapStructure structure = structures.get(location);
+            if (structure != null){
+                players.add(structure.getOwner());
+            }
+        }
+        return players;
+    }
+
     /*
      * (non-Javadoc)
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    @Override
-    public boolean equals(Object obj)
+    @Override public boolean equals(Object obj)
     {
         if (this == obj)
             return true;

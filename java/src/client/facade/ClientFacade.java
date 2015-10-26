@@ -19,6 +19,7 @@ import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +38,7 @@ public class ClientFacade
     private PlayerInfo clientPlayer;
     private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
     private Poller poller;
+    private int playerByIndex;
 
     private ClientFacade()
     {
@@ -75,6 +77,7 @@ public class ClientFacade
 
     /**
      * Gets the player that has the given name.
+     *
      * @param name the name to search for.
      * @return the player that matches the name.
      */
@@ -90,6 +93,7 @@ public class ClientFacade
         LOGGER.log(Level.WARNING, "Player's name could not be found in the ClientFacade.");
         return null;
     }
+
     public CatanColor getColorByName(String name)
     {
         return getPlayerByName(name).getPlayerColor();
@@ -97,11 +101,13 @@ public class ClientFacade
 
     /**
      * Gets the clientPlayer's Player Object, which holds their bank, as well as other things.
+     *
      * @return the Client Player's Player object.
      */
     public Player getPlayer()
     {
-        if(getPlayers() == null){
+        if (getPlayers() == null)
+        {
             return null;
         }
         return getPlayers().get(clientPlayer.getPlayerIndex().getIndex());
@@ -232,7 +238,8 @@ public class ClientFacade
      */
     public void discardResources(Resources discardedResources)
     {
-        model.updateModel(proxy.discardCards(new DiscardCardsCommand(clientPlayer.getPlayerIndex(), discardedResources)));
+        model.updateModel(
+                proxy.discardCards(new DiscardCardsCommand(clientPlayer.getPlayerIndex(), discardedResources)));
     }
 
     /**
@@ -507,18 +514,7 @@ public class ClientFacade
         model.updateModel(proxy.buildCity(new BuildCityCommand(clientPlayer.getPlayerIndex(), location)));
     }
 
-    /**
-     * Changes the Robbers HexLocation
-     *
-     * @param location the location of the Robber
-     * @post player robs player
-     * @pre player rolls a 7
-     */
 
-    public void placeRobber(HexLocation location)
-    {
-        // TODO implement placeRobber.
-    }
 
     /**
      * Robs a player, player receives one resource from the player being robbed
@@ -590,6 +586,7 @@ public class ClientFacade
 
     /**
      * Sets the host and port of the proxy to send commands to.
+     *
      * @param host the host to run the proxy on.
      * @param port the port to run the proxy on.
      */
@@ -601,6 +598,7 @@ public class ClientFacade
 
     /**
      * Adds an observer to the model to receive it's notifications whenever model.updateModel() is called.
+     *
      * @param observerController the Observer to add.
      * @see java.util.Observable
      * @see java.util.Observer
@@ -612,7 +610,8 @@ public class ClientFacade
 
     public List<Player> getPlayers()
     {
-        if(model.getGameInfo() == null){
+        if (model.getGameInfo() == null)
+        {
             return null;
         }
         return model.getGameInfo().getPlayers();
@@ -620,6 +619,7 @@ public class ClientFacade
 
     /**
      * This does something, I'm pretty sure. Not sure of what. -Cache
+     *
      * @param index
      * @return
      */
@@ -640,5 +640,21 @@ public class ClientFacade
     public HexLocation getRobberLocation()
     {
         return getModel().getMap().getRobberLocation();
+    }
+
+    public RobPlayerInfo[] getRobPlayerInfo(HexLocation hexLocation)
+    {
+        List<RobPlayerInfo> robPlayerInfos = new ArrayList<>();
+        for (PlayerIndex index : model.getMap().getHexPlayers(hexLocation))
+        {
+            robPlayerInfos.add(new RobPlayerInfo(index, getPlayerByIndex(index).getResourceCount()));
+        }
+
+        return robPlayerInfos.toArray(new RobPlayerInfo[robPlayerInfos.size()]);
+    }
+
+    public Player getPlayerByIndex(PlayerIndex index)
+    {
+        return getPlayers().get(index.getIndex());
     }
 }
