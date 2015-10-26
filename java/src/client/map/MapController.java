@@ -325,9 +325,6 @@ public class MapController extends ObserverController implements IMapController
         state.update(this, model, arg);
         this.initFromModel(model);
 
-
-
-
     }
 
 }

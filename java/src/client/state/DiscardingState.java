@@ -33,6 +33,7 @@ public class DiscardingState extends GameplayState
         }
     }
 
+
     @Override public void discardResources(Resources discardedResources)
     {
         super.discardResources(discardedResources);
