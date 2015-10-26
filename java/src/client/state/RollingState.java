@@ -11,7 +11,7 @@ import shared.definitions.Dice;
 import java.util.logging.Logger;
 
 /**
- * @author cstaheli
+ * This state allows all of the rolling options.
  */
 public class RollingState extends GameplayState
 {

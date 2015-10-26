@@ -1,16 +1,16 @@
 /**
- * 
+ *
  */
 package client.state;
 
 import client.base.ObserverController;
 import client.discard.DiscardController;
+import shared.model.bank.resource.Resources;
 
 import java.util.logging.Logger;
 
 /**
  * @author cstaheli
- *
  */
 public class DiscardingState extends GameplayState
 {
@@ -26,5 +26,10 @@ public class DiscardingState extends GameplayState
     {
         super.showModal();
         ((DiscardController) controller).getDiscardView().showModal();
+    }
+
+    @Override public void discardResources(Resources discardedResources)
+    {
+        super.discardResources(discardedResources);
     }
 }

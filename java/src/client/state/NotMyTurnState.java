@@ -27,4 +27,11 @@ public class NotMyTurnState extends GameplayState
         TurnTrackerController turnTrackerController = ((TurnTrackerController) newController);
         turnTrackerController.getView().updateGameState("Just hangin' out.", false);
     }
+
+    @Override
+    public void acceptTrade(boolean willAccept)
+    {
+        LOGGER.fine("State calling facade willAccept(" + willAccept + ").");
+        facade.acceptTrade(willAccept);
+    }
 }

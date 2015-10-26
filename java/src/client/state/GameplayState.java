@@ -19,7 +19,8 @@ import shared.model.player.TradeOffer;
 import java.util.logging.Logger;
 
 /**
- * @author cstaheli
+ * This is the generic state. This state allows nothing to be done, and returns false for all can-do methods.
+ * GameplayState contains methods to set the various states of the controllers so that they can use the allowed/necessary methods.
  */
 public abstract class GameplayState
 {
@@ -49,21 +50,6 @@ public abstract class GameplayState
 
     public void sendMessage(String message)
     {
-    }
-
-    /*
-     * Game History Controller
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#initHistoryFromModel(shared.model.
-     * ClientModel)
-     */
-
-    public void initHistoryFromModel(ClientModel model)
-    {
-
     }
 
     /*
@@ -348,7 +334,7 @@ public abstract class GameplayState
      * @see client.state.ICatanGameMethods#robPlayer(client.data.RobPlayerInfo)
      */
 
-    public void robPlayer(RobPlayerInfo victim)
+    public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
 
     }
@@ -370,20 +356,6 @@ public abstract class GameplayState
     }
 
     /*
-     * Points Controller methods
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#initPointsFromModel()
-     */
-
-    public void initPointsFromModel()
-    {
-
-    }
-
-    /*
      * Roll Dice Controller methods
      */
     /*
@@ -400,7 +372,7 @@ public abstract class GameplayState
 
     public void showModal()
     {
-        return;
+
     }
 
     /*

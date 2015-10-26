@@ -6,6 +6,7 @@ package client.base;
 import client.facade.ClientFacade;
 import client.state.GameplayState;
 import client.state.InitialState;
+import com.sun.deploy.util.SessionState;
 import com.sun.org.apache.xml.internal.security.Init;
 
 import java.util.*;
@@ -18,7 +19,7 @@ public abstract class ObserverController extends Controller implements Observer
 {
     protected GameplayState state;
     /**
-     * @param view
+     * @param view the view that this controller uses.
      */
     protected ObserverController(IView view)
     {

@@ -1,9 +1,7 @@
 package client.map;
 
 import client.base.ObserverController;
-import client.data.GameInfo;
-import client.data.PlayerInfo;
-import client.data.RobPlayerInfo;
+import client.data.*;
 import client.facade.ClientFacade;
 import client.state.GameplayState;
 import client.state.SetupState;
@@ -15,14 +13,14 @@ import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import client.state.*;
+import shared.definitions.*;
+import shared.locations.*;
 import shared.model.ClientModel;
-import shared.model.map.CatanMap;
-import shared.model.map.Hex;
+import shared.model.map.*;
 import shared.model.map.structure.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Observable;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -226,60 +224,62 @@ public class MapController extends ObserverController implements IMapController
     }
 
     @Override
-    public boolean canPlaceRoad(EdgeLocation edgeLoc)
+    public boolean canPlaceRoad(EdgeLocation edgeLocation)
     {
-        return state.canPlaceRoad(edgeLoc.getNormalizedLocation());
+        return state.canPlaceRoad(edgeLocation.getNormalizedLocation());
     }
 
     @Override
-    public boolean canPlaceSettlement(VertexLocation vertLoc)
+    public boolean canPlaceSettlement(VertexLocation vertexLocation)
     {
 
-        return state.canPlaceSettlement(vertLoc);
+        return state.canPlaceSettlement(vertexLocation);
     }
 
     @Override
-    public boolean canPlaceCity(VertexLocation vertLoc)
+    public boolean canPlaceCity(VertexLocation vertexLocation)
     {
 
-        return state.canPlaceCity(vertLoc);
+        return state.canPlaceCity(vertexLocation);
     }
 
     @Override
-    public boolean canPlaceRobber(HexLocation hexLoc)
+    public boolean canPlaceRobber(HexLocation hexLocation)
     {
 
-        return state.canPlaceRobber(hexLoc);
+        return state.canPlaceRobber(hexLocation);
     }
 
     @Override
-    public void placeRoad(EdgeLocation edgeLoc)
+    public void placeRoad(EdgeLocation edgeLocation)
     {
-        //state.placeRoad(edgeLoc);
-        ClientFacade.getInstance().placeRoad(edgeLoc, true);
+        //TODO these place methods never check to see if the place was successful. In theory, it always will be if
+        // this method is called, but we can't be sure.
+        //state.placeRoad(edgeLocation);
+        ClientFacade.getInstance().placeRoad(edgeLocation, true);
 
-        getView().placeRoad(edgeLoc, ClientFacade.getInstance().getClientPlayer().getColor());
+        getView().placeRoad(edgeLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
     @Override
-    public void placeSettlement(VertexLocation vertLoc)
+    public void placeSettlement(VertexLocation vertexLocation)
     {
-
-        getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+        state.placeSettlement(vertexLocation);
+        getView().placeSettlement(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
     @Override
-    public void placeCity(VertexLocation vertLoc)
+    public void placeCity(VertexLocation vertexLocation)
     {
-
-        getView().placeCity(vertLoc, CatanColor.ORANGE);
+        state.placeCity(vertexLocation);
+        getView().placeCity(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
     @Override
-    public void placeRobber(HexLocation hexLoc)
+    public void placeRobber(HexLocation hexLocation)
     {
-
-        getView().placeRobber(hexLoc);
+        state.placeRobber(hexLocation);
+        getView().placeRobber(hexLocation);
 
         getRobView().showModal();
         facade.placeRobber(hexLoc);
@@ -289,7 +289,7 @@ public class MapController extends ObserverController implements IMapController
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
 
-        getView().startDrop(pieceType, CatanColor.ORANGE, true);
+        getView().startDrop(pieceType, ClientFacade.getInstance().getClientPlayer().getColor(), true);
     }
 
     @Override
