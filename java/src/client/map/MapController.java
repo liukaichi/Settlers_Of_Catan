@@ -251,11 +251,7 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void placeRoad(EdgeLocation edgeLocation)
     {
-        //TODO these place methods never check to see if the place was successful. In theory, it always will be if
-        // this method is called, but we can't be sure.
-        //state.placeRoad(edgeLocation);
-        ClientFacade.getInstance().placeRoad(edgeLocation, true);
-
+        state.placeRoad(edgeLocation);
         getView().placeRoad(edgeLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
