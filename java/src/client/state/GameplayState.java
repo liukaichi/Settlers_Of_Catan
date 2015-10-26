@@ -33,7 +33,7 @@ public abstract class GameplayState
     public GameplayState()
     {
         facade = ClientFacade.getInstance();
-        currentTurnStatus = TurnStatus.Playing;
+        currentTurnStatus = null;
     }
     /*
      * Chat Controller methods
@@ -234,9 +234,12 @@ public abstract class GameplayState
     {
         if (state instanceof TurnStatus)
         {
-            if (currentTurnStatus.equals((TurnStatus) state)){
-                return;
+            if (currentTurnStatus != null){
+                if (currentTurnStatus.equals((TurnStatus) state)){
+                    return;
+                }
             }
+
             currentTurnStatus = (TurnStatus) state;
 
             //this commented code determines if it's your turn right now. Put this back when you're ready.

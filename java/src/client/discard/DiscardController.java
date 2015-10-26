@@ -1,10 +1,11 @@
 package client.discard;
 
-import java.util.Observable;
-
 import client.base.ObserverController;
 import client.misc.IWaitView;
 import shared.definitions.ResourceType;
+import shared.model.ClientModel;
+
+import java.util.Observable;
 
 /**
  * Discard controller implementation
@@ -77,6 +78,7 @@ public class DiscardController extends ObserverController implements IDiscardCon
     @Override
     public void update(Observable o, Object arg)
     {
-
+        ClientModel model = (ClientModel) o;
+        state.update(this, model, arg);
     }
 }
