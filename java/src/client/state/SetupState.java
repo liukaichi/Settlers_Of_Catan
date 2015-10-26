@@ -4,7 +4,6 @@
 package client.state;
 
 import client.base.ObserverController;
-import client.facade.ClientFacade;
 import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
@@ -26,6 +25,7 @@ public class SetupState extends GameplayState
     {
         super(controller);
         this.roundNumber = roundNumber;
+        currentTurnStatus = roundNumber;
     }
 
     /*

@@ -4,9 +4,11 @@
 package client.state;
 
 import client.base.ObserverController;
+import client.data.RobPlayerInfo;
 import client.map.MapController;
 import client.turntracker.TurnTrackerController;
-import client.data.RobPlayerInfo;
+import shared.definitions.PieceType;
+import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
 
 import java.util.logging.Logger;
@@ -23,6 +25,7 @@ public class RobbingState extends GameplayState
     public RobbingState(ObserverController controller)
     {
         super(controller);
+        currentTurnStatus = TurnStatus.Robbing;
     }
 
     @Override public boolean canPlaceRobber(HexLocation hexLoc)
@@ -48,11 +51,13 @@ public class RobbingState extends GameplayState
         turnTrackerController.getView().updateGameState("Let's rob some peeps, yo.", false);
     }
 
-    @Override public void showModal()
+    @Override public void updateView()
     {
         if (controller instanceof MapController)
         {
-            ((MapController) controller).getRobView().showModal();
+            ((MapController) controller).getView().startDrop(PieceType.ROBBER,null, false);
+            //((MapController) controller).getRobView().updateView();
+
         }
     }
 }

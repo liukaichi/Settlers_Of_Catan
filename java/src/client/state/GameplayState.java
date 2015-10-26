@@ -4,11 +4,12 @@
 package client.state;
 
 import client.base.ObserverController;
-import client.data.GameInfo;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
-import shared.communication.Credentials;
-import shared.definitions.*;
+import shared.definitions.DevCardType;
+import shared.definitions.Dice;
+import shared.definitions.ResourceType;
+import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -26,11 +27,13 @@ public abstract class GameplayState
 {
     protected ClientFacade facade;
     protected ObserverController controller;
+    protected TurnStatus currentTurnStatus;
     private static final Logger LOGGER = Logger.getLogger(GameplayState.class.getName());
 
     public GameplayState()
     {
         facade = ClientFacade.getInstance();
+        currentTurnStatus = TurnStatus.Playing;
     }
     /*
      * Chat Controller methods
@@ -40,6 +43,7 @@ public abstract class GameplayState
     {
         this();
         this.controller = controller;
+
     }
 
     public void sendMessage(String message)
@@ -202,7 +206,7 @@ public abstract class GameplayState
         return -1;
     }
 
-    public void showModal()
+    public void updateView()
     {
 
     }
@@ -230,10 +234,15 @@ public abstract class GameplayState
     {
         if (state instanceof TurnStatus)
         {
-            TurnStatus newStatus = (TurnStatus) state;
-            if (model.getTurnTracker().getCurrentTurn() != facade.getClientPlayer().getPlayerIndex())
+            if (currentTurnStatus.equals((TurnStatus) state)){
+                return;
+            }
+            currentTurnStatus = (TurnStatus) state;
+
+            //this commented code determines if it's your turn right now. Put this back when you're ready.
+           /* if (model.getTurnTracker().getCurrentTurn() != facade.getClientPlayer().getPlayerIndex())
             {
-                switch (newStatus)
+                switch (currentTurnStatus)
                 {
                 case Discarding:
                     controller.setState(new DiscardingState(controller));
@@ -242,11 +251,12 @@ public abstract class GameplayState
                     controller.setState(new NotMyTurnState(controller));
                 }
             } else
-            {
-                switch (newStatus)
+            {*/
+                switch (currentTurnStatus)
                 {
                 case Rolling:
                     controller.setState(new RollingState(controller));
+
                     break;
 
                 case Playing:
@@ -262,17 +272,19 @@ public abstract class GameplayState
                     break;
 
                 case FirstRound:
-                    controller.setState(new SetupState(controller, TurnStatus.FirstRound));
+                    controller.setState(new SetupState(controller, currentTurnStatus));
                     break;
 
                 case SecondRound:
-                    controller.setState(new SetupState(controller, TurnStatus.SecondRound));
+                    controller.setState(new SetupState(controller, currentTurnStatus));
                     break;
                 default:
                     break;
                 }
+            controller.getState().updateView();
             }
-        }
+
+        /*}*/
 
     }
 

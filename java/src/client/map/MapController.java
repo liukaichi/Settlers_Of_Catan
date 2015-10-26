@@ -1,9 +1,10 @@
 package client.map;
 
 import client.base.ObserverController;
-import client.data.*;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
-import client.state.GameplayState;
 import client.state.InitialState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -11,14 +12,14 @@ import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import client.state.*;
-import shared.definitions.*;
-import shared.locations.*;
 import shared.model.ClientModel;
-import shared.model.map.*;
+import shared.model.map.CatanMap;
+import shared.model.map.Hex;
 import shared.model.map.structure.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Observable;
 import java.util.logging.Logger;
 
 /**
@@ -28,7 +29,6 @@ public class MapController extends ObserverController implements IMapController
 {
 
     private IRobView robView;
-    private GameplayState state;
     private PlayerInfo currentPlayer;
     private ClientFacade facade;
     private static final Logger LOGGER = Logger.getLogger(MapController.class.getName());
@@ -278,9 +278,8 @@ public class MapController extends ObserverController implements IMapController
     {
         state.placeRobber(hexLocation);
         getView().placeRobber(hexLocation);
-
+        getRobView().setPlayers(facade.getRobPlayerInfo());
         getRobView().showModal();
-        facade.placeRobber(hexLocation);
     }
 
     @Override
@@ -326,6 +325,10 @@ public class MapController extends ObserverController implements IMapController
         ClientModel model = (ClientModel) o;
         state.update(this, model, arg);
         this.initFromModel(model);
+
+
+
+
     }
 
 }

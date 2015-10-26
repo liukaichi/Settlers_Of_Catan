@@ -5,6 +5,7 @@ package client.state;
 
 import client.base.ObserverController;
 import client.discard.DiscardController;
+import shared.definitions.TurnStatus;
 import shared.model.bank.resource.Resources;
 
 import java.util.logging.Logger;
@@ -20,12 +21,16 @@ public class DiscardingState extends GameplayState
     public DiscardingState(ObserverController controller)
     {
         super(controller);
+        currentTurnStatus = TurnStatus.Discarding;
     }
 
-    @Override public void showModal()
+    @Override public void updateView()
     {
-        super.showModal();
-        ((DiscardController) controller).getDiscardView().showModal();
+        super.updateView();
+        if (controller instanceof DiscardController)
+        {
+            ((DiscardController) controller).getDiscardView().showModal();
+        }
     }
 
     @Override public void discardResources(Resources discardedResources)

@@ -7,6 +7,7 @@ import client.base.ObserverController;
 import client.roll.RollController;
 import client.turntracker.TurnTrackerController;
 import shared.definitions.Dice;
+import shared.definitions.TurnStatus;
 
 import java.util.logging.Logger;
 
@@ -21,6 +22,7 @@ public class RollingState extends GameplayState
     public RollingState(ObserverController controller)
     {
         super(controller);
+        currentTurnStatus = TurnStatus.Rolling;
     }
 
     @Override public int rollDice(Dice dice)
@@ -41,9 +43,12 @@ public class RollingState extends GameplayState
         return diceRollResult;
     }
 
-    @Override public void showModal()
+    @Override public void updateView()
     {
-        ((RollController) controller).getRollView().showModal();
+        if (controller instanceof RollController)
+        {
+            ((RollController) controller).getRollView().showModal();
+        }
     }
 
     @Override public void setTurnTrackerInfo(ObserverController newController)

@@ -3,8 +3,8 @@ package client.state;
 import client.base.ObserverController;
 import shared.definitions.DevCardType;
 import client.turntracker.TurnTrackerController;
+import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 import java.util.logging.Logger;
@@ -19,6 +19,7 @@ public class PlayingState extends GameplayState
     public PlayingState(ObserverController controller)
     {
         super(controller);
+        currentTurnStatus = TurnStatus.Playing;
     }
 
     @Override public void endTurn()
