@@ -33,10 +33,6 @@ public class RobbingState extends GameplayState
         return facade.canPlaceRobber(hexLoc);
     }
 
-    @Override public void placeRobber(HexLocation hexLoc)
-    {
-        facade.placeRobber(hexLoc);
-    }
 
     @Override public void robPlayer(RobPlayerInfo victim, HexLocation hexLocation)
     {

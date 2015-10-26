@@ -276,9 +276,8 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void placeRobber(HexLocation hexLocation)
     {
-        state.placeRobber(hexLocation);
         getView().placeRobber(hexLocation);
-        getRobView().setPlayers(facade.getRobPlayerInfo());
+        getRobView().setPlayers(facade.getRobPlayerInfo(hexLocation));
         getRobView().showModal();
     }
 
