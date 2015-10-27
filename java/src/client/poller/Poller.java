@@ -43,11 +43,13 @@ public class Poller
         pollTask.setProxy(newProxy);
     }
 
-    public int getCurrentVersion(){
+    public int getCurrentVersion()
+    {
         return currentVersion;
     }
 
-    private PollTask getPollTask(){
+    private PollTask getPollTask()
+    {
         return pollTask;
     }
 
@@ -72,13 +74,13 @@ public class Poller
             this.proxy = proxy;
         }
 
-
         /**
          * Goes through the Proxy to check for updates in the server's model.
          * Executes updateModel() if model has changed.
+         *
+         * @return returns true if model was updated. False if model stayed the same.
          * @pre When the model changes it must update the version number.
          * @post The ClientFacade will hold an updated model.
-         * @return returns true if model was updated. False if model stayed the same.
          */
         public boolean poll()
         {
