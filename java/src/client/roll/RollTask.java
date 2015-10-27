@@ -16,9 +16,8 @@ public class RollTask extends TimerTask
     public void roll()
     {
         view.closeModal();
-
         view.getController().rollDice();
-
+        cancel();
     }
 
     @Override public void run()

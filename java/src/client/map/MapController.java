@@ -117,10 +117,11 @@ public class MapController extends ObserverController implements IMapController
             getView().addHex(hex.getLocation(), hex.getHexType());
             if(hex.getNumberTile() != -1)
                 getView().addNumber(hex.getLocation(), hex.getNumberTile());
-            else
-                getView().placeRobber(hex.getLocation());
+
+
             LOGGER.fine("Adding Hex." + hex);
         }
+        getView().placeRobber(map.getRobberLocation());
 
         HashMap<EdgeLocation, Road> roads = (HashMap<EdgeLocation, Road>) map.getRoads();
         GameInfo game = model.getGameInfo();
@@ -141,6 +142,7 @@ public class MapController extends ObserverController implements IMapController
                 LOGGER.fine("PlaceSettlement. " + mapStructure);
             } else if (mapStructure instanceof City)
             {
+
                 getView().placeCity(mapStructure.getLocation(), color);
                 LOGGER.fine("PlaceCity. " + mapStructure);
             }
@@ -273,7 +275,6 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void placeRobber(HexLocation hexLocation)
     {
-        getView().placeRobber(hexLocation);
         getRobView().setPlayers(facade.getRobPlayerInfo(hexLocation));
         getRobView().showModal();
     }

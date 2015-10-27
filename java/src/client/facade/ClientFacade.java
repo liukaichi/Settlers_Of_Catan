@@ -514,8 +514,6 @@ public class ClientFacade
         model.updateModel(proxy.buildCity(new BuildCityCommand(clientPlayer.getPlayerIndex(), location)));
     }
 
-
-
     /**
      * Robs a player, player receives one resource from the player being robbed
      *
@@ -647,8 +645,10 @@ public class ClientFacade
         List<RobPlayerInfo> robPlayerInfos = new ArrayList<>();
         for (PlayerIndex index : model.getMap().getHexPlayers(hexLocation))
         {
-            if(!getClientPlayer().getPlayerIndex().equals(index))
+            if (!getClientPlayer().getPlayerIndex().equals(index))
+            {
                 robPlayerInfos.add(new RobPlayerInfo(index, getPlayerByIndex(index).getResourceCount()));
+            }
         }
 
         return robPlayerInfos.toArray(new RobPlayerInfo[robPlayerInfos.size()]);
