@@ -70,29 +70,10 @@ public class ClientFacadeTester
     }
 
     /**
-     * Test method for {@link client.facade.ClientFacade#initHistoryFromModel()}
-     * .
-     */
-    @Test
-    public void testInitHistoryFromModel()
-    {
-        fail("Not yet implemented");
-    }
-
-    /**
      * Test method for {@link client.facade.ClientFacade#canBuyDevCard()}.
      */
     @Test
     public void testCanBuyDevCard()
-    {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link client.facade.ClientFacade#buyDevCard()}.
-     */
-    @Test
-    public void testBuyDevCard()
     {
         fail("Not yet implemented");
     }
@@ -121,17 +102,6 @@ public class ClientFacadeTester
 
     /**
      * Test method for
-     * {@link client.facade.ClientFacade#playOtherDevCard(shared.definitions.DevCardType)}
-     * .
-     */
-    @Test
-    public void testPlayOtherDevCard()
-    {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for
      * {@link client.facade.ClientFacade#discardResources(shared.model.bank.resource.Resources)}
      * .
      */
@@ -141,16 +111,6 @@ public class ClientFacadeTester
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#sendTradeOffer(shared.model.player.TradeOffer)}
-     * .
-     */
-    @Test
-    public void testSendTradeOffer()
-    {
-        fail("Not yet implemented");
-    }
 
     /**
      * Test method for {@link client.facade.ClientFacade#acceptTrade(boolean)}.
@@ -161,20 +121,7 @@ public class ClientFacadeTester
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#createNewGame(client.data.GameInfo)}.
-     */
-    @Test
-    public void testCreateNewGame()
-    {
-        fail("Not yet implemented");
-    }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#joinGame(client.data.GameInfo)}.
-     */
     @Test
     public void testJoinGame()
     {
@@ -215,7 +162,7 @@ public class ClientFacadeTester
 
     /**
      * Test method for
-     * {@link client.facade.ClientFacade#canPlaceRoad(shared.locations.EdgeLocation)}
+     * {@link client.facade.ClientFacade#canPlaceRoad(shared.locations.EdgeLocation, boolean)}
      * .
      */
     @Test
@@ -226,7 +173,7 @@ public class ClientFacadeTester
 
     /**
      * Test method for
-     * {@link client.facade.ClientFacade#canPlaceSettlement(shared.locations.VertexLocation)}
+     * {@link client.facade.ClientFacade#canPlaceSettlement(shared.locations.VertexLocation, boolean)}
      * .
      */
     @Test
@@ -257,101 +204,68 @@ public class ClientFacadeTester
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#placeRoad(shared.locations.EdgeLocation)}
-     * .
-     */
     @Test
     public void testPlaceRoad()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#placeSettlement(shared.locations.VertexLocation)}
-     * .
-     */
+
     @Test
     public void testPlaceSettlement()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#placeCity(shared.locations.VertexLocation)}
-     * .
-     */
+
     @Test
     public void testPlaceCity()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#placeRobber(shared.locations.HexLocation)}
-     * .
-     */
+
     @Test
     public void testPlaceRobber()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#robPlayer(client.data.RobPlayerInfo)}.
-     */
+
     @Test
     public void testRobPlayer()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for
-     * {@link client.facade.ClientFacade#makeMaritimeTrade(shared.model.player.TradeOffer)}
-     * .
-     */
+
     @Test
     public void testMakeMaritimeTrade()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for {@link client.facade.ClientFacade#initPointsFromModel()}.
-     */
+
     @Test
     public void testInitPointsFromModel()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for {@link client.facade.ClientFacade#rollDice()}.
-     */
+
     @Test
     public void testRollDice()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for {@link client.facade.ClientFacade#endTurn()}.
-     */
+
     @Test
     public void testEndTurn()
     {
         fail("Not yet implemented");
     }
 
-    /**
-     * Test method for {@link client.facade.ClientFacade#initTurnFromModel()}.
-     */
     @Test
     public void testInitTurnFromModel()
     {

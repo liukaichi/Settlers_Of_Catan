@@ -228,24 +228,24 @@ public class CatanMap
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
      *
-     * @param player   -- this will be the player placing the settlement
-     * @param location -- this will be the location of the settlement; must ensure that
-     *                 this space on the map is empty
+     * @param player            -- this will be the player placing the settlement
+     * @param location          -- this will be the location of the settlement; must ensure that
+     *                          this space on the map is empty
+     * @param allowDisconnected
      * @return boolean -- returns true if the location is vacant and at least
      * two spaces away from another settlement otherwise returns false
      */
-    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
+    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
     {
         HexLocation hexLocation = location.getHexLoc();
         if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
         {
-            VertexLocation normalizedVertex = location;
-            MapStructure atLocation = structures.get(normalizedVertex);
+            MapStructure atLocation = structures.get(location);
             // check if location exists, and is empty
             if (atLocation == null)
             {
                 //check structures is 2 roads a way
-                List<VertexLocation> vertices = getNearbyVertices(normalizedVertex);
+                List<VertexLocation> vertices = getNearbyVertices(location);
                 for (VertexLocation vertex : vertices)
                 {
                     if (structures.get(vertex) != null)
@@ -253,8 +253,8 @@ public class CatanMap
                         return false;
                     }
                 }
-
-                List<EdgeLocation> edges = getNearbyEdges(normalizedVertex);
+                //check if settlement is connected to player's road.
+                List<EdgeLocation> edges = getNearbyEdges(location);
                 for (EdgeLocation edge : edges)
                 {
                     Road road = roads.get(edge);
@@ -337,14 +337,15 @@ public class CatanMap
      * Method that indicates whether a player has the ability to place a city on
      * a certain edge on the map
      *
-     * @param player   -- this will be the player placing the road
-     * @param location -- this will be the edge location where the road will be placed;
-     *                 must ensure this space is empty on the map
+     * @param player            -- this will be the player placing the road
+     * @param location          -- this will be the edge location where the road will be placed;
+     *                          must ensure this space is empty on the map
+     * @param allowDisconnected
      * @return boolean -- returns true if the player owns a settlement or city
      * at the neighboring vertex locations and there is no current road
      * there otherwise returns false
      */
-    public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
+    public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location, boolean allowDisconnected)
     {
         HexLocation hexLocation = location.getHexLoc();
         if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
@@ -371,29 +372,49 @@ public class CatanMap
                 for (VertexLocation vertex : vertices)
                 {
                     MapStructure mapStructure = structures.get(vertex);
-                    if (mapStructure != null && mapStructure.getOwner().getIndex() == player.getIndex())
+                    if (mapStructure != null)
                     {
-                        return true;
-                    }
-                }
-                //check connecting roads
-                List<EdgeLocation> edges = getNearbyEdges(normalizedEdge);
-                for (EdgeLocation edge : edges)
-                {
-                    Road road = roads.get(edge);
-                    if (road != null && road.getOwner().equals(player))
-                    {
-                        //get the vertex between the two
-                        for (VertexLocation vertex : getNearbyVertices(normalizedEdge))
+                        if (mapStructure.getOwner().getIndex() == player.getIndex())
                         {
-                            if (getNearbyVertices(edge).contains(vertex) && structures.get(vertex) != null)
+                            if (allowDisconnected)
                             {
                                 return false;
                             }
+                            {
+                                return true;
+                            }
                         }
-                        return true;
+                        else if (allowDisconnected)
+                        {
+                            return false;
+                        }
                     }
                 }
+                if (!allowDisconnected)
+                {
+                    //check connecting roads
+                    List<EdgeLocation> edges = getNearbyEdges(normalizedEdge);
+                    for (EdgeLocation edge : edges)
+                    {
+                        Road road = roads.get(edge);
+                        if (road != null && road.getOwner().equals(player))
+                        {
+                            //get the vertex between the two
+                            for (VertexLocation vertex : getNearbyVertices(normalizedEdge))
+                            {
+                                if (getNearbyVertices(edge).contains(vertex) && structures.get(vertex) != null)
+                                {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        }
+                    }
+                } else
+                {
+                    return true;
+                }
+
             }
         }
         return false;
@@ -419,51 +440,11 @@ public class CatanMap
         return false;
     }
 
-    /**
-     * Method that places a road on the map
-     *
-     * @param player   -- this will be the player placing the road
-     * @param location -- this will be the hex location where the road will be placed
-     * @throws PlacementException
-     */
-    public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
-    {
-        if (canPlaceRoad(player, location))
-        {
-            Road road = new Road(player, location);
-            roads.put(location, road);
-        } else
-        {
-            throw new PlacementException();
-        }
-
-    }
-
     public void forcePlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
         Road road = new Road(player, location);
         roads.put(location, road);
 
-    }
-
-    /**
-     * Method that places a settlement on the map
-     *
-     * @param player   -- this will be the player placing the settlement
-     * @param location -- this will be the vertex location where the settlement will be
-     *                 placed
-     * @throws PlacementException
-     */
-    public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
-    {
-        if (canPlaceSettlement(player, location))
-        {
-            Settlement settlement = new Settlement(player, location);
-            structures.put(location, settlement);
-        } else
-        {
-            throw new PlacementException();
-        }
     }
 
     public void forcePlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
@@ -472,47 +453,10 @@ public class CatanMap
         structures.put(location, settlement);
     }
 
-    /**
-     * Method that places a city on the map
-     *
-     * @param player   -- this will be the player placing the city
-     * @param location -- this will be the vertex location where the city will be placed
-     * @throws PlacementException
-     */
-    public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
-    {
-        if (canPlaceCity(player, location))
-        {
-            City city = new City(player, location);
-            structures.put(location, city);
-        } else
-        {
-            throw new PlacementException();
-        }
-    }
-
     public void forcePlaceCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
         City city = new City(player, location);
         structures.put(location, city);
-    }
-
-    /**
-     * Method that moves the robber on the map
-     *
-     * @param player   -- this will be the player moving the robber
-     * @param location -- this will be the hex location where the robber will be placed
-     * @throws PlacementException
-     */
-    public void moveRobber(PlayerIndex player, HexLocation location) throws PlacementException
-    {
-        if (canMoveRobber(player, location))
-        {
-            this.robberLocation = location;
-        } else
-        {
-            throw new PlacementException();
-        }
     }
 
     public void setHexes(Map<HexLocation, Hex> hexes)

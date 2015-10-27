@@ -49,12 +49,12 @@ public class PlayingState extends GameplayState
 
     @Override public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
-        return facade.canPlaceRoad(edgeLoc);
+        return facade.canPlaceRoad(edgeLoc, false);
     }
 
     @Override public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
-        return facade.canPlaceSettlement(vertLoc);
+        return facade.canPlaceSettlement(vertLoc, false);
     }
 
     @Override public boolean canPlaceRobber(HexLocation hexLoc)

@@ -6,6 +6,7 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
+import client.state.SetupState;
 import client.state.RobbingState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -143,7 +144,6 @@ public class MapController extends ObserverController implements IMapController
                 LOGGER.fine("PlaceSettlement. " + mapStructure);
             } else if (mapStructure instanceof City)
             {
-
                 getView().placeCity(mapStructure.getLocation(), color);
                 LOGGER.fine("PlaceCity. " + mapStructure);
             }
@@ -255,14 +255,14 @@ public class MapController extends ObserverController implements IMapController
     public void placeRoad(EdgeLocation edgeLocation)
     {
         state.placeRoad(edgeLocation.getNormalizedLocation());
-        //getView().placeRoad(edgeLocation, ClientFacade.getInstance().getClientPlayer().getColor());
+        getView().placeRoad(edgeLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
     @Override
     public void placeSettlement(VertexLocation vertexLocation)
     {
         state.placeSettlement(vertexLocation.getNormalizedLocation());
-        //getView().placeSettlement(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
+        getView().placeSettlement(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
 
@@ -284,8 +284,7 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
-
-        getView().startDrop(pieceType, ClientFacade.getInstance().getClientPlayer().getColor(), true);
+        state.startMove(pieceType, isFree, allowDisconnected);
     }
 
     @Override

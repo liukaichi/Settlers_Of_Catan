@@ -6,10 +6,7 @@ package client.state;
 import client.base.ObserverController;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
-import shared.definitions.DevCardType;
-import shared.definitions.Dice;
-import shared.definitions.ResourceType;
-import shared.definitions.TurnStatus;
+import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -299,7 +296,11 @@ public abstract class GameplayState
     {
     }
 
-    ;
+    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
+    {
+
+    }
+
 }
 
 

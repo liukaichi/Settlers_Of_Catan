@@ -402,6 +402,7 @@ public class ClientFacade
      * Checks to see if the player meets the conditions to place a road
      *
      * @param edgeLoc the location of the Road
+     * @param allowDisconnected
      * @return boolean - true if the player has the required resources and the
      * location is vacant and the player owns a settlement or city at a
      * neighboring vertex location
@@ -409,9 +410,9 @@ public class ClientFacade
      * @post place road continues
      */
 
-    public boolean canPlaceRoad(EdgeLocation edgeLoc)
+    public boolean canPlaceRoad(EdgeLocation edgeLoc, boolean allowDisconnected)
     {
-        return model.canPlaceRoad(clientPlayer.getPlayerIndex(), edgeLoc);
+        return model.canPlaceRoad(clientPlayer.getPlayerIndex(), edgeLoc, allowDisconnected);
     }
 
     public boolean canBuyRoad()
@@ -423,15 +424,16 @@ public class ClientFacade
      * Checks to see if the player meets the condition to place a settlement
      *
      * @param vertLoc the location of the Vertex
+     * @param allowDisconnected
      * @return boolean - true if player has the required resources and the
      * location is 2 edges or more from another settlement
      * @pre place settlement is called
      * @post place settlement continues
      */
 
-    public boolean canPlaceSettlement(VertexLocation vertLoc)
+    public boolean canPlaceSettlement(VertexLocation vertLoc, boolean allowDisconnected)
     {
-        return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertLoc);
+        return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertLoc, allowDisconnected);
     }
 
     public boolean canBuySettlement()

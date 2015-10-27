@@ -175,12 +175,13 @@ public class ClientModel extends Observable
      * @param location
      *        -- this will be the location of the settlement; must ensure that
      *        this space on the map is empty
+     * @param allowDisconnected
      * @return boolean -- returns true if the location is vacant and at least
      *         two spaces away from another settlement otherwise returns false
      */
-    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
+    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
     {
-        return map.canPlaceSettlement(player, location);
+        return map.canPlaceSettlement(player, location, allowDisconnected);
     }
 
     /**
@@ -209,13 +210,14 @@ public class ClientModel extends Observable
      * @param location
      *        -- this will be the edge location where the road will be placed;
      *        must ensure this space is empty on the map
+     * @param allowDisconnected
      * @return boolean -- returns true if the player owns a settlement or city
      *         at the neighboring vertex locations and there is no current road
      *         there otherwise returns false
      */
-    public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location)
+    public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location, boolean allowDisconnected)
     {
-        return map.canPlaceRoad(player, location);
+        return map.canPlaceRoad(player, location, allowDisconnected);
     }
 
     /**
@@ -233,64 +235,6 @@ public class ClientModel extends Observable
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
         return map.canMoveRobber(player, location);
-    }
-
-    /**
-     * Method that places a road on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the road
-     * @param location
-     *        -- this will be the hex location where the road will be placed
-     * @throws PlacementException
-     */
-    public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
-    {
-        map.placeRoad(player, location);
-
-    }
-
-    /**
-     * Method that places a settlement on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the settlement
-     * @param location
-     *        -- this will be the vertex location where the settlement will be
-     *        placed
-     * @throws PlacementException
-     */
-    public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
-    {
-        map.placeSettlement(player, location);
-    }
-
-    /**
-     * Method that places a city on the map
-     * 
-     * @param player
-     *        -- this will be the player placing the city
-     * @param location
-     *        -- this will be the vertex location where the city will be placed
-     * @throws PlacementException
-     */
-    public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
-    {
-        map.placeCity(player, location);
-    }
-
-    /**
-     * Method that moves the robber on the map
-     * 
-     * @param player
-     *        -- this will be the player moving the robber
-     * @param location
-     *        -- this will be the hex location where the robber will be placed
-     * @throws PlacementException
-     */
-    public void moveRobber(PlayerIndex player, HexLocation location) throws PlacementException
-    {
-        map.moveRobber(player, location);
     }
 
     public boolean canBuyRoad(Player player)
@@ -321,17 +265,6 @@ public class ClientModel extends Observable
     }
 
     /**
-     * Updates the PlayerBank to decrement resources used and increment
-     * settlement count
-     * 
-     * @throws CatanException
-     */
-    public void buySettlement(Player player) throws CatanException
-    {
-        player.buySettlement();
-    }
-
-    /**
      * Determines if the PlayerBank has Cities left to purchase AND if the
      * resources required are available
      * 
@@ -340,18 +273,6 @@ public class ClientModel extends Observable
     public boolean canBuyCity(Player player)
     {
         return player.canBuyCity();
-    }
-
-    /**
-     * Updates the PlayerBank to decrement resources used and increment city
-     * count
-     * 
-     * @throws CatanException
-     * @throws InsufficientResourcesException
-     */
-    public void buyCity(Player player) throws CatanException
-    {
-        player.buyCity();
     }
 
     /**
