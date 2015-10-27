@@ -10,6 +10,7 @@ public class BankStructure
 {
     private StructureType type;
     private int amountBuilt;
+    private int amountRemaining;
     private final int amountMax;
 
     @Override public boolean equals(Object o)
@@ -25,6 +26,9 @@ public class BankStructure
             return false;
         if (amountMax != bankStructure.amountMax)
             return false;
+        if (amountRemaining != bankStructure.amountRemaining)
+            return false;
+
         return type == bankStructure.type;
 
     }
@@ -36,11 +40,11 @@ public class BankStructure
 
     public int getAmountRemaining()
     {
-        return amountMax - amountBuilt;
+        return amountRemaining;
     }
 
     public enum AmountType{
-        BUILT, MAX
+        BUILT, MAX, REMAINING
     }
 
     public BankStructure(StructureType type){
@@ -49,15 +53,19 @@ public class BankStructure
         switch (type){
             case CITY:
                 amountMax = 4;
+                amountRemaining = 4;
                 break;
             case SETTLEMENT:
                 amountMax = 5;
+                amountRemaining = 5;
                 break;
             case ROAD:
                 amountMax = 15;
+                amountRemaining = 15;
                 break;
             default:
                 amountMax = -1;
+                amountRemaining = -1;
         }
     }
 
@@ -67,6 +75,7 @@ public class BankStructure
 
     public void setAmountBuilt(int amountBuilt) {
         this.amountBuilt = amountBuilt;
+        this.amountRemaining = this.amountMax - this.amountBuilt;
     }
 
     public int getAmountMax() {
@@ -77,12 +86,19 @@ public class BankStructure
         return type;
     }
 
+    public void setAmountRemaining(int amountRemaining) {
+        this.amountRemaining = amountRemaining;
+    }
+
     public int getAmount(AmountType type){
         switch (type){
             case BUILT:
+
                 return amountBuilt;
             case MAX:
                 return amountMax;
+            case REMAINING:
+                return amountRemaining;
             default:
                 return -1;
         }
@@ -92,22 +108,24 @@ public class BankStructure
      * Increments the specified amount from this MapStructure
      * @param addAmount -- amount to increment by
      */
-    public void addAmount(int addAmount) throws CatanException {
+    public void addAmountBuilt(int addAmount) throws CatanException {
         if ((amountBuilt + addAmount) > amountMax){
             throw new CatanException();
         }
         amountBuilt += addAmount;
+        amountRemaining -= addAmount;
     }
 
     /**
      * Decrement the specified amount from this MapStructure
      * @param subAmount -- amount to decrement by
      */
-    public void subAmount(int subAmount) throws CatanException {
+    public void subAmountBuilt(int subAmount) throws CatanException {
         if (amountBuilt == 0){
             throw new CatanException();
         }
         amountBuilt -= subAmount;
+        amountRemaining += subAmount;
     }
 
 }

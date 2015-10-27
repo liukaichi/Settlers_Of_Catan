@@ -6,6 +6,7 @@ import client.base.*;
 import client.facade.ClientFacade;
 import shared.definitions.ResourceType;
 import shared.definitions.StructureType;
+import shared.model.ClientModel;
 import shared.model.bank.PlayerBank;
 import shared.model.bank.resource.Resource;
 import shared.model.bank.resource.Resources;
@@ -63,13 +64,14 @@ public class ResourceBarController extends ObserverController implements IResour
             Structures structures = bank.getStructures();
 
             // testing
-            resources.setAmount(ResourceType.WHEAT, 5);
-            resources.setAmount(ResourceType.BRICK, 5);
-            resources.setAmount(ResourceType.WOOD, 5);
-            structures.getStructure(StructureType.ROAD).setAmountBuilt(3);
+//            resources.setAmount(ResourceType.WHEAT, 5);
+//            resources.setAmount(ResourceType.BRICK, 5);
+//            resources.setAmount(ResourceType.WOOD, 5);
+//            structures.getStructure(StructureType.ROAD).setAmountBuilt(3);
 
             setResources(resources);
             setStructures(structures);
+            getView().setElementAmount(ResourceBarElement.SOLDIERS, bank.getKnights());
             disableActions();
         }
 
@@ -110,7 +112,7 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     @Override public void buildRoad()
     {
-            executeElementAction(ResourceBarElement.ROAD);
+        executeElementAction(ResourceBarElement.ROAD);
     }
 
     /**
@@ -118,7 +120,7 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     @Override public void buildSettlement()
     {
-            executeElementAction(ResourceBarElement.SETTLEMENT);
+        executeElementAction(ResourceBarElement.SETTLEMENT);
     }
 
     /**
@@ -126,12 +128,12 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     @Override public void buildCity()
     {
-            executeElementAction(ResourceBarElement.CITY);
+        executeElementAction(ResourceBarElement.CITY);
     }
 
     @Override public void buyCard()
     {
-            executeElementAction(ResourceBarElement.BUY_CARD);
+       executeElementAction(ResourceBarElement.BUY_CARD);
     }
 
     /**
@@ -155,7 +157,10 @@ public class ResourceBarController extends ObserverController implements IResour
 
     @Override public void update(Observable o, Object arg)
     {
+        ClientModel model = (ClientModel) o;
+        state.update(this, model, arg);
         initFromModel();
+
     }
 
 }

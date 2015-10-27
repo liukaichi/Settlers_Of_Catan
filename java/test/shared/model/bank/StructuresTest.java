@@ -30,7 +30,7 @@ public class StructuresTest {
         assertEquals(test.getAmount(BankStructure.AmountType.MAX), 4);
         assertEquals(test.getAmount(BankStructure.AmountType.BUILT), 0);
 
-        test.addAmount(2);
+        test.addAmountBuilt(2);
         assertEquals(test.getAmount(BankStructure.AmountType.BUILT), 2);
     }
 }

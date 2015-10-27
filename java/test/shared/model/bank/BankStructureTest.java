@@ -49,27 +49,27 @@ public class BankStructureTest
     @Test
     public void testAddAmount() throws Exception{
         BankStructure test = setCity();
-        test.addAmount(4);
+        test.addAmountBuilt(4);
         assertEquals(test.getAmount(BankStructure.AmountType.BUILT), 4);
     }
 
     @Test(expected = Exception.class)
     public void testAddAmountException() throws Exception {
         BankStructure test = setCity();
-        test.addAmount(9);
+        test.addAmountBuilt(9);
     }
 
     @Test
     public void testSubAmount() throws Exception {
         BankStructure test = setSettlement();
-        test.addAmount(3);
-        test.subAmount(1);
+        test.addAmountBuilt(3);
+        test.subAmountBuilt(1);
         assertEquals(test.getAmount(BankStructure.AmountType.BUILT), 2);
     }
 
     @Test(expected = CatanException.class)
     public void testSubAmountException() throws Exception {
         BankStructure test = setSettlement();
-        test.subAmount(1);
+        test.subAmountBuilt(1);
     }
 }

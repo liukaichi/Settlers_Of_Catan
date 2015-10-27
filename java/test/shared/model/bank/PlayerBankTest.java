@@ -230,7 +230,7 @@ public class PlayerBankTest
 
         try
         {
-            test.getStructures().getStructure(StructureType.SETTLEMENT).addAmount(1);
+            test.getStructures().getStructure(StructureType.SETTLEMENT).addAmountBuilt(1);
             assertTrue(test.canBuyCity());
         } catch (CatanException e)
         {
@@ -247,7 +247,7 @@ public class PlayerBankTest
 
             wheat().addResource(3);
             ore().addResource(3);
-            test.getStructures().getStructure(StructureType.SETTLEMENT).addAmount(1);
+            test.getStructures().getStructure(StructureType.SETTLEMENT).addAmountBuilt(1);
             test.buyCity();
 
             assertEquals(1,
