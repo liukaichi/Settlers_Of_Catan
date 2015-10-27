@@ -72,21 +72,10 @@ public class SetupState extends GameplayState
         return facade.canPlaceSettlement(vertLoc, true);
     }
 
-
     @Override
     public void placeSettlement(VertexLocation vertLoc)
     {
         facade.placeSettlement(vertLoc, true);
-    }
-
-    @Override
-    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
-    {
-        if (controller instanceof MapController)
-        {
-            ((MapController) controller).getView()
-                    .startDrop(pieceType, ClientFacade.getInstance().getClientPlayer().getColor(), false);
-        }
     }
 
     @Override

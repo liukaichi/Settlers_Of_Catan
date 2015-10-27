@@ -6,6 +6,7 @@ package client.state;
 import client.base.ObserverController;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
+import client.map.MapController;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;

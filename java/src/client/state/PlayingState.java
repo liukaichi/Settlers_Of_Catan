@@ -2,9 +2,11 @@ package client.state;
 
 import client.base.ObserverController;
 import client.data.RobPlayerInfo;
+import client.facade.ClientFacade;
 import client.map.MapController;
 import client.turntracker.TurnTrackerController;
 import shared.definitions.DevCardType;
+import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
@@ -31,6 +33,7 @@ public class PlayingState extends GameplayState
         LOGGER.info("Ending Turn");
         facade.endTurn();
     }
+
     @Override public void setTurnTrackerInfo(ObserverController newController)
     {
         TurnTrackerController turnTrackerController = ((TurnTrackerController) newController);
@@ -97,14 +100,12 @@ public class PlayingState extends GameplayState
         return facade.canPlayDevCard(type);
     }
 
-    @Override
-    public void playMonopolyCard(ResourceType resource)
+    @Override public void playMonopolyCard(ResourceType resource)
     {
 
     }
 
-    @Override
-    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
+    @Override public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
 
     }
@@ -112,22 +113,28 @@ public class PlayingState extends GameplayState
     /**
      * Plays a Monument Card.
      */
-    @Override
-    public void playMonumentCard()
+    @Override public void playMonumentCard()
     {
 
     }
 
-    @Override
-    public void playRoadBuildingCard(EdgeLocation edge1, EdgeLocation edge2)
+    @Override public void playRoadBuildingCard(EdgeLocation edge1, EdgeLocation edge2)
     {
 
     }
 
-    @Override
-    public void playSoldierCard(RobPlayerInfo info, HexLocation location)
+    @Override public void playSoldierCard(RobPlayerInfo info, HexLocation location)
     {
 
+    }
+
+    @Override public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
+    {
+        if (controller instanceof MapController)
+        {
+            ((MapController) controller).getView()
+                    .startDrop(pieceType, ClientFacade.getInstance().getClientPlayer().getColor(), true);
+        }
     }
 
     @Override public void updateView()

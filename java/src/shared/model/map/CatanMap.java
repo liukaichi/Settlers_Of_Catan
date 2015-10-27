@@ -215,7 +215,7 @@ public class CatanMap
     public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, Road> roads,
             Map<VertexLocation, MapStructure> structures, int radius, HexLocation robberLocation)
     {
-        super();
+        this();
         this.ports = ports;
         this.hexes = hexes;
         this.roads = roads;
@@ -231,20 +231,26 @@ public class CatanMap
      * @param player            -- this will be the player placing the settlement
      * @param location          -- this will be the location of the settlement; must ensure that
      *                          this space on the map is empty
-     * @param allowDisconnected
+     * @param allowDisconnected unused currently.
      * @return boolean -- returns true if the location is vacant and at least
      * two spaces away from another settlement otherwise returns false
      */
     public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
     {
         HexLocation hexLocation = location.getHexLoc();
-        if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
+        if (isHexWithinMapRadius(hexLocation, this.radius))
+        //if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
         {
             MapStructure atLocation = structures.get(location);
             // check if location exists, and is empty
             if (atLocation == null)
             {
+                if (!isTwoRoadsAwayFromOpponents(location))
+                {
+                    return false;
+                }
                 //check structures is 2 roads a way
+                /*
                 List<VertexLocation> vertices = getNearbyVertices(location);
                 for (VertexLocation vertex : vertices)
                 {
@@ -253,6 +259,9 @@ public class CatanMap
                         return false;
                     }
                 }
+                */
+                return isSettlementConnectedToPlayersRoads(location, player);
+                /*
                 //check if settlement is connected to player's road.
                 List<EdgeLocation> edges = getNearbyEdges(location);
                 for (EdgeLocation edge : edges)
@@ -266,44 +275,41 @@ public class CatanMap
                         }
                     }
                 }
+                */
             }
         }
         return false;
 
     }
 
-    private List<EdgeLocation> getNearbyEdges(VertexLocation normalized)
+    private boolean isTwoRoadsAwayFromOpponents(VertexLocation location)
     {
-        ArrayList<EdgeLocation> edges = new ArrayList<>();
-        if (normalized.getDir().equals(VertexDirection.NorthEast))
+        List<VertexLocation> vertices = getNearbyVertices(location);
+        for (VertexLocation vertex : vertices)
         {
-            Hex hex = hexes.get(normalized.getHexLoc());
-            if (hex != null)
+            if (structures.get(vertex) != null)
             {
-                edges.add(hex.getEdgeLocation(EdgeDirection.North));
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
-            }
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
-            }
-        } else if (normalized.getDir().equals(VertexDirection.NorthWest))
-        {
-            Hex hex = hexes.get(normalized.getHexLoc());
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.North));
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
-
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
-            }
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+                return false;
             }
         }
-        return edges;
+        return true;
+    }
+
+    private boolean isSettlementConnectedToPlayersRoads(VertexLocation location, PlayerIndex player)
+    {
+        List<EdgeLocation> edges = getNearbyEdges(location);
+        for (EdgeLocation edge : edges)
+        {
+            Road road = roads.get(edge);
+            if (road != null)
+            {
+                if (road.getOwner().equals(player))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -340,7 +346,7 @@ public class CatanMap
      * @param player            -- this will be the player placing the road
      * @param location          -- this will be the edge location where the road will be placed;
      *                          must ensure this space is empty on the map
-     * @param allowDisconnected
+     * @param allowDisconnected whether this road must be connected to a settlement/road to place. True only during the setup phase.
      * @return boolean -- returns true if the player owns a settlement or city
      * at the neighboring vertex locations and there is no current road
      * there otherwise returns false
@@ -348,15 +354,20 @@ public class CatanMap
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location, boolean allowDisconnected)
     {
         HexLocation hexLocation = location.getHexLoc();
-        if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
+
+        //if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
+        if (isHexWithinMapRadius(hexLocation, this.radius))
         {
-            EdgeLocation normalizedEdge = location;
-            Road atLocation = roads.get(normalizedEdge);
+            Road atLocation = roads.get(location);
             // check if location exists, and is empty
             if (atLocation == null)
             {
                 //check valid hex
-                Hex hex = hexes.get(hexLocation);
+                if (isHexEdgeAlwaysWater(hexLocation, location.getDir()))
+                {
+                    return false;
+                }
+                /*Hex hex = hexes.get(hexLocation);
                 if (hex != null && hex.getHexType().equals(HexType.WATER))
                 {
                     EdgeDirection dir = location.getDir();
@@ -366,11 +377,19 @@ public class CatanMap
                         return false;
                     }
 
-                }
+                }*/
                 //check nearby vertices
-                List<VertexLocation> vertices = getNearbyVertices(normalizedEdge);
+                List<VertexLocation> vertices = getNearbyVertices(location);
                 for (VertexLocation vertex : vertices)
                 {
+                    if (isPlayerAtLocation(vertex, player))
+                    {
+                        return !allowDisconnected;
+                    } else if (allowDisconnected)
+                    {
+                        return false;
+                    }
+                    /*
                     MapStructure mapStructure = structures.get(vertex);
                     if (mapStructure != null)
                     {
@@ -380,27 +399,26 @@ public class CatanMap
                             {
                                 return false;
                             }
+                            else
                             {
                                 return true;
                             }
-                        }
-                        else if (allowDisconnected)
+                        } else if (allowDisconnected)
                         {
                             return false;
                         }
-                    }
+                    }*/
                 }
                 if (!allowDisconnected)
                 {
                     //check connecting roads
-                    List<EdgeLocation> edges = getNearbyEdges(normalizedEdge);
+                    List<EdgeLocation> edges = getNearbyEdges(location);
                     for (EdgeLocation edge : edges)
                     {
-                        Road road = roads.get(edge);
-                        if (road != null && road.getOwner().equals(player))
+                        if (isPlayerAtLocation(edge, player))
                         {
                             //get the vertex between the two
-                            for (VertexLocation vertex : getNearbyVertices(normalizedEdge))
+                            for (VertexLocation vertex : getNearbyVertices(location))
                             {
                                 if (getNearbyVertices(edge).contains(vertex) && structures.get(vertex) != null)
                                 {
@@ -409,6 +427,21 @@ public class CatanMap
                             }
                             return true;
                         }
+                        /*
+                        Road road = roads.get(edge);
+                        if (road != null && road.getOwner().equals(player))
+                        {
+                            //get the vertex between the two
+                            for (VertexLocation vertex : getNearbyVertices(location))
+                            {
+                                if (getNearbyVertices(edge).contains(vertex) && structures.get(vertex) != null)
+                                {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        }
+                        */
                     }
                 } else
                 {
@@ -419,6 +452,85 @@ public class CatanMap
         }
         return false;
 
+    }
+
+    private boolean isHexWithinMapRadius(HexLocation hexLocation, int radius)
+    {
+        return ((Math.abs(hexLocation.getY()) <= radius) && (Math.abs(hexLocation.getX()) <= radius));
+    }
+
+    private boolean isHexEdgeAlwaysWater(HexLocation hexLocation, EdgeDirection roadDirection)
+    {
+        Hex hex = hexes.get(hexLocation);
+        if (hex != null && hex.getHexType().equals(HexType.WATER))
+        {
+            Hex opposite = hexes.get(hexLocation.getNeighborLoc(roadDirection));
+            if (opposite != null && opposite.getHexType().equals(HexType.WATER))
+            {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    private boolean isPlayerAtLocation(EdgeLocation location, PlayerIndex player)
+    {
+        Road road = roads.get(location);
+        if (road != null)
+        {
+            return (road.getOwner().getIndex() == player.getIndex());
+        }
+        return false;
+    }
+
+    private boolean isPlayerAtLocation(VertexLocation location, PlayerIndex player)
+    {
+        MapStructure mapStructure = structures.get(location);
+        if (mapStructure != null)
+        {
+            return (mapStructure.getOwner().getIndex() == player.getIndex());
+        }
+        return false;
+
+    }
+
+    private boolean doStuff(EdgeLocation location, EdgeLocation edge)
+    {
+        //get the vertex between the two
+        for (VertexLocation vertex : getNearbyVertices(location))
+        {
+            if (getNearbyVertices(edge).contains(vertex) && structures.get(vertex) != null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isRoadAllowed(List<VertexLocation> vertices, boolean allowDisconnected, PlayerIndex player)
+    {
+        for (VertexLocation vertex : vertices)
+        {
+            MapStructure mapStructure = structures.get(vertex);
+            if (mapStructure != null)
+            {
+                if (mapStructure.getOwner().getIndex() == player.getIndex())
+                {
+                    if (allowDisconnected)
+                    {
+                        return false;
+                    } else
+                    {
+                        return true;
+                    }
+                } else if (allowDisconnected)
+                {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -497,15 +609,26 @@ public class CatanMap
     /**
      * Gets vertices that are up to two vertices away.
      *
-     * @param location the current vertex to find neighbors for.
+     * @param normalized the current vertex to find neighbors for.
      * @return a list a vertices up to two spaces away.
      */
-    private List<VertexLocation> getNearbyVertices(VertexLocation location)
+    private List<VertexLocation> getNearbyVertices(VertexLocation normalized)
     {
-        VertexLocation normalized = location;
         ArrayList<VertexLocation> vertices = new ArrayList<>();
+        switch (normalized.getDir())
+        {
+        case NorthEast:
+            vertices.addAll(getNearbyVerticesFromNorthEastVertex(normalized));
+            break;
+        case NorthWest:
+            vertices.addAll(getNearbyVerticesFromNorthWestVertex(normalized));
+            break;
+        }
+        return vertices;
+        /*
         if (normalized.getDir().equals(VertexDirection.NorthEast))
         {
+
             Hex hex = hexes.get(normalized.getHexLoc());
             if (hex != null)
             {
@@ -517,8 +640,11 @@ public class CatanMap
             {
                 vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
             }
-        } else if (normalized.getDir().equals(VertexDirection.NorthWest))
+
+        }
+        else if (normalized.getDir().equals(VertexDirection.NorthWest))
         {
+
             Hex hex = hexes.get(normalized.getHexLoc());
             if (hex != null)
             {
@@ -527,6 +653,43 @@ public class CatanMap
 
                 hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
             }
+            if (hex != null)
+            {
+                vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
+            }
+
+        }
+        */
+    }
+
+    private List<VertexLocation> getNearbyVerticesFromNorthEastVertex(VertexLocation vertexLocation)
+    {
+        List<VertexLocation> vertices = new ArrayList<>();
+        Hex hex = hexes.get(vertexLocation.getHexLoc());
+        if (hex != null)
+        {
+            vertices.add(hex.getVertexLocation(VertexDirection.East));
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
+
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
+            if (hex != null)
+            {
+                vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
+            }
+        }
+        return vertices;
+    }
+
+    private List<VertexLocation> getNearbyVerticesFromNorthWestVertex(VertexLocation vertexLocation)
+    {
+        List<VertexLocation> vertices = new ArrayList<>();
+        Hex hex = hexes.get(vertexLocation.getHexLoc());
+        if (hex != null)
+        {
+            vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
+            vertices.add(hex.getVertexLocation(VertexDirection.West));
+
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
             if (hex != null)
             {
                 vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
@@ -538,82 +701,228 @@ public class CatanMap
     /**
      * Gets the nearby vertices from an edge one distance away from the current road.
      *
-     * @param location the current location of the edge.
+     * @param normalized the current location of the edge.
      * @return a list of vertices one distance away.
      */
-    private List<VertexLocation> getNearbyVertices(EdgeLocation location)
+    private List<VertexLocation> getNearbyVertices(EdgeLocation normalized)
     {
-        EdgeLocation normalized = location;
         ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
         Hex hex = hexes.get(normalized.getHexLoc());
         if (hex != null)
         {
-            if (normalized.getDir().equals(EdgeDirection.NorthWest))
+            switch (normalized.getDir())
             {
+            case NorthWest:
                 vertices.add(hex.getVertexLocation(VertexDirection.West));
                 vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
-            } else if (normalized.getDir().equals(EdgeDirection.North))
-            {
+                break;
+            case North:
                 vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
                 vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
-            } else if (normalized.getDir().equals(EdgeDirection.NorthEast))
-            {
+                break;
+            case NorthEast:
                 vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
                 vertices.add(hex.getVertexLocation(VertexDirection.East));
+                break;
             }
         }
         return vertices;
     }
 
+    private List<EdgeLocation> getNearbyEdges(VertexLocation normalized)
+    {
+        ArrayList<EdgeLocation> edges = new ArrayList<>();
+        switch (normalized.getDir())
+        {
+        case NorthEast:
+            edges.addAll(getNearbyEdgesFromNorthEastVertex(normalized));
+            break;
+        case NorthWest:
+            edges.addAll(getNearbyEdgesFromNorthWestVertex(normalized));
+            break;
+        }
+        return edges;
+
+        /*
+        if (normalized.getDir().equals(VertexDirection.NorthEast))
+        {
+            Hex hex = hexes.get(normalized.getHexLoc());
+            if (hex != null)
+            {
+                edges.add(hex.getEdgeLocation(EdgeDirection.North));
+                edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
+            }
+            if (hex != null)
+            {
+                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+            }
+
+        } else if (normalized.getDir().equals(VertexDirection.NorthWest))
+        {
+            /*
+            Hex hex = hexes.get(normalized.getHexLoc());
+            if (hex != null)
+            {
+                edges.add(hex.getEdgeLocation(EdgeDirection.North));
+                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+
+                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
+            }
+            if (hex != null)
+            {
+                edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+            }
+
+        }
+        */
+    }
+
+    private List<EdgeLocation> getNearbyEdgesFromNorthEastVertex(VertexLocation vertexLocation)
+    {
+        List<EdgeLocation> edges = new ArrayList<>();
+        Hex hex = hexes.get(vertexLocation.getHexLoc());
+        if (hex != null)
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.North));
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
+        }
+        if (hex != null)
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+        }
+        return edges;
+    }
+
+    private List<EdgeLocation> getNearbyEdgesFromNorthWestVertex(VertexLocation vertexLocation)
+    {
+        List<EdgeLocation> edges = new ArrayList<>();
+        Hex hex = hexes.get(vertexLocation.getHexLoc());
+        if (hex != null)
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.North));
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
+        }
+        if (hex != null)
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+        }
+        return edges;
+    }
+
     /**
      * Gets edges that are one edge distance away. Edges are added clockwise
      *
-     * @param location the current location of the edge.
+     * @param normalized the current location of the edge.
      * @return a list of edges one distance away.
      */
-    private List<EdgeLocation> getNearbyEdges(EdgeLocation location)
+    private List<EdgeLocation> getNearbyEdges(EdgeLocation normalized)
     {
-        EdgeLocation normalized = location;
         ArrayList<EdgeLocation> edges = new ArrayList<EdgeLocation>();
 
-        Hex hex = hexes.get(normalized.getHexLoc());
-        if (hex != null)
+        switch (normalized.getDir())
         {
-            if (normalized.getDir().equals(EdgeDirection.NorthWest))
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.North));
-                edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
+        case NorthWest:
+            edges.addAll(getNearbyEdgesFromNorthWestEdge(normalized));
+            /*
+            edges.add(hex.getEdgeLocation(EdgeDirection.North));
+            edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
 
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
-                if (hex != null)
-                {
-                    edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
-                    edges.add(hex.getEdgeLocation(EdgeDirection.South));
-                }
-
-            } else if (normalized.getDir().equals(EdgeDirection.North))
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
+            if (hex != null)
             {
                 edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+                edges.add(hex.getEdgeLocation(EdgeDirection.South));
+            }
+            */
+            break;
+        case North:
+            edges.addAll(getNearbyEdgesFromNorthEdge(normalized));
+            /*
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
 
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.North));
-                if (hex != null)
-                {
-                    edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
-                    edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
-                }
-
-            } else if (normalized.getDir().equals(EdgeDirection.NorthEast))
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.North));
+            if (hex != null)
             {
-                edges.add(hex.getEdgeLocation(EdgeDirection.North));
                 edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
+                edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
+            }
+            */
+            break;
+        case NorthEast:
+            edges.addAll(getNearbyEdgesFromNorthEastEdge(normalized));
+            /*
+            edges.add(hex.getEdgeLocation(EdgeDirection.North));
+            edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
 
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
-                if (hex != null)
-                {
-                    edges.add(hex.getEdgeLocation(EdgeDirection.South));
-                    edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
-                }
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
+            if (hex != null)
+            {
+                edges.add(hex.getEdgeLocation(EdgeDirection.South));
+                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+            }
+            */
+            break;
+        }
+        return edges;
+    }
+
+    private List<EdgeLocation> getNearbyEdgesFromNorthWestEdge(EdgeLocation edgeLocation)
+    {
+        List<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+        Hex hex = hexes.get(edgeLocation.getHexLoc());
+        if (hex != null)
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.North));
+            edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
+
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
+            if (hex != null)
+            {
+                edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+                edges.add(hex.getEdgeLocation(EdgeDirection.South));
+            }
+        }
+        return edges;
+    }
+
+    private List<EdgeLocation> getNearbyEdgesFromNorthEdge(EdgeLocation edgeLocation)
+    {
+        List<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+        Hex hex = hexes.get(edgeLocation.getHexLoc());
+        if (hex != null)
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
+            edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
+
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.North));
+            if (hex != null)
+            {
+                edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
+                edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
+            }
+        }
+        return edges;
+    }
+
+    private List<EdgeLocation> getNearbyEdgesFromNorthEastEdge(EdgeLocation edgeLocation)
+    {
+        List<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+        Hex hex = hexes.get(edgeLocation.getHexLoc());
+        if (hex != null)
+        {
+            edges.add(hex.getEdgeLocation(EdgeDirection.North));
+            edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
+
+            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
+            if (hex != null)
+            {
+                edges.add(hex.getEdgeLocation(EdgeDirection.South));
+                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
             }
         }
         return edges;

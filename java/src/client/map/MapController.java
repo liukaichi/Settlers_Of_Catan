@@ -153,7 +153,7 @@ public class MapController extends ObserverController implements IMapController
         for (Port port : ports)
         {
             getView().addPort(port.getEdgeLocation(), port.getResource());
-            LOGGER.info("Adding port. " + port);
+            LOGGER.fine("Adding port. " + port);
         }
 
         /*
@@ -255,14 +255,14 @@ public class MapController extends ObserverController implements IMapController
     public void placeRoad(EdgeLocation edgeLocation)
     {
         state.placeRoad(edgeLocation.getNormalizedLocation());
-        getView().placeRoad(edgeLocation, ClientFacade.getInstance().getClientPlayer().getColor());
+        //getView().placeRoad(edgeLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
     @Override
     public void placeSettlement(VertexLocation vertexLocation)
     {
         state.placeSettlement(vertexLocation.getNormalizedLocation());
-        getView().placeSettlement(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
+        //getView().placeSettlement(vertexLocation, ClientFacade.getInstance().getClientPlayer().getColor());
     }
 
 
