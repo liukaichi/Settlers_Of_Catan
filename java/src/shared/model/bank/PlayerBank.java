@@ -225,7 +225,7 @@ public class PlayerBank extends Bank
         {
             payResource(ResourceType.BRICK, 1);
             payResource(ResourceType.WOOD, 1);
-            structures.getStructure(StructureType.ROAD).addAmount(1);
+            structures.getStructure(StructureType.ROAD).addAmountBuilt(1);
         }
     }
 
@@ -259,7 +259,7 @@ public class PlayerBank extends Bank
             payResource(ResourceType.WHEAT, 1);
             payResource(ResourceType.BRICK, 1);
 
-            structures.getStructure(StructureType.SETTLEMENT).addAmount(1);
+            structures.getStructure(StructureType.SETTLEMENT).addAmountBuilt(1);
         }
     }
 
@@ -290,8 +290,8 @@ public class PlayerBank extends Bank
         {
             payResource(ResourceType.ORE, 3);
             payResource(ResourceType.WHEAT, 2);
-            structures.getStructure(StructureType.CITY).addAmount(1);
-            structures.getStructure(StructureType.SETTLEMENT).subAmount(1);
+            structures.getStructure(StructureType.CITY).addAmountBuilt(1);
+            structures.getStructure(StructureType.SETTLEMENT).subAmountBuilt(1);
         }
     }
 

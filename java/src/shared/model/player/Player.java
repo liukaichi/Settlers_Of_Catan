@@ -16,6 +16,8 @@ import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
 
+import javax.swing.event.ListSelectionListener;
+
 /**
  * Represents a player playing the game. There can be up to 4 players in a
  * single game.
@@ -78,6 +80,9 @@ public class Player
                 new DevCards(jobj.get("oldDevCards").getAsJsonObject().toString(), DevCard.AmountType.PLAYABLE));
         this.bank.getDevCards()
                 .setDevCards(jobj.get("newDevCards").getAsJsonObject().toString(), DevCard.AmountType.UNPLAYABLE);
+        this.bank.getStructures().getStructure(StructureType.ROAD).setAmountRemaining(jobj.get("roads").getAsInt());
+        this.bank.getStructures().getStructure(StructureType.CITY).setAmountRemaining(jobj.get("cities").getAsInt());
+        this.bank.getStructures().getStructure(StructureType.SETTLEMENT).setAmountRemaining(jobj.get("settlements").getAsInt());
 
         this.info.setName(jobj.get("name").getAsString());
         this.info.setPlayerIndex(jobj.get("playerIndex").getAsInt());
@@ -245,9 +250,9 @@ public class Player
             player.add("resources", bank.getResources().toJsonObject());
             player.add("oldDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.PLAYABLE));
             player.add("newDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.UNPLAYABLE));
-            player.addProperty("roads", bank.amountOf(StructureType.ROAD));
-            player.addProperty("cities", bank.amountOf(StructureType.CITY));
-            player.addProperty("settlements", bank.amountOf(StructureType.SETTLEMENT));
+            player.addProperty("roads", bank.getStructures().getStructure(StructureType.ROAD).getAmountRemaining());
+            player.addProperty("cities", bank.getStructures().getStructure(StructureType.SETTLEMENT).getAmountRemaining());
+            player.addProperty("settlements", bank.getStructures().getStructure(StructureType.CITY).getAmountRemaining());
             player.addProperty("soldiers", bank.getKnights());
             player.addProperty("victoryPoints", bank.getVictoryPoints());
             player.addProperty("monuments", bank.getMonuments());

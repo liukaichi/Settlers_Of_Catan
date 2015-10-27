@@ -100,6 +100,7 @@ public class Resources implements JsonSerializer<Resources>
     public String toString()
     {
         JsonObject resources = toJsonObject();
+        System.out.println("JSON-izing resources\n" + resources.toString());
         return resources.toString();
     }
 

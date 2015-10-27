@@ -3,7 +3,13 @@ package client.devcards;
 import java.util.Observable;
 
 import client.base.*;
+import client.facade.ClientFacade;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
+import shared.model.ClientModel;
+import shared.model.bank.card.DevCard;
+import shared.model.bank.card.DevCards;
+import shared.model.player.Player;
 
 /**
  * "Dev card" controller implementation
@@ -14,6 +20,8 @@ public class DevCardController extends ObserverController implements IDevCardCon
     private IBuyDevCardView buyCardView;
     private IAction soldierAction;
     private IAction roadAction;
+    private ClientFacade facade;
+
 
     /**
      * DevCardController constructor
@@ -38,6 +46,7 @@ public class DevCardController extends ObserverController implements IDevCardCon
         this.buyCardView = buyCardView;
         this.soldierAction = soldierAction;
         this.roadAction = roadAction;
+        facade = ClientFacade.getInstance();
     }
 
     public IPlayDevCardView getPlayCardView()
@@ -48,6 +57,33 @@ public class DevCardController extends ObserverController implements IDevCardCon
     public IBuyDevCardView getBuyCardView()
     {
         return buyCardView;
+    }
+
+    public void initFromModel(){
+        Player player = facade.getPlayer();
+        DevCards devCards = player.getBank().getDevCards();
+
+        //testing
+        devCards.getCard(DevCardType.MONOPOLY).setAmountPlayable(2);
+
+        setCards(devCards);
+        disableCards();
+    }
+
+    private void setCards(DevCards devCards){
+        getPlayCardView().setCardAmount(DevCardType.MONOPOLY, devCards.getCard(DevCardType.MONOPOLY).getAmount(DevCard.AmountType.PLAYABLE));
+        getPlayCardView().setCardAmount(DevCardType.MONUMENT, devCards.getCard(DevCardType.MONUMENT).getAmount(DevCard.AmountType.PLAYABLE));
+        getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, devCards.getCard(DevCardType.ROAD_BUILD).getAmount(DevCard.AmountType.PLAYABLE));
+        getPlayCardView().setCardAmount(DevCardType.SOLDIER, devCards.getCard(DevCardType.SOLDIER).getAmount(DevCard.AmountType.PLAYABLE));
+        getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, devCards.getCard(DevCardType.YEAR_OF_PLENTY).getAmount(DevCard.AmountType.PLAYABLE));
+    }
+
+    private void disableCards(){
+        getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, state.canPlayDevCard(DevCardType.MONOPOLY));
+        getPlayCardView().setCardEnabled(DevCardType.MONUMENT, state.canPlayDevCard(DevCardType.MONUMENT));
+        getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, state.canPlayDevCard(DevCardType.ROAD_BUILD));
+        getPlayCardView().setCardEnabled(DevCardType.SOLDIER, state.canPlayDevCard(DevCardType.SOLDIER));
+        getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, state.canPlayDevCard(DevCardType.YEAR_OF_PLENTY));
     }
 
     @Override
@@ -74,14 +110,12 @@ public class DevCardController extends ObserverController implements IDevCardCon
     @Override
     public void startPlayCard()
     {
-
         getPlayCardView().showModal();
     }
 
     @Override
     public void cancelPlayCard()
     {
-
         getPlayCardView().closeModal();
     }
 
@@ -125,6 +159,9 @@ public class DevCardController extends ObserverController implements IDevCardCon
     public void update(Observable o, Object arg)
     {
         //Does nothing at the moment.
+        ClientModel model = (ClientModel) o;
+        initFromModel();
+        state.update(this, model, arg);
     }
 
 }
