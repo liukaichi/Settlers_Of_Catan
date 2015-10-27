@@ -36,15 +36,14 @@ public class ClientFacade
     private ClientModel model;
     private IProxy proxy;
     private PlayerInfo clientPlayer;
-    private final static Logger LOGGER = Logger.getLogger(ServerProxy.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(ClientFacade.class.getName());
     private Poller poller;
-    private int playerByIndex;
 
     private ClientFacade()
     {
         model = new ClientModel();
         proxy = new ServerProxy();
-        //poller = new Poller(proxy);
+        poller = new Poller(proxy);
     }
 
     private void setClientPlayer(PlayerInfo clientPlayer)
@@ -591,7 +590,7 @@ public class ClientFacade
     public void setProxy(String host, String port)
     {
         proxy = new ServerProxy(host, port);
-        //poller.setProxy(proxy);
+        poller.setProxy(proxy);
     }
 
     /**

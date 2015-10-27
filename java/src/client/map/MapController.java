@@ -32,6 +32,7 @@ public class MapController extends ObserverController implements IMapController
     private PlayerInfo currentPlayer;
     private ClientFacade facade;
     private static final Logger LOGGER = Logger.getLogger(MapController.class.getName());
+    private HexLocation robberLocation;
 
     public MapController(IMapView view, IRobView robView)
     {
@@ -117,7 +118,6 @@ public class MapController extends ObserverController implements IMapController
             getView().addHex(hex.getLocation(), hex.getHexType());
             if(hex.getNumberTile() != -1)
                 getView().addNumber(hex.getLocation(), hex.getNumberTile());
-
 
             LOGGER.fine("Adding Hex." + hex);
         }
@@ -276,6 +276,7 @@ public class MapController extends ObserverController implements IMapController
     public void placeRobber(HexLocation hexLocation)
     {
         getRobView().setPlayers(facade.getRobPlayerInfo(hexLocation));
+        robberLocation = hexLocation;
         getRobView().showModal();
     }
 
@@ -308,7 +309,7 @@ public class MapController extends ObserverController implements IMapController
     public void robPlayer(RobPlayerInfo victim)
     {
         getRobView().closeModal();
-        facade.robPlayer(victim, facade.getRobberLocation());
+        state.robPlayer(victim, robberLocation);
     }
 
     /*

@@ -14,7 +14,6 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.ClientModel;
-import shared.model.bank.resource.Resources;
 import shared.model.player.TradeOffer;
 
 import java.util.logging.Logger;
@@ -181,7 +180,7 @@ public abstract class GameplayState
 
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
-
+        facade.robPlayer(victim,location);
     }
 
     /*

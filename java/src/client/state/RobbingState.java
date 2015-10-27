@@ -4,7 +4,6 @@
 package client.state;
 
 import client.base.ObserverController;
-import client.data.RobPlayerInfo;
 import client.map.MapController;
 import client.turntracker.TurnTrackerController;
 import shared.definitions.PieceType;
@@ -31,17 +30,6 @@ public class RobbingState extends GameplayState
     @Override public boolean canPlaceRobber(HexLocation hexLoc)
     {
         return facade.canPlaceRobber(hexLoc);
-    }
-
-    @Override public void robPlayer(RobPlayerInfo victim, HexLocation hexLocation)
-    {
-        //TODO we talked about how the map will know the robber's location at this point. So, is this how we want it done,
-        // or is this incorrect?
-        if (victim != null)
-        {
-
-        }
-        facade.robPlayer(victim, hexLocation);
     }
 
     @Override public void setTurnTrackerInfo(ObserverController newController)
