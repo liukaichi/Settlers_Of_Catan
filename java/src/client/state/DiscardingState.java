@@ -52,13 +52,15 @@ public class DiscardingState extends GameplayState
         for (ResourceType resourceType : ResourceType.values())
         {
             view.setResourceAmountChangeEnabled(resourceType,
-                    playersHand.getAmount(resourceType) > discardHand.getAmount(resourceType),
+                    playersHand.getAmount(resourceType) > discardHand.getAmount(resourceType) && (
+                            discardHand.totalResources() != Math.ceil(playersHand.totalResources() / 2.0)),
                     discardHand.getAmount(resourceType) > 0);
             view.setResourceDiscardAmount(resourceType, discardHand.getAmount(resourceType));
             view.setResourceMaxAmount(resourceType, playersHand.getAmount(resourceType));
         }
 
-        view.setStateMessage("Discarding: "+discardHand.totalResources()+" Left to Discard: "+ Math.ceil(playersHand.totalResources() / 2.0));
+        view.setStateMessage("Discarding: " + discardHand.totalResources() + " Left to Discard: " + (int) (
+                Math.ceil(playersHand.totalResources() / 2.0) - discardHand.totalResources()));
     }
 
     @Override public void increaseAmount(ResourceType resource)
