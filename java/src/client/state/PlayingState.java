@@ -135,7 +135,7 @@ public class PlayingState extends GameplayState
     {
         if (controller instanceof MapController)
         {
-            ((MapController) controller).getView().startDrop(PieceType.ROBBER, null, false);
+            //((MapController) controller).getView().startDrop(PieceType.ROBBER, null, false);
             //((MapController) controller).getRobView().updateView();
 
         }
