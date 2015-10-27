@@ -93,6 +93,7 @@ public class GameStatePanel extends JPanel
             	color = new Color(0, 0, 0);	
             	break;
             }
+			button.setOpaque(true); 
 			button.setBackground(color);
 			button.setBorder(BorderFactory.createLineBorder(color, 3));
 			this.repaint();
