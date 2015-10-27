@@ -202,4 +202,22 @@ public class Resources implements JsonSerializer<Resources>
         return !(wood != null ? !wood.equals(resources.wood) : resources.wood != null);
 
     }
+
+    /**
+     * Increases the specified resource in this collection by 1
+     * @param resource
+     */
+    public void increase(ResourceType resource)
+    {
+        getResource(resource).addResource(1);
+    }
+
+    /**
+     * Decreases the specified resource in this collection by 1
+     * @param resource
+     */
+    public void decrease(ResourceType resource)
+    {
+        getResource(resource).subResource(1);
+    }
 }

@@ -37,7 +37,8 @@ public class Resource
      */
     public void addResource(int num)
     {
-        amount += num;
+        if((amount + num) <= 19)
+            amount += num;
     }
 
     /**
@@ -46,7 +47,8 @@ public class Resource
      */
     public void subResource(int num)
     {
-        amount -= num;
+        if(amount >= num)
+            amount -= num;
     }
 
     @Override public boolean equals(Object o)
