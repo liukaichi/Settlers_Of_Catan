@@ -41,6 +41,7 @@ public class DiscardingState extends GameplayState
             if (discardHand == null)
                 discardHand = new Resources(0, 0, 0, 0, 0);
             playersHand = facade.getPlayer().getResources();
+            updateResources();
         }
     }
 
