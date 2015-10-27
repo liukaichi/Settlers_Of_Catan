@@ -241,7 +241,7 @@ public abstract class GameplayState
             currentTurnStatus = (TurnStatus) state;
 
             //this commented code determines if it's your turn right now. Put this back when you're ready.
-           /* if (model.getTurnTracker().getCurrentTurn() != facade.getClientPlayer().getPlayerIndex())
+            if (model.getTurnTracker().getCurrentTurn() != facade.getClientPlayer().getPlayerIndex())
             {
                 switch (currentTurnStatus)
                 {
@@ -252,7 +252,7 @@ public abstract class GameplayState
                     controller.setState(new NotMyTurnState(controller));
                 }
             } else
-            {*/
+            {
             switch (currentTurnStatus)
             {
             case Rolling:
@@ -285,7 +285,7 @@ public abstract class GameplayState
             controller.getState().updateView();
         }
 
-        /*}*/
+        }
 
     }
 

@@ -102,7 +102,7 @@ public class Poller
         public void updateModel(ClientModel newModel)
         {
 
-            ClientFacade.getInstance().setModel(newModel);
+            ClientFacade.getInstance().getModel().updateModel(newModel);
             currentVersion = newModel.getVersion();
 
         }
