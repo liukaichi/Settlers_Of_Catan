@@ -5,6 +5,7 @@ import java.util.Observable;
 import client.base.ObserverController;
 import client.misc.IWaitView;
 import shared.definitions.ResourceType;
+import shared.model.ClientModel;
 
 /**
  * Domestic trade controller implementation
@@ -152,8 +153,15 @@ public class DomesticTradeController extends ObserverController implements IDome
     @Override
     public void update(Observable o, Object arg)
     {
-        // TODO Auto-generated method stub
-
+        ClientModel model = ((ClientModel)o);
+        if(model.hasTradeOffer())
+        {
+            getAcceptOverlay().showModal();
+        }
+        else if(getTradeOverlay().isModalShowing())
+        {
+            getTradeOverlay().closeModal();
+        }
     }
 
 }

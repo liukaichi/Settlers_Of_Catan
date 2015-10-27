@@ -2,6 +2,7 @@ package shared.model;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.facade.ClientFacade;
 import com.google.gson.*;
 import shared.definitions.DevCardType;
 import shared.definitions.PlayerIndex;
@@ -450,5 +451,13 @@ public class ClientModel extends Observable
 
     }
 
-
+    /**
+     * if client player is being offered a trade this returns true
+     * @return
+     */
+    public boolean hasTradeOffer()
+    {
+        TradeOffer offer = getTradeOffer();
+        return (offer != null && (offer.getReceiver() == ClientFacade.getInstance().getClientPlayer().getPlayerIndex().getIndex()));
+    }
 }

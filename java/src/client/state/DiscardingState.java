@@ -38,8 +38,6 @@ public class DiscardingState extends GameplayState
         {
             DiscardController control = ((DiscardController) controller);
             control.getDiscardView().showModal();
-            if (discardHand == null)
-                discardHand = new Resources(0, 0, 0, 0, 0);
             playersHand = facade.getPlayer().getResources();
             updateResources();
         }
@@ -47,6 +45,8 @@ public class DiscardingState extends GameplayState
 
     private void updateResources()
     {
+        if (discardHand == null)
+            discardHand = new Resources(0, 0, 0, 0, 0);
         IDiscardView view = ((DiscardController) controller).getDiscardView();
         view.setDiscardButtonEnabled(discardHand.totalResources() == Math.ceil(playersHand.totalResources() / 2.0));
         for (ResourceType resourceType : ResourceType.values())
