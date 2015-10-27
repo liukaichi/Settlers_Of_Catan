@@ -64,7 +64,8 @@ public class DevCardController extends ObserverController implements IDevCardCon
         DevCards devCards = player.getBank().getDevCards();
 
         //testing
-        devCards.getCard(DevCardType.MONOPOLY).setAmountPlayable(2);
+//        devCards.getCard(DevCardType.SOLDIER).setAmountPlayable(2);
+        devCards.getCard(DevCardType.MONOPOLY).setAmountPlayable(3);
 
         setCards(devCards);
         disableCards();
@@ -160,8 +161,9 @@ public class DevCardController extends ObserverController implements IDevCardCon
     {
         //Does nothing at the moment.
         ClientModel model = (ClientModel) o;
-        initFromModel();
         state.update(this, model, arg);
+        initFromModel();
+
     }
 
 }
