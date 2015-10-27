@@ -1,10 +1,15 @@
 package client.state;
 
 import client.base.ObserverController;
+import client.data.RobPlayerInfo;
+import client.map.MapController;
 import shared.definitions.DevCardType;
 import client.turntracker.TurnTrackerController;
+import shared.definitions.PieceType;
+import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 import java.util.logging.Logger;
@@ -53,6 +58,11 @@ public class PlayingState extends GameplayState
         return facade.canPlaceSettlement(vertLoc);
     }
 
+    @Override public boolean canPlaceRobber(HexLocation hexLoc)
+    {
+        return facade.canPlaceRobber(hexLoc);
+    }
+
     @Override public void placeCity(VertexLocation vertLoc)
     {
         facade.placeCity(vertLoc);
@@ -86,5 +96,48 @@ public class PlayingState extends GameplayState
     @Override public boolean canPlayDevCard(DevCardType type)
     {
         return facade.canPlayDevCard(type);
+    }
+
+    @Override
+    public void playMonopolyCard(ResourceType resource)
+    {
+
+    }
+
+    @Override
+    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
+    {
+
+    }
+
+    /**
+     * Plays a Monument Card.
+     */
+    @Override
+    public void playMonumentCard()
+    {
+
+    }
+
+    @Override
+    public void playRoadBuildingCard(EdgeLocation edge1, EdgeLocation edge2)
+    {
+
+    }
+
+    @Override
+    public void playSoldierCard(RobPlayerInfo info, HexLocation location)
+    {
+
+    }
+
+    @Override public void updateView()
+    {
+        if (controller instanceof MapController)
+        {
+            ((MapController) controller).getView().startDrop(PieceType.ROBBER, null, false);
+            //((MapController) controller).getRobView().updateView();
+
+        }
     }
 }

@@ -189,38 +189,4 @@ public class DevCards {
     {
         return 0;
     }
-
-    //    public static class OldDevCardsAdapter implements JsonSerializer<DevCards> {
-//
-//        @Override
-//        public JsonElement serialize(DevCards src, Type type, JsonSerializationContext jsonSerializationContext) {
-//            JsonObject oldDevCards = new JsonObject();
-//            {
-//                oldDevCards.addProperty("monopoly", src.getCard(DevCardType.MONOPOLY).getAmount(DevCard.AmountType.PLAYABLE));
-//                oldDevCards.addProperty("monument", src.getCard(DevCardType.MONUMENT).getAmount(DevCard.AmountType.PLAYABLE));
-//                oldDevCards.addProperty("roadBuilding", src.getCard(DevCardType.ROAD_BUILD).getAmount(DevCard.AmountType.PLAYABLE));
-//                oldDevCards.addProperty("soldier", src.getCard(DevCardType.SOLDIER).getAmount(DevCard.AmountType.PLAYABLE));
-//                oldDevCards.addProperty("yearOfPlenty", src.getCard(DevCardType.YEAR_OF_PLENTY).getAmount(DevCard.AmountType.PLAYABLE));
-//            }
-//
-//            return oldDevCards;
-//        }
-//    }
-//
-//    public static class NewDevCardsAdapter implements JsonSerializer<DevCards> {
-//
-//        @Override
-//        public JsonElement serialize(DevCards src, Type type, JsonSerializationContext jsonSerializationContext) {
-//            JsonObject newDevCards = new JsonObject();
-//            {
-//                 newDevCards.addProperty("monopoly", src.getCard(DevCardType.MONOPOLY).getAmount(DevCard.AmountType.UNPLAYABLE));
-//                 newDevCards.addProperty("monument", src.getCard(DevCardType.MONUMENT).getAmount(DevCard.AmountType.UNPLAYABLE));
-//                 newDevCards.addProperty("roadBuilding", src.getCard(DevCardType.ROAD_BUILD).getAmount(DevCard.AmountType.UNPLAYABLE));
-//                 newDevCards.addProperty("soldier", src.getCard(DevCardType.SOLDIER).getAmount(DevCard.AmountType.UNPLAYABLE));
-//                 newDevCards.addProperty("yearOfPlenty", src.getCard(DevCardType.YEAR_OF_PLENTY).getAmount(DevCard.AmountType.UNPLAYABLE));
-//            }
-//
-//            return  newDevCards;
-//        }
-//    }
 }

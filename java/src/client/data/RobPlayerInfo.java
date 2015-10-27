@@ -27,10 +27,14 @@ public class RobPlayerInfo extends PlayerInfo
     public RobPlayerInfo(PlayerIndex victim, int numCards)
     {
         this.setPlayerIndex(victim);
-        Player player = ClientFacade.getInstance().getPlayerByIndex(victim);
-        super.setName(player.getName());
-        super.setColor(player.getPlayerColor());
-        super.setId(player.getPlayerInfo().getId());
+
+        if (victim != PlayerIndex.NONE)
+        {
+            Player player = ClientFacade.getInstance().getPlayerByIndex(victim);
+            super.setName(player.getName());
+            super.setColor(player.getPlayerColor());
+            super.setId(player.getPlayerInfo().getId());
+        }
         this.numCards = numCards;
 
     }

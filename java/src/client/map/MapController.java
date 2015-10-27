@@ -6,6 +6,7 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
+import client.state.RobbingState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -32,6 +33,7 @@ public class MapController extends ObserverController implements IMapController
     private PlayerInfo currentPlayer;
     private ClientFacade facade;
     private static final Logger LOGGER = Logger.getLogger(MapController.class.getName());
+    private HexLocation robberLocation;
 
     public MapController(IMapView view, IRobView robView)
     {
@@ -117,10 +119,10 @@ public class MapController extends ObserverController implements IMapController
             getView().addHex(hex.getLocation(), hex.getHexType());
             if(hex.getNumberTile() != -1)
                 getView().addNumber(hex.getLocation(), hex.getNumberTile());
-            else
-                getView().placeRobber(hex.getLocation());
+
             LOGGER.fine("Adding Hex." + hex);
         }
+        getView().placeRobber(map.getRobberLocation());
 
         HashMap<EdgeLocation, Road> roads = (HashMap<EdgeLocation, Road>) map.getRoads();
         GameInfo game = model.getGameInfo();
@@ -141,6 +143,7 @@ public class MapController extends ObserverController implements IMapController
                 LOGGER.fine("PlaceSettlement. " + mapStructure);
             } else if (mapStructure instanceof City)
             {
+
                 getView().placeCity(mapStructure.getLocation(), color);
                 LOGGER.fine("PlaceCity. " + mapStructure);
             }
@@ -273,8 +276,8 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void placeRobber(HexLocation hexLocation)
     {
-        getView().placeRobber(hexLocation);
         getRobView().setPlayers(facade.getRobPlayerInfo(hexLocation));
+        robberLocation = hexLocation;
         getRobView().showModal();
     }
 
@@ -294,7 +297,9 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void playSoldierCard()
     {
-        //state.playSoldierCard();
+
+        getView().startDrop(PieceType.ROBBER, null, false);
+
     }
 
     @Override
@@ -307,7 +312,7 @@ public class MapController extends ObserverController implements IMapController
     public void robPlayer(RobPlayerInfo victim)
     {
         getRobView().closeModal();
-        facade.robPlayer(victim, facade.getRobberLocation());
+        state.robPlayer(victim, robberLocation);
     }
 
     /*

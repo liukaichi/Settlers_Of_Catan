@@ -27,6 +27,7 @@ public class RollView extends OverlayView implements IRollView {
 	private JButton rollButton;
 	private JPanel buttonPanel;
 	private Logger LOGGER = Logger.getLogger(RollView.class.getName());
+	java.util.Timer timer;
 	public RollView() {
 		
 		this.setOpaque(true);
@@ -67,7 +68,7 @@ public class RollView extends OverlayView implements IRollView {
 			if (e.getSource() == rollButton) {
 				
 				closeModal();
-				
+				timer.cancel();
 				getController().rollDice();
 			}
 		}	
@@ -89,7 +90,7 @@ public class RollView extends OverlayView implements IRollView {
 		LOGGER.info("Showing Roll Dice Modal");
 		super.showModal();
 		RollTask rollTask = new RollTask(this);
-		java.util.Timer timer;
+
 		timer = new java.util.Timer();
 		timer.schedule(rollTask, 3000);
 	}
