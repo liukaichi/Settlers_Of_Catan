@@ -297,7 +297,7 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void playSoldierCard()
     {
-
+        setState(new RobbingState(this));
         getView().startDrop(PieceType.ROBBER, null, false);
 
     }
@@ -305,7 +305,8 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void playRoadBuildingCard()
     {
-
+        startMove(PieceType.ROAD, true, false);
+        startMove(PieceType.ROAD, true, false);
     }
 
     @Override

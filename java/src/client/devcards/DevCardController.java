@@ -64,8 +64,8 @@ public class DevCardController extends ObserverController implements IDevCardCon
         DevCards devCards = player.getBank().getDevCards();
 
         //testing
-//        devCards.getCard(DevCardType.SOLDIER).setAmountPlayable(2);
-        devCards.getCard(DevCardType.MONOPOLY).setAmountPlayable(3);
+        devCards.getCard(DevCardType.SOLDIER).setAmountPlayable(2);
+        devCards.getCard(DevCardType.ROAD_BUILD).setAmountPlayable(3);
 
         setCards(devCards);
         disableCards();
