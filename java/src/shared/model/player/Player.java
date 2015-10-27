@@ -311,4 +311,9 @@ public class Player
     {
         return bank.getResources().totalResources();
     }
+
+    public Resources getResources()
+    {
+        return getBank().getResources();
+    }
 }

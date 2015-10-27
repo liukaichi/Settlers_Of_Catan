@@ -52,7 +52,7 @@ public class DiscardController extends ObserverController implements IDiscardCon
     @Override
     public void increaseAmount(ResourceType resource)
     {
-
+        state.increaseAmount(resource);
     }
 
     /**
@@ -61,7 +61,7 @@ public class DiscardController extends ObserverController implements IDiscardCon
     @Override
     public void decreaseAmount(ResourceType resource)
     {
-
+        state.decreaseAmount(resource);
     }
 
     /**
@@ -71,8 +71,8 @@ public class DiscardController extends ObserverController implements IDiscardCon
     @Override
     public void discard()
     {
-
-        getDiscardView().closeModal();
+        //TODO
+        state.discardResources();
     }
 
     @Override

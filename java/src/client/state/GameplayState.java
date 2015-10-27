@@ -101,8 +101,7 @@ public abstract class GameplayState
      * Discard Controller methods
      */
 
-
-    public void discardResources(Resources discardedResources)
+    public void discardResources()
     {
 
     }
@@ -111,12 +110,10 @@ public abstract class GameplayState
      * Domestic trade controller methods
      */
 
-
     public void sendTradeOffer()
     {
 
     }
-
 
     public void acceptTrade(boolean willAccept)
     {
@@ -234,8 +231,10 @@ public abstract class GameplayState
     {
         if (state instanceof TurnStatus)
         {
-            if (currentTurnStatus != null){
-                if (currentTurnStatus.equals((TurnStatus) state)){
+            if (currentTurnStatus != null)
+            {
+                if (currentTurnStatus.equals((TurnStatus) state))
+                {
                     return;
                 }
             }
@@ -255,42 +254,53 @@ public abstract class GameplayState
                 }
             } else
             {*/
-                switch (currentTurnStatus)
-                {
-                case Rolling:
-                    controller.setState(new RollingState(controller));
+            switch (currentTurnStatus)
+            {
+            case Rolling:
+                controller.setState(new RollingState(controller));
 
-                    break;
+                break;
 
-                case Playing:
-                    controller.setState(new PlayingState(controller));
-                    break;
+            case Playing:
+                controller.setState(new PlayingState(controller));
+                break;
 
-                case Robbing:
-                    controller.setState(new RobbingState(controller));
-                    break;
+            case Robbing:
+                controller.setState(new RobbingState(controller));
+                break;
 
-                case Discarding:
-                    controller.setState(new DiscardingState(controller));
-                    break;
+            case Discarding:
+                controller.setState(new DiscardingState(controller));
+                break;
 
-                case FirstRound:
-                    controller.setState(new SetupState(controller, currentTurnStatus));
-                    break;
+            case FirstRound:
+                controller.setState(new SetupState(controller, currentTurnStatus));
+                break;
 
-                case SecondRound:
-                    controller.setState(new SetupState(controller, currentTurnStatus));
-                    break;
-                default:
-                    break;
-                }
-            controller.getState().updateView();
+            case SecondRound:
+                controller.setState(new SetupState(controller, currentTurnStatus));
+                break;
+            default:
+                break;
             }
+            controller.getState().updateView();
+        }
 
         /*}*/
 
     }
 
+    public void increaseAmount(ResourceType resource)
+    {
+    }
+
+    ;
+
+    public void decreaseAmount(ResourceType resource)
+    {
+    }
+
+    ;
 }
 
 
