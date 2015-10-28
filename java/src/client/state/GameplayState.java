@@ -245,6 +245,10 @@ public abstract class GameplayState
                     LOGGER.info("<<<<<<<<<<NOW IN DISCARDING STATE>>>>>>>>>>>");
                     controller.setState(new DiscardingState(controller));
                     break;
+                case Robbing:
+                    LOGGER.info("<<<<<<<<<<NOW IN ROBBING STATE - (not my turn)>>>>>>>>>>>");
+                    controller.setState(new RobbingState(controller));
+                    break;
                 default:
                     LOGGER.info("<<<<<<<<<<NOW IN NOT-MY-TURN STATE>>>>>>>>>>>");
                     controller.setState(new NotMyTurnState(controller));

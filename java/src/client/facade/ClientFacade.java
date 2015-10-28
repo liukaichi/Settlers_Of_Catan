@@ -659,4 +659,11 @@ public class ClientFacade
     {
         return getPlayers().get(index.getIndex());
     }
+
+    public boolean isMyTurn()
+    {
+        PlayerIndex currentTurn = model.getTurnTracker().getCurrentTurn();
+        PlayerIndex currentPlayerIndex = getClientPlayer().getPlayerIndex();
+        return currentTurn.equals(currentPlayerIndex);
+    }
 }

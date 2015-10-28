@@ -41,7 +41,7 @@ public class RobbingState extends GameplayState
 
     @Override public void updateView()
     {
-        if (controller instanceof MapController)
+        if (controller instanceof MapController && facade.isMyTurn())
         {
             ((MapController) controller).getView().startDrop(PieceType.ROBBER, null, false);
             //((MapController) controller).getRobView().updateView();
