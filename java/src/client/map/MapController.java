@@ -6,7 +6,6 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
-import client.state.SetupState;
 import client.state.RobbingState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;

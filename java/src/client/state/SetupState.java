@@ -29,7 +29,10 @@ public class SetupState extends GameplayState
     {
         super(controller);
         currentTurnStatus = round;
-        playRound();
+        if (controller instanceof MapController)
+        {
+            playRound();
+        }
     }
 
     private void playRound()
@@ -76,6 +79,15 @@ public class SetupState extends GameplayState
     public void placeSettlement(VertexLocation vertLoc)
     {
         facade.placeSettlement(vertLoc, true);
+    }
+
+    @Override public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
+    {
+        if (controller instanceof MapController)
+        {
+            ((MapController) controller).getView()
+                    .startDrop(pieceType, ClientFacade.getInstance().getClientPlayer().getColor(), false);
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package shared.definitions;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**

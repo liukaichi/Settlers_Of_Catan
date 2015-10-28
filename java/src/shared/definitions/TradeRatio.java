@@ -12,7 +12,7 @@ import java.util.Map;
 public enum TradeRatio
 {
     FOUR(4), THREE(3), TWO(2);
-    private static final Map<Integer, TradeRatio> intToTypeMap = new HashMap<Integer, TradeRatio>();
+    private static final Map<Integer, TradeRatio> intToTypeMap = new HashMap<>();
     
     static {
         for (TradeRatio type : TradeRatio.values()) {
@@ -21,7 +21,7 @@ public enum TradeRatio
     }
 
     public static TradeRatio fromInt(int i) {
-    	TradeRatio type = intToTypeMap.get(Integer.valueOf(i));
+    	TradeRatio type = intToTypeMap.get(i);
         if (type == null) 
             return null;
         return type;
@@ -29,7 +29,7 @@ public enum TradeRatio
 
     private final int ratio;
 
-    private TradeRatio(int ratio)
+    TradeRatio(int ratio)
     {
         this.ratio = ratio;
     }

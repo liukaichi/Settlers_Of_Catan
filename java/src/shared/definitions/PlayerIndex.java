@@ -15,7 +15,7 @@ public enum PlayerIndex
     NONE(-1), PLAYER_0(0), PLAYER_1(1), PLAYER_2(2), PLAYER_3(3);
 
     private final int index;
-    private static final Map<Integer, PlayerIndex> intToTypeMap = new HashMap<Integer, PlayerIndex>();
+    private static final Map<Integer, PlayerIndex> intToTypeMap = new HashMap<>();
     
     static {
         for (PlayerIndex type : PlayerIndex.values()) {
@@ -24,13 +24,13 @@ public enum PlayerIndex
     }
 
     public static PlayerIndex fromInt(int i) {
-    	PlayerIndex type = intToTypeMap.get(Integer.valueOf(i));
+    	PlayerIndex type = intToTypeMap.get(i);
         if (type == null) 
             return PlayerIndex.NONE;
         return type;
     }
 
-    private PlayerIndex(int index)
+    PlayerIndex(int index)
     {
         this.index = index;
     }

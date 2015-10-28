@@ -4,13 +4,9 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import com.google.gson.*;
-import shared.definitions.DevCardType;
 import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
 import shared.definitions.exceptions.CatanException;
-import shared.definitions.exceptions.InsufficientResourcesException;
-import shared.definitions.exceptions.PlacementException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -175,7 +171,7 @@ public class ClientModel extends Observable
      * @param location
      *        -- this will be the location of the settlement; must ensure that
      *        this space on the map is empty
-     * @param allowDisconnected
+     * @param allowDisconnected whether or not the settlement can be disconnected. Only true during setup. Not currently used.
      * @return boolean -- returns true if the location is vacant and at least
      *         two spaces away from another settlement otherwise returns false
      */
@@ -210,7 +206,7 @@ public class ClientModel extends Observable
      * @param location
      *        -- this will be the edge location where the road will be placed;
      *        must ensure this space is empty on the map
-     * @param allowDisconnected
+     * @param allowDisconnected whether or not the road can be disconnected. Only true during setup.
      * @return boolean -- returns true if the player owns a settlement or city
      *         at the neighboring vertex locations and there is no current road
      *         there otherwise returns false
@@ -374,7 +370,7 @@ public class ClientModel extends Observable
 
     /**
      * if client player is being offered a trade this returns true
-     * @return
+     * @return true if the model contains a trade offer, false otherwise.
      */
     public boolean hasTradeOffer()
     {

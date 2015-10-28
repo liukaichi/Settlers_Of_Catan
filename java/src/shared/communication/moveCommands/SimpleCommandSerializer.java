@@ -19,8 +19,8 @@ public abstract class SimpleCommandSerializer extends MoveCommand implements Jso
 {
 
     /**
-     * @param type
-     * @param playerIndex
+     * @param type the type of move.
+     * @param playerIndex the index of the player sending the command.
      */
     public SimpleCommandSerializer(MoveType type, PlayerIndex playerIndex)
     {
@@ -36,8 +36,7 @@ public abstract class SimpleCommandSerializer extends MoveCommand implements Jso
     @Override
     public JsonElement serialize(SimpleCommandSerializer src, Type srcType, JsonSerializationContext context)
     {
-        JsonObject obj = (JsonObject) serializeCommand(src);
-        return obj;
+        return serializeCommand(src);
     }
 
 }

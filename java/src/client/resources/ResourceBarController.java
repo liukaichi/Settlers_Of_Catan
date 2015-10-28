@@ -62,16 +62,10 @@ public class ResourceBarController extends ObserverController implements IResour
 
             Resources resources = bank.getResources();
             Structures structures = bank.getStructures();
-
-            // testing
-//            resources.setAmount(ResourceType.WHEAT, 5);
-//            resources.setAmount(ResourceType.BRICK, 5);
-//            resources.setAmount(ResourceType.WOOD, 5);
-//            structures.getStructure(StructureType.ROAD).setAmountBuilt(3);
-
             setResources(resources);
             setStructures(structures);
             getView().setElementAmount(ResourceBarElement.SOLDIERS, bank.getKnights());
+
             disableActions();
         }
 

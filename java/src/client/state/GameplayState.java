@@ -196,7 +196,6 @@ public abstract class GameplayState
 
     public int rollDice(Dice dice)
     {
-        // roll dice
         return -1;
     }
 
@@ -290,8 +289,6 @@ public abstract class GameplayState
     public void increaseAmount(ResourceType resource)
     {
     }
-
-    ;
 
     public void decreaseAmount(ResourceType resource)
     {

@@ -17,11 +17,11 @@ import java.util.*;
 public class CatanMap
 {
     // populated on map initialization
-    private List<Port> ports = new ArrayList<Port>();
-    private Map<HexLocation, Hex> hexes = new HashMap<HexLocation, Hex>();
+    private List<Port> ports = new ArrayList<>();
+    private Map<HexLocation, Hex> hexes = new HashMap<>();
     // populated on buy
-    private Map<EdgeLocation, Road> roads = new HashMap<EdgeLocation, Road>();
-    private Map<VertexLocation, MapStructure> structures = new HashMap<VertexLocation, MapStructure>();
+    private Map<EdgeLocation, Road> roads = new HashMap<>();
+    private Map<VertexLocation, MapStructure> structures = new HashMap<>();
 
     public List<Port> getPorts()
     {
@@ -86,7 +86,7 @@ public class CatanMap
         }
         this.radius = map.get("radius").getAsInt();
         JsonArray portsArray = map.getAsJsonArray("ports");
-        this.ports = new ArrayList<Port>();
+        this.ports = new ArrayList<>();
         for (JsonElement elem : portsArray)
         {
             JsonObject port = (JsonObject) elem;
@@ -194,23 +194,27 @@ public class CatanMap
         return map.toString();
     }
 
+    /**
+     * Initializes an empty map.
+     */
     public CatanMap()
     {
-        ports = new ArrayList<Port>();
-        hexes = new HashMap<HexLocation, Hex>();
-        roads = new HashMap<EdgeLocation, Road>();
-        structures = new HashMap<VertexLocation, MapStructure>();
+        ports = new ArrayList<>();
+        hexes = new HashMap<>();
+        roads = new HashMap<>();
+        structures = new HashMap<>();
         radius = -1;
         robberLocation = new HexLocation(0, 0);
     }
 
     /**
-     * @param ports
-     * @param hexes
-     * @param roads
-     * @param structures
-     * @param radius
-     * @param robberLocation
+     * Creates a map with the given ports, hexes, roads, structures, radius, and robber location.
+     * @param ports the list of ports in the map.
+     * @param hexes the hexes in the map.
+     * @param roads the roads in the map.
+     * @param structures the structures in the map.
+     * @param radius the radius of the map.
+     * @param robberLocation the location of the robber in the map.
      */
     public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, Road> roads,
             Map<VertexLocation, MapStructure> structures, int radius, HexLocation robberLocation)
@@ -225,12 +229,10 @@ public class CatanMap
     }
 
     /**
-     * Method that indicates whether a player has the ability to place a
-     * settlement in a certain location on the map
+     * Method that indicates whether a player has the ability to place a settlement in a certain location on the map
      *
-     * @param player            -- this will be the player placing the settlement
-     * @param location          -- this will be the location of the settlement; must ensure that
-     *                          this space on the map is empty
+     * @param player this will be the player placing the settlement.
+     * @param location this will be the location of the settlement; must ensure that this space on the map is empty.
      * @param allowDisconnected unused currently.
      * @return boolean -- returns true if the location is vacant and at least
      * two spaces away from another settlement otherwise returns false
@@ -239,43 +241,12 @@ public class CatanMap
     {
         HexLocation hexLocation = location.getHexLoc();
         if (isHexWithinMapRadius(hexLocation, this.radius))
-        //if (Math.abs(hexLocation.getY()) <= radius && Math.abs(hexLocation.getX()) <= radius)
         {
             MapStructure atLocation = structures.get(location);
             // check if location exists, and is empty
             if (atLocation == null)
             {
-                if (!isTwoRoadsAwayFromOpponents(location))
-                {
-                    return false;
-                }
-                //check structures is 2 roads a way
-                /*
-                List<VertexLocation> vertices = getNearbyVertices(location);
-                for (VertexLocation vertex : vertices)
-                {
-                    if (structures.get(vertex) != null)
-                    {
-                        return false;
-                    }
-                }
-                */
-                return isSettlementConnectedToPlayersRoads(location, player);
-                /*
-                //check if settlement is connected to player's road.
-                List<EdgeLocation> edges = getNearbyEdges(location);
-                for (EdgeLocation edge : edges)
-                {
-                    Road road = roads.get(edge);
-                    if (road != null)
-                    {
-                        if (road.getOwner().equals(player))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                */
+                return ((isTwoRoadsAwayFromOpponents(location)) && (isSettlementConnectedToPlayersRoads(location, player)));
             }
         }
         return false;
@@ -363,21 +334,10 @@ public class CatanMap
             if (atLocation == null)
             {
                 //check valid hex
-                if (isHexEdgeAlwaysWater(hexLocation, location.getDir()))
+                if (isEdgeOnlyOnWater(hexLocation, location.getDir()))
                 {
                     return false;
                 }
-                /*Hex hex = hexes.get(hexLocation);
-                if (hex != null && hex.getHexType().equals(HexType.WATER))
-                {
-                    EdgeDirection dir = location.getDir();
-                    Hex opposite = hexes.get(hexLocation.getNeighborLoc(dir));
-                    if (opposite != null && opposite.getHexType().equals(HexType.WATER))
-                    {
-                        return false;
-                    }
-
-                }*/
                 //check nearby vertices
                 List<VertexLocation> vertices = getNearbyVertices(location);
                 for (VertexLocation vertex : vertices)
@@ -385,65 +345,13 @@ public class CatanMap
                     if (isPlayerAtLocation(vertex, player))
                     {
                         return !allowDisconnected;
-                    } else if (allowDisconnected)
-                    {
-                        return false;
                     }
-                    /*
-                    MapStructure mapStructure = structures.get(vertex);
-                    if (mapStructure != null)
-                    {
-                        if (mapStructure.getOwner().getIndex() == player.getIndex())
-                        {
-                            if (allowDisconnected)
-                            {
-                                return false;
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        } else if (allowDisconnected)
-                        {
-                            return false;
-                        }
-                    }*/
                 }
                 if (!allowDisconnected)
                 {
-                    //check connecting roads
-                    List<EdgeLocation> edges = getNearbyEdges(location);
-                    for (EdgeLocation edge : edges)
-                    {
-                        if (isPlayerAtLocation(edge, player))
-                        {
-                            //get the vertex between the two
-                            for (VertexLocation vertex : getNearbyVertices(location))
-                            {
-                                if (getNearbyVertices(edge).contains(vertex) && structures.get(vertex) != null)
-                                {
-                                    return false;
-                                }
-                            }
-                            return true;
-                        }
-                        /*
-                        Road road = roads.get(edge);
-                        if (road != null && road.getOwner().equals(player))
-                        {
-                            //get the vertex between the two
-                            for (VertexLocation vertex : getNearbyVertices(location))
-                            {
-                                if (getNearbyVertices(edge).contains(vertex) && structures.get(vertex) != null)
-                                {
-                                    return false;
-                                }
-                            }
-                            return true;
-                        }
-                        */
-                    }
-                } else
+                    return isRoadConnectedToPlayersRoads(location, player);
+                }
+                else
                 {
                     return true;
                 }
@@ -454,16 +362,32 @@ public class CatanMap
 
     }
 
+    /**
+     * Checks to see if the given hex is within the radius of the map.
+     * @param hexLocation the location of the hex in question.
+     * @param radius the radius of the map.
+     * @return true if the hex is within the radius of the map, false otherwise.
+     */
     private boolean isHexWithinMapRadius(HexLocation hexLocation, int radius)
     {
         return ((Math.abs(hexLocation.getY()) <= radius) && (Math.abs(hexLocation.getX()) <= radius));
     }
 
-    private boolean isHexEdgeAlwaysWater(HexLocation hexLocation, EdgeDirection roadDirection)
+    /**
+     * Checks to see if the edge (from the hex) is only located on water (used for bounds checking)
+     * @param hexLocation the location of the hex.
+     * @param roadDirection the direction of the hex that edge is on.
+     * @return false if the edge is on land (always or on the edge of land or water) and true otherwise.
+     */
+    private boolean isEdgeOnlyOnWater(HexLocation hexLocation, EdgeDirection roadDirection)
     {
         Hex hex = hexes.get(hexLocation);
-        if (hex != null && hex.getHexType().equals(HexType.WATER))
+        if (hex != null)
         {
+            if (!hex.getHexType().equals(HexType.WATER))
+            {
+                return false;
+            }
             Hex opposite = hexes.get(hexLocation.getNeighborLoc(roadDirection));
             if (opposite != null && opposite.getHexType().equals(HexType.WATER))
             {
@@ -474,60 +398,64 @@ public class CatanMap
         return false;
     }
 
+    /**
+     * Checks to see if a player is at an edge (road).
+     * @param location the location to check.
+     * @param player the player's index.
+     * @return true if the player is at the location, false otherwise.
+     */
     private boolean isPlayerAtLocation(EdgeLocation location, PlayerIndex player)
     {
         Road road = roads.get(location);
-        if (road != null)
-        {
-            return (road.getOwner().getIndex() == player.getIndex());
-        }
-        return false;
+        return ((road != null) && (road.getOwner().getIndex() == player.getIndex()));
     }
 
+    /**
+     * Checks to see if a player is at a vertex (settlement or city).
+     * @param location the location to check.
+     * @param player the player's index.
+     * @return true if the player is at the location, false otherwise.
+     */
     private boolean isPlayerAtLocation(VertexLocation location, PlayerIndex player)
     {
         MapStructure mapStructure = structures.get(location);
-        if (mapStructure != null)
-        {
-            return (mapStructure.getOwner().getIndex() == player.getIndex());
-        }
-        return false;
+        return ((mapStructure != null) && (mapStructure.getOwner().getIndex() == player.getIndex()));
 
     }
 
-    private boolean doStuff(EdgeLocation location, EdgeLocation edge)
+    /**
+     * Checks to see if there is a settlement or city between the two adjacent edges.
+     * @param edge1 the first edge.
+     * @param edge2 the second edge.
+     * @return true if there is a structure between the two, false otherwise.
+     */
+    private boolean isStructureBetweenTwoEdges(EdgeLocation edge1, EdgeLocation edge2)
     {
         //get the vertex between the two
-        for (VertexLocation vertex : getNearbyVertices(location))
+        for (VertexLocation vertex : getNearbyVertices(edge1))
         {
-            if (getNearbyVertices(edge).contains(vertex) && structures.get(vertex) != null)
+            if (getNearbyVertices(edge2).contains(vertex) && structures.get(vertex) != null)
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
-    private boolean isRoadAllowed(List<VertexLocation> vertices, boolean allowDisconnected, PlayerIndex player)
+    /**
+     * Checks to see if the given edge is connected to a player's already existing road.
+     * @param location the location of the edge in question.
+     * @param player the player's index.
+     * @return true if the edge is adjacent to one of the player's already existing roads, false otherwise.
+     */
+    private boolean isRoadConnectedToPlayersRoads(EdgeLocation location, PlayerIndex player)
     {
-        for (VertexLocation vertex : vertices)
+        List<EdgeLocation> edges = getNearbyEdges(location);
+        for (EdgeLocation edge : edges)
         {
-            MapStructure mapStructure = structures.get(vertex);
-            if (mapStructure != null)
+            if (isPlayerAtLocation(edge, player))
             {
-                if (mapStructure.getOwner().getIndex() == player.getIndex())
-                {
-                    if (allowDisconnected)
-                    {
-                        return false;
-                    } else
-                    {
-                        return true;
-                    }
-                } else if (allowDisconnected)
-                {
-                    return false;
-                }
+                return !isStructureBetweenTwoEdges(location, edge);
             }
         }
         return false;
@@ -545,11 +473,7 @@ public class CatanMap
      */
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
-        if (hexes.get(location) != null && !robberLocation.equals(location))
-        {
-            return true;
-        }
-        return false;
+        return ((hexes.get(location) != null) && (!robberLocation.equals(location)));
     }
 
     public void forcePlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
@@ -601,16 +525,19 @@ public class CatanMap
         this.radius = radius;
     }
 
+    /*
     public void setRobberLocation(HexLocation robberLocation)
     {
         this.robberLocation = robberLocation;
     }
+    */
 
     /**
-     * Gets vertices that are up to two vertices away.
+     * Gets vertices that are one vertex away.
      *
-     * @param normalized the current vertex to find neighbors for.
-     * @return a list a vertices up to two spaces away.
+     * @param normalized the normalized vertex to find neighbors for.
+     * @pre the vertex location passed in is normalized.
+     * @return a list of adjacent vertices.
      */
     private List<VertexLocation> getNearbyVertices(VertexLocation normalized)
     {
@@ -625,43 +552,13 @@ public class CatanMap
             break;
         }
         return vertices;
-        /*
-        if (normalized.getDir().equals(VertexDirection.NorthEast))
-        {
-
-            Hex hex = hexes.get(normalized.getHexLoc());
-            if (hex != null)
-            {
-                vertices.add(hex.getVertexLocation(VertexDirection.East));
-                vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
-            }
-            if (hex != null)
-            {
-                vertices.add(hex.getVertexLocation(VertexDirection.NorthWest));
-            }
-
-        }
-        else if (normalized.getDir().equals(VertexDirection.NorthWest))
-        {
-
-            Hex hex = hexes.get(normalized.getHexLoc());
-            if (hex != null)
-            {
-                vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
-                vertices.add(hex.getVertexLocation(VertexDirection.West));
-
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
-            }
-            if (hex != null)
-            {
-                vertices.add(hex.getVertexLocation(VertexDirection.NorthEast));
-            }
-
-        }
-        */
     }
 
+    /**
+     * Gets the vertices that are adjacent to the North East Vertex of a hex.
+     * @param vertexLocation the location of the NE vertex.
+     * @return a list of adjacent vertices.
+     */
     private List<VertexLocation> getNearbyVerticesFromNorthEastVertex(VertexLocation vertexLocation)
     {
         List<VertexLocation> vertices = new ArrayList<>();
@@ -680,6 +577,11 @@ public class CatanMap
         return vertices;
     }
 
+    /**
+     * Gets the vertices that are adjacent to the North West Vertex of a hex.
+     * @param vertexLocation the location of the NW vertex.
+     * @return a list of adjacent vertices.
+     */
     private List<VertexLocation> getNearbyVerticesFromNorthWestVertex(VertexLocation vertexLocation)
     {
         List<VertexLocation> vertices = new ArrayList<>();
@@ -701,12 +603,13 @@ public class CatanMap
     /**
      * Gets the nearby vertices from an edge one distance away from the current road.
      *
-     * @param normalized the current location of the edge.
+     * @param normalized the normalized location of the edge.
+     * @pre the location is normalized.
      * @return a list of vertices one distance away.
      */
     private List<VertexLocation> getNearbyVertices(EdgeLocation normalized)
     {
-        ArrayList<VertexLocation> vertices = new ArrayList<VertexLocation>();
+        ArrayList<VertexLocation> vertices = new ArrayList<>();
         Hex hex = hexes.get(normalized.getHexLoc());
         if (hex != null)
         {
@@ -729,6 +632,11 @@ public class CatanMap
         return vertices;
     }
 
+    /**
+     * Gets edges adjacent to the given vertexLocation.
+     * @param normalized the normalized location of the vertex.
+     * @return a list of edges adjacent to the location of the vertex.
+     */
     private List<EdgeLocation> getNearbyEdges(VertexLocation normalized)
     {
         ArrayList<EdgeLocation> edges = new ArrayList<>();
@@ -742,42 +650,13 @@ public class CatanMap
             break;
         }
         return edges;
-
-        /*
-        if (normalized.getDir().equals(VertexDirection.NorthEast))
-        {
-            Hex hex = hexes.get(normalized.getHexLoc());
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.North));
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
-            }
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
-            }
-
-        } else if (normalized.getDir().equals(VertexDirection.NorthWest))
-        {
-            /*
-            Hex hex = hexes.get(normalized.getHexLoc());
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.North));
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
-
-                hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
-            }
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
-            }
-
-        }
-        */
     }
 
+    /**
+     * Gets edges adjacent to the North East Vertex
+     * @param vertexLocation the NE Vertex
+     * @return a list of edges adjacent to the location of the vertex.
+     */
     private List<EdgeLocation> getNearbyEdgesFromNorthEastVertex(VertexLocation vertexLocation)
     {
         List<EdgeLocation> edges = new ArrayList<>();
@@ -795,6 +674,11 @@ public class CatanMap
         return edges;
     }
 
+    /**
+     * Gets edges adjacent to the North West Vertex
+     * @param vertexLocation the NW Vertex
+     * @return a list of edges adjacent to the location of the vertex.
+     */
     private List<EdgeLocation> getNearbyEdgesFromNorthWestVertex(VertexLocation vertexLocation)
     {
         List<EdgeLocation> edges = new ArrayList<>();
@@ -821,51 +705,18 @@ public class CatanMap
      */
     private List<EdgeLocation> getNearbyEdges(EdgeLocation normalized)
     {
-        ArrayList<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+        ArrayList<EdgeLocation> edges = new ArrayList<>();
 
         switch (normalized.getDir())
         {
         case NorthWest:
             edges.addAll(getNearbyEdgesFromNorthWestEdge(normalized));
-            /*
-            edges.add(hex.getEdgeLocation(EdgeDirection.North));
-            edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
-
-            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthWest));
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
-                edges.add(hex.getEdgeLocation(EdgeDirection.South));
-            }
-            */
             break;
         case North:
             edges.addAll(getNearbyEdgesFromNorthEdge(normalized));
-            /*
-            edges.add(hex.getEdgeLocation(EdgeDirection.NorthEast));
-            edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
-
-            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.North));
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
-                edges.add(hex.getEdgeLocation(EdgeDirection.SouthWest));
-            }
-            */
             break;
         case NorthEast:
             edges.addAll(getNearbyEdgesFromNorthEastEdge(normalized));
-            /*
-            edges.add(hex.getEdgeLocation(EdgeDirection.North));
-            edges.add(hex.getEdgeLocation(EdgeDirection.SouthEast));
-
-            hex = hexes.get(hex.getLocation().getNeighborLoc(EdgeDirection.NorthEast));
-            if (hex != null)
-            {
-                edges.add(hex.getEdgeLocation(EdgeDirection.South));
-                edges.add(hex.getEdgeLocation(EdgeDirection.NorthWest));
-            }
-            */
             break;
         }
         return edges;
@@ -873,7 +724,7 @@ public class CatanMap
 
     private List<EdgeLocation> getNearbyEdgesFromNorthWestEdge(EdgeLocation edgeLocation)
     {
-        List<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+        List<EdgeLocation> edges = new ArrayList<>();
         Hex hex = hexes.get(edgeLocation.getHexLoc());
         if (hex != null)
         {
@@ -892,7 +743,7 @@ public class CatanMap
 
     private List<EdgeLocation> getNearbyEdgesFromNorthEdge(EdgeLocation edgeLocation)
     {
-        List<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+        List<EdgeLocation> edges = new ArrayList<>();
         Hex hex = hexes.get(edgeLocation.getHexLoc());
         if (hex != null)
         {
@@ -911,7 +762,7 @@ public class CatanMap
 
     private List<EdgeLocation> getNearbyEdgesFromNorthEastEdge(EdgeLocation edgeLocation)
     {
-        List<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+        List<EdgeLocation> edges = new ArrayList<>();
         Hex hex = hexes.get(edgeLocation.getHexLoc());
         if (hex != null)
         {

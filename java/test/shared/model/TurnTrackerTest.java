@@ -47,7 +47,7 @@ public class TurnTrackerTest
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}; 
+		}
 		PlayerIndex currentTurn = turnTracker.getCurrentTurn();
 		TurnStatus status = turnTracker.getStatus();
 		PlayerIndex longestRoad = turnTracker.getLongestRoad(); 
