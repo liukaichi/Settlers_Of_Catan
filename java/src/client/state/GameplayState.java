@@ -6,7 +6,6 @@ package client.state;
 import client.base.ObserverController;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
-import client.map.MapController;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -178,7 +177,7 @@ public abstract class GameplayState
 
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
-        facade.robPlayer(victim,location);
+        facade.robPlayer(victim, location);
     }
 
     /*
@@ -237,53 +236,62 @@ public abstract class GameplayState
 
             currentTurnStatus = (TurnStatus) state;
 
-            //this commented code determines if it's your turn right now. Put this back when you're ready.
+            //this commented code determines if it's your turn right now.
             if (model.getTurnTracker().getCurrentTurn() != facade.getClientPlayer().getPlayerIndex())
             {
                 switch (currentTurnStatus)
                 {
                 case Discarding:
+                    LOGGER.info("<<<<<<<<<<NOW IN DISCARDING STATE>>>>>>>>>>>");
                     controller.setState(new DiscardingState(controller));
                     break;
                 default:
+                    LOGGER.info("<<<<<<<<<<NOW IN NOT-MY-TURN STATE>>>>>>>>>>>");
                     controller.setState(new NotMyTurnState(controller));
+                    break;
                 }
             } else
             {
-            switch (currentTurnStatus)
-            {
-            case Rolling:
-                controller.setState(new RollingState(controller));
+                switch (currentTurnStatus)
+                {
+                case Rolling:
+                    LOGGER.info("<<<<<<<<<<NOW IN ROLLING STATE>>>>>>>>>>>");
+                    controller.setState(new RollingState(controller));
 
-                break;
+                    break;
 
-            case Playing:
-                controller.setState(new PlayingState(controller));
-                break;
+                case Playing:
+                    LOGGER.info("<<<<<<<<<<NOW IN PLAYING STATE>>>>>>>>>>>");
+                    controller.setState(new PlayingState(controller));
+                    break;
 
-            case Robbing:
-                controller.setState(new RobbingState(controller));
-                break;
+                case Robbing:
+                    LOGGER.info("<<<<<<<<<<NOW IN ROBBING STATE>>>>>>>>>>>");
+                    controller.setState(new RobbingState(controller));
+                    break;
 
-            case Discarding:
-                controller.setState(new DiscardingState(controller));
-                break;
+                case Discarding:
+                    LOGGER.info("<<<<<<<<<<NOW IN DISCARDING STATE>>>>>>>>>>>");
+                    controller.setState(new DiscardingState(controller));
+                    break;
 
-            case FirstRound:
-                controller.setState(new SetupState(controller, currentTurnStatus));
-                break;
+                case FirstRound:
+                    LOGGER.info("<<<<<<<<<<NOW IN FIRSTROUND STATE>>>>>>>>>>>");
+                    controller.setState(new SetupState(controller, currentTurnStatus));
+                    break;
 
-            case SecondRound:
-                controller.setState(new SetupState(controller, currentTurnStatus));
-                break;
-            default:
-                break;
+                case SecondRound:
+                    LOGGER.info("<<<<<<<<<<NOW IN SECONDROUND STATE>>>>>>>>>>>");
+                    controller.setState(new SetupState(controller, currentTurnStatus));
+                    break;
+                default:
+                    break;
+                }
+
             }
-            controller.getState().updateView();
-        }
 
         }
-
+        controller.getState().updateView();
     }
 
     public void increaseAmount(ResourceType resource)

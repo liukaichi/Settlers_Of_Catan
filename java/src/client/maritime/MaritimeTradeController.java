@@ -1,9 +1,11 @@
 package client.maritime;
 
-import java.util.Observable;
-
 import client.base.ObserverController;
+import client.facade.ClientFacade;
+import shared.definitions.PortType;
 import shared.definitions.ResourceType;
+
+import java.util.Observable;
 
 /**
  * Implementation for the maritime trade controller
@@ -38,8 +40,8 @@ public class MaritimeTradeController extends ObserverController implements IMari
     }
 
     /**
-     *Gets called by the view when the roll dice button is pressed.<br>
-     *To Do (not necessarily in this class):
+     * Gets called by the view when the roll dice button is pressed.<br>
+     * To Do (not necessarily in this class):
      * <ul>
      * <li>Create and array of possible resource trade options (Resource types of a sufficent amount to trade)
      * <li>and pass them into the overlay in .showGiveOptions(resurce[]).
@@ -47,10 +49,18 @@ public class MaritimeTradeController extends ObserverController implements IMari
      * <li>updateView on tradeOverlay.
      * </ul>
      */
-    @Override
-    public void startTrade()
+    @Override public void startTrade()
     {
         //TODO do the things above.
+        ClientFacade facade = ClientFacade.getInstance();
+
+        for (PortType port : PortType.values())
+        {
+            //facade.getPlayer().canTradeResource();
+
+        }
+
+        //tradeOverlay.showGiveOptions(facade.getPlayer().getBank().getResources());
         getTradeOverlay().showModal();
     }
 
@@ -60,9 +70,8 @@ public class MaritimeTradeController extends ObserverController implements IMari
      * <li>Send request to server
      * <li>closeModal
      * </ul>
-     * */
-    @Override
-    public void makeTrade()
+     */
+    @Override public void makeTrade()
     {
         state.sendTradeOffer(); //TODO pass in parameters
         getTradeOverlay().closeModal();
@@ -71,8 +80,7 @@ public class MaritimeTradeController extends ObserverController implements IMari
     /**
      * closeModal()
      */
-    @Override
-    public void cancelTrade()
+    @Override public void cancelTrade()
     {
 
         getTradeOverlay().closeModal();
@@ -85,8 +93,7 @@ public class MaritimeTradeController extends ObserverController implements IMari
      * <li>enable/disable trade button based on validity
      * </ul>
      */
-    @Override
-    public void setGetResource(ResourceType resource)
+    @Override public void setGetResource(ResourceType resource)
     {
 
     }
@@ -97,8 +104,7 @@ public class MaritimeTradeController extends ObserverController implements IMari
      * <li>call selectGiveOption() in tradeOverlay
      * </ul>
      */
-    @Override
-    public void setGiveResource(ResourceType resource)
+    @Override public void setGiveResource(ResourceType resource)
     {
 
     }
@@ -109,8 +115,7 @@ public class MaritimeTradeController extends ObserverController implements IMari
      * <li>redisplay the trade Options for getting resource
      * </ul>
      */
-    @Override
-    public void unsetGetValue()
+    @Override public void unsetGetValue()
     {
 
     }
@@ -121,14 +126,12 @@ public class MaritimeTradeController extends ObserverController implements IMari
      * <li>redisplay the trade Options for getting resource
      * </ul>
      */
-    @Override
-    public void unsetGiveValue()
+    @Override public void unsetGiveValue()
     {
 
     }
 
-    @Override
-    public void update(Observable o, Object arg)
+    @Override public void update(Observable o, Object arg)
     {
 
     }

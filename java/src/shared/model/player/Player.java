@@ -4,10 +4,7 @@ import client.data.PlayerInfo;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import shared.definitions.CatanColor;
-import shared.definitions.DevCardType;
-import shared.definitions.PlayerIndex;
-import shared.definitions.StructureType;
+import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.Bank;
@@ -15,8 +12,6 @@ import shared.model.bank.PlayerBank;
 import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
-
-import javax.swing.event.ListSelectionListener;
 
 /**
  * Represents a player playing the game. There can be up to 4 players in a
@@ -315,5 +310,22 @@ public class Player
     public Resources getResources()
     {
         return getBank().getResources();
+    }
+
+    public void canTradeResource(PortType port)
+    {
+        if (getBank().canAccessPort(port))
+        {
+
+            /*if (port == PortType.THREE)
+            {
+                for ()
+                if (getResources().getAmount())
+            }
+            else if ()
+            {
+
+            }*/
+        }
     }
 }
