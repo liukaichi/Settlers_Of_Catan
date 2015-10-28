@@ -473,7 +473,7 @@ public class CatanMap
      */
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
-        return ((hexes.get(location) != null) && (!robberLocation.equals(location)) && hexes.get(location).getHexType().equals(HexType.WATER));
+        return ((hexes.get(location) != null) && (!robberLocation.equals(location)) && !hexes.get(location).getHexType().equals(HexType.WATER));
     }
 
     public void forcePlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
