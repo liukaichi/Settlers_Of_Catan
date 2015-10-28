@@ -95,9 +95,11 @@ public class DiscardingState extends GameplayState
 
     @Override public void discardResources()
     {
+        DiscardController control = ((DiscardController) controller);
+        control.getDiscardView().closeModal();
+        control.getWaitView().showModal();
         facade.discardResources(discardHand);
         discardHand = null;
-        ((DiscardController) controller).getDiscardView().closeModal();
         //TODO need to use this method to show modal, close modal when turnstatus is your turn again. ((DiscardController) controller).getWaitView().showModal();
     }
 }
