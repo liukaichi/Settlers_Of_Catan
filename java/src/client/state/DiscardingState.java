@@ -7,8 +7,10 @@ import client.base.ObserverController;
 import client.discard.DiscardController;
 import client.discard.IDiscardView;
 import client.facade.ClientFacade;
+import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
+import shared.model.TurnTracker;
 import shared.model.bank.resource.Resources;
 
 import java.util.logging.Logger;
@@ -37,9 +39,19 @@ public class DiscardingState extends GameplayState
         if (controller instanceof DiscardController)
         {
             DiscardController control = ((DiscardController) controller);
-            control.getDiscardView().showModal();
+            TurnTracker tracker = facade.getModel().getTurnTracker();
+            PlayerIndex turn = tracker.getCurrentTurn();
             playersHand = facade.getPlayer().getResources();
-            updateResources();
+            if(playersHand.totalResources() > 7)
+            {
+                updateResources();
+                control.getDiscardView().showModal();
+            }
+            else
+            {
+                control.getWaitView().showModal();
+            }
+
         }
     }
 
@@ -48,19 +60,19 @@ public class DiscardingState extends GameplayState
         if (discardHand == null)
             discardHand = new Resources(0, 0, 0, 0, 0);
         IDiscardView view = ((DiscardController) controller).getDiscardView();
-        view.setDiscardButtonEnabled(discardHand.totalResources() == Math.ceil(playersHand.totalResources() / 2.0));
+        view.setDiscardButtonEnabled(discardHand.totalResources() == (playersHand.totalResources() / 2));
         for (ResourceType resourceType : ResourceType.values())
         {
             view.setResourceAmountChangeEnabled(resourceType,
                     playersHand.getAmount(resourceType) > discardHand.getAmount(resourceType) && (
-                            discardHand.totalResources() != Math.ceil(playersHand.totalResources() / 2.0)),
+                            discardHand.totalResources() != (playersHand.totalResources() / 2)),
                     discardHand.getAmount(resourceType) > 0);
             view.setResourceDiscardAmount(resourceType, discardHand.getAmount(resourceType));
             view.setResourceMaxAmount(resourceType, playersHand.getAmount(resourceType));
         }
 
         view.setStateMessage("Discarding: " + discardHand.totalResources() + " Left to Discard: " + (int) (
-                Math.ceil(playersHand.totalResources() / 2.0) - discardHand.totalResources()));
+                (playersHand.totalResources() / 2) - discardHand.totalResources()));
     }
 
     @Override public void increaseAmount(ResourceType resource)
