@@ -228,8 +228,15 @@ public abstract class GameplayState
         {
             if (currentTurnStatus != null)
             {
-                if (currentTurnStatus.equals((TurnStatus) state))
+                if (currentTurnStatus.equals(state))
                 {
+                    switch (currentTurnStatus)
+                    {
+                    case FirstRound:
+                    case SecondRound:
+                        controller.getState().updateView();
+                        break;
+                    }
                     return;
                 }
             }
