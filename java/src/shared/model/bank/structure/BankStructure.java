@@ -88,6 +88,7 @@ public class BankStructure
 
     public void setAmountRemaining(int amountRemaining) {
         this.amountRemaining = amountRemaining;
+        this.amountBuilt = this.amountMax - this.amountRemaining;
     }
 
     public int getAmount(AmountType type){
