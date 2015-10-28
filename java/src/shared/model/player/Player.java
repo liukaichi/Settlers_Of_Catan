@@ -328,4 +328,9 @@ public class Player
             }*/
         }
     }
+
+    public int getStructureCount(StructureType type)
+    {
+        return bank.amountOf(type);
+    }
 }

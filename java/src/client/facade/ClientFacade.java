@@ -666,4 +666,14 @@ public class ClientFacade
         PlayerIndex currentPlayerIndex = getClientPlayer().getPlayerIndex();
         return currentTurn.equals(currentPlayerIndex);
     }
+
+    public int getClientPlayerRoadCount()
+    {
+        return getPlayer().getStructureCount(StructureType.ROAD);
+    }
+
+    public int getClientPlayerSettlementCount()
+    {
+        return getPlayer().getStructureCount(StructureType.SETTLEMENT);
+    }
 }

@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 
 /**
  * This state is used in the first two rounds of the game, where players place roads and cities only.
- *
  */
 public class SetupState extends GameplayState
 {
@@ -29,16 +28,49 @@ public class SetupState extends GameplayState
     {
         super(controller);
         currentTurnStatus = round;
-        if (controller instanceof MapController)
-        {
-            playRound();
-        }
     }
 
     private void playRound()
     {
-        startMove(PieceType.SETTLEMENT, true, true);
-        startMove(PieceType.ROAD, true, true);
+        switch (currentTurnStatus)
+        {
+        case FirstRound:
+            switch (facade.getClientPlayerRoadCount())
+            {
+            case 0:
+                startMove(PieceType.ROAD, true, true);
+                break;
+            case 1:
+                switch (facade.getClientPlayerSettlementCount())
+                {
+                case 0:
+                    startMove(PieceType.SETTLEMENT, true, true);
+                    break;
+                case 1:
+                    this.endTurn();
+                    break;
+                }
+                break;
+            } break;
+        case SecondRound:
+            switch (facade.getClientPlayerRoadCount())
+            {
+            case 1:
+                startMove(PieceType.ROAD, true, true);
+                break;
+            case 2:
+                switch (facade.getClientPlayerSettlementCount())
+                {
+                case 1:
+                    startMove(PieceType.SETTLEMENT, true, true);
+                    break;
+                case 2:
+                    this.endTurn();
+                    break;
+                }
+                break;
+            } break;
+        }
     }
 
     /*
@@ -50,15 +82,12 @@ public class SetupState extends GameplayState
      * @see client.state.ICatanGameMethods#canPlaceRoad(shared.definitions.
      * PlayerIndex, shared.locations.EdgeLocation)
      */
-    @Override
-    public boolean canPlaceRoad(EdgeLocation edgeLoc)
+    @Override public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return facade.canPlaceRoad(edgeLoc, true);
     }
 
-
-    @Override
-    public void placeRoad(EdgeLocation edgeLoc)
+    @Override public void placeRoad(EdgeLocation edgeLoc)
     {
         facade.placeRoad(edgeLoc, true);
     }
@@ -69,14 +98,12 @@ public class SetupState extends GameplayState
      * @see client.state.ICatanGameMethods#canPlaceSettlement(shared.locations.
      * VertexLocation)
      */
-    @Override
-    public boolean canPlaceSettlement(VertexLocation vertLoc)
+    @Override public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         return facade.canPlaceSettlement(vertLoc, true);
     }
 
-    @Override
-    public void placeSettlement(VertexLocation vertLoc)
+    @Override public void placeSettlement(VertexLocation vertLoc)
     {
         facade.placeSettlement(vertLoc, true);
     }
@@ -90,9 +117,16 @@ public class SetupState extends GameplayState
         }
     }
 
-    @Override
-    public void endTurn()
+    @Override public void endTurn()
     {
         facade.endTurn();
+    }
+
+    @Override public void updateView()
+    {
+        if (controller instanceof MapController)
+        {
+            playRound();
+        }
     }
 }
