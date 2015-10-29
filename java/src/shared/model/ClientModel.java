@@ -383,4 +383,9 @@ public class ClientModel extends Observable
         TradeOffer offer = getTradeOffer();
         return (offer != null && (offer.getReceiver() == ClientFacade.getInstance().getClientPlayer().getPlayerIndex().getIndex()));
     }
+
+    public boolean canBuyDevCard()
+    {
+        return bank.getDevCards().totalCards() > 0;
+    }
 }

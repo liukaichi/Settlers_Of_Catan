@@ -23,6 +23,7 @@ public class Poller
     public void setProxy(IProxy proxy)
     {
         this.proxy = proxy;
+        setPollProxy(proxy);
     }
 
     private IProxy proxy;

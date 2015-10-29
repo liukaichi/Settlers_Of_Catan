@@ -44,7 +44,6 @@ public class ClientFacade
     {
         model = new ClientModel();
         proxy = new ServerProxy();
-        poller = new Poller(proxy);
     }
 
     private void setClientPlayer(PlayerInfo clientPlayer)
@@ -63,7 +62,7 @@ public class ClientFacade
      * @param players the info of each of the players. Typically, this is supplied by GameInfo#getPlayerInfos().
      * @pre The clientPlayer has already been initialized with a name and an ID.
      */
-    private void buildClientPlayerFromGameInfo(List<PlayerInfo> players)
+    private void buildClientPlayerFromPlayerInfos(List<PlayerInfo> players)
     {
         for (PlayerInfo playerInfo : players)
         {
@@ -106,11 +105,20 @@ public class ClientFacade
      */
     public Player getPlayer()
     {
+        if (clientPlayer != null)
+        {
+            return getPlayer(clientPlayer.getPlayerIndex());
+        }
+        return null;
+    }
+
+    public Player getPlayer(PlayerIndex player)
+    {
         if (getPlayers() == null)
         {
             return null;
         }
-        return getPlayers().get(clientPlayer.getPlayerIndex().getIndex());
+        return getPlayers().get(player.getIndex());
     }
 
     /**
@@ -156,7 +164,7 @@ public class ClientFacade
 
     public boolean canBuyDevCard()
     {
-        return getPlayer().canBuyDevCard();
+        return (getPlayer().canBuyDevCard() && model.canBuyDevCard());
     }
 
     public boolean canPlayDevCard(DevCardType type)
@@ -324,7 +332,8 @@ public class ClientFacade
         if (clientPlayer.getNormalizedPlayerIndex() == -1)
         {
             List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
-            buildClientPlayerFromGameInfo(players);
+            buildClientPlayerFromPlayerInfos(players);
+            poller = new Poller(proxy);
         }
         this.model.updateModel(model);
         return model;
@@ -403,7 +412,7 @@ public class ClientFacade
      * Checks to see if the player meets the conditions to place a road
      *
      * @param edgeLoc the location of the Road
-     * @param allowDisconnected
+     * @param allowDisconnected whether or not the road is being placed in the setup round.
      * @return boolean - true if the player has the required resources and the
      * location is vacant and the player owns a settlement or city at a
      * neighboring vertex location
@@ -424,17 +433,17 @@ public class ClientFacade
     /**
      * Checks to see if the player meets the condition to place a settlement
      *
-     * @param vertLoc the location of the Vertex
-     * @param allowDisconnected
+     * @param vertexLocation the location of the Vertex
+     * @param allowDisconnected whether or not the settlement is being placed in the setup round.
      * @return boolean - true if player has the required resources and the
      * location is 2 edges or more from another settlement
      * @pre place settlement is called
      * @post place settlement continues
      */
 
-    public boolean canPlaceSettlement(VertexLocation vertLoc, boolean allowDisconnected)
+    public boolean canPlaceSettlement(VertexLocation vertexLocation, boolean allowDisconnected)
     {
-        return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertLoc, allowDisconnected);
+        return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertexLocation, allowDisconnected);
     }
 
     public boolean canBuySettlement()
@@ -593,7 +602,11 @@ public class ClientFacade
     public void setProxy(String host, String port)
     {
         proxy = new ServerProxy(host, port);
-        poller.setProxy(proxy);
+        /*
+        Add this new proxy to the poller if it is running.
+         */
+        if (poller != null)
+            poller.setProxy(proxy);
     }
 
     /**
@@ -618,23 +631,18 @@ public class ClientFacade
     }
 
     /**
-     * This does something, I'm pretty sure. Not sure of what. -Cache
+     * Gets the points of a player by their index.
      *
-     * @param index
-     * @return
+     * @param index the index of the player.
+     * @return the victory points that the player has.
      */
     public int getPlayerPoints(PlayerIndex index)
     {
-        for (Player player : getPlayers())
-        {
-            if (player.getPlayerInfo().getPlayerIndex() == index)
-            {
-                return player.getBank().getVictoryPoints();
-            }
-        }
+        Player player = getPlayer(index);
+        if (player != null)
+            return player.getBank().getVictoryPoints();
         LOGGER.warning("Couldn't find that player index's points");
         return -1;
-        //TODO get this finished.
     }
 
     public HexLocation getRobberLocation()

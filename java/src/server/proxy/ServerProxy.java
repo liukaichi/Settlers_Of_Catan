@@ -123,8 +123,9 @@ public class ServerProxy implements IProxy
      */
     private PlayerInfo buildPlayerInfoFromCookie() throws UnsupportedEncodingException
     {
-        LOGGER.info(URLDecoder.decode(catanUserCookie, "UTF-8"));
-        return new PlayerInfo(URLDecoder.decode(catanUserCookie, "UTF-8"));
+        String decodedPlayerCookie = URLDecoder.decode(catanUserCookie, "UTF-8");
+        LOGGER.info("Decoded Player Cookie" + decodedPlayerCookie);
+        return new PlayerInfo(decodedPlayerCookie);
     }
 
     @Override
@@ -481,20 +482,10 @@ public class ServerProxy implements IProxy
             URL url = new URL(URLPrefix + commandName);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Accept", "application/json");
-            // connection.setRequestProperty("Content-Type",
-            // "application/json");
             connection.setRequestMethod(HTTP_POST);
             if (catanUserCookie != null)
             {
-                String cookieRequest;
-                if (catanGameCookie != null)
-                {
-                    cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
-                }
-                else
-                {
-                    cookieRequest = "catan.user=" + catanUserCookie;
-                }
+                String cookieRequest = buildCookie();
                 connection.setRequestProperty("Cookie", cookieRequest);
             }
             connection.setDoOutput(true);
@@ -562,10 +553,28 @@ public class ServerProxy implements IProxy
         }
     }
 
+    /**
+     * Builds a cookie for a HttpURLConnection
+     * @return the cookie received previously from the server.
+     */
+    private String buildCookie()
+    {
+        String cookieRequest;
+        if (catanGameCookie != null)
+        {
+            cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
+        }
+        else
+        {
+            cookieRequest = "catan.user=" + catanUserCookie;
+        }
+        return cookieRequest;
+    }
+
     private String doGet(String commandName, String query)
     {
         String response = null;
-        LOGGER.info(commandName + query);
+        LOGGER.fine(commandName + query);
         try
         {
             URL url = new URL(URLPrefix + commandName + query);
@@ -573,15 +582,7 @@ public class ServerProxy implements IProxy
             connection.setRequestProperty("Content-Type", "application/json");
             if (catanUserCookie != null)
             {
-                String cookieRequest;
-                if (catanGameCookie != null)
-                {
-                    cookieRequest = "catan.user=" + catanUserCookie + "; " + "catan.game=" + catanGameCookie;
-                }
-                else
-                {
-                    cookieRequest = "catan.user=" + catanUserCookie;
-                }
+                String cookieRequest = buildCookie();
                 connection.setRequestProperty("Cookie", cookieRequest);
             }
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
@@ -594,7 +595,7 @@ public class ServerProxy implements IProxy
                     builder.append(string);
                 }
                 response = builder.toString();
-                LOGGER.log(Level.INFO, response);
+                LOGGER.fine(response);
             }
             else
             {
