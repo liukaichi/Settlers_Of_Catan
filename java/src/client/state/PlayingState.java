@@ -2,6 +2,7 @@ package client.state;
 
 import client.base.ObserverController;
 import client.data.RobPlayerInfo;
+import client.discard.DiscardController;
 import client.facade.ClientFacade;
 import client.map.MapController;
 import client.turntracker.TurnTrackerController;
@@ -144,6 +145,14 @@ public class PlayingState extends GameplayState
             //((MapController) controller).getView().startDrop(PieceType.ROBBER, null, false);
             //((MapController) controller).getRobView().updateView();
 
+        }
+        else if (controller instanceof DiscardController)
+        {
+            DiscardController control = (DiscardController) controller;
+            if(control.getWaitView().isModalShowing())
+            {
+                control.getWaitView().closeModal();
+            }
         }
     }
 }
