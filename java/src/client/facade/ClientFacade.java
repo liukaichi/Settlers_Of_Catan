@@ -645,12 +645,17 @@ public class ClientFacade
     public RobPlayerInfo[] getRobPlayerInfo(HexLocation hexLocation)
     {
         List<RobPlayerInfo> robPlayerInfos = new ArrayList<>();
+        PlayerIndex clientIndex = getClientPlayer().getPlayerIndex();
         for (PlayerIndex index : model.getMap().getHexPlayers(hexLocation))
         {
-            if (!getClientPlayer().getPlayerIndex().equals(index))
+            if (!clientIndex.equals(index))
             {
                 robPlayerInfos.add(new RobPlayerInfo(index, getPlayerByIndex(index).getResourceCount()));
             }
+        }
+        if(robPlayerInfos.size() == 0)
+        {
+            robPlayerInfos.add(new RobPlayerInfo(PlayerIndex.NONE, 0));
         }
 
         return robPlayerInfos.toArray(new RobPlayerInfo[robPlayerInfos.size()]);

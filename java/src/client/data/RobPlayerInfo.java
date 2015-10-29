@@ -35,6 +35,11 @@ public class RobPlayerInfo extends PlayerInfo
             super.setColor(player.getPlayerColor());
             super.setId(player.getPlayerInfo().getId());
         }
+        else
+        {
+            super.setName("NONE");
+            //super.setColor(CatanColor.);
+        }
         this.numCards = numCards;
 
     }
