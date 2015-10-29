@@ -130,7 +130,14 @@ public class ProxyTester
     @Test
     public void testUserLogin()
     {
-        Credentials credentials = new Credentials("userLogin", "login");
+        Credentials credentials = null;
+        try
+        {
+            credentials = new Credentials("login", "login");
+        } catch (SignInException e)
+        {
+            e.printStackTrace();
+        }
         try
         {
             proxy.userLogin(credentials);
@@ -181,7 +188,14 @@ public class ProxyTester
     @Test
     public void testUserRegister()
     {
-        Credentials credentials = new Credentials("userRegister", "register");
+        Credentials credentials = null;
+        try
+        {
+            credentials = new Credentials("userReg", "register");
+        } catch (SignInException e)
+        {
+            e.printStackTrace();
+        }
         try
         {
             proxy.userRegister(credentials);
@@ -200,7 +214,13 @@ public class ProxyTester
         {
             assertTrue(true);
         }
-        credentials = new Credentials("user1", "pass");
+        try
+        {
+            credentials = new Credentials("user1", "pass");
+        } catch (SignInException e)
+        {
+            e.printStackTrace();
+        }
         try
         {
             proxy.userRegister(credentials);

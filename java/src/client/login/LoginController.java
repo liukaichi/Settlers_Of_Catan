@@ -1,7 +1,5 @@
 package client.login;
 
-import javax.xml.bind.ValidationException;
-
 import client.base.*;
 import client.facade.ClientFacade;
 import client.misc.IMessageView;
@@ -87,9 +85,9 @@ public class LoginController extends Controller implements ILoginController
     {
         String username = getLoginView().getLoginUsername();
         String password = getLoginView().getLoginPassword();
-        Credentials credentials = new Credentials(username, password);
         try
         {
+            Credentials credentials = new Credentials(username, password);
             ClientFacade.getInstance().signInUser(credentials);
             // If log in succeeded
             getLoginView().closeModal();
@@ -114,11 +112,12 @@ public class LoginController extends Controller implements ILoginController
         try
         {
             String username = getLoginView().getRegisterUsername();
-            if (username.equals(""))
-            {
-                throw new ValidationException("Invalid Username/Password");
-            }
             String password = getLoginView().getRegisterPassword();
+            String passwordRepeat = getLoginView().getRegisterPasswordRepeat();
+            if (!password.equals(passwordRepeat))
+            {
+                throw new SignInException("Passwords must match");
+            }
             Credentials credentials = new Credentials(username, password);
             ClientFacade.getInstance().registerUser(credentials);
             // If register succeeded
@@ -127,14 +126,8 @@ public class LoginController extends Controller implements ILoginController
         }
         catch (SignInException e)
         {
-            getMessageView().setTitle("Error Homes!");
-            getMessageView().setMessage("Yo Homie, that register shiz there aint gonna work!");
-            getMessageView().showModal();
-        }
-        catch (ValidationException e1)
-        {
-            getMessageView().setTitle("Invalid!");
-            getMessageView().setMessage("Yo Homie, that name shiz is invalid!");
+            getMessageView().setTitle("Invalid Sign-In Homes!");
+            getMessageView().setMessage("Yo, Homie, " + e.getMessage());
             getMessageView().showModal();
         }
     }

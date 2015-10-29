@@ -157,17 +157,7 @@ public class LoginView extends OverlayView implements ILoginView
     @Override
     public String getRegisterUsername()
     {
-        /*
-         * Modification - Only return the username if it was properly validated.
-         */
-        if (isValidRegistration())
-        {
-            return registerPanel.txtUsername.getText();
-        }
-        else
-        {
-            return "";
-        }
+        return registerPanel.txtUsername.getText();
     }
 
     @Override
@@ -180,11 +170,6 @@ public class LoginView extends OverlayView implements ILoginView
     public String getRegisterPasswordRepeat()
     {
         return registerPanel.txtPasswordAgain.getText();
-    }
-
-    private boolean isValidRegistration()
-    {
-        return registerPanel.isValidRegistration();
     }
 
     private class SignInPanel extends JPanel
@@ -279,7 +264,6 @@ public class LoginView extends OverlayView implements ILoginView
         private JLabel lblPasswordAgain = null;
         private JTextField txtPasswordAgain = null;
         private JButton btnRegister = null;
-        private boolean isValidRegistration;
 
         public RegisterPanel()
         {
@@ -287,11 +271,6 @@ public class LoginView extends OverlayView implements ILoginView
             initTooltips();
             initLayout();
             initEventListeners();
-        }
-
-        public boolean isValidRegistration()
-        {
-            return isValidRegistration;
         }
 
         private void initComponents()
@@ -381,12 +360,9 @@ public class LoginView extends OverlayView implements ILoginView
                     final int MIN_UNAME_LENGTH = 3;
                     final int MAX_UNAME_LENGTH = 7;
 
-                    isValidRegistration = true;
-
                     if (username.length() < MIN_UNAME_LENGTH || username.length() > MAX_UNAME_LENGTH)
                     {
-                        isValidRegistration = false;
-                        // return false;
+                        return false;
                     }
                     else
                     {
@@ -394,14 +370,12 @@ public class LoginView extends OverlayView implements ILoginView
                         {
                             if (!Character.isLetterOrDigit(c) && c != '_' && c != '-')
                             {
-                                isValidRegistration = false;
-                                // return false;
+                                return false;
                             }
                         }
                     }
 
-                    return isValidRegistration;
-                    // return true;
+                    return true;
                 }
 
             };
@@ -414,12 +388,9 @@ public class LoginView extends OverlayView implements ILoginView
                 {
                     final int MIN_PASS_LENGTH = 5;
 
-                    isValidRegistration = true;
-
                     if (input.length() < MIN_PASS_LENGTH)
                     {
-                        isValidRegistration = false;
-                        // return false;
+                        return false;
                     }
                     else
                     {
@@ -427,14 +398,12 @@ public class LoginView extends OverlayView implements ILoginView
                         {
                             if (!Character.isLetterOrDigit(c) && c != '_' && c != '-')
                             {
-                                isValidRegistration = false;
-                                // return false;
+                                return false;
                             }
                         }
                     }
 
-                    return isValidRegistration;
-                    // return true;
+                    return true;
                 }
 
             };
@@ -445,9 +414,7 @@ public class LoginView extends OverlayView implements ILoginView
                 @Override
                 public boolean validateContents(String input)
                 {
-                    isValidRegistration = input.equals(txtPassword.getText());
-                    // return input.equals(txtPassword.getText());
-                    return isValidRegistration;
+                    return input.equals(txtPassword.getText());
                 }
 
             };

@@ -168,17 +168,20 @@ public class ClientModel extends Observable
         this.version = version;
     }
 
+    public boolean canBuyDevCard()
+    {
+        return bank.getDevCards().totalCards() > 0;
+    }
+
     /**
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
      * 
-     * @param player
-     *        -- this will be the player placing the settlement
-     * @param location
-     *        -- this will be the location of the settlement; must ensure that
+     * @param player this will be the player placing the settlement
+     * @param location this will be the location of the settlement; must ensure that
      *        this space on the map is empty
      * @param allowDisconnected whether or not the settlement can be disconnected. Only true during setup. Not currently used.
-     * @return boolean -- returns true if the location is vacant and at least
+     * @return boolean  returns true if the location is vacant and at least
      *         two spaces away from another settlement otherwise returns false
      */
     public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
@@ -190,12 +193,10 @@ public class ClientModel extends Observable
      * Method that indicates whether a player has the ability to place a city in
      * a certain location on the map
      * 
-     * @param player
-     *        -- this will be the player placing the city
-     * @param location
-     *        -- this will be the location of the city; must ensure that this
+     * @param player this will be the player placing the city
+     * @param location this will be the location of the city; must ensure that this
      *        space already has a settlement located their owned by this player
-     * @return boolean -- returns true if there is a settlement at the specified
+     * @return boolean returns true if there is a settlement at the specified
      *         location and it is owned by the player otherwise returns false
      */
     public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
@@ -207,13 +208,11 @@ public class ClientModel extends Observable
      * Method that indicates whether a player has the ability to place a city on
      * a certain edge on the map
      * 
-     * @param player
-     *        -- this will be the player placing the road
-     * @param location
-     *        -- this will be the edge location where the road will be placed;
+     * @param player this will be the player placing the road
+     * @param location this will be the edge location where the road will be placed;
      *        must ensure this space is empty on the map
      * @param allowDisconnected whether or not the road can be disconnected. Only true during setup.
-     * @return boolean -- returns true if the player owns a settlement or city
+     * @return boolean  returns true if the player owns a settlement or city
      *         at the neighboring vertex locations and there is no current road
      *         there otherwise returns false
      */
@@ -226,12 +225,10 @@ public class ClientModel extends Observable
      * Method that indicates whether a player has the ability to move a robber
      * on a certain Hex
      * 
-     * @param player
-     *        -- this will be the player placing the robber
-     * @param location
-     *        -- this will be the hex location where the robber will be placed;
+     * @param player this will be the player placing the robber
+     * @param location this will be the hex location where the robber will be placed;
      *        cannot place on water or where the robber already is
-     * @return boolean -- returns true if it is not moving to its current
+     * @return boolean  returns true if it is not moving to its current
      *         location and it is not a sea piece otherwise returns false
      */
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
@@ -382,10 +379,5 @@ public class ClientModel extends Observable
     {
         TradeOffer offer = getTradeOffer();
         return (offer != null && (offer.getReceiver() == ClientFacade.getInstance().getClientPlayer().getPlayerIndex().getIndex()));
-    }
-
-    public boolean canBuyDevCard()
-    {
-        return bank.getDevCards().totalCards() > 0;
     }
 }

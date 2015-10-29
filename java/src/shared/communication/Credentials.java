@@ -3,6 +3,7 @@ package shared.communication;
 import java.lang.reflect.Type;
 
 import com.google.gson.*;
+import shared.definitions.exceptions.SignInException;
 
 /**
  * Credentials class holds the login information for each player. This validates
@@ -17,13 +18,19 @@ public class Credentials implements JsonSerializer<Credentials>
     private Username username;
     private Password password;
 
-    public Credentials()
+    private Credentials()
     {
-        username = new Username("");
-        password = new Password("");
+        try
+        {
+            username = new Username("user");
+            password = new Password("password");
+        } catch (SignInException e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    public Credentials(String username, String password)
+    public Credentials(String username, String password) throws SignInException
     {
         this();
         setUsername(username);
@@ -35,7 +42,7 @@ public class Credentials implements JsonSerializer<Credentials>
         return username.getUsername();
     }
 
-    public void setUsername(String username)
+    public void setUsername(String username) throws SignInException
     {
         this.username.setUsername(username);
     }
@@ -45,7 +52,7 @@ public class Credentials implements JsonSerializer<Credentials>
         return password;
     }
 
-    public void setPassword(String password)
+    public void setPassword(String password) throws SignInException
     {
         this.password.setPassword(password);
     }
@@ -108,10 +115,10 @@ public class Credentials implements JsonSerializer<Credentials>
     @Override
     public JsonElement serialize(Credentials src, Type srcType, JsonSerializationContext context)
     {
-        JsonObject creds = new JsonObject();
-        creds.addProperty("username", src.getUsername());
-        creds.addProperty("password", src.password.getPasswordPlainText());
-        return creds;
+        JsonObject credentials = new JsonObject();
+        credentials.addProperty("username", src.getUsername());
+        credentials.addProperty("password", src.password.getPasswordPlainText());
+        return credentials;
     }
 
 }
