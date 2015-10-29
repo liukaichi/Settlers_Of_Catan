@@ -32,4 +32,9 @@ public class Structures
         }
     }
 
+    public int getAmountRemaining(StructureType type)
+    {
+        return getStructure(type).getAmountRemaining();
+    }
+
 }

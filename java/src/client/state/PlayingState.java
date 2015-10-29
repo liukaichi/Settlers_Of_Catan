@@ -66,6 +66,11 @@ public class PlayingState extends GameplayState
         return facade.canPlaceRobber(hexLoc);
     }
 
+    @Override public void buyDevCard()
+    {
+        facade.buyDevCard();
+    }
+
     @Override public void placeCity(VertexLocation vertLoc)
     {
         facade.placeCity(vertLoc);
@@ -108,7 +113,7 @@ public class PlayingState extends GameplayState
 
     @Override public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
-
+        facade.playYearOfPlentyCard(resource1, resource2);
     }
 
     /**
@@ -116,17 +121,17 @@ public class PlayingState extends GameplayState
      */
     @Override public void playMonumentCard()
     {
-
+        facade.playMonumentCard();
     }
 
     @Override public void playRoadBuildingCard(EdgeLocation edge1, EdgeLocation edge2)
     {
-
+        facade.playRoadBuildingCard(edge1, edge2);
     }
 
     @Override public void playSoldierCard(RobPlayerInfo info, HexLocation location)
     {
-
+        facade.playSoldierCard(info, location);
     }
 
     @Override public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
@@ -134,7 +139,7 @@ public class PlayingState extends GameplayState
         if (controller instanceof MapController)
         {
             ((MapController) controller).getView()
-                    .startDrop(pieceType, ClientFacade.getInstance().getClientPlayer().getColor(), true);
+                    .startDrop(pieceType, facade.getClientPlayer().getColor(), true);
         }
     }
 

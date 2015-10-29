@@ -70,4 +70,9 @@ public class Resource
     {
         return 0;
     }
+
+    @Override public String toString()
+    {
+        return String.valueOf(type) + ": " + amount;
+    }
 }
