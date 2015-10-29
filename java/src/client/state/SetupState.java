@@ -10,7 +10,6 @@ import shared.definitions.PieceType;
 import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
-import shared.model.ClientModel;
 
 import java.util.logging.Logger;
 
@@ -21,8 +20,7 @@ public class SetupState extends GameplayState
 {
     /* Logger */
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
-
-    private boolean isFirstTimeThroughRound;
+    private boolean roundComplete = false;
 
     public SetupState(ObserverController controller, TurnStatus round)
     {
@@ -44,7 +42,10 @@ public class SetupState extends GameplayState
                 switch (facade.getClientPlayerSettlementCount())
                 {
                 case 0:
-                    startMove(PieceType.SETTLEMENT, true, true);
+                    if(!roundComplete) {
+                        roundComplete = true;
+                        startMove(PieceType.SETTLEMENT, true, true);
+                    }
                     break;
                 case 1:
                     this.endTurn();
@@ -62,7 +63,10 @@ public class SetupState extends GameplayState
                 switch (facade.getClientPlayerSettlementCount())
                 {
                 case 1:
-                    startMove(PieceType.SETTLEMENT, true, true);
+                    if(!roundComplete) {
+                        roundComplete = true;
+                        startMove(PieceType.SETTLEMENT, true, true);
+                    }
                     break;
                 case 2:
                     this.endTurn();

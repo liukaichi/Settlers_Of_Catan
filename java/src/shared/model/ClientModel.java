@@ -37,6 +37,7 @@ public class ClientModel extends Observable
     private TurnTracker turnTracker;
     private int version;
     private PlayerIndex winner;
+    private boolean isUpdating;
 
     public ClientModel()
     {
@@ -52,17 +53,21 @@ public class ClientModel extends Observable
 
     public void updateModel(ClientModel model)
     {
-        this.gameInfo = model.gameInfo;
-        this.bank = model.bank;
-        this.chat = model.chat;
-        this.log = model.log;
-        this.map = model.map;
-        this.tradeOffer = model.tradeOffer;
-        this.turnTracker = model.turnTracker;
-        this.version = model.version;
-        this.winner = model.winner;
-        this.setChanged();
-        this.notifyObservers(turnTracker.getStatus());
+        if(!isUpdating) {
+            isUpdating = true;
+            this.gameInfo = model.gameInfo;
+            this.bank = model.bank;
+            this.chat = model.chat;
+            this.log = model.log;
+            this.map = model.map;
+            this.tradeOffer = model.tradeOffer;
+            this.turnTracker = model.turnTracker;
+            this.version = model.version;
+            this.winner = model.winner;
+            this.setChanged();
+            this.notifyObservers(turnTracker.getStatus());
+            isUpdating = false;
+        }
     }
 
     public ClientModel(String json)
