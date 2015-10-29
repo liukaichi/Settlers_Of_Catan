@@ -353,7 +353,15 @@ public class CatanMap
                 }
                 else
                 {
-                    return true;
+                    List<VertexLocation> vertexes = getNearbyVertices(location);
+                    for (VertexLocation vertex : vertexes)
+                    {
+                        if(structures.get(vertex) == null && isTwoRoadsAwayFromOpponents(vertex))
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
                 }
 
             }
