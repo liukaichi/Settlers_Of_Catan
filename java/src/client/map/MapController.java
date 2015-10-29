@@ -6,7 +6,6 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
-import client.state.RobbingState;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -275,9 +274,8 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void placeRobber(HexLocation hexLocation)
     {
-        getRobView().setPlayers(facade.getRobPlayerInfo(hexLocation));
-        robberLocation = hexLocation;
-        getRobView().showModal();
+        state.placeRobber(hexLocation);
+
     }
 
     @Override
@@ -295,7 +293,7 @@ public class MapController extends ObserverController implements IMapController
     @Override
     public void playSoldierCard()
     {
-        setState(new RobbingState(this));
+        //setState(new RobbingState(this));
         getView().startDrop(PieceType.ROBBER, null, false);
 
     }
@@ -328,4 +326,13 @@ public class MapController extends ObserverController implements IMapController
 
     }
 
+    public HexLocation getRobberLocation()
+    {
+        return robberLocation;
+    }
+
+    public HexLocation setRobberLocation(HexLocation hexLocation)
+    {
+        return robberLocation = hexLocation;
+    }
 }

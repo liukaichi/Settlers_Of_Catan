@@ -615,7 +615,7 @@ public class CatanMap
      * @pre the location is normalized.
      * @return a list of vertices one distance away.
      */
-    private List<VertexLocation> getNearbyVertices(EdgeLocation normalized)
+    public List<VertexLocation> getNearbyVertices(EdgeLocation normalized)
     {
         ArrayList<VertexLocation> vertices = new ArrayList<>();
         Hex hex = hexes.get(normalized.getHexLoc());

@@ -2,18 +2,25 @@ package client.maritime;
 
 import client.base.ObserverController;
 import client.facade.ClientFacade;
-import shared.definitions.PortType;
 import shared.definitions.ResourceType;
+import shared.definitions.TradeRatio;
 
 import java.util.Observable;
+import java.util.TreeSet;
+import java.util.logging.Logger;
 
 /**
  * Implementation for the maritime trade controller
  */
 public class MaritimeTradeController extends ObserverController implements IMaritimeTradeController
 {
-
+    ClientFacade facade = ClientFacade.getInstance();
     private IMaritimeTradeOverlay tradeOverlay;
+    private static final Logger LOGGER = Logger.getLogger(MaritimeTradeController.class.getName());
+
+    ResourceType resourceToGive = null;
+    ResourceType resourceToReceive = null;
+    int tradingRatio = -1;
 
     public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay)
     {
@@ -52,16 +59,21 @@ public class MaritimeTradeController extends ObserverController implements IMari
     @Override public void startTrade()
     {
         //TODO do the things above.
-        ClientFacade facade = ClientFacade.getInstance();
 
-        for (PortType port : PortType.values())
+        getTradeOverlay().reset();
+        TreeSet<ResourceType> tradeableResources = new TreeSet<>();
+        for (ResourceType type : ResourceType.values())
         {
-            //facade.getPlayer().canTradeResource();
-
+            if (facade.getPlayer().canTradeResource(type)){
+                tradeableResources.add(type);
+            }
         }
 
-        //tradeOverlay.showGiveOptions(facade.getPlayer().getBank().getResources());
+        tradeOverlay.showGiveOptions(tradeableResources.toArray(new ResourceType[tradeableResources.size()]));
+
+        getTradeOverlay().setTradeEnabled(false);
         getTradeOverlay().showModal();
+
     }
 
     /**
@@ -73,8 +85,16 @@ public class MaritimeTradeController extends ObserverController implements IMari
      */
     @Override public void makeTrade()
     {
-        state.sendTradeOffer(); //TODO pass in parameters
+        if (tradingRatio == -1 || resourceToGive == null || resourceToReceive == null)
+        {
+            LOGGER.warning("Something went wrong with Maritime trade. Shouldn't have gotten here");
+        }
+        facade.makeMaritimeTrade(TradeRatio.fromInt(tradingRatio), resourceToGive, resourceToReceive);
+        getTradeOverlay().hideGiveOptions();
         getTradeOverlay().closeModal();
+        tradingRatio = -1;
+        resourceToGive = null;
+        resourceToReceive = null;
     }
 
     /**
@@ -82,8 +102,10 @@ public class MaritimeTradeController extends ObserverController implements IMari
      */
     @Override public void cancelTrade()
     {
-
         getTradeOverlay().closeModal();
+        tradingRatio = -1;
+        resourceToGive = null;
+        resourceToReceive = null;
     }
 
     /**
@@ -95,6 +117,15 @@ public class MaritimeTradeController extends ObserverController implements IMari
      */
     @Override public void setGetResource(ResourceType resource)
     {
+        if (facade.getModel().getBank().getResources().getAmount(resource) > 0)
+        {
+            resourceToReceive = resource;
+            tradeOverlay.selectGetOption(resource,1);
+            tradeOverlay.setTradeEnabled(true);
+        } else
+        {
+            tradeOverlay.setTradeEnabled(false);
+        }
 
     }
 
@@ -106,6 +137,19 @@ public class MaritimeTradeController extends ObserverController implements IMari
      */
     @Override public void setGiveResource(ResourceType resource)
     {
+        int tradeRatio = facade.getPlayer().getTradeRatio(resource);
+        tradeOverlay.selectGiveOption(resource, tradeRatio);
+        resourceToGive = resource;
+        tradingRatio= tradeRatio;
+
+        TreeSet<ResourceType> tradeableResources = new TreeSet<>();
+        for (ResourceType type : ResourceType.values())
+        {
+            if (facade.getBank().getResources().getAmount(type) > 0 && type != resource){
+                tradeableResources.add(type);
+            }
+        }
+        tradeOverlay.showGetOptions(tradeableResources.toArray(new ResourceType[tradeableResources.size()]));
 
     }
 
@@ -117,6 +161,16 @@ public class MaritimeTradeController extends ObserverController implements IMari
      */
     @Override public void unsetGetValue()
     {
+        getTradeOverlay().setTradeEnabled(false);
+        resourceToReceive = null;
+        TreeSet<ResourceType> tradeableResources = new TreeSet<>();
+        for (ResourceType type : ResourceType.values())
+        {
+            if (facade.getBank().getResources().getAmount(type) > 0){
+                tradeableResources.add(type);
+            }
+        }
+        tradeOverlay.showGetOptions(tradeableResources.toArray(new ResourceType[tradeableResources.size()]));
 
     }
 
@@ -129,7 +183,22 @@ public class MaritimeTradeController extends ObserverController implements IMari
     @Override public void unsetGiveValue()
     {
 
+        tradeOverlay.setTradeEnabled(false);
+        resourceToGive = null;
+        resourceToReceive = null;
+
+        TreeSet<ResourceType> tradeableResources = new TreeSet<>();
+        for (ResourceType type : ResourceType.values())
+        {
+            if (facade.getPlayer().canTradeResource(type)){
+                tradeableResources.add(type);
+            }
+        }
+
+        tradeOverlay.showGiveOptions(tradeableResources.toArray(new ResourceType[tradeableResources.size()]));
     }
+
+
 
     @Override public void update(Observable o, Object arg)
     {

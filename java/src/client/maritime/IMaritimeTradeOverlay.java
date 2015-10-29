@@ -12,9 +12,9 @@ public interface IMaritimeTradeOverlay extends IOverlayView
 	
 	/**
 	 * Resets the view to its initial state.
-	 */
+	*/
 	void reset();
-	
+
 	/**
 	 * Hides the "get" resources and undo components.
 	 */

@@ -1,10 +1,11 @@
 package shared.model.bank.resource;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.*;
-
 import shared.definitions.ResourceType;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * List of the resource objects
@@ -79,6 +80,17 @@ public class Resources implements JsonSerializer<Resources>
         }
 
         return null;
+    }
+
+    public List<Resource> getAllResources()
+    {
+        ArrayList<Resource> resourceList = new ArrayList<>();
+        resourceList.add(brick);
+        resourceList.add(wood);
+        resourceList.add(sheep);
+        resourceList.add(wheat);
+        resourceList.add(ore);
+        return resourceList;
     }
 
     public void setAmount(ResourceType type, int amount)

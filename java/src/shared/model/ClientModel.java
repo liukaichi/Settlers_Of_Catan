@@ -81,17 +81,18 @@ public class ClientModel extends Observable
 
         gameInfo = new GameInfo();
         JsonArray players = model.getAsJsonArray("players");
-        // TODO Should be: for(Player player : gameinfo.getPlayers();
+
         for (JsonElement player : players)
         {
             if (!(player instanceof JsonNull))
             {
-                gameInfo.addPlayer(new Player(player.toString()));
+                Player newPlayer = new Player(player.toString());
+                newPlayer.populatePorts(map);
+                gameInfo.addPlayer(newPlayer);
 
             }
         }
 
-        // TODO these few need to have constructors using JSON.
         log = new Log(model.getAsJsonObject("log").toString());
         chat = new Chat(model.getAsJsonObject("chat").toString());
         bank.initResources(model.getAsJsonObject("bank").toString());

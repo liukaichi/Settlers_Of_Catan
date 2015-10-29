@@ -7,11 +7,14 @@ import com.google.gson.JsonParser;
 import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
+import shared.locations.VertexLocation;
 import shared.model.bank.Bank;
 import shared.model.bank.PlayerBank;
 import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
+import shared.model.map.CatanMap;
+import shared.model.map.structure.Port;
 
 /**
  * Represents a player playing the game. There can be up to 4 players in a
@@ -77,7 +80,8 @@ public class Player
                 .setDevCards(jobj.get("newDevCards").getAsJsonObject().toString(), DevCard.AmountType.UNPLAYABLE);
         this.bank.getStructures().getStructure(StructureType.ROAD).setAmountRemaining(jobj.get("roads").getAsInt());
         this.bank.getStructures().getStructure(StructureType.CITY).setAmountRemaining(jobj.get("cities").getAsInt());
-        this.bank.getStructures().getStructure(StructureType.SETTLEMENT).setAmountRemaining(jobj.get("settlements").getAsInt());
+        this.bank.getStructures().getStructure(StructureType.SETTLEMENT)
+                .setAmountRemaining(jobj.get("settlements").getAsInt());
 
         this.info.setName(jobj.get("name").getAsString());
         this.info.setPlayerIndex(jobj.get("playerIndex").getAsInt());
@@ -203,7 +207,6 @@ public class Player
         }
     }
 
-
     /**
      * Plays the action of the specified DevCard
      *
@@ -246,8 +249,10 @@ public class Player
             player.add("oldDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.PLAYABLE));
             player.add("newDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.UNPLAYABLE));
             player.addProperty("roads", bank.getStructures().getStructure(StructureType.ROAD).getAmountRemaining());
-            player.addProperty("cities", bank.getStructures().getStructure(StructureType.SETTLEMENT).getAmountRemaining());
-            player.addProperty("settlements", bank.getStructures().getStructure(StructureType.CITY).getAmountRemaining());
+            player.addProperty("cities",
+                    bank.getStructures().getStructure(StructureType.SETTLEMENT).getAmountRemaining());
+            player.addProperty("settlements",
+                    bank.getStructures().getStructure(StructureType.CITY).getAmountRemaining());
             player.addProperty("soldiers", bank.getKnights());
             player.addProperty("victoryPoints", bank.getVictoryPoints());
             player.addProperty("monuments", bank.getMonuments());
@@ -298,7 +303,9 @@ public class Player
     {
         return bank.getVictoryPoints();
     }
-    public PlayerIndex getPlayerIndex(){
+
+    public PlayerIndex getPlayerIndex()
+    {
         return getPlayerInfo().getPlayerIndex();
     }
 
@@ -312,20 +319,45 @@ public class Player
         return getBank().getResources();
     }
 
-    public void canTradeResource(PortType port)
+    /**
+     * Checks if the player can currently trade using a given resource
+     *
+     * @param type the type of resource
+     * @return True if you can trade, false if you can't.
+     */
+    public boolean canTradeResource(ResourceType type)
     {
+
+        if (getBank().getResources().getAmount(type) >= getTradeRatio(type))
+        {
+            return true;
+        }
+        return false;
+
+    }
+
+    /**
+     * Gets the trade ratio of a resource based on what ports you have
+     *
+     * @param type resource type to check
+     * @return the ratio as an integer (returns 3 if you can trade 3:1)
+     */
+    public int getTradeRatio(ResourceType type)
+    {
+        PortType port = ResourceType.toPortType(type);
+
         if (getBank().canAccessPort(port))
         {
-
-            /*if (port == PortType.THREE)
-            {
-                for ()
-                if (getResources().getAmount())
-            }
-            else if ()
-            {
-
-            }*/
+            //if you can access the specific resourceport
+            return 2;
+        } else if (getBank().canAccessPort(PortType.THREE))
+        {
+            //if you can access the three port
+            return 3;
+        } else
+        {
+            //don't got no ports to trade with
+            return 4;
         }
     }
 
@@ -333,4 +365,22 @@ public class Player
     {
         return bank.amountOf(type);
     }
+
+    public void populatePorts(CatanMap map)
+    {
+        for (Port port : map.getPorts())
+        {
+            for (VertexLocation vertex : map.getNearbyVertices(port.getEdgeLocation()))
+            {
+                if (map.getStructures().containsKey(vertex))
+                {
+                    if (map.getStructures().get(vertex).getOwner() == getPlayerIndex())
+                    {
+                        bank.addPort(port.getResource());
+                    }
+                }
+            }
+        }
+    }
 }
+

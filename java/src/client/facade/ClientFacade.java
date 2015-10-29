@@ -16,6 +16,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.ClientModel;
+import shared.model.bank.Bank;
 import shared.model.bank.resource.Resources;
 import shared.model.player.Player;
 
@@ -675,5 +676,10 @@ public class ClientFacade
     public int getClientPlayerSettlementCount()
     {
         return getPlayer().getStructureCount(StructureType.SETTLEMENT);
+    }
+
+    public Bank getBank()
+    {
+        return model.getBank();
     }
 }

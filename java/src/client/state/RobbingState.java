@@ -44,8 +44,6 @@ public class RobbingState extends GameplayState
         if (controller instanceof MapController && facade.isMyTurn())
         {
             ((MapController) controller).getView().startDrop(PieceType.ROBBER, null, false);
-            //((MapController) controller).getRobView().updateView();
-
         }
         else if (controller instanceof DiscardController)
         {
@@ -55,5 +53,17 @@ public class RobbingState extends GameplayState
                 control.getWaitView().closeModal();
             }
         }
+    }
+
+    @Override public void placeRobber(HexLocation hexLoc)
+    {
+        if (controller instanceof MapController)
+        {
+            MapController mapController = (MapController) controller;
+            mapController.getRobView().setPlayers(facade.getRobPlayerInfo(hexLoc));
+            mapController.setRobberLocation(hexLoc);
+            mapController.getRobView().showModal();
+        }
+
     }
 }
