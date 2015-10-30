@@ -70,8 +70,8 @@ public class ServerProxy implements IProxy
     private static final String YEAR_OF_PLENTY = "moves/Year_of_Plenty";
     private static final String ROAD_BUILDING = "moves/Road_Building";
     private static final String SOLDIER = "moves/Soldier";
-    private static final String MONOPOLY = "moves/monopoly";
-    private static final String MONUMENT = "moves/monument";
+    private static final String MONOPOLY = "moves/Monopoly";
+    private static final String MONUMENT = "moves/Monument";
     private static final String BUILD_ROAD = "moves/buildRoad";
     private static final String BUILD_SETTLEMENT = "moves/buildSettlement";
     private static final String BUILD_CITY = "moves/buildCity";
