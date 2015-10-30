@@ -32,7 +32,8 @@ public class LoginView extends OverlayView implements ILoginView
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel mainPanel = new JPanel();
-        mainPanel.add(new LoginView());
+        LoginView loginView = new LoginView();
+        mainPanel.add(loginView);
 
         jf.getContentPane().add(mainPanel);
         jf.setSize(640, 480);
@@ -204,6 +205,14 @@ public class LoginView extends OverlayView implements ILoginView
             txtPassword = new JPasswordField(NUM_TXT_COLS);
 
             btnSignIn = new JButton("Sign in");
+            this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+            this.getActionMap().put("Enter", new AbstractAction()
+            {
+                @Override public void actionPerformed(ActionEvent e)
+                {
+                    getController().signIn();
+                }
+            });
         }
 
         private void initLayout()
