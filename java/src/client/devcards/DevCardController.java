@@ -1,15 +1,15 @@
 package client.devcards;
 
-import java.util.Observable;
-
-import client.base.*;
+import client.base.IAction;
+import client.base.ObserverController;
 import client.facade.ClientFacade;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.model.ClientModel;
-import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
 import shared.model.player.Player;
+
+import java.util.Observable;
 
 /**
  * "Dev card" controller implementation
@@ -64,19 +64,19 @@ public class DevCardController extends ObserverController implements IDevCardCon
         DevCards devCards = player.getBank().getDevCards();
 
         //testing
-        devCards.getCard(DevCardType.SOLDIER).setAmountPlayable(2);
-        devCards.getCard(DevCardType.ROAD_BUILD).setAmountPlayable(3);
+        //devCards.getCard(DevCardType.SOLDIER).setAmountPlayable(2);
+        //devCards.getCard(DevCardType.ROAD_BUILD).setAmountPlayable(3);
 
         setCards(devCards);
         disableCards();
     }
 
     private void setCards(DevCards devCards){
-        getPlayCardView().setCardAmount(DevCardType.MONOPOLY, devCards.getCard(DevCardType.MONOPOLY).getAmount(DevCard.AmountType.PLAYABLE));
-        getPlayCardView().setCardAmount(DevCardType.MONUMENT, devCards.getCard(DevCardType.MONUMENT).getAmount(DevCard.AmountType.PLAYABLE));
-        getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, devCards.getCard(DevCardType.ROAD_BUILD).getAmount(DevCard.AmountType.PLAYABLE));
-        getPlayCardView().setCardAmount(DevCardType.SOLDIER, devCards.getCard(DevCardType.SOLDIER).getAmount(DevCard.AmountType.PLAYABLE));
-        getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, devCards.getCard(DevCardType.YEAR_OF_PLENTY).getAmount(DevCard.AmountType.PLAYABLE));
+        getPlayCardView().setCardAmount(DevCardType.MONOPOLY, devCards.getCard(DevCardType.MONOPOLY).getAmountInHand());
+        getPlayCardView().setCardAmount(DevCardType.MONUMENT, devCards.getCard(DevCardType.MONUMENT).getAmountInHand());
+        getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, devCards.getCard(DevCardType.ROAD_BUILD).getAmountInHand());
+        getPlayCardView().setCardAmount(DevCardType.SOLDIER, devCards.getCard(DevCardType.SOLDIER).getAmountInHand());
+        getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, devCards.getCard(DevCardType.YEAR_OF_PLENTY).getAmountInHand());
     }
 
     private void disableCards(){
@@ -106,6 +106,7 @@ public class DevCardController extends ObserverController implements IDevCardCon
     {
         state.buyDevCard();
         getBuyCardView().closeModal();
+
     }
 
     @Override

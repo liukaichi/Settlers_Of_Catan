@@ -177,7 +177,7 @@ public abstract class GameplayState
 
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
-        facade.robPlayer(victim, location);
+
     }
 
     /*

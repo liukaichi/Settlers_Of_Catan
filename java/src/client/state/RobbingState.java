@@ -4,6 +4,7 @@
 package client.state;
 
 import client.base.ObserverController;
+import client.data.RobPlayerInfo;
 import client.discard.DiscardController;
 import client.map.MapController;
 import client.turntracker.TurnTrackerController;
@@ -65,5 +66,10 @@ public class RobbingState extends GameplayState
             mapController.getRobView().showModal();
         }
 
+    }
+    @Override
+    public void robPlayer(RobPlayerInfo victim, HexLocation location)
+    {
+        facade.robPlayer(victim, location);
     }
 }

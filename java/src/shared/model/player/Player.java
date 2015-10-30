@@ -370,7 +370,7 @@ public class Player
     {
         for (Port port : map.getPorts())
         {
-            for (VertexLocation vertex : map.getNearbyVertices(port.getEdgeLocation()))
+            for (VertexLocation vertex : map.getNearbyVertices(port.getEdgeLocation().getNormalizedLocation()))
             {
                 if (map.getStructures().containsKey(vertex))
                 {

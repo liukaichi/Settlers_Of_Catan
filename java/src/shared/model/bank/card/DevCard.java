@@ -53,6 +53,10 @@ public abstract class DevCard {
         }
         return -1;
     }
+    public int getAmountInHand()
+    {
+        return amountPlayable + amountUnplayable;
+    }
 
     public DevCard(DevCardType inType){
         type = inType;

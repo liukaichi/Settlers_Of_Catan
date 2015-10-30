@@ -3,7 +3,6 @@ package client.state;
 import client.base.ObserverController;
 import client.data.RobPlayerInfo;
 import client.discard.DiscardController;
-import client.facade.ClientFacade;
 import client.map.MapController;
 import client.turntracker.TurnTrackerController;
 import shared.definitions.DevCardType;
@@ -108,7 +107,7 @@ public class PlayingState extends GameplayState
 
     @Override public void playMonopolyCard(ResourceType resource)
     {
-
+        facade.playMonopolyCard(resource);
     }
 
     @Override public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
@@ -132,6 +131,22 @@ public class PlayingState extends GameplayState
     @Override public void playSoldierCard(RobPlayerInfo info, HexLocation location)
     {
         facade.playSoldierCard(info, location);
+    }
+    @Override
+    public void placeRobber(HexLocation hexLoc){
+
+        if (controller instanceof MapController)
+        {
+            MapController mapController = (MapController) controller;
+            mapController.getRobView().setPlayers(facade.getRobPlayerInfo(hexLoc));
+            mapController.setRobberLocation(hexLoc);
+            mapController.getRobView().showModal();
+        }
+    }
+    @Override
+    public void robPlayer(RobPlayerInfo victim, HexLocation location)
+    {
+        facade.playSoldierCard(victim, location);
     }
 
     @Override public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
