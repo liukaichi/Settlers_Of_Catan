@@ -397,10 +397,11 @@ public class CatanMap
                 return false;
             }
             Hex opposite = hexes.get(hexLocation.getNeighborLoc(roadDirection));
-            if (opposite != null && opposite.getHexType().equals(HexType.WATER))
+            if (opposite == null || opposite.getHexType().equals(HexType.WATER))
             {
                 return true;
             }
+
 
         }
         return false;
