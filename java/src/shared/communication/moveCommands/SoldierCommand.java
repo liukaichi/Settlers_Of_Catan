@@ -14,13 +14,13 @@ public class SoldierCommand extends RobPlayerCommand
 {
 
     /**
-     * @param playerIndex
-     * @param robberInfo
-     * @param location
+     * @param playerIndex the index of the player calling the command
+     * @param victimIndex the index of the player being robbed.
+     * @param location the new location of the robber.
      */
-    public SoldierCommand(PlayerIndex playerIndex, RobPlayerInfo robberInfo, HexLocation location)
+    public SoldierCommand(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
-        super(playerIndex, robberInfo, location);
+        super(playerIndex, victimIndex, location);
         this.type = MoveType.Soldier;
     }
 

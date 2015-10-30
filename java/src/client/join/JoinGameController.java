@@ -2,6 +2,7 @@ package client.join;
 
 import client.base.Controller;
 import client.base.IAction;
+import client.base.ObserverController;
 import client.data.GameInfo;
 import client.facade.ClientFacade;
 import client.misc.IMessageView;
@@ -12,13 +13,14 @@ import shared.definitions.exceptions.GameQueryException;
 import shared.model.player.Player;
 
 import java.util.List;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController
+public class JoinGameController extends ObserverController implements IJoinGameController
 {
 
     private INewGameView newGameView;
@@ -32,15 +34,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     /**
      * JoinGameController constructor
      *
-     * @param view
-     *        Join game view
-     * @param newGameView
-     *        New game view
-     * @param selectColorView
-     *        Select color view
-     * @param messageView
-     *        Message view (used to display error messages that occur while the
-     *        user is joining a game)
+     * @param view            Join game view
+     * @param newGameView     New game view
+     * @param selectColorView Select color view
+     * @param messageView     Message view (used to display error messages that occur while the
+     *                        user is joining a game)
      */
     public JoinGameController(IJoinGameView view, INewGameView newGameView, ISelectColorView selectColorView,
             IMessageView messageView)
@@ -74,8 +72,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     /**
      * Sets the action to be executed when the user joins a game
      *
-     * @param value
-     *        The action to be executed when the user joins a game
+     * @param value The action to be executed when the user joins a game
      */
     public void setJoinAction(IAction value)
     {
@@ -123,8 +120,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
      * get list of games from server, save them into your pre-game model
      * JoinGameView().setGames(list of games, your player info) updateView
      */
-    @Override
-    public void start()
+    @Override public void start()
     {
         ListGamesResponse response = facade.listGames();
         List<GameInfo> games = response.getGames();
@@ -133,15 +129,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         getJoinGameView().showModal();
     }
 
-    @Override
-    public void startCreateNewGame()
+    @Override public void startCreateNewGame()
     {
 
         getNewGameView().showModal();
     }
 
-    @Override
-    public void cancelCreateNewGame()
+    @Override public void cancelCreateNewGame()
     {
 
         getNewGameView().closeModal();
@@ -155,8 +149,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
      * <li>update Game List closeModal
      * </ul>
      */
-    @Override
-    public void createNewGame()
+    @Override public void createNewGame()
     {
         boolean randomTiles = getNewGameView().getRandomlyPlaceHexes();
         boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
@@ -176,8 +169,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
      * <li>if so, call JoinGame with the color you had already picked
      * </ul>
      */
-    @Override
-    public void startJoinGame(GameInfo game)
+    @Override public void startJoinGame(GameInfo game)
     {
         this.currentGame = game;
         List<Player> players = game.getPlayers();
@@ -192,8 +184,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         getSelectColorView().showModal();
     }
 
-    @Override
-    public void cancelJoinGame()
+    @Override public void cancelJoinGame()
     {
 
         getJoinGameView().closeModal();
@@ -202,8 +193,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     /**
      * call join game on server
      */
-    @Override
-    public void joinGame(CatanColor color)
+    @Override public void joinGame(CatanColor color)
     {
         try
         {
@@ -212,11 +202,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             getSelectColorView().closeModal();
             getJoinGameView().closeModal();
             joinAction.execute();
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Join Game", e);
         }
     }
 
+    @Override public void update(Observable observable, Object o)
+    {
+
+    }
 }

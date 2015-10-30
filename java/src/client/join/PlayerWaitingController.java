@@ -1,6 +1,7 @@
 package client.join;
 
 import client.base.Controller;
+import client.base.ObserverController;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;
@@ -8,18 +9,21 @@ import shared.definitions.AIType;
 import shared.model.ClientModel;
 
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Implementation for the player waiting controller
  */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController
+public class PlayerWaitingController extends ObserverController implements IPlayerWaitingController
 {
     private ClientFacade facade;
+    private ClientModel model;
 
     public PlayerWaitingController(IPlayerWaitingView view)
     {
         super(view);
         facade = ClientFacade.getInstance();
+        facade.addObserver(this);
     }
 
     @Override public IPlayerWaitingView getView()
@@ -56,6 +60,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     @Override public void addAI()
     {
         facade.addAI(AIType.valueOf(getView().getSelectedAI()));
+        this.start();
+    }
+
+    @Override public void update(Observable observable, Object o)
+    {
+        this.model = (ClientModel) observable;
         this.start();
     }
 }

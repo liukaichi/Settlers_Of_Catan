@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package facades;
 
@@ -23,7 +23,6 @@ import shared.model.message.MessageLine;
 
 /**
  * @author cstaheli
- *
  */
 public class ProxyTester
 {
@@ -33,8 +32,7 @@ public class ProxyTester
     /**
      * @throws java.lang.Exception
      */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception
+    @BeforeClass public static void setUpBeforeClass() throws Exception
     {
 
         // Class[] parameterTypes = new Class[1];
@@ -51,16 +49,14 @@ public class ProxyTester
     /**
      * @throws java.lang.Exception
      */
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception
+    @AfterClass public static void tearDownAfterClass() throws Exception
     {
     }
 
     /**
      * @throws java.lang.Exception
      */
-    @Before
-    public void setUp() throws Exception
+    @Before public void setUp() throws Exception
     {
         expectedModel = new ClientModel();
         testingModel = new ClientModel();
@@ -70,8 +66,7 @@ public class ProxyTester
     /**
      * @throws java.lang.Exception
      */
-    @After
-    public void tearDown() throws Exception
+    @After public void tearDown() throws Exception
     {
         expectedModel = null;
         testingModel = null;
@@ -127,8 +122,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#userLogin(shared.communication.Credentials)}
      * .
      */
-    @Test
-    public void testUserLogin()
+    @Test public void testUserLogin()
     {
         Credentials credentials = null;
         try
@@ -142,8 +136,7 @@ public class ProxyTester
         {
             proxy.userLogin(credentials);
             fail("Shouldn't have reached this.");
-        }
-        catch (SignInException e1)
+        } catch (SignInException e1)
         {
             assertTrue(true);
         }
@@ -153,16 +146,14 @@ public class ProxyTester
             assertTrue(true);
             proxy.userLogin(credentials);
             assertTrue(true);
-        }
-        catch (SignInException e)
+        } catch (SignInException e)
         {
             fail("Login failed");
         }
         try
         {
             proxy.userLogin(credentials);
-        }
-        catch (SignInException e)
+        } catch (SignInException e)
         {
             fail("Shouldn't have reached this.");
         }
@@ -173,8 +164,7 @@ public class ProxyTester
         try
         {
             proxy.userLogin(new Credentials("Sam", "sam"));
-        }
-        catch (SignInException e)
+        } catch (SignInException e)
         {
             fail(e.getMessage());
         }
@@ -185,8 +175,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#userRegister(shared.communication.Credentials)}
      * .
      */
-    @Test
-    public void testUserRegister()
+    @Test public void testUserRegister()
     {
         Credentials credentials = null;
         try
@@ -200,8 +189,7 @@ public class ProxyTester
         {
             proxy.userRegister(credentials);
             assertTrue(true);
-        }
-        catch (SignInException e)
+        } catch (SignInException e)
         {
             fail("Login failed");
         }
@@ -209,8 +197,7 @@ public class ProxyTester
         {
             proxy.userRegister(credentials);
             fail("Shouldn't have reached this.");
-        }
-        catch (SignInException e)
+        } catch (SignInException e)
         {
             assertTrue(true);
         }
@@ -227,8 +214,7 @@ public class ProxyTester
             assertTrue(true);
             proxy.userRegister(new Credentials("mel", "blanc"));
             assertTrue(true);
-        }
-        catch (SignInException e)
+        } catch (SignInException e)
         {
             fail("Registration failed");
         }
@@ -238,8 +224,7 @@ public class ProxyTester
      * Test method for
      * {@link server.proxy.ServerProxy#changeLogLevel(java.util.logging.Level)}.
      */
-    @Test
-    public void testChangeLogLevel()
+    @Test public void testChangeLogLevel()
     {
         startGame("logLevel");
         proxy.changeLogLevel(Level.ALL);
@@ -248,8 +233,7 @@ public class ProxyTester
     /**
      * Test method for {@link server.proxy.ServerProxy#listGames()}.
      */
-    @Test
-    public void testListGames()
+    @Test public void testListGames()
     {
         logUserIn();
 
@@ -302,8 +286,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#createGame(shared.communication.CreateGameRequest)}
      * .
      */
-    @Test
-    public void testCreateGame()
+    @Test public void testCreateGame()
     {
         logUserIn();
 
@@ -332,8 +315,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#joinGame(shared.communication.JoinGameRequest)}
      * .
      */
-    @Test
-    public void testJoinGame()
+    @Test public void testJoinGame()
     {
         logUserIn();
 
@@ -345,8 +327,7 @@ public class ProxyTester
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
             proxy.joinGame(new JoinGameRequest(id, CatanColor.PUCE));
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
             fail("Join game failed");
         }
@@ -358,14 +339,12 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#saveGame(shared.communication.SaveGameRequest)}
      * .
      */
-    @Test
-    public void testSaveGame()
+    @Test public void testSaveGame()
     {
         try
         {
             proxy.saveGame(null);
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
         }
     }
@@ -375,14 +354,12 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#loadGame(shared.communication.LoadGameRequest)}
      * .
      */
-    @Test
-    public void testLoadGame()
+    @Test public void testLoadGame()
     {
         try
         {
             proxy.loadGame(null);
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
         }
     }
@@ -390,8 +367,7 @@ public class ProxyTester
     /**
      * Test method for {@link server.proxy.ServerProxy#getGameState(int)}.
      */
-    @Test
-    public void testGetGameState()
+    @Test public void testGetGameState()
     {
         startGame("gameState");
         testingModel = proxy.getGameState(-1);
@@ -400,8 +376,7 @@ public class ProxyTester
     /**
      * Test method for {@link server.proxy.ServerProxy#resetGame()}.
      */
-    @Test
-    public void testResetGame()
+    @Test public void testResetGame()
     {
         proxy.resetGame();
     }
@@ -409,8 +384,7 @@ public class ProxyTester
     /**
      * Test method for {@link server.proxy.ServerProxy#getCommands()}.
      */
-    @Test
-    public void testGetCommands()
+    @Test public void testGetCommands()
     {
         proxy.getCommands();
     }
@@ -419,8 +393,7 @@ public class ProxyTester
      * Test method for
      * {@link server.proxy.ServerProxy#postCommands(PostCommandsRequest)}.
      */
-    @Test
-    public void testPostCommands()
+    @Test public void testPostCommands()
     {
         proxy.postCommands(null);
     }
@@ -428,8 +401,7 @@ public class ProxyTester
     /**
      * Test method for {@link server.proxy.ServerProxy#listAI()}.
      */
-    @Test
-    public void testListAI()
+    @Test public void testListAI()
     {
         logUserIn();
 
@@ -445,8 +417,7 @@ public class ProxyTester
             assertNotNull(aiTypes);
             assertTrue(aiTypes.size() == 1);
             assertTrue(aiTypes.get(0).toString().equals("LARGEST_ARMY"));
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
             fail("Join Game Failed");
         }
@@ -457,8 +428,7 @@ public class ProxyTester
      * Test method for
      * {@link server.proxy.ServerProxy#addAI(shared.definitions.AIType)}.
      */
-    @Test
-    public void testAddAI()
+    @Test public void testAddAI()
     {
         logUserIn();
 
@@ -466,12 +436,10 @@ public class ProxyTester
         {
             proxy.addAI(AIType.LARGEST_ARMY);
             fail("Shouldn't have gotten here");
-        }
-        catch (AddAIException e)
+        } catch (AddAIException e)
         {
             assertTrue("Properly couldn't add AI.", true);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
             fail("Shouldn't have gotten here");
@@ -482,8 +450,7 @@ public class ProxyTester
         try
         {
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
             e.printStackTrace();
             fail("Join Game Failed");
@@ -491,12 +458,10 @@ public class ProxyTester
         try
         {
             proxy.addAI(AIType.LARGEST_ARMY);
-        }
-        catch (AddAIException e)
+        } catch (AddAIException e)
         {
             fail("Couldn't validly add AI");
-        }
-        catch (GameQueryException | IllegalArgumentException e1)
+        } catch (GameQueryException | IllegalArgumentException e1)
         {
             e1.printStackTrace();
             fail("Shouldn't have gotten here");
@@ -509,12 +474,10 @@ public class ProxyTester
             assertTrue(true);
             proxy.addAI(AIType.LARGEST_ARMY);
             fail("Shouldn't have added the last AI properly");
-        }
-        catch (AddAIException e)
+        } catch (AddAIException e)
         {
             assertTrue("validly couldn't add AI", true);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
             fail("Shouldn't have gotten here");
@@ -525,9 +488,8 @@ public class ProxyTester
      * A method to create log a user in, create and join a game. Since these
      * processes will be called many, many times, this method is here to reduce
      * code duplication.
-     * 
-     * @param gameName
-     *        the name of the game to create.
+     *
+     * @param gameName the name of the game to create.
      */
     private void startGame(String gameName)
     {
@@ -538,8 +500,7 @@ public class ProxyTester
         try
         {
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
             fail("shouldn't have failed");
         }
@@ -549,8 +510,7 @@ public class ProxyTester
             {
                 proxy.addAI(AIType.LARGEST_ARMY);
             }
-        }
-        catch (AddAIException | IllegalArgumentException | GameQueryException e)
+        } catch (AddAIException | IllegalArgumentException | GameQueryException e)
         {
             fail("shouldn't have failed to add AI players");
         }
@@ -561,14 +521,14 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#sendChat(shared.communication.moveCommands.SendChatCommand)}
      * .
      */
-    @Test
-    public void testSendChat()
+    @Test public void testSendChat()
     {
         startGame("sendChat");
         testingModel = proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_0, "Test"));
         Chat chat = testingModel.getChat();
         assertTrue(chat.getMessages().size() == 1);
-        for (MessageLine messageLine : chat.getMessages()) {
+        for (MessageLine messageLine : chat.getMessages())
+        {
             if (!messageLine.getMessage().equals("Test"))
             {
                 fail("Should have been equal");
@@ -578,8 +538,7 @@ public class ProxyTester
         proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_0, "YoYoYo"));
         testingModel = proxy.sendChat(new SendChatCommand(PlayerIndex.PLAYER_3, "Different Player"));
         chat = testingModel.getChat();
-        assertEquals(4,chat.getMessages().size());
-
+        assertEquals(4, chat.getMessages().size());
 
     }
 
@@ -588,8 +547,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#rollNumber(shared.communication.moveCommands.RollNumberCommand)}
      * .
      */
-    @Test
-    public void testRollNumber()
+    @Test public void testRollNumber()
     {
         startGame("rollNumber");
         testingModel = proxy.rollNumber(new RollNumberCommand(PlayerIndex.PLAYER_0, 8));
@@ -610,8 +568,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#acceptTrade(shared.communication.moveCommands.AcceptTradeCommand)}
      * .
      */
-    @Test
-    public void testAcceptTrade()
+    @Test public void testAcceptTrade()
     {
         startGame("acceptTrade");
         testingModel = proxy
@@ -629,8 +586,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#discardCards(shared.communication.moveCommands.DiscardCardsCommand)}
      * .
      */
-    @Test
-    public void testDiscardCards()
+    @Test public void testDiscardCards()
     {
         startGame("DiscardCards");
         testingModel = proxy.discardCards(new DiscardCardsCommand(PlayerIndex.PLAYER_0, 0, 1, 0, 0, 0));
@@ -643,12 +599,18 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#buildRoad(shared.communication.moveCommands.BuildRoadCommand)}
      * .
      */
-    @Test
-    public void testBuildRoad()
+    @Test public void testBuildRoad()
     {
         startGame("BuildRoad");
         testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
                 new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthWest), true));
+        assertNotNull(testingModel);
+        testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
+                new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North), true));
+        assertNotNull(testingModel);
+        testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
+                new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthEast), true));
+        assertNotNull(testingModel);
     }
 
     /**
@@ -656,8 +618,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#buildSettlement(shared.communication.moveCommands.BuildSettlementCommand)}
      * .
      */
-    @Test
-    public void testBuildSettlement()
+    @Test public void testBuildSettlement()
     {
         startGame("BuildSettlement");
         testingModel = proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_0,
@@ -670,8 +631,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#buildCity(shared.communication.moveCommands.BuildCityCommand)}
      * .
      */
-    @Test
-    public void testBuildCity()
+    @Test public void testBuildCity()
     {
         startGame("BuildCity");
         testingModel = proxy.buildCity(new BuildCityCommand(PlayerIndex.PLAYER_0,
@@ -684,8 +644,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#offerTrade(shared.communication.moveCommands.OfferTradeCommand)}
      * .
      */
-    @Test
-    public void testOfferTrade()
+    @Test public void testOfferTrade()
     {
         startGame("OfferTrade");
         testingModel = proxy
@@ -698,8 +657,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#maritimeTrade(shared.communication.moveCommands.MaritimeTradeCommand)}
      * .
      */
-    @Test
-    public void testMaritimeTrade()
+    @Test public void testMaritimeTrade()
     {
         startGame("MaritimeTrade");
         testingModel = proxy.maritimeTrade(
@@ -712,12 +670,30 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#robPlayer(shared.communication.moveCommands.RobPlayerCommand)}
      * .
      */
-    @Test
-    public void testRobPlayer()
+    @Test public void testRobPlayer()
     {
         startGame("RobPlayer");
-        testingModel = proxy.robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_0,
-                new RobPlayerInfo(PlayerIndex.PLAYER_2, 1), new HexLocation(0, 1)));
+        proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_3,
+                new VertexLocation(new HexLocation(-1, 0), VertexDirection.East), false));
+        testingModel = proxy
+                .robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_3, new HexLocation(-1, 0)));
+        assertNotNull(testingModel);
+
+        proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_1,
+                new VertexLocation(new HexLocation(-2, 2), VertexDirection.NorthEast), false));
+        testingModel = proxy
+                .robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_3, PlayerIndex.PLAYER_1, new HexLocation(-2, 2)));
+        assertNotNull(testingModel);
+
+        proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_2,
+                new VertexLocation(new HexLocation(1,0), VertexDirection.NorthWest), false));
+        proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_0,
+                new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthEast), false));
+        testingModel = proxy
+                .robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_3, PlayerIndex.PLAYER_2, new HexLocation(1, 0)));
+        assertNotNull(testingModel);
+        testingModel = proxy
+                .robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_3, PlayerIndex.PLAYER_0, new HexLocation(1, 0)));
         assertNotNull(testingModel);
     }
 
@@ -726,8 +702,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#finishTurn(shared.communication.moveCommands.FinishTurnCommand)}
      * .
      */
-    @Test
-    public void testFinishTurn()
+    @Test public void testFinishTurn()
     {
         startGame("FinishTurn");
         testingModel = proxy.finishTurn(new FinishTurnCommand(PlayerIndex.PLAYER_0));
@@ -739,8 +714,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#buyDevCard(shared.communication.moveCommands.BuyDevCardCommand)}
      * .
      */
-    @Test
-    public void testBuyDevCard()
+    @Test public void testBuyDevCard()
     {
         startGame("BuyDevCard");
         testingModel = proxy.buyDevCard(new BuyDevCardCommand(PlayerIndex.PLAYER_0));
@@ -752,12 +726,13 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#soldier(shared.communication.moveCommands.SoldierCommand)}
      * .
      */
-    @Test
-    public void testSoldier()
+    @Test public void testSoldier()
     {
         startGame("Soldier");
-        testingModel = proxy.soldier(new SoldierCommand(PlayerIndex.PLAYER_0,
-                new RobPlayerInfo(PlayerIndex.PLAYER_2, 1), new HexLocation(0, 1)));
+        proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_3,
+                new VertexLocation(new HexLocation(-1, 0), VertexDirection.East), false));
+        testingModel = proxy
+                .soldier(new SoldierCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_3, new HexLocation(-1, 0)));
         assertNotNull(testingModel);
     }
 
@@ -766,8 +741,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#yearOfPlenty(shared.communication.moveCommands.YearOfPlentyCommand)}
      * .
      */
-    @Test
-    public void testYearOfPlenty()
+    @Test public void testYearOfPlenty()
     {
         startGame("YearOfPlenty");
         testingModel = proxy
@@ -780,13 +754,12 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#roadBuilding(shared.communication.moveCommands.RoadBuildingCommand)}
      * .
      */
-    @Test
-    public void testRoadBuilding()
+    @Test public void testRoadBuilding()
     {
         startGame("RoadBuilding");
         testingModel = proxy.roadBuilding(new RoadBuildingCommand(PlayerIndex.PLAYER_0,
                 new EdgeLocation(new HexLocation(0, 1), EdgeDirection.NorthEast),
-                new EdgeLocation(new HexLocation(-1, 2), EdgeDirection.South)));
+                new EdgeLocation(new HexLocation(-1, 2), EdgeDirection.North)));
         assertNotNull(testingModel);
     }
 
@@ -795,8 +768,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#monopoly(shared.communication.moveCommands.MonopolyCommand)}
      * .
      */
-    @Test
-    public void testMonopoly()
+    @Test public void testMonopoly()
     {
         startGame("Monopoly");
         testingModel = proxy.monopoly(new MonopolyCommand(PlayerIndex.PLAYER_0, ResourceType.WHEAT));
@@ -808,8 +780,7 @@ public class ProxyTester
      * {@link server.proxy.ServerProxy#monument(shared.communication.moveCommands.MonumentCommand)}
      * .
      */
-    @Test
-    public void testMonument()
+    @Test public void testMonument()
     {
         startGame("Monument");
         testingModel = proxy.monument(new MonumentCommand(PlayerIndex.PLAYER_0));
