@@ -22,21 +22,20 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     private TradeOffer offer;
 
     /**
-     * 
-     * @param sender
+     *  @param sender
      * @param reciever
      * @param brick
-     * @param ore
+     * @param wood
      * @param sheep
      * @param wheat
-     * @param wood
+     * @param ore
      */
-    public OfferTradeCommand(PlayerIndex sender, PlayerIndex reciever, int brick, int ore, int sheep, int wheat,
-            int wood)
+    public OfferTradeCommand(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat,
+            int ore)
     {
         // TODO fix this. This is not correct.
         super(MoveType.offerTrade, sender);
-        offer = new TradeOffer(sender, reciever, brick, ore, sheep, wheat, wood);
+        offer = new TradeOffer(sender, reciever, brick, wood, sheep, wheat, ore);
         this.type = MoveType.offerTrade;
     }
 

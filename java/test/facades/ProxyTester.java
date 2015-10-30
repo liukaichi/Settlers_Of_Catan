@@ -648,7 +648,7 @@ public class ProxyTester
     {
         startGame("OfferTrade");
         testingModel = proxy
-                .offerTrade(new OfferTradeCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_2, 1, 0, -1, 0, 1));
+                .offerTrade(new OfferTradeCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_2, 1, 1, -1, 0, 0));
         assertNotNull(testingModel);
     }
 

@@ -155,7 +155,8 @@ public class DomesticTradeController extends ObserverController implements IDome
     @Override
     public void update(Observable o, Object arg)
     {
-        ClientModel model = ((ClientModel)o);
+        state.update(this,(ClientModel)o,arg);
+        /*ClientModel model = ((ClientModel)o);
         if(model.hasTradeOffer())
         {
             getAcceptOverlay().showModal();
@@ -163,7 +164,7 @@ public class DomesticTradeController extends ObserverController implements IDome
         else if(getTradeOverlay().isModalShowing())
         {
             getTradeOverlay().closeModal();
-        }
+        }*/
     }
 
 }

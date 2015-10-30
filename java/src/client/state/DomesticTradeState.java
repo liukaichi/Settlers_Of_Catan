@@ -61,11 +61,13 @@ public class DomesticTradeState extends GameplayState
         if(controller instanceof DomesticTradeController)
         {
             offer = facade.getModel().getTradeOffer();
-            IAcceptTradeOverlay accept = control.getAcceptOverlay();
             for(ResourceType type : ResourceType.values())
             {
-                accept.addGetResource(type, offer.getOffer(type));
-                accept.addGiveResource(type, offer.getOffer(type));
+                int value = offer.getOffer(type);
+                if(value < 0)
+                    accept.addGetResource(type, Math.abs(value));
+                else if(value > 0)
+                    accept.addGiveResource(type, value);
             }
             accept.setAcceptEnabled(true);
             accept.setPlayerName(player.getName());
@@ -264,8 +266,11 @@ public class DomesticTradeState extends GameplayState
     @Override public void sendTradeOffer()
     {
         super.sendTradeOffer();
+        trade.closeModal();
         accepted = true;
-        facade.sendTradeOffer(PlayerIndex.fromInt(offer.getReceiver()), offer.getOffer(ResourceType.BRICK),offer.getOffer(ResourceType.ORE),offer.getOffer(ResourceType.SHEEP),offer.getOffer(ResourceType.WHEAT),offer.getOffer(ResourceType.WOOD));
+        facade.sendTradeOffer(PlayerIndex.fromInt(offer.getReceiver()), offer.getOffer(ResourceType.BRICK),
+                offer.getOffer(ResourceType.ORE),offer.getOffer(ResourceType.SHEEP),
+                offer.getOffer(ResourceType.WHEAT),offer.getOffer(ResourceType.WOOD));
     }
 
     @Override public void acceptTrade(boolean willAccept)
@@ -274,4 +279,6 @@ public class DomesticTradeState extends GameplayState
         accepted = true;
         facade.acceptTrade(willAccept);
     }
+
+
 }

@@ -256,6 +256,13 @@ public abstract class GameplayState
                     LOGGER.info("<<<<<<<<<<NOW IN ROBBING STATE - (not my turn)>>>>>>>>>>>");
                     controller.setState(new RobbingState(controller));
                     break;
+                case Playing:
+                    if(model.hasTradeOffer())
+                    {
+                        LOGGER.info("<<<<<<<<<<NOW IN DomesticTradingState>>>>>>>>>>>");
+                        controller.setState(new DomesticTradeState(controller));
+                        break;
+                    }
                 default:
                     LOGGER.info("<<<<<<<<<<NOW IN NOT-MY-TURN STATE>>>>>>>>>>>");
                     controller.setState(new NotMyTurnState(controller));

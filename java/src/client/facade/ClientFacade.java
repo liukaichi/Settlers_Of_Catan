@@ -276,7 +276,7 @@ public class ClientFacade
     public void sendTradeOffer(PlayerIndex receiver, int brick, int ore, int sheep, int wheat, int wood)
     {
         model.updateModel(proxy.offerTrade(
-                new OfferTradeCommand(clientPlayer.getPlayerIndex(), receiver, brick, ore, sheep, wheat, wood)));
+                new OfferTradeCommand(clientPlayer.getPlayerIndex(), receiver, brick, wood, sheep, wheat, ore)));
     }
 
     /**
