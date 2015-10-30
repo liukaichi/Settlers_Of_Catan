@@ -64,8 +64,11 @@ public class DevCardController extends ObserverController implements IDevCardCon
         DevCards devCards = player.getBank().getDevCards();
 
         //testing
-        //devCards.getCard(DevCardType.SOLDIER).setAmountPlayable(2);
-        //devCards.getCard(DevCardType.ROAD_BUILD).setAmountPlayable(3);
+        devCards.getCard(DevCardType.SOLDIER).setAmountPlayable(2);
+        devCards.getCard(DevCardType.ROAD_BUILD).setAmountPlayable(3);
+        devCards.getCard(DevCardType.MONOPOLY).setAmountPlayable(2);
+        devCards.getCard(DevCardType.MONUMENT).setAmountPlayable(3);
+        devCards.getCard(DevCardType.YEAR_OF_PLENTY).setAmountPlayable(3);
 
         setCards(devCards);
         disableCards();
@@ -136,7 +139,6 @@ public class DevCardController extends ObserverController implements IDevCardCon
     @Override
     public void playRoadBuildCard()
     {
-
         roadAction.execute();
     }
 
