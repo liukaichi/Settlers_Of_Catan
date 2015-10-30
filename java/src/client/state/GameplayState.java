@@ -83,7 +83,7 @@ public abstract class GameplayState
 
     }
 
-    public void playRoadBuildingCard(EdgeLocation edge1, EdgeLocation edge2)
+    public void playRoadBuildingCard()
     {
 
     }

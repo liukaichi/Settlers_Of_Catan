@@ -6,6 +6,7 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
+import com.sun.javafx.geom.Edge;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
@@ -33,6 +34,8 @@ public class MapController extends ObserverController implements IMapController
     private ClientFacade facade;
     private static final Logger LOGGER = Logger.getLogger(MapController.class.getName());
     private HexLocation robberLocation;
+    private EdgeLocation roadBuildingLoc1, roadBuildingLoc2;
+    private boolean isDevCard;
 
     public MapController(IMapView view, IRobView robView)
     {
@@ -298,11 +301,24 @@ public class MapController extends ObserverController implements IMapController
 
     }
 
+    public boolean isDevCard() {
+        return isDevCard;
+    }
+
+    public void setIsDevCard(boolean isDevCard) {
+        this.isDevCard = isDevCard;
+    }
+
     @Override
     public void playRoadBuildingCard()
     {
+        setIsDevCard(true);
         startMove(PieceType.ROAD, true, false);
-        startMove(PieceType.ROAD, true, false);
+        System.out.print(roadBuildingLoc1);
+//        startMove(PieceType.ROAD, true, false);
+//        state.playRoadBuildingCard();
+//        setRoadBuildingLoc1(null);
+//        setRoadBuildingLoc2(null);
     }
 
     @Override
@@ -310,6 +326,22 @@ public class MapController extends ObserverController implements IMapController
     {
         getRobView().closeModal();
         state.robPlayer(victim, robberLocation);
+    }
+
+    public void setRoadBuildingLoc1(EdgeLocation edgeLoc){
+        this.roadBuildingLoc1 = edgeLoc;
+    }
+
+    public EdgeLocation getRoadBuildingLoc1(){
+        return this.roadBuildingLoc1;
+    }
+
+    public void setRoadBuildingLoc2(EdgeLocation edgeLoc){
+        this.roadBuildingLoc2 = edgeLoc;
+    }
+
+    public EdgeLocation getRoadBuildingLoc2(){
+        return this.roadBuildingLoc2;
     }
 
     /*
