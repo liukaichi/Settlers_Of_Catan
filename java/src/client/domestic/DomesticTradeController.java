@@ -4,6 +4,7 @@ import java.util.Observable;
 
 import client.base.ObserverController;
 import client.misc.IWaitView;
+import client.state.DomesticTradeState;
 import shared.definitions.ResourceType;
 import shared.model.ClientModel;
 
@@ -83,26 +84,27 @@ public class DomesticTradeController extends ObserverController implements IDome
     @Override
     public void startTrade()
     {
-
+        state = new DomesticTradeState(this);
+        state.startTrade();
         getTradeOverlay().showModal();
     }
 
     @Override
     public void decreaseResourceAmount(ResourceType resource)
     {
-
+        state.decreaseAmount(resource);
     }
 
     @Override
     public void increaseResourceAmount(ResourceType resource)
     {
-
+        state.increaseAmount(resource);
     }
 
     @Override
     public void sendTradeOffer()
     {
-
+        state.sendTradeOffer();
         getTradeOverlay().closeModal();
         // getWaitOverlay().updateView();
     }
@@ -110,38 +112,38 @@ public class DomesticTradeController extends ObserverController implements IDome
     @Override
     public void setPlayerToTradeWith(int playerIndex)
     {
-
+        state.setPlayerToTradeWith(playerIndex);
     }
 
     @Override
     public void setResourceToReceive(ResourceType resource)
     {
-
+        state.setResourceToReceive(resource);
     }
 
     @Override
     public void setResourceToSend(ResourceType resource)
     {
-
+        state.setResourceToSend(resource);
     }
 
     @Override
     public void unsetResource(ResourceType resource)
     {
-
+        state.unsetResource(resource);
     }
 
     @Override
     public void cancelTrade()
     {
-
+        state.cancelTrade();
         getTradeOverlay().closeModal();
     }
 
     @Override
     public void acceptTrade(boolean willAccept)
     {
-
+        state.acceptTrade(willAccept);
         getAcceptOverlay().closeModal();
     }
 

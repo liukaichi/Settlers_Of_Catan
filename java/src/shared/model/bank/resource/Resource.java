@@ -47,7 +47,6 @@ public class Resource
      */
     public void subResource(int num)
     {
-        if(amount >= num)
             amount -= num;
     }
 

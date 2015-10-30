@@ -378,6 +378,8 @@ public class ClientModel extends Observable
     public boolean hasTradeOffer()
     {
         TradeOffer offer = getTradeOffer();
-        return (offer != null && (offer.getReceiver() == ClientFacade.getInstance().getClientPlayer().getPlayerIndex().getIndex()));
+        PlayerInfo clientPlayer = ClientFacade.getInstance().getClientPlayer();
+        int currentPlayer = clientPlayer.getNormalizedPlayerIndex();
+        return (offer != null && (offer.getReceiver() == currentPlayer || offer.getSender() == currentPlayer));
     }
 }

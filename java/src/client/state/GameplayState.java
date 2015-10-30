@@ -272,8 +272,16 @@ public abstract class GameplayState
                     break;
 
                 case Playing:
-                    LOGGER.info("<<<<<<<<<<NOW IN PLAYING STATE>>>>>>>>>>>");
-                    controller.setState(new PlayingState(controller));
+                    if(model.hasTradeOffer())
+                    {
+                        LOGGER.info("<<<<<<<<<<NOW IN DomesticTradingState>>>>>>>>>>>");
+                        controller.setState(new DomesticTradeState(controller));
+                    }
+                    else
+                    {
+                        LOGGER.info("<<<<<<<<<<NOW IN PLAYING STATE>>>>>>>>>>>");
+                        controller.setState(new PlayingState(controller));
+                    }
                     break;
 
                 case Robbing:
@@ -318,6 +326,34 @@ public abstract class GameplayState
 
     }
 
+    public void cancelTrade()
+    {
+
+    }
+
+    public void unsetResource(ResourceType resource)
+    {
+
+    }
+
+    public void setResourceToSend(ResourceType resource)
+    {
+
+    }
+
+    public void setResourceToReceive(ResourceType resource)
+    {
+
+    }
+
+    public void setPlayerToTradeWith(int playerIndex)
+    {
+
+    }
+
+    public void startTrade()
+    {
+    }
 }
 
 
