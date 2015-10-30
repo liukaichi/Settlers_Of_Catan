@@ -231,7 +231,7 @@ public class ClientFacade
      */
     public void playSoldierCard(RobPlayerInfo info, HexLocation location)
     {
-        model.updateModel(proxy.soldier(new SoldierCommand(clientPlayer.getPlayerIndex(), info, location)));
+        model.updateModel(proxy.soldier(new SoldierCommand(clientPlayer.getPlayerIndex(), info.getPlayerIndex(), location)));
     }
 
     /*
@@ -276,7 +276,7 @@ public class ClientFacade
     public void sendTradeOffer(PlayerIndex receiver, int brick, int ore, int sheep, int wheat, int wood)
     {
         model.updateModel(proxy.offerTrade(
-                new OfferTradeCommand(clientPlayer.getPlayerIndex(), receiver, brick, ore, sheep, wheat, wood)));
+                new OfferTradeCommand(clientPlayer.getPlayerIndex(), receiver, brick, wood, sheep, wheat, ore)));
     }
 
     /**
@@ -329,13 +329,14 @@ public class ClientFacade
     public ClientModel getGameState(int version)
     {
         ClientModel model = proxy.getGameState(version);
+        this.model.updateModel(model);
         if (clientPlayer.getNormalizedPlayerIndex() == -1)
         {
-            List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
-            buildClientPlayerFromPlayerInfos(players);
             poller = new Poller(proxy);
         }
-        this.model.updateModel(model);
+        List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
+        buildClientPlayerFromPlayerInfos(players);
+
         return model;
     }
 
@@ -535,7 +536,7 @@ public class ClientFacade
 
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
-        model.updateModel(proxy.robPlayer(new RobPlayerCommand(clientPlayer.getPlayerIndex(), victim, location)));
+        model.updateModel(proxy.robPlayer(new RobPlayerCommand(clientPlayer.getPlayerIndex(), victim.getPlayerIndex(), location)));
     }
 
     /*

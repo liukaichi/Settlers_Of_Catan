@@ -1,6 +1,7 @@
 package shared.model.player;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 import com.google.gson.*;
 
@@ -19,9 +20,46 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
      * player index of the sender and receiver of player trade
      */
     private PlayerIndex sender, receiver;
+
+    public Hand getResourceHand(ResourceType resource)
+    {
+        if(resourceHand.containsKey(resource))
+        return resourceHand.get(resource);
+        else
+            return Hand.none;
+    }
+
+    public boolean isSending()
+    {
+        for(ResourceType type : ResourceType.values())
+        {
+            if(getResourceHand(type).equals(Hand.send) && getOffer(type) < 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isReceiving()
+    {
+        for(ResourceType type : ResourceType.values())
+        {
+            if(getResourceHand(type).equals(Hand.receive) && getOffer(type) > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public enum Hand{
+        send, none, receive
+    }
     /**
      * Object that represents the trade offer made by a player
      */
+    HashMap<ResourceType, Hand> resourceHand = new HashMap<>();
     private Resources offer;
 
     /*
@@ -39,7 +77,11 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         result = prime * result + sender.hashCode();
         return result;
     }
-
+    public void setResourceHand(ResourceType type, Hand value)
+    {
+        resourceHand.put(type, value);
+        this.setOffer(type, 0);
+    }
     /*
      * (non-Javadoc)
      * 
@@ -147,6 +189,11 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         offer.getResource(type).addResource(num);
     }
 
+    public void setOffer(ResourceType type, int num)
+    {
+        offer.setAmount(type, num);
+    }
+
     public void subFromOffer(ResourceType type, int num)
     {
         offer.getResource(type).subResource(num);
@@ -155,6 +202,11 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
     public Resources getOffer()
     {
         return offer;
+    }
+
+    public int getOffer(ResourceType type)
+    {
+        return offer.getAmount(type);
     }
 
     /*

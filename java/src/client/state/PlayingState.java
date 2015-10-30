@@ -3,6 +3,7 @@ package client.state;
 import client.base.ObserverController;
 import client.data.RobPlayerInfo;
 import client.discard.DiscardController;
+import client.domestic.DomesticTradeController;
 import client.map.MapController;
 import client.turntracker.TurnTrackerController;
 import shared.definitions.DevCardType;
@@ -218,6 +219,18 @@ public class PlayingState extends GameplayState
             if(control.getWaitView().isModalShowing())
             {
                 control.getWaitView().closeModal();
+            }
+        }
+        else if (controller instanceof DomesticTradeController)
+        {
+            DomesticTradeController control = (DomesticTradeController) controller;
+            if(control.getWaitOverlay().isModalShowing())
+            {
+                control.getWaitOverlay().closeModal();
+            }
+            else if(control.getTradeOverlay().isModalShowing())
+            {
+                control.getTradeOverlay().closeModal();
             }
         }
     }
