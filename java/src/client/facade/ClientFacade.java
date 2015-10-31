@@ -46,7 +46,7 @@ public class ClientFacade
         proxy = new ServerProxy();
     }
 
-    private void setClientPlayer(PlayerInfo clientPlayer)
+    public void setClientPlayer(PlayerInfo clientPlayer)
     {
         this.clientPlayer = clientPlayer;
     }
@@ -62,7 +62,7 @@ public class ClientFacade
      * @param players the info of each of the players. Typically, this is supplied by GameInfo#getPlayerInfos().
      * @pre The clientPlayer has already been initialized with a name and an ID.
      */
-    private void buildClientPlayerFromPlayerInfos(List<PlayerInfo> players)
+    public void buildClientPlayerFromPlayerInfos(List<PlayerInfo> players)
     {
         for (PlayerInfo playerInfo : players)
         {
@@ -329,15 +329,23 @@ public class ClientFacade
     public ClientModel getGameState(int version)
     {
         ClientModel model = proxy.getGameState(version);
-        this.model.updateModel(model);
-        if (clientPlayer.getNormalizedPlayerIndex() == -1)
-        {
-            poller = new Poller(proxy);
-        }
         List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
         buildClientPlayerFromPlayerInfos(players);
+        if(version == -1 && players.size() < 4)
+        {
+
+        }
+        else
+        {
+            this.model.updateModel(model);
+        }
 
         return model;
+    }
+
+    public void startPoller()
+    {
+        poller = new Poller(proxy);
     }
 
     /**

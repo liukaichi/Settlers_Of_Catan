@@ -12,6 +12,9 @@ import shared.definitions.CatanColor;
 import shared.definitions.exceptions.GameQueryException;
 import shared.model.player.Player;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
@@ -30,6 +33,14 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     private ClientFacade facade;
     private GameInfo currentGame;
     private static final Logger LOGGER = Logger.getLogger(JoinGameController.class.getName());
+    private ActionListener action = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LOGGER.info("JOIN GAME CONTROLLER TIMER UPDATING");
+            updateView();
+        }
+    };
+    final private Timer timer = new Timer(2000,action);
 
     /**
      * JoinGameController constructor
@@ -122,11 +133,24 @@ public class JoinGameController extends ObserverController implements IJoinGameC
      */
     @Override public void start()
     {
+        updateView();
+        LOGGER.info("JOIN GAME CONTROLLER TIMER STARTING");
+        timer.start();
+    }
+
+    private void updateView() {
         ListGamesResponse response = facade.listGames();
         List<GameInfo> games = response.getGames();
         getJoinGameView().setGames(response.getGames().toArray(new GameInfo[games.size()]),
                 ClientFacade.getInstance().getClientPlayer());
-        getJoinGameView().showModal();
+        if(!getSelectColorView().isModalShowing() && !getNewGameView().isModalShowing())
+        {
+            if(getJoinGameView().isModalShowing())
+            {
+                getJoinGameView().closeModal();
+            }
+            getJoinGameView().showModal();
+        }
     }
 
     @Override public void startCreateNewGame()
@@ -172,6 +196,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     @Override public void startJoinGame(GameInfo game)
     {
         this.currentGame = game;
+
         List<Player> players = game.getPlayers();
         for (Player player : players)
         {
@@ -201,6 +226,8 @@ public class JoinGameController extends ObserverController implements IJoinGameC
             // If join succeeded
             getSelectColorView().closeModal();
             getJoinGameView().closeModal();
+            LOGGER.info("JOIN GAME CONTROLLER TIMER STOPPING");
+            timer.stop();
             joinAction.execute();
         } catch (GameQueryException e)
         {

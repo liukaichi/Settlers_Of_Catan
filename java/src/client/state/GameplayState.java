@@ -240,6 +240,11 @@ public abstract class GameplayState
                     return;
                 }
             }
+            else if(facade.getClientPlayer().getPlayerIndex().equals(PlayerIndex.NONE))
+            {
+                facade.buildClientPlayerFromPlayerInfos(model.getGameInfo().getPlayerInfos());
+                LOGGER.severe("Client player index is -1");
+            }
 
             currentTurnStatus = (TurnStatus) state;
 

@@ -28,55 +28,6 @@ public class SetupState extends GameplayState
         currentTurnStatus = round;
     }
 
-    private void playRound()
-    {
-        switch (currentTurnStatus)
-        {
-        case FirstRound:
-            switch (facade.getClientPlayerRoadCount())
-            {
-            case 0:
-                startMove(PieceType.ROAD, true, true);
-                break;
-            case 1:
-                switch (facade.getClientPlayerSettlementCount())
-                {
-                case 0:
-                    if(!roundComplete) {
-                        roundComplete = true;
-                        startMove(PieceType.SETTLEMENT, true, true);
-                    }
-                    break;
-                case 1:
-                    this.endTurn();
-                    break;
-                }
-                break;
-            } break;
-        case SecondRound:
-            switch (facade.getClientPlayerRoadCount())
-            {
-            case 1:
-                startMove(PieceType.ROAD, true, true);
-                break;
-            case 2:
-                switch (facade.getClientPlayerSettlementCount())
-                {
-                case 1:
-                    if(!roundComplete) {
-                        roundComplete = true;
-                        startMove(PieceType.SETTLEMENT, true, true);
-                    }
-                    break;
-                case 2:
-                    this.endTurn();
-                    break;
-                }
-                break;
-            } break;
-        }
-    }
-
     /*
      * Map controller methods
      */
@@ -131,6 +82,69 @@ public class SetupState extends GameplayState
         if (controller instanceof MapController)
         {
             playRound();
+
+        }
+    }
+    private void playRound()
+    {
+        switch (currentTurnStatus)
+        {
+            case FirstRound:
+                firstRound();
+                break;
+            case SecondRound:
+                secondRound();
+                break;
+        }
+    }
+
+    private void firstRound() {
+        switch (facade.getClientPlayerRoadCount())
+        {
+            case 0:
+                LOGGER.severe("------------------CALLING startMove Road 1---------------");
+                startMove(PieceType.ROAD, true, true);
+                break;
+            case 1:
+                switch (facade.getClientPlayerSettlementCount())
+                {
+                    case 0:
+                        if(!roundComplete && facade.getClientPlayerRoadCount() == 1) {
+                            roundComplete = true;
+                            LOGGER.severe("------------------CALLING startMove Settlement 1---------------");
+                            startMove(PieceType.SETTLEMENT, true, true);
+                        }
+                        break;
+                    case 1:
+                        this.endTurn();
+                        break;
+                }
+                break;
+        }
+    }
+
+    private void secondRound() {
+        switch (facade.getClientPlayerRoadCount())
+        {
+            case 1:
+                    LOGGER.severe("------------------CALLING startMove Road 2---------------");
+                    startMove(PieceType.ROAD, true, true);
+                break;
+            case 2:
+                switch (facade.getClientPlayerSettlementCount())
+                {
+                    case 1:
+                        if(!roundComplete && facade.getClientPlayerRoadCount() == 2) {
+                            roundComplete = true;
+                            LOGGER.severe("------------------CALLING startMove Settlement 2---------------");
+                            startMove(PieceType.SETTLEMENT, true, true);
+                        }
+                        break;
+                    case 2:
+                        this.endTurn();
+                        break;
+                }
+                break;
         }
     }
 }

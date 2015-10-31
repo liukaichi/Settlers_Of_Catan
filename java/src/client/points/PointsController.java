@@ -56,12 +56,13 @@ public class PointsController extends ObserverController implements IPointsContr
     public void update(Observable o, Object arg)
     {
         ClientFacade facade = ClientFacade.getInstance();
-        int points = facade.getPlayerPoints(facade.getPlayer().getPlayerIndex());
-        getPointsView().setPoints(points);
-        
-        if (points == 10)
-        {
-        	getFinishedView(); 
+        if(facade.getClientPlayer().getNormalizedPlayerIndex() != -1) {
+            int points = facade.getPlayerPoints(facade.getPlayer().getPlayerIndex());
+            getPointsView().setPoints(points);
+
+            if (points == 10) {
+                getFinishedView();
+            }
         }
     }
 
