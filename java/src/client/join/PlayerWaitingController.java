@@ -35,6 +35,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
             {
                 LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPING");
                 timer.stop();
+                facade.startPoller();
             }
         }
     };
@@ -77,7 +78,6 @@ public class PlayerWaitingController extends ObserverController implements IPlay
         if (players.size() == 4)
         {
             getView().closeModal();
-            facade.startPoller();
         }
     }
 
