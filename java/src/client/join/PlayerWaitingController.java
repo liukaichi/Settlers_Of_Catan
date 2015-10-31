@@ -74,6 +74,8 @@ public class PlayerWaitingController extends ObserverController implements IPlay
         List<PlayerInfo> players = game.getPlayerInfos();
         getView().setPlayers(players.toArray(new PlayerInfo[players.size()]));
         getView().setAIChoices(new String[] { AIType.LARGEST_ARMY.toString() });
+        if(getView().isModalShowing())
+            getView().closeModal();
         getView().showModal();
         if (players.size() == 4)
         {
