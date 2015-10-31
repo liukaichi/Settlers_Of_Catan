@@ -245,7 +245,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
             boolean colorAlreadyExists = false;
             for(PlayerInfo info : currentGame.getPlayerInfos())
             {
-                if(info.getColor().equals(color))
+                if(info.getColor().equals(color) && info.getId() != facade.getClientPlayer().getId())
                 {
                     colorAlreadyExists = true;
                     break;
