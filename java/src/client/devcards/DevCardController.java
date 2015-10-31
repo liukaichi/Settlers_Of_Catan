@@ -164,8 +164,10 @@ public class DevCardController extends ObserverController implements IDevCardCon
     {
         //Does nothing at the moment.
         ClientModel model = (ClientModel) o;
-        state.update(this, model, arg);
-        initFromModel();
+        if(facade.getClientPlayer().getNormalizedPlayerIndex() != -1) {
+            state.update(this, model, arg);
+            initFromModel();
+        }
 
     }
 

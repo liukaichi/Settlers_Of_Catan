@@ -152,8 +152,11 @@ public class ResourceBarController extends ObserverController implements IResour
     @Override public void update(Observable o, Object arg)
     {
         ClientModel model = (ClientModel) o;
-        state.update(this, model, arg);
-        initFromModel();
+        if(facade.getClientPlayer().getNormalizedPlayerIndex() != -1)
+        {
+            state.update(this, model, arg);
+            initFromModel();
+        }
 
     }
 

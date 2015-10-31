@@ -228,6 +228,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
             getJoinGameView().closeModal();
             LOGGER.info("JOIN GAME CONTROLLER TIMER STOPPING");
             timer.stop();
+            facade.startPoller();
             joinAction.execute();
         } catch (GameQueryException e)
         {
