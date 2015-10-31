@@ -39,7 +39,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
             }
         }
     };
-    final private Timer timer = new Timer(2000,action);
+    final private Timer timer = new Timer(3000,action);
     private final static Logger LOGGER = Logger.getLogger(PlayerWaitingController.class.getName());
 
     public PlayerWaitingController(IPlayerWaitingView view)
@@ -88,7 +88,8 @@ public class PlayerWaitingController extends ObserverController implements IPlay
     @Override public void addAI()
     {
         facade.addAI(AIType.valueOf(getView().getSelectedAI()));
-        this.start();
+        //this.start();
+        updateView();
     }
 
     @Override public void update(Observable observable, Object o)
