@@ -210,7 +210,6 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     {
         this.currentGame = game;
         updateColorSelector(game);
-        getSelectColorView().showModal();
     }
 
     private void updateColorSelector(GameInfo game)
@@ -224,6 +223,9 @@ public class JoinGameController extends ObserverController implements IJoinGameC
                 getSelectColorView().setColorEnabled(player.getPlayerColor(), true);
             }
         }
+        if(getSelectColorView().isModalShowing())
+            getSelectColorView().closeModal();
+        getSelectColorView().showModal();
     }
 
     @Override public void cancelJoinGame()
