@@ -77,6 +77,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
         if (players.size() == 4)
         {
             getView().closeModal();
+            facade.startPoller();
         }
     }
 
