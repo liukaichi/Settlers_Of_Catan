@@ -42,6 +42,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
         }
     };
     final private Timer timer = new Timer(2000,action);
+    private boolean joiningGame;
 
     /**
      * JoinGameController constructor
@@ -209,6 +210,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     @Override public void startJoinGame(GameInfo game)
     {
         this.currentGame = game;
+        joiningGame = true;
         updateColorSelector(game);
     }
 
@@ -223,14 +225,17 @@ public class JoinGameController extends ObserverController implements IJoinGameC
                 getSelectColorView().setColorEnabled(player.getPlayerColor(), true);
             }
         }
-        if(getSelectColorView().isModalShowing())
-            getSelectColorView().closeModal();
-        getSelectColorView().showModal();
+        if(joiningGame)
+        {
+            if (getSelectColorView().isModalShowing())
+                getSelectColorView().closeModal();
+            getSelectColorView().showModal();
+        }
     }
 
     @Override public void cancelJoinGame()
     {
-
+        joiningGame = false;
         getJoinGameView().closeModal();
     }
 
