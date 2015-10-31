@@ -8,8 +8,12 @@ import client.facade.ClientFacade;
 import shared.definitions.AIType;
 import shared.model.ClientModel;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
+import java.util.logging.Logger;
 
 /**
  * Implementation for the player waiting controller
@@ -18,6 +22,24 @@ public class PlayerWaitingController extends ObserverController implements IPlay
 {
     private ClientFacade facade;
     private ClientModel model;
+    private ActionListener action = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LOGGER.info("PLAYER WAITING CONTROLLER TIMER UPDATING");
+            if(model.getGameInfo().getPlayerInfos().size() != 4)
+            {
+                model = facade.getGameState(-1); /// should make it not update the model if players less than 4 and state = -1
+                updateView();
+            }
+            else
+            {
+                LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPING");
+                timer.stop();
+            }
+        }
+    };
+    final private Timer timer = new Timer(2000,action);
+    private final static Logger LOGGER = Logger.getLogger(PlayerWaitingController.class.getName());
 
     public PlayerWaitingController(IPlayerWaitingView view)
     {
@@ -38,13 +60,18 @@ public class PlayerWaitingController extends ObserverController implements IPlay
      */
     @Override public void start()
     {
-        ClientModel model = facade.getGameState(-1);
+        model = facade.getGameState(-1);
+        updateView();
+        LOGGER.info("PLAYER WAITING CONTROLLER TIMER STARTING");
+        timer.start();
+
+    }
+
+    private void updateView()
+    {
         GameInfo game = model.getGameInfo();
         List<PlayerInfo> players = game.getPlayerInfos();
         getView().setPlayers(players.toArray(new PlayerInfo[players.size()]));
-        // Unnecessary to get the AITypes, since there is only one.
-        // List<AIType> AITypes = facade.listAI();
-        // String[] type = new
         getView().setAIChoices(new String[] { AIType.LARGEST_ARMY.toString() });
         getView().showModal();
         if (players.size() == 4)
@@ -66,6 +93,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
     @Override public void update(Observable observable, Object o)
     {
         this.model = (ClientModel) observable;
-        this.start();
+        updateView();
     }
+
 }

@@ -329,12 +329,19 @@ public class ClientFacade
     public ClientModel getGameState(int version)
     {
         ClientModel model = proxy.getGameState(version);
-        this.model.updateModel(model);
+        List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
+        if(version == -1 && players.size() < 4)
+        {
+
+        }
+        else
+        {
+            this.model.updateModel(model);
+        }
         if (clientPlayer.getNormalizedPlayerIndex() == -1)
         {
             poller = new Poller(proxy);
         }
-        List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
         buildClientPlayerFromPlayerInfos(players);
 
         return model;
