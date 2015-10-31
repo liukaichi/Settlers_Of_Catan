@@ -19,7 +19,6 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
 {
     private static final Logger LOGGER = Logger.getLogger(TurnTrackerController.class.getName());
     private ClientFacade facade;
-    private boolean stateButtonEnabled = false;
 
     public TurnTrackerController(ITurnTrackerView view)
     {
@@ -61,15 +60,13 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
             getView().initializePlayer(player.getPlayerIndex().getIndex(), player.getName(), player.getPlayerColor());
 
             boolean hasLargestArmy = (turnTracker.getLargestArmy().equals(player.getPlayerIndex()));
-            boolean hasLongestRoad = (turnTracker.getLargestArmy().equals(player.getPlayerIndex()));
+            boolean hasLongestRoad = (turnTracker.getLongestRoad().equals(player.getPlayerIndex()));
             boolean isCurrentTurn = (turnTracker.getCurrentTurn().equals(player.getPlayerIndex()));
 
             getView().updatePlayer(player.getPlayerIndex().getIndex(), player.getVictoryPoints(), isCurrentTurn,
                     hasLargestArmy, hasLongestRoad);
         }
 
-        // TODO This might need to include more statuses
-        stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
         LOGGER.info(turnTracker.getStatus().toString());
         LOGGER.info("My turn: " + (turnTracker.getCurrentTurn() == facade.getClientPlayer().getPlayerIndex()));
 

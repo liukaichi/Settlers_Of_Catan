@@ -69,7 +69,7 @@ import client.utils.FontUtils;
 @SuppressWarnings({"serial", "unused"})
 public class DiscardView extends OverlayView implements IDiscardView
 {
-	private final boolean TESTING = false;
+//	private final boolean TESTING = false;
 	
 	private final int LABEL_TEXT_SIZE = 20;
 	private final int BUTTON_TEXT_SIZE = 14;
@@ -195,14 +195,14 @@ public class DiscardView extends OverlayView implements IDiscardView
 		
 		JPanel discardButtonPanel = new JPanel();
 		discardButtonPanel.add(discardButton);
-		
+		/*
 		if(TESTING)
 		{
     		testButton = new RoundedButton("Enable");
     		testButton.addActionListener(actionListener);
     		discardButtonPanel.add(testButton);
 		}
-		
+		*/
 		this.add(discardButtonPanel, BorderLayout.SOUTH);
 		
 	}
@@ -313,16 +313,16 @@ public class DiscardView extends OverlayView implements IDiscardView
 			{
 				getController().discard();
 			}
-			else if(e.getSource() == testButton)
-			{
-				enabled = !enabled;
-				if(enabled)
-					testButton.setText("Disable");
-				else
-					testButton.setText("Enable");
-				DiscardView.this.setDiscardButtonEnabled(enabled);
-//				DiscardView.this.update();
-			}
+//			else if(e.getSource() == testButton)
+//			{
+//				enabled = !enabled;
+//				if(enabled)
+//					testButton.setText("Disable");
+//				else
+//					testButton.setText("Enable");
+//				DiscardView.this.setDiscardButtonEnabled(enabled);
+////				DiscardView.this.update();
+//			}
 		}
 	};
 	
