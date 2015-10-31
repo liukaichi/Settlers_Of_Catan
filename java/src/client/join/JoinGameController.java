@@ -4,6 +4,7 @@ import client.base.Controller;
 import client.base.IAction;
 import client.base.ObserverController;
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import client.misc.IMessageView;
 import shared.communication.CreateGameRequest;
@@ -143,6 +144,18 @@ public class JoinGameController extends ObserverController implements IJoinGameC
         List<GameInfo> games = response.getGames();
         getJoinGameView().setGames(response.getGames().toArray(new GameInfo[games.size()]),
                 ClientFacade.getInstance().getClientPlayer());
+        if(currentGame != null)
+        {
+            for(GameInfo game : games)
+            {
+                if(game.getId() == currentGame.getId())
+                {
+                    currentGame = game;
+                    updateColorSelector(currentGame);
+                    break;
+                }
+            }
+        }
         if(!getSelectColorView().isModalShowing() && !getNewGameView().isModalShowing())
         {
             if(getJoinGameView().isModalShowing())
@@ -196,7 +209,12 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     @Override public void startJoinGame(GameInfo game)
     {
         this.currentGame = game;
+        updateColorSelector(game);
+        getSelectColorView().showModal();
+    }
 
+    private void updateColorSelector(GameInfo game)
+    {
         List<Player> players = game.getPlayers();
         for (Player player : players)
         {
@@ -206,7 +224,6 @@ public class JoinGameController extends ObserverController implements IJoinGameC
                 getSelectColorView().setColorEnabled(player.getPlayerColor(), true);
             }
         }
-        getSelectColorView().showModal();
     }
 
     @Override public void cancelJoinGame()
@@ -222,13 +239,26 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     {
         try
         {
-            facade.joinGame(currentGame.getId(), color);
-            // If join succeeded
-            getSelectColorView().closeModal();
-            getJoinGameView().closeModal();
-            LOGGER.info("JOIN GAME CONTROLLER TIMER STOPPING");
-            timer.stop();
-            joinAction.execute();
+            updateView();
+            boolean colorAlreadyExists = false;
+            for(PlayerInfo info : currentGame.getPlayerInfos())
+            {
+                if(info.getColor().equals(color))
+                {
+                    colorAlreadyExists = true;
+                    break;
+                }
+            }
+            if(!colorAlreadyExists)
+            {
+                facade.joinGame(currentGame.getId(), color);
+                // If join succeeded
+                getSelectColorView().closeModal();
+                getJoinGameView().closeModal();
+                LOGGER.info("JOIN GAME CONTROLLER TIMER STOPPING");
+                timer.stop();
+                joinAction.execute();
+            }
         } catch (GameQueryException e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Join Game", e);
