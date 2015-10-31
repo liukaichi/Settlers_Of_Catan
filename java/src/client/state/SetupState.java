@@ -116,7 +116,11 @@ public class SetupState extends GameplayState
                         }
                         break;
                     case 1:
-                        this.endTurn();
+                        if (roundComplete)
+                        {
+                            roundComplete = false;
+                            this.endTurn();
+                        }
                         break;
                 }
                 break;
@@ -127,7 +131,7 @@ public class SetupState extends GameplayState
         switch (facade.getClientPlayerRoadCount())
         {
             case 1:
-                    LOGGER.severe("------------------CALLING startMove Road 2---------------");
+                    LOGGER.info("------------------CALLING startMove Road 2---------------");
                     startMove(PieceType.ROAD, true, true);
                 break;
             case 2:
@@ -136,12 +140,16 @@ public class SetupState extends GameplayState
                     case 1:
                         if(!roundComplete && facade.getClientPlayerRoadCount() == 2) {
                             roundComplete = true;
-                            LOGGER.severe("------------------CALLING startMove Settlement 2---------------");
+                            LOGGER.info("------------------CALLING startMove Settlement 2---------------");
                             startMove(PieceType.SETTLEMENT, true, true);
                         }
                         break;
                     case 2:
-                        this.endTurn();
+                        if (roundComplete)
+                        {
+                            roundComplete = false;
+                            this.endTurn();
+                        }
                         break;
                 }
                 break;

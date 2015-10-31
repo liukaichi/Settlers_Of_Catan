@@ -33,7 +33,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
             }
             else
             {
-                LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPING");
+                LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPPING");
                 timer.stop();
                 facade.startPoller();
             }
@@ -88,7 +88,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
     @Override public void addAI()
     {
         facade.addAI(AIType.valueOf(getView().getSelectedAI()));
-        //this.start();
+        model = facade.getGameState(-1);
         updateView();
     }
 

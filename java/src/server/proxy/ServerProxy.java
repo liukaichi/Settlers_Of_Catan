@@ -1,6 +1,7 @@
 package server.proxy;
 
 import client.data.PlayerInfo;
+import client.facade.ClientFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import shared.communication.*;
@@ -134,7 +135,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
         String request = gson.toJson(credentials);
         String response = doPost(USER_LOGIN, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "User Login Response:" + response);
         if (response == null)
         {
             throw new SignInException("Login response returned null");
@@ -156,7 +157,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
         String request = gson.toJson(credentials);
         String response = doPost(USER_REGISTER, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "User Register Response:" + response);
         if (response == null)
         {
             throw new SignInException("Register response returned null");
@@ -176,14 +177,14 @@ public class ServerProxy implements IProxy
     {
         String response = doPost(CHANGE_LOG_LEVEL, level.toString());
         LOGGER.setLevel(level);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Change Log Level Response:" + response);
     }
 
     @Override
     public ListGamesResponse listGames()
     {
         String response = doGet(LIST_GAMES, "");
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, " List Games Response:" + response);
         return new ListGamesResponse(response);
     }
 
@@ -193,7 +194,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().create();
         String request = gson.toJson(createGameRequest);
         String response = doPost(CREATE_GAME, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Create Game Response:" + response);
         return new CreateGameResponse(response);
     }
 
@@ -203,7 +204,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().create();
         String request = gson.toJson(joinGameRequest);
         String response = doPost(JOIN_GAME, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Join Game Response:" + response);
         if (response == null)
         {
             throw new GameQueryException();
@@ -216,7 +217,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().create();
         String request = gson.toJson(saveGameRequest);
         String response = doPost(SAVE_GAME, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Save Game Response:" + response);
         if (response == null)
         {
             throw new GameQueryException();
@@ -229,7 +230,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().create();
         String request = gson.toJson(loadGameRequest);
         String response = doPost(LOAD_GAME, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Load Game Response:" + response);
         if (response == null)
         {
             throw new GameQueryException();
@@ -246,7 +247,6 @@ public class ServerProxy implements IProxy
             query = String.format("?version=%s", versionNumber);
         }
         String response = doGet(GET_GAME_STATE, query);
-        LOGGER.log(Level.INFO, "Response:" + response);
         ClientModel responseModel = null;
         /* If the model has changed */
         if (response != null)
@@ -254,6 +254,7 @@ public class ServerProxy implements IProxy
             if (!response.equals("\"true\""))
             {
                 responseModel = new ClientModel(response);
+                LOGGER.log(Level.INFO, "Get Game Response:" + response);
             }
         }
 
@@ -285,7 +286,7 @@ public class ServerProxy implements IProxy
     public ListAIResponse listAI()
     {
         String response = doGet(LIST_AI, "");
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "List AI Response:" + response);
         return new ListAIResponse(response);
     }
 
@@ -295,7 +296,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(AIType.class, aiType).create();
         String request = gson.toJson(aiType);
         String response = doPost(ADD_AI, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Add AI Response:" + response);
         if (response == null)
         {
             throw new AddAIException();
@@ -309,7 +310,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(SendChatCommand.class, sendChat).create();
         String request = gson.toJson(sendChat);
         String response = doPost(SEND_CHAT, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Send Chat Response:" + response);
         return new ClientModel(response);
     }
 
@@ -319,7 +320,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(RollNumberCommand.class, rollNumber).create();
         String request = gson.toJson(rollNumber);
         String response = doPost(ROLL_NUMBER, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Roll Number Response:" + response);
         return new ClientModel(response);
     }
 
@@ -329,7 +330,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(AcceptTradeCommand.class, acceptTrade).create();
         String request = gson.toJson(acceptTrade);
         String response = doPost(ACCEPT_TRADE, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Accept Trade Response:" + response);
         return new ClientModel(response);
     }
 
@@ -339,7 +340,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(DiscardCardsCommand.class, discardCards).create();
         String request = gson.toJson(discardCards);
         String response = doPost(DISCARD_CARDS, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Discard Cards Response:" + response);
         return new ClientModel(response);
     }
 
@@ -349,7 +350,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(BuildRoadCommand.class, buildRoad).create();
         String request = gson.toJson(buildRoad);
         String response = doPost(BUILD_ROAD, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Build Road Response:" + response);
         return new ClientModel(response);
     }
 
@@ -359,7 +360,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(BuildSettlementCommand.class, buildSettlement).create();
         String request = gson.toJson(buildSettlement);
         String response = doPost(BUILD_SETTLEMENT, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Build Settlement Response:" + response);
         return new ClientModel(response);
     }
 
@@ -369,7 +370,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(BuildCityCommand.class, buildCity).create();
         String request = gson.toJson(buildCity);
         String response = doPost(BUILD_CITY, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Build City Response:" + response);
         return new ClientModel(response);
     }
 
@@ -379,7 +380,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(OfferTradeCommand.class, offerTrade).create();
         String request = gson.toJson(offerTrade);
         String response = doPost(OFFER_TRADE, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Offer Trade Response:" + response);
         return new ClientModel(response);
     }
 
@@ -389,7 +390,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(MaritimeTradeCommand.class, maritimeTrade).create();
         String request = gson.toJson(maritimeTrade);
         String response = doPost(MARITIME_TRADE, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Maritime Trade Response:" + response);
         return new ClientModel(response);
     }
 
@@ -399,7 +400,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(RobPlayerCommand.class, robPlayer).create();
         String request = gson.toJson(robPlayer);
         String response = doPost(ROB_PLAYER, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Rob Player Response:" + response);
         return new ClientModel(response);
     }
 
@@ -409,7 +410,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(FinishTurnCommand.class, finishTurn).create();
         String request = gson.toJson(finishTurn);
         String response = doPost(FINISH_TURN, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Finish Turn Response:" + response);
         return new ClientModel(response);
     }
 
@@ -419,7 +420,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(BuyDevCardCommand.class, buyDevCard).create();
         String request = gson.toJson(buyDevCard);
         String response = doPost(BUY_DEV_CARD, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Buy Dev Card Response:" + response);
         return new ClientModel(response);
     }
 
@@ -429,7 +430,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(SoldierCommand.class, soldier).create();
         String request = gson.toJson(soldier);
         String response = doPost(SOLDIER, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Soldier Response:" + response);
         return new ClientModel(response);
     }
 
@@ -439,7 +440,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(YearOfPlentyCommand.class, yearOfPlenty).create();
         String request = gson.toJson(yearOfPlenty);
         String response = doPost(YEAR_OF_PLENTY, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Year Of Plenty Response:" + response);
         return new ClientModel(response);
     }
 
@@ -449,7 +450,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(RoadBuildingCommand.class, roadBuilding).create();
         String request = gson.toJson(roadBuilding);
         String response = doPost(ROAD_BUILDING, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Road Building Response:" + response);
         return new ClientModel(response);
     }
 
@@ -459,7 +460,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(MonopolyCommand.class, monopoly).create();
         String request = gson.toJson(monopoly);
         String response = doPost(MONOPOLY, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Monopoly Response:" + response);
         return new ClientModel(response);
     }
 
@@ -469,7 +470,7 @@ public class ServerProxy implements IProxy
         Gson gson = new GsonBuilder().registerTypeAdapter(MonumentCommand.class, monument).create();
         String request = gson.toJson(monument);
         String response = doPost(MONUMENT, request);
-        LOGGER.log(Level.INFO, "Response:" + response);
+        LOGGER.log(Level.INFO, "Monument Response:" + response);
         return new ClientModel(response);
     }
 

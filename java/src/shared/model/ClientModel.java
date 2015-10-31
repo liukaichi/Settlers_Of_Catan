@@ -53,6 +53,9 @@ public class ClientModel extends Observable
 
     public void updateModel(ClientModel model)
     {
+        /*
+        For thread safety, don't update if previous update has not finished.
+         */
         if(!isUpdating) {
             isUpdating = true;
             this.gameInfo = model.gameInfo;
