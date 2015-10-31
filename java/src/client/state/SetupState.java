@@ -21,7 +21,6 @@ public class SetupState extends GameplayState
     /* Logger */
     private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
     private boolean roundComplete = false;
-    private boolean road2 = false;
 
     public SetupState(ObserverController controller, TurnStatus round)
     {
@@ -128,11 +127,8 @@ public class SetupState extends GameplayState
         switch (facade.getClientPlayerRoadCount())
         {
             case 1:
-                if(!road2) {
                     LOGGER.severe("------------------CALLING startMove Road 2---------------");
                     startMove(PieceType.ROAD, true, true);
-                    road2 = true;
-                }
                 break;
             case 2:
                 switch (facade.getClientPlayerSettlementCount())
