@@ -4,7 +4,6 @@ import client.base.ObserverController;
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
-import shared.definitions.TurnStatus;
 import shared.model.ClientModel;
 import shared.model.TurnTracker;
 import shared.model.player.Player;
@@ -54,7 +53,6 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
         PlayerInfo clientPlayer = facade.getClientPlayer();
 
         getView().setLocalPlayerColor(clientPlayer.getColor());
-
         for (Player player : model.getGameInfo().getPlayers())
         {
             getView().initializePlayer(player.getPlayerIndex().getIndex(), player.getName(), player.getPlayerColor());
@@ -73,6 +71,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
         state.setTurnTrackerInfo(this);
 
     }
+
 
     @Override public void update(Observable o, Object arg)
     {

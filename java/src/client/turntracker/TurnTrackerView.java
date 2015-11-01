@@ -89,6 +89,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 		labelFont = labelFont.deriveFont(Font.BOLD, FONT_SIZE);
 		name.setFont(labelFont);
 		playerPanel[playerIndex].add(name, BorderLayout.WEST);
+
 		
 		JPanel indicatorPanel = new JPanel();
 		indicatorPanel.setBackground(playerColor.getJavaColor());

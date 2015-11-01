@@ -1,6 +1,5 @@
 package client.join;
 
-import client.base.Controller;
 import client.base.IAction;
 import client.base.ObserverController;
 import client.data.GameInfo;
@@ -26,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class JoinGameController extends ObserverController implements IJoinGameController
 {
-
+    private static JoinGameController instance;
     private INewGameView newGameView;
     private ISelectColorView selectColorView;
     private IMessageView messageView;
@@ -44,6 +43,10 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     final private Timer timer = new Timer(2000,action);
     private boolean joiningGame;
 
+
+    public static JoinGameController getInstance(){
+        return instance;
+    }
     /**
      * JoinGameController constructor
      *
@@ -58,7 +61,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     {
 
         super(view);
-
+        instance = this;
         setNewGameView(newGameView);
         setSelectColorView(selectColorView);
         setMessageView(messageView);
@@ -101,7 +104,6 @@ public class JoinGameController extends ObserverController implements IJoinGameC
 
     public void setNewGameView(INewGameView newGameView)
     {
-
         this.newGameView = newGameView;
     }
 

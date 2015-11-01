@@ -594,7 +594,7 @@ public class ClientFacade
 
     public void setModel(ClientModel newModel)
     {
-        model = newModel;
+
     }
 
     public ClientModel getModel()

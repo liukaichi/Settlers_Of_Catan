@@ -1,17 +1,19 @@
 package client.resources;
 
-import java.util.*;
-
-import client.base.*;
+import client.base.IAction;
+import client.base.ObserverController;
 import client.facade.ClientFacade;
 import shared.definitions.ResourceType;
 import shared.definitions.StructureType;
 import shared.model.ClientModel;
 import shared.model.bank.PlayerBank;
-import shared.model.bank.resource.Resource;
 import shared.model.bank.resource.Resources;
 import shared.model.bank.structure.Structures;
 import shared.model.player.Player;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
 
 /**
  * Implementation for the resource bar controller
@@ -66,7 +68,6 @@ public class ResourceBarController extends ObserverController implements IResour
             setStructures(structures);
             getView().setElementAmount(ResourceBarElement.SOLDIERS, bank.getKnights());
 
-            disableActions();
         }
 
     }
@@ -90,12 +91,13 @@ public class ResourceBarController extends ObserverController implements IResour
                 structures.getStructure(StructureType.CITY).getAmountRemaining());
     }
 
-    private void disableActions()
+    public void enableActions()
     {
         getView().setElementEnabled(ResourceBarElement.ROAD, state.canBuyRoad());
         getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canBuySettlement());
         getView().setElementEnabled(ResourceBarElement.CITY, state.canBuyCity());
         getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
+        getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
     }
 
     /**
@@ -160,5 +162,16 @@ public class ResourceBarController extends ObserverController implements IResour
 
     }
 
+    /**
+     * Disables all the things in the Resource Bar. Usually used for NotMyTurnState
+     */
+    public void disableAllActions()
+    {
+        getView().setElementEnabled(ResourceBarElement.BUY_CARD,false);
+        getView().setElementEnabled(ResourceBarElement.PLAY_CARD,false);
+        getView().setElementEnabled(ResourceBarElement.ROAD,false);
+        getView().setElementEnabled(ResourceBarElement.CITY,false);
+        getView().setElementEnabled(ResourceBarElement.SETTLEMENT,false);
+    }
 }
 

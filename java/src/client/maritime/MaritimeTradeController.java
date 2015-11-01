@@ -4,6 +4,7 @@ import client.base.ObserverController;
 import client.facade.ClientFacade;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
+import shared.model.ClientModel;
 
 import java.util.Observable;
 import java.util.TreeSet;
@@ -202,6 +203,6 @@ public class MaritimeTradeController extends ObserverController implements IMari
 
     @Override public void update(Observable o, Object arg)
     {
-
+        state.update(this, (ClientModel) o, arg);
     }
 }

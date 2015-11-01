@@ -5,6 +5,8 @@ import client.data.RobPlayerInfo;
 import client.discard.DiscardController;
 import client.domestic.DomesticTradeController;
 import client.map.MapController;
+import client.maritime.MaritimeTradeController;
+import client.resources.ResourceBarController;
 import client.turntracker.TurnTrackerController;
 import shared.definitions.DevCardType;
 import shared.definitions.PieceType;
@@ -224,6 +226,7 @@ public class PlayingState extends GameplayState
         else if (controller instanceof DomesticTradeController)
         {
             DomesticTradeController control = (DomesticTradeController) controller;
+            control.getTradeView().enableDomesticTrade(true);
             if(control.getWaitOverlay().isModalShowing())
             {
                 control.getWaitOverlay().closeModal();
@@ -232,6 +235,16 @@ public class PlayingState extends GameplayState
             {
                 control.getTradeOverlay().closeModal();
             }
+        }
+        else if (controller instanceof MaritimeTradeController)
+        {
+            MaritimeTradeController control = (MaritimeTradeController) controller;
+            control.getTradeView().enableMaritimeTrade(true);
+        }
+        else if (controller instanceof ResourceBarController)
+        {
+            ResourceBarController control = (ResourceBarController) controller;
+            control.enableActions();
         }
     }
 }
