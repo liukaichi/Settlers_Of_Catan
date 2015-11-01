@@ -158,6 +158,7 @@ public class ResourceBarController extends ObserverController implements IResour
         {
             state.update(this, model, arg);
             initFromModel();
+            state.updateView();
         }
 
     }

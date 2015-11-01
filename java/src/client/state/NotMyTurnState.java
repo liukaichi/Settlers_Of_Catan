@@ -51,6 +51,6 @@ public class NotMyTurnState extends GameplayState
         else if (controller instanceof ResourceBarController)
         {
             ((ResourceBarController) controller).disableAllActions();
-    }
+        }
     }
 }

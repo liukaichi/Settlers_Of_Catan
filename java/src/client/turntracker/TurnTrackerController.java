@@ -52,7 +52,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
         TurnTracker turnTracker = model.getTurnTracker();
         PlayerInfo clientPlayer = facade.getClientPlayer();
 
-        getView().setLocalPlayerColor(clientPlayer.getColor());
+
         for (Player player : model.getGameInfo().getPlayers())
         {
             getView().initializePlayer(player.getPlayerIndex().getIndex(), player.getName(), player.getPlayerColor());
@@ -64,7 +64,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
             getView().updatePlayer(player.getPlayerIndex().getIndex(), player.getVictoryPoints(), isCurrentTurn,
                     hasLargestArmy, hasLongestRoad);
         }
-
+        getView().setLocalPlayerColor(clientPlayer.getColor());
         LOGGER.info(turnTracker.getStatus().toString());
         LOGGER.info("My turn: " + (turnTracker.getCurrentTurn() == facade.getClientPlayer().getPlayerIndex()));
 
@@ -75,6 +75,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
 
     @Override public void update(Observable o, Object arg)
     {
+        ClientFacade.getInstance().updateClientPlayer();
         ClientModel model = (ClientModel) o;
         state.update(this, model, arg);
         this.initFromModel(model);

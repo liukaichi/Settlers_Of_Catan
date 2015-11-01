@@ -704,4 +704,16 @@ public class ClientFacade
     {
         return model.getBank();
     }
+
+    public void updateClientPlayer()
+    {
+        for (PlayerInfo playerInfo : model.getGameInfo().getPlayerInfos())
+        {
+            if (playerInfo.getId() == clientPlayer.getId())
+            {
+                setClientPlayer(playerInfo);
+                return;
+            }
+        }
+    }
 }

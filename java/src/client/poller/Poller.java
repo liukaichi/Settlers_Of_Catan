@@ -64,6 +64,7 @@ public class Poller
     {
 
         private IProxy proxy;
+        ClientFacade facade = ClientFacade.getInstance();
 
         PollTask(IProxy proxy)
         {
@@ -103,9 +104,9 @@ public class Poller
         public void updateModel(ClientModel newModel)
         {
 
-            ClientFacade.getInstance().getModel().updateModel(newModel);
+            facade.getModel().updateModel(newModel);
             currentVersion = newModel.getVersion();
-
+            facade.updateClientPlayer();
         }
 
         @Override public void run()

@@ -83,7 +83,6 @@ public class SetupState extends GameplayState
         if (controller instanceof MapController)
         {
             playRound();
-
         }
     }
     private void playRound()
