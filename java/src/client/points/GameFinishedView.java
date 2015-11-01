@@ -1,7 +1,9 @@
 package client.points;
 
 import client.base.OverlayView;
+import client.facade.ClientFacade;
 import client.join.JoinGameController;
+import client.main.Catan;
 import client.utils.ImageUtils;
 
 import javax.swing.*;
@@ -79,8 +81,10 @@ public class GameFinishedView extends OverlayView implements IGameFinishedView {
 			
 			if (e.getSource() == okButton) {
 				closeModal();
-				//ClientFacade.getInstance().setModel(new ClientModel());
+				ClientFacade.getInstance().stopPoller();
+				JoinGameController.getInstance().resetCurrentGame();
 				JoinGameController.getInstance().start();
+				Catan.getInstance().reset();
 			}
 		}	
 	};

@@ -716,4 +716,15 @@ public class ClientFacade
             }
         }
     }
+
+    /**
+     * Stops the PollerTask
+     */
+    public void stopPoller()
+    {
+        if (poller != null)
+        {
+            poller.stopPoll();
+        }
+    }
 }
