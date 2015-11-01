@@ -4,10 +4,12 @@ import client.base.ObserverController;
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
+import shared.definitions.TurnStatus;
 import shared.model.ClientModel;
 import shared.model.TurnTracker;
 import shared.model.player.Player;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.logging.Logger;
 
@@ -18,6 +20,8 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
 {
     private static final Logger LOGGER = Logger.getLogger(TurnTrackerController.class.getName());
     private ClientFacade facade;
+    private boolean stateButtonEnabled = false;
+    private boolean isInitialized = false;
 
     public TurnTrackerController(ITurnTrackerView view)
     {
@@ -47,39 +51,42 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
      * getView().updatePlayer(...) to update the player's acheivements and
      * score.
      */
-    private void initFromModel(ClientModel model)
-    {
-        TurnTracker turnTracker = model.getTurnTracker();
-        PlayerInfo clientPlayer = facade.getClientPlayer();
 
+    public void init(){
+        List<Player> players = facade.getPlayers();
 
-        for (Player player : model.getGameInfo().getPlayers())
-        {
-            getView().initializePlayer(player.getPlayerIndex().getIndex(), player.getName(), player.getPlayerColor());
-
-            boolean hasLargestArmy = (turnTracker.getLargestArmy().equals(player.getPlayerIndex()));
-            boolean hasLongestRoad = (turnTracker.getLongestRoad().equals(player.getPlayerIndex()));
-            boolean isCurrentTurn = (turnTracker.getCurrentTurn().equals(player.getPlayerIndex()));
-
-            getView().updatePlayer(player.getPlayerIndex().getIndex(), player.getVictoryPoints(), isCurrentTurn,
-                    hasLargestArmy, hasLongestRoad);
+        for(Player p : players){
+            getView().initializePlayer(p.getPlayerIndex().getIndex(), p.getName(), p.getPlayerColor());
         }
-        getView().setLocalPlayerColor(clientPlayer.getColor());
-        LOGGER.info(turnTracker.getStatus().toString());
-        LOGGER.info("My turn: " + (turnTracker.getCurrentTurn() == facade.getClientPlayer().getPlayerIndex()));
 
-        state.setTurnTrackerInfo(this);
-
+        isInitialized = true;
     }
 
+    public void updatePlayers(ClientModel model){
+        List<Player> players = facade.getPlayers();
+        TurnTracker turnTracker = model.getTurnTracker();
+
+        for(Player p : players){
+            boolean hasLargestArmy = (turnTracker.getLargestArmy().equals(p.getPlayerIndex()));
+            boolean hasLongestRoad = (turnTracker.getLongestRoad().equals(p.getPlayerIndex()));
+            boolean isCurrentTurn = (turnTracker.getCurrentTurn().equals(p.getPlayerIndex()));
+
+            getView().updatePlayer(p.getPlayerIndex().getIndex(), p.getVictoryPoints(), isCurrentTurn, hasLargestArmy, hasLongestRoad);
+        }
+
+        stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
+        state.setTurnTrackerInfo(this);
+    }
+
+    public boolean isInitialized() {
+        return isInitialized;
+    }
 
     @Override public void update(Observable o, Object arg)
     {
-        ClientFacade.getInstance().updateClientPlayer();
         ClientModel model = (ClientModel) o;
         state.update(this, model, arg);
-        this.initFromModel(model);
-
+        state.updateView();
     }
 
 }

@@ -16,6 +16,8 @@ import shared.definitions.exceptions.PlacementException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.model.TurnTracker;
+import shared.model.player.Player;
 
 import java.util.logging.Logger;
 
@@ -222,6 +224,14 @@ public class PlayingState extends GameplayState
             {
                 control.getWaitView().closeModal();
             }
+        }
+        else if (controller instanceof TurnTrackerController){
+            TurnTrackerController control = (TurnTrackerController) controller;
+            if(!control.isInitialized()){
+                control.init();
+            }
+
+            control.updatePlayers(facade.getModel());
         }
         else if (controller instanceof DomesticTradeController)
         {
