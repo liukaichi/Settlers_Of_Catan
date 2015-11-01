@@ -54,23 +54,25 @@ public class DomesticTradeState extends GameplayState
         infos.addAll(facade.getModel().getGameInfo().getPlayerInfos());
         infos.remove(player.getPlayerInfo());
         trade.setPlayers(infos.toArray(new PlayerInfo[infos.size()]));
+        trade.reset();
     }
 
     private void updateAcceptView()
     {
         if(controller instanceof DomesticTradeController)
         {
+            accept.reset();
             offer = facade.getModel().getTradeOffer();
             for(ResourceType type : ResourceType.values())
             {
                 int value = offer.getOffer(type);
-                if(value < 0)
+                if(value > 0)
                     accept.addGetResource(type, Math.abs(value));
-                else if(value > 0)
+                else if(value < 0)
                     accept.addGiveResource(type, value);
             }
             accept.setAcceptEnabled(true);
-            accept.setPlayerName(player.getName());
+            accept.setPlayerName(facade.getPlayerByIndex(PlayerIndex.fromInt(offer.getSender())).getName());
         }
     }
 
@@ -153,11 +155,11 @@ public class DomesticTradeState extends GameplayState
         switch(offer.getResourceHand(type))
         {
         case send:
-            if(playerAmount + offerAmount > 0)
+            if(playerAmount - offerAmount > 0)
                 return true;
             break;
         case receive:
-            if(offerAmount < 19)
+            if(offerAmount > -19)
                 return true;
             break;
         }
@@ -171,11 +173,11 @@ public class DomesticTradeState extends GameplayState
         switch(offer.getResourceHand(type))
         {
         case send:
-            if(offerAmount < 0)
+            if(offerAmount > 0)
                 return true;
             break;
         case receive:
-            if(offerAmount > 0)
+            if(offerAmount < 0)
                 return true;
             break;
         }
@@ -210,10 +212,10 @@ public class DomesticTradeState extends GameplayState
     {
         switch(offer.getResourceHand(resource))
         {
-        case send:
+        case receive:
             offer.subFromOffer(resource, 1);
             break;
-        case receive:
+        case send:
             offer.addToOffer(resource, 1);
             break;
         }
@@ -225,10 +227,10 @@ public class DomesticTradeState extends GameplayState
     {
         switch(offer.getResourceHand(resource))
         {
-        case send:
+        case receive:
             offer.addToOffer(resource, 1);
             break;
-        case receive:
+        case send:
             offer.subFromOffer(resource, 1);
             break;
         }

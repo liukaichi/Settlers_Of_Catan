@@ -405,7 +405,6 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
     @Override
     public void setPlayers(PlayerInfo[] value)
     {
-
         for (int i = 0; i < value.length; i++)
         {
 

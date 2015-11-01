@@ -33,7 +33,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
     {
         for(ResourceType type : ResourceType.values())
         {
-            if(getResourceHand(type).equals(Hand.send) && getOffer(type) < 0)
+            if(getResourceHand(type).equals(Hand.send) && getOffer(type) > 0)
             {
                 return true;
             }
@@ -45,7 +45,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
     {
         for(ResourceType type : ResourceType.values())
         {
-            if(getResourceHand(type).equals(Hand.receive) && getOffer(type) > 0)
+            if(getResourceHand(type).equals(Hand.receive) && getOffer(type) < 0)
             {
                 return true;
             }
