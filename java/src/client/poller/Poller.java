@@ -29,14 +29,20 @@ public class Poller
     private IProxy proxy;
     private PollTask pollTask;
     private int currentVersion = 0;
+    Timer timer;
 
     public Poller(IProxy proxy)
     {
         this.proxy = proxy;
+        ClientModel serverModel = proxy.getGameState(currentVersion);
+        if (serverModel != null)
+        {
+            currentVersion = serverModel.getVersion();
+        }
         pollTask = new PollTask(this.proxy);
-        Timer timer;
+
         timer = new Timer();
-        timer.schedule(pollTask, 0, 3000);
+        timer.schedule(pollTask, 1, 3000);
     }
 
     public void setPollProxy(IProxy newProxy)
@@ -52,6 +58,11 @@ public class Poller
     private PollTask getPollTask()
     {
         return pollTask;
+    }
+
+    public void stopPoll()
+    {
+        timer.cancel();
     }
 
 

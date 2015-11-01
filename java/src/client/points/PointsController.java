@@ -66,11 +66,15 @@ public class PointsController extends ObserverController implements IPointsContr
                 if (player.getPlayerIndex() == facade.getPlayer().getPlayerIndex())
                 {
                     getFinishedView().setWinner(player.getName(), true);
-                    getFinishedView().showModal();
+
                 }
                 else
                 {
                     getFinishedView().setWinner(player.getName(), false);
+                }
+
+                if (!getFinishedView().isModalShowing())
+                {
                     getFinishedView().showModal();
                 }
             }
