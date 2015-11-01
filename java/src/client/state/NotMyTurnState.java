@@ -8,6 +8,7 @@ import client.domestic.DomesticTradeController;
 import client.maritime.MaritimeTradeController;
 import client.resources.ResourceBarController;
 import client.turntracker.TurnTrackerController;
+import shared.model.TurnTracker;
 
 import java.util.logging.Logger;
 
@@ -47,6 +48,15 @@ public class NotMyTurnState extends GameplayState
         else if (controller instanceof DomesticTradeController)
         {
             ((DomesticTradeController) controller).getTradeView().enableDomesticTrade(false);
+
+        }
+        else if (controller instanceof TurnTrackerController)
+        {
+            TurnTrackerController control = (TurnTrackerController) controller;
+            if(!control.isInitialized()){
+                control.init();
+            }
+            control.updatePlayers(facade.getModel());
         }
         else if (controller instanceof ResourceBarController)
         {

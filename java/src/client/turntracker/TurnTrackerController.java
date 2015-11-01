@@ -44,6 +44,8 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
     @Override public void endTurn()
     {
         state.endTurn();
+        state.updateView();
+
     }
 
     /**
@@ -54,12 +56,15 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
 
     public void init(){
         List<Player> players = facade.getPlayers();
+        TurnTracker turnTracker = facade.getModel().getTurnTracker();
 
         for(Player p : players){
             getView().initializePlayer(p.getPlayerIndex().getIndex(), p.getName(), p.getPlayerColor());
         }
 
         isInitialized = true;
+        stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
+        state.setTurnTrackerInfo(this);
     }
 
     public void updatePlayers(ClientModel model){
