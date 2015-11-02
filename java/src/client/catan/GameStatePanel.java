@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.plaf.ButtonUI;
+import javax.swing.plaf.basic.BasicButtonUI;
+
 import shared.definitions.CatanColor;
 import client.base.IAction;
 import client.data.PlayerInfo;
@@ -22,7 +25,7 @@ public class GameStatePanel extends JPanel
 	public GameStatePanel()
 	{
 		this.setLayout(new FlowLayout());
-		this.setBackground(Color.white);
+		//this.setBackground(Color.white);
 		this.setOpaque(true);
 		
 		button = new JButton();
@@ -93,9 +96,11 @@ public class GameStatePanel extends JPanel
             	color = new Color(0, 0, 0);	
             	break;
             }
-			button.setOpaque(true); 
+			//button.setBorder(BorderFactory.createLineBorder(color, 3));
+			button.setUI((ButtonUI) BasicButtonUI.createUI(button));
 			button.setBackground(color);
-			button.setBorder(BorderFactory.createLineBorder(color, 3));
+			button.setContentAreaFilled(true);
+			button.setOpaque(true);
 			this.repaint();
 		}
 		
