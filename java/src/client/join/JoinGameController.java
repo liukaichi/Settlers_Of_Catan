@@ -219,6 +219,26 @@ public class JoinGameController extends ObserverController implements IJoinGameC
 
     private void updateColorSelector(GameInfo game)
     {
+        resetColors();
+        disablePlayerColors(game);
+        if (joiningGame)
+        {
+            if (getSelectColorView().isModalShowing())
+                getSelectColorView().closeModal();
+            getSelectColorView().showModal();
+        }
+    }
+
+    private void resetColors()
+    {
+        for (CatanColor color : CatanColor.values())
+        {
+            getSelectColorView().setColorEnabled(color, true);
+        }
+    }
+
+    private void disablePlayerColors(GameInfo game)
+    {
         List<Player> players = game.getPlayers();
         for (Player player : players)
         {
@@ -227,12 +247,6 @@ public class JoinGameController extends ObserverController implements IJoinGameC
             {
                 getSelectColorView().setColorEnabled(player.getPlayerColor(), true);
             }
-        }
-        if (joiningGame)
-        {
-            if (getSelectColorView().isModalShowing())
-                getSelectColorView().closeModal();
-            getSelectColorView().showModal();
         }
     }
 
