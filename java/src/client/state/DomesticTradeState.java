@@ -26,11 +26,11 @@ public class DomesticTradeState extends GameplayState
     private ClientFacade facade;
     private TradeOffer offer;
     private boolean accepted = false;
-    Resources playerHand;
-    DomesticTradeController control;
-    IDomesticTradeOverlay trade;
-    IAcceptTradeOverlay accept;
-    Player player;
+    private Resources playerHand;
+    private DomesticTradeController control;
+    private IDomesticTradeOverlay trade;
+    private IAcceptTradeOverlay accept;
+    private Player player;
 
     public DomesticTradeState(ObserverController controller)
     {
@@ -63,16 +63,28 @@ public class DomesticTradeState extends GameplayState
         {
             accept.reset();
             offer = facade.getModel().getTradeOffer();
+            Resources giveResources = new Resources();
             for(ResourceType type : ResourceType.values())
             {
                 int value = offer.getOffer(type);
                 if(value > 0)
-                    accept.addGetResource(type, Math.abs(value));
+                {
+                    int getAmount = Math.abs(value);
+                    accept.addGetResource(type, getAmount);
+                }
                 else if(value < 0)
-                    accept.addGiveResource(type, value);
+                {
+                    int giveAmount = Math.abs(value);
+                    accept.addGiveResource(type, giveAmount);
+                    giveResources.setAmount(type, giveAmount);
+                }
             }
-            accept.setAcceptEnabled(true);
-            accept.setPlayerName(facade.getPlayerByIndex(PlayerIndex.fromInt(offer.getSender())).getName());
+            Player receiver = facade.getPlayer(PlayerIndex.fromInt(offer.getReceiver()));
+            Player sender = facade.getPlayerByIndex(PlayerIndex.fromInt(offer.getSender()));
+
+            boolean canAccept = receiver.hasEnoughResources(giveResources);
+            accept.setAcceptEnabled(canAccept);
+            accept.setPlayerName(sender.getName());
         }
     }
 
@@ -82,7 +94,7 @@ public class DomesticTradeState extends GameplayState
         {
             if (offer == null)
             {
-                offer = new TradeOffer(player.getPlayerIndex(), PlayerIndex.NONE, 0, 0, 0, 0, 0);
+                offer = new TradeOffer(player.getPlayerIndex(), PlayerIndex.NONE);
                 playerHand = player.getResources();
             }
 

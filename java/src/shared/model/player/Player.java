@@ -382,5 +382,10 @@ public class Player
             }
         }
     }
+
+    public boolean hasEnoughResources(Resources cost)
+    {
+        return bank.hasEnoughResources(cost);
+    }
 }
 

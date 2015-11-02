@@ -2,6 +2,7 @@ package shared.model.bank;
 
 import java.util.*;
 
+import client.facade.ClientFacade;
 import shared.definitions.*;
 import shared.definitions.exceptions.*;
 import shared.model.bank.card.*;
@@ -160,7 +161,7 @@ public class PlayerBank extends Bank
         }
     }
 
-    private boolean hasEnoughResources(Resources cost)
+    public boolean hasEnoughResources(Resources cost)
     {
         List<Resource> resourcesList = playerResources.getAllResources();
         List<Resource> costList = cost.getAllResources();
@@ -183,7 +184,8 @@ public class PlayerBank extends Bank
     {
         Resources cost = new Resources(0,0,1,1,1);
         //TODO this might not properly get the game bank's dev cards.
-        if (hasEnoughResources(cost) && (!super.getDevCardDeck().empty()))
+        //if (hasEnoughResources(cost) && (!super.getDevCardDeck().empty()))
+        if (hasEnoughResources(cost) && ClientFacade.getInstance().getBank().getDevCardDeck().empty())
         {
             return true;
         }

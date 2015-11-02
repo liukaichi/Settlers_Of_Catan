@@ -116,7 +116,14 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
     {
         this.sender = sender.getPlayerInfo().getPlayerIndex();
         this.receiver = receiver.getPlayerInfo().getPlayerIndex();
-        this.offer = new Resources(false);
+        this.offer = new Resources();
+    }
+
+    public TradeOffer(PlayerIndex sender, PlayerIndex receiver)
+    {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.offer = new Resources();
     }
 
     public TradeOffer(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat, int ore)

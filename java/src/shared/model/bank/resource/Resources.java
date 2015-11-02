@@ -2,6 +2,7 @@ package shared.model.bank.resource;
 
 import com.google.gson.*;
 import shared.definitions.ResourceType;
+import sun.security.tools.keytool.Resources_es;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -43,6 +44,11 @@ public class Resources implements JsonSerializer<Resources>
         this.sheep.setAmount(sheep);
         this.wheat.setAmount(wheat);
         this.ore.setAmount(ore);
+    }
+
+    public Resources()
+    {
+        this(0,0,0,0,0);
     }
 
     private void initialize(boolean isGameBank)
@@ -129,49 +135,6 @@ public class Resources implements JsonSerializer<Resources>
 
         return resources;
     }
-    //
-    // public static class ResourcesSerializer implements
-    // JsonSerializer<Resources> {
-    //
-    // @Override
-    // public JsonElement serialize(Resources src, Type type,
-    // JsonSerializationContext jsonSerializationContext) {
-    // JsonObject resources = new JsonObject();
-    // {
-    // resources.addProperty("brick",
-    // src.getResource(ResourceType.BRICK).getAmount());
-    // resources.addProperty("ore",
-    // src.getResource(ResourceType.ORE).getAmount());
-    // resources.addProperty("sheep",
-    // src.getResource(ResourceType.SHEEP).getAmount());
-    // resources.addProperty("wheat",
-    // src.getResource(ResourceType.WHEAT).getAmount());
-    // resources.addProperty("wood",
-    // src.getResource(ResourceType.WOOD).getAmount());
-    // }
-    // return resources;
-    // }
-    // }
-    //
-    // public static class ResourcesDeserializer implements
-    // JsonDeserializer<Resources> {
-    //
-    // @Override
-    // public Resources deserialize(JsonElement json, Type type,
-    // JsonDeserializationContext jsonDeserializationContext) throws
-    // JsonParseException {
-    // System.out.println(json);
-    // JsonObject jobj = (JsonObject) json;
-    // Resources list = new Resources(false);
-    // list.wheat.setAmount(jobj.get("wheat").getAsInt());
-    // list.brick.setAmount(jobj.get("brick").getAsInt());
-    // list.ore.setAmount(jobj.get("ore").getAsInt());
-    // list.sheep.setAmount(jobj.get("sheep").getAsInt());
-    // list.wood.setAmount(jobj.get("wood").getAsInt());
-    //
-    // return list;
-    // }
-    // }
 
     /*
      * (non-Javadoc)
@@ -216,8 +179,8 @@ public class Resources implements JsonSerializer<Resources>
     }
 
     /**
-     * Increases the specified resource in this collection by 1
-     * @param resource
+     * Increases the specified resource in this collection by 1. This behaves identically to increase(type, 1).
+     * @param resource the resource type to increase.
      */
     public void increase(ResourceType resource)
     {
