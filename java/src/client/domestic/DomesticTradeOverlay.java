@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.ButtonUI;
 import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.plaf.basic.BasicToggleButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -144,6 +145,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         this.toggleButtonGroup = new ButtonGroup();
 
         JToggleButton noneToggle = new JToggleButton("None");
+        noneToggle.setUI(new BasicToggleButtonUI());
         noneToggle.setSelected(true);
         noneToggle.addActionListener(new ActionListener()
         {
@@ -418,7 +420,8 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
                 toggle.putClientProperty("JButton.segmentPosition", "last");
             else
                 toggle.putClientProperty("JButton.segmentPosition", "middle");
-            toggle.setUI((ButtonUI) BasicButtonUI.createUI(toggle));
+            toggle.setUI(new BasicToggleButtonUI());
+            toggle.setFont(toggle.getFont().deriveFont(Font.BOLD));
             toggle.setBackground(value[i].getColor().getJavaColor());
             toggle.setContentAreaFilled(true);
             toggle.setOpaque(true);
