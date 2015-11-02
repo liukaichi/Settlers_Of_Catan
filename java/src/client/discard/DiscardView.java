@@ -598,8 +598,7 @@ public class DiscardView extends OverlayView implements IDiscardView
 			resourcePanel.add(Box.createRigidArea(new Dimension(BUTTON_SIZE, BUTTON_SIZE)), c);
 			
 			_discardResourcePanel = new JPanel();
-			_discardResourcePanel.setLayout(new BoxLayout(_discardResourcePanel,
-			                                              BoxLayout.Y_AXIS));
+			_discardResourcePanel.setLayout(new BoxLayout(_discardResourcePanel, BoxLayout.Y_AXIS));
 			_discardResourcePanel.add(resourcePanel);
 			
 			return _discardResourcePanel;
@@ -612,16 +611,12 @@ public class DiscardView extends OverlayView implements IDiscardView
 				switch(e.getActionCommand())
 				{
 					case "UP":
-						System.out.printf("Increase amount of %s\n",
-						                  Resource.this.getType());
-						DiscardView.this.getController()
-										.increaseAmount(Resource.this.getType());
+						//System.out.printf("Increase amount of %s\n", Resource.this.getType());
+						DiscardView.this.getController().increaseAmount(Resource.this.getType());
 						break;
 					case "DOWN":
-						System.out.printf("Decrease amount of %s\n",
-						                  Resource.this.getType());
-						DiscardView.this.getController()
-										.decreaseAmount(Resource.this.getType());
+						//System.out.printf("Decrease amount of %s\n", Resource.this.getType());
+						DiscardView.this.getController().decreaseAmount(Resource.this.getType());
 						break;
 					default:
 						break;
