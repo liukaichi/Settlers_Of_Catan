@@ -14,14 +14,14 @@ import java.util.logging.Logger;
 /**
  * Main entry point for the Catan program
  */
-@SuppressWarnings("serial")
-public class Catan extends JFrame
+@SuppressWarnings("serial") public class Catan extends JFrame
 {
 
     private static CatanPanel catanPanel;
     private static String host;
     private static String port;
-    private static Catan catan;
+    private static Catan _catan;
+
     public Catan()
     {
 
@@ -51,18 +51,16 @@ public class Catan extends JFrame
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
 
         SwingUtilities.invokeLater(new Runnable()
         {
-            @Override
-            public void run()
+            @Override public void run()
             {
-                catan = new Catan();
+                getInstance();
                 if (args.length == 2)
                 {
                     host = args[0];
@@ -84,8 +82,7 @@ public class Catan extends JFrame
                         joinMessageView);
                 joinController.setJoinAction(new IAction()
                 {
-                    @Override
-                    public void execute()
+                    @Override public void execute()
                     {
                         playerWaitingController.start();
                     }
@@ -100,8 +97,7 @@ public class Catan extends JFrame
                 LoginController loginController = new LoginController(loginView, loginMessageView);
                 loginController.setLoginAction(new IAction()
                 {
-                    @Override
-                    public void execute()
+                    @Override public void execute()
                     {
                         joinController.start();
                     }
@@ -113,16 +109,27 @@ public class Catan extends JFrame
             }
         });
     }
-    public static Catan getInstance()
-{
-    return catan;
-}
 
-    public void reset(){
+    public static Catan getInstance()
+    {
+        if (_catan == null)
+        {
+            _catan = new Catan();
+        }
+        return _catan;
+    }
+
+    private void resetInstance()
+    {
+        _catan = new Catan();
+    }
+
+    public void reset()
+    {
         this.setVisible(false);
         this.dispose();
-
-        catan = new Catan();
+        ClientFacade.resetInstance();
+        resetInstance();
         PlayerWaitingView playerWaitingView = new PlayerWaitingView();
         final PlayerWaitingController playerWaitingController = new PlayerWaitingController(playerWaitingView);
         playerWaitingView.setController(playerWaitingController);
@@ -135,8 +142,7 @@ public class Catan extends JFrame
                 joinMessageView);
         joinController.setJoinAction(new IAction()
         {
-            @Override
-            public void execute()
+            @Override public void execute()
             {
                 playerWaitingController.start();
             }
@@ -147,18 +153,6 @@ public class Catan extends JFrame
         joinMessageView.setController(joinController);
         LoginView loginView = new LoginView();
         MessageView loginMessageView = new MessageView();
-
-        LoginController loginController = new LoginController(loginView, loginMessageView);
-        loginController.setLoginAction(new IAction()
-        {
-            @Override
-            public void execute()
-            {
-                joinController.start();
-            }
-        });
-        loginView.setController(loginController);
-        loginView.setController(loginController);
 
     }
 }

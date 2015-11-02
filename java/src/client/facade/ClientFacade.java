@@ -736,4 +736,9 @@ public class ClientFacade
             poller.stopPoll();
         }
     }
+
+    public static void resetInstance()
+    {
+        _instance = new ClientFacade();
+    }
 }

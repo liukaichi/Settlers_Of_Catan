@@ -1,7 +1,6 @@
 package client.turntracker;
 
 import client.base.ObserverController;
-import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
 import shared.definitions.TurnStatus;
@@ -57,11 +56,10 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
     public void init(){
         List<Player> players = facade.getPlayers();
         TurnTracker turnTracker = facade.getModel().getTurnTracker();
-
+        getView().setLocalPlayerColor(facade.getPlayer().getPlayerColor());
         for(Player p : players){
             getView().initializePlayer(p.getPlayerIndex().getIndex(), p.getName(), p.getPlayerColor());
         }
-
         isInitialized = true;
         stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
         state.setTurnTrackerInfo(this);
