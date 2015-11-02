@@ -7,6 +7,8 @@ import shared.definitions.ResourceType;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.ButtonUI;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -416,7 +418,10 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
                 toggle.putClientProperty("JButton.segmentPosition", "last");
             else
                 toggle.putClientProperty("JButton.segmentPosition", "middle");
-            toggle.setForeground(value[i].getColor().getJavaColor());
+            toggle.setUI((ButtonUI) BasicButtonUI.createUI(toggle));
+            toggle.setBackground(value[i].getColor().getJavaColor());
+            toggle.setContentAreaFilled(true);
+            toggle.setOpaque(true);
             toggleButtonGroup.add(toggle);
             this.playerSelectionPanel.add(toggle);
             this.playerButtons.add(toggle);
