@@ -739,6 +739,8 @@ public class ClientFacade
 
     public static void resetInstance()
     {
+        IProxy proxy = _instance.proxy;
         _instance = new ClientFacade();
+        _instance.proxy = proxy;
     }
 }
