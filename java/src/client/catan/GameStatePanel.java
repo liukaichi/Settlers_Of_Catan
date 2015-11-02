@@ -25,7 +25,7 @@ public class GameStatePanel extends JPanel
 	public GameStatePanel()
 	{
 		this.setLayout(new FlowLayout());
-		//this.setBackground(Color.white);
+		this.setBackground(Color.white);
 		this.setOpaque(true);
 		
 		button = new JButton();
