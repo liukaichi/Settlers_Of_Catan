@@ -2,7 +2,6 @@ package shared.model.bank.resource;
 
 import com.google.gson.*;
 import shared.definitions.ResourceType;
-import sun.security.tools.keytool.Resources_es;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
