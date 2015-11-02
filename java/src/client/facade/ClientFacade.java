@@ -309,6 +309,8 @@ public class ClientFacade
     {
         CreateGameResponse response = proxy.createGame(request);
         model.setGameInfo(response.getGameInfo());
+        joinGame(response.getGameID(), CatanColor.RED);
+
     }
 
     /**
@@ -317,9 +319,16 @@ public class ClientFacade
      * @throws GameQueryException
      */
 
-    public void joinGame(int id, CatanColor color) throws GameQueryException
+    public void joinGame(int id, CatanColor color)
     {
-        proxy.joinGame(new JoinGameRequest(id, color));
+        try
+        {
+            proxy.joinGame(new JoinGameRequest(id, color));
+        }
+        catch (GameQueryException e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to Join Game", e);
+        }
     }
 
     /*

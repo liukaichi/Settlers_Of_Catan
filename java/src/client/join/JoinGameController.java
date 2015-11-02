@@ -9,7 +9,6 @@ import client.misc.IMessageView;
 import shared.communication.CreateGameRequest;
 import shared.communication.ListGamesResponse;
 import shared.definitions.CatanColor;
-import shared.definitions.exceptions.GameQueryException;
 import shared.model.player.Player;
 
 import javax.swing.*;
@@ -17,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -33,20 +31,22 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     private ClientFacade facade;
     private GameInfo currentGame;
     private static final Logger LOGGER = Logger.getLogger(JoinGameController.class.getName());
-    private ActionListener action = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+    private ActionListener action = new ActionListener()
+    {
+        @Override public void actionPerformed(ActionEvent e)
+        {
             LOGGER.info("JOIN GAME CONTROLLER TIMER UPDATING");
             updateView();
         }
     };
-    final private Timer timer = new Timer(2000,action);
+    final private Timer timer = new Timer(2000, action);
     private boolean joiningGame;
 
-
-    public static JoinGameController getInstance(){
+    public static JoinGameController getInstance()
+    {
         return instance;
     }
+
     /**
      * JoinGameController constructor
      *
@@ -142,16 +142,17 @@ public class JoinGameController extends ObserverController implements IJoinGameC
         timer.start();
     }
 
-    private void updateView() {
+    private void updateView()
+    {
         ListGamesResponse response = facade.listGames();
         List<GameInfo> games = response.getGames();
         getJoinGameView().setGames(response.getGames().toArray(new GameInfo[games.size()]),
                 ClientFacade.getInstance().getClientPlayer());
-        if(currentGame != null)
+        if (currentGame != null)
         {
-            for(GameInfo game : games)
+            for (GameInfo game : games)
             {
-                if(game.getId() == currentGame.getId())
+                if (game.getId() == currentGame.getId())
                 {
                     currentGame = game;
                     updateColorSelector(currentGame);
@@ -159,9 +160,9 @@ public class JoinGameController extends ObserverController implements IJoinGameC
                 }
             }
         }
-        if(!getSelectColorView().isModalShowing() && !getNewGameView().isModalShowing())
+        if (!getSelectColorView().isModalShowing() && !getNewGameView().isModalShowing())
         {
-            if(getJoinGameView().isModalShowing())
+            if (getJoinGameView().isModalShowing())
             {
                 getJoinGameView().closeModal();
             }
@@ -227,7 +228,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
                 getSelectColorView().setColorEnabled(player.getPlayerColor(), true);
             }
         }
-        if(joiningGame)
+        if (joiningGame)
         {
             if (getSelectColorView().isModalShowing())
                 getSelectColorView().closeModal();
@@ -246,38 +247,35 @@ public class JoinGameController extends ObserverController implements IJoinGameC
      */
     @Override public void joinGame(CatanColor color)
     {
-        try
+
+        updateView();
+        boolean colorAlreadyExists = false;
+        for (PlayerInfo info : currentGame.getPlayerInfos())
         {
-            updateView();
-            boolean colorAlreadyExists = false;
-            for(PlayerInfo info : currentGame.getPlayerInfos())
+            if (info.getColor().equals(color) && info.getId() != facade.getClientPlayer().getId())
             {
-                if(info.getColor().equals(color) && info.getId() != facade.getClientPlayer().getId())
-                {
-                    colorAlreadyExists = true;
-                    break;
-                }
+                colorAlreadyExists = true;
+                break;
             }
-            if(!colorAlreadyExists)
-            {
-                facade.joinGame(currentGame.getId(), color);
-                // If join succeeded
-                getSelectColorView().closeModal();
-                getJoinGameView().closeModal();
-                LOGGER.info("JOIN GAME CONTROLLER TIMER STOPPING");
-                timer.stop();
-                joinAction.execute();
-            }
-        } catch (GameQueryException e)
-        {
-            LOGGER.log(Level.SEVERE, "Failed to Join Game", e);
         }
+        if (!colorAlreadyExists)
+        {
+            facade.joinGame(currentGame.getId(), color);
+            // If join succeeded
+            getSelectColorView().closeModal();
+            getJoinGameView().closeModal();
+            LOGGER.info("JOIN GAME CONTROLLER TIMER STOPPING");
+            timer.stop();
+            joinAction.execute();
+        }
+
     }
 
     @Override public void update(Observable observable, Object o)
     {
 
     }
+
     public void resetCurrentGame()
     {
         currentGame = null;

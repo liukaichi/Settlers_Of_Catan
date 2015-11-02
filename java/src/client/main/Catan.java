@@ -114,9 +114,9 @@ public class Catan extends JFrame
         });
     }
     public static Catan getInstance()
-    {
-        return catan;
-    }
+{
+    return catan;
+}
 
     public void reset(){
         this.setVisible(false);
