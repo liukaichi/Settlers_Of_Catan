@@ -6,7 +6,6 @@ import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
-import com.sun.javafx.geom.Edge;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.definitions.PieceType;
