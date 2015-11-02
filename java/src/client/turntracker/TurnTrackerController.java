@@ -1,6 +1,7 @@
 package client.turntracker;
 
 import client.base.ObserverController;
+import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
 import shared.definitions.TurnStatus;
@@ -20,7 +21,6 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
     private static final Logger LOGGER = Logger.getLogger(TurnTrackerController.class.getName());
     private ClientFacade facade;
     private boolean stateButtonEnabled = false;
-    private boolean isInitialized = false;
 
     public TurnTrackerController(ITurnTrackerView view)
     {
@@ -52,25 +52,15 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
      * getView().updatePlayer(...) to update the player's acheivements and
      * score.
      */
-
-    public void init(){
-        List<Player> players = facade.getPlayers();
-        TurnTracker turnTracker = facade.getModel().getTurnTracker();
-        getView().setLocalPlayerColor(facade.getPlayer().getPlayerColor());
-        for(Player p : players){
-            getView().initializePlayer(p.getPlayerIndex().getIndex(), p.getName(), p.getPlayerColor());
-        }
-        isInitialized = true;
-        stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
-        state.setTurnTrackerInfo(this);
-    }
-
     public void updatePlayers(ClientModel model){
         List<Player> players = facade.getPlayers();
         TurnTracker turnTracker = model.getTurnTracker();
         getView().setLocalPlayerColor(facade.getPlayer().getPlayerColor());
 
         for(Player p : players){
+
+            getView().initializePlayer(p.getPlayerIndex().getIndex(), p.getName(), p.getPlayerColor());
+
             boolean hasLargestArmy = (turnTracker.getLargestArmy().equals(p.getPlayerIndex()));
             boolean hasLongestRoad = (turnTracker.getLongestRoad().equals(p.getPlayerIndex()));
             boolean isCurrentTurn = (turnTracker.getCurrentTurn().equals(p.getPlayerIndex()));
@@ -80,10 +70,6 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
 
         stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);
         state.setTurnTrackerInfo(this);
-    }
-
-    public boolean isInitialized() {
-        return isInitialized;
     }
 
     @Override public void update(Observable o, Object arg)

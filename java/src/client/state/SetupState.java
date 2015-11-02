@@ -6,6 +6,7 @@ package client.state;
 import client.base.ObserverController;
 import client.facade.ClientFacade;
 import client.map.MapController;
+import client.turntracker.TurnTrackerController;
 import shared.definitions.PieceType;
 import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
@@ -83,6 +84,10 @@ public class SetupState extends GameplayState
         if (controller instanceof MapController)
         {
             playRound();
+        }
+        else if (controller instanceof TurnTrackerController)
+        {
+            ((TurnTrackerController) controller).updatePlayers(facade.getModel());
         }
     }
     private void playRound()

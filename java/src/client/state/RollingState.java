@@ -49,6 +49,10 @@ public class RollingState extends GameplayState
         {
             ((RollController) controller).getRollView().showModal();
         }
+        else if (controller instanceof TurnTrackerController)
+        {
+            ((TurnTrackerController) controller).updatePlayers(facade.getModel());
+        }
     }
 
     @Override public void setTurnTrackerInfo(ObserverController newController)

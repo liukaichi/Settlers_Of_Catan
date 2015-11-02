@@ -226,12 +226,7 @@ public class PlayingState extends GameplayState
             }
         }
         else if (controller instanceof TurnTrackerController){
-            TurnTrackerController control = (TurnTrackerController) controller;
-            if(!control.isInitialized()){
-                control.init();
-            }
-
-            control.updatePlayers(facade.getModel());
+            ((TurnTrackerController) controller).updatePlayers(facade.getModel());
         }
         else if (controller instanceof DomesticTradeController)
         {
