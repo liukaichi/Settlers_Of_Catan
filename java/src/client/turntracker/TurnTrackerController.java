@@ -70,6 +70,7 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
     public void updatePlayers(ClientModel model){
         List<Player> players = facade.getPlayers();
         TurnTracker turnTracker = model.getTurnTracker();
+        getView().setLocalPlayerColor(facade.getPlayer().getPlayerColor());
 
         for(Player p : players){
             boolean hasLargestArmy = (turnTracker.getLargestArmy().equals(p.getPlayerIndex()));
