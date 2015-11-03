@@ -31,15 +31,8 @@ public class ChatController extends ObserverController implements IChatControlle
         ClientFacade.getInstance().sendMessage(message);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    @Override public void update(Observable o, Object arg)
+    private void updateView(ClientModel model)
     {
-        ClientModel model = (ClientModel) o;
-
         List<MessageLine> messages = model.getChat().getMessages();
         ArrayList<LogEntry> entries = new ArrayList<>();
         for (MessageLine messageLine : messages)
@@ -49,7 +42,16 @@ public class ChatController extends ObserverController implements IChatControlle
                     messageLine.getMessage()));
         }
         getView().setEntries(entries);
+    }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    @Override public void update(Observable o, Object arg)
+    {
+        updateView((ClientModel) o);
     }
 
 }

@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  */
 public class DomesticTradeState extends GameplayState
 {
-    private static final Logger LOGGER = Logger.getLogger(DomesticTradeState.class.getName());
     private ClientFacade facade;
     private TradeOffer offer;
     private boolean accepted = false;
@@ -42,9 +41,7 @@ public class DomesticTradeState extends GameplayState
             trade = control.getTradeOverlay();
             accept = control.getAcceptOverlay();
             player = facade.getPlayer();
-            //currentTurnStatus = facade.getModel().getTurnTracker().getStatus();
             initializeTradeView();
-            //updateTradeView();
         }
     }
 
@@ -144,18 +141,6 @@ public class DomesticTradeState extends GameplayState
                     control.getWaitOverlay().closeModal();
                 }
             }
-            else
-            {
-                //do nothing
-                /*if(!control.getWaitOverlay().isModalShowing())
-                {
-                    control.getWaitOverlay().showModal();
-                }
-                else if(accepted)
-                {
-                    control.getWaitOverlay().closeModal();
-                }*/
-            }
 
         }
     }
@@ -180,7 +165,6 @@ public class DomesticTradeState extends GameplayState
 
     private boolean canDecrease(ResourceType type)
     {
-        int playerAmount = playerHand.getAmount(type);
         int offerAmount = offer.getOffer(type);
         switch(offer.getResourceHand(type))
         {

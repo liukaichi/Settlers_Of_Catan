@@ -16,8 +16,6 @@ import java.util.logging.Logger;
  */
 public class RollingState extends GameplayState
 {
-    /* Logger */
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     public RollingState(ObserverController controller)
     {

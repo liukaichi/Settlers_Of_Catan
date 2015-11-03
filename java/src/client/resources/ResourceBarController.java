@@ -22,16 +22,13 @@ public class ResourceBarController extends ObserverController implements IResour
 {
 
     private Map<ResourceBarElement, IAction> elementActions;
-    private ClientFacade facade;
 
     public ResourceBarController(IResourceBarView view)
     {
-
         super(view);
-
-        elementActions = new HashMap<ResourceBarElement, IAction>();
+        elementActions = new HashMap<>();
         facade = ClientFacade.getInstance();
-        initFromModel();
+        updateView();
     }
 
     @Override public IResourceBarView getView()
@@ -47,7 +44,6 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     public void setElementAction(ResourceBarElement element, IAction action)
     {
-
         elementActions.put(element, action);
     }
 
@@ -55,21 +51,18 @@ public class ResourceBarController extends ObserverController implements IResour
      * For each resourceType, buildingType, and cardType for your client's player
      * call getView().setElementAmount
      */
-    public void initFromModel()
+    public void updateView()
     {
         Player player = facade.getPlayer();
         if (player != null)
         {
             PlayerBank bank = player.getBank();
-
             Resources resources = bank.getResources();
             Structures structures = bank.getStructures();
             setResources(resources);
             setStructures(structures);
             getView().setElementAmount(ResourceBarElement.SOLDIERS, bank.getKnights());
-
         }
-
     }
 
     public void setResources(Resources resources)
@@ -145,7 +138,6 @@ public class ResourceBarController extends ObserverController implements IResour
 
         if (elementActions.containsKey(element))
         {
-
             IAction action = elementActions.get(element);
             action.execute();
         }
@@ -153,14 +145,10 @@ public class ResourceBarController extends ObserverController implements IResour
 
     @Override public void update(Observable o, Object arg)
     {
-        ClientModel model = (ClientModel) o;
         if(facade.getClientPlayer().getNormalizedPlayerIndex() != -1)
         {
-            state.update(this, model, arg);
-            initFromModel();
-            state.updateView();
+            updateView();
         }
-
     }
 
     /**

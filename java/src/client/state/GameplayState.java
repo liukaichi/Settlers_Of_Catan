@@ -24,12 +24,13 @@ public abstract class GameplayState
     protected ClientFacade facade;
     protected ObserverController controller;
     protected TurnStatus currentTurnStatus;
-    private static final Logger LOGGER = Logger.getLogger(GameplayState.class.getName());
+    protected static Logger LOGGER;
 
     public GameplayState()
     {
         facade = ClientFacade.getInstance();
         currentTurnStatus = null;
+        LOGGER = Logger.getLogger(this.getClass().getName());
     }
     /*
      * Chat Controller methods
@@ -40,10 +41,6 @@ public abstract class GameplayState
         this();
         this.controller = controller;
 
-    }
-
-    public void sendMessage(String message)
-    {
     }
 
     /*
@@ -176,15 +173,6 @@ public abstract class GameplayState
     }
 
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
-    {
-
-    }
-
-    /*
-     * Martitime Trade Controller methods
-     */
-
-    public void makeMaritimeTrade(TradeOffer offer)
     {
 
     }

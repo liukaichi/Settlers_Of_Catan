@@ -6,6 +6,7 @@ package client.state;
 import client.base.ObserverController;
 import client.data.RobPlayerInfo;
 import client.discard.DiscardController;
+import client.map.IRobView;
 import client.map.MapController;
 import client.turntracker.TurnTrackerController;
 import shared.definitions.PieceType;
@@ -20,12 +21,17 @@ import java.util.logging.Logger;
  */
 public class RobbingState extends GameplayState
 {
-    /* Logger */
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
+    private IRobView robView;
+    private MapController mapController;
 
     public RobbingState(ObserverController controller)
     {
         super(controller);
+        if(controller instanceof MapController)
+        {
+            mapController = (MapController)controller;
+            robView = mapController.getRobView();
+        }
         currentTurnStatus = TurnStatus.Robbing;
     }
 
@@ -34,9 +40,9 @@ public class RobbingState extends GameplayState
         return facade.canPlaceRobber(hexLoc);
     }
 
-    @Override public void setTurnTrackerInfo(ObserverController newController)
+    @Override public void setTurnTrackerInfo(ObserverController controller)
     {
-        TurnTrackerController turnTrackerController = ((TurnTrackerController) newController);
+        TurnTrackerController turnTrackerController = ((TurnTrackerController) controller);
         turnTrackerController.getView().updateGameState("Let's rob some peeps, yo.", false);
     }
 
@@ -44,7 +50,7 @@ public class RobbingState extends GameplayState
     {
         if (controller instanceof MapController && facade.isMyTurn())
         {
-            ((MapController) controller).getView().startDrop(PieceType.ROBBER, null, false);
+            mapController.getView().startDrop(PieceType.ROBBER, null, false);
         }
         else if (controller instanceof DiscardController)
         {
@@ -60,16 +66,19 @@ public class RobbingState extends GameplayState
     {
         if (controller instanceof MapController)
         {
-            MapController mapController = (MapController) controller;
-            mapController.getRobView().setPlayers(facade.getRobPlayerInfo(hexLoc));
+            robView.setPlayers(facade.getRobPlayerInfo(hexLoc));
             mapController.setRobberLocation(hexLoc);
-            mapController.getRobView().showModal();
+            robView.showModal();
         }
 
     }
     @Override
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
+        if (robView.isModalShowing())
+        {
+            robView.closeModal();
+        }
         facade.robPlayer(victim, location);
     }
 }
