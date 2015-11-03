@@ -5,9 +5,11 @@ package client.state;
 
 import client.base.ObserverController;
 import client.domestic.DomesticTradeController;
+import client.domestic.IAcceptTradeOverlay;
 import client.maritime.MaritimeTradeController;
 import client.resources.ResourceBarController;
 import client.turntracker.TurnTrackerController;
+import com.sun.java.browser.plugin2.DOM;
 import shared.model.TurnTracker;
 
 import java.util.logging.Logger;
@@ -33,8 +35,14 @@ public class NotMyTurnState extends GameplayState
     @Override
     public void acceptTrade(boolean willAccept)
     {
-        LOGGER.fine("State calling facade willAccept(" + willAccept + ").");
-        facade.acceptTrade(willAccept);
+        if(controller instanceof DomesticTradeController) {
+            IAcceptTradeOverlay accept = ((DomesticTradeController)controller).getAcceptOverlay();
+            if (accept.isModalShowing()) {
+                accept.closeModal();
+            }
+            LOGGER.fine("State calling facade willAccept(" + willAccept + ").");
+            facade.acceptTrade(willAccept);
+        }
     }
 
     @Override public void updateView()

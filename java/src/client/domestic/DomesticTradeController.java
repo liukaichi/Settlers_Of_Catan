@@ -86,7 +86,6 @@ public class DomesticTradeController extends ObserverController implements IDome
     {
         state = new DomesticTradeState(this);
         state.startTrade();
-        getTradeOverlay().showModal();
     }
 
     @Override
@@ -105,8 +104,6 @@ public class DomesticTradeController extends ObserverController implements IDome
     public void sendTradeOffer()
     {
         state.sendTradeOffer();
-        getTradeOverlay().closeModal();
-        // getWaitOverlay().updateView();
     }
 
     @Override
@@ -137,34 +134,18 @@ public class DomesticTradeController extends ObserverController implements IDome
     public void cancelTrade()
     {
         state.cancelTrade();
-        getTradeOverlay().closeModal();
     }
 
     @Override
     public void acceptTrade(boolean willAccept)
     {
         state.acceptTrade(willAccept);
-        getAcceptOverlay().closeModal();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
     @Override
     public void update(Observable o, Object arg)
     {
         state.update(this,(ClientModel)o,arg);
-        /*ClientModel model = ((ClientModel)o);
-        if(model.hasTradeOffer())
-        {
-            getAcceptOverlay().showModal();
-        }
-        else if(getTradeOverlay().isModalShowing())
-        {
-            getTradeOverlay().closeModal();
-        }*/
     }
 
 }
