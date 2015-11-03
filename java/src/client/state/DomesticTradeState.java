@@ -123,10 +123,14 @@ public class DomesticTradeState extends GameplayState
                 if(!control.getAcceptOverlay().isModalShowing() && !accepted)
                 {
                     updateAcceptView();
-                    control.getAcceptOverlay().showModal();
+                    if(accept.isModalShowing())
+                        accept.closeModal();
+                    accept.showModal();
                 }
                 else if(accepted)
                 {
+                    if(accept.isModalShowing())
+                        accept.closeModal();
                     control.getAcceptOverlay().closeModal();
                 }
             }

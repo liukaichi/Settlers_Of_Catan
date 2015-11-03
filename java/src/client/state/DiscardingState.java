@@ -46,10 +46,14 @@ public class DiscardingState extends GameplayState
             if(playersHand.totalResources() > 7)
             {
                 updateResources();
+                if(discardController.getDiscardView().isModalShowing())
+                    discardController.getDiscardView().closeModal();
                 discardController.getDiscardView().showModal();
             }
             else
             {
+                if(discardController.getWaitView().isModalShowing())
+                    discardController.getWaitView().closeModal();
                 discardController.getWaitView().showModal();
             }
 
@@ -98,6 +102,8 @@ public class DiscardingState extends GameplayState
     {
         if(discardController.getDiscardView().isModalShowing())
             discardController.getDiscardView().closeModal();
+        if(discardController.getWaitView().isModalShowing())
+            discardController.getWaitView().closeModal();
         discardController.getWaitView().showModal();
         facade.discardResources(discardHand);
         discardHand = null;

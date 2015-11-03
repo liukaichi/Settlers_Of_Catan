@@ -68,6 +68,8 @@ public class RobbingState extends GameplayState
         {
             robView.setPlayers(facade.getRobPlayerInfo(hexLoc));
             mapController.setRobberLocation(hexLoc);
+            if(robView.isModalShowing())
+                robView.closeModal();
             robView.showModal();
         }
 

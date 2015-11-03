@@ -61,7 +61,7 @@ public class MaritimeTradeController extends ObserverController implements IMari
     {
         //TODO do the things above.
 
-        getTradeOverlay().reset();
+        tradeOverlay.reset();
         TreeSet<ResourceType> tradeableResources = new TreeSet<>();
         for (ResourceType type : ResourceType.values())
         {
@@ -72,8 +72,10 @@ public class MaritimeTradeController extends ObserverController implements IMari
 
         tradeOverlay.showGiveOptions(tradeableResources.toArray(new ResourceType[tradeableResources.size()]));
 
-        getTradeOverlay().setTradeEnabled(false);
-        getTradeOverlay().showModal();
+        tradeOverlay.setTradeEnabled(false);
+        if(tradeOverlay.isModalShowing())
+            tradeOverlay.closeModal();
+        tradeOverlay.showModal();
 
     }
 
@@ -91,8 +93,9 @@ public class MaritimeTradeController extends ObserverController implements IMari
             LOGGER.warning("Something went wrong with Maritime trade. Shouldn't have gotten here");
         }
         facade.makeMaritimeTrade(TradeRatio.fromInt(tradingRatio), resourceToGive, resourceToReceive);
-        getTradeOverlay().hideGiveOptions();
-        getTradeOverlay().closeModal();
+        tradeOverlay.hideGiveOptions();
+        if(tradeOverlay.isModalShowing())
+            tradeOverlay.closeModal();
         tradingRatio = -1;
         resourceToGive = null;
         resourceToReceive = null;
@@ -103,7 +106,8 @@ public class MaritimeTradeController extends ObserverController implements IMari
      */
     @Override public void cancelTrade()
     {
-        getTradeOverlay().closeModal();
+        if(tradeOverlay.isModalShowing())
+            tradeOverlay.closeModal();
         tradingRatio = -1;
         resourceToGive = null;
         resourceToReceive = null;
@@ -162,7 +166,7 @@ public class MaritimeTradeController extends ObserverController implements IMari
      */
     @Override public void unsetGetValue()
     {
-        getTradeOverlay().setTradeEnabled(false);
+        tradeOverlay.setTradeEnabled(false);
         resourceToReceive = null;
         TreeSet<ResourceType> tradeableResources = new TreeSet<>();
         for (ResourceType type : ResourceType.values())
