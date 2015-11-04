@@ -172,14 +172,15 @@ public class JoinGameController extends ObserverController implements IJoinGameC
 
     @Override public void startCreateNewGame()
     {
-
+        if(getNewGameView().isModalShowing())
+            getNewGameView().closeModal();
         getNewGameView().showModal();
     }
 
     @Override public void cancelCreateNewGame()
     {
-
-        getNewGameView().closeModal();
+        if(getNewGameView().isModalShowing())
+            getNewGameView().closeModal();
     }
 
     /**
@@ -198,7 +199,8 @@ public class JoinGameController extends ObserverController implements IJoinGameC
         String name = getNewGameView().getTitle();
 
         facade.createNewGame(new CreateGameRequest(randomTiles, randomNumbers, randomPorts, name));
-        getNewGameView().closeModal();
+        if(getNewGameView().isModalShowing())
+            getNewGameView().closeModal();
         this.start();
     }
 
@@ -253,7 +255,8 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     @Override public void cancelJoinGame()
     {
         joiningGame = false;
-        getJoinGameView().closeModal();
+        if(getJoinGameView().isModalShowing())
+            getJoinGameView().closeModal();
     }
 
     /**

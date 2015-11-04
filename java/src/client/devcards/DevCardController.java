@@ -59,7 +59,7 @@ public class DevCardController extends ObserverController implements IDevCardCon
         return buyCardView;
     }
 
-    public void initFromModel(){
+    public void updateView(){
         Player player = facade.getPlayer();
         DevCards devCards = player.getBank().getDevCards();
 
@@ -86,35 +86,40 @@ public class DevCardController extends ObserverController implements IDevCardCon
     @Override
     public void startBuyCard()
     {
-
+        if(getBuyCardView().isModalShowing())
+            getBuyCardView().closeModal();
         getBuyCardView().showModal();
     }
 
     @Override
     public void cancelBuyCard()
     {
-
-        getBuyCardView().closeModal();
+        if(getBuyCardView().isModalShowing())
+            getBuyCardView().closeModal();
     }
 
     @Override
     public void buyCard()
     {
         state.buyDevCard();
-        getBuyCardView().closeModal();
+        if(getBuyCardView().isModalShowing())
+            getBuyCardView().closeModal();
 
     }
 
     @Override
     public void startPlayCard()
     {
+        if(getPlayCardView().isModalShowing())
+            getPlayCardView().closeModal();
         getPlayCardView().showModal();
     }
 
     @Override
     public void cancelPlayCard()
     {
-        getPlayCardView().closeModal();
+        if(getPlayCardView().isModalShowing())
+            getPlayCardView().closeModal();
     }
 
     @Override
@@ -159,7 +164,7 @@ public class DevCardController extends ObserverController implements IDevCardCon
         ClientModel model = (ClientModel) o;
         if(facade.getClientPlayer().getNormalizedPlayerIndex() != -1) {
             state.update(this, model, arg);
-            initFromModel();
+            updateView();
         }
 
     }

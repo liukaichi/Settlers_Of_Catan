@@ -19,7 +19,7 @@ public class GameHistoryController extends ObserverController implements IGameHi
 
         super(view);
 
-        //initFromModel();
+        //updateView();
     }
 
     @Override

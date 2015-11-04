@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  */
 public class DomesticTradeState extends GameplayState
 {
-    private static final Logger LOGGER = Logger.getLogger(DomesticTradeState.class.getName());
     private ClientFacade facade;
     private TradeOffer offer;
     private boolean accepted = false;
@@ -42,9 +41,7 @@ public class DomesticTradeState extends GameplayState
             trade = control.getTradeOverlay();
             accept = control.getAcceptOverlay();
             player = facade.getPlayer();
-            //currentTurnStatus = facade.getModel().getTurnTracker().getStatus();
             initializeTradeView();
-            //updateTradeView();
         }
     }
 
@@ -126,10 +123,14 @@ public class DomesticTradeState extends GameplayState
                 if(!control.getAcceptOverlay().isModalShowing() && !accepted)
                 {
                     updateAcceptView();
-                    control.getAcceptOverlay().showModal();
+                    if(accept.isModalShowing())
+                        accept.closeModal();
+                    accept.showModal();
                 }
                 else if(accepted)
                 {
+                    if(accept.isModalShowing())
+                        accept.closeModal();
                     control.getAcceptOverlay().closeModal();
                 }
             }
@@ -143,18 +144,6 @@ public class DomesticTradeState extends GameplayState
                 {
                     control.getWaitOverlay().closeModal();
                 }
-            }
-            else
-            {
-                //do nothing
-                /*if(!control.getWaitOverlay().isModalShowing())
-                {
-                    control.getWaitOverlay().showModal();
-                }
-                else if(accepted)
-                {
-                    control.getWaitOverlay().closeModal();
-                }*/
             }
 
         }
@@ -180,7 +169,6 @@ public class DomesticTradeState extends GameplayState
 
     private boolean canDecrease(ResourceType type)
     {
-        int playerAmount = playerHand.getAmount(type);
         int offerAmount = offer.getOffer(type);
         switch(offer.getResourceHand(type))
         {
@@ -211,11 +199,16 @@ public class DomesticTradeState extends GameplayState
     public void startTrade()
     {
         updateTradeView();
+        if(trade.isModalShowing())
+            trade.closeModal();
+        trade.showModal();
     }
 
     @Override
     public void cancelTrade()
     {
+        if(trade.isModalShowing())
+            trade.closeModal();
         controller.setState(new PlayingState(controller));
     }
 
@@ -279,19 +272,20 @@ public class DomesticTradeState extends GameplayState
 
     @Override public void sendTradeOffer()
     {
-        super.sendTradeOffer();
-        trade.closeModal();
+        if(trade.isModalShowing())
+            trade.closeModal();
         accepted = true;
-        facade.sendTradeOffer(PlayerIndex.fromInt(offer.getReceiver()), offer.getOffer(ResourceType.BRICK),
-                offer.getOffer(ResourceType.ORE),offer.getOffer(ResourceType.SHEEP),
-                offer.getOffer(ResourceType.WHEAT),offer.getOffer(ResourceType.WOOD));
+        facade.sendTradeOffer(offer);
     }
 
     @Override public void acceptTrade(boolean willAccept)
     {
-        super.acceptTrade(willAccept);
         accepted = true;
         facade.acceptTrade(willAccept);
+        if(accept.isModalShowing())
+        {
+            accept.closeModal();
+        }
     }
 
 

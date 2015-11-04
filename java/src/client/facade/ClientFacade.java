@@ -19,6 +19,7 @@ import shared.model.ClientModel;
 import shared.model.bank.Bank;
 import shared.model.bank.resource.Resources;
 import shared.model.player.Player;
+import shared.model.player.TradeOffer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -752,5 +753,11 @@ public class ClientFacade
     public IProxy getProxy()
     {
         return proxy;
+    }
+
+    public void sendTradeOffer(TradeOffer offer) {
+        sendTradeOffer(PlayerIndex.fromInt(offer.getReceiver()), offer.getOffer(ResourceType.BRICK),
+                offer.getOffer(ResourceType.ORE),offer.getOffer(ResourceType.SHEEP),
+                offer.getOffer(ResourceType.WHEAT),offer.getOffer(ResourceType.WOOD));
     }
 }

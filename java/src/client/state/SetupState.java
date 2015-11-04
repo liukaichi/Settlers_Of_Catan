@@ -19,8 +19,6 @@ import java.util.logging.Logger;
  */
 public class SetupState extends GameplayState
 {
-    /* Logger */
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
     private boolean roundComplete = false;
     private boolean road2 = false;
 
@@ -29,16 +27,6 @@ public class SetupState extends GameplayState
         super(controller);
         currentTurnStatus = round;
     }
-
-    /*
-     * Map controller methods
-     */
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#canPlaceRoad(shared.definitions.
-     * PlayerIndex, shared.locations.EdgeLocation)
-     */
     @Override public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return facade.canPlaceRoad(edgeLoc, true);
@@ -49,12 +37,6 @@ public class SetupState extends GameplayState
         facade.placeRoad(edgeLoc, true);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see client.state.ICatanGameMethods#canPlaceSettlement(shared.locations.
-     * VertexLocation)
-     */
     @Override public boolean canPlaceSettlement(VertexLocation vertLoc)
     {
         return facade.canPlaceSettlement(vertLoc, true);

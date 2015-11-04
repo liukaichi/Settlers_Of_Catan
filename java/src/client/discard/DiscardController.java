@@ -71,7 +71,6 @@ public class DiscardController extends ObserverController implements IDiscardCon
     @Override
     public void discard()
     {
-        //TODO
         state.discardResources();
     }
 

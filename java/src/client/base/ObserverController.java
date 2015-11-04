@@ -9,6 +9,7 @@ import client.state.InitialState;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Logger;
 
 /**
  * @author cstaheli
@@ -16,6 +17,8 @@ import java.util.Observer;
 public abstract class ObserverController extends Controller implements Observer
 {
     protected GameplayState state;
+    protected ClientFacade facade;
+    protected static Logger LOGGER;
 
     /**
      * @param view the view that this controller uses.
@@ -24,7 +27,9 @@ public abstract class ObserverController extends Controller implements Observer
     {
         super(view);
         state = new InitialState();
-        ClientFacade.getInstance().addObserver(this);
+        LOGGER = Logger.getLogger(this.getClass().getName());
+        facade = ClientFacade.getInstance();
+        facade.addObserver(this);
     }
 
     public void setState(GameplayState state)

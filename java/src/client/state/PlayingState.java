@@ -4,6 +4,7 @@ import client.base.ObserverController;
 import client.data.RobPlayerInfo;
 import client.discard.DiscardController;
 import client.domestic.DomesticTradeController;
+import client.map.IRobView;
 import client.map.MapController;
 import client.maritime.MaritimeTradeController;
 import client.resources.ResourceBarController;
@@ -27,14 +28,18 @@ import java.util.logging.Logger;
 public class PlayingState extends GameplayState
 {
     private static final Logger LOGGER = Logger.getLogger(PlayingState.class.getName());
-    private boolean isDevCard;
-    private EdgeLocation edgeLoc1;
+    private MapController mapController;
+    private IRobView robView;
 
     public PlayingState(ObserverController controller)
     {
         super(controller);
         currentTurnStatus = TurnStatus.Playing;
-        isDevCard = false;
+        if(controller instanceof MapController)
+        {
+            mapController = (MapController)controller;
+            robView = mapController.getRobView();
+        }
     }
 
     @Override public void endTurn()
@@ -86,46 +91,27 @@ public class PlayingState extends GameplayState
 
     @Override public void placeRoad(EdgeLocation edgeLoc)
     {
-        MapController ctrl = (MapController) controller;
-
-        if(ctrl.isDevCard()){
-
-            if(ctrl.getRoadBuildingLoc1() == null){
-                ctrl.setRoadBuildingLoc1(edgeLoc);
-                ctrl.getView().placeRoad(edgeLoc, facade.getPlayer().getPlayerColor());
+        if(mapController.isDevCard()){
+            if(mapController.getRoadBuildingLoc1() == null){
+                mapController.setRoadBuildingLoc1(edgeLoc);
+                mapController.getView().placeRoad(edgeLoc, facade.getPlayer().getPlayerColor());
                 try {
                     facade.getModel().getMap().forcePlaceRoad(facade.getPlayer().getPlayerIndex(), edgeLoc);
                 } catch (PlacementException e) {
                     e.printStackTrace();
                 }
-
-                ctrl.startMove(PieceType.ROAD, true, false);
+                mapController.startMove(PieceType.ROAD, true, false);
             }
             else
             {
-//                ctrl.setRoadBuildingLoc2(edgeLoc);
-                facade.playRoadBuildingCard(ctrl.getRoadBuildingLoc1(), edgeLoc);
-                ctrl.setIsDevCard(false);
-                ctrl.setRoadBuildingLoc1(null);
+                facade.playRoadBuildingCard(mapController.getRoadBuildingLoc1(), edgeLoc);
+                mapController.setIsDevCard(false);
+                mapController.setRoadBuildingLoc1(null);
             }
-
-
-//            if(edgeLoc1 == null){
-//                edgeLoc1 = edgeLoc;
-//                ((MapController) controller).setRoadBuildingLoc(edgeLoc);
-////                facade.placeRoad(edgeLoc1, true);
-//            }
-//            else{
-////                facade.placeRoad(edgeLoc, true);
-//                facade.playRoadBuildingCard(edgeLoc1, edgeLoc);
-//                isDevCard = false;
-//                edgeLoc1 = null;
-//            }
         }
         else
         {
             facade.placeRoad(edgeLoc, false);
-
         }
     }
 
@@ -174,13 +160,11 @@ public class PlayingState extends GameplayState
 
     @Override public void playRoadBuildingCard()
     {
-        MapController ctrl = (MapController) controller;
-        facade.playRoadBuildingCard(ctrl.getRoadBuildingLoc1(), ctrl.getRoadBuildingLoc2());
+        facade.playRoadBuildingCard(mapController.getRoadBuildingLoc1(), mapController.getRoadBuildingLoc2());
     }
 
     @Override public void playSoldierCard(RobPlayerInfo info, HexLocation location)
     {
-        isDevCard = true;
         facade.playSoldierCard(info, location);
     }
     @Override
@@ -188,15 +172,20 @@ public class PlayingState extends GameplayState
 
         if (controller instanceof MapController)
         {
-            MapController mapController = (MapController) controller;
-            mapController.getRobView().setPlayers(facade.getRobPlayerInfo(hexLoc));
+            robView.setPlayers(facade.getRobPlayerInfo(hexLoc));
             mapController.setRobberLocation(hexLoc);
-            mapController.getRobView().showModal();
+            if(robView.isModalShowing())
+                robView.closeModal();
+            robView.showModal();
         }
     }
     @Override
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
+        if (robView.isModalShowing())
+        {
+            robView.closeModal();
+        }
         facade.playSoldierCard(victim, location);
     }
 
@@ -204,20 +193,13 @@ public class PlayingState extends GameplayState
     {
         if (controller instanceof MapController)
         {
-            ((MapController) controller).getView()
-                    .startDrop(pieceType, facade.getClientPlayer().getColor(), true);
+            mapController.getView().startDrop(pieceType, facade.getClientPlayer().getColor(), true);
         }
     }
 
     @Override public void updateView()
     {
-        if (controller instanceof MapController)
-        {
-            //((MapController) controller).getView().startDrop(PieceType.ROBBER, null, false);
-            //((MapController) controller).getRobView().updateView();
-
-        }
-        else if (controller instanceof DiscardController)
+        if (controller instanceof DiscardController)
         {
             DiscardController control = (DiscardController) controller;
             if(control.getWaitView().isModalShowing())

@@ -16,8 +16,6 @@ import java.util.logging.Logger;
  */
 public class RollingState extends GameplayState
 {
-    /* Logger */
-    private final Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     public RollingState(ObserverController controller)
     {
@@ -34,6 +32,8 @@ public class RollingState extends GameplayState
             diceRollResult = dice.rollDice();
             rollController.getResultView().setRollValue(diceRollResult);
             facade.rollDice(diceRollResult);
+            if(rollController.getResultView().isModalShowing())
+                rollController.getResultView().closeModal();
             rollController.getResultView().showModal();
         }
         else{
@@ -47,6 +47,8 @@ public class RollingState extends GameplayState
     {
         if (controller instanceof RollController)
         {
+            if(((RollController) controller).getRollView().isModalShowing())
+                ((RollController) controller).getRollView().closeModal();
             ((RollController) controller).getRollView().showModal();
         }
         else if (controller instanceof TurnTrackerController)

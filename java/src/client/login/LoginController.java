@@ -70,7 +70,8 @@ public class LoginController extends Controller implements ILoginController
     @Override
     public void start()
     {
-
+        if(getLoginView().isModalShowing())
+            getLoginView().closeModal();
         getLoginView().showModal();
     }
 
@@ -97,6 +98,8 @@ public class LoginController extends Controller implements ILoginController
         {
             getMessageView().setTitle("Error Yo!");
             getMessageView().setMessage("Yo Homie, that login shiz there aint gonna work!");
+            if(getMessageView().isModalShowing())
+                getMessageView().closeModal();
             getMessageView().showModal();
         }
 
@@ -128,6 +131,8 @@ public class LoginController extends Controller implements ILoginController
         {
             getMessageView().setTitle("Invalid Sign-In Homes!");
             getMessageView().setMessage("Yo, Homie, " + e.getMessage());
+            if(getMessageView().isModalShowing())
+                getMessageView().closeModal();
             getMessageView().showModal();
         }
     }
