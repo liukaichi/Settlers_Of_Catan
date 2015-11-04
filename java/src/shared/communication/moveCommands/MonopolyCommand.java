@@ -43,4 +43,9 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
         obj.addProperty("resource", src.resource.toString().toLowerCase());
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }

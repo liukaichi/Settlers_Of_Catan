@@ -19,4 +19,8 @@ public class MonumentCommand extends SimpleCommandSerializer
         super(MoveType.Monument, playerIndex);
     }
 
+    @Override public void execute()
+    {
+
+    }
 }

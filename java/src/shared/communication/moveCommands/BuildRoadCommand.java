@@ -50,4 +50,9 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
         obj.addProperty("free", isFree);
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }

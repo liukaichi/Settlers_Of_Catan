@@ -46,4 +46,8 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
         return obj;
     }
 
+    @Override public void execute()
+    {
+
+    }
 }

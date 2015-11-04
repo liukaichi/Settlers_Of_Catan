@@ -47,4 +47,9 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
         obj.add("spot2", src.spot2.serialize(src.spot2, src.spot2.getClass(), context));
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }

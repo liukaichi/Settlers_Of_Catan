@@ -42,4 +42,9 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
         obj.addProperty("number", number);
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }

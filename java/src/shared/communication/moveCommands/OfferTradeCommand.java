@@ -54,4 +54,9 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
         obj.addProperty("type", src.type.toString());
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }

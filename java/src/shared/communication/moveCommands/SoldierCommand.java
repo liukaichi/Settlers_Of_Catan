@@ -24,4 +24,9 @@ public class SoldierCommand extends RobPlayerCommand
         this.type = MoveType.Soldier;
     }
 
+    @Override public void execute()
+    {
+
+    }
+
 }

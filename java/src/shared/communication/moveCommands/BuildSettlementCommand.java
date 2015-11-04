@@ -53,4 +53,8 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
         return obj;
     }
 
+    @Override public void execute()
+    {
+
+    }
 }

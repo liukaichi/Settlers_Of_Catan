@@ -55,4 +55,9 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
         obj.add("location", location);
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }

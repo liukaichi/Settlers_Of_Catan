@@ -56,4 +56,9 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
         obj.addProperty("outputResource", src.outputResource.toString().toLowerCase());
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }

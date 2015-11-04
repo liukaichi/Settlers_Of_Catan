@@ -42,4 +42,9 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
         obj.addProperty("willAccept", willAccept);
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }

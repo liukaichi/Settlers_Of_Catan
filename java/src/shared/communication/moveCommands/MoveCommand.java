@@ -57,4 +57,6 @@ public abstract class MoveCommand
         obj.addProperty("playerIndex", src.playerIndex.getIndex());
         return obj;
     }
+
+    public abstract void execute();
 }

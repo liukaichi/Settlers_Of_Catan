@@ -43,4 +43,9 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
         obj.addProperty("content", content);
         return obj;
     }
+
+    @Override public void execute()
+    {
+
+    }
 }
