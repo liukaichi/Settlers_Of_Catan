@@ -9,7 +9,7 @@ import shared.definitions.*;
  * @author Cache Staheli
  *
  */
-public class FinishTurnCommand extends SimpleCommandSerializer
+public class FinishTurnCommand extends SimpleSerializableCommand
 {
     /**
      * @param playerIndex

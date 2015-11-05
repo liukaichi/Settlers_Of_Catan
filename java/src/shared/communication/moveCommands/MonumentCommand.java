@@ -9,7 +9,7 @@ import shared.definitions.*;
  * @author Cache Staheli
  *
  */
-public class MonumentCommand extends SimpleCommandSerializer
+public class MonumentCommand extends SimpleSerializableCommand
 {
 
     /**

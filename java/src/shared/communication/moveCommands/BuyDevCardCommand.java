@@ -9,7 +9,7 @@ import shared.definitions.*;
  * @author Cache Staheli
  *
  */
-public class BuyDevCardCommand extends SimpleCommandSerializer
+public class BuyDevCardCommand extends SimpleSerializableCommand
 {
 
     /**

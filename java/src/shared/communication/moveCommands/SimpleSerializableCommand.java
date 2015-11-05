@@ -15,14 +15,14 @@ import shared.definitions.*;
  * @author cstaheli
  *
  */
-public abstract class SimpleCommandSerializer extends MoveCommand implements JsonSerializer<SimpleCommandSerializer>
+public abstract class SimpleSerializableCommand extends MoveCommand implements JsonSerializer<SimpleSerializableCommand>
 {
 
     /**
      * @param type the type of move.
      * @param playerIndex the index of the player sending the command.
      */
-    public SimpleCommandSerializer(MoveType type, PlayerIndex playerIndex)
+    public SimpleSerializableCommand(MoveType type, PlayerIndex playerIndex)
     {
         super(type, playerIndex);
     }
@@ -34,7 +34,7 @@ public abstract class SimpleCommandSerializer extends MoveCommand implements Jso
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
     @Override
-    public JsonElement serialize(SimpleCommandSerializer src, Type srcType, JsonSerializationContext context)
+    public JsonElement serialize(SimpleSerializableCommand src, Type srcType, JsonSerializationContext context)
     {
         return serializeCommand(src);
     }
