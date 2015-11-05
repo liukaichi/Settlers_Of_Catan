@@ -1,5 +1,6 @@
 package shared.communication.moveCommands;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 
 /**
@@ -18,7 +19,7 @@ public class FinishTurnCommand extends SimpleCommandSerializer
         super(MoveType.finishTurn, playerIndex);
     }
 
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

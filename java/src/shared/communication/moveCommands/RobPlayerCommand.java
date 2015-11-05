@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import com.google.gson.*;
 
 import client.data.RobPlayerInfo;
+import server.facade.IServerFacade;
 import shared.definitions.*;
 import shared.locations.HexLocation;
 
@@ -56,7 +57,7 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
         return obj;
     }
 
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

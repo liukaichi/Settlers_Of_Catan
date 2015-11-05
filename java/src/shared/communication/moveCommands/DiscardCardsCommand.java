@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 import shared.model.bank.resource.Resources;
 
@@ -63,7 +64,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
         return obj;
     }
 
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

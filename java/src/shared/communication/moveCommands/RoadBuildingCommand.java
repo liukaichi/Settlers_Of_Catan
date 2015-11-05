@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 
@@ -48,7 +49,7 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
         return obj;
     }
 
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

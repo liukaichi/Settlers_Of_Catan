@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 import shared.locations.VertexLocation;
 
@@ -53,7 +54,7 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
         return obj;
     }
 
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

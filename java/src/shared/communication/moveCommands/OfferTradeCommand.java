@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 import shared.model.player.TradeOffer;
 
@@ -78,8 +79,9 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     /**
      * Calls offerTrade method on the Server Facade
      * @return Json String representing the current state of the Server Model
+     * @param facade
      */
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

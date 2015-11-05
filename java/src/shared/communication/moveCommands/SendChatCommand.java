@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 
 /**
@@ -64,8 +65,9 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
     /**
      * Calls sendChat method from the Server Facade
      * @return Json String representing the current state of the Server Model
+     * @param facade
      */
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

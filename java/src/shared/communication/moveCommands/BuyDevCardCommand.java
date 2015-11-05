@@ -1,5 +1,6 @@
 package shared.communication.moveCommands;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 
 /**
@@ -19,7 +20,7 @@ public class BuyDevCardCommand extends SimpleCommandSerializer
         super(MoveType.buyDevCard, playerIndex);
     }
 
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

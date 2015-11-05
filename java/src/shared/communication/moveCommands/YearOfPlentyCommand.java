@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 
 /**
@@ -47,7 +48,7 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
         return obj;
     }
 
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

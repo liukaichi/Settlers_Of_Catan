@@ -1,5 +1,6 @@
 package shared.communication.moveCommands;
 
+import server.facade.IServerFacade;
 import shared.definitions.*;
 import shared.locations.HexLocation;
 
@@ -23,7 +24,7 @@ public class SoldierCommand extends RobPlayerCommand
         this.type = MoveType.Soldier;
     }
 
-    @Override public String execute()
+    @Override public String execute(IServerFacade facade)
     {
         return null;
     }

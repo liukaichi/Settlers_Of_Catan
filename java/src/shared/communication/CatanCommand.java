@@ -1,5 +1,7 @@
 package shared.communication;
 
+import server.facade.IServerFacade;
+
 /**
  * This is the Super Class for all commands sent across this server. It is intended that ServerHandlers will be able to
  * take server contexts and create classes from the context name, and call Object.execute() on them, and the
@@ -17,6 +19,7 @@ public interface CatanCommand
      * This is to be implemented in different ways depending on the type of command.
      * @return the Json response for this command. Typically, this will be a serialized form of the CatanModel, but
      * some commands return some other response object.
+     * @param facade
      */
-    String execute();
+    String execute(IServerFacade facade);
 }
