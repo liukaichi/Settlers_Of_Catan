@@ -12,6 +12,7 @@ import shared.definitions.*;
 import shared.definitions.exceptions.AddAIException;
 import shared.definitions.exceptions.GameQueryException;
 import shared.definitions.exceptions.SignInException;
+import shared.facade.IUserFacade;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -32,7 +33,7 @@ import java.util.logging.Logger;
  * else will call the Facade to do actions. This class contains all available
  * communications with the model.
  */
-public class ClientFacade
+public class ClientFacade implements IUserFacade
 {
     private static ClientFacade _instance = null;
     private ClientModel model;

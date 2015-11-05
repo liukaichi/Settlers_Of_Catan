@@ -1,4 +1,4 @@
-package server.facade;
+package shared.facade;
 
 import shared.model.ClientModel;
 

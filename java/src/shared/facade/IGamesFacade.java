@@ -1,4 +1,4 @@
-package server.facade;
+package shared.facade;
 
 import client.data.GameInfo;
 
