@@ -38,5 +38,9 @@ public abstract class SimpleSerializableCommand extends MoveCommand implements J
     {
         return serializeCommand(src);
     }
-
+    
+    protected SimpleSerializableCommand()
+    {
+    	
+    }
 }

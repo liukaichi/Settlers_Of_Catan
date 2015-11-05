@@ -6,6 +6,7 @@ import com.google.gson.*;
 
 import server.facade.IServerFacade;
 import shared.definitions.*;
+import shared.model.bank.resource.Resources;
 
 /**
  * acceptTrade command object.
@@ -59,10 +60,18 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
     /**
      * Calls acceptTrade method on the Server Facade
      * @return Json String representing the current state of the Server Model
-     * @param facade
      */
-    @Override public String execute(IServerFacade facade)
+    public String execute()
     {
         return null;
     }
+
+	/* (non-Javadoc)
+	 * @see shared.communication.CatanCommand#execute(server.facade.IServerFacade)
+	 */
+	@Override
+	public String execute(IServerFacade facade) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
