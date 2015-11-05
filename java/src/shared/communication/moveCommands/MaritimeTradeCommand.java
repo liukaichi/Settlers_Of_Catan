@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import server.facade.IServerFacade;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.model.player.TradeOffer;
 
@@ -46,7 +46,7 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
      * Constructs a MaritimeTradeCommand from the client
      * @param json, the serialized MaritimeTradeCommand from the client
      */
-    public MaritimeTradeCommand(String json)
+    public MaritimeTradeCommand(String json, AbstractServerFacade facade)
     {
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
@@ -77,9 +77,8 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
     /**
      * Calls maritimeTrade method on the Server Facade
      * @return Json String representing the current state of the Server Model
-     * @param facade
      */
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }

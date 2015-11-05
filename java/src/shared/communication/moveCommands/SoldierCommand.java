@@ -1,6 +1,6 @@
 package shared.communication.moveCommands;
 
-import server.facade.IServerFacade;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.locations.HexLocation;
 
@@ -27,17 +27,16 @@ public class SoldierCommand extends RobPlayerCommand
      * Constructor that takes in JSON and parses it.
      * @param json JSON of the DiscardCardsCommand
      */
-    public SoldierCommand(String json)
+    public SoldierCommand(String json, AbstractServerFacade facade)
     {
-        super(json);
+        super(json, facade);
     }
 
     /**
      * Robs the player that is specified
-     * @param facade
      * @return returns the updated model
      */
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }

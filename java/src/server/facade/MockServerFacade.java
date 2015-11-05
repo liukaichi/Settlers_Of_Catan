@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by cstaheli on 11/4/2015.
  */
-public class MockServerFacade implements IServerFacade
+public class MockServerFacade extends AbstractServerFacade
 {
     @Override public ClientModel getGameState()
     {

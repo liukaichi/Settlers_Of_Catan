@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import server.facade.IServerFacade;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.model.bank.resource.Resources;
 
@@ -41,7 +41,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      * Constructor that takes in JSON and parses it.
      * @param json JSON of the DiscardCardsCommand
      */
-    public DiscardCardsCommand(String json)
+    public DiscardCardsCommand(String json, AbstractServerFacade facade)
     {
 
     }
@@ -78,7 +78,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
     * This will discard the amount of cards within the resources object to subtract from the ServerModel
      * @return returns the JSON of the new model after the discards are completed
     */
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }

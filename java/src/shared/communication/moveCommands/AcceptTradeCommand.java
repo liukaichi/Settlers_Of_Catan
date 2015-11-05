@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import server.facade.IServerFacade;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.model.bank.resource.Resources;
 
@@ -35,7 +35,7 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
      * Constructs a AcceptTradeCommand from the client
      * @param json, the serialized AcceptTradeCommand from the client
      */
-    public AcceptTradeCommand(String json)
+    public AcceptTradeCommand(String json, AbstractServerFacade facade)
     {
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
@@ -61,17 +61,8 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
      * Calls acceptTrade method on the Server Facade
      * @return Json String representing the current state of the Server Model
      */
-    public String execute()
+    @Override public String execute()
     {
         return null;
     }
-
-	/* (non-Javadoc)
-	 * @see shared.communication.CatanCommand#execute(server.facade.IServerFacade)
-	 */
-	@Override
-	public String execute(IServerFacade facade) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

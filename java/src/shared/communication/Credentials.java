@@ -3,7 +3,6 @@ package shared.communication;
 import java.lang.reflect.Type;
 
 import com.google.gson.*;
-import server.facade.IServerFacade;
 import shared.definitions.exceptions.SignInException;
 
 /**
@@ -122,7 +121,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         return credentials;
     }
 
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }

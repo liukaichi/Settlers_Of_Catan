@@ -1,6 +1,5 @@
 package shared.communication;
 
-import server.facade.IServerFacade;
 import shared.definitions.CatanColor;
 
 /**
@@ -20,7 +19,7 @@ public class JoinGameRequest implements CatanCommand
         this.color = color;
     }
 
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }

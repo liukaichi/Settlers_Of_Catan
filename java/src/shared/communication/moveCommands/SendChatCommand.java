@@ -3,8 +3,7 @@ package shared.communication.moveCommands;
 import java.lang.reflect.Type;
 
 import com.google.gson.*;
-
-import server.facade.IServerFacade;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 
 /**
@@ -35,7 +34,7 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
      * Constructs a SendChatCommand from the client
      * @param json, the serialized SendChatCommand from the client
      */
-    public SendChatCommand(String json)
+    public SendChatCommand(String json, AbstractServerFacade facade)
     {
         JsonParser parser = new JsonParser();
         JsonObject sendChatCommand = (JsonObject) parser.parse(json);
@@ -65,9 +64,8 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
     /**
      * Calls sendChat method from the Server Facade
      * @return Json String representing the current state of the Server Model
-     * @param facade
      */
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }

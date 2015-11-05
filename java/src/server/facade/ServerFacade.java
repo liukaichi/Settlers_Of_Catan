@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by cstaheli on 11/4/2015.
  */
-public class ServerFacade implements IServerFacade
+public class ServerFacade extends AbstractServerFacade
 {
     private ClientModel model;
 

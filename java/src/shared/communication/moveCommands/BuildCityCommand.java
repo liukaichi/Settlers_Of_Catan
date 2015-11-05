@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import server.facade.IServerFacade;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.locations.VertexLocation;
 
@@ -37,7 +37,7 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
      * Parses and creates a BuildCityCommand from Json.
      * @param json the Json to parse.
      */
-    public BuildCityCommand(String json)
+    public BuildCityCommand(String json, AbstractServerFacade facade)
     {
         super(MoveType.buildCity, PlayerIndex.NONE);
     }
@@ -58,9 +58,8 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
 
     /**
      * Calls the ServerFacade to build a city with the data stored inside this command.
-     * @param facade
      */
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }

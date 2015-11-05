@@ -4,7 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import server.facade.IServerFacade;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 
 /**
@@ -33,7 +33,7 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
      * Constructor that takes in JSON and parses it.
      * @param json JSON of the RollNumberCommand
      */
-    public RollNumberCommand(String json)
+    public RollNumberCommand(String json, AbstractServerFacade facade)
     {
 
     }
@@ -58,7 +58,7 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
      * Also changes the state to robbing state if a 7 is rolled.
      * @return returns a JSON of the new model
      */
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }

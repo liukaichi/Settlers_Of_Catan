@@ -5,7 +5,7 @@ import java.lang.reflect.Type;
 import com.google.gson.*;
 
 import client.data.RobPlayerInfo;
-import server.facade.IServerFacade;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.locations.HexLocation;
 
@@ -45,7 +45,7 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      * Constructor that takes in JSON and parses it.
      * @param json JSON of the RobPlayerCommand
      */
-    public RobPlayerCommand(String json)
+    public RobPlayerCommand(String json, AbstractServerFacade facade)
     {
 
     }
@@ -73,7 +73,7 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      * Robs the player and moves the robber the new hex location
      * @return JSON of the new model after the player is robbed.
      */
-    @Override public String execute(IServerFacade facade)
+    @Override public String execute()
     {
         return null;
     }
