@@ -7,7 +7,7 @@ package shared.communication;
  * @author Cache Staheli
  *
  */
-public class CreateGameRequest
+public class CreateGameRequest implements CatanCommand
 {
     private boolean randomTiles, randomNumbers, randomPorts;
     private String name;
@@ -18,5 +18,10 @@ public class CreateGameRequest
         this.randomNumbers = randomNumbers;
         this.randomPorts = randomPorts;
         this.name = name;
+    }
+
+    @Override public void execute()
+    {
+
     }
 }

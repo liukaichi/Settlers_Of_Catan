@@ -59,7 +59,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
     /**
      * Object that represents the trade offer made by a player
      */
-    HashMap<ResourceType, Hand> resourceHand = new HashMap<>();
+    private HashMap<ResourceType, Hand> resourceHand = new HashMap<>();
     private Resources offer;
 
     /*

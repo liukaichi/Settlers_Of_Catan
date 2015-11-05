@@ -9,10 +9,9 @@ import shared.model.player.TradeOffer;
 
 /**
  * offerTrade command object.
- * 
+ *
  * @author Cache Staheli
  * @see TradeOffer
- *
  */
 public class OfferTradeCommand extends MoveCommand implements JsonSerializer<OfferTradeCommand>
 {
@@ -22,7 +21,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     private TradeOffer offer;
 
     /**
-     *  @param sender
+     * @param sender
      * @param reciever
      * @param brick
      * @param wood
@@ -33,7 +32,6 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     public OfferTradeCommand(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat,
             int ore)
     {
-        // TODO fix this. This is not correct.
         super(MoveType.offerTrade, sender);
         offer = new TradeOffer(sender, reciever, brick, wood, sheep, wheat, ore);
         this.type = MoveType.offerTrade;
@@ -45,8 +43,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(OfferTradeCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(OfferTradeCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) src.offer.serialize(src.offer, src.offer.getClass(), context);
         obj.remove("sender");

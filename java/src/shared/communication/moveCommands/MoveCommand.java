@@ -2,6 +2,7 @@ package shared.communication.moveCommands;
 
 import com.google.gson.*;
 
+import shared.communication.CatanCommand;
 import shared.definitions.*;
 
 /**
@@ -12,7 +13,7 @@ import shared.definitions.*;
  * @see MoveType
  * @see PlayerIndex
  */
-public abstract class MoveCommand
+public abstract class MoveCommand implements CatanCommand
 {
     /**
      * The type of the moveCommand
@@ -33,8 +34,8 @@ public abstract class MoveCommand
     }
 
     /**
-     * @param type
-     * @param playerIndex
+     * @param type the type of command that this is (specified by sub-class)
+     * @param playerIndex the index of the player that is executing this command to the server.
      */
     public MoveCommand(MoveType type, PlayerIndex playerIndex)
     {
@@ -46,8 +47,7 @@ public abstract class MoveCommand
     /**
      * Custom Serializer method, based off of interface JsonSerializer<T>
      * 
-     * @param src
-     *        this command
+     * @param src this command
      * @return a JsonElement representing this command
      */
     public JsonElement serializeCommand(MoveCommand src)
@@ -57,6 +57,4 @@ public abstract class MoveCommand
         obj.addProperty("playerIndex", src.playerIndex.getIndex());
         return obj;
     }
-
-    public abstract void execute();
 }

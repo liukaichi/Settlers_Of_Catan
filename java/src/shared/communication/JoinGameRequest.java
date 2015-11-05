@@ -8,7 +8,7 @@ import shared.definitions.CatanColor;
  * @author Cache Staheli
  *
  */
-public class JoinGameRequest
+public class JoinGameRequest implements CatanCommand
 {
     private int id;
     private CatanColor color;
@@ -17,5 +17,10 @@ public class JoinGameRequest
     {
         this.id = id;
         this.color = color;
+    }
+
+    @Override public void execute()
+    {
+
     }
 }

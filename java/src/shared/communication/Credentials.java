@@ -12,7 +12,7 @@ import shared.definitions.exceptions.SignInException;
  * @author amandafisher
  *
  */
-public class Credentials implements JsonSerializer<Credentials>
+public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 {
 
     private Username username;
@@ -121,4 +121,8 @@ public class Credentials implements JsonSerializer<Credentials>
         return credentials;
     }
 
+    @Override public void execute()
+    {
+
+    }
 }
