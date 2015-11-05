@@ -32,6 +32,20 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
     }
 
     /**
+     * Constructs a MaritimeTradeCommand from the client
+     * @param json, the serialized MaritimeTradeCommand from the client
+     */
+    public MaritimeTradeCommand(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject tradeObject = (JsonObject) parser.parse(json);
+        this.type = MoveType.valueOf(tradeObject.getAsJsonPrimitive("type").getAsString());
+        this.playerIndex = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("receiver").getAsInt());
+        this.ratio = TradeRatio.valueOf(tradeObject.get("ratio").getAsString());
+        this.inputResource = ResourceType.valueOf(tradeObject.get("inputResource").getAsString());
+        this.outputResource = ResourceType.valueOf(tradeObject.get("outputResource").getAsString());
+    }
+    /**
      * The ratio at which the maritime offer is being extended.
      * 
      */
@@ -57,6 +71,10 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
         return obj;
     }
 
+    /**
+     * Calls maritimeTrade method on the Server Facade
+     * @return Json String representing the current state of the Server Model
+     */
     @Override public String execute()
     {
         return null;

@@ -30,6 +30,23 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
         this.content = content;
     }
 
+    /**
+     * Constructs a SendChatCommand from the client
+     * @param json, the serialized SendChatCommand from the client
+     */
+    public SendChatCommand(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject sendChatCommand = (JsonObject) parser.parse(json);
+        String moveType = sendChatCommand.get("type").getAsString();
+        int index = sendChatCommand.get("playerIndex").getAsInt();
+        String content = sendChatCommand.get("content").getAsString();
+
+        this.type = MoveType.valueOf(moveType);
+        this.playerIndex = PlayerIndex.fromInt(index);
+        this.content = content;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -44,6 +61,10 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
         return obj;
     }
 
+    /**
+     * Calls sendChat method from the Server Facade
+     * @return Json String representing the current state of the Server Model
+     */
     @Override public String execute()
     {
         return null;

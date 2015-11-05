@@ -37,6 +37,31 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
         this.type = MoveType.offerTrade;
     }
 
+    /**
+     * Constructs a OfferTradeCommand from the client
+     * @param json, the serialized OfferTradeCommand from the client
+     */
+    public OfferTradeCommand(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject offerTradeCommand = (JsonObject) parser.parse(json);
+        String moveType = offerTradeCommand.get("type").getAsString();
+        int sender = offerTradeCommand.get("playerIndex").getAsInt();
+        String content = offerTradeCommand.get("content").getAsString();
+        int receiver = offerTradeCommand.get("receiver").getAsInt();
+
+        JsonObject offer = offerTradeCommand.get("offer").getAsJsonObject();
+        int brick = offer.get("brick").getAsInt();
+        int ore = offer.get("ore").getAsInt();
+        int sheep = offer.get("sheep").getAsInt();
+        int wheat = offer.get("wheat").getAsInt();
+        int wood = offer.get("wood").getAsInt();
+
+        this.type = MoveType.valueOf(moveType);
+        this.playerIndex = PlayerIndex.fromInt(sender);
+        this.offer = new TradeOffer(playerIndex, PlayerIndex.fromInt(receiver),brick,wood,sheep,wheat,ore);
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -52,6 +77,10 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
         return obj;
     }
 
+    /**
+     * Calls offerTrade method on the Server Facade
+     * @return Json String representing the current state of the Server Model
+     */
     @Override public String execute()
     {
         return null;

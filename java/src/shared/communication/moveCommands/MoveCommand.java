@@ -27,7 +27,7 @@ public abstract class MoveCommand implements CatanCommand
     /**
      * 
      */
-    private MoveCommand()
+    protected MoveCommand()
     {
         playerIndex = PlayerIndex.NONE;
         type = null;

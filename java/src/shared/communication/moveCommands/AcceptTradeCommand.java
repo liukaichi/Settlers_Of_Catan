@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import com.google.gson.*;
 
 import shared.definitions.*;
+import shared.model.bank.resource.Resources;
 
 /**
  * acceptTrade command object.
@@ -29,6 +30,18 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
         this.willAccept = willAccept;
     }
 
+    /**
+     * Constructs a AcceptTradeCommand from the client
+     * @param json, the serialized AcceptTradeCommand from the client
+     */
+    public AcceptTradeCommand(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject tradeObject = (JsonObject) parser.parse(json);
+        this.type = MoveType.valueOf(tradeObject.getAsJsonPrimitive("type").getAsString());
+        this.playerIndex = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("receiver").getAsInt());
+        this.willAccept = tradeObject.get("willAccept").getAsBoolean();
+    }
     /*
      * (non-Javadoc)
      * 
@@ -43,6 +56,10 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
         return obj;
     }
 
+    /**
+     * Calls acceptTrade method on the Server Facade
+     * @return Json String representing the current state of the Server Model
+     */
     @Override public String execute()
     {
         return null;
