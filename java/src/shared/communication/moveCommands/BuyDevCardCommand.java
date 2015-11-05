@@ -13,7 +13,8 @@ public class BuyDevCardCommand extends SimpleSerializableCommand
 {
 
     /**
-     * @param playerIndex
+     * Player of playerIndex receives a Development Card and loses a sheep, ore and wheat each.
+     * @param playerIndex Index of player buying a Development Card
      */
     public BuyDevCardCommand(PlayerIndex playerIndex)
     {

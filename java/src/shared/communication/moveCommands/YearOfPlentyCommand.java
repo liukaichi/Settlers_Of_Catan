@@ -22,9 +22,10 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
     private ResourceType resource1, resource2;
 
     /**
-     * @param playerIndex
-     * @param resource1
-     * @param resource2
+     * Player of playerIndex receives resource1 and resource2 for free.
+     * @param playerIndex index of player receiving the resources
+     * @param resource1 first free resource
+     * @param resource2 second free resource
      */
     public YearOfPlentyCommand(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
     {

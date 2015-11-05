@@ -13,7 +13,8 @@ public class MonumentCommand extends SimpleSerializableCommand
 {
 
     /**
-     * @param playerIndex
+     * Player of playerIndex receives a Victory Point
+     * @param playerIndex Index of player receving a Victory Point
      */
     public MonumentCommand(PlayerIndex playerIndex)
     {

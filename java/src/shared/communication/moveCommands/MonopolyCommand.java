@@ -17,8 +17,9 @@ import shared.definitions.*;
 public class MonopolyCommand extends MoveCommand implements JsonSerializer<MonopolyCommand>
 {
     /**
-     * @param playerIndex
-     * @param resource
+     * Player of playerIndex receives all resources of type resource from all players.
+     * @param playerIndex Index of player receiving the resources
+     * @param resource The resource to take from all other players
      */
     public MonopolyCommand(PlayerIndex playerIndex, ResourceType resource)
     {
