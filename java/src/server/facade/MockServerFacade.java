@@ -1,6 +1,8 @@
 package server.facade;
 
 import client.data.GameInfo;
+import shared.communication.Credentials;
+import shared.definitions.exceptions.SignInException;
 import shared.model.ClientModel;
 
 import java.util.List;
@@ -125,12 +127,12 @@ public class MockServerFacade implements IServerFacade
         return null;
     }
 
-    @Override public void userLogin()
+    @Override public void signInUser(Credentials credentials) throws SignInException
     {
 
     }
 
-    @Override public void userRegister()
+    @Override public void registerUser(Credentials credentials) throws SignInException
     {
 
     }

@@ -1,6 +1,8 @@
 package server.facade;
 
 import client.data.GameInfo;
+import shared.communication.Credentials;
+import shared.definitions.exceptions.SignInException;
 import shared.model.ClientModel;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
  */
 public class ServerFacade implements IServerFacade
 {
+    private ClientModel model;
+
     @Override public ClientModel getGameState()
     {
         return null;
@@ -62,6 +66,7 @@ public class ServerFacade implements IServerFacade
 
     @Override public ClientModel buyDevCard()
     {
+        model.buyDevCard();
         return null;
     }
 
@@ -92,16 +97,19 @@ public class ServerFacade implements IServerFacade
 
     @Override public ClientModel buildRoad()
     {
+        model.buildRoad(null, null);
         return null;
     }
 
     @Override public ClientModel buildSettlement()
     {
+        model.buildSettlement(null, null);
         return null;
     }
 
     @Override public ClientModel buildCity()
     {
+        model.buildCity(null, null);
         return null;
     }
 
@@ -125,12 +133,12 @@ public class ServerFacade implements IServerFacade
         return null;
     }
 
-    @Override public void userLogin()
+    @Override public void signInUser(Credentials credentials) throws SignInException
     {
 
     }
 
-    @Override public void userRegister()
+    @Override public void registerUser(Credentials credentials) throws SignInException
     {
 
     }

@@ -3,7 +3,7 @@ package shared.model.bank.structure;
 import shared.definitions.StructureType;
 
 /**
- * This class represents a list of MapStructure in the Catan game
+ * This class represents a list of BankStructure in the Catan game
  */
 public class Structures
 {

@@ -228,30 +228,7 @@ public class CatanMap
         this.robberLocation = robberLocation;
     }
 
-    /**
-     * Method that indicates whether a player has the ability to place a settlement in a certain location on the map
-     *
-     * @param player this will be the player placing the settlement.
-     * @param location this will be the location of the settlement; must ensure that this space on the map is empty.
-     * @param allowDisconnected unused currently.
-     * @return boolean -- returns true if the location is vacant and at least
-     * two spaces away from another settlement otherwise returns false
-     */
-    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
-    {
-        HexLocation hexLocation = location.getHexLoc();
-        if (isHexWithinMapRadius(hexLocation, this.radius))
-        {
-            MapStructure atLocation = structures.get(location);
-            // check if location exists, and is empty
-            if (atLocation == null)
-            {
-                return ((isTwoRoadsAwayFromOpponents(location)) && (isSettlementConnectedToPlayersRoads(location, player)));
-            }
-        }
-        return false;
 
-    }
 
     private boolean isTwoRoadsAwayFromOpponents(VertexLocation location)
     {
@@ -284,14 +261,55 @@ public class CatanMap
     }
 
     /**
+     * Method that indicates whether a player has the ability to place a settlement in a certain location on the map
+     *
+     * @param player this will be the player placing the settlement.
+     * @param location this will be the location of the settlement; must ensure that this space on the map is empty.
+     * @param allowDisconnected unused currently.
+     * @return true if the location is vacant and at least
+     * two spaces away from another settlement otherwise returns false
+     */
+    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
+    {
+        HexLocation hexLocation = location.getHexLoc();
+        if (isHexWithinMapRadius(hexLocation, this.radius))
+        {
+            MapStructure atLocation = structures.get(location);
+            // check if location exists, and is empty
+            if (atLocation == null)
+            {
+                return ((isTwoRoadsAwayFromOpponents(location)) && (isSettlementConnectedToPlayersRoads(location, player)));
+            }
+        }
+        return false;
+
+    }
+
+    /**
+     * Builds a settlement for the given player at the given location.
+     * @param player the player who is building the settlement.
+     * @param location the location where the settlement is being built.
+     */
+    public void buildSettlement(PlayerIndex player, VertexLocation location)
+    {
+
+    }
+
+    public void forcePlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
+    {
+        Settlement settlement = new Settlement(player, location);
+        structures.put(location, settlement);
+    }
+
+    /**
      * Method that indicates whether a player has the ability to place a city in
      * a certain location on the map
      *
-     * @param player   -- this will be the player placing the city
-     * @param location -- this will be the location of the city; must ensure that this
-     *                 space already has a settlement located their owned by this player
-     * @return boolean -- returns true if there is a settlement at the specified
-     * location and it is owned by the player otherwise returns false
+     * @param player this will be the player placing the city
+     * @param location this will be the location of the city; must ensure that this space already has a settlement
+     *                 located their owned by this player
+     * @return true if there is a settlement at the specified location and it is owned by the player otherwise
+     * returns false
      */
     public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
     {
@@ -311,16 +329,25 @@ public class CatanMap
     }
 
     /**
+     * Builds a city for the given player at the given location.
+     * @param player the player who is building the city.
+     * @param location the location where the city is being built.
+     */
+    public void buildCity(PlayerIndex player, VertexLocation location)
+    {
+
+    }
+
+    /**
      * Method that indicates whether a player has the ability to place a city on
      * a certain edge on the map
      *
-     * @param player            -- this will be the player placing the road
-     * @param location          -- this will be the edge location where the road will be placed;
-     *                          must ensure this space is empty on the map
+     * @param player this will be the player placing the road
+     * @param location this will be the edge location where the road will be placed;
+     *                 must ensure this space is empty on the map
      * @param allowDisconnected whether this road must be connected to a settlement/road to place. True only during the setup phase.
-     * @return boolean -- returns true if the player owns a settlement or city
-     * at the neighboring vertex locations and there is no current road
-     * there otherwise returns false
+     * @return true if the player owns a settlement or city at the neighboring vertex locations and there is no current
+     * road there. False otherwise
      */
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location, boolean allowDisconnected)
     {
@@ -367,6 +394,16 @@ public class CatanMap
             }
         }
         return false;
+
+    }
+
+    /**
+     * Builds a road for the given player at the given location.
+     * @param player the player who is building the road.
+     * @param location the location where the road is being built.
+     */
+    public void buildRoad(PlayerIndex player, EdgeLocation location)
+    {
 
     }
 
@@ -490,12 +527,6 @@ public class CatanMap
         Road road = new Road(player, location);
         roads.put(location, road);
 
-    }
-
-    public void forcePlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
-    {
-        Settlement settlement = new Settlement(player, location);
-        structures.put(location, settlement);
     }
 
     public void forcePlaceCity(PlayerIndex player, VertexLocation location) throws PlacementException
@@ -857,4 +888,5 @@ public class CatanMap
     {
         return roads;
     }
+
 }

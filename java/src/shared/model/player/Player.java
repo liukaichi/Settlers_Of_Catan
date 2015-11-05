@@ -117,7 +117,7 @@ public class Player
      *
      * @throws CatanException
      */
-    public void buyRoad() throws CatanException
+    public void buyRoad(boolean isFree) throws CatanException
     {
         bank.buyRoad();
     }
@@ -139,7 +139,7 @@ public class Player
      *
      * @throws CatanException
      */
-    public void buySettlement() throws CatanException
+    public void buySettlement(boolean isFree) throws CatanException
     {
         bank.buySettlement();
     }
