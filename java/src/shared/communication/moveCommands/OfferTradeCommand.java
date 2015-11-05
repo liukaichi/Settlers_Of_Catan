@@ -52,8 +52,8 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

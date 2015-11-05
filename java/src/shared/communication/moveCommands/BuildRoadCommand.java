@@ -51,8 +51,8 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

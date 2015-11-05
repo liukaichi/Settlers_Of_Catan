@@ -19,8 +19,8 @@ public class BuyDevCardCommand extends SimpleCommandSerializer
         super(MoveType.buyDevCard, playerIndex);
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

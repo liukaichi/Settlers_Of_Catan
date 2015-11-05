@@ -20,8 +20,8 @@ public class CreateGameRequest implements CatanCommand
         this.name = name;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

@@ -47,8 +47,8 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

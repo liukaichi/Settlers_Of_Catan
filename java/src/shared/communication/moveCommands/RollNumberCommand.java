@@ -43,8 +43,8 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

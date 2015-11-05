@@ -44,8 +44,8 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

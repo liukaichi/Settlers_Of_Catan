@@ -43,8 +43,8 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

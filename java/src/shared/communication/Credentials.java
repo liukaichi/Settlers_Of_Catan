@@ -121,8 +121,8 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         return credentials;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

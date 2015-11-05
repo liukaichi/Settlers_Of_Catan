@@ -48,8 +48,8 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

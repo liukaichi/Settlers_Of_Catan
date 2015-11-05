@@ -63,8 +63,8 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

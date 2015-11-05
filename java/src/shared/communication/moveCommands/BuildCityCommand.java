@@ -32,6 +32,15 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
         this.cityLocation = cityLocation;
     }
 
+    /**
+     * Parses and creates a BuildCityCommand from Json.
+     * @param json the Json to parse.
+     */
+    public BuildCityCommand(String json)
+    {
+        super(MoveType.buildCity, PlayerIndex.NONE);
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -46,8 +55,11 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
         return obj;
     }
 
-    @Override public void execute()
+    /**
+     * Calls the ServerFacade to build a road with the
+     */
+    @Override public String execute()
     {
-
+        return null;
     }
 }

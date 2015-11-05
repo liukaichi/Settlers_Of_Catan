@@ -44,8 +44,8 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

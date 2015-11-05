@@ -19,8 +19,8 @@ public class JoinGameRequest implements CatanCommand
         this.color = color;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

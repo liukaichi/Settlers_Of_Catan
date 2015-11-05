@@ -18,8 +18,8 @@ public class FinishTurnCommand extends SimpleCommandSerializer
         super(MoveType.finishTurn, playerIndex);
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }

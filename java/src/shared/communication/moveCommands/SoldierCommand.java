@@ -1,6 +1,5 @@
 package shared.communication.moveCommands;
 
-import client.data.RobPlayerInfo;
 import shared.definitions.*;
 import shared.locations.HexLocation;
 
@@ -24,9 +23,9 @@ public class SoldierCommand extends RobPlayerCommand
         this.type = MoveType.Soldier;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 
 }

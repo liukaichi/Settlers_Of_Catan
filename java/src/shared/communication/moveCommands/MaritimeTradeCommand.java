@@ -57,8 +57,8 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
         return obj;
     }
 
-    @Override public void execute()
+    @Override public String execute()
     {
-
+        return null;
     }
 }
