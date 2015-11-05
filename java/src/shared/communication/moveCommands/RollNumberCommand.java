@@ -29,6 +29,14 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
         super(MoveType.rollNumber, playerIndex);
         this.number = number;
     }
+    /**
+     * Constructor that takes in JSON and parses it.
+     * @param json JSON of the RollNumberCommand
+     */
+    public RollNumberCommand(String json)
+    {
+
+    }
 
     /*
      * (non-Javadoc)
@@ -44,6 +52,12 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
         return obj;
     }
 
+ 
+    /**
+     * Rolls the number for the player and gives all the players the earned resources.
+     * Also changes the state to robbing state if a 7 is rolled.
+     * @return returns a JSON of the new model
+     */
     @Override public String execute(IServerFacade facade)
     {
         return null;

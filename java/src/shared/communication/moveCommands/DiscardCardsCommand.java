@@ -38,6 +38,15 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
     }
 
     /**
+     * Constructor that takes in JSON and parses it.
+     * @param json JSON of the DiscardCardsCommand
+     */
+    public DiscardCardsCommand(String json)
+    {
+
+    }
+
+    /**
      * Packages a discard cards command for use by the server.
      * @param index the player discarding cards.
      * @param resources the resources to discard.
@@ -64,6 +73,11 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
         return obj;
     }
 
+
+    /**
+    * This will discard the amount of cards within the resources object to subtract from the ServerModel
+     * @return returns the JSON of the new model after the discards are completed
+    */
     @Override public String execute(IServerFacade facade)
     {
         return null;

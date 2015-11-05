@@ -11,12 +11,10 @@ import java.util.Observable;
  */
 public class PointsController extends ObserverController implements IPointsController
 {
-
     private IGameFinishedView finishedView;
 
     /**
      * PointsController constructor
-     * 
      * @param view
      *        Points view
      * @param finishedView
@@ -24,16 +22,12 @@ public class PointsController extends ObserverController implements IPointsContr
      */
     public PointsController(IPointsView view, IGameFinishedView finishedView)
     {
-
         super(view);
-
         setFinishedView(finishedView);
-
     }
 
     public IPointsView getPointsView()
     {
-
         return (IPointsView) super.getView();
     }
 
@@ -47,11 +41,6 @@ public class PointsController extends ObserverController implements IPointsContr
         this.finishedView = finishedView;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
     @Override
     public void update(Observable o, Object arg)
     {

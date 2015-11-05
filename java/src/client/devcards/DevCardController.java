@@ -64,7 +64,11 @@ public class DevCardController extends ObserverController implements IDevCardCon
         DevCards devCards = player.getBank().getDevCards();
 
         setCards(devCards);
+
+
         disableCards();
+        //getPlayCardView().setCardAmount(DevCardType.MONUMENT,10);
+        //getPlayCardView().setCardEnabled(DevCardType.MONUMENT, true);
     }
 
     private void setCards(DevCards devCards){
