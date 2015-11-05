@@ -37,6 +37,25 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         setPassword(password);
     }
 
+    /**
+     * Constructs a Credentials from the client
+     * @param json, the serialized AcceptTradeCommand from the client
+     */
+    public Credentials(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject credentialsObject = (JsonObject) parser.parse(json);
+        try
+        {
+            this.setUsername(credentialsObject.getAsJsonPrimitive("username").getAsString());
+        }
+        catch (SignInException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     public String getUsername()
     {
         return username.getUsername();

@@ -19,8 +19,14 @@ public class MovesHandler implements HttpHandler
 {
     AbstractServerFacade facade = new MockServerFacade();
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
-    @Override public void handle(HttpExchange httpExchange) throws IOException
-    {
+
+    /**
+     * Parses the HTTP Context for the command and executes it
+     * @param httpExchange
+     * @throws IOException
+     */
+    @Override
+    public void handle(HttpExchange httpExchange) throws IOException {
         LOGGER.entering("MovesHandler", "handle");
         try {
             String clientAddress = httpExchange.getLocalAddress().getHostString();
@@ -39,33 +45,28 @@ public class MovesHandler implements HttpHandler
             out.close();
             responseBody.close();
 
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            LOGGER.severe("Error in server.SubmitBatchHandler.handle(): "
+            LOGGER.severe("Error in server.MovesHandler.handle(): "
                     + e.getMessage());
             e.printStackTrace();
-        } catch (ServerException e) {
+        }
+        catch (ServerException e) {
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,
                     0);
-            LOGGER.severe("Error in server.SubmitBatchHandler.handle(): "
+            LOGGER.severe("Error in server.MovesHandler.handle(): "
                     + e.getMessage());
             e.printStackTrace();
-        } catch (NoSuchMethodException e)
-        {
+        }
+        catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e)
-        {
-            e.printStackTrace();
-        } catch (InstantiationException e)
-        {
-            e.printStackTrace();
-        } catch (InvocationTargetException e)
-        {
-            e.printStackTrace();
-        } finally {
-            if (httpExchange != null)
+        }
+        finally {
+            if (httpExchange != null) {
                 httpExchange.close();
-            LOGGER.exiting("server.server.SubmitBatchHandler", "handle");
+            }
+            LOGGER.exiting("server.server.MovesHandler", "handle");
         }
     }
 }

@@ -10,7 +10,12 @@ import java.io.IOException;
  */
 public class GameHandler implements HttpHandler
 {
-    @Override public void handle(HttpExchange httpExchange) throws IOException
+    /**
+     * Parses the HTTP Context for the command and executes it
+     * @param httpExchange
+     * @throws IOException
+     */
+    @Override public void handle(HttpExchange httpExchange)
     {
 
     }

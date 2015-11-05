@@ -1,5 +1,7 @@
 package shared.communication;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.CatanColor;
 
 /**
@@ -19,6 +21,22 @@ public class JoinGameRequest implements CatanCommand
         this.color = color;
     }
 
+    /**
+     * Constructs a JoinGameRequest from the client
+     * @param json, the serialized JoinGameRequest from the client
+     */
+    public JoinGameRequest(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject joinGameObject = (JsonObject) parser.parse(json);
+        this.id = joinGameObject.getAsJsonPrimitive("id").getAsInt();
+        this.color = CatanColor.valueOf(joinGameObject.getAsJsonPrimitive("color").getAsString());
+    }
+
+    /**
+     * Calls JoinGame method on the Server Facade
+     * @return Json String representing the current state of the Server Model
+     */
     @Override public String execute()
     {
         return null;
