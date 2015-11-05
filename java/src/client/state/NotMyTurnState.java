@@ -9,7 +9,6 @@ import client.domestic.IAcceptTradeOverlay;
 import client.maritime.MaritimeTradeController;
 import client.resources.ResourceBarController;
 import client.turntracker.TurnTrackerController;
-import com.sun.java.browser.plugin2.DOM;
 import shared.model.TurnTracker;
 
 import java.util.logging.Logger;
