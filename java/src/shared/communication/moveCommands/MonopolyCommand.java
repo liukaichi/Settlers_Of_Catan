@@ -17,9 +17,13 @@ import shared.definitions.*;
 public class MonopolyCommand extends MoveCommand implements JsonSerializer<MonopolyCommand>
 {
     /**
-     * Player of playerIndex receives all resources of type resource from all players.
-     * @param playerIndex Index of player receiving the resources
-     * @param resource The resource to take from all other players
+     * The resource the Monopoly Card applies to.
+     */
+    private ResourceType resource;
+
+    /**
+     * @param playerIndex
+     * @param resource
      */
     public MonopolyCommand(PlayerIndex playerIndex, ResourceType resource)
     {
@@ -27,10 +31,7 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
         this.resource = resource;
     }
 
-    /**
-     * The resource the Monopoly Card applies to.
-     */
-    private ResourceType resource;
+
 
     /*
      * (non-Javadoc)

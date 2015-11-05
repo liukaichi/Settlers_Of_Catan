@@ -16,6 +16,17 @@ import shared.locations.EdgeLocation;
  */
 public class BuildRoadCommand extends MoveCommand implements JsonSerializer<BuildRoadCommand>
 {
+
+    /**
+     * Location of the Road.
+     */
+    private EdgeLocation roadLocation;
+    /**
+     * Whether this is placed for free (setup).
+     */
+    private boolean isFree;
+
+
     /**
      * @param playerIndex
      * @param roadLocation
@@ -27,15 +38,6 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
         this.roadLocation = roadLocation;
         this.isFree = isFree;
     }
-
-    /**
-     * Location of the Road.
-     */
-    private EdgeLocation roadLocation;
-    /**
-     * Whether this is placed for free (setup).
-     */
-    private boolean isFree;
 
     /*
      * (non-Javadoc)

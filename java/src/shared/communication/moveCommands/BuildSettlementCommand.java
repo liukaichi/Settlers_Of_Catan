@@ -17,6 +17,16 @@ import shared.locations.VertexLocation;
  */
 public class BuildSettlementCommand extends MoveCommand implements JsonSerializer<BuildSettlementCommand>
 {
+
+    /**
+     * Location of the Settlement.
+     */
+    private VertexLocation settlementLocation;
+    /**
+     * Whether this is placed for free (setup).
+     */
+    private boolean isFree;
+
     /**
      * @param playerIndex
      * @param settlementLocation
@@ -29,14 +39,6 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
         this.isFree = isFree;
     }
 
-    /**
-     * Location of the Settlement.
-     */
-    private VertexLocation settlementLocation;
-    /**
-     * Whether this is placed for free (setup).
-     */
-    private boolean isFree;
 
     /*
      * (non-Javadoc)

@@ -18,6 +18,17 @@ import shared.locations.HexLocation;
  */
 public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobPlayerCommand>
 {
+
+
+    /**
+     * The information about the player being robbed.
+     */
+    private PlayerIndex victimIndex;
+    /**
+     * The location of the robber.
+     */
+    private HexLocation location;
+
     /**
      * @param playerIndex
      * @param victimIndex
@@ -39,14 +50,6 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
 
     }
 
-    /**
-     * The information about the player being robbed.
-     */
-    private PlayerIndex victimIndex;
-    /**
-     * The location of the robber.
-     */
-    private HexLocation location;
 
     /*
      * (non-Javadoc)
