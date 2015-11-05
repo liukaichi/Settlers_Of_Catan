@@ -47,9 +47,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
         JsonObject offerTradeCommand = (JsonObject) parser.parse(json);
         String moveType = offerTradeCommand.get("type").getAsString();
         int sender = offerTradeCommand.get("playerIndex").getAsInt();
-        String content = offerTradeCommand.get("content").getAsString();
         int receiver = offerTradeCommand.get("receiver").getAsInt();
-
         JsonObject offer = offerTradeCommand.get("offer").getAsJsonObject();
         int brick = offer.get("brick").getAsInt();
         int ore = offer.get("ore").getAsInt();
