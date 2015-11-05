@@ -5,4 +5,7 @@ package server.facade;
  */
 public interface IUserFacade
 {
+    void userLogin();
+
+    void userRegister();
 }
