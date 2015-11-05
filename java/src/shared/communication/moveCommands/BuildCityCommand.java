@@ -56,7 +56,7 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
     }
 
     /**
-     * Calls the ServerFacade to build a road with the
+     * Calls the ServerFacade to build a city with the data stored inside this command.
      */
     @Override public String execute()
     {
