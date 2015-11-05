@@ -89,7 +89,7 @@ public class ResourceBarController extends ObserverController implements IResour
         getView().setElementEnabled(ResourceBarElement.ROAD, state.canBuyRoad());
         getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canBuySettlement());
         getView().setElementEnabled(ResourceBarElement.CITY, state.canBuyCity());
-        getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canBuyDevCard());
+        getView().setElementEnabled(ResourceBarElement.BUY_CARD, true); //TODO FIX THIS TO WORK
         getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
     }
 

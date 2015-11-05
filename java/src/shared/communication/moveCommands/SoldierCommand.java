@@ -23,7 +23,20 @@ public class SoldierCommand extends RobPlayerCommand
         super(playerIndex, victimIndex, location);
         this.type = MoveType.Soldier;
     }
+    /**
+     * Constructor that takes in JSON and parses it.
+     * @param json JSON of the DiscardCardsCommand
+     */
+    public SoldierCommand(String json)
+    {
+        super(json);
+    }
 
+    /**
+     * Robs the player that is specified
+     * @param facade
+     * @return returns the updated model
+     */
     @Override public String execute(IServerFacade facade)
     {
         return null;

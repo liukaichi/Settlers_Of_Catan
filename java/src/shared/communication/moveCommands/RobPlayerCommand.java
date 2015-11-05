@@ -31,6 +31,15 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
     }
 
     /**
+     * Constructor that takes in JSON and parses it.
+     * @param json JSON of the RobPlayerCommand
+     */
+    public RobPlayerCommand(String json)
+    {
+
+    }
+
+    /**
      * The information about the player being robbed.
      */
     private PlayerIndex victimIndex;
@@ -57,6 +66,10 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
         return obj;
     }
 
+    /**
+     * Robs the player and moves the robber the new hex location
+     * @return JSON of the new model after the player is robbed.
+     */
     @Override public String execute(IServerFacade facade)
     {
         return null;
