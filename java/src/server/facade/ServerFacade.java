@@ -59,8 +59,13 @@ public class ServerFacade extends AbstractServerFacade
         return null;
     }
 
+    /**
+     * Calls finish turn from the model to progress to next state.
+     * @return the updated ClientModel
+     */
     @Override public ClientModel finishTurn()
     {
+    	model.finishTurn(); 
         return null;
     }
 
@@ -194,11 +199,17 @@ public class ServerFacade extends AbstractServerFacade
         return null;
     }
 
+    /**
+     * Signs in user using credentials provided
+     */
     @Override public void signInUser(Credentials credentials) throws SignInException
     {
 
     }
 
+    /**
+     * Registers a user using credentials provided
+     */
     @Override public void registerUser(Credentials credentials) throws SignInException
     {
 

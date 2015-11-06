@@ -416,4 +416,12 @@ public class ClientModel extends Observable
         int currentPlayer = clientPlayer.getNormalizedPlayerIndex();
         return (offer != null && (offer.getReceiver() == currentPlayer || offer.getSender() == currentPlayer));
     }
+
+	/**
+	 * 
+	 */
+	public void finishTurn() {
+		// TODO Auto-generated method stub
+		
+	}
 }
