@@ -59,8 +59,13 @@ public class ServerFacade extends AbstractServerFacade
         return null;
     }
 
+    /**
+     * Calls finish turn from the model to progress to next state.
+     * @return the updated ClientModel
+     */
     @Override public ClientModel finishTurn()
     {
+    	model.finishTurn(); 
         return null;
     }
 
