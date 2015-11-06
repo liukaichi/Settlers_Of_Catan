@@ -1,55 +1,60 @@
 package server;
 
 import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+import shared.definitions.TradeRatio;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.ClientModel;
+import shared.model.player.TradeOffer;
 
 /**
  * Created by cstaheli on 11/5/2015.
  */
 public class ServerModel extends ClientModel
 {
-    ClientModel sendChat()
+    public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
         return null;
     }
-    ClientModel rollNumber()
+    public ClientModel rollNumber(PlayerIndex playerIndex, int number)
     {
         return null;
     }
-    ClientModel robPlayer()
-    {
-        return null;
-    }/*
-    ClientModel finishTurn()
-    {
-        return null;
-    }*/
-    ClientModel buyDevCard()
+    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
     {
         return null;
     }
-    ClientModel yearOfPlenty()
+    public ClientModel finishTurn(PlayerIndex playerIndex)
     {
         return null;
     }
-    ClientModel roadBuilding()
+    public ClientModel buyDevCard(PlayerIndex playerIndex)
     {
         return null;
     }
-    ClientModel soldier()
+    public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
     {
         return null;
     }
-    ClientModel monopoly()
+    public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
     {
         return null;
     }
-    ClientModel monument()
+    public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
         return null;
     }
-    ClientModel buildRoad()
+    public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource)
+    {
+        return null;
+    }
+    public ClientModel monument(PlayerIndex playerIndex)
+    {
+        return null;
+    }
+    public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
     {
         return null;
     }
@@ -58,7 +63,7 @@ public class ServerModel extends ClientModel
      * @param player the player who is building the settlement.
      * @param location the location where the settlement is being built.
      */
-    public void buildSettlement(PlayerIndex player, VertexLocation location)
+    public void buildSettlement(PlayerIndex player, VertexLocation location, boolean isFree)
     {
 
     }
@@ -71,19 +76,20 @@ public class ServerModel extends ClientModel
     {
         getMap().buildCity(player, location);
     }
-    ClientModel offerTrade()
+    public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
         return null;
     }
-    ClientModel acceptTrade()
+    public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept)
     {
         return null;
     }
-    ClientModel maritimeTrade()
+    public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
+            ResourceType outputResource)
     {
         return null;
     }
-    ClientModel discardCards()
+    public ClientModel discardCards()
     {
         return null;
     }
