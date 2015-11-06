@@ -12,7 +12,7 @@ import shared.definitions.*;
 import shared.definitions.exceptions.AddAIException;
 import shared.definitions.exceptions.GameQueryException;
 import shared.definitions.exceptions.SignInException;
-import shared.facade.IUserFacade;
+import server.facade.IUserFacade;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;

@@ -1,4 +1,4 @@
-package shared.facade;
+package server.facade;
 
 import shared.communication.Credentials;
 import shared.definitions.exceptions.SignInException;

@@ -4,6 +4,7 @@ import client.data.GameInfo;
 import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
 import shared.definitions.AIType;
+import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.SignInException;
@@ -44,7 +45,7 @@ public class ServerFacade extends AbstractServerFacade
      */
     @Override public ListAIResponse listAI()
     {
-
+        return null;
     }
 
     /**
@@ -59,7 +60,8 @@ public class ServerFacade extends AbstractServerFacade
     /**
      * Joins game of the given id with the specified color
      */
-    @Override public void joinGame()
+    @Override
+    public void joinGame(PlayerIndex player, int gameID, CatanColor color)
     {
 
     }
@@ -67,7 +69,8 @@ public class ServerFacade extends AbstractServerFacade
     /**
      * Create a new game with the given id and specified name
      */
-    @Override public void createGame()
+    @Override
+    public void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
 
     }
@@ -128,7 +131,7 @@ public class ServerFacade extends AbstractServerFacade
      */
     @Override public ClientModel buyDevCard(PlayerIndex playerIndex)
     {
-        model.buyDevCard();
+        //model.buyDevCard();
         return null;
     }
 
@@ -221,7 +224,7 @@ public class ServerFacade extends AbstractServerFacade
      */
     @Override public ClientModel buildSettlement()
     {
-        model.buildSettlement(null, null);
+        //model.buildSettlement(null, null);
         return null;
     }
 
@@ -233,7 +236,7 @@ public class ServerFacade extends AbstractServerFacade
      */
     @Override public ClientModel buildCity()
     {
-        model.buildCity(null, null);
+        //model.buildCity(null, null);
         return null;
     }
 

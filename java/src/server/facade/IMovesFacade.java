@@ -1,4 +1,4 @@
-package shared.facade;
+package server.facade;
 
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;

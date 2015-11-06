@@ -11,47 +11,47 @@ public class ServerModel extends ClientModel
 {
     ClientModel sendChat()
     {
-
+        return null;
     }
     ClientModel rollNumber()
     {
-
+        return null;
     }
     ClientModel robPlayer()
     {
-
-    }
+        return null;
+    }/*
     ClientModel finishTurn()
     {
-
-    }
+        return null;
+    }*/
     ClientModel buyDevCard()
     {
-
+        return null;
     }
     ClientModel yearOfPlenty()
     {
-
+        return null;
     }
     ClientModel roadBuilding()
     {
-
+        return null;
     }
     ClientModel soldier()
     {
-
+        return null;
     }
     ClientModel monopoly()
     {
-
+        return null;
     }
     ClientModel monument()
     {
-
+        return null;
     }
     ClientModel buildRoad()
     {
-
+        return null;
     }
     /**
      * Builds a settlement for the given player at the given location.
@@ -73,18 +73,18 @@ public class ServerModel extends ClientModel
     }
     ClientModel offerTrade()
     {
-
+        return null;
     }
     ClientModel acceptTrade()
     {
-
+        return null;
     }
     ClientModel maritimeTrade()
     {
-
+        return null;
     }
     ClientModel discardCards()
     {
-
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package shared.facade;
+package server.facade;
 
 import shared.communication.ListAIResponse;
 import shared.definitions.AIType;
