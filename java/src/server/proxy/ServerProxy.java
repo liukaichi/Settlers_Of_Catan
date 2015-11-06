@@ -173,14 +173,6 @@ public class ServerProxy implements IProxy
     }
 
     @Override
-    public void changeLogLevel(Level level)
-    {
-        String response = doPost(CHANGE_LOG_LEVEL, level.toString());
-        LOGGER.setLevel(level);
-        LOGGER.log(Level.INFO, "Change Log Level Response:" + response);
-    }
-
-    @Override
     public ListGamesResponse listGames()
     {
         String response = doGet(LIST_GAMES, "");
@@ -212,33 +204,6 @@ public class ServerProxy implements IProxy
     }
 
     @Override
-    public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
-    {
-        Gson gson = new GsonBuilder().create();
-        String request = gson.toJson(saveGameRequest);
-        String response = doPost(SAVE_GAME, request);
-        LOGGER.log(Level.INFO, "Save Game Response:" + response);
-        if (response == null)
-        {
-            throw new GameQueryException();
-        }
-    }
-
-    @Override
-    public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
-    {
-        Gson gson = new GsonBuilder().create();
-        String request = gson.toJson(loadGameRequest);
-        String response = doPost(LOAD_GAME, request);
-        LOGGER.log(Level.INFO, "Load Game Response:" + response);
-        if (response == null)
-        {
-            throw new GameQueryException();
-        }
-
-    }
-
-    @Override
     public ClientModel getGameState(int versionNumber)
     {
         String query = "";
@@ -259,27 +224,6 @@ public class ServerProxy implements IProxy
         }
 
         return responseModel;
-    }
-
-    @Override
-    public ClientModel resetGame()
-    {
-        // Unecessary
-        return null;
-    }
-
-    @Override
-    public GetCommandsResponse getCommands()
-    {
-        // Unecessary
-        return null;
-    }
-
-    @Override
-    public ClientModel postCommands(PostCommandsRequest request)
-    {
-        // Unecessary
-        return null;
     }
 
     @Override

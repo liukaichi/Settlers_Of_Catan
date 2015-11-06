@@ -92,28 +92,4 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *      How the Catan Server Uses HTTP Cookies</a>
      */
     PlayerInfo userRegister(Credentials credentials) throws SignInException;
-
-    // Util Method
-    /**
-     * Sets the server"s logging level.
-     * 
-     * @pre The caller specifies a valid logging level. Valid values include:
-     *      <i>SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST.</i>
-     * @post On success:
-     *       <ol>
-     *       <li>The server returns an HTTP 200 success response with "Success"
-     *       in the body.
-     *       <li>The Server is using the specified logging level
-     *       </ol>
-     *       On failure:
-     *       <ul>
-     *       <li>The server returns an HTTP 400 error response, and the body
-     *       contains an error message
-     *       </ul>
-     * 
-     * @param level
-     *        The logging level
-     * @see Level
-     */
-    void changeLogLevel(Level level);
 }

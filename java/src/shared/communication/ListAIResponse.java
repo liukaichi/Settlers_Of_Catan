@@ -18,7 +18,7 @@ public class ListAIResponse
     private List<AIType> aiTypes;
 
     /**
-     * 
+     * TODO
      */
     public ListAIResponse()
     {
@@ -26,10 +26,8 @@ public class ListAIResponse
     }
 
     /**
-     * Parses the Json to create a List of AIType.
-     * 
-     * @param json
-     *        the json to parse
+     * Instantiate a ListAIResponse from JSON with the injected facade
+     * @param json JSON of the ListAIResponse
      */
     public ListAIResponse(String json)
     {

@@ -70,12 +70,6 @@ public class MockProxy implements IProxy
     }
 
     @Override
-    public void changeLogLevel(Level level)
-    {
-
-    }
-
-    @Override
     public ListGamesResponse listGames()
     {
         String json = "";
@@ -119,16 +113,6 @@ public class MockProxy implements IProxy
     }
 
     @Override
-    public void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException
-    {
-    }
-
-    @Override
-    public void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException
-    {
-    }
-
-    @Override
     public ClientModel getGameState(int versionNumber)
     {
         if (versionNumber == serverModel.getVersion())
@@ -136,39 +120,6 @@ public class MockProxy implements IProxy
             return null;
         }
         return serverModel;
-    }
-
-    @Override
-    public ClientModel resetGame()
-    {
-        String json = "";
-        File file = new File(jsonFileDir + "resetGame.json");
-        try
-        {
-            json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
-        ClientModel clientModel = new ClientModel(json);
-        return clientModel;
-    }
-
-    @Override
-    public GetCommandsResponse getCommands()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public ClientModel postCommands(PostCommandsRequest commands)
-    {
-        // shouldn't need to be done. Used only when debugging the the server
-        // running.
-        return null;
     }
 
     @Override

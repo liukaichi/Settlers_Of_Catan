@@ -221,16 +221,6 @@ public class ProxyTester
     }
 
     /**
-     * Test method for
-     * {@link server.proxy.ServerProxy#changeLogLevel(java.util.logging.Level)}.
-     */
-    @Test public void testChangeLogLevel()
-    {
-        startGame("logLevel");
-        proxy.changeLogLevel(Level.ALL);
-    }
-
-    /**
      * Test method for {@link server.proxy.ServerProxy#listGames()}.
      */
     @Test public void testListGames()
@@ -335,67 +325,12 @@ public class ProxyTester
     }
 
     /**
-     * Test method for
-     * {@link server.proxy.ServerProxy#saveGame(shared.communication.SaveGameRequest)}
-     * .
-     */
-    @Test public void testSaveGame()
-    {
-        try
-        {
-            proxy.saveGame(null);
-        } catch (GameQueryException e)
-        {
-        }
-    }
-
-    /**
-     * Test method for
-     * {@link server.proxy.ServerProxy#loadGame(shared.communication.LoadGameRequest)}
-     * .
-     */
-    @Test public void testLoadGame()
-    {
-        try
-        {
-            proxy.loadGame(null);
-        } catch (GameQueryException e)
-        {
-        }
-    }
-
-    /**
      * Test method for {@link server.proxy.ServerProxy#getGameState(int)}.
      */
     @Test public void testGetGameState()
     {
         startGame("gameState");
         testingModel = proxy.getGameState(-1);
-    }
-
-    /**
-     * Test method for {@link server.proxy.ServerProxy#resetGame()}.
-     */
-    @Test public void testResetGame()
-    {
-        proxy.resetGame();
-    }
-
-    /**
-     * Test method for {@link server.proxy.ServerProxy#getCommands()}.
-     */
-    @Test public void testGetCommands()
-    {
-        proxy.getCommands();
-    }
-
-    /**
-     * Test method for
-     * {@link server.proxy.ServerProxy#postCommands(PostCommandsRequest)}.
-     */
-    @Test public void testPostCommands()
-    {
-        proxy.postCommands(null);
     }
 
     /**

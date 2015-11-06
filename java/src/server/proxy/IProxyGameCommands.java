@@ -37,7 +37,7 @@ public interface IProxyGameCommands
 
     /**
      * Creates a new game.
-     * 
+     *
      * @pre Inside of the createGameRequest:
      *      <ul>
      *      <li>Name is not null.
@@ -106,70 +106,6 @@ public interface IProxyGameCommands
      */
     void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException;
 
-    /**
-     * This method is for testing and debugging purposes. When a bug is found,
-     * you can use the /games/save method to save the state of the game to a
-     * file, and attach the file to a bug report. A developer can later restore
-     * the state of the game when the bug occurred by loading the previously
-     * saved file using the /games/load method. Game files are saved to and
-     * loaded from the server's saves/ directory.
-     * 
-     * @pre
-     *      <ol>
-     *      <li>The specified game ID is valid
-     *      <li>The specified file name is valid (i.e., not null or empty)
-     *      </ol>
-     * @post If the operation succeeds,
-     *       <ol>
-     *       <li>The server returns an HTTP 200 success response with "Success"
-     *       in the body.
-     *       <li>The current state of the specified game (including its ID) has
-     *       been saved to the specified file name in the server's saves/
-     *       directory
-     *       </ol>
-     *       If the operation fails,
-     *       <ul>
-     *       <li>The server returns an HTTP 400 error response, and the body
-     *       contains an error message.
-     *       </ul>
-     * @param saveGameRequest
-     *        The id of the game to save and the save file name (no extensions
-     *        please).
-     * @throws GameQueryException
-     *         if the request fails
-     */
-    void saveGame(SaveGameRequest saveGameRequest) throws GameQueryException;
-
-    /**
-     * This method is for testing and debugging purposes. When a bug is found,
-     * you can use the /games/save method to save the state of the game to a
-     * file, and attach the file to a bug report. A developer can later restore
-     * the state of the game when the bug occurred by loading the previously
-     * saved file using the /games/load method. Game files are saved to and
-     * loaded from the server's saves/ directory.
-     * 
-     * @pre A previously saved game file with the specified name exists in the
-     *      server's saves/ directory.
-     * @post If the operation succeeds,
-     *       <ol>
-     *       <li>The server returns an HTTP 200 success response with "Success"
-     *       in the body.</li>
-     *       <li>The game in the specified file has been loaded into the server
-     *       and its state restored(including its ID).</li>
-     *       </ol>
-     *       If the operation fails,
-     *       <ul>
-     *       <li>The server returns an HTTP 400 error response, and the body
-     *       contains an error message</li>
-     *       </ul>
-     * 
-     * @param loadGameRequest
-     *        The game file to load that is saved on the server.
-     * @throws GameQueryException
-     *         if the request fails
-     */
-    void loadGame(LoadGameRequest loadGameRequest) throws GameQueryException;
-
     // Game operations for games you are already in (requires cookie)
     /**
      * Returns the current state of the game in JSON format.<br>
@@ -223,121 +159,6 @@ public interface IProxyGameCommands
      *         already matches, it returns null.
      */
     ClientModel getGameState(int versionNumber);
-
-    /**
-     * Clears out the command history of the current game.<br>
-     * <br>
-     * For the default games created by the server, this method reverts the game
-     * to the state immediately after the initial placement round. For
-     * user-created games, this method reverts the game to the very beginning
-     * (i.e., before the initial placement round).<br>
-     * <br>
-     * This method returns the client model JSON for the game after it has been
-     * reset.<br>
-     * <br>
-     * You must login and join a game before calling this method.<br>
-     * <br>
-     * Note: When a game is reset, the players in the game are maintained.
-     * 
-     * @pre
-     *      <ul>
-     *      <li>The caller has previously logged in to the server and joined a
-     *      game (i.e., they have valid catan.user and catan.game HTTP cookies).
-     *      </ul>
-     * @post If the operation succeeds,
-     *       <ol>
-     *       <li>The game's command history has been cleared out
-     *       <li>The game's players have NOT been cleared out
-     *       <li>The server returns an HTTP 200 success response.
-     *       <li>The body contains the game's updated client model JSON
-     *       </ol>
-     *       If the operation fails,
-     *       <ul>
-     *       <li>The server returns an HTTP 400 error response, and the body
-     *       contains an error message.
-     *       </ul>
-     * 
-     * @return Returns the client model of the reset game.
-     */
-    ClientModel resetGame();
-
-    /**
-     * Returns a list of commands that have been executed in the current game.
-     * <br>
-     * <br>
-     * This method can be used for testing and debugging. The command list
-     * returned by this method can be passed to the /game/command (POST) method
-     * to re-execute the commands in the game. This would typically be done
-     * after calling /game/reset to clear out the game's command history. This
-     * is one way to capture the state of a game and restore it later. (See the
-     * /games/save and /games/load methods which provide another way to save and
-     * restore the state of a game.) <br>
-     * <br>
-     * For the default games created by the server, this method returns a list
-     * of all commands that have been executed after the initial placement
-     * round. For user=created games, this method returns a list of all commands
-     * that have been executed since the very beginning of the game (i.e.,
-     * before the initial placement round). <br>
-     * <br>
-     * You must login and join a game before calling this method.
-     * 
-     * @pre
-     *      <ul>
-     *      <li>The caller has previously logged in to the server and joined a
-     *      game (i.e., they have valid catan.user and catan.game HTTP cookies).
-     *      </ul>
-     * @post If the operation succeeds,
-     *       <ol>
-     *       <li>The server returns an HTTP 200 success response.
-     *       <li>The body contains a JSON array of commands that have been
-     *       executed in the game. This command array is suitable for passing
-     *       back to the /game/command [POST] method to restore the state of the
-     *       game later (after calling /game/reset to revert the game to its
-     *       initial state).
-     *       </ol>
-     *       If the operation fails,
-     *       <ul>
-     *       <li>The server returns an HTTP 400 error response, and the body
-     *       contains an error message.
-     *       </ul>
-     * @return List of Commands used in the game so far.
-     */
-    GetCommandsResponse getCommands();
-
-    /**
-     * Executes the specified command list in the current game. <br>
-     * <br>
-     * This method can be used for testing and debugging. The command list
-     * returned by the /game/command [GET] method is suitable for passing to
-     * this method. <br>
-     * <br>
-     * This method returns the client model JSON for the game after the command
-     * list has been applied.<br>
-     * <br>
-     * You must login and join a game before calling this method.
-     * 
-     * @pre
-     *      <ul>
-     *      <li>The caller has previously logged in to the server and joined a
-     *      game (i.e., they have valid catan.user and catan.game HTTP cookies).
-     *      </ul>
-     * @post If the operation succeeds,
-     *       <ol>
-     *       <li>The passed-in command list has been applied to the game.
-     *       <li>The server returns an HTTP 200 success response.
-     *       <li>The body contains the game's updated client model JSON
-     *       </ol>
-     *       If the operation fails,
-     *       <ul>
-     *       <li>The server returns an HTTP 400 error response, and the body
-     *       contains an error message.
-     *       </ul>
-     * 
-     * @param commands
-     *        The list of commands to be executed.
-     * @return updated Game model after the commands are executed.
-     */
-    ClientModel postCommands(PostCommandsRequest commands);
 
     /**
      * Returns a list of supported AI player types. <br>

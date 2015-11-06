@@ -24,6 +24,10 @@ public class ListGamesResponse
         games = new ArrayList<>();
     }
 
+    /**
+     * Instantiate a ListGamesResponse from JSON with the injected facade
+     * @param json JSON of the ListGamesResponse
+     */
     public ListGamesResponse(String json)
     {
         this();

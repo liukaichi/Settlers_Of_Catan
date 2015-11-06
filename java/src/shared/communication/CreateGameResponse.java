@@ -3,6 +3,7 @@ package shared.communication;
 import com.google.gson.*;
 
 import client.data.GameInfo;
+import server.facade.AbstractServerFacade;
 
 /**
  * Class that creates the game response
@@ -20,7 +21,8 @@ public class CreateGameResponse
     }
 
     /**
-     * @param response
+     * Instantiate a CreateGameResponse from JSON with the injected facade
+     * @param json JSON of the CreateGameResponse
      */
     public CreateGameResponse(String json)
     {
