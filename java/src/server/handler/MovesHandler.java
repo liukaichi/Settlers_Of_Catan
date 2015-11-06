@@ -27,16 +27,21 @@ public class MovesHandler implements HttpHandler
      */
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        LOGGER.entering("MovesHandler", "handle");
+        LOGGER.entering(this.getClass().getCanonicalName(), "handle");
         try {
-            String clientAddress = httpExchange.getLocalAddress().getHostString();
+            //Handling cookie
+            String cookie =  httpExchange.getRequestHeaders().getFirst("Cookie");
+            //Handling input Request
             InputStream requestBody = httpExchange.getRequestBody();
             ObjectInput in = new ObjectInputStream(requestBody);
-            String className = httpExchange.getHttpContext().toString(); //TODO get the class name from the context
+            String className = httpExchange.getRequestURI().getQuery(); //TODO get the class name from the context
             Constructor c = Class.forName(className).getConstructor(String.class, AbstractServerFacade.class);
             CatanCommand request = (CatanCommand)c.newInstance(in.readObject(), facade);
             in.close();
             requestBody.close();
+
+            //Handling response to request
+            httpExchange.getResponseHeaders().set("Set-cookie", cookie);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             String result = request.execute();
             OutputStream responseBody = httpExchange.getResponseBody();
@@ -46,27 +51,15 @@ public class MovesHandler implements HttpHandler
             responseBody.close();
 
         }
-        catch (ClassNotFoundException e) {
-            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-            LOGGER.severe("Error in server.MovesHandler.handle(): "
-                    + e.getMessage());
-            e.printStackTrace();
-        }
-        catch (ServerException e) {
-            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,
-                    0);
-            LOGGER.severe("Error in server.MovesHandler.handle(): "
-                    + e.getMessage());
-            e.printStackTrace();
-        }
-        catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+        catch(Exception e)
+        {
             e.printStackTrace();
         }
         finally {
             if (httpExchange != null) {
                 httpExchange.close();
             }
-            LOGGER.exiting("server.server.MovesHandler", "handle");
+            LOGGER.exiting(this.getClass().getCanonicalName(), "handle");
         }
     }
 }
