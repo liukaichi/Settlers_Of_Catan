@@ -8,10 +8,14 @@ import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
+import shared.definitions.TradeRatio;
 import shared.definitions.exceptions.SignInException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
+import shared.model.bank.resource.Resources;
+import shared.model.player.TradeOffer;
 
 /**
  * Created by cstaheli on 11/4/2015.
@@ -103,32 +107,33 @@ public class MockServerFacade extends AbstractServerFacade
         return null;
     }
 
-    @Override public ClientModel buildSettlement()
+    @Override public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean free)
     {
         return null;
     }
 
-    @Override public ClientModel buildCity()
+    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation)
     {
         return null;
     }
 
-    @Override public ClientModel offerTrade()
+    @Override public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
         return null;
     }
 
-    @Override public ClientModel acceptTrade()
+    @Override public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept)
     {
         return null;
     }
 
-    @Override public ClientModel maritimeTrade()
+    @Override public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
+            ResourceType outputResource)
     {
         return null;
     }
 
-    @Override public ClientModel discardCards()
+    @Override public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
     }

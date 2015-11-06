@@ -1,18 +1,13 @@
 package server.facade;
 
-import shared.communication.CreateGameResponse;
-import shared.communication.Credentials;
-import shared.communication.ListAIResponse;
-import shared.definitions.AIType;
-import shared.definitions.CatanColor;
-import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceType;
-import shared.communication.ListAIResponse;
-import shared.communication.ListGamesResponse;
+import client.data.GameInfo;
+import shared.communication.*;
+import shared.definitions.*;
 import shared.definitions.exceptions.SignInException;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
+import shared.locations.*;
 import shared.model.ClientModel;
+import shared.model.bank.resource.Resources;
+import shared.model.player.TradeOffer;
 
 /**
  * Created by cstaheli on 11/4/2015.
@@ -221,8 +216,11 @@ public class ServerFacade extends AbstractServerFacade
      * Decrease the client player's settlement of AmountType.AVAILABLE by 1.
      * Update the map with a new settlement
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param vertexLocation
+     * @param free
      */
-    @Override public ClientModel buildSettlement()
+    @Override public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean free)
     {
         //model.buildSettlement(null, null);
         return null;
@@ -233,8 +231,10 @@ public class ServerFacade extends AbstractServerFacade
      * Decrease the client player's city of AmountType.AVAILABLE by 1.
      * Update the map with a new city
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param vertexLocation
      */
-    @Override public ClientModel buildCity()
+    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation)
     {
         //model.buildCity(null, null);
         return null;
@@ -244,8 +244,11 @@ public class ServerFacade extends AbstractServerFacade
      * Update model with a new TradeOffer object
      * Player to be traded is asked to trade.
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param offer
+     * @param receiver
      */
-    @Override public ClientModel offerTrade()
+    @Override public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
         return null;
     }
@@ -255,8 +258,10 @@ public class ServerFacade extends AbstractServerFacade
      * Update both players' PlayerBank depending on whether
      * the TradeOffer is accepted or not.
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param willAccept
      */
-    @Override public ClientModel acceptTrade()
+    @Override public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept)
     {
         return null;
     }
@@ -265,8 +270,13 @@ public class ServerFacade extends AbstractServerFacade
      * The client player trades with the game bank based on the
      * trade ratio that is available to the player
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param ratio
+     * @param inputResource
+     * @param outputResource
      */
-    @Override public ClientModel maritimeTrade()
+    @Override public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
+            ResourceType outputResource)
     {
         return null;
     }
@@ -275,8 +285,10 @@ public class ServerFacade extends AbstractServerFacade
      * The client player discards a number of each resource.
      * The resources are returned to the game bank
      * @return the updated CLientModel
+     * @param playerIndex
+     * @param discardedCards
      */
-    @Override public ClientModel discardCards()
+    @Override public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
     }
