@@ -9,7 +9,22 @@ import shared.model.ClientModel;
  */
 public interface IGameFacade
 {
+    /**
+     * Retrieves the current GameplayState
+     * @return the current GameplayState
+     * @param version
+     */
     ClientModel getGameState(int version);
+
+    /**
+     * Add an AI player to the game
+     * @param aiType
+     */
     void addAI(AIType aiType);
+
+    /**
+     * List the types of AI available
+     * @return ListAIResponse
+     */
     ListAIResponse listAI();
 }

@@ -8,7 +8,17 @@ import shared.definitions.exceptions.SignInException;
  */
 public interface IUserFacade
 {
+    /**
+     * Signs in the player with the given credentials
+     * @param credentials
+     * @throws SignInException
+     */
     void signInUser(Credentials credentials) throws SignInException;
 
+    /**
+     * Registers a new player with the given credentials
+     * @param credentials
+     * @throws SignInException
+     */
     void registerUser(Credentials credentials) throws SignInException;
 }

@@ -37,6 +37,7 @@ public class ServerFacade extends AbstractServerFacade
 
     /**
      * List the types of AI available
+     * @return ListAIResponse
      */
     @Override public ListAIResponse listAI()
     {
