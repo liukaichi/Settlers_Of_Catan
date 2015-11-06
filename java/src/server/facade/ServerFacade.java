@@ -14,46 +14,80 @@ public class ServerFacade extends AbstractServerFacade
 {
     private ClientModel model;
 
+    /**
+     * Retrieves the current GameplayState
+     * @return the current GameplayState
+     */
     @Override public ClientModel getGameState()
     {
         return null;
     }
 
+    /**
+     * Add an AI player to the game
+     */
     @Override public void addAI()
     {
 
     }
 
+    /**
+     * List the types of AI available
+     */
     @Override public void listAI()
     {
 
     }
 
+    /**
+     * List the games available
+     * @return the list of all games
+     */
     @Override public List<GameInfo> listGames()
     {
         return null;
     }
 
+    /**
+     * Joins game of the given id with the specified color
+     */
     @Override public void joinGame()
     {
 
     }
 
+    /**
+     * Create a new game with the given id and specified name
+     */
     @Override public void createGame()
     {
 
     }
 
+    /**
+     * Add a message to the ClientModel with the sender's id
+     * @return the updated ClientModel
+     */
     @Override public ClientModel sendChat()
     {
         return null;
     }
 
+    /**
+     * Distribute resources to players based on the number rolled
+     * @return the updated ClientModel
+     */
     @Override public ClientModel rollNumber()
     {
         return null;
     }
 
+    /**
+     * Move the robber to the new given location.
+     * Increase the robbed resource client player's PlayerBank.
+     * Decrease the robbed resource from the robbed player's PlayerBank.
+     * @return
+     */
     @Override public ClientModel robPlayer()
     {
         return null;
