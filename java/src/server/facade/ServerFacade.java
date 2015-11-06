@@ -168,6 +168,7 @@ public class ServerFacade extends AbstractServerFacade
 
     /**
      * Update model with a new TradeOffer object
+     * Player to be traded is asked to trade.
      * @return the updated ClientModel
      */
     @Override public ClientModel offerTrade()
@@ -176,29 +177,51 @@ public class ServerFacade extends AbstractServerFacade
     }
 
     /**
-     *
-     * @return
+     * Update model and remove the TradeOffer
+     * Update both players' PlayerBank depending on whether
+     * the TradeOffer is accepted or not.
+     * @return the updated ClientModel
      */
     @Override public ClientModel acceptTrade()
     {
         return null;
     }
 
+    /**
+     * The client player trades with the game bank based on the
+     * trade ratio that is available to the player
+     * @return the updated ClientModel
+     */
     @Override public ClientModel maritimeTrade()
     {
         return null;
     }
 
+    /**
+     * The client player discards a number of each resource.
+     * The resources are returned to the game bank
+     * @return the updated CLientModel
+     */
     @Override public ClientModel discardCards()
     {
         return null;
     }
 
+    /**
+     * Signs in the player with the given credentials
+     * @param credentials
+     * @throws SignInException
+     */
     @Override public void signInUser(Credentials credentials) throws SignInException
     {
 
     }
 
+    /**
+     * Registers a new player with the given credentials
+     * @param credentials
+     * @throws SignInException
+     */
     @Override public void registerUser(Credentials credentials) throws SignInException
     {
 
