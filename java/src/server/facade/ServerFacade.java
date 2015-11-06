@@ -2,7 +2,13 @@ package server.facade;
 
 import client.data.GameInfo;
 import shared.communication.Credentials;
+import shared.communication.ListAIResponse;
+import shared.definitions.AIType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
 import shared.definitions.exceptions.SignInException;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.model.ClientModel;
 
 import java.util.List;
@@ -17,16 +23,18 @@ public class ServerFacade extends AbstractServerFacade
     /**
      * Retrieves the current GameplayState
      * @return the current GameplayState
+     * @param version
      */
-    @Override public ClientModel getGameState()
+    @Override public ClientModel getGameState(int version)
     {
         return null;
     }
 
     /**
      * Add an AI player to the game
+     * @param aiType
      */
-    @Override public void addAI()
+    @Override public void addAI(AIType aiType)
     {
 
     }
@@ -34,7 +42,7 @@ public class ServerFacade extends AbstractServerFacade
     /**
      * List the types of AI available
      */
-    @Override public void listAI()
+    @Override public ListAIResponse listAI()
     {
 
     }
@@ -67,8 +75,10 @@ public class ServerFacade extends AbstractServerFacade
     /**
      * Add a message to the ClientModel with the sender's id
      * @return the updated ClientModel
+     * @param sender
+     * @param content
      */
-    @Override public ClientModel sendChat()
+    @Override public ClientModel sendChat(PlayerIndex sender, String content)
     {
         return null;
     }
@@ -76,8 +86,10 @@ public class ServerFacade extends AbstractServerFacade
     /**
      * Distribute resources to players based on the number rolled
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param number
      */
-    @Override public ClientModel rollNumber()
+    @Override public ClientModel rollNumber(PlayerIndex playerIndex, int number)
     {
         return null;
     }
@@ -87,8 +99,11 @@ public class ServerFacade extends AbstractServerFacade
      * Increase the robbed resource client player's PlayerBank.
      * Decrease the robbed resource from the robbed player's PlayerBank.
      * @return
+     * @param playerIndex
+     * @param victim
+     * @param location
      */
-    @Override public ClientModel robPlayer()
+    @Override public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
     {
         return null;
     }
@@ -96,8 +111,9 @@ public class ServerFacade extends AbstractServerFacade
     /**
      * Calls finish turn from the model to progress to next state.
      * @return the updated ClientModel
+     * @param playerIndex
      */
-    @Override public ClientModel finishTurn()
+    @Override public ClientModel finishTurn(PlayerIndex playerIndex)
     {
     	model.finishTurn(); 
         return null;
@@ -108,8 +124,9 @@ public class ServerFacade extends AbstractServerFacade
      * Pop said Development Card from the DevCardDeck
      * Display bought Development Card message.
      * @return the updated ClientModel
+     * @param playerIndex
      */
-    @Override public ClientModel buyDevCard()
+    @Override public ClientModel buyDevCard(PlayerIndex playerIndex)
     {
         model.buyDevCard();
         return null;
@@ -120,8 +137,11 @@ public class ServerFacade extends AbstractServerFacade
      * Decrease the appropriate resources from the game bank.
      * Display resources received message.
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param resource2
+     * @param resource2
      */
-    @Override public ClientModel yearOfPlenty()
+    @Override public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
     {
         return null;
     }
@@ -132,8 +152,11 @@ public class ServerFacade extends AbstractServerFacade
      * Update the map with the 2 new roads
      * Display 2 roads built message
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param spot1
+     * @param spot2
      */
-    @Override public ClientModel roadBuilding()
+    @Override public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
     {
         return null;
     }
@@ -144,8 +167,11 @@ public class ServerFacade extends AbstractServerFacade
      * Decrease the robber player's PlayerBank with the robber resource.
      * Display robbed message.
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param victimIndex
+     * @param location
      */
-    @Override public ClientModel soldier()
+    @Override public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
         return null;
     }
@@ -154,8 +180,10 @@ public class ServerFacade extends AbstractServerFacade
      * Updates the client player's PlayerBank with the resources gained.
      * Updates all other players' PlayerBank with the resources lost.
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param resource
      */
-    @Override public ClientModel monopoly()
+    @Override public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource)
     {
         return null;
     }
@@ -163,8 +191,9 @@ public class ServerFacade extends AbstractServerFacade
     /**
      * Increase the client player's Victory Points by 1
      * @return the updated ClientModel
+     * @param playerIndex
      */
-    @Override public ClientModel monument()
+    @Override public ClientModel monument(PlayerIndex playerIndex)
     {
         return null;
     }
@@ -174,8 +203,11 @@ public class ServerFacade extends AbstractServerFacade
      * Decrease the client player's road of AmountType.AVAILABLE by 1.
      * Update the map with a new road.
      * @return the updated ClientModel
+     * @param playerIndex
+     * @param roadLocation
+     * @param free
      */
-    @Override public ClientModel buildRoad()
+    @Override public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
     {
         model.buildRoad(null, null);
         return null;

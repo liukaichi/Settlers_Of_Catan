@@ -2,7 +2,13 @@ package server.facade;
 
 import client.data.GameInfo;
 import shared.communication.Credentials;
+import shared.communication.ListAIResponse;
+import shared.definitions.AIType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
 import shared.definitions.exceptions.SignInException;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.model.ClientModel;
 
 import java.util.List;
@@ -12,17 +18,17 @@ import java.util.List;
  */
 public class MockServerFacade extends AbstractServerFacade
 {
-    @Override public ClientModel getGameState()
+    @Override public ClientModel getGameState(int version)
     {
         return null;
     }
 
-    @Override public void addAI()
+    @Override public void addAI(AIType aiType)
     {
 
     }
 
-    @Override public void listAI()
+    @Override public ListAIResponse listAI()
     {
 
     }
@@ -42,57 +48,57 @@ public class MockServerFacade extends AbstractServerFacade
 
     }
 
-    @Override public ClientModel sendChat()
+    @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
         return null;
     }
 
-    @Override public ClientModel rollNumber()
+    @Override public ClientModel rollNumber(PlayerIndex playerIndex, int number)
     {
         return null;
     }
 
-    @Override public ClientModel robPlayer()
+    @Override public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
     {
         return null;
     }
 
-    @Override public ClientModel finishTurn()
+    @Override public ClientModel finishTurn(PlayerIndex playerIndex)
     {
         return null;
     }
 
-    @Override public ClientModel buyDevCard()
+    @Override public ClientModel buyDevCard(PlayerIndex playerIndex)
     {
         return null;
     }
 
-    @Override public ClientModel yearOfPlenty()
+    @Override public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
     {
         return null;
     }
 
-    @Override public ClientModel roadBuilding()
+    @Override public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
     {
         return null;
     }
 
-    @Override public ClientModel soldier()
+    @Override public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
         return null;
     }
 
-    @Override public ClientModel monopoly()
+    @Override public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource)
     {
         return null;
     }
 
-    @Override public ClientModel monument()
+    @Override public ClientModel monument(PlayerIndex playerIndex)
     {
         return null;
     }
 
-    @Override public ClientModel buildRoad()
+    @Override public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
     {
         return null;
     }

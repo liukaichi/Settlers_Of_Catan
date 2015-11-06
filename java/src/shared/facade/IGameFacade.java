@@ -1,5 +1,7 @@
 package shared.facade;
 
+import shared.communication.ListAIResponse;
+import shared.definitions.AIType;
 import shared.model.ClientModel;
 
 /**
@@ -7,7 +9,7 @@ import shared.model.ClientModel;
  */
 public interface IGameFacade
 {
-    ClientModel getGameState();
-    void addAI();
-    void listAI();
+    ClientModel getGameState(int version);
+    void addAI(AIType aiType);
+    ListAIResponse listAI();
 }
