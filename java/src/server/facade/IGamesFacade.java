@@ -20,7 +20,7 @@ public interface IGamesFacade
     ListGamesResponse listGames();
 
     /**
-     *
+     * Joins a game
      * @param player
      * @param gameID
      * @param color
@@ -28,7 +28,7 @@ public interface IGamesFacade
     void joinGame(PlayerIndex player, int gameID, CatanColor color);
 
     /**
-     *
+     * Creates a game
      * @param randomTiles
      * @param randomNumbers
      * @param randomPorts
