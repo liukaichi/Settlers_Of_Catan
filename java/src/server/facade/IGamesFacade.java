@@ -1,6 +1,7 @@
 package server.facade;
 
 import client.data.GameInfo;
+import shared.communication.CreateGameResponse;
 import shared.communication.ListGamesResponse;
 import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
@@ -16,7 +17,7 @@ public interface IGamesFacade
      * Returns a list of Games on the server.
      * @return a list of games on the server.
      */
-    List<GameInfo> listGames();
+    ListGamesResponse listGames();
 
     /**
      *
@@ -33,5 +34,5 @@ public interface IGamesFacade
      * @param randomPorts
      * @param name
      */
-    void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
+    CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
 }

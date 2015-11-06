@@ -1,18 +1,18 @@
 package server.facade;
 
-import client.data.GameInfo;
+import shared.communication.CreateGameResponse;
 import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
+import shared.communication.ListAIResponse;
+import shared.communication.ListGamesResponse;
 import shared.definitions.exceptions.SignInException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.model.ClientModel;
-
-import java.util.List;
 
 /**
  * Created by cstaheli on 11/4/2015.
@@ -52,7 +52,7 @@ public class ServerFacade extends AbstractServerFacade
      * List the games available
      * @return the list of all games
      */
-    @Override public List<GameInfo> listGames()
+    @Override public ListGamesResponse listGames()
     {
         return null;
     }
@@ -70,9 +70,9 @@ public class ServerFacade extends AbstractServerFacade
      * Create a new game with the given id and specified name
      */
     @Override
-    public void createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+    public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
-
+        return null;
     }
 
     /**

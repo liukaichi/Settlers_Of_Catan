@@ -27,6 +27,7 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
      */
     public MonopolyCommand(PlayerIndex playerIndex, ResourceType resource)
     {
+
         super(MoveType.Monopoly, playerIndex);
         this.resource = resource;
     }

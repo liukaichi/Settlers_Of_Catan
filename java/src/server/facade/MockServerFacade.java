@@ -1,17 +1,17 @@
 package server.facade;
 
-import client.data.GameInfo;
+import shared.communication.CreateGameResponse;
 import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
+import shared.communication.ListGamesResponse;
 import shared.definitions.AIType;
+import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.SignInException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.model.ClientModel;
-
-import java.util.List;
 
 /**
  * Created by cstaheli on 11/4/2015.
@@ -30,22 +30,22 @@ public class MockServerFacade extends AbstractServerFacade
 
     @Override public ListAIResponse listAI()
     {
-
+        return null;
     }
 
-    @Override public List<GameInfo> listGames()
+    @Override public ListGamesResponse listGames()
     {
         return null;
     }
 
-    @Override public void joinGame()
+    @Override public void joinGame(PlayerIndex player, int gameID, CatanColor color)
     {
 
     }
 
-    @Override public void createGame()
+    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
-
+        return null;
     }
 
     @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
