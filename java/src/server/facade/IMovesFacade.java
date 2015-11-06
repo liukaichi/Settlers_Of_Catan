@@ -93,13 +93,77 @@ public interface IMovesFacade
      * @param resource
      */
     ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource);
+   
+    /**
+     * Increase the client player's Victory Points by 1
+     * @return the updated ClientModel
+     * @param playerIndex
+     */
     ClientModel monument(PlayerIndex playerIndex);
+    /**
+     * Increase the client player's road of AmountType.BUILT by 1.
+     * Decrease the client player's road of AmountType.AVAILABLE by 1.
+     * Update the map with a new road.
+     * @return the updated ClientModel
+     * @param playerIndex
+     * @param roadLocation
+     * @param free
+     */
     ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free);
+    /**
+     * Increase the client player's settlement of AmountType.BUILT by 1.
+     * Decrease the client player's settlement of AmountType.AVAILABLE by 1.
+     * Update the map with a new settlement
+     * @return the updated ClientModel
+     * @param playerIndex
+     * @param vertexLocation
+     * @param free
+     */
     ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean free);
+    /**
+     * Increase the client player's city of AmountType.BUILT by 1.
+     * Decrease the client player's city of AmountType.AVAILABLE by 1.
+     * Update the map with a new city
+     * @return the updated ClientModel
+     * @param playerIndex
+     * @param vertexLocation
+     */
     ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation);
+    /**
+     * Update model with a new TradeOffer object
+     * Player to be traded is asked to trade.
+     * @return the updated ClientModel
+     * @param playerIndex
+     * @param offer
+     * @param receiver
+     */
     ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver);
+    /**
+     * Update model and remove the TradeOffer
+     * Update both players' PlayerBank depending on whether
+     * the TradeOffer is accepted or not.
+     * @return the updated ClientModel
+     * @param playerIndex
+     * @param willAccept
+     */
     ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept);
+    /**
+     * The client player trades with the game bank based on the
+     * trade ratio that is available to the player
+     * @return the updated ClientModel
+     * @param playerIndex
+     * @param ratio
+     * @param inputResource
+     * @param outputResource
+     */
     ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
             ResourceType outputResource);
+    /**
+     * The client player discards a number of each resource.
+     * The resources are returned to the game bank
+     * @return the updated CLientModel
+     * @param playerIndex
+     * @param discardedCards
+     */
     ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards);
 }
