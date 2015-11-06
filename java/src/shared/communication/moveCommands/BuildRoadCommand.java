@@ -27,15 +27,27 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
 
 
     /**
-     * @param playerIndex
-     * @param roadLocation
-     * @param isFree
+     * Constructs a BuildRoadCommand based off of the index of the builder, the location, and whether it is free or not.
+     * @param playerIndex the builder of the road.
+     * @param roadLocation the location of the road.
+     * @param isFree whether or not the road is free. True in setup round.
      */
     public BuildRoadCommand(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean isFree)
     {
         super(MoveType.buildRoad, playerIndex);
         this.roadLocation = roadLocation;
         this.isFree = isFree;
+    }
+
+    /**
+     * Constructs a BuildRoadCommand from json.
+     * @param json the json to parse.
+     */
+    public BuildRoadCommand(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject buildRoadCommand = (JsonObject) parser.parse(json);
+
     }
 
     /*

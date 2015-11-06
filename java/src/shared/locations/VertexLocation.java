@@ -12,10 +12,29 @@ public class VertexLocation implements JsonSerializer<VertexLocation>
     private HexLocation hexLoc;
     private VertexDirection dir;
 
+    /**
+     *
+     * @param hexLoc
+     * @param dir
+     */
     public VertexLocation(HexLocation hexLoc, VertexDirection dir)
     {
         setHexLoc(hexLoc);
         setDir(dir);
+    }
+
+    /**
+     * Builds a VertexLocation from Json.
+     * @param json the json representing the VertexLocation.
+     */
+    public VertexLocation(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject location = (JsonObject) parser.parse(json);
+        int x = location.get("x").getAsInt();
+        int y = location.get("y").getAsInt();
+        this.hexLoc = new HexLocation(x,y);
+        this.dir = VertexDirection.fromAbreviation(location.get("direction").getAsString());
     }
 
     public HexLocation getHexLoc()

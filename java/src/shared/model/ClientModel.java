@@ -183,11 +183,6 @@ public class ClientModel extends Observable
         return bank.getDevCards().totalCards() > 0;
     }
 
-    public void buyDevCard()
-    {
-
-    }
-
     /**
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
@@ -205,16 +200,6 @@ public class ClientModel extends Observable
     }
 
     /**
-     * Builds a settlement for the given player at the given location.
-     * @param player the player who is building the settlement.
-     * @param location the location where the settlement is being built.
-     */
-    public void buildSettlement(PlayerIndex player, VertexLocation location)
-    {
-
-    }
-
-    /**
      * Method that indicates whether a player has the ability to place a city in
      * a certain location on the map
      * 
@@ -227,16 +212,6 @@ public class ClientModel extends Observable
     public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
     {
         return map.canPlaceCity(player, location);
-    }
-
-    /**
-     * Builds a city for the given player at the given location.
-     * @param player the player who is building the city.
-     * @param location the location where the city is being built.
-     */
-    public void buildCity(PlayerIndex player, VertexLocation location)
-    {
-        map.buildCity(player, location);
     }
 
     /**

@@ -40,6 +40,12 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
     public BuildCityCommand(String json, AbstractServerFacade facade)
     {
         super(MoveType.buildCity, PlayerIndex.NONE);
+        JsonParser parser = new JsonParser();
+        JsonObject buildCityCommand = (JsonObject) parser.parse(json);
+        this.type = MoveType.valueOf(buildCityCommand.get("type").getAsString());
+        this.playerIndex = PlayerIndex.fromInt(buildCityCommand.get("playerIndex").getAsInt());
+        JsonObject location = (JsonObject) buildCityCommand.get("vertexLocation");
+        cityLocation = new VertexLocation(location.toString());
     }
 
     /*
