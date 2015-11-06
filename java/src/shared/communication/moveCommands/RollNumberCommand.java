@@ -30,8 +30,9 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
         this.number = number;
     }
     /**
-     * Constructor that takes in JSON and parses it.
+     * Instantiate a RollNumberCommand from JSON with the injected facade
      * @param json JSON of the RollNumberCommand
+     * @param facade Facade to be used
      */
     public RollNumberCommand(String json, AbstractServerFacade facade)
     {

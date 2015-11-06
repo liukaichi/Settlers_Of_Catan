@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.locations.VertexLocation;
 
@@ -37,6 +38,17 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
         this.settlementLocation = settlementLocation;
         this.isFree = isFree;
     }
+
+    /**
+     * Instantiate a BuildSettlementCommand from JSON with the injected facade
+     * @param json JSON of the BuildSettlementCommand
+     * @param facade Facade to be used
+     */
+    public BuildSettlementCommand(String json, AbstractServerFacade facade)
+    {
+
+    }
+
 
 
     /*

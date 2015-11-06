@@ -3,6 +3,7 @@ package shared.communication.moveCommands;
 import java.lang.reflect.Type;
 
 import com.google.gson.*;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 
 /**
@@ -30,6 +31,16 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
         super(MoveType.Year_of_Plenty, playerIndex);
         this.resource1 = resource1;
         this.resource2 = resource2;
+    }
+
+    /**
+     * Instantiate a YearOfPlentyCommand from JSON with the injected facade
+     * @param json JSON of the YearOfPlentyCommand
+     * @param facade Facade to be used
+     */
+    public YearOfPlentyCommand(String json, AbstractServerFacade facade)
+    {
+
     }
 
     /*

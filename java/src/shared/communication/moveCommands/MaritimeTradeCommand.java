@@ -43,8 +43,9 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
     }
 
     /**
-     * Constructs a MaritimeTradeCommand from the client
-     * @param json, the serialized MaritimeTradeCommand from the client
+     * Instantiate a MaritimeTradeCommand from JSON with the injected facade
+     * @param json JSON of the MaritimeTradeCommand
+     * @param facade Facade to be used
      */
     public MaritimeTradeCommand(String json, AbstractServerFacade facade)
     {

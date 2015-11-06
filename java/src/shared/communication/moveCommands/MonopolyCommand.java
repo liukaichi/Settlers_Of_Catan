@@ -3,6 +3,7 @@ package shared.communication.moveCommands;
 import java.lang.reflect.Type;
 
 import com.google.gson.*;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 
 /**
@@ -20,8 +21,9 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
     private ResourceType resource;
 
     /**
-     * @param playerIndex
-     * @param resource
+     * The player takes all of one type of resource from all other players
+     * @param playerIndex Index of Player playing the card
+     * @param resource Resource to take from all other players
      */
     public MonopolyCommand(PlayerIndex playerIndex, ResourceType resource)
     {
@@ -29,6 +31,15 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
         this.resource = resource;
     }
 
+    /**
+     * Instantiate a MonopolyCommand from JSON with the injected facade
+     * @param json JSON of the MonopolyCommand
+     * @param facade Facade to be used
+     */
+    public MonopolyCommand(String json, AbstractServerFacade facade)
+    {
+
+    }
 
 
     /*

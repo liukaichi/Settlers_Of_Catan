@@ -34,8 +34,9 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
     }
 
     /**
-     * Parses and creates a BuildCityCommand from Json.
-     * @param json the Json to parse.
+     * Instantiate a BuildCityCommand from JSON with the injected facade
+     * @param json JSON of the BuildCityCommand
+     * @param facade Facade to be used
      */
     public BuildCityCommand(String json, AbstractServerFacade facade)
     {

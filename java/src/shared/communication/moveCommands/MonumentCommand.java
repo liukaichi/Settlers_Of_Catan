@@ -1,5 +1,6 @@
 package shared.communication.moveCommands;
 
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 
 /**
@@ -18,6 +19,16 @@ public class MonumentCommand extends SimpleSerializableCommand
     public MonumentCommand(PlayerIndex playerIndex)
     {
         super(MoveType.Monument, playerIndex);
+    }
+
+    /**
+     * Instantiate a MonumentCommand from JSON with the injected facade
+     * @param json JSON of the MonumentCommand
+     * @param facade Facade to be used
+     */
+    public MonumentCommand(String json, AbstractServerFacade facade)
+    {
+
     }
 
     @Override public String execute()

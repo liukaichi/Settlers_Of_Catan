@@ -29,6 +29,10 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      */
     private HexLocation location;
 
+    public RobPlayerCommand()
+    {
+        super(MoveType.robPlayer, PlayerIndex.NONE);
+    }
     /**
      * @param playerIndex
      * @param victimIndex
@@ -42,8 +46,9 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
     }
 
     /**
-     * Constructor that takes in JSON and parses it.
+     * Instantiate a RobPlayerCommand from JSON with the injected facade
      * @param json JSON of the RobPlayerCommand
+     * @param facade Facade to be used
      */
     public RobPlayerCommand(String json, AbstractServerFacade facade)
     {

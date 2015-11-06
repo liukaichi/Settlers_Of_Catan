@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 
@@ -33,7 +34,15 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
         this.spot2 = spot2;
     }
 
+    /**
+     * Instantiate a RoadBuildingCommand from JSON with the injected facade
+     * @param json JSON of the RoadBuildingCommand
+     * @param facade Facade to be used
+     */
+    public RoadBuildingCommand(String json, AbstractServerFacade facade)
+    {
 
+    }
 
     /*
      * (non-Javadoc)

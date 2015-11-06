@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 
@@ -40,13 +41,12 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
     }
 
     /**
-     * Constructs a BuildRoadCommand from json.
-     * @param json the json to parse.
+     * Instantiate a BuildRoadCommand from JSON with the injected facade
+     * @param json JSON of the BuildRoadCommand
+     * @param facade Facade to be used
      */
-    public BuildRoadCommand(String json)
+    public BuildRoadCommand(String json, AbstractServerFacade facade)
     {
-        JsonParser parser = new JsonParser();
-        JsonObject buildRoadCommand = (JsonObject) parser.parse(json);
 
     }
 

@@ -32,8 +32,9 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
     }
 
     /**
-     * Constructs a AcceptTradeCommand from the client
-     * @param json, the serialized AcceptTradeCommand from the client
+     * Instantiate a AcceptTradeCommand from JSON with the injected facade
+     * @param json JSON of the AcceptTradeCommand
+     * @param facade Facade to be used
      */
     public AcceptTradeCommand(String json, AbstractServerFacade facade)
     {

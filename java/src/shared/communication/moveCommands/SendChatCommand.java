@@ -31,8 +31,9 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
     }
 
     /**
-     * Constructs a SendChatCommand from the client
-     * @param json, the serialized SendChatCommand from the client
+     * Instantiate a SendChatCommand from JSON with the injected facade
+     * @param json JSON of the SendChatCommand
+     * @param facade Facade to be used
      */
     public SendChatCommand(String json, AbstractServerFacade facade)
     {

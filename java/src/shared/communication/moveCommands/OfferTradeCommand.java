@@ -39,8 +39,9 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     }
 
     /**
-     * Constructs a OfferTradeCommand from the client
-     * @param json, the serialized OfferTradeCommand from the client
+     * Instantiate a OfferTradeCommand from JSON with the injected facade
+     * @param json JSON of the OfferTradeCommand
+     * @param facade Facade to be used
      */
     public OfferTradeCommand(String json, AbstractServerFacade facade)
     {

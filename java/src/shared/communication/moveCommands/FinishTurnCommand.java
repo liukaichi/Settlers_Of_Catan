@@ -2,6 +2,7 @@ package shared.communication.moveCommands;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 
 /**
@@ -21,10 +22,11 @@ public class FinishTurnCommand extends SimpleSerializableCommand
     }
 
     /**
-     * Constructs a FinishTurnCommand from the client
-     * @param json, the serialized FinishTurnCommand from the client
+     * Instantiate a FinishTurnCommand from JSON with the injected facade
+     * @param json JSON of the FinishTurnCommand
+     * @param facade Facade to be used
      */
-    public FinishTurnCommand(String json)
+    public FinishTurnCommand(String json, AbstractServerFacade facade)
     {
         JsonParser parser = new JsonParser();
         JsonObject finishTurnObject = (JsonObject) parser.parse(json);

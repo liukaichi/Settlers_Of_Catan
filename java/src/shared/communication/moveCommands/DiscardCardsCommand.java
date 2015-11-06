@@ -38,8 +38,9 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
     }
 
     /**
-     * Constructor that takes in JSON and parses it.
+     * Instantiate a DiscardCardsCommand from JSON with the injected facade
      * @param json JSON of the DiscardCardsCommand
+     * @param facade Facade to be used
      */
     public DiscardCardsCommand(String json, AbstractServerFacade facade)
     {

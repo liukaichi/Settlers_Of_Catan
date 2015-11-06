@@ -1,5 +1,6 @@
 package shared.communication.moveCommands;
 
+import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 
 /**
@@ -18,6 +19,16 @@ public class BuyDevCardCommand extends SimpleSerializableCommand
     public BuyDevCardCommand(PlayerIndex playerIndex)
     {
         super(MoveType.buyDevCard, playerIndex);
+    }
+
+    /**
+     * Instantiate a BuyDevCardCommand from JSON with the injected facade
+     * @param json JSON of the BuyDevCardCommand
+     * @param facade Facade to be used
+     */
+    public BuyDevCardCommand(String json, AbstractServerFacade facade)
+    {
+
     }
 
     @Override public String execute()
