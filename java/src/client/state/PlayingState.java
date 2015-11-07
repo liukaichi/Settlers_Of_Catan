@@ -1,14 +1,14 @@
 package client.state;
 
-import client.base.ObserverController;
-import client.data.RobPlayerInfo;
-import client.discard.DiscardController;
-import client.domestic.DomesticTradeController;
-import client.map.IRobView;
-import client.map.MapController;
-import client.maritime.MaritimeTradeController;
-import client.resources.ResourceBarController;
-import client.turntracker.TurnTrackerController;
+import client.gui.base.ObserverController;
+import client.gui.data.RobPlayerInfo;
+import client.gui.discard.DiscardController;
+import client.gui.domestic.DomesticTradeController;
+import client.gui.map.IRobView;
+import client.gui.map.MapController;
+import client.gui.maritime.MaritimeTradeController;
+import client.gui.resources.ResourceBarController;
+import client.gui.turntracker.TurnTrackerController;
 import shared.definitions.DevCardType;
 import shared.definitions.PieceType;
 import shared.definitions.ResourceType;
@@ -17,8 +17,6 @@ import shared.definitions.exceptions.PlacementException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.model.TurnTracker;
-import shared.model.player.Player;
 
 import java.util.logging.Logger;
 

@@ -38,11 +38,10 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
     }
 
     /**
-     * Instantiate a DiscardCardsCommand from JSON with the injected facade
-     * @param json JSON of the DiscardCardsCommand
-     * @param facade Facade to be used
+     * Instantiate a DiscardCardsCommand from JSON.
+     * @param json JSON of the DiscardCardsCommand.
      */
-    public DiscardCardsCommand(String json, AbstractServerFacade facade)
+    public DiscardCardsCommand(String json)
     {
 
     }
@@ -77,9 +76,10 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
 
     /**
     * This will discard the amount of cards within the resources object to subtract from the ServerModel
-     * @return returns the JSON of the new model after the discards are completed
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game for which to execute the command.
     */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

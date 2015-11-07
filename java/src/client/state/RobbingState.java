@@ -3,17 +3,15 @@
  */
 package client.state;
 
-import client.base.ObserverController;
-import client.data.RobPlayerInfo;
-import client.discard.DiscardController;
-import client.map.IRobView;
-import client.map.MapController;
-import client.turntracker.TurnTrackerController;
+import client.gui.base.ObserverController;
+import client.gui.data.RobPlayerInfo;
+import client.gui.discard.DiscardController;
+import client.gui.map.IRobView;
+import client.gui.map.MapController;
+import client.gui.turntracker.TurnTrackerController;
 import shared.definitions.PieceType;
 import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
-
-import java.util.logging.Logger;
 
 /**
  * @author cstaheli

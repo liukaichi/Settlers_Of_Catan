@@ -35,8 +35,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/map/MapComponent.html" title="class in client.map"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../client/map/MapView.html" title="class in client.map"><span class="strong">Next Class</span></a></li>
+<li><a href="../../client/map/MapComponent.html" title="class in client.gui.map"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/map/MapView.html" title="class in client.gui.map"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../index.html?client/map/MapController.html" target="_top">Frames</a></li>
@@ -78,7 +78,7 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">client.map</div>
+<div class="subTitle">client.gui.map</div>
 <h2 title="Class MapController" class="title">Class MapController</h2>
 </div>
 <div class="contentContainer">
@@ -86,10 +86,10 @@
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../client/base/Controller.html" title="class in client.base">client.base.Controller</a></li>
+<li><a href="../../client/base/Controller.html" title="class in client.gui.base">client.gui.base.Controller</a></li>
 <li>
 <ul class="inheritance">
-<li>client.map.MapController</li>
+<li>client.gui.map.MapController</li>
 </ul>
 </li>
 </ul>
@@ -100,13 +100,13 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../client/base/IController.html" title="interface in client.base">IController</a>, <a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></dd>
+<dd><a href="../../client/base/IController.html" title="interface in client.gui.base">IController</a>, <a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="strong">MapController</span>
-extends <a href="../../client/base/Controller.html" title="class in client.base">Controller</a>
-implements <a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></pre>
+extends <a href="../../client/base/Controller.html" title="class in client.gui.base">Controller</a>
+implements <a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></pre>
 <div class="block">Implementation for the map controller</div>
 </li>
 </ul>
@@ -126,8 +126,8 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../client/map/MapController.html#MapController(client.map.IMapView, client.map.IRobView)">MapController</a></strong>(<a href="../../client/map/IMapView.html" title="interface in client.map">IMapView</a>&nbsp;view,
-             <a href="../../client/map/IRobView.html" title="interface in client.map">IRobView</a>&nbsp;robView)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../client/map/MapController.html#MapController(client.map.IMapView, client.map.IRobView)">MapController</a></strong>(<a href="../../client/map/IMapView.html" title="interface in client.gui.map">IMapView</a>&nbsp;view,
+             <a href="../../client/map/IRobView.html" title="interface in client.gui.map">IRobView</a>&nbsp;robView)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -180,7 +180,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../client/map/IMapView.html" title="interface in client.map">IMapView</a></code></td>
+<td class="colFirst"><code><a href="../../client/map/IMapView.html" title="interface in client.gui.map">IMapView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/map/MapController.html#getView()">getView</a></strong>()</code>
 <div class="block">View getter</div>
 </td>
@@ -229,7 +229,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../client/map/MapController.html#robPlayer(client.data.RobPlayerInfo)">robPlayer</a></strong>(<a href="../../client/data/RobPlayerInfo.html" title="class in client.data">RobPlayerInfo</a>&nbsp;victim)</code>
+<td class="colLast"><code><strong><a href="../../client/map/MapController.html#robPlayer(client.data.RobPlayerInfo)">robPlayer</a></strong>(<a href="../../client/data/RobPlayerInfo.html" title="class in client.gui.data">RobPlayerInfo</a>&nbsp;victim)</code>
 <div class="block">This method is called by the Rob View when a player to rob is selected
  via a button click.</div>
 </td>
@@ -271,8 +271,8 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 <ul class="blockListLast">
 <li class="blockList">
 <h4>MapController</h4>
-<pre>public&nbsp;MapController(<a href="../../client/map/IMapView.html" title="interface in client.map">IMapView</a>&nbsp;view,
-             <a href="../../client/map/IRobView.html" title="interface in client.map">IRobView</a>&nbsp;robView)</pre>
+<pre>public&nbsp;MapController(<a href="../../client/map/IMapView.html" title="interface in client.gui.map">IMapView</a>&nbsp;view,
+             <a href="../../client/map/IRobView.html" title="interface in client.gui.map">IRobView</a>&nbsp;robView)</pre>
 </li>
 </ul>
 </li>
@@ -289,14 +289,14 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 <ul class="blockList">
 <li class="blockList">
 <h4>getView</h4>
-<pre>public&nbsp;<a href="../../client/map/IMapView.html" title="interface in client.map">IMapView</a>&nbsp;getView()</pre>
+<pre>public&nbsp;<a href="../../client/map/IMapView.html" title="interface in client.gui.map">IMapView</a>&nbsp;getView()</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../client/base/IController.html#getView()">IController</a></code></strong></div>
 <div class="block">View getter</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/base/IController.html#getView()">getView</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/base/IController.html" title="interface in client.base">IController</a></code></dd>
+<dd><code><a href="../../client/base/IController.html#getView()">getView</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/base/IController.html" title="interface in client.gui.base">IController</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../client/base/Controller.html#getView()">getView</a></code>&nbsp;in class&nbsp;<code><a href="../../client/base/Controller.html" title="class in client.base">Controller</a></code></dd>
+<dd><code><a href="../../client/base/Controller.html#getView()">getView</a></code>&nbsp;in class&nbsp;<code><a href="../../client/base/Controller.html" title="class in client.gui.base">Controller</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>The controller's view</dd></dl>
 </li>
 </ul>
@@ -323,7 +323,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  specified location.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#canPlaceRoad(shared.locations.EdgeLocation)">canPlaceRoad</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#canPlaceRoad(shared.locations.EdgeLocation)">canPlaceRoad</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>edgeLoc</code> - The proposed road location</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if the road can be placed at edgeLoc, false otherwise</dd></dl>
 </li>
@@ -342,7 +342,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  be placed at the specified location.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#canPlaceSettlement(shared.locations.VertexLocation)">canPlaceSettlement</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#canPlaceSettlement(shared.locations.VertexLocation)">canPlaceSettlement</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>vertLoc</code> - The proposed settlement location</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if the settlement can be placed at vertLoc, false otherwise</dd></dl>
 </li>
@@ -361,7 +361,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  specified location.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#canPlaceCity(shared.locations.VertexLocation)">canPlaceCity</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#canPlaceCity(shared.locations.VertexLocation)">canPlaceCity</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>vertLoc</code> - The proposed city location</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if the city can be placed at vertLoc, false otherwise</dd></dl>
 </li>
@@ -380,7 +380,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  placed at the specified location.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#canPlaceRobber(shared.locations.HexLocation)">canPlaceRobber</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#canPlaceRobber(shared.locations.HexLocation)">canPlaceRobber</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>hexLoc</code> - The proposed robber location</dd>
 <dt><span class="strong">Returns:</span></dt><dd>true if the robber can be placed at hexLoc, false otherwise</dd></dl>
 </li>
@@ -396,7 +396,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 <div class="block">This method is called when the user clicks the mouse to place a road.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#placeRoad(shared.locations.EdgeLocation)">placeRoad</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#placeRoad(shared.locations.EdgeLocation)">placeRoad</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>edgeLoc</code> - The road location</dd></dl>
 </li>
 </ul>
@@ -412,7 +412,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  settlement.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#placeSettlement(shared.locations.VertexLocation)">placeSettlement</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#placeSettlement(shared.locations.VertexLocation)">placeSettlement</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>vertLoc</code> - The settlement location</dd></dl>
 </li>
 </ul>
@@ -427,7 +427,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 <div class="block">This method is called when the user clicks the mouse to place a city.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#placeCity(shared.locations.VertexLocation)">placeCity</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#placeCity(shared.locations.VertexLocation)">placeCity</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>vertLoc</code> - The city location</dd></dl>
 </li>
 </ul>
@@ -442,7 +442,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 <div class="block">This method is called when the user clicks the mouse to place the robber.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#placeRobber(shared.locations.HexLocation)">placeRobber</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#placeRobber(shared.locations.HexLocation)">placeRobber</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>hexLoc</code> - The robber location</dd></dl>
 </li>
 </ul>
@@ -460,7 +460,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  (road, city, or settlement)</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#startMove(shared.definitions.PieceType, boolean, boolean)">startMove</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#startMove(shared.definitions.PieceType, boolean, boolean)">startMove</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>pieceType</code> - The type of piece to be placed</dd><dd><code>isFree</code> - true if the piece should not cost the player resources, false
             otherwise. Set to true during initial setup and when a road
             building card is played.</dd><dd><code>allowDisconnected</code> - true if the piece can be disconnected, false otherwise. Set to
@@ -479,7 +479,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  is pressed.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#cancelMove()">cancelMove</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#cancelMove()">cancelMove</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -495,7 +495,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  It should initiate robber placement.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#playSoldierCard()">playSoldierCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#playSoldierCard()">playSoldierCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -512,7 +512,7 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
  to place two roads.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#playRoadBuildingCard()">playRoadBuildingCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#playRoadBuildingCard()">playRoadBuildingCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -522,13 +522,13 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 <ul class="blockListLast">
 <li class="blockList">
 <h4>robPlayer</h4>
-<pre>public&nbsp;void&nbsp;robPlayer(<a href="../../client/data/RobPlayerInfo.html" title="class in client.data">RobPlayerInfo</a>&nbsp;victim)</pre>
+<pre>public&nbsp;void&nbsp;robPlayer(<a href="../../client/data/RobPlayerInfo.html" title="class in client.gui.data">RobPlayerInfo</a>&nbsp;victim)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../client/map/IMapController.html#robPlayer(client.data.RobPlayerInfo)">IMapController</a></code></strong></div>
 <div class="block">This method is called by the Rob View when a player to rob is selected
  via a button click.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/map/IMapController.html#robPlayer(client.data.RobPlayerInfo)">robPlayer</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.map">IMapController</a></code></dd>
+<dd><code><a href="../../client/map/IMapController.html#robPlayer(client.data.RobPlayerInfo)">robPlayer</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/map/IMapController.html" title="interface in client.gui.map">IMapController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>victim</code> - The player to be robbed</dd></dl>
 </li>
 </ul>
@@ -557,8 +557,8 @@ implements <a href="../../client/map/IMapController.html" title="interface in cl
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/map/MapComponent.html" title="class in client.map"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../client/map/MapView.html" title="class in client.map"><span class="strong">Next Class</span></a></li>
+<li><a href="../../client/map/MapComponent.html" title="class in client.gui.map"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/map/MapView.html" title="class in client.gui.map"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../index.html?client/map/MapController.html" target="_top">Frames</a></li>

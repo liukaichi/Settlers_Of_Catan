@@ -35,8 +35,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/join/ISelectColorView.html" title="interface in client.join"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../client/join/JoinGameView.html" title="class in client.join"><span class="strong">Next Class</span></a></li>
+<li><a href="../../client/join/ISelectColorView.html" title="interface in client.gui.join"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/join/JoinGameView.html" title="class in client.gui.join"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../index.html?client/join/JoinGameController.html" target="_top">Frames</a></li>
@@ -78,7 +78,7 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">client.join</div>
+<div class="subTitle">client.gui.join</div>
 <h2 title="Class JoinGameController" class="title">Class JoinGameController</h2>
 </div>
 <div class="contentContainer">
@@ -86,10 +86,10 @@
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../client/base/Controller.html" title="class in client.base">client.base.Controller</a></li>
+<li><a href="../../client/base/Controller.html" title="class in client.gui.base">client.gui.base.Controller</a></li>
 <li>
 <ul class="inheritance">
-<li>client.join.JoinGameController</li>
+<li>client.gui.join.JoinGameController</li>
 </ul>
 </li>
 </ul>
@@ -100,13 +100,13 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../client/base/IController.html" title="interface in client.base">IController</a>, <a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></dd>
+<dd><a href="../../client/base/IController.html" title="interface in client.gui.base">IController</a>, <a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="strong">JoinGameController</span>
-extends <a href="../../client/base/Controller.html" title="class in client.base">Controller</a>
-implements <a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></pre>
+extends <a href="../../client/base/Controller.html" title="class in client.gui.base">Controller</a>
+implements <a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></pre>
 <div class="block">Implementation for the join game controller</div>
 </li>
 </ul>
@@ -126,10 +126,10 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../client/join/JoinGameController.html#JoinGameController(client.join.IJoinGameView, client.join.INewGameView, client.join.ISelectColorView, client.misc.IMessageView)">JoinGameController</a></strong>(<a href="../../client/join/IJoinGameView.html" title="interface in client.join">IJoinGameView</a>&nbsp;view,
-                  <a href="../../client/join/INewGameView.html" title="interface in client.join">INewGameView</a>&nbsp;newGameView,
-                  <a href="../../client/join/ISelectColorView.html" title="interface in client.join">ISelectColorView</a>&nbsp;selectColorView,
-                  <a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a>&nbsp;messageView)</code>
+<td class="colOne"><code><strong><a href="../../client/join/JoinGameController.html#JoinGameController(client.join.IJoinGameView, client.join.INewGameView, client.join.ISelectColorView, client.misc.IMessageView)">JoinGameController</a></strong>(<a href="../../client/join/IJoinGameView.html" title="interface in client.gui.join">IJoinGameView</a>&nbsp;view,
+                  <a href="../../client/join/INewGameView.html" title="interface in client.gui.join">INewGameView</a>&nbsp;newGameView,
+                  <a href="../../client/join/ISelectColorView.html" title="interface in client.gui.join">ISelectColorView</a>&nbsp;selectColorView,
+                  <a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a>&nbsp;messageView)</code>
 <div class="block">JoinGameController constructor</div>
 </td>
 </tr>
@@ -167,25 +167,25 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../client/base/IAction.html" title="interface in client.base">IAction</a></code></td>
+<td class="colFirst"><code><a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#getJoinAction()">getJoinAction</a></strong>()</code>
 <div class="block">Returns the action to be executed when the user joins a game</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../client/join/IJoinGameView.html" title="interface in client.join">IJoinGameView</a></code></td>
+<td class="colFirst"><code><a href="../../client/join/IJoinGameView.html" title="interface in client.gui.join">IJoinGameView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#getJoinGameView()">getJoinGameView</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a></code></td>
+<td class="colFirst"><code><a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#getMessageView()">getMessageView</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../client/join/INewGameView.html" title="interface in client.join">INewGameView</a></code></td>
+<td class="colFirst"><code><a href="../../client/join/INewGameView.html" title="interface in client.gui.join">INewGameView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#getNewGameView()">getNewGameView</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../client/join/ISelectColorView.html" title="interface in client.join">ISelectColorView</a></code></td>
+<td class="colFirst"><code><a href="../../client/join/ISelectColorView.html" title="interface in client.gui.join">ISelectColorView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#getSelectColorView()">getSelectColorView</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -197,21 +197,21 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#setJoinAction(client.base.IAction)">setJoinAction</a></strong>(<a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;value)</code>
+<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#setJoinAction(client.base.IAction)">setJoinAction</a></strong>(<a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;value)</code>
 <div class="block">Sets the action to be executed when the user joins a game</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#setMessageView(client.misc.IMessageView)">setMessageView</a></strong>(<a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a>&nbsp;messageView)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#setMessageView(client.misc.IMessageView)">setMessageView</a></strong>(<a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a>&nbsp;messageView)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#setNewGameView(client.join.INewGameView)">setNewGameView</a></strong>(<a href="../../client/join/INewGameView.html" title="interface in client.join">INewGameView</a>&nbsp;newGameView)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#setNewGameView(client.join.INewGameView)">setNewGameView</a></strong>(<a href="../../client/join/INewGameView.html" title="interface in client.gui.join">INewGameView</a>&nbsp;newGameView)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#setSelectColorView(client.join.ISelectColorView)">setSelectColorView</a></strong>(<a href="../../client/join/ISelectColorView.html" title="interface in client.join">ISelectColorView</a>&nbsp;selectColorView)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#setSelectColorView(client.join.ISelectColorView)">setSelectColorView</a></strong>(<a href="../../client/join/ISelectColorView.html" title="interface in client.gui.join">ISelectColorView</a>&nbsp;selectColorView)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -228,7 +228,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#startJoinGame(client.data.GameInfo)">startJoinGame</a></strong>(<a href="../../client/data/GameInfo.html" title="class in client.data">GameInfo</a>&nbsp;game)</code>
+<td class="colLast"><code><strong><a href="../../client/join/JoinGameController.html#startJoinGame(client.data.GameInfo)">startJoinGame</a></strong>(<a href="../../client/data/GameInfo.html" title="class in client.gui.data">GameInfo</a>&nbsp;game)</code>
 <div class="block">Called by the join game view when the user clicks a "Join" or "Re-join"
  button.</div>
 </td>
@@ -238,7 +238,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <li class="blockList"><a name="methods_inherited_from_class_client.base.Controller">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;client.base.<a href="../../client/base/Controller.html" title="class in client.base">Controller</a></h3>
+<h3>Methods inherited from class&nbsp;client.gui.base.<a href="../../client/base/Controller.html" title="class in client.gui.base">Controller</a></h3>
 <code><a href="../../client/base/Controller.html#getView()">getView</a></code></li>
 </ul>
 <ul class="blockList">
@@ -252,7 +252,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <li class="blockList"><a name="methods_inherited_from_class_client.base.IController">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;client.base.<a href="../../client/base/IController.html" title="interface in client.base">IController</a></h3>
+<h3>Methods inherited from interface&nbsp;client.gui.base.<a href="../../client/base/IController.html" title="interface in client.gui.base">IController</a></h3>
 <code><a href="../../client/base/IController.html#getView()">getView</a></code></li>
 </ul>
 </li>
@@ -275,10 +275,10 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockListLast">
 <li class="blockList">
 <h4>JoinGameController</h4>
-<pre>public&nbsp;JoinGameController(<a href="../../client/join/IJoinGameView.html" title="interface in client.join">IJoinGameView</a>&nbsp;view,
-                  <a href="../../client/join/INewGameView.html" title="interface in client.join">INewGameView</a>&nbsp;newGameView,
-                  <a href="../../client/join/ISelectColorView.html" title="interface in client.join">ISelectColorView</a>&nbsp;selectColorView,
-                  <a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a>&nbsp;messageView)</pre>
+<pre>public&nbsp;JoinGameController(<a href="../../client/join/IJoinGameView.html" title="interface in client.gui.join">IJoinGameView</a>&nbsp;view,
+                  <a href="../../client/join/INewGameView.html" title="interface in client.gui.join">INewGameView</a>&nbsp;newGameView,
+                  <a href="../../client/join/ISelectColorView.html" title="interface in client.gui.join">ISelectColorView</a>&nbsp;selectColorView,
+                  <a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a>&nbsp;messageView)</pre>
 <div class="block">JoinGameController constructor</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>view</code> - Join game view</dd><dd><code>newGameView</code> - New game view</dd><dd><code>selectColorView</code> - Select color view</dd><dd><code>messageView</code> - Message view (used to display error messages that occur while the user is joining a game)</dd></dl>
 </li>
@@ -297,7 +297,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>getJoinGameView</h4>
-<pre>public&nbsp;<a href="../../client/join/IJoinGameView.html" title="interface in client.join">IJoinGameView</a>&nbsp;getJoinGameView()</pre>
+<pre>public&nbsp;<a href="../../client/join/IJoinGameView.html" title="interface in client.gui.join">IJoinGameView</a>&nbsp;getJoinGameView()</pre>
 </li>
 </ul>
 <a name="getJoinAction()">
@@ -306,7 +306,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>getJoinAction</h4>
-<pre>public&nbsp;<a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;getJoinAction()</pre>
+<pre>public&nbsp;<a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;getJoinAction()</pre>
 <div class="block">Returns the action to be executed when the user joins a game</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>The action to be executed when the user joins a game</dd></dl>
 </li>
@@ -317,7 +317,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>setJoinAction</h4>
-<pre>public&nbsp;void&nbsp;setJoinAction(<a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;value)</pre>
+<pre>public&nbsp;void&nbsp;setJoinAction(<a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;value)</pre>
 <div class="block">Sets the action to be executed when the user joins a game</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>value</code> - The action to be executed when the user joins a game</dd></dl>
 </li>
@@ -328,7 +328,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>getNewGameView</h4>
-<pre>public&nbsp;<a href="../../client/join/INewGameView.html" title="interface in client.join">INewGameView</a>&nbsp;getNewGameView()</pre>
+<pre>public&nbsp;<a href="../../client/join/INewGameView.html" title="interface in client.gui.join">INewGameView</a>&nbsp;getNewGameView()</pre>
 </li>
 </ul>
 <a name="setNewGameView(client.join.INewGameView)">
@@ -337,7 +337,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>setNewGameView</h4>
-<pre>public&nbsp;void&nbsp;setNewGameView(<a href="../../client/join/INewGameView.html" title="interface in client.join">INewGameView</a>&nbsp;newGameView)</pre>
+<pre>public&nbsp;void&nbsp;setNewGameView(<a href="../../client/join/INewGameView.html" title="interface in client.gui.join">INewGameView</a>&nbsp;newGameView)</pre>
 </li>
 </ul>
 <a name="getSelectColorView()">
@@ -346,7 +346,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>getSelectColorView</h4>
-<pre>public&nbsp;<a href="../../client/join/ISelectColorView.html" title="interface in client.join">ISelectColorView</a>&nbsp;getSelectColorView()</pre>
+<pre>public&nbsp;<a href="../../client/join/ISelectColorView.html" title="interface in client.gui.join">ISelectColorView</a>&nbsp;getSelectColorView()</pre>
 </li>
 </ul>
 <a name="setSelectColorView(client.join.ISelectColorView)">
@@ -355,7 +355,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>setSelectColorView</h4>
-<pre>public&nbsp;void&nbsp;setSelectColorView(<a href="../../client/join/ISelectColorView.html" title="interface in client.join">ISelectColorView</a>&nbsp;selectColorView)</pre>
+<pre>public&nbsp;void&nbsp;setSelectColorView(<a href="../../client/join/ISelectColorView.html" title="interface in client.gui.join">ISelectColorView</a>&nbsp;selectColorView)</pre>
 </li>
 </ul>
 <a name="getMessageView()">
@@ -364,7 +364,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>getMessageView</h4>
-<pre>public&nbsp;<a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a>&nbsp;getMessageView()</pre>
+<pre>public&nbsp;<a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a>&nbsp;getMessageView()</pre>
 </li>
 </ul>
 <a name="setMessageView(client.misc.IMessageView)">
@@ -373,7 +373,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>setMessageView</h4>
-<pre>public&nbsp;void&nbsp;setMessageView(<a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a>&nbsp;messageView)</pre>
+<pre>public&nbsp;void&nbsp;setMessageView(<a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a>&nbsp;messageView)</pre>
 </li>
 </ul>
 <a name="start()">
@@ -387,7 +387,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <div class="block">Displays the join game view</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/join/IJoinGameController.html#start()">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></code></dd>
+<dd><code><a href="../../client/join/IJoinGameController.html#start()">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -403,7 +403,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
  button. Displays the new game view.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/join/IJoinGameController.html#startCreateNewGame()">startCreateNewGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></code></dd>
+<dd><code><a href="../../client/join/IJoinGameController.html#startCreateNewGame()">startCreateNewGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -418,7 +418,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <div class="block">Called by the new game view when the user clicks the "Cancel" button</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/join/IJoinGameController.html#cancelCreateNewGame()">cancelCreateNewGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></code></dd>
+<dd><code><a href="../../client/join/IJoinGameController.html#cancelCreateNewGame()">cancelCreateNewGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -433,7 +433,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <div class="block">Called by the new game view when the user clicks the "Create Game" button</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/join/IJoinGameController.html#createNewGame()">createNewGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></code></dd>
+<dd><code><a href="../../client/join/IJoinGameController.html#createNewGame()">createNewGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -443,13 +443,13 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <h4>startJoinGame</h4>
-<pre>public&nbsp;void&nbsp;startJoinGame(<a href="../../client/data/GameInfo.html" title="class in client.data">GameInfo</a>&nbsp;game)</pre>
+<pre>public&nbsp;void&nbsp;startJoinGame(<a href="../../client/data/GameInfo.html" title="class in client.gui.data">GameInfo</a>&nbsp;game)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../client/join/IJoinGameController.html#startJoinGame(client.data.GameInfo)">IJoinGameController</a></code></strong></div>
 <div class="block">Called by the join game view when the user clicks a "Join" or "Re-join"
  button. Displays the select color view.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/join/IJoinGameController.html#startJoinGame(client.data.GameInfo)">startJoinGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></code></dd>
+<dd><code><a href="../../client/join/IJoinGameController.html#startJoinGame(client.data.GameInfo)">startJoinGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>game</code> - The game that the user is joining</dd></dl>
 </li>
 </ul>
@@ -464,7 +464,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 <div class="block">Called by the select color view when the user clicks the "Cancel" button</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/join/IJoinGameController.html#cancelJoinGame()">cancelJoinGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></code></dd>
+<dd><code><a href="../../client/join/IJoinGameController.html#cancelJoinGame()">cancelJoinGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -480,7 +480,7 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
  button</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/join/IJoinGameController.html#joinGame(shared.definitions.CatanColor)">joinGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.join">IJoinGameController</a></code></dd>
+<dd><code><a href="../../client/join/IJoinGameController.html#joinGame(shared.definitions.CatanColor)">joinGame</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/join/IJoinGameController.html" title="interface in client.gui.join">IJoinGameController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>color</code> - The color selected by the user</dd></dl>
 </li>
 </ul>
@@ -509,8 +509,8 @@ implements <a href="../../client/join/IJoinGameController.html" title="interface
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/join/ISelectColorView.html" title="interface in client.join"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../client/join/JoinGameView.html" title="class in client.join"><span class="strong">Next Class</span></a></li>
+<li><a href="../../client/join/ISelectColorView.html" title="interface in client.gui.join"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/join/JoinGameView.html" title="class in client.gui.join"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../index.html?client/join/JoinGameController.html" target="_top">Frames</a></li>

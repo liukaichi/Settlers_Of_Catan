@@ -1,12 +1,12 @@
 package client.main;
 
-import client.base.IAction;
-import client.catan.CatanPanel;
+import client.gui.base.IAction;
+import client.gui.catan.CatanPanel;
 import client.facade.ClientFacade;
-import client.join.*;
-import client.login.LoginController;
-import client.login.LoginView;
-import client.misc.MessageView;
+import client.gui.join.*;
+import client.gui.login.LoginController;
+import client.gui.login.LoginView;
+import client.gui.misc.MessageView;
 
 import javax.swing.*;
 import java.util.logging.Logger;
@@ -25,7 +25,7 @@ import java.util.logging.Logger;
     public Catan()
     {
 
-        client.base.OverlayView.setWindow(this);
+        client.gui.base.OverlayView.setWindow(this);
 
         this.setTitle("Settlers of Catan");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

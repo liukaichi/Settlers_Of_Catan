@@ -3,17 +3,13 @@
  */
 package client.state;
 
-import client.base.ObserverController;
-import client.discard.DiscardController;
-import client.discard.IDiscardView;
+import client.gui.base.ObserverController;
+import client.gui.discard.DiscardController;
+import client.gui.discard.IDiscardView;
 import client.facade.ClientFacade;
-import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TurnStatus;
-import shared.model.TurnTracker;
 import shared.model.bank.resource.Resources;
-
-import java.util.logging.Logger;
 
 /**
  * @author cstaheli

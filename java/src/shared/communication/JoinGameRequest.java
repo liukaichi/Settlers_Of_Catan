@@ -2,7 +2,6 @@ package shared.communication;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import server.facade.AbstractServerFacade;
 import shared.definitions.CatanColor;
 
 /**
@@ -23,11 +22,10 @@ public class JoinGameRequest implements CatanCommand
     }
 
     /**
-     * Instantiate a CreateGameRequest from JSON with the injected facade
+     * Instantiate a CreateGameRequest from JSON.
      * @param json JSON of the CreateGameRequest
-     * @param facade Facade to be used
      */
-    public JoinGameRequest(String json, AbstractServerFacade facade)
+    public JoinGameRequest(String json)
     {
         JsonParser parser = new JsonParser();
         JsonObject joinGameObject = (JsonObject) parser.parse(json);
@@ -38,8 +36,9 @@ public class JoinGameRequest implements CatanCommand
     /**
      * Calls JoinGame method on the Server Facade
      * @return Json String representing the current state of the Server Model
+     * @param gameID
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

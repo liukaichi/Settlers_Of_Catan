@@ -3,15 +3,14 @@
  */
 package client.state;
 
-import client.base.ObserverController;
-import client.data.RobPlayerInfo;
+import client.gui.base.ObserverController;
+import client.gui.data.RobPlayerInfo;
 import client.facade.ClientFacade;
 import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.ClientModel;
-import shared.model.player.TradeOffer;
 
 import java.util.logging.Logger;
 

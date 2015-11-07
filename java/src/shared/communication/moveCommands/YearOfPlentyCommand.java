@@ -34,11 +34,10 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
     }
 
     /**
-     * Instantiate a YearOfPlentyCommand from JSON with the injected facade
+     * Instantiate a YearOfPlentyCommand from JSON.
      * @param json JSON of the YearOfPlentyCommand
-     * @param facade Facade to be used
      */
-    public YearOfPlentyCommand(String json, AbstractServerFacade facade)
+    public YearOfPlentyCommand(String json)
     {
 
     }
@@ -58,7 +57,12 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
         return obj;
     }
 
-    @Override public String execute()
+    /**
+     *
+     * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
+     */
+    @Override public String execute(int gameID)
     {
         return null;
     }

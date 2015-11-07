@@ -56,16 +56,23 @@ public class ServerModel extends ClientModel implements IMovesFacade
     {
         return null;
     }
-    @Override public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
+    /**
+     * Builds a road for the given player at the given location.
+     * @param playerIndex the player who is building the road.
+     * @param location the location where the road is being built.
+     * @param isFree whether or not the road is built for free (only true in setup phase).
+     */
+    @Override public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree)
     {
         return null;
     }
     /**
      * Builds a settlement for the given player at the given location.
-     * @param player the player who is building the settlement.
+     * @param playerIndex the player who is building the settlement.
      * @param location the location where the settlement is being built.
+     * @param isFree whether or not the settlement is built for free (only true in setup phase).
      */
-    @Override public ClientModel buildSettlement(PlayerIndex player, VertexLocation location, boolean isFree)
+    @Override public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree)
     {
         return null;
     }
@@ -77,7 +84,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
     @Override public ClientModel buildCity(PlayerIndex player, VertexLocation location)
     {
         getMap().buildCity(player, location);
-        return null;
+        return this;
     }
     @Override public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {

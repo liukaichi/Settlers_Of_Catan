@@ -35,8 +35,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/login/ILoginView.html" title="interface in client.login"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../client/login/LoginView.html" title="class in client.login"><span class="strong">Next Class</span></a></li>
+<li><a href="../../client/login/ILoginView.html" title="interface in client.gui.login"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/login/LoginView.html" title="class in client.gui.login"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../index.html?client/login/LoginController.html" target="_top">Frames</a></li>
@@ -78,7 +78,7 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">client.login</div>
+<div class="subTitle">client.gui.login</div>
 <h2 title="Class LoginController" class="title">Class LoginController</h2>
 </div>
 <div class="contentContainer">
@@ -86,10 +86,10 @@
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../client/base/Controller.html" title="class in client.base">client.base.Controller</a></li>
+<li><a href="../../client/base/Controller.html" title="class in client.gui.base">client.gui.base.Controller</a></li>
 <li>
 <ul class="inheritance">
-<li>client.login.LoginController</li>
+<li>client.gui.login.LoginController</li>
 </ul>
 </li>
 </ul>
@@ -100,13 +100,13 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../client/base/IController.html" title="interface in client.base">IController</a>, <a href="../../client/login/ILoginController.html" title="interface in client.login">ILoginController</a></dd>
+<dd><a href="../../client/base/IController.html" title="interface in client.gui.base">IController</a>, <a href="../../client/login/ILoginController.html" title="interface in client.gui.login">ILoginController</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="strong">LoginController</span>
-extends <a href="../../client/base/Controller.html" title="class in client.base">Controller</a>
-implements <a href="../../client/login/ILoginController.html" title="interface in client.login">ILoginController</a></pre>
+extends <a href="../../client/base/Controller.html" title="class in client.gui.base">Controller</a>
+implements <a href="../../client/login/ILoginController.html" title="interface in client.gui.login">ILoginController</a></pre>
 <div class="block">Implementation for the login controller</div>
 </li>
 </ul>
@@ -126,8 +126,8 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../client/login/LoginController.html#LoginController(client.login.ILoginView, client.misc.IMessageView)">LoginController</a></strong>(<a href="../../client/login/ILoginView.html" title="interface in client.login">ILoginView</a>&nbsp;view,
-               <a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a>&nbsp;messageView)</code>
+<td class="colOne"><code><strong><a href="../../client/login/LoginController.html#LoginController(client.login.ILoginView, client.misc.IMessageView)">LoginController</a></strong>(<a href="../../client/login/ILoginView.html" title="interface in client.gui.login">ILoginView</a>&nbsp;view,
+               <a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a>&nbsp;messageView)</code>
 <div class="block">LoginController constructor</div>
 </td>
 </tr>
@@ -147,17 +147,17 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../client/base/IAction.html" title="interface in client.base">IAction</a></code></td>
+<td class="colFirst"><code><a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/login/LoginController.html#getLoginAction()">getLoginAction</a></strong>()</code>
 <div class="block">Returns the action to be executed when the user logs in</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../client/login/ILoginView.html" title="interface in client.login">ILoginView</a></code></td>
+<td class="colFirst"><code><a href="../../client/login/ILoginView.html" title="interface in client.gui.login">ILoginView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/login/LoginController.html#getLoginView()">getLoginView</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a></code></td>
+<td class="colFirst"><code><a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/login/LoginController.html#getMessageView()">getMessageView</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -168,7 +168,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../client/login/LoginController.html#setLoginAction(client.base.IAction)">setLoginAction</a></strong>(<a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;value)</code>
+<td class="colLast"><code><strong><a href="../../client/login/LoginController.html#setLoginAction(client.base.IAction)">setLoginAction</a></strong>(<a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;value)</code>
 <div class="block">Sets the action to be executed when the user logs in</div>
 </td>
 </tr>
@@ -189,7 +189,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <li class="blockList"><a name="methods_inherited_from_class_client.base.Controller">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;client.base.<a href="../../client/base/Controller.html" title="class in client.base">Controller</a></h3>
+<h3>Methods inherited from class&nbsp;client.gui.base.<a href="../../client/base/Controller.html" title="class in client.gui.base">Controller</a></h3>
 <code><a href="../../client/base/Controller.html#getView()">getView</a></code></li>
 </ul>
 <ul class="blockList">
@@ -203,7 +203,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <li class="blockList"><a name="methods_inherited_from_class_client.base.IController">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;client.base.<a href="../../client/base/IController.html" title="interface in client.base">IController</a></h3>
+<h3>Methods inherited from interface&nbsp;client.gui.base.<a href="../../client/base/IController.html" title="interface in client.gui.base">IController</a></h3>
 <code><a href="../../client/base/IController.html#getView()">getView</a></code></li>
 </ul>
 </li>
@@ -226,8 +226,8 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <ul class="blockListLast">
 <li class="blockList">
 <h4>LoginController</h4>
-<pre>public&nbsp;LoginController(<a href="../../client/login/ILoginView.html" title="interface in client.login">ILoginView</a>&nbsp;view,
-               <a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a>&nbsp;messageView)</pre>
+<pre>public&nbsp;LoginController(<a href="../../client/login/ILoginView.html" title="interface in client.gui.login">ILoginView</a>&nbsp;view,
+               <a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a>&nbsp;messageView)</pre>
 <div class="block">LoginController constructor</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>view</code> - Login view</dd><dd><code>messageView</code> - Message view (used to display error messages that occur during the login process)</dd></dl>
 </li>
@@ -246,7 +246,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <ul class="blockList">
 <li class="blockList">
 <h4>getLoginView</h4>
-<pre>public&nbsp;<a href="../../client/login/ILoginView.html" title="interface in client.login">ILoginView</a>&nbsp;getLoginView()</pre>
+<pre>public&nbsp;<a href="../../client/login/ILoginView.html" title="interface in client.gui.login">ILoginView</a>&nbsp;getLoginView()</pre>
 </li>
 </ul>
 <a name="getMessageView()">
@@ -255,7 +255,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <ul class="blockList">
 <li class="blockList">
 <h4>getMessageView</h4>
-<pre>public&nbsp;<a href="../../client/misc/IMessageView.html" title="interface in client.misc">IMessageView</a>&nbsp;getMessageView()</pre>
+<pre>public&nbsp;<a href="../../client/misc/IMessageView.html" title="interface in client.gui.misc">IMessageView</a>&nbsp;getMessageView()</pre>
 </li>
 </ul>
 <a name="setLoginAction(client.base.IAction)">
@@ -264,7 +264,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <ul class="blockList">
 <li class="blockList">
 <h4>setLoginAction</h4>
-<pre>public&nbsp;void&nbsp;setLoginAction(<a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;value)</pre>
+<pre>public&nbsp;void&nbsp;setLoginAction(<a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;value)</pre>
 <div class="block">Sets the action to be executed when the user logs in</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>value</code> - The action to be executed when the user logs in</dd></dl>
 </li>
@@ -275,7 +275,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <ul class="blockList">
 <li class="blockList">
 <h4>getLoginAction</h4>
-<pre>public&nbsp;<a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;getLoginAction()</pre>
+<pre>public&nbsp;<a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;getLoginAction()</pre>
 <div class="block">Returns the action to be executed when the user logs in</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>The action to be executed when the user logs in</dd></dl>
 </li>
@@ -291,7 +291,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <div class="block">Displays the login view</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/login/ILoginController.html#start()">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/login/ILoginController.html" title="interface in client.login">ILoginController</a></code></dd>
+<dd><code><a href="../../client/login/ILoginController.html#start()">start</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/login/ILoginController.html" title="interface in client.gui.login">ILoginController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -306,7 +306,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <div class="block">Called when the user clicks the "Sign in" button in the login view</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/login/ILoginController.html#signIn()">signIn</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/login/ILoginController.html" title="interface in client.login">ILoginController</a></code></dd>
+<dd><code><a href="../../client/login/ILoginController.html#signIn()">signIn</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/login/ILoginController.html" title="interface in client.gui.login">ILoginController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -321,7 +321,7 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 <div class="block">Called when the user clicks the "Register" button in the login view</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/login/ILoginController.html#register()">register</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/login/ILoginController.html" title="interface in client.login">ILoginController</a></code></dd>
+<dd><code><a href="../../client/login/ILoginController.html#register()">register</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/login/ILoginController.html" title="interface in client.gui.login">ILoginController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -350,8 +350,8 @@ implements <a href="../../client/login/ILoginController.html" title="interface i
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/login/ILoginView.html" title="interface in client.login"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../client/login/LoginView.html" title="class in client.login"><span class="strong">Next Class</span></a></li>
+<li><a href="../../client/login/ILoginView.html" title="interface in client.gui.login"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/login/LoginView.html" title="class in client.gui.login"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../index.html?client/login/LoginController.html" target="_top">Frames</a></li>

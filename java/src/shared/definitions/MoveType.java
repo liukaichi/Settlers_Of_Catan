@@ -1,6 +1,6 @@
 package shared.definitions;
 
-import server.proxy.IProxyPlayingCommands;
+import client.proxy.IProxyPlayingCommands;
 
 /**
  * Defines the types of moves that can be called on the server. <br>

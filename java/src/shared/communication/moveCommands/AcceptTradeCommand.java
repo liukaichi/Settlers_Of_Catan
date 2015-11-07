@@ -4,9 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import server.facade.AbstractServerFacade;
 import shared.definitions.*;
-import shared.model.bank.resource.Resources;
 
 /**
  * acceptTrade command object.
@@ -32,11 +30,10 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
     }
 
     /**
-     * Instantiate a AcceptTradeCommand from JSON with the injected facade
+     * Instantiate a AcceptTradeCommand from JSON.
      * @param json JSON of the AcceptTradeCommand
-     * @param facade Facade to be used
      */
-    public AcceptTradeCommand(String json, AbstractServerFacade facade)
+    public AcceptTradeCommand(String json)
     {
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
@@ -60,9 +57,10 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
 
     /**
      * Calls acceptTrade method on the Server Facade
-     * @return Json String representing the current state of the Server Model
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game to call accept trade on.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

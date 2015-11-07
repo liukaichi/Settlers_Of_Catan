@@ -35,8 +35,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/devcards/BuyDevCardView.html" title="class in client.devcards"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../client/devcards/DevelopmentCardChooser.html" title="class in client.devcards"><span class="strong">Next Class</span></a></li>
+<li><a href="../../client/devcards/BuyDevCardView.html" title="class in client.gui.devcards"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/devcards/DevelopmentCardChooser.html" title="class in client.gui.devcards"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../index.html?client/devcards/DevCardController.html" target="_top">Frames</a></li>
@@ -78,7 +78,7 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">client.devcards</div>
+<div class="subTitle">client.gui.devcards</div>
 <h2 title="Class DevCardController" class="title">Class DevCardController</h2>
 </div>
 <div class="contentContainer">
@@ -86,10 +86,10 @@
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../client/base/Controller.html" title="class in client.base">client.base.Controller</a></li>
+<li><a href="../../client/base/Controller.html" title="class in client.gui.base">client.gui.base.Controller</a></li>
 <li>
 <ul class="inheritance">
-<li>client.devcards.DevCardController</li>
+<li>client.gui.devcards.DevCardController</li>
 </ul>
 </li>
 </ul>
@@ -100,13 +100,13 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../client/base/IController.html" title="interface in client.base">IController</a>, <a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></dd>
+<dd><a href="../../client/base/IController.html" title="interface in client.gui.base">IController</a>, <a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="strong">DevCardController</span>
-extends <a href="../../client/base/Controller.html" title="class in client.base">Controller</a>
-implements <a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></pre>
+extends <a href="../../client/base/Controller.html" title="class in client.gui.base">Controller</a>
+implements <a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></pre>
 <div class="block">"Dev card" controller implementation</div>
 </li>
 </ul>
@@ -126,10 +126,10 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../client/devcards/DevCardController.html#DevCardController(client.devcards.IPlayDevCardView, client.devcards.IBuyDevCardView, client.base.IAction, client.base.IAction)">DevCardController</a></strong>(<a href="../../client/devcards/IPlayDevCardView.html" title="interface in client.devcards">IPlayDevCardView</a>&nbsp;view,
-                 <a href="../../client/devcards/IBuyDevCardView.html" title="interface in client.devcards">IBuyDevCardView</a>&nbsp;buyCardView,
-                 <a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;soldierAction,
-                 <a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;roadAction)</code>
+<td class="colOne"><code><strong><a href="../../client/devcards/DevCardController.html#DevCardController(client.devcards.IPlayDevCardView, client.devcards.IBuyDevCardView, client.base.IAction, client.base.IAction)">DevCardController</a></strong>(<a href="../../client/devcards/IPlayDevCardView.html" title="interface in client.gui.devcards">IPlayDevCardView</a>&nbsp;view,
+                 <a href="../../client/devcards/IBuyDevCardView.html" title="interface in client.gui.devcards">IBuyDevCardView</a>&nbsp;buyCardView,
+                 <a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;soldierAction,
+                 <a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;roadAction)</code>
 <div class="block">DevCardController constructor</div>
 </td>
 </tr>
@@ -169,11 +169,11 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="../../client/devcards/IBuyDevCardView.html" title="interface in client.devcards">IBuyDevCardView</a></code></td>
+<td class="colFirst"><code><a href="../../client/devcards/IBuyDevCardView.html" title="interface in client.gui.devcards">IBuyDevCardView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/devcards/DevCardController.html#getBuyCardView()">getBuyCardView</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../client/devcards/IPlayDevCardView.html" title="interface in client.devcards">IPlayDevCardView</a></code></td>
+<td class="colFirst"><code><a href="../../client/devcards/IPlayDevCardView.html" title="interface in client.gui.devcards">IPlayDevCardView</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/devcards/DevCardController.html#getPlayCardView()">getPlayCardView</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -225,7 +225,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <li class="blockList"><a name="methods_inherited_from_class_client.base.Controller">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;client.base.<a href="../../client/base/Controller.html" title="class in client.base">Controller</a></h3>
+<h3>Methods inherited from class&nbsp;client.gui.base.<a href="../../client/base/Controller.html" title="class in client.gui.base">Controller</a></h3>
 <code><a href="../../client/base/Controller.html#getView()">getView</a></code></li>
 </ul>
 <ul class="blockList">
@@ -239,7 +239,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <li class="blockList"><a name="methods_inherited_from_class_client.base.IController">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;client.base.<a href="../../client/base/IController.html" title="interface in client.base">IController</a></h3>
+<h3>Methods inherited from interface&nbsp;client.gui.base.<a href="../../client/base/IController.html" title="interface in client.gui.base">IController</a></h3>
 <code><a href="../../client/base/IController.html#getView()">getView</a></code></li>
 </ul>
 </li>
@@ -262,10 +262,10 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DevCardController</h4>
-<pre>public&nbsp;DevCardController(<a href="../../client/devcards/IPlayDevCardView.html" title="interface in client.devcards">IPlayDevCardView</a>&nbsp;view,
-                 <a href="../../client/devcards/IBuyDevCardView.html" title="interface in client.devcards">IBuyDevCardView</a>&nbsp;buyCardView,
-                 <a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;soldierAction,
-                 <a href="../../client/base/IAction.html" title="interface in client.base">IAction</a>&nbsp;roadAction)</pre>
+<pre>public&nbsp;DevCardController(<a href="../../client/devcards/IPlayDevCardView.html" title="interface in client.gui.devcards">IPlayDevCardView</a>&nbsp;view,
+                 <a href="../../client/devcards/IBuyDevCardView.html" title="interface in client.gui.devcards">IBuyDevCardView</a>&nbsp;buyCardView,
+                 <a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;soldierAction,
+                 <a href="../../client/base/IAction.html" title="interface in client.gui.base">IAction</a>&nbsp;roadAction)</pre>
 <div class="block">DevCardController constructor</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>view</code> - "Play dev card" view</dd><dd><code>buyCardView</code> - "Buy dev card" view</dd><dd><code>soldierAction</code> - Action to be executed when the user plays a soldier card.  It calls "mapController.playSoldierCard()".</dd><dd><code>roadAction</code> - Action to be executed when the user plays a road building card.  It calls "mapController.playRoadBuildingCard()".</dd></dl>
 </li>
@@ -284,7 +284,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <ul class="blockList">
 <li class="blockList">
 <h4>getPlayCardView</h4>
-<pre>public&nbsp;<a href="../../client/devcards/IPlayDevCardView.html" title="interface in client.devcards">IPlayDevCardView</a>&nbsp;getPlayCardView()</pre>
+<pre>public&nbsp;<a href="../../client/devcards/IPlayDevCardView.html" title="interface in client.gui.devcards">IPlayDevCardView</a>&nbsp;getPlayCardView()</pre>
 </li>
 </ul>
 <a name="getBuyCardView()">
@@ -293,7 +293,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <ul class="blockList">
 <li class="blockList">
 <h4>getBuyCardView</h4>
-<pre>public&nbsp;<a href="../../client/devcards/IBuyDevCardView.html" title="interface in client.devcards">IBuyDevCardView</a>&nbsp;getBuyCardView()</pre>
+<pre>public&nbsp;<a href="../../client/devcards/IBuyDevCardView.html" title="interface in client.gui.devcards">IBuyDevCardView</a>&nbsp;getBuyCardView()</pre>
 </li>
 </ul>
 <a name="startBuyCard()">
@@ -307,7 +307,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <div class="block">This method displays the "buy dev card" view.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#startBuyCard()">startBuyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#startBuyCard()">startBuyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -323,7 +323,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
  card.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#cancelBuyCard()">cancelBuyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#cancelBuyCard()">cancelBuyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -338,7 +338,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <div class="block">This method is called when the user buys a development card.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#buyCard()">buyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#buyCard()">buyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -353,7 +353,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <div class="block">This method displays the "play dev card" view.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#startPlayCard()">startPlayCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#startPlayCard()">startPlayCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -369,7 +369,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
  card.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#cancelPlayCard()">cancelPlayCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#cancelPlayCard()">cancelPlayCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -384,7 +384,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <div class="block">This method is called when the user plays a monopoly development card.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#playMonopolyCard(shared.definitions.ResourceType)">playMonopolyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#playMonopolyCard(shared.definitions.ResourceType)">playMonopolyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>resource</code> - The resource to take from other players</dd></dl>
 </li>
 </ul>
@@ -399,7 +399,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <div class="block">This method is called when the user plays a monument development card.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#playMonumentCard()">playMonumentCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#playMonumentCard()">playMonumentCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -414,7 +414,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <div class="block">This method is called when the user plays a road build development card.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#playRoadBuildCard()">playRoadBuildCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#playRoadBuildCard()">playRoadBuildCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -429,7 +429,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 <div class="block">This method is called when the user plays a soldier development card.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#playSoldierCard()">playSoldierCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#playSoldierCard()">playSoldierCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -446,7 +446,7 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
  card.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/devcards/IDevCardController.html#playYearOfPlentyCard(shared.definitions.ResourceType, shared.definitions.ResourceType)">playYearOfPlentyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.devcards">IDevCardController</a></code></dd>
+<dd><code><a href="../../client/devcards/IDevCardController.html#playYearOfPlentyCard(shared.definitions.ResourceType, shared.definitions.ResourceType)">playYearOfPlentyCard</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/devcards/IDevCardController.html" title="interface in client.gui.devcards">IDevCardController</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>resource1</code> - The first resource to gain</dd><dd><code>resource2</code> - The second resource to gain</dd></dl>
 </li>
 </ul>
@@ -475,8 +475,8 @@ implements <a href="../../client/devcards/IDevCardController.html" title="interf
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/devcards/BuyDevCardView.html" title="class in client.devcards"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../client/devcards/DevelopmentCardChooser.html" title="class in client.devcards"><span class="strong">Next Class</span></a></li>
+<li><a href="../../client/devcards/BuyDevCardView.html" title="class in client.gui.devcards"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/devcards/DevelopmentCardChooser.html" title="class in client.gui.devcards"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../index.html?client/devcards/DevCardController.html" target="_top">Frames</a></li>

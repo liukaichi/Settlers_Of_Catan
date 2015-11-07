@@ -3,15 +3,12 @@
  */
 package client.state;
 
-import client.base.ObserverController;
-import client.domestic.DomesticTradeController;
-import client.domestic.IAcceptTradeOverlay;
-import client.maritime.MaritimeTradeController;
-import client.resources.ResourceBarController;
-import client.turntracker.TurnTrackerController;
-import shared.model.TurnTracker;
-
-import java.util.logging.Logger;
+import client.gui.base.ObserverController;
+import client.gui.domestic.DomesticTradeController;
+import client.gui.domestic.IAcceptTradeOverlay;
+import client.gui.maritime.MaritimeTradeController;
+import client.gui.resources.ResourceBarController;
+import client.gui.turntracker.TurnTrackerController;
 
 /**
  * @author cstaheli

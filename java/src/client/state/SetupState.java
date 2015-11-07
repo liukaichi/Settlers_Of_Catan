@@ -3,16 +3,14 @@
  */
 package client.state;
 
-import client.base.ObserverController;
+import client.gui.base.ObserverController;
 import client.facade.ClientFacade;
-import client.map.MapController;
-import client.turntracker.TurnTrackerController;
+import client.gui.map.MapController;
+import client.gui.turntracker.TurnTrackerController;
 import shared.definitions.PieceType;
 import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
-
-import java.util.logging.Logger;
 
 /**
  * This state is used in the first two rounds of the game, where players place roads and cities only.

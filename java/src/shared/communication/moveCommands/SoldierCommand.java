@@ -25,20 +25,20 @@ public class SoldierCommand extends RobPlayerCommand
     }
 
     /**
-     * Instantiate a SoldierCommand from JSON with the injected facade
-     * @param json JSON of the SoldierCommand
-     * @param facade Facade to be used
+     * Instantiate a SoldierCommand from JSON.
+     * @param json JSON of the SoldierCommand.
      */
-    public SoldierCommand(String json, AbstractServerFacade facade)
+    public SoldierCommand(String json)
     {
 
     }
 
     /**
      * Robs the player that is specified
-     * @return returns the updated model
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game for which to execute the command.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }
