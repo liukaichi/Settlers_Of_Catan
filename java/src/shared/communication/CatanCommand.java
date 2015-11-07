@@ -1,5 +1,7 @@
 package shared.communication;
 
+import server.facade.AbstractServerFacade;
+
 /**
  * This is the Super Class for all commands sent across this server. It is intended that ServerHandlers will be able to
  * take server contexts and create classes from the context name, and call Object.execute() on them, and the
@@ -15,10 +17,8 @@ public interface CatanCommand
     /**
      * Executes a command on the server side. <br>
      * This is to be implemented in different ways depending on the type of command.
-     * @return the Json response for this command. Typically, this will be a serialized form of the ClientModel, but
+     * @return the Json response for this command. Typically, this will be a serialized form of the CatanModel, but
      * some commands return some other response object.
-     * @param gameID the ID of the game for which to execute the command.
-     * @see shared.model.ClientModel
      */
-    String execute(int gameID);
+    String execute();
 }

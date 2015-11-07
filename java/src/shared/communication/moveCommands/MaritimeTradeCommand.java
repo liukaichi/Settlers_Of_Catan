@@ -43,10 +43,11 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
     }
 
     /**
-     * Instantiate a MaritimeTradeCommand from JSON.
-     * @param json JSON of the MaritimeTradeCommand.
+     * Instantiate a MaritimeTradeCommand from JSON with the injected facade
+     * @param json JSON of the MaritimeTradeCommand
+     * @param facade Facade to be used
      */
-    public MaritimeTradeCommand(String json)
+    public MaritimeTradeCommand(String json, AbstractServerFacade facade)
     {
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
@@ -76,10 +77,9 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
 
     /**
      * Calls maritimeTrade method on the Server Facade
-     * @return the Json representation of the model after the command is executed.
-     * @param gameID the ID of the game for which to execute the command.
+     * @return Json String representing the current state of the Server Model
      */
-    @Override public String execute(int gameID)
+    @Override public String execute()
     {
         return null;
     }

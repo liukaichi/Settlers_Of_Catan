@@ -33,10 +33,11 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
     }
 
     /**
-     * Instantiate a MonopolyCommand from JSON.
+     * Instantiate a MonopolyCommand from JSON with the injected facade
      * @param json JSON of the MonopolyCommand
+     * @param facade Facade to be used
      */
-    public MonopolyCommand(String json)
+    public MonopolyCommand(String json, AbstractServerFacade facade)
     {
 
     }
@@ -56,12 +57,7 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
         return obj;
     }
 
-    /**
-     *
-     * @param gameID the ID of the game for which to execute the command.
-     * @return the Json representation of the model after the command is executed.
-     */
-    @Override public String execute(int gameID)
+    @Override public String execute()
     {
         return null;
     }

@@ -41,10 +41,11 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
     }
 
     /**
-     * Instantiate a BuildRoadCommand from JSON.
+     * Instantiate a BuildRoadCommand from JSON with the injected facade
      * @param json JSON of the BuildRoadCommand
+     * @param facade Facade to be used
      */
-    public BuildRoadCommand(String json)
+    public BuildRoadCommand(String json, AbstractServerFacade facade)
     {
 
     }
@@ -64,12 +65,7 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
         return obj;
     }
 
-    /**
-     * Calls the ServerFacade to build a road for the person and at the location specified in this command.
-     * @param gameID the ID of the game for which to execute the command.
-     * @return the Json representation of the model after the command is executed.
-     */
-    @Override public String execute(int gameID)
+    @Override public String execute()
     {
         return null;
     }

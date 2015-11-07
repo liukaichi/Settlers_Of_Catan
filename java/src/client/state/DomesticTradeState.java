@@ -1,11 +1,12 @@
 package client.state;
 
-import client.gui.base.ObserverController;
-import client.gui.data.PlayerInfo;
-import client.gui.domestic.DomesticTradeController;
-import client.gui.domestic.IAcceptTradeOverlay;
-import client.gui.domestic.IDomesticTradeOverlay;
+import client.base.ObserverController;
+import client.data.PlayerInfo;
+import client.domestic.DomesticTradeController;
+import client.domestic.IAcceptTradeOverlay;
+import client.domestic.IDomesticTradeOverlay;
 import client.facade.ClientFacade;
+import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.model.bank.resource.Resources;
@@ -13,6 +14,8 @@ import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by dtaylor on 10/29/2015.

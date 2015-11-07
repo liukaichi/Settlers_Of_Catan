@@ -21,9 +21,8 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
     private int number;
 
     /**
-     * Instantiates a RollNumberCommand with the given player and number.
-     * @param playerIndex the index of the player rolling the number.
-     * @param number the number to roll.
+     * @param playerIndex
+     * @param number
      */
     public RollNumberCommand(PlayerIndex playerIndex, int number)
     {
@@ -31,10 +30,11 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
         this.number = number;
     }
     /**
-     * Instantiate a RollNumberCommand from JSON.
-     * @param json JSON of the RollNumberCommand.
+     * Instantiate a RollNumberCommand from JSON with the injected facade
+     * @param json JSON of the RollNumberCommand
+     * @param facade Facade to be used
      */
-    public RollNumberCommand(String json)
+    public RollNumberCommand(String json, AbstractServerFacade facade)
     {
 
     }
@@ -57,10 +57,9 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
     /**
      * Rolls the number for the player and gives all the players the earned resources.
      * Also changes the state to robbing state if a 7 is rolled.
-     * @return the Json representation of the model after the command is executed.
-     * @param gameID the ID of the game for which to execute the command.
+     * @return returns a JSON of the new model
      */
-    @Override public String execute(int gameID)
+    @Override public String execute()
     {
         return null;
     }

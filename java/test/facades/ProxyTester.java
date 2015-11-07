@@ -6,11 +6,12 @@ package facades;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import org.junit.*;
 
-import client.gui.data.*;
-import client.proxy.*;
+import client.data.*;
+import server.proxy.*;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;
@@ -118,7 +119,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#userLogin(shared.communication.Credentials)}
+     * {@link server.proxy.ServerProxy#userLogin(shared.communication.Credentials)}
      * .
      */
     @Test public void testUserLogin()
@@ -171,7 +172,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#userRegister(shared.communication.Credentials)}
+     * {@link server.proxy.ServerProxy#userRegister(shared.communication.Credentials)}
      * .
      */
     @Test public void testUserRegister()
@@ -220,7 +221,7 @@ public class ProxyTester
     }
 
     /**
-     * Test method for {@link client.proxy.ServerProxy#listGames()}.
+     * Test method for {@link server.proxy.ServerProxy#listGames()}.
      */
     @Test public void testListGames()
     {
@@ -272,7 +273,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#createGame(shared.communication.CreateGameRequest)}
+     * {@link server.proxy.ServerProxy#createGame(shared.communication.CreateGameRequest)}
      * .
      */
     @Test public void testCreateGame()
@@ -301,7 +302,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#joinGame(shared.communication.JoinGameRequest)}
+     * {@link server.proxy.ServerProxy#joinGame(shared.communication.JoinGameRequest)}
      * .
      */
     @Test public void testJoinGame()
@@ -324,7 +325,7 @@ public class ProxyTester
     }
 
     /**
-     * Test method for {@link client.proxy.ServerProxy#getGameState(int)}.
+     * Test method for {@link server.proxy.ServerProxy#getGameState(int)}.
      */
     @Test public void testGetGameState()
     {
@@ -333,7 +334,7 @@ public class ProxyTester
     }
 
     /**
-     * Test method for {@link client.proxy.ServerProxy#listAI()}.
+     * Test method for {@link server.proxy.ServerProxy#listAI()}.
      */
     @Test public void testListAI()
     {
@@ -360,7 +361,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#addAI(shared.definitions.AIType)}.
+     * {@link server.proxy.ServerProxy#addAI(shared.definitions.AIType)}.
      */
     @Test public void testAddAI()
     {
@@ -452,7 +453,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#sendChat(shared.communication.moveCommands.SendChatCommand)}
+     * {@link server.proxy.ServerProxy#sendChat(shared.communication.moveCommands.SendChatCommand)}
      * .
      */
     @Test public void testSendChat()
@@ -478,7 +479,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#rollNumber(shared.communication.moveCommands.RollNumberCommand)}
+     * {@link server.proxy.ServerProxy#rollNumber(shared.communication.moveCommands.RollNumberCommand)}
      * .
      */
     @Test public void testRollNumber()
@@ -499,7 +500,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#acceptTrade(shared.communication.moveCommands.AcceptTradeCommand)}
+     * {@link server.proxy.ServerProxy#acceptTrade(shared.communication.moveCommands.AcceptTradeCommand)}
      * .
      */
     @Test public void testAcceptTrade()
@@ -517,7 +518,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#discardCards(shared.communication.moveCommands.DiscardCardsCommand)}
+     * {@link server.proxy.ServerProxy#discardCards(shared.communication.moveCommands.DiscardCardsCommand)}
      * .
      */
     @Test public void testDiscardCards()
@@ -530,7 +531,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#buildRoad(shared.communication.moveCommands.BuildRoadCommand)}
+     * {@link server.proxy.ServerProxy#buildRoad(shared.communication.moveCommands.BuildRoadCommand)}
      * .
      */
     @Test public void testBuildRoad()
@@ -549,7 +550,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#buildSettlement(shared.communication.moveCommands.BuildSettlementCommand)}
+     * {@link server.proxy.ServerProxy#buildSettlement(shared.communication.moveCommands.BuildSettlementCommand)}
      * .
      */
     @Test public void testBuildSettlement()
@@ -562,7 +563,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#buildCity(shared.communication.moveCommands.BuildCityCommand)}
+     * {@link server.proxy.ServerProxy#buildCity(shared.communication.moveCommands.BuildCityCommand)}
      * .
      */
     @Test public void testBuildCity()
@@ -575,7 +576,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#offerTrade(shared.communication.moveCommands.OfferTradeCommand)}
+     * {@link server.proxy.ServerProxy#offerTrade(shared.communication.moveCommands.OfferTradeCommand)}
      * .
      */
     @Test public void testOfferTrade()
@@ -588,7 +589,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#maritimeTrade(shared.communication.moveCommands.MaritimeTradeCommand)}
+     * {@link server.proxy.ServerProxy#maritimeTrade(shared.communication.moveCommands.MaritimeTradeCommand)}
      * .
      */
     @Test public void testMaritimeTrade()
@@ -601,7 +602,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#robPlayer(shared.communication.moveCommands.RobPlayerCommand)}
+     * {@link server.proxy.ServerProxy#robPlayer(shared.communication.moveCommands.RobPlayerCommand)}
      * .
      */
     @Test public void testRobPlayer()
@@ -633,7 +634,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#finishTurn(shared.communication.moveCommands.FinishTurnCommand)}
+     * {@link server.proxy.ServerProxy#finishTurn(shared.communication.moveCommands.FinishTurnCommand)}
      * .
      */
     @Test public void testFinishTurn()
@@ -645,7 +646,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#buyDevCard(shared.communication.moveCommands.BuyDevCardCommand)}
+     * {@link server.proxy.ServerProxy#buyDevCard(shared.communication.moveCommands.BuyDevCardCommand)}
      * .
      */
     @Test public void testBuyDevCard()
@@ -657,7 +658,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#soldier(shared.communication.moveCommands.SoldierCommand)}
+     * {@link server.proxy.ServerProxy#soldier(shared.communication.moveCommands.SoldierCommand)}
      * .
      */
     @Test public void testSoldier()
@@ -672,7 +673,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#yearOfPlenty(shared.communication.moveCommands.YearOfPlentyCommand)}
+     * {@link server.proxy.ServerProxy#yearOfPlenty(shared.communication.moveCommands.YearOfPlentyCommand)}
      * .
      */
     @Test public void testYearOfPlenty()
@@ -685,7 +686,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#roadBuilding(shared.communication.moveCommands.RoadBuildingCommand)}
+     * {@link server.proxy.ServerProxy#roadBuilding(shared.communication.moveCommands.RoadBuildingCommand)}
      * .
      */
     @Test public void testRoadBuilding()
@@ -699,7 +700,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#monopoly(shared.communication.moveCommands.MonopolyCommand)}
+     * {@link server.proxy.ServerProxy#monopoly(shared.communication.moveCommands.MonopolyCommand)}
      * .
      */
     @Test public void testMonopoly()
@@ -711,7 +712,7 @@ public class ProxyTester
 
     /**
      * Test method for
-     * {@link client.proxy.ServerProxy#monument(shared.communication.moveCommands.MonumentCommand)}
+     * {@link server.proxy.ServerProxy#monument(shared.communication.moveCommands.MonumentCommand)}
      * .
      */
     @Test public void testMonument()

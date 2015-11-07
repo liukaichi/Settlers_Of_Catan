@@ -35,7 +35,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/points/PointsController.html" title="class in client.gui.points"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/points/PointsController.html" title="class in client.points"><span class="strong">Prev Class</span></a></li>
 <li>Next Class</li>
 </ul>
 <ul class="navList">
@@ -78,7 +78,7 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">client.gui.points</div>
+<div class="subTitle">client.points</div>
 <h2 title="Class PointsView" class="title">Class PointsView</h2>
 </div>
 <div class="contentContainer">
@@ -95,10 +95,10 @@
 <li>javax.swing.JComponent</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../client/base/ComponentView.html" title="class in client.gui.base">client.gui.base.ComponentView</a></li>
+<li><a href="../../client/base/ComponentView.html" title="class in client.base">client.base.ComponentView</a></li>
 <li>
 <ul class="inheritance">
-<li>client.gui.points.PointsView</li>
+<li>client.points.PointsView</li>
 </ul>
 </li>
 </ul>
@@ -115,13 +115,13 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../client/base/IView.html" title="interface in client.gui.base">IView</a>, <a href="../../client/points/IPointsView.html" title="interface in client.gui.points">IPointsView</a>, java.awt.image.ImageObserver, java.awt.MenuContainer, java.io.Serializable</dd>
+<dd><a href="../../client/base/IView.html" title="interface in client.base">IView</a>, <a href="../../client/points/IPointsView.html" title="interface in client.points">IPointsView</a>, java.awt.image.ImageObserver, java.awt.MenuContainer, java.io.Serializable</dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="strong">PointsView</span>
-extends <a href="../../client/base/ComponentView.html" title="class in client.gui.base">ComponentView</a>
-implements <a href="../../client/points/IPointsView.html" title="interface in client.gui.points">IPointsView</a></pre>
+extends <a href="../../client/base/ComponentView.html" title="class in client.base">ComponentView</a>
+implements <a href="../../client/points/IPointsView.html" title="interface in client.points">IPointsView</a></pre>
 <div class="block">Implementation for the points view, which displays the user's victory points</div>
 <dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../serialized-form.html#client.points.PointsView">Serialized Form</a></dd></dl>
 </li>
@@ -218,7 +218,7 @@ implements <a href="../../client/points/IPointsView.html" title="interface in cl
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../client/points/IPointsController.html" title="interface in client.gui.points">IPointsController</a></code></td>
+<td class="colFirst"><code><a href="../../client/points/IPointsController.html" title="interface in client.points">IPointsController</a></code></td>
 <td class="colLast"><code><strong><a href="../../client/points/PointsView.html#getController()">getController</a></strong>()</code>
 <div class="block">Controller getter</div>
 </td>
@@ -238,7 +238,7 @@ implements <a href="../../client/points/IPointsView.html" title="interface in cl
 <li class="blockList"><a name="methods_inherited_from_class_client.base.ComponentView">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;client.gui.base.<a href="../../client/base/ComponentView.html" title="class in client.gui.base">ComponentView</a></h3>
+<h3>Methods inherited from class&nbsp;client.base.<a href="../../client/base/ComponentView.html" title="class in client.base">ComponentView</a></h3>
 <code><a href="../../client/base/ComponentView.html#setController(client.base.IController)">setController</a></code></li>
 </ul>
 <ul class="blockList">
@@ -273,7 +273,7 @@ implements <a href="../../client/points/IPointsView.html" title="interface in cl
 <li class="blockList"><a name="methods_inherited_from_class_client.base.IView">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;client.gui.base.<a href="../../client/base/IView.html" title="interface in client.gui.base">IView</a></h3>
+<h3>Methods inherited from interface&nbsp;client.base.<a href="../../client/base/IView.html" title="interface in client.base">IView</a></h3>
 <code><a href="../../client/base/IView.html#setController(client.base.IController)">setController</a></code></li>
 </ul>
 </li>
@@ -313,14 +313,14 @@ implements <a href="../../client/points/IPointsView.html" title="interface in cl
 <ul class="blockList">
 <li class="blockList">
 <h4>getController</h4>
-<pre>public&nbsp;<a href="../../client/points/IPointsController.html" title="interface in client.gui.points">IPointsController</a>&nbsp;getController()</pre>
+<pre>public&nbsp;<a href="../../client/points/IPointsController.html" title="interface in client.points">IPointsController</a>&nbsp;getController()</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../client/base/IView.html#getController()">IView</a></code></strong></div>
 <div class="block">Controller getter</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/base/IView.html#getController()">getController</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/base/IView.html" title="interface in client.gui.base">IView</a></code></dd>
+<dd><code><a href="../../client/base/IView.html#getController()">getController</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/base/IView.html" title="interface in client.base">IView</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../client/base/ComponentView.html#getController()">getController</a></code>&nbsp;in class&nbsp;<code><a href="../../client/base/ComponentView.html" title="class in client.gui.base">ComponentView</a></code></dd>
+<dd><code><a href="../../client/base/ComponentView.html#getController()">getController</a></code>&nbsp;in class&nbsp;<code><a href="../../client/base/ComponentView.html" title="class in client.base">ComponentView</a></code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>The view's controller</dd></dl>
 </li>
 </ul>
@@ -335,7 +335,7 @@ implements <a href="../../client/points/IPointsView.html" title="interface in cl
 <div class="block">Sets the number of victory points the player has</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../client/points/IPointsView.html#setPoints(int)">setPoints</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/points/IPointsView.html" title="interface in client.gui.points">IPointsView</a></code></dd>
+<dd><code><a href="../../client/points/IPointsView.html#setPoints(int)">setPoints</a></code>&nbsp;in interface&nbsp;<code><a href="../../client/points/IPointsView.html" title="interface in client.points">IPointsView</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>points</code> - The number of victory points to display</dd></dl>
 </li>
 </ul>
@@ -377,7 +377,7 @@ implements <a href="../../client/points/IPointsView.html" title="interface in cl
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../client/points/PointsController.html" title="class in client.gui.points"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../client/points/PointsController.html" title="class in client.points"><span class="strong">Prev Class</span></a></li>
 <li>Next Class</li>
 </ul>
 <ul class="navList">

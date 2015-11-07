@@ -14,7 +14,7 @@ public class MonumentCommand extends SimpleSerializableCommand
 
     /**
      * Player of playerIndex receives a Victory Point
-     * @param playerIndex Index of player receiving a Victory Point
+     * @param playerIndex Index of player receving a Victory Point
      */
     public MonumentCommand(PlayerIndex playerIndex)
     {
@@ -22,20 +22,16 @@ public class MonumentCommand extends SimpleSerializableCommand
     }
 
     /**
-     * Instantiate a MonumentCommand from JSON.
-     * @param json JSON of the MonumentCommand.
+     * Instantiate a MonumentCommand from JSON with the injected facade
+     * @param json JSON of the MonumentCommand
+     * @param facade Facade to be used
      */
-    public MonumentCommand(String json)
+    public MonumentCommand(String json, AbstractServerFacade facade)
     {
 
     }
 
-    /**
-     *
-     * @param gameID the ID of the game for which to execute the command.
-     * @return the Json representation of the model after the command is executed.
-     */
-    @Override public String execute(int gameID)
+    @Override public String execute()
     {
         return null;
     }

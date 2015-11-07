@@ -3,11 +3,13 @@
  */
 package client.state;
 
-import client.gui.base.ObserverController;
-import client.gui.roll.RollController;
-import client.gui.turntracker.TurnTrackerController;
+import client.base.ObserverController;
+import client.roll.RollController;
+import client.turntracker.TurnTrackerController;
 import shared.definitions.Dice;
 import shared.definitions.TurnStatus;
+
+import java.util.logging.Logger;
 
 /**
  * This state allows all of the rolling options.

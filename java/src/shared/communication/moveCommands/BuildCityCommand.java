@@ -36,8 +36,9 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
     /**
      * Instantiate a BuildCityCommand from JSON with the injected facade
      * @param json JSON of the BuildCityCommand
+     * @param facade Facade to be used
      */
-    public BuildCityCommand(String json)
+    public BuildCityCommand(String json, AbstractServerFacade facade)
     {
         super(MoveType.buildCity, PlayerIndex.NONE);
         JsonParser parser = new JsonParser();
@@ -64,10 +65,8 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
 
     /**
      * Calls the ServerFacade to build a city with the data stored inside this command.
-     * @param gameID the ID of the game for which to build the city.
-     * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute()
     {
         return null;
     }

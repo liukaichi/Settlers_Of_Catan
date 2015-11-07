@@ -22,10 +22,11 @@ public class FinishTurnCommand extends SimpleSerializableCommand
     }
 
     /**
-     * Instantiate a FinishTurnCommand from JSON.
-     * @param json JSON of the FinishTurnCommand.
+     * Instantiate a FinishTurnCommand from JSON with the injected facade
+     * @param json JSON of the FinishTurnCommand
+     * @param facade Facade to be used
      */
-    public FinishTurnCommand(String json)
+    public FinishTurnCommand(String json, AbstractServerFacade facade)
     {
         JsonParser parser = new JsonParser();
         JsonObject finishTurnObject = (JsonObject) parser.parse(json);
@@ -35,10 +36,9 @@ public class FinishTurnCommand extends SimpleSerializableCommand
 
     /**
      * Calls FinishTurn method on the Server Facade
-     * @return the Json representation of the model after the command is executed.
-     * @param gameID the ID of the game for which to execute the command.
+     * @return Json String representing the current state of the Server Model
      */
-    @Override public String execute(int gameID)
+    @Override public String execute()
     {
         return null;
     }

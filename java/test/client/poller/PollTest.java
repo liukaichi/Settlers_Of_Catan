@@ -2,7 +2,7 @@ package client.poller;
 
 import client.facade.ClientFacade;
 import junit.framework.TestCase;
-import client.proxy.MockProxy;
+import server.proxy.MockProxy;
 import shared.model.ClientModel;
 
 import java.lang.reflect.Method;

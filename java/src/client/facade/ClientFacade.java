@@ -1,11 +1,11 @@
 package client.facade;
 
-import client.gui.base.ObserverController;
-import client.gui.data.PlayerInfo;
-import client.gui.data.RobPlayerInfo;
+import client.base.ObserverController;
+import client.data.PlayerInfo;
+import client.data.RobPlayerInfo;
 import client.poller.Poller;
-import client.proxy.IProxy;
-import client.proxy.ServerProxy;
+import server.proxy.IProxy;
+import server.proxy.ServerProxy;
 import shared.communication.*;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;

@@ -1,7 +1,7 @@
 package client.poller;
 
 import client.facade.ClientFacade;
-import client.proxy.IProxy;
+import server.proxy.IProxy;
 import shared.model.ClientModel;
 
 import java.util.Timer;

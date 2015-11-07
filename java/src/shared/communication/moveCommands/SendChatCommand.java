@@ -31,10 +31,11 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
     }
 
     /**
-     * Instantiate a SendChatCommand from JSON.
-     * @param json JSON of the SendChatCommand.
+     * Instantiate a SendChatCommand from JSON with the injected facade
+     * @param json JSON of the SendChatCommand
+     * @param facade Facade to be used
      */
-    public SendChatCommand(String json)
+    public SendChatCommand(String json, AbstractServerFacade facade)
     {
         JsonParser parser = new JsonParser();
         JsonObject sendChatCommand = (JsonObject) parser.parse(json);
@@ -63,10 +64,9 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
 
     /**
      * Calls sendChat method from the Server Facade
-     * @return the Json representation of the model after the command is executed.
-     * @param gameID the ID of the game for which to execute the command.
+     * @return Json String representing the current state of the Server Model
      */
-    @Override public String execute(int gameID)
+    @Override public String execute()
     {
         return null;
     }
