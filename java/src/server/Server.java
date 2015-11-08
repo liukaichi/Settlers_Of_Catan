@@ -22,25 +22,9 @@ public class Server {
         SERVER_PORT_NUMBER = server;
     }
 
-    public Server() {
-
-    }
-
-    public static void main(String[] args) {
-        if (args.length >= 1) {
-
-            int serverPort = Integer.parseInt(args[0]);
-            new Server(serverPort).run();
-        }
-        else {
-            new Server().run();
-        }
-    }
-
-    private void run() {
+    public Server(String address, int port) {
         try {
-            LOGGER.info("Starting Server...");
-            HttpServer server = HttpServer.create(new InetSocketAddress(8081), 0);
+            server = HttpServer.create(new InetSocketAddress(address, 8081), 0);
             server.createContext("/game/", new GameHandler());
             server.createContext("/games/", new GamesHandler());
             server.createContext("/moves/", new MovesHandler());
@@ -50,10 +34,35 @@ public class Server {
             server.createContext("/docs/api/view", new SwaggerHandler.BasicFile(""));
 
             server.setExecutor(null); // creates a default executor
-            server.start();
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             e.printStackTrace();
+        }
+    }
+    public static Server run()
+    {
+        Server server = new Server("localhost",8081);
+        server.start();
+        return server;
+    }
+    public void start()
+    {
+        LOGGER.info("Starting Server...");
+        server.start();
+    }
+
+    public void stop()
+    {
+        server.stop(0);
+    }
+
+    public static void main(String[] args) {
+
+        switch(args.length) {
+            case 0:
+                Server.run();
+                break;
         }
     }
 }

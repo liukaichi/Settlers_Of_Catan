@@ -16,6 +16,7 @@ import shared.definitions.exceptions.SignInException;
 public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 {
 
+    private AbstractServerFacade facade;
     private Username username;
     private Password password;
 
@@ -45,11 +46,13 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
      */
     public Credentials(String json, AbstractServerFacade facade)
     {
+        this.facade = facade;
         JsonParser parser = new JsonParser();
         JsonObject credentialsObject = (JsonObject) parser.parse(json);
         try
         {
             this.setUsername(credentialsObject.getAsJsonPrimitive("username").getAsString());
+            this.setPassword(credentialsObject.getAsJsonPrimitive("password").getAsString());
         }
         catch (SignInException e)
         {
@@ -65,7 +68,14 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 
     public void setUsername(String username) throws SignInException
     {
-        this.username.setUsername(username);
+        if(this.username != null)
+        {
+            this.username.setUsername(username);
+        }
+        else
+        {
+            this.username = new Username(username);
+        }
     }
 
     public Password getPassword()
@@ -75,7 +85,14 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 
     public void setPassword(String password) throws SignInException
     {
-        this.password.setPassword(password);
+        if(this.password != null)
+        {
+            this.password.setPassword(password);
+        }
+        else
+        {
+            this.password = new Password(password);
+        }
     }
 
     /*
@@ -144,6 +161,18 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 
     @Override public String execute()
     {
-        return null;
+        String response = "";
+        try
+        {
+            facade.signInUser(this);
+            response = "";
+        }
+        catch (SignInException e) {
+            response = e.getMessage();
+        }
+        finally
+        {
+            return response;
+        }
     }
 }

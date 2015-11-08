@@ -32,7 +32,7 @@ public class GamesHandler implements HttpHandler
             //Handling input Request
             InputStream requestBody = httpExchange.getRequestBody();
             ObjectInput in = new ObjectInputStream(requestBody);
-            String className = httpExchange.getRequestURI().getQuery(); //TODO get the class name from the context
+            String className = httpExchange.getRequestURI().getPath().split("/")[1]; //TODO get the class name from the context
             Constructor c = Class.forName(className).getConstructor(String.class, AbstractServerFacade.class);
             CatanCommand request = (CatanCommand)c.newInstance(in.readObject(), facade);
             in.close();

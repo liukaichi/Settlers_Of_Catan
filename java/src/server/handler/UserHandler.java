@@ -1,10 +1,12 @@
 package server.handler;
 
+import com.google.gson.JsonStreamParser;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.facade.AbstractServerFacade;
 import server.facade.MockServerFacade;
 import shared.communication.CatanCommand;
+import shared.communication.Credentials;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
@@ -30,18 +32,26 @@ public class UserHandler implements HttpHandler
             //Handling cookie
             String cookie =  httpExchange.getRequestHeaders().getFirst("Cookie");
             //Handling input Request
-            InputStream requestBody = httpExchange.getRequestBody();
-            ObjectInput in = new ObjectInputStream(requestBody);
-            String className = httpExchange.getRequestURI().getQuery(); //TODO get the class name from the context
-            Constructor c = Class.forName(className).getConstructor(String.class, AbstractServerFacade.class);
-            CatanCommand request = (CatanCommand)c.newInstance(in.readObject(), facade);
-            in.close();
-            requestBody.close();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
+            StringBuilder builder = new StringBuilder();
+            String json;
+            while ((json = reader.readLine()) != null)
+            {
+                builder.append(json);
+            }
+            String request = builder.toString();
 
-            //Handling response to request
+            String commandString = httpExchange.getRequestURI().getPath().split("/")[2]; //TODO get the class name from the context
+            CatanCommand command = null;
+            if(commandString.equalsIgnoreCase("login"))
+            {
+                command = new Credentials(request, AbstractServerFacade.getInstance());
+            }
+            //Set cookie
             httpExchange.getResponseHeaders().set("Set-cookie", cookie);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-            String result = request.execute();
+            //Handling response to request
+            String result = command.execute();
             OutputStream responseBody = httpExchange.getResponseBody();
             ObjectOutput out = new ObjectOutputStream(responseBody);
             out.writeObject(result);

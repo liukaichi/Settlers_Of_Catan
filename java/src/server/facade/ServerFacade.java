@@ -1,6 +1,5 @@
 package server.facade;
 
-import client.data.GameInfo;
 import shared.communication.*;
 import shared.definitions.*;
 import shared.definitions.exceptions.SignInException;
@@ -301,7 +300,7 @@ public class ServerFacade extends AbstractServerFacade
      */
     @Override public void signInUser(Credentials credentials) throws SignInException
     {
-
+        throw new SignInException("Failed to login - bad username or password.");
     }
 
     /**
@@ -311,6 +310,6 @@ public class ServerFacade extends AbstractServerFacade
      */
     @Override public void registerUser(Credentials credentials) throws SignInException
     {
-
+        throw new SignInException("Failed to register - someone already has that username.");
     }
 }

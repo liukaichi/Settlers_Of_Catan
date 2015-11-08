@@ -140,11 +140,11 @@ public class MockServerFacade extends AbstractServerFacade
 
     @Override public void signInUser(Credentials credentials) throws SignInException
     {
-
+        throw new SignInException("Failed to login - bad username or password.");
     }
 
     @Override public void registerUser(Credentials credentials) throws SignInException
     {
-
+        throw new SignInException( "Failed to register - someone already has that username.");
     }
 }
