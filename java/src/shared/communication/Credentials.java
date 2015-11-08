@@ -165,7 +165,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         try
         {
             facade.signInUser(this);
-            response = "";
+            response = "SUCCESS";
         }
         catch (SignInException e) {
             response = e.getMessage();
