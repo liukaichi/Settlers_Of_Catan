@@ -10,7 +10,7 @@ import shared.locations.EdgeLocation;
 
 /**
  * buildRoad command object.
- * 
+ *
  * @author Cache Staheli
  *
  */
@@ -41,18 +41,17 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
     }
 
     /**
-     * Instantiate a BuildRoadCommand from JSON with the injected facade
+     * Instantiate a BuildRoadCommand from JSON.
      * @param json JSON of the BuildRoadCommand
-     * @param facade Facade to be used
      */
-    public BuildRoadCommand(String json, AbstractServerFacade facade)
+    public BuildRoadCommand(String json)
     {
 
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -65,7 +64,12 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
         return obj;
     }
 
-    @Override public String execute()
+    /**
+     * Calls the ServerFacade to build a road for the person and at the location specified in this command.
+     * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
+     */
+    @Override public String execute(int gameID)
     {
         return null;
     }

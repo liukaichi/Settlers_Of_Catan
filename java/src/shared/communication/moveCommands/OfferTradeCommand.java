@@ -22,28 +22,30 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     private TradeOffer offer;
 
     /**
-     * @param sender
-     * @param reciever
-     * @param brick
-     * @param wood
-     * @param sheep
-     * @param wheat
-     * @param ore
+     * Instantiates a OfferTradeCommand. If resources are negative, it means they are being sent, and positive
+     * means they are being received.
+     * @param sender the PlayerIndex of the sender.
+     * @param receiver  the PlayerIndex of the receiver.
+     * @param brick the amount of brick being sent or received.
+     * @param wood the amount of wood being sent or received.
+     * @param sheep the amount of sheep being sent or received.
+     * @param wheat the amount of wheat being sent or received.
+     * @param ore the amount of ore being sent or received.
+     * @see TradeOffer
      */
-    public OfferTradeCommand(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat,
+    public OfferTradeCommand(PlayerIndex sender, PlayerIndex receiver, int brick, int wood, int sheep, int wheat,
             int ore)
     {
         super(MoveType.offerTrade, sender);
-        offer = new TradeOffer(sender, reciever, brick, wood, sheep, wheat, ore);
+        offer = new TradeOffer(sender, receiver, brick, wood, sheep, wheat, ore);
         this.type = MoveType.offerTrade;
     }
 
     /**
-     * Instantiate a OfferTradeCommand from JSON with the injected facade
-     * @param json JSON of the OfferTradeCommand
-     * @param facade Facade to be used
+     * Instantiate a OfferTradeCommand from JSON.
+     * @param json JSON of the OfferTradeCommand.
      */
-    public OfferTradeCommand(String json, AbstractServerFacade facade)
+    public OfferTradeCommand(String json)
     {
         JsonParser parser = new JsonParser();
         JsonObject offerTradeCommand = (JsonObject) parser.parse(json);
@@ -64,7 +66,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -79,9 +81,10 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
 
     /**
      * Calls offerTrade method on the Server Facade
-     * @return Json String representing the current state of the Server Model
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game for which to execute the command.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

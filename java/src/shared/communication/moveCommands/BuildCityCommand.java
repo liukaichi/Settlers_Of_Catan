@@ -10,7 +10,7 @@ import shared.locations.VertexLocation;
 
 /**
  * buildCity command object.
- * 
+ *
  * @author Cache Staheli
  * @see VertexLocation
  *
@@ -24,8 +24,9 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
     private VertexLocation cityLocation;
 
     /**
-     * @param playerIndex
-     * @param cityLocation
+     * Instantiates a BuildCityCommand with the given player and location.
+     * @param playerIndex the index of the player building the city.
+     * @param cityLocation the location of the city being built.
      */
     public BuildCityCommand(PlayerIndex playerIndex, VertexLocation cityLocation)
     {
@@ -36,9 +37,8 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
     /**
      * Instantiate a BuildCityCommand from JSON with the injected facade
      * @param json JSON of the BuildCityCommand
-     * @param facade Facade to be used
      */
-    public BuildCityCommand(String json, AbstractServerFacade facade)
+    public BuildCityCommand(String json)
     {
         super(MoveType.buildCity, PlayerIndex.NONE);
         JsonParser parser = new JsonParser();
@@ -51,7 +51,7 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -65,8 +65,10 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
 
     /**
      * Calls the ServerFacade to build a city with the data stored inside this command.
+     * @param gameID the ID of the game for which to build the city.
+     * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

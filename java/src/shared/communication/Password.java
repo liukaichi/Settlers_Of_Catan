@@ -21,6 +21,9 @@ public class Password
         setPassword(password);
     }
 
+    /**
+     * Several passwords of people already existing in the games have short passwords that would be disallowed otherwise.
+     */
     private void buildAllowedPasswords()
     {
         allowedInvalidPasswords = new HashSet<>();
@@ -30,17 +33,32 @@ public class Password
         addAllowedPassword("ken");
     }
 
+    /**
+     * Adds an invalid password to the list of accepted passwords.
+     * @param password the password to add.
+     */
     public void addAllowedPassword(String password)
     {
         allowedInvalidPasswords.add(password);
     }
+
+    /**
+     * Inputs a password to be validated and added.
+     * @param password the password.
+     * @throws SignInException if the password is invalid.
+     */
     public void setPassword(String password) throws SignInException
     {
         validatePassword(password);
         this.password = password;
     }
 
-    public void validatePassword(String password) throws SignInException
+    /**
+     * Validates a password.
+     * @param password the password to validate.
+     * @throws SignInException if the password is invalid.
+     */
+    private void validatePassword(String password) throws SignInException
     {
         if (allowedInvalidPasswords.contains(password))
             return;
@@ -63,9 +81,9 @@ public class Password
     }
 
     /**
-     * Returns the password.
+     * Returns the password as plain text.
      * 
-     * @return the password.
+     * @return the password as plain text.
      */
     public String getPasswordPlainText()
     {

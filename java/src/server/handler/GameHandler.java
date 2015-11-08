@@ -12,7 +12,7 @@ import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
 /**
- * Created by dtaylor on 11/4/2015.
+ * The Handler for all requests of the format game/*
  */
 public class GameHandler implements HttpHandler
 {
@@ -20,8 +20,7 @@ public class GameHandler implements HttpHandler
     private static Logger LOGGER = Logger.getLogger(GameHandler.class.getName());
     /**
      * Parses the HTTP Context for the command and executes it
-     * @param httpExchange
-     * @throws IOException
+     * @param httpExchange the httpExchange to parse.
      */
     @Override public void handle(HttpExchange httpExchange)
     {
@@ -41,7 +40,7 @@ public class GameHandler implements HttpHandler
             //Handling response to request
             httpExchange.getResponseHeaders().set("Set-cookie", cookie);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-            String result = request.execute();
+            String result = request.execute(-1);
             OutputStream responseBody = httpExchange.getResponseBody();
             ObjectOutput out = new ObjectOutputStream(responseBody);
             out.writeObject(result);

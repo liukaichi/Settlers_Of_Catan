@@ -2,12 +2,11 @@ package shared.communication;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import server.facade.AbstractServerFacade;
 
 /**
  * The name and settings to use for the new game. Can be sent as form encoded
  * key-value pairs as well. The new game's ID can be read from the response.
- * 
+ *
  * @author Cache Staheli
  *
  */
@@ -25,11 +24,10 @@ public class CreateGameRequest implements CatanCommand
     }
 
     /**
-     * Instantiate a CreateGameRequest from JSON with the injected facade
+     * Instantiate a CreateGameRequest from JSON.
      * @param json JSON of the CreateGameRequest
-     * @param facade Facade to be used
      */
-    public CreateGameRequest(String json, AbstractServerFacade facade)
+    public CreateGameRequest(String json)
     {
         JsonParser parser = new JsonParser();
         JsonObject createGameObject = (JsonObject) parser.parse(json);
@@ -42,8 +40,9 @@ public class CreateGameRequest implements CatanCommand
     /**
      * Calls createGame method on the Server Facade
      * @return Json String representing the current state of the Server Model
+     * @param gameID possibly not used.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

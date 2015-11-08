@@ -3,20 +3,18 @@ package shared.communication;
 import java.lang.reflect.Type;
 
 import com.google.gson.*;
-import server.facade.AbstractServerFacade;
 import shared.definitions.exceptions.SignInException;
 
 /**
  * Credentials class holds the login information for each player. This validates
  * that the user can login and begin game play.
- * 
+ *
  * @author amandafisher
  *
  */
 public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 {
 
-    private AbstractServerFacade facade;
     private Username username;
     private Password password;
 
@@ -40,19 +38,16 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
     }
 
     /**
-     * Instantiate a Credentials object from JSON with the injected facade
+     * Instantiate a Credentials object from JSON.
      * @param json JSON of the Credentials
-     * @param facade Facade to be used
      */
-    public Credentials(String json, AbstractServerFacade facade)
+    public Credentials(String json)
     {
-        this.facade = facade;
         JsonParser parser = new JsonParser();
         JsonObject credentialsObject = (JsonObject) parser.parse(json);
         try
         {
             this.setUsername(credentialsObject.getAsJsonPrimitive("username").getAsString());
-            this.setPassword(credentialsObject.getAsJsonPrimitive("password").getAsString());
         }
         catch (SignInException e)
         {
@@ -68,14 +63,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 
     public void setUsername(String username) throws SignInException
     {
-        if(this.username != null)
-        {
-            this.username.setUsername(username);
-        }
-        else
-        {
-            this.username = new Username(username);
-        }
+        this.username.setUsername(username);
     }
 
     public Password getPassword()
@@ -85,19 +73,12 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 
     public void setPassword(String password) throws SignInException
     {
-        if(this.password != null)
-        {
-            this.password.setPassword(password);
-        }
-        else
-        {
-            this.password = new Password(password);
-        }
+        this.password.setPassword(password);
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -146,7 +127,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -159,20 +140,8 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         return credentials;
     }
 
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
-        String response = "";
-        try
-        {
-            facade.signInUser(this);
-            response = "SUCCESS";
-        }
-        catch (SignInException e) {
-            response = e.getMessage();
-        }
-        finally
-        {
-            return response;
-        }
+        return null;
     }
 }

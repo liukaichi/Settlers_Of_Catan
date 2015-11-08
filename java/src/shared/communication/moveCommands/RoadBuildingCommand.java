@@ -10,7 +10,7 @@ import shared.locations.EdgeLocation;
 
 /**
  * Road_Building command object.
- * 
+ *
  * @author Cache Staheli
  * @see EdgeLocation
  *
@@ -23,6 +23,7 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
      */
     private EdgeLocation spot1, spot2;
     /**
+     * Instantiates a RoadBuildingCommand based the given player, and two locations to build the roads.
      * @param playerIndex the index of the player playing the card.
      * @param spot1 the first location to build a road.
      * @param spot2 the second location to build a road.
@@ -35,18 +36,17 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
     }
 
     /**
-     * Instantiate a RoadBuildingCommand from JSON with the injected facade
-     * @param json JSON of the RoadBuildingCommand
-     * @param facade Facade to be used
+     * Instantiate a RoadBuildingCommand from JSON.
+     * @param json JSON of the RoadBuildingCommand.
      */
-    public RoadBuildingCommand(String json, AbstractServerFacade facade)
+    public RoadBuildingCommand(String json)
     {
 
     }
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -59,7 +59,12 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
         return obj;
     }
 
-    @Override public String execute()
+    /**
+     *
+     * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
+     */
+    @Override public String execute(int gameID)
     {
         return null;
     }

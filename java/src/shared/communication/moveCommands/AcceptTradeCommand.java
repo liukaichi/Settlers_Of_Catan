@@ -4,13 +4,11 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import server.facade.AbstractServerFacade;
 import shared.definitions.*;
-import shared.model.bank.resource.Resources;
 
 /**
  * acceptTrade command object.
- * 
+ *
  * @author Cache Staheli
  *
  */
@@ -22,8 +20,9 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
     private boolean willAccept;
 
     /**
-     * @param playerIndex
-     * @param willAccept
+     * Instantiates a AcceptTradeCommand with the given PlayerIndex and whether the player will accept the trade.
+     * @param playerIndex the index of the player sending the trade reply.
+     * @param willAccept whether or not the player will accept the trade offered.
      */
     public AcceptTradeCommand(PlayerIndex playerIndex, boolean willAccept)
     {
@@ -32,11 +31,10 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
     }
 
     /**
-     * Instantiate a AcceptTradeCommand from JSON with the injected facade
+     * Instantiate a AcceptTradeCommand from JSON.
      * @param json JSON of the AcceptTradeCommand
-     * @param facade Facade to be used
      */
-    public AcceptTradeCommand(String json, AbstractServerFacade facade)
+    public AcceptTradeCommand(String json)
     {
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
@@ -46,7 +44,7 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
     }
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -60,9 +58,10 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
 
     /**
      * Calls acceptTrade method on the Server Facade
-     * @return Json String representing the current state of the Server Model
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game to call accept trade on.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

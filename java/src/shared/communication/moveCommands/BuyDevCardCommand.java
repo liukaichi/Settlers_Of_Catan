@@ -5,7 +5,7 @@ import shared.definitions.*;
 
 /**
  * buyDevCard command object.
- * 
+ *
  * @author Cache Staheli
  *
  */
@@ -22,16 +22,20 @@ public class BuyDevCardCommand extends SimpleSerializableCommand
     }
 
     /**
-     * Instantiate a BuyDevCardCommand from JSON with the injected facade
-     * @param json JSON of the BuyDevCardCommand
-     * @param facade Facade to be used
+     * Instantiate a BuyDevCardCommand from JSON.
+     * @param json JSON of the BuyDevCardCommand.
      */
-    public BuyDevCardCommand(String json, AbstractServerFacade facade)
+    public BuyDevCardCommand(String json)
     {
 
     }
 
-    @Override public String execute()
+    /**
+     *
+     * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
+     */
+    @Override public String execute(int gameID)
     {
         return null;
     }

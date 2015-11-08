@@ -8,7 +8,7 @@ import shared.definitions.*;
 /**
  * All move commands objects contain at least the following properties. These
  * properties are described once here and should be assumed for each move type.
- * 
+ *
  * @author Cache Staheli
  * @see MoveType
  * @see PlayerIndex
@@ -25,7 +25,7 @@ public abstract class MoveCommand implements CatanCommand
     protected PlayerIndex playerIndex;
 
     /**
-     * 
+     *
      */
     protected MoveCommand()
     {
@@ -34,6 +34,7 @@ public abstract class MoveCommand implements CatanCommand
     }
 
     /**
+     * Instantiates the type of command and player index who is sending this command.
      * @param type the type of command that this is (specified by sub-class)
      * @param playerIndex the index of the player that is executing this command to the server.
      */
@@ -46,7 +47,7 @@ public abstract class MoveCommand implements CatanCommand
 
     /**
      * Custom Serializer method, based off of interface JsonSerializer<T>
-     * 
+     *
      * @param src this command
      * @return a JsonElement representing this command
      */

@@ -10,7 +10,7 @@ import shared.locations.VertexLocation;
 
 /**
  * buildSettlement command object.
- * 
+ *
  * @author Cache Staheli
  * @see VertexLocation
  *
@@ -28,9 +28,10 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
     private boolean isFree;
 
     /**
-     * @param playerIndex
-     * @param settlementLocation
-     * @param isFree
+     * Instantiates a BuildSettlementCommand from the player's index, the location, and whether or not it is free.
+     * @param playerIndex the index of the player building the settlement.
+     * @param settlementLocation the location of the settlement being built.
+     * @param isFree whether or not the settlement is free (only true during the setup phase).
      */
     public BuildSettlementCommand(PlayerIndex playerIndex, VertexLocation settlementLocation, boolean isFree)
     {
@@ -40,11 +41,10 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
     }
 
     /**
-     * Instantiate a BuildSettlementCommand from JSON with the injected facade
+     * Instantiate a BuildSettlementCommand from JSON.
      * @param json JSON of the BuildSettlementCommand
-     * @param facade Facade to be used
      */
-    public BuildSettlementCommand(String json, AbstractServerFacade facade)
+    public BuildSettlementCommand(String json)
     {
 
     }
@@ -53,7 +53,7 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -67,7 +67,12 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
         return obj;
     }
 
-    @Override public String execute()
+    /**
+     * Calls the ServerFacade to build a settlement for the person and at the location specified in this command.
+     * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
+     */
+    @Override public String execute(int gameID)
     {
         return null;
     }

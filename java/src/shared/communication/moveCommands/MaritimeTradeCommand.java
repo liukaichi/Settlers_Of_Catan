@@ -10,7 +10,7 @@ import shared.model.player.TradeOffer;
 
 /**
  * maritimeTrade command object.
- * 
+ *
  * @author Cache Staheli
  * @see TradeRatio
  * @see TradeOffer
@@ -28,6 +28,7 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
     private ResourceType inputResource, outputResource;
 
     /**
+     * Instantiates a MaritimeTradeCommand with the given player, ratio of trade, and which resources area being traded.
      * @param playerIndex the player sending the maritime trade.
      * @param ratio the ratio at which the trade is being offered.
      * @param inputResource the resource the player is sending.
@@ -43,11 +44,10 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
     }
 
     /**
-     * Instantiate a MaritimeTradeCommand from JSON with the injected facade
-     * @param json JSON of the MaritimeTradeCommand
-     * @param facade Facade to be used
+     * Instantiate a MaritimeTradeCommand from JSON.
+     * @param json JSON of the MaritimeTradeCommand.
      */
-    public MaritimeTradeCommand(String json, AbstractServerFacade facade)
+    public MaritimeTradeCommand(String json)
     {
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
@@ -61,7 +61,7 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -77,9 +77,10 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
 
     /**
      * Calls maritimeTrade method on the Server Facade
-     * @return Json String representing the current state of the Server Model
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game for which to execute the command.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

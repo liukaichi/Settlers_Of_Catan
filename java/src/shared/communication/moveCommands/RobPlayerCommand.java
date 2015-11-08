@@ -4,16 +4,13 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 
-import client.data.RobPlayerInfo;
-import server.facade.AbstractServerFacade;
 import shared.definitions.*;
 import shared.locations.HexLocation;
 
 /**
  * robPlayer command object
- * 
+ *
  * @author Cache Staheli
- * @see RobPlayerInfo
  * @see HexLocation
  */
 public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobPlayerCommand>
@@ -29,14 +26,16 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      */
     private HexLocation location;
 
+
     public RobPlayerCommand()
     {
         super(MoveType.robPlayer, PlayerIndex.NONE);
     }
     /**
-     * @param playerIndex
-     * @param victimIndex
-     * @param location
+     * Instantiates a RobPlayerCommand  with the given player, victim, and new location of the robber.
+     * @param playerIndex the index of the player who is robbing.
+     * @param victimIndex the idex of the player being robbed.
+     * @param location the location where the robber is now.
      */
     public RobPlayerCommand(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
@@ -46,11 +45,10 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
     }
 
     /**
-     * Instantiate a RobPlayerCommand from JSON with the injected facade
-     * @param json JSON of the RobPlayerCommand
-     * @param facade Facade to be used
+     * Instantiate a RobPlayerCommand from JSON.
+     * @param json JSON of the RobPlayerCommand.
      */
-    public RobPlayerCommand(String json, AbstractServerFacade facade)
+    public RobPlayerCommand(String json)
     {
 
     }
@@ -58,7 +56,7 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -76,9 +74,10 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
 
     /**
      * Robs the player and moves the robber the new hex location
-     * @return JSON of the new model after the player is robbed.
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game for which to execute the command.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

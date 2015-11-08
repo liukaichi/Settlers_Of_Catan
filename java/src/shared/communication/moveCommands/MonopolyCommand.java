@@ -8,7 +8,7 @@ import shared.definitions.*;
 
 /**
  * Monopoly command object.
- * 
+ *
  * @author Cache Staheli
  * @see ResourceType
  *
@@ -33,11 +33,10 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
     }
 
     /**
-     * Instantiate a MonopolyCommand from JSON with the injected facade
+     * Instantiate a MonopolyCommand from JSON.
      * @param json JSON of the MonopolyCommand
-     * @param facade Facade to be used
      */
-    public MonopolyCommand(String json, AbstractServerFacade facade)
+    public MonopolyCommand(String json)
     {
 
     }
@@ -45,7 +44,7 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -57,7 +56,12 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
         return obj;
     }
 
-    @Override public String execute()
+    /**
+     *
+     * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
+     */
+    @Override public String execute(int gameID)
     {
         return null;
     }

@@ -14,15 +14,15 @@ import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
 /**
- * Created by dtaylor on 11/4/2015.
+ * The handler for all contexts of the form /user/*
  */
 public class UserHandler implements HttpHandler
 {
     AbstractServerFacade facade = new MockServerFacade();
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
     /**
-     * Parses the HTTP Context for the command and executes it
-     * @param httpExchange
+     * Parses the HTTP Context for the command and executes it.
+     * @param httpExchange the httpExchange to parse.
      * @throws IOException
      */
     @Override public void handle(HttpExchange httpExchange) throws IOException
@@ -45,13 +45,13 @@ public class UserHandler implements HttpHandler
             CatanCommand command = null;
             if(commandString.equalsIgnoreCase("login"))
             {
-                command = new Credentials(request, AbstractServerFacade.getInstance());
+                command = new Credentials(request);
             }
             //Set cookie
             httpExchange.getResponseHeaders().set("Set-cookie", cookie);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             //Handling response to request
-            String result = command.execute();
+            String result = command.execute(-1);
             OutputStream responseBody = httpExchange.getResponseBody();
             ObjectOutput out = new ObjectOutputStream(responseBody);
             out.writeObject(result);

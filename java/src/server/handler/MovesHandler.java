@@ -13,7 +13,7 @@ import java.rmi.ServerException;
 import java.util.logging.Logger;
 
 /**
- * Created by dtaylor on 11/4/2015.
+ * The handler for all contexts of the form /moves/*
  */
 public class MovesHandler implements HttpHandler
 {
@@ -22,7 +22,7 @@ public class MovesHandler implements HttpHandler
 
     /**
      * Parses the HTTP Context for the command and executes it
-     * @param httpExchange
+     * @param httpExchange the httpExchange to parse.
      * @throws IOException
      */
     @Override
@@ -35,15 +35,15 @@ public class MovesHandler implements HttpHandler
             InputStream requestBody = httpExchange.getRequestBody();
             ObjectInput in = new ObjectInputStream(requestBody);
             String className = httpExchange.getRequestURI().getPath().split("/")[1]; //TODO get the class name from the context
-            Constructor c = Class.forName(className).getConstructor(String.class, AbstractServerFacade.class);
-            CatanCommand request = (CatanCommand)c.newInstance(in.readObject(), facade);
+            Constructor c = Class.forName(className).getConstructor(String.class);
+            CatanCommand request = (CatanCommand)c.newInstance(in.readObject());
             in.close();
             requestBody.close();
 
             //Handling response to request
             httpExchange.getResponseHeaders().set("Set-cookie", cookie);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-            String result = request.execute();
+            String result = request.execute(-1);
             OutputStream responseBody = httpExchange.getResponseBody();
             ObjectOutput out = new ObjectOutputStream(responseBody);
             out.writeObject(result);

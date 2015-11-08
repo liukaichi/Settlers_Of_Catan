@@ -8,7 +8,7 @@ import shared.definitions.*;
 
 /**
  * sendChat command object.
- * 
+ *
  * @author Cache Staheli
  *
  */
@@ -20,9 +20,9 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
     private String content;
 
     /**
-     * 
-     * @param sender
-     * @param content
+     * Instantiates a SendChatCommand with the given player and message.
+     * @param sender the index of the player sending the message.
+     * @param content the content of the message being sent.
      */
     public SendChatCommand(PlayerIndex sender, String content)
     {
@@ -31,11 +31,10 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
     }
 
     /**
-     * Instantiate a SendChatCommand from JSON with the injected facade
-     * @param json JSON of the SendChatCommand
-     * @param facade Facade to be used
+     * Instantiate a SendChatCommand from JSON.
+     * @param json JSON of the SendChatCommand.
      */
-    public SendChatCommand(String json, AbstractServerFacade facade)
+    public SendChatCommand(String json)
     {
         JsonParser parser = new JsonParser();
         JsonObject sendChatCommand = (JsonObject) parser.parse(json);
@@ -50,7 +49,7 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -64,9 +63,10 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
 
     /**
      * Calls sendChat method from the Server Facade
-     * @return Json String representing the current state of the Server Model
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game for which to execute the command.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }

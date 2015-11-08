@@ -10,7 +10,7 @@ import com.google.gson.*;
 import shared.definitions.*;
 
 /**
- * Used merely for serialization
+ * Used merely for serialization since several classes serialize exactly the same way.
  * 
  * @author cstaheli
  *

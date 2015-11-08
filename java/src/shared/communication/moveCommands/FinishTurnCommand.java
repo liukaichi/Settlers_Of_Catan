@@ -7,14 +7,15 @@ import shared.definitions.*;
 
 /**
  * finishTurn command object.
- * 
+ *
  * @author Cache Staheli
  *
  */
 public class FinishTurnCommand extends SimpleSerializableCommand
 {
     /**
-     * @param playerIndex
+     * Instantiates a FinishTurnCommand from the given PlayerIndex.
+     * @param playerIndex the index of the player finishing the turn.
      */
     public FinishTurnCommand(PlayerIndex playerIndex)
     {
@@ -22,11 +23,10 @@ public class FinishTurnCommand extends SimpleSerializableCommand
     }
 
     /**
-     * Instantiate a FinishTurnCommand from JSON with the injected facade
-     * @param json JSON of the FinishTurnCommand
-     * @param facade Facade to be used
+     * Instantiate a FinishTurnCommand from JSON.
+     * @param json JSON of the FinishTurnCommand.
      */
-    public FinishTurnCommand(String json, AbstractServerFacade facade)
+    public FinishTurnCommand(String json)
     {
         JsonParser parser = new JsonParser();
         JsonObject finishTurnObject = (JsonObject) parser.parse(json);
@@ -36,9 +36,10 @@ public class FinishTurnCommand extends SimpleSerializableCommand
 
     /**
      * Calls FinishTurn method on the Server Facade
-     * @return Json String representing the current state of the Server Model
+     * @return the Json representation of the model after the command is executed.
+     * @param gameID the ID of the game for which to execute the command.
      */
-    @Override public String execute()
+    @Override public String execute(int gameID)
     {
         return null;
     }
