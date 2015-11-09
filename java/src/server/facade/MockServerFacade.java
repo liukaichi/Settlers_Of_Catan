@@ -1,5 +1,11 @@
 package server.facade;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+import client.utils.BufferedReaderParser;
 import shared.communication.CreateGameResponse;
 import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
@@ -22,6 +28,27 @@ import shared.model.player.TradeOffer;
  */
 public class MockServerFacade extends AbstractServerFacade
 {
+	
+	private ClientModel getModelFromFile(String fileName)
+	{
+		File file = new File(fileName);
+   	 	BufferedReader reader;
+   	 	ClientModel model = new ClientModel();
+		try 
+		{
+			reader = new BufferedReader(new FileReader(file));
+			String json = BufferedReaderParser.parse(reader);
+	         model = new ClientModel(json);
+		} 
+		catch (FileNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		return model;
+	}
+	
     @Override public ClientModel getGameState(int version)
     {
         return null;
@@ -54,7 +81,8 @@ public class MockServerFacade extends AbstractServerFacade
 
     @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
-        return null;
+    	
+        return getModelFromFile("sample/mockServerJsons/sendChat.json");
     }
 
     @Override public ClientModel rollNumber(PlayerIndex playerIndex, int number)
