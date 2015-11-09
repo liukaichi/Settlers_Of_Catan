@@ -3,7 +3,6 @@ java/build/
 doc/
 .idea/
 *.xml
-/docs/
 .idea/workspace.xml
 
 java/dist/
