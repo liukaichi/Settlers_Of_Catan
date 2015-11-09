@@ -3,6 +3,7 @@ package shared.communication;
 import java.lang.reflect.Type;
 
 import com.google.gson.*;
+import server.facade.AbstractServerFacade;
 import shared.definitions.exceptions.SignInException;
 
 /**
@@ -42,6 +43,12 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         setUsername(username);
         setPassword(password);
     }
+    AbstractServerFacade facade;
+    public Credentials(String json, AbstractServerFacade facade)
+    {
+        this(json);
+        this.facade = facade;
+    }
 
     /**
      * Instantiate a Credentials object from JSON.
@@ -49,6 +56,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
      */
     public Credentials(String json)
     {
+        this();
         JsonParser parser = new JsonParser();
         JsonObject credentialsObject = (JsonObject) parser.parse(json);
         try
@@ -148,6 +156,13 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
 
     @Override public String execute(int gameID)
     {
-        return null;
+        try
+        {
+            facade.signInUser(this);
+            return "SUCCESS";
+        } catch (SignInException e)
+        {
+            return e.getMessage();
+        }
     }
 }
