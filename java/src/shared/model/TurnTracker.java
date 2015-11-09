@@ -141,6 +141,12 @@ public class TurnTracker
 			return false;
 		return status == other.status;
 	}
-	
-	
+
+	public void finishTurn(PlayerIndex playerIndex)
+	{
+		if(currentTurn.equals(playerIndex))
+		{
+			currentTurn = currentTurn.getNext();
+		}
+	}
 }

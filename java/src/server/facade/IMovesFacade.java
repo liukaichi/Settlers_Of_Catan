@@ -107,9 +107,9 @@ public interface IMovesFacade
      * @return the updated ClientModel
      * @param playerIndex the index of the player building the road.
      * @param roadLocation the location where the road is being built.
-     * @param free if the road is free (only in setup state).
+     * @param isFree if the road is free (only in setup state).
      */
-    ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free);
+    ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean isFree);
     /**
      * Increase the client player's settlement of AmountType.BUILT by 1.
      * Decrease the client player's settlement of AmountType.AVAILABLE by 1.
@@ -117,9 +117,9 @@ public interface IMovesFacade
      * @return the updated ClientModel
      * @param playerIndex the index of the player building the settlement.
      * @param vertexLocation the location of the settlement.
-     * @param free if the settlement is free (only in setup state).
+     * @param isFree if the settlement is free (only in setup state).
      */
-    ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean free);
+    ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree);
     /**
      * Increase the client player's city of AmountType.BUILT by 1.
      * Decrease the client player's city of AmountType.AVAILABLE by 1.
@@ -127,8 +127,9 @@ public interface IMovesFacade
      * @return the updated ClientModel
      * @param playerIndex the index of the player building the city.
      * @param vertexLocation the location of the city.
+     * @param isFree whether or not to charge the player.
      */
-    ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation);
+    ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree);
     /**
      * Update model with a new TradeOffer object
      * Player to be traded is asked to trade.

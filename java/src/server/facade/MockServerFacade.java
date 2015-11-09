@@ -140,7 +140,7 @@ public class MockServerFacade extends AbstractServerFacade
         return null;
     }
 
-    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation)
+    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree)
     {
         return null;
     }

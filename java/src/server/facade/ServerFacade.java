@@ -233,8 +233,9 @@ public class ServerFacade extends AbstractServerFacade
      * @return the updated ClientModel
      * @param playerIndex
      * @param vertexLocation
+     * @param isFree
      */
-    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation)
+    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree)
     {
         //model.buildCity(null, null);
         return null;

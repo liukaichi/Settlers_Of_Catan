@@ -8,7 +8,6 @@ import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.MapStructure;
-import shared.model.map.structure.Road;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,7 +40,7 @@ public class CatanMapTest {
 				true));
 		//Nearby settlement
 		try {
-			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
@@ -50,7 +49,7 @@ public class CatanMapTest {
 				true));
 		//existing settlement
 		try {
-			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.SouthEast));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
@@ -110,7 +109,7 @@ public class CatanMapTest {
 				allowDisconnected));
 		//vacant and has settlement
 		try {
-			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
@@ -119,7 +118,7 @@ public class CatanMapTest {
 				allowDisconnected));
 		//vacant and not his settlement
 		try {
-			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+			catanMap.placeSettlement(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
@@ -128,13 +127,13 @@ public class CatanMapTest {
 				allowDisconnected));
 		//existing road
 		try {
-			catanMap.forcePlaceSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
+			catanMap.placeSettlement(PlayerIndex.PLAYER_1, new VertexLocation(new HexLocation(0,-1), VertexDirection.East));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());
 		}
 		try {
-			catanMap.forcePlaceRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
+			catanMap.placeRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0,-1), EdgeDirection.SouthEast));
 		} catch (PlacementException e) {
 			// TODO Auto-generated catch block
 			fail(e.getMessage());

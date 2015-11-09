@@ -39,4 +39,9 @@ public enum PlayerIndex
     {
         return index;
     }
+
+    public PlayerIndex getNext()
+    {
+        return index < 3 ? PlayerIndex.fromInt(index+1) : PlayerIndex.PLAYER_0;
+    }
 }

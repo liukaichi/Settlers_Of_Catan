@@ -33,7 +33,7 @@ public class ClientModel extends Observable
     private Chat chat;
     private Log log;
     private CatanMap map;
-    private TradeOffer tradeOffer;
+    protected TradeOffer tradeOffer;
     private TurnTracker turnTracker;
     private int version;
     private PlayerIndex winner;

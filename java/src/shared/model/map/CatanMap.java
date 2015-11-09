@@ -285,22 +285,12 @@ public class CatanMap
     }
 
     /**
-     * Builds a settlement for the given player at the given location.
-     * @param player the player who is building the settlement.
-     * @param location the location where the settlement is being built.
-     */
-    public void buildSettlement(PlayerIndex player, VertexLocation location)
-    {
-
-    }
-
-    /**
      * Forces a settlement to be placed without any checks.
      * @param player the player to build for.
      * @param location the location to build at.
      * @throws PlacementException if something goes wrong.
      */
-    public void forcePlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
+    public void placeSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
     {
         Settlement settlement = new Settlement(player, location);
         structures.put(location, settlement);
@@ -533,7 +523,7 @@ public class CatanMap
      * @param location the location of the road.
      * @throws PlacementException if something goes wrong.
      */
-    public void forcePlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
+    public void placeRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
         Road road = new Road(player, location);
         roads.put(location, road);
@@ -546,7 +536,7 @@ public class CatanMap
      * @param location the location of the city.
      * @throws PlacementException if something goes wrong.
      */
-    public void forcePlaceCity(PlayerIndex player, VertexLocation location) throws PlacementException
+    public void placeCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
         City city = new City(player, location);
         structures.put(location, city);
@@ -856,6 +846,36 @@ public class CatanMap
         return players;
     }
 
+    public Set<PlayerIndex> getHexPlayersWithSettlement(HexLocation hexLocation)
+    {
+        Set<PlayerIndex> players = new HashSet<>();
+        for (VertexLocation location : hexes.get(hexLocation).getVertices())
+        {
+
+            MapStructure structure = structures.get(location);
+            if (structure != null && structure instanceof Settlement)
+            {
+                players.add(structure.getOwner());
+            }
+        }
+        return players;
+    }
+
+
+    public Set<PlayerIndex> getHexPlayersWithCity(HexLocation hexLocation)
+    {
+        Set<PlayerIndex> players = new HashSet<>();
+        for (VertexLocation location : hexes.get(hexLocation).getVertices())
+        {
+
+            MapStructure structure = structures.get(location);
+            if (structure != null && structure instanceof City)
+            {
+                players.add(structure.getOwner());
+            }
+        }
+        return players;
+    }
     /*
      * (non-Javadoc)
      *
@@ -911,4 +931,14 @@ public class CatanMap
         return roads;
     }
 
+    public ArrayList<Hex> getHexesByNumber(int number)
+    {
+        ArrayList<Hex> selectedHexes = new ArrayList<>();
+        for(Hex hex : hexes.values())
+        {
+            if(hex.getNumberTile() == number)
+                selectedHexes.add(hex);
+        }
+        return selectedHexes;
+    }
 }

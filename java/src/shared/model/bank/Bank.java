@@ -1,7 +1,9 @@
 package shared.model.bank;
 
 import shared.definitions.DevCardType;
+import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
+import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.card.DevCard;
@@ -9,6 +11,7 @@ import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
 
 import java.util.Collections;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -143,5 +146,24 @@ public class Bank
 
         return !(devCards != null ? !devCards.equals(bank.devCards) : bank.devCards != null);
 
+    }
+
+    public void awardPlayers(ResourceType resourceType, StructureType type, Set<PlayerIndex> players)
+    {
+        int num = 1;
+        if(type.equals(StructureType.CITY))
+        {
+            num = 2;
+        }
+        for(PlayerIndex playerIndex : players)
+        {
+            try
+            {
+                giveResource(resourceType, num);
+            } catch (InsufficientResourcesException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }
