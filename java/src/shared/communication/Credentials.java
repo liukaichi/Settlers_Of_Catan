@@ -22,8 +22,8 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
     {
         try
         {
-            username = new Username("user");
-            password = new Password("password");
+            this.username = new Username("user");
+            this.password = new Password("password");
         } catch (SignInException e)
         {
             e.printStackTrace();
