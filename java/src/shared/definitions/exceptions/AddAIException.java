@@ -11,7 +11,7 @@ public class AddAIException extends CatanException
 {
 
     /**
-     * @param string
+     * @param string the message to associate with the exception.
      */
     public AddAIException(String string)
     {

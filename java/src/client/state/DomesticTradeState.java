@@ -29,6 +29,10 @@ public class DomesticTradeState extends GameplayState
     private IAcceptTradeOverlay accept;
     private Player player;
 
+    /**
+     * Creates a new Domestic trade state with the given controller.
+     * @param controller the controller.
+     */
     public DomesticTradeState(ObserverController controller)
     {
         super(controller);

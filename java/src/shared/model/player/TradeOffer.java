@@ -107,9 +107,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
             return false;
         if (receiver != other.receiver)
             return false;
-        if (sender != other.sender)
-            return false;
-        return true;
+        return sender == other.sender;
     }
 
     public TradeOffer(Player sender, Player receiver)

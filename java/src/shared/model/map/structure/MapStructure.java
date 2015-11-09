@@ -101,8 +101,6 @@ public abstract class MapStructure
             return false;
         if (this.owner.getIndex() != other.owner.getIndex())
             return false;
-        if (this.victoryPointValue != other.victoryPointValue)
-            return false;
-        return true;
+        return this.victoryPointValue == other.victoryPointValue;
     }
 }

@@ -22,6 +22,10 @@ public class Bank
     private DevCards devCards;
     private static Stack<DevCardType> devCardDeck;
 
+    /**
+     * Initializes the Bank with resources. If the bank is specified to be the game bank, it is given 19 of each resource.
+     * @param isGameBank if the Bank is the game bank.
+     */
     public Bank(boolean isGameBank){
         initialize(isGameBank);
     }
@@ -75,14 +79,28 @@ public class Bank
         return devCards;
     }
 
+    /**
+     * Initializes the deck of dev cards from Json
+     * @param json the Json to initialize the deck from.
+     */
     public void initDevCards(String json){
         devCards = new DevCards(json, DevCard.AmountType.PLAYABLE);
     }
 
+    /**
+     * Initializes the resources from Json.
+     * @param json the Json to initialize the resources from.
+     */
     public void initResources(String json){
         resources = new Resources(json);
     }
 
+    /**
+     * Gives an amount of resources of the given type.
+     * @param type the type to give.
+     * @param num the amount to give.
+     * @throws InsufficientResourcesException if there are insufficient resources to execute the transactions.
+     */
     public void giveResource(ResourceType type, int num) throws InsufficientResourcesException {
         if ((resources.getResource(type).getAmount() - num) < 0){
             throw new InsufficientResourcesException();
@@ -92,6 +110,12 @@ public class Bank
         }
     }
 
+    /**
+     * Takes an amount of resources of the given type.
+     * @param type the type to take.
+     * @param num the amount to take.
+     * @throws CatanException if something goes wrong.
+     */
     public void takeResource(ResourceType type, int num) throws CatanException {
         if ((resources.getResource(type).getAmount() + num) > 19){
             throw new CatanException();

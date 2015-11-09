@@ -19,7 +19,11 @@ public class Log
      * An array of MessageLine.
      */
     private List<MessageLine> lines;
-    
+
+    /**
+	 * Initializes the Log from Json.
+	 * @param json the Json to initialize from.
+     */
     public Log(String json)
     {
     	JsonParser parser = new JsonParser();

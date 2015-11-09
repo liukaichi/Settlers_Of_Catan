@@ -207,8 +207,8 @@ public class MapComponent extends JComponent
 		setBackground(Color.white);
 		setOpaque(true);
 		
-		int prefWidth = (int)(8 * MapComponent.HEX_IMAGE_WIDTH);
-		int prefHeight = (int)(8 * MapComponent.HEX_IMAGE_HEIGHT);
+		int prefWidth = 8 * MapComponent.HEX_IMAGE_WIDTH;
+		int prefHeight = 8 * MapComponent.HEX_IMAGE_HEIGHT;
 		setPreferredSize(new Dimension(prefWidth, prefHeight));
 		
 		setController(controller);

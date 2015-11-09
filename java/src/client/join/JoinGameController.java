@@ -293,6 +293,9 @@ public class JoinGameController extends ObserverController implements IJoinGameC
 
     }
 
+    /**
+     * Resets the current game.
+     */
     public void resetCurrentGame()
     {
         currentGame = null;

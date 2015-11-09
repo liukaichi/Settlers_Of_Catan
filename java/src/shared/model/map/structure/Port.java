@@ -142,9 +142,7 @@ public class Port
             return false;
         if (this.ratio.getRatio() != other.ratio.getRatio())
             return false;
-        if (this.resource.ordinal() != other.resource.ordinal())
-            return false;
-        return true;
+        return this.resource.ordinal() == other.resource.ordinal();
     }
 
     public EdgeLocation getEdgeLocation()

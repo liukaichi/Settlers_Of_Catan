@@ -17,8 +17,9 @@ public class City extends MapStructure
 {
 
 	/**
-	 * @param owner
-	 * @param location
+	 * Creates a new City for the player associated with the given location.
+	 * @param owner the owner of the city.
+	 * @param location the location of the city.
 	 */
 	public City(PlayerIndex owner, VertexLocation location) 
 	{

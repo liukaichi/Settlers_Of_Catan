@@ -58,13 +58,13 @@ public class PollTest extends TestCase
         proxy.getServerModel().setVersion(1);
         Poller poller = new Poller(proxy);
 
-        Method getPollTask = Poller.class.getDeclaredMethod("getPollTask", null);
+        Method getPollTask = Poller.class.getDeclaredMethod("getPollTask");
         getPollTask.setAccessible(true);
 
-        boolean updated = ((Poller.PollTask)getPollTask.invoke(poller, null)).poll();
+        boolean updated = ((Poller.PollTask)getPollTask.invoke(poller)).poll();
         assertTrue(updated);
 
-        updated = ((Poller.PollTask)getPollTask.invoke(poller, null)).poll();
+        updated = ((Poller.PollTask)getPollTask.invoke(poller)).poll();
         assertFalse(updated);
 
     }

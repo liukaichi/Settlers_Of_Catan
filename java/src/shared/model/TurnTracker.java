@@ -139,9 +139,7 @@ public class TurnTracker
 			return false;
 		if (longestRoad.getIndex() != other.longestRoad.getIndex())
 			return false;
-		if (status!= other.status)
-			return false;
-		return true;
+		return status == other.status;
 	}
 	
 	

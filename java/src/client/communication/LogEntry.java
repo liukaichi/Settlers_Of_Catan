@@ -17,7 +17,12 @@ public class LogEntry
 	 * Message text
 	 */
 	private String message;
-	
+
+	/**
+	 * Initializes a LogEntry with the given color and message.
+	 * @param color the color of the log.
+	 * @param message the message in the log.
+     */
 	public LogEntry(CatanColor color, String message)
 	{
 		this.color = color;

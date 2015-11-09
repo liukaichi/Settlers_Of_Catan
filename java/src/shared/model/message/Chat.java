@@ -15,6 +15,10 @@ import java.util.List;
  */
 public class Chat {
 
+    /**
+     * Initializes the Chat log from Json.
+     * @param json the Json to initialize from.
+     */
 	public Chat(String json)
 	{
         lines = new ArrayList<>();
@@ -60,6 +64,10 @@ public class Chat {
         lines.add(line);
     }
 
+    /**
+     * Adds a line to the log.
+     * @param messageLine the message line to add.
+     */
     public void addMessageLine(MessageLine messageLine)
     {
         lines.add(messageLine);

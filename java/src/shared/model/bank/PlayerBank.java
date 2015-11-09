@@ -185,11 +185,7 @@ public class PlayerBank extends Bank
         Resources cost = new Resources(0,0,1,1,1);
         //TODO this might not properly get the game bank's dev cards.
         //if (hasEnoughResources(cost) && (!super.getDevCardDeck().empty()))
-        if (hasEnoughResources(cost) && !ClientFacade.getInstance().getBank().getDevCardDeck().empty())
-        {
-            return true;
-        }
-        return false;
+        return hasEnoughResources(cost) && !ClientFacade.getInstance().getBank().getDevCardDeck().empty();
     }
 
     /**
@@ -218,11 +214,7 @@ public class PlayerBank extends Bank
     public boolean canBuyRoad()
     {
         Resources cost = new Resources(1, 1, 0, 0, 0);
-        if (hasEnoughResources(cost) && structures.getAmountRemaining(StructureType.ROAD) > 0)
-        {
-            return true;
-        }
-        return false;
+        return hasEnoughResources(cost) && structures.getAmountRemaining(StructureType.ROAD) > 0;
     }
 
     /**
@@ -249,11 +241,7 @@ public class PlayerBank extends Bank
     public boolean canBuySettlement()
     {
         Resources cost = new Resources(1, 1, 1, 1, 0);
-        if (hasEnoughResources(cost) && structures.getAmountRemaining(StructureType.SETTLEMENT) > 0)
-        {
-            return true;
-        }
-        return false;
+        return hasEnoughResources(cost) && structures.getAmountRemaining(StructureType.SETTLEMENT) > 0;
     }
 
     /**
@@ -283,11 +271,7 @@ public class PlayerBank extends Bank
     public boolean canBuyCity()
     {
         Resources cost = new Resources(0, 0, 0, 2, 3);
-        if (hasEnoughResources(cost) && (structures.getAmountRemaining(StructureType.CITY) > 0))
-        {
-            return true;
-        }
-        return false;
+        return hasEnoughResources(cost) && (structures.getAmountRemaining(StructureType.CITY) > 0);
     }
 
     /**
@@ -315,12 +299,8 @@ public class PlayerBank extends Bank
      */
     public boolean canPlayDevCard(DevCardType type)
     {
-        if (amountOf(type, DevCard.AmountType.PLAYABLE) > 0)
-        {
-            return true;
-        }
+        return amountOf(type, DevCard.AmountType.PLAYABLE) > 0;
 
-        return false;
     }
 
     /**
@@ -348,11 +328,7 @@ public class PlayerBank extends Bank
      */
     public boolean canAccessPort(PortType type)
     {
-        if (ports.contains(type))
-        {
-            return true;
-        }
-        return false;
+        return ports.contains(type);
     }
 
     public void addPort(PortType type)

@@ -12,6 +12,10 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
     private static AbstractServerFacade _mockInstance;
     private static boolean useRealServerFacade;
 
+    /**
+     * Singleton pattern to return either the real ServerFacade, or the MockServerFacade
+     * @return the singleton instance.
+     */
     public static AbstractServerFacade getInstance()
     {
         if (useRealServerFacade)

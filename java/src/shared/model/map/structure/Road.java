@@ -71,8 +71,6 @@ public class Road
         Road other = (Road) obj;
         if (!this.location.equals(other.location))
             return false;
-        if (!this.owner.equals(other.owner))
-            return false;
-        return true;
+		return this.owner.equals(other.owner);
 	}
 }

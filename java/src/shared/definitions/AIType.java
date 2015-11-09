@@ -11,6 +11,9 @@ import com.google.gson.*;
  */
 public enum AIType implements JsonSerializer<AIType>
 {
+    /**
+     * Largest Army AIType. Tries to build the largest army during game play.
+     */
     LARGEST_ARMY;
 
     /*

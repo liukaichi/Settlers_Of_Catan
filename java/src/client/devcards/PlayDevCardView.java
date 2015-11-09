@@ -227,20 +227,20 @@ public class PlayDevCardView extends OverlayView implements IPlayDevCardView {
 
 interface IButtonGroup {
 	
-	public void add(AbstractButton button);
-	public void clearSelection();
-	public int getButtonCount();
-	public Enumeration<AbstractButton> getElements();
-	public ButtonModel getSelection();
-	public boolean isSelected(ButtonModel model);
-	public void remove(AbstractButton button);
-	public void setSelected(ButtonModel model, boolean bool);
+	void add(AbstractButton button);
+	void clearSelection();
+	int getButtonCount();
+	Enumeration<AbstractButton> getElements();
+	ButtonModel getSelection();
+	boolean isSelected(ButtonModel model);
+	void remove(AbstractButton button);
+	void setSelected(ButtonModel model, boolean bool);
 }
 
 
 interface ButtonGroupPanelListener {
 
-	public void selectedButtonChanged(ButtonGroupPanel source);
+	void selectedButtonChanged(ButtonGroupPanel source);
 }
 
 

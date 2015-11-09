@@ -22,6 +22,10 @@ public class DiscardingState extends GameplayState
     private ClientFacade facade;
     private DiscardController discardController;
 
+    /**
+     * Creates a new Discarding state with the given controller.
+     * @param controller the controller.
+     */
     public DiscardingState(ObserverController controller)
     {
         super(controller);
@@ -72,8 +76,8 @@ public class DiscardingState extends GameplayState
             view.setResourceMaxAmount(resourceType, playersHand.getAmount(resourceType));
         }
 
-        view.setStateMessage("Discarding: " + discardHand.totalResources() + " Left to Discard: " + (int) (
-                (playersHand.totalResources() / 2) - discardHand.totalResources()));
+        view.setStateMessage("Discarding: " + discardHand.totalResources() + " Left to Discard: " +
+                (playersHand.totalResources() / 2) - discardHand.totalResources());
     }
 
     @Override public void increaseAmount(ResourceType resource)

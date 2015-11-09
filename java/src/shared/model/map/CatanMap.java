@@ -46,10 +46,9 @@ public class CatanMap
     private int radius;
     private HexLocation robberLocation;
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
+    /**
+     * Initializes a CatanMap from Json.
+     * @param json the Json to initialize from.
      */
     public CatanMap(String json)
     {
@@ -295,6 +294,12 @@ public class CatanMap
 
     }
 
+    /**
+     * Forces a settlement to be placed without any checks.
+     * @param player the player to build for.
+     * @param location the location to build at.
+     * @throws PlacementException if something goes wrong.
+     */
     public void forcePlaceSettlement(PlayerIndex player, VertexLocation location) throws PlacementException
     {
         Settlement settlement = new Settlement(player, location);
@@ -522,6 +527,12 @@ public class CatanMap
         return ((hexes.get(location) != null) && (!robberLocation.equals(location)) && !hexes.get(location).getHexType().equals(HexType.WATER));
     }
 
+    /**
+     * Places a Road without any checks.
+     * @param player the player to build the road for.
+     * @param location the location of the road.
+     * @throws PlacementException if something goes wrong.
+     */
     public void forcePlaceRoad(PlayerIndex player, EdgeLocation location) throws PlacementException
     {
         Road road = new Road(player, location);
@@ -529,6 +540,12 @@ public class CatanMap
 
     }
 
+    /**
+     * Places a City without any checks.
+     * @param player the player to build the city for.
+     * @param location the location of the city.
+     * @throws PlacementException if something goes wrong.
+     */
     public void forcePlaceCity(PlayerIndex player, VertexLocation location) throws PlacementException
     {
         City city = new City(player, location);
@@ -819,6 +836,11 @@ public class CatanMap
         return edges;
     }
 
+    /**
+     * Gets the players with settlements or cities at the given HexLocation.
+     * @param hexLocation the location to check.
+     * @return a unique set of players at the hex.
+     */
     public Set<PlayerIndex> getHexPlayers(HexLocation hexLocation)
     {
         Set<PlayerIndex> players = new HashSet<>();

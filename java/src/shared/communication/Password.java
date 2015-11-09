@@ -15,6 +15,11 @@ public class Password
     private String password;
     private HashSet<String> allowedInvalidPasswords;
 
+    /**
+     * Creates a password from te given string.
+     * @param password the password.
+     * @throws SignInException if the password is not a valid password.
+     */
     public Password(String password) throws SignInException
     {
         buildAllowedPasswords();

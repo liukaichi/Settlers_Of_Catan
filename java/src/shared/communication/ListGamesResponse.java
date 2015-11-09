@@ -19,7 +19,7 @@ public class ListGamesResponse
 {
     private List<GameInfo> games;
 
-    public ListGamesResponse()
+    private ListGamesResponse()
     {
         games = new ArrayList<>();
     }

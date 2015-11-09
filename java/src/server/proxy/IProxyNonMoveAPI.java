@@ -49,8 +49,8 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
      *      How the Catan Server Uses HTTP Cookies</a>
-     * 
-     * 
+     *
+     * @return the info the player set in the cookie.
      */
     // Or just Username/Password. We should discuss this, probably.
     PlayerInfo userLogin(Credentials credentials) throws SignInException;
@@ -90,6 +90,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
      *      How the Catan Server Uses HTTP Cookies</a>
+     * @return the info the player set in the cookie.
      */
     PlayerInfo userRegister(Credentials credentials) throws SignInException;
 }

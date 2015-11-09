@@ -15,6 +15,7 @@ public class Dice
 
     /**
      * Rolling two dice and returning the results
+     * @return the amount rolled.
      */
     public int rollDice()
     { 

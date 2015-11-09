@@ -39,6 +39,9 @@ public class ClientModel extends Observable
     private PlayerIndex winner;
     private boolean isUpdating;
 
+    /**
+     * Initializes everything properly.
+     */
     public ClientModel()
     {
         bank = null;
@@ -51,6 +54,13 @@ public class ClientModel extends Observable
         winner = PlayerIndex.NONE;
     }
 
+    /**
+     * Per the Observer pattern, this method replaces the pieces of the model and then notifies the Observers to the
+     * model that a change has been made.
+     * @param model the model to replace
+     * @see Observable
+     * @see java.util.Observer
+     */
     public void updateModel(ClientModel model)
     {
         /*
@@ -80,6 +90,10 @@ public class ClientModel extends Observable
         }
     }
 
+    /**
+     * Initializes a ClientModel from Json.
+     * @param json the Json to initialize from.
+     */
     public ClientModel(String json)
     {
         JsonParser parser = new JsonParser();
@@ -178,6 +192,10 @@ public class ClientModel extends Observable
         this.version = version;
     }
 
+    /**
+     * Determines if there are any dev cards to buy.
+     * @return true if there are any dev cards to buy, false otherwise.
+     */
     public boolean canBuyDevCard()
     {
         return bank.getDevCards().totalCards() > 0;
@@ -256,6 +274,11 @@ public class ClientModel extends Observable
         return map.canMoveRobber(player, location);
     }
 
+    /**
+     * Determines if the given player can buy a road.
+     * @param player the player to check.
+     * @return true if the given player can buy a road, false otherwise.
+     */
     public boolean canBuyRoad(Player player)
     {
         return player.canBuyRoad();
@@ -265,6 +288,7 @@ public class ClientModel extends Observable
      * Determines if the PlayerBank has Settlements left to purchase AND if the
      * resources required are available
      * 
+     * @param player the player to check.
      * @return true if both conditions are met
      */
     public boolean canBuySettlement(Player player)
@@ -276,6 +300,7 @@ public class ClientModel extends Observable
      * Determines if the PlayerBank has Cities left to purchase AND if the
      * resources required are available
      * 
+     * @param player the player to check.
      * @return true if both conditions are met
      */
     public boolean canBuyCity(Player player)
@@ -285,6 +310,7 @@ public class ClientModel extends Observable
 
     /**
      * Updates the currentTurn counter
+     * @param playerCurrentTurn the info of the player to update the current turn for.
      */
     public void updateCurrentTurn(PlayerInfo playerCurrentTurn)
     {
@@ -294,6 +320,7 @@ public class ClientModel extends Observable
     /**
      * Updates the longestRoad counter. A player has the longest road if he or
      * she has at least 5 roads
+     * @param playerLongestRoad the info of the player to update the longest road for.
      */
     public void updateLongestRoad(PlayerBank playerLongestRoad)
     {
@@ -303,6 +330,7 @@ public class ClientModel extends Observable
     /**
      * Updates the largest army counter A player has the largest army if he or
      * she has at least 3 knights
+     * @param playerLargestArmy the info of the player to update the largest army for.
      */
     public void updateLargestArmy(PlayerBank playerLargestArmy)
     {
@@ -311,6 +339,7 @@ public class ClientModel extends Observable
 
     /**
      * Updates the status string based on the current phase of the player's turn
+     * @param playerTurnStatus the info of the player to update the status for.
      */
     public void updateStatus(TurnStatus playerTurnStatus)
     {

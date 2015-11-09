@@ -95,6 +95,11 @@ public class ClientFacade implements IUserFacade
         return null;
     }
 
+    /**
+     * Gets the color of the player with the given name.
+     * @param name the name of the player to get the color for.
+     * @return the color of the player with the given name.
+     */
     public CatanColor getColorByName(String name)
     {
         return getPlayerByName(name).getPlayerColor();
@@ -114,6 +119,11 @@ public class ClientFacade implements IUserFacade
         return null;
     }
 
+    /**
+     * Gets the player with the given index.
+     * @param player the player's index.
+     * @return the  player with the given index.
+     */
     public Player getPlayer(PlayerIndex player)
     {
         if (getPlayers() == null)
@@ -169,6 +179,11 @@ public class ClientFacade implements IUserFacade
         return (getPlayer().canBuyDevCard() && model.canBuyDevCard());
     }
 
+    /**
+     * Checks whether the client player can play the given dev card type.
+     * @param type the type of Dev card.
+     * @return true if the player can play the card type, false otherwise.
+     */
     public boolean canPlayDevCard(DevCardType type)
     {
         return getPlayer().canPlayDevCard(type);
@@ -273,8 +288,13 @@ public class ClientFacade implements IUserFacade
 
     /**
      * Sends a trade offer to a player.
+     * @param receiver the index of the player receiving the offer.
+     * @param brick the amount of brick.
+     * @param ore the amount of ore.
+     * @param sheep the amount of sheep.
+     * @param wheat the amount of wheat.
+     * @param wood the amount of wood.
      */
-
     public void sendTradeOffer(PlayerIndex receiver, int brick, int ore, int sheep, int wheat, int wood)
     {
         model.updateModel(proxy.offerTrade(
@@ -296,6 +316,10 @@ public class ClientFacade implements IUserFacade
      * Join Game Controller methods
      */
 
+    /**
+     * Gets the list of games available on the server.
+     * @return the list of game available on the server.
+     */
     public ListGamesResponse listGames()
     {
         return proxy.listGames();
@@ -318,7 +342,8 @@ public class ClientFacade implements IUserFacade
     /**
      * Joins an already existent game.
      *
-     * @throws GameQueryException
+     * @param id the Id of the game to join.
+     * @param color the color for the client player to join with.
      */
 
     public void joinGame(int id, CatanColor color)
@@ -337,6 +362,11 @@ public class ClientFacade implements IUserFacade
      * player Waiting Controller methods
      */
 
+    /**
+     * Gets the state of the game given a version.
+     * @param version the version to check for. -1 grabs the game state regardless.
+     * @return the representation of the game.
+     */
     public ClientModel getGameState(int version)
     {
         ClientModel model = proxy.getGameState(version);
@@ -354,6 +384,10 @@ public class ClientFacade implements IUserFacade
         return model;
     }
 
+    /**
+     * Starts the ServerPoller.
+     * @see Poller
+     */
     public void startPoller()
     {
         poller = new Poller(proxy);
@@ -376,6 +410,10 @@ public class ClientFacade implements IUserFacade
         }
     }
 
+    /**
+     * Lists the AITypes available to add to the currently joined game.
+     * @return the list of AITypes available to add to the currently joined game.
+     */
     public List<AIType> listAI()
     {
         ListAIResponse response = proxy.listAI();
@@ -445,6 +483,10 @@ public class ClientFacade implements IUserFacade
         return model.canPlaceRoad(clientPlayer.getPlayerIndex(), edgeLoc, allowDisconnected);
     }
 
+    /**
+     * Determines if the client player can buy a road.
+     * @return true if the player can buy a road, false otherwise.
+     */
     public boolean canBuyRoad()
     {
         return getPlayer().canBuyRoad();
@@ -466,6 +508,10 @@ public class ClientFacade implements IUserFacade
         return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertexLocation, allowDisconnected);
     }
 
+    /**
+     * Checks to see if the player meets the condition to buy a settlement.
+     * @return if the player meets the requirements, false otherwise.
+     */
     public boolean canBuySettlement()
     {
         return getPlayer().canBuySettlement();
@@ -486,6 +532,10 @@ public class ClientFacade implements IUserFacade
         return model.canPlaceCity(clientPlayer.getPlayerIndex(), location);
     }
 
+    /**
+     * Checks to see if the player meets the condition to buy a city.
+     * @return true if the player meets all the conditions to buy a city, false otherwise.
+     */
     public boolean canBuyCity()
     {
         return getPlayer().canBuyCity();
@@ -509,6 +559,7 @@ public class ClientFacade implements IUserFacade
      * player purchases and places a road
      *
      * @param location the location of the road
+     * @param isFree whether or not the road is free to place.
      * @pre player clicks on a location to place road
      * @post player met conditions and road is on map
      */
@@ -522,6 +573,7 @@ public class ClientFacade implements IUserFacade
      * player purchases and places a settlement
      *
      * @param location the location of the Settlement
+     * @param isFree whether or not the settlement is free to place.
      * @pre player clicks on a location to place a settlement
      * @post player met conditions and settlement is now on map
      */
@@ -549,6 +601,7 @@ public class ClientFacade implements IUserFacade
      * Robs a player, player receives one resource from the player being robbed
      *
      * @param victim the victim of the brutal armed robbery
+     * @param location the new location of the robber.
      * @pre robber is placed
      * @post player has an extra resource
      */
@@ -564,6 +617,10 @@ public class ClientFacade implements IUserFacade
 
     /**
      * Completes a maritime trade
+     * @param ratio the ratio to trade at.
+     * @param inputResource the resource the client player is trading away.
+     * @param outputResource the resourec the client player is receiving.
+     * @see TradeRatio
      */
 
     public void makeMaritimeTrade(TradeRatio ratio, ResourceType inputResource, ResourceType outputResource)
@@ -580,6 +637,7 @@ public class ClientFacade implements IUserFacade
     /**
      * Calls the roll method on the dice
      *
+     * @param diceRollResult the amount rolled.
      * @post Value of dice is changed
      */
 
@@ -605,7 +663,7 @@ public class ClientFacade implements IUserFacade
 
     public void setModel(ClientModel newModel)
     {
-
+        model = newModel;
     }
 
     public ClientModel getModel()
@@ -670,6 +728,11 @@ public class ClientFacade implements IUserFacade
         return getModel().getMap().getRobberLocation();
     }
 
+    /**
+     * Gets the rob player info associated with the given hex.
+     * @param hexLocation the location of the hex to check.
+     * @return a list of RobPlayerInfo associated with the given hex.
+     */
     public RobPlayerInfo[] getRobPlayerInfo(HexLocation hexLocation)
     {
         List<RobPlayerInfo> robPlayerInfos = new ArrayList<>();
@@ -689,17 +752,28 @@ public class ClientFacade implements IUserFacade
         return robPlayerInfos.toArray(new RobPlayerInfo[robPlayerInfos.size()]);
     }
 
+    /**
+     * Gets the Player object based on the given index.
+     * @param index the index of the player.
+     * @return the Player object based on the given index.
+     * @see Player
+     */
     public Player getPlayerByIndex(PlayerIndex index)
     {
         return getPlayers().get(index.getIndex());
     }
 
+    /**
+     * Determines if it is the client player's turn.
+     * @return true if it is client player's turn, false otherwise.
+     */
     public boolean isMyTurn()
     {
         PlayerIndex currentTurn = model.getTurnTracker().getCurrentTurn();
         PlayerIndex currentPlayerIndex = getClientPlayer().getPlayerIndex();
         return currentTurn.equals(currentPlayerIndex);
     }
+
 
     public int getClientPlayerRoadCount()
     {
@@ -716,6 +790,9 @@ public class ClientFacade implements IUserFacade
         return model.getBank();
     }
 
+    /**
+     * Updates the client player. This is called periodically to ensure that the clientPlayer is up to date.
+     */
     public void updateClientPlayer()
     {
         for (PlayerInfo playerInfo : model.getGameInfo().getPlayerInfos())
@@ -739,6 +816,9 @@ public class ClientFacade implements IUserFacade
         }
     }
 
+    /**
+     * Resets the instance of the facade to null. It saves the proxy so that the client still has their cookie set.
+     */
     public static void resetInstance()
     {
         IProxy proxy = _instance.getProxy();
@@ -756,6 +836,10 @@ public class ClientFacade implements IUserFacade
         return proxy;
     }
 
+    /**
+     * Sends a trade offer based off of the TradeOffer object, which contains all of the important information.
+     * @param offer the trade offer.
+     */
     public void sendTradeOffer(TradeOffer offer) {
         sendTradeOffer(PlayerIndex.fromInt(offer.getReceiver()), offer.getOffer(ResourceType.BRICK),
                 offer.getOffer(ResourceType.ORE),offer.getOffer(ResourceType.SHEEP),

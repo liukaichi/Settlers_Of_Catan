@@ -15,6 +15,11 @@ public class JoinGameRequest implements CatanCommand
     private int id;
     private CatanColor color;
 
+    /**
+     * Initializes a JoinGameRequest with the id of the game to join, and the color the player is joining with.
+     * @param id the id of the game to join.
+     * @param color the color the player the is joining.
+     */
     public JoinGameRequest(int id, CatanColor color)
     {
         this.id = id;

@@ -328,11 +328,7 @@ public class Player
     public boolean canTradeResource(ResourceType type)
     {
 
-        if (getBank().getResources().getAmount(type) >= getTradeRatio(type))
-        {
-            return true;
-        }
-        return false;
+        return getBank().getResources().getAmount(type) >= getTradeRatio(type);
 
     }
 

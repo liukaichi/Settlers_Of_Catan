@@ -13,5 +13,5 @@ import server.proxy.IProxyPlayingCommands;
 public enum MoveType
 {
     sendChat, rollNumber, robPlayer, finishTurn, buyDevCard, Year_of_Plenty, Road_Building, Soldier, Monopoly, Monument,
-    buildRoad, buildSettlement, buildCity, offerTrade, acceptTrade, maritimeTrade, discardCards;
+    buildRoad, buildSettlement, buildCity, offerTrade, acceptTrade, maritimeTrade, discardCards
 }

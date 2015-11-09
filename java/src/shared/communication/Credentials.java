@@ -30,6 +30,12 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         }
     }
 
+    /**
+     * Creates credentials with the given username and password.
+     * @param username the username.
+     * @param password the password.
+     * @throws SignInException if either the username or password are invalid.
+     */
     public Credentials(String username, String password) throws SignInException
     {
         this();

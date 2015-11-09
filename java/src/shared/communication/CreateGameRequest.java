@@ -15,6 +15,13 @@ public class CreateGameRequest implements CatanCommand
     private boolean randomTiles, randomNumbers, randomPorts;
     private String name;
 
+    /**
+     * Creates a CreateGameRequest with the specified options and name.
+     * @param randomTiles whether the created game will have randomly generated hexes.
+     * @param randomNumbers whether the created game will have randomly placed numbers on the hexes.
+     * @param randomPorts whether the created game will have randomly placed ports.
+     * @param name the name of the game.
+     */
     public CreateGameRequest(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
         this.randomTiles = randomTiles;

@@ -36,6 +36,10 @@ public abstract class GameplayState
      * Chat Controller methods
      */
 
+    /**
+     * Creates a new state with the given controller.
+     * @param controller the controller.
+     */
     public GameplayState(ObserverController controller)
     {
         this();
@@ -206,6 +210,9 @@ public abstract class GameplayState
     }
 
     /**
+     * Called by the controllers whenever they are notified that the model has changed. This will set the new state
+     * for the controllers so that future calls will be executed properly. This will also inform the new state to
+     * update the view of the controller accordingly.
      * @param controller the controller that is calling this state.
      * @param model      the clientModel that was updated.
      * @param state      the state that the ClientModel's turnTracker contains.

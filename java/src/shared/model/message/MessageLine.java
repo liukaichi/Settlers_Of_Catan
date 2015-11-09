@@ -18,7 +18,11 @@ public class MessageLine
      * The index of the player, or NONE if the server.
      */
     private String sourceName;
-  
+
+    /**
+     * Initializes a MessageLine from Json.
+     * @param json the Json to initialize from.
+     */
     public MessageLine(String json)
     {
     	JsonParser parser = new JsonParser();

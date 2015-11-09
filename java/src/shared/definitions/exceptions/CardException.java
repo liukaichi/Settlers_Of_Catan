@@ -10,7 +10,7 @@ public class CardException extends CatanException
 {
 
     /**
-     * @param string
+     * @param string the message to accompany the exception.
      */
     public CardException(String string)
     {

@@ -15,6 +15,11 @@ public class CreateGameResponse
 {
     private GameInfo gameInfo;
 
+    /**
+     * Initializes the response from the server with the given ID and title.
+     * @param id the id of the game that was created.
+     * @param title the title of the game that was created.
+     */
     public CreateGameResponse(int id, String title)
     {
         gameInfo = new GameInfo(id, title);
