@@ -1,6 +1,7 @@
 package server;
 
 import com.sun.net.httpserver.HttpServer;
+import server.facade.AbstractServerFacade;
 import server.handler.*;
 
 import java.io.IOException;
@@ -61,6 +62,7 @@ public class Server {
 
         switch(args.length) {
             case 0:
+                AbstractServerFacade.useRealServerFacade(false);
                 Server.run();
                 break;
         }
