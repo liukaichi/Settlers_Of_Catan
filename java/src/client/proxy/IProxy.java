@@ -1,4 +1,4 @@
-package server.proxy;
+package client.proxy;
 
 /**
  * This interface defines the actions that can be taken with the server. <br>

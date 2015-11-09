@@ -1,7 +1,6 @@
-package server.proxy;
+package client.proxy;
 
 import client.data.PlayerInfo;
-import client.facade.ClientFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import shared.communication.*;

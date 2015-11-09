@@ -1,12 +1,11 @@
 package facades;
 
 import client.data.GameInfo;
-import client.data.PlayerInfo;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import server.proxy.MockProxy;
+import client.proxy.MockProxy;
 import shared.communication.CreateGameRequest;
 import shared.communication.CreateGameResponse;
 import shared.communication.ListGamesResponse;

@@ -1,4 +1,4 @@
-package server.proxy;
+package client.proxy;
 
 import shared.communication.*;
 import shared.definitions.AIType;

@@ -1,8 +1,7 @@
-package server.proxy;
+package client.proxy;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.logging.Level;
 
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;

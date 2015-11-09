@@ -1,6 +1,4 @@
-package server.proxy;
-
-import java.util.logging.Level;
+package client.proxy;
 
 import client.data.PlayerInfo;
 import shared.communication.Credentials;
