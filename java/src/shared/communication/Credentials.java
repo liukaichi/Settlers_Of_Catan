@@ -43,12 +43,6 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         setUsername(username);
         setPassword(password);
     }
-    AbstractServerFacade facade;
-    public Credentials(String json, AbstractServerFacade facade)
-    {
-        this(json);
-        this.facade = facade;
-    }
 
     /**
      * Instantiate a Credentials object from JSON.
@@ -158,7 +152,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
     {
         try
         {
-            facade.signInUser(this);
+            AbstractServerFacade.getInstance().signInUser(this);
             return "SUCCESS";
         } catch (SignInException e)
         {
