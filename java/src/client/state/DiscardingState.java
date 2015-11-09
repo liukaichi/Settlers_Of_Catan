@@ -77,7 +77,7 @@ public class DiscardingState extends GameplayState
         }
 
         view.setStateMessage("Discarding: " + discardHand.totalResources() + " Left to Discard: " +
-                (playersHand.totalResources() / 2) - discardHand.totalResources());
+                ((playersHand.totalResources() / 2) - discardHand.totalResources()));
     }
 
     @Override public void increaseAmount(ResourceType resource)
