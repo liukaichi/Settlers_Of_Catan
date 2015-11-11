@@ -10,7 +10,12 @@ import shared.communication.Credentials;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
+import java.net.CookieManager;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -42,11 +47,41 @@ public class UserHandler implements HttpHandler
             String request = builder.toString();
 
             String commandString = httpExchange.getRequestURI().getPath().split("/")[2]; //TODO get the class name from the context
-            CatanCommand command = null;
+            Credentials creds;
             if(commandString.equalsIgnoreCase("login"))
             {
-                command = new Credentials(request);
+                creds = new Credentials(request);
+                facade.signInUser(creds);
             }
+            else if(commandString.equalsIgnoreCase("register"))
+            {
+                creds = new Credentials(request);
+                facade.registerUser(creds);
+                HashMap<String, List<String>> cookieHeaders = new HashMap<String, List<String>>();
+                ArrayList<String> cookieLines = new ArrayList<>();
+                cookieLines.add("catan.user="+creds.getUsername()); //TODO we need to get userId
+                cookieHeaders.put("Set-cookie",cookieLines);
+                CookieManager cMan = new CookieManager();
+                cMan.put(httpExchange.getRequestURI(),cookieHeaders);
+                httpExchange.getResponseHeaders().set("Set-cookie",cMan.getCookieStore().getCookies().get(0).toString());
+            }
+            /*
+            to help know how to build cookie
+    private void parseCookie(String cookieHeader)
+    {
+        HttpCookie httpCookie = HttpCookie.parse(cookieHeader).get(0);
+        String cookie = httpCookie.toString();
+        if (cookie.contains("catan.user"))
+        {
+            this.catanUserCookie = cookie.substring(cookie.indexOf("=") + 1);
+        }
+        else if (cookie.contains("catan.game"))
+        {
+            this.catanGameCookie = cookie.substring(cookie.indexOf("=") + 1);
+        }
+    }
+
+             */
             //Set cookie
             httpExchange.getResponseHeaders().set("Set-cookie", cookie);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
