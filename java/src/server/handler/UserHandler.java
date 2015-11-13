@@ -45,22 +45,21 @@ public class UserHandler implements HttpHandler
             CookieStore cookieJar = manager.getCookieStore();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
-            StringBuilder builder = new StringBuilder();
-            String json;
-            while ((json = reader.readLine()) != null)
+            StringBuilder jsonBuilder = new StringBuilder();
+            String nextLine;
+            while ((nextLine = reader.readLine()) != null)
             {
-                builder.append(json);
+                jsonBuilder.append(nextLine);
             }
-            String request = builder.toString();
+            String json = jsonBuilder.toString();
 
-            Credentials creds = new Credentials(request);
-
-            User user = null;
+            Credentials creds = new Credentials(json);
 
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
 
+            User user = null;
             if (commandString.equalsIgnoreCase("login"))
             {
                 user = facade.signInUser(creds);
