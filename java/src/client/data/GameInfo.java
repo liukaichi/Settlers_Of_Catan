@@ -2,6 +2,9 @@ package client.data;
 
 import java.util.*;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.*;
 import shared.model.player.Player;
 
@@ -43,6 +46,7 @@ public class GameInfo
         this();
         setId(id);
         setTitle(title);
+        players = new ArrayList<Player>();
     }
 
     public int getId()
@@ -140,5 +144,28 @@ public class GameInfo
     public CatanColor getPlayerColor(PlayerIndex index)
     {
         return players.get(index.getIndex()).getPlayerColor();
+    }
+
+
+    @Override
+    public String toString() {
+
+        JsonParser parser = new JsonParser();
+        JsonObject gameInfo = new JsonObject();
+
+        //create list of players
+        JsonArray playerList = new JsonArray();
+        for (Player player : players)
+        {
+            playerList.add(parser.parse(player.toString()));
+        }
+
+        //add all gameInfo properties
+        gameInfo.addProperty("title", title);
+        gameInfo.addProperty("id", id);
+        gameInfo.add("players", playerList);
+
+        return gameInfo.toString();
+
     }
 }

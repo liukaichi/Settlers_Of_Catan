@@ -72,4 +72,18 @@ public class ListGamesResponse
     {
         return Collections.unmodifiableList(games);
     }
+
+    @Override
+    public String toString() {
+        JsonParser parser = new JsonParser();
+        JsonObject listGamesResponse = new JsonObject();
+
+        JsonArray gameInfos = new JsonArray();
+        for (GameInfo info : games)
+        {
+            gameInfos.add(parser.parse(info.toString()));
+        }
+
+        return gameInfos.toString();
+    }
 }
