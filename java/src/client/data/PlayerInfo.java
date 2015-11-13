@@ -158,4 +158,16 @@ public class PlayerInfo
 
         return this.id == other.id;
     }
+
+    @Override
+    public String toString() {
+        JsonParser parser = new JsonParser();
+        JsonObject gameInfo = new JsonObject();
+
+        //add all gameInfo properties
+        gameInfo.addProperty("color", color.toString().toLowerCase());
+        gameInfo.addProperty("name", name);
+        gameInfo.addProperty("id", id);
+        return gameInfo.toString();
+    }
 }

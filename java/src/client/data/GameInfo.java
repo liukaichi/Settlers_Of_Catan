@@ -157,13 +157,14 @@ public class GameInfo
         JsonArray playerList = new JsonArray();
         for (Player player : players)
         {
-            playerList.add(parser.parse(player.toString()));
+            playerList.add(parser.parse(player.getPlayerInfo().toString()));
         }
 
         //add all gameInfo properties
         gameInfo.addProperty("title", title);
         gameInfo.addProperty("id", id);
         gameInfo.add("players", playerList);
+
 
         return gameInfo.toString();
 

@@ -76,7 +76,6 @@ public class ListGamesResponse
     @Override
     public String toString() {
         JsonParser parser = new JsonParser();
-        JsonObject listGamesResponse = new JsonObject();
 
         JsonArray gameInfos = new JsonArray();
         for (GameInfo info : games)
@@ -84,6 +83,8 @@ public class ListGamesResponse
             gameInfos.add(parser.parse(info.toString()));
         }
 
-        return gameInfos.toString();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(gameInfos);
+        return json.toString();
     }
 }

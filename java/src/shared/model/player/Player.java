@@ -59,6 +59,9 @@ public class Player
     public Player(PlayerInfo playerInfo)
     {
         info = playerInfo;
+        bank = new PlayerBank();
+        discarded = false;
+        playedDev = false;
     }
 
     public Player(String json)
