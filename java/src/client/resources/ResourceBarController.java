@@ -148,8 +148,8 @@ public class ResourceBarController extends ObserverController implements IResour
         if(facade.getClientPlayer().getNormalizedPlayerIndex() != -1)
         {
             state.update(this, (ClientModel)o, arg);
-            updateView();
             state.updateView();
+            updateView();
         }
     }
 
