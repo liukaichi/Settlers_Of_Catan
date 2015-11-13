@@ -1,10 +1,11 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.*;
+import server.facade.AbstractServerFacade;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 
-import shared.definitions.*;
+import java.lang.reflect.Type;
 
 /**
  * acceptTrade command object.
@@ -63,6 +64,6 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().acceptTrade(this.getPlayerIndex(), willAccept).toString();
     }
 }
