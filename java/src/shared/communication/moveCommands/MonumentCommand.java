@@ -1,5 +1,6 @@
 package shared.communication.moveCommands;
 
+import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 
@@ -37,6 +38,7 @@ public class MonumentCommand extends SimpleSerializableCommand
      */
     @Override public String execute(int gameID)
     {
-        return null;
+	    return AbstractServerFacade.getInstance().monument(gameID, getPlayerIndex()).toString();
+
     }
 }

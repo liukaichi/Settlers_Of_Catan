@@ -1,7 +1,8 @@
 package shared.communication.moveCommands;
 
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 
 /**
  * buyDevCard command object.
@@ -37,6 +38,7 @@ public class BuyDevCardCommand extends SimpleSerializableCommand
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().buyDevCard(gameID, getPlayerIndex()).toString();
+
     }
 }

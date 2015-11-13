@@ -3,7 +3,8 @@ package shared.communication.moveCommands;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 
 /**
  * finishTurn command object.
@@ -41,6 +42,7 @@ public class FinishTurnCommand extends SimpleSerializableCommand
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().finishTurn(gameID, getPlayerIndex()).toString();
+
     }
 }
