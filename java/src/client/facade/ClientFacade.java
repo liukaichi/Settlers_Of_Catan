@@ -11,6 +11,7 @@ import shared.communication.moveCommands.*;
 import shared.definitions.*;
 import shared.definitions.exceptions.AddAIException;
 import shared.definitions.exceptions.GameQueryException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.definitions.exceptions.SignInException;
 import server.facade.IUserFacade;
 import shared.locations.EdgeLocation;
@@ -431,12 +432,12 @@ public class ClientFacade
      * @throws SignInException if the user doesn't exist in the server.
      */
 
-    public void signInUser(Credentials credentials) throws SignInException
+    public void signInUser(Credentials credentials) throws InvalidCredentialsException
     {
         try
         {
             setClientPlayer(proxy.userLogin(credentials));
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Login", e);
             throw e;
@@ -450,12 +451,12 @@ public class ClientFacade
      * @throws SignInException if the registration fails (username already taken).
      */
 
-    public void registerUser(Credentials credentials) throws SignInException
+    public void registerUser(Credentials credentials) throws InvalidCredentialsException
     {
         try
         {
             setClientPlayer(proxy.userRegister(credentials));
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Login", e);
             throw e;

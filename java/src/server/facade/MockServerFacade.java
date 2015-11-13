@@ -22,7 +22,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
-import shared.definitions.exceptions.SignInException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -214,5 +214,15 @@ public class MockServerFacade extends AbstractServerFacade
     @Override public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
     {
         return getModelFromFile("basicGameTurn");
+    }
+
+    @Override public User signInUser(Credentials credentials) throws InvalidCredentialsException
+    {
+        throw new InvalidCredentialsException("Failed to login - bad username or password.");
+    }
+
+    @Override public User registerUser(Credentials credentials) throws InvalidCredentialsException
+    {
+        throw new InvalidCredentialsException( "Failed to register - someone already has that username.");
     }
 }

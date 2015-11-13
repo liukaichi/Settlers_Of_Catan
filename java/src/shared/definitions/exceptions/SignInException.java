@@ -1,37 +1,10 @@
 package shared.definitions.exceptions;
 
 /**
- * Exception thrown when unable to sign in
- * 
- * @author dtaylor
- *
+ * Created by Adrian on 11/12/2015.
  */
-public class SignInException extends CatanException
-{
-
-    /**
-     * @param string
-     */
-    public SignInException(String string)
-    {
-        super(string);
+public class SignInException extends CatanException {
+    public SignInException(String s) {
+        super(s);
     }
-
-    /**
-     * 
-     */
-    public SignInException()
-    {
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param string
-     * @param e
-     */
-    public SignInException(String string, Exception e)
-    {
-        super(string, e);
-    }
-
 }

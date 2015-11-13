@@ -127,7 +127,7 @@ public class ProxyTester
         try
         {
             credentials = new Credentials("login", "login");
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             e.printStackTrace();
         }
@@ -135,7 +135,7 @@ public class ProxyTester
         {
             proxy.userLogin(credentials);
             fail("Shouldn't have reached this.");
-        } catch (SignInException e1)
+        } catch (InvalidCredentialsException e1)
         {
             assertTrue(true);
         }
@@ -145,14 +145,14 @@ public class ProxyTester
             assertTrue(true);
             proxy.userLogin(credentials);
             assertTrue(true);
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             fail("Login failed");
         }
         try
         {
             proxy.userLogin(credentials);
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             fail("Shouldn't have reached this.");
         }
@@ -163,7 +163,7 @@ public class ProxyTester
         try
         {
             proxy.userLogin(new Credentials("Sam", "sam"));
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             fail(e.getMessage());
         }
@@ -180,7 +180,7 @@ public class ProxyTester
         try
         {
             credentials = new Credentials("userReg", "register");
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             e.printStackTrace();
         }
@@ -188,7 +188,7 @@ public class ProxyTester
         {
             proxy.userRegister(credentials);
             assertTrue(true);
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             fail("Login failed");
         }
@@ -196,14 +196,14 @@ public class ProxyTester
         {
             proxy.userRegister(credentials);
             fail("Shouldn't have reached this.");
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             assertTrue(true);
         }
         try
         {
             credentials = new Credentials("user1", "pass");
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             e.printStackTrace();
         }
@@ -213,7 +213,7 @@ public class ProxyTester
             assertTrue(true);
             proxy.userRegister(new Credentials("mel", "blanc"));
             assertTrue(true);
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             fail("Registration failed");
         }

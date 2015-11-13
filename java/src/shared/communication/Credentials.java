@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import com.google.gson.*;
 import server.facade.AbstractServerFacade;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.definitions.exceptions.SignInException;
 
 /**
@@ -25,7 +26,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         {
             this.username = new Username("user");
             this.password = new Password("password");
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
             e.printStackTrace();
         }
@@ -35,9 +36,9 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
      * Creates credentials with the given username and password.
      * @param username the username.
      * @param password the password.
-     * @throws SignInException if either the username or password are invalid.
+     * @throws InvalidCredentialsException if either the username or password are invalid.
      */
-    public Credentials(String username, String password) throws SignInException
+    public Credentials(String username, String password) throws InvalidCredentialsException
     {
         this();
         setUsername(username);
@@ -57,7 +58,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         {
             this.setUsername(credentialsObject.getAsJsonPrimitive("username").getAsString());
         }
-        catch (SignInException e)
+        catch (InvalidCredentialsException e)
         {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -69,7 +70,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         return username.getUsername();
     }
 
-    public void setUsername(String username) throws SignInException
+    public void setUsername(String username) throws InvalidCredentialsException
     {
         this.username.setUsername(username);
     }
@@ -79,7 +80,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         return password;
     }
 
-    public void setPassword(String password) throws SignInException
+    public void setPassword(String password) throws InvalidCredentialsException
     {
         this.password.setPassword(password);
     }
@@ -154,8 +155,10 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         {
             AbstractServerFacade.getInstance().signInUser(this);
             return "SUCCESS";
-        } catch (SignInException e)
+        } catch (InvalidCredentialsException e)
         {
+            return e.getMessage();
+        } catch (SignInException e) {
             return e.getMessage();
         }
     }

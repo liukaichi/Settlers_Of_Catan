@@ -8,7 +8,7 @@ import shared.communication.moveCommands.*;
 import shared.definitions.AIType;
 import shared.definitions.exceptions.AddAIException;
 import shared.definitions.exceptions.GameQueryException;
-import shared.definitions.exceptions.SignInException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.model.ClientModel;
 
 import java.io.*;
@@ -129,7 +129,7 @@ public class ServerProxy implements IProxy
     }
 
     @Override
-    public PlayerInfo userLogin(Credentials credentials) throws SignInException
+    public PlayerInfo userLogin(Credentials credentials) throws InvalidCredentialsException
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
         String request = gson.toJson(credentials);
@@ -137,7 +137,7 @@ public class ServerProxy implements IProxy
         LOGGER.log(Level.INFO, "User Login Response:" + response);
         if (response == null)
         {
-            throw new SignInException("Login response returned null");
+            throw new InvalidCredentialsException("Login response returned null");
         }
         try
         {
@@ -146,12 +146,12 @@ public class ServerProxy implements IProxy
         catch (UnsupportedEncodingException e)
         {
             LOGGER.log(Level.SEVERE, "Can't set client player from cookie", e);
-            throw new SignInException("Can't set client player from cookie", e);
+            throw new InvalidCredentialsException("Can't set client player from cookie", e);
         }
     }
 
     @Override
-    public PlayerInfo userRegister(Credentials credentials) throws SignInException
+    public PlayerInfo userRegister(Credentials credentials) throws InvalidCredentialsException
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(Credentials.class, credentials).create();
         String request = gson.toJson(credentials);
@@ -159,7 +159,7 @@ public class ServerProxy implements IProxy
         LOGGER.log(Level.INFO, "User Register Response:" + response);
         if (response == null)
         {
-            throw new SignInException("Register response returned null");
+            throw new InvalidCredentialsException("Register response returned null");
         }
         try
         {
@@ -167,7 +167,7 @@ public class ServerProxy implements IProxy
         }
         catch (UnsupportedEncodingException e)
         {
-            throw new SignInException("Can't set client player from cookie");
+            throw new InvalidCredentialsException("Can't set client player from cookie");
         }
     }
 

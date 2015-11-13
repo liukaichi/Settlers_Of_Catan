@@ -2,7 +2,7 @@ package client.proxy;
 
 import client.data.PlayerInfo;
 import shared.communication.Credentials;
-import shared.definitions.exceptions.SignInException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 
 /**
  * All operations that have to do with users as well as server utility methods
@@ -42,7 +42,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       If the passed"in (username, password) pair is not valid, or the
      *       operation fails for any other reason, The server returns an HTTP
      *       400 error response, and the body contains an error message.
-     * @throws SignInException
+     * @throws InvalidCredentialsException
      *         if the login fails.
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
@@ -51,7 +51,7 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      * @return the info the player set in the cookie.
      */
     // Or just Username/Password. We should discuss this, probably.
-    PlayerInfo userLogin(Credentials credentials) throws SignInException;
+    PlayerInfo userLogin(Credentials credentials) throws InvalidCredentialsException;
 
     /**
      * Logs into the server and sets the user's HTTP cookie. <br>
@@ -83,12 +83,12 @@ public interface IProxyNonMoveAPI extends IProxyGameCommands
      *       If there is already an existing user with the specified name, or
      *       the operation fails for any other reason, the server returns an
      *       HTTP 400 error response, and the body contains an error message.
-     * @throws SignInException
+     * @throws InvalidCredentialsException
      *         if the login/registration fails.
      * @see <a href=
      *      "https://students.cs.byu.edu/~cs340ta/fall2015/group_project/Cookies.pdf">
      *      How the Catan Server Uses HTTP Cookies</a>
      * @return the info the player set in the cookie.
      */
-    PlayerInfo userRegister(Credentials credentials) throws SignInException;
+    PlayerInfo userRegister(Credentials credentials) throws InvalidCredentialsException;
 }

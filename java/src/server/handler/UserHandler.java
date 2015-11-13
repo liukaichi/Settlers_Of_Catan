@@ -1,18 +1,19 @@
 package server.handler;
 
 import com.google.gson.JsonStreamParser;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.facade.AbstractServerFacade;
 import server.facade.MockServerFacade;
+import server.facade.ServerFacade;
+import server.manager.User;
 import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
-import java.net.CookieManager;
-import java.net.HttpCookie;
-import java.net.HttpURLConnection;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,9 +35,14 @@ public class UserHandler implements HttpHandler
     {
         LOGGER.entering(this.getClass().getCanonicalName(), "handle");
         try {
-            //Handling cookie
-            String cookie =  httpExchange.getRequestHeaders().getFirst("Cookie");
-            //Handling input Request
+            URI uri = httpExchange.getRequestURI();
+            String commandString = uri.getPath().split("/")[2];
+
+            // instantiate CookieManager
+            CookieManager manager = new CookieManager();
+            CookieHandler.setDefault(manager);
+            CookieStore cookieJar = manager.getCookieStore();
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder builder = new StringBuilder();
             String json;
@@ -45,53 +51,38 @@ public class UserHandler implements HttpHandler
                 builder.append(json);
             }
             String request = builder.toString();
+            System.out.print(request);
+            Credentials creds = new Credentials(request);
 
-            String commandString = httpExchange.getRequestURI().getPath().split("/")[2]; //TODO get the class name from the context
-            Credentials creds;
+            User user = null;
+
             if(commandString.equalsIgnoreCase("login"))
             {
-                creds = new Credentials(request);
-                facade.signInUser(creds);
+                user = facade.signInUser(creds);
             }
             else if(commandString.equalsIgnoreCase("register"))
             {
-                creds = new Credentials(request);
-                facade.registerUser(creds);
-                HashMap<String, List<String>> cookieHeaders = new HashMap<String, List<String>>();
-                ArrayList<String> cookieLines = new ArrayList<>();
-                cookieLines.add("catan.user="+creds.getUsername()); //TODO we need to get userId
-                cookieHeaders.put("Set-cookie",cookieLines);
-                CookieManager cMan = new CookieManager();
-                cMan.put(httpExchange.getRequestURI(),cookieHeaders);
-                httpExchange.getResponseHeaders().set("Set-cookie",cMan.getCookieStore().getCookies().get(0).toString());
+                user = facade.registerUser(creds);
             }
-            /*
-            to help know how to build cookie
-    private void parseCookie(String cookieHeader)
-    {
-        HttpCookie httpCookie = HttpCookie.parse(cookieHeader).get(0);
-        String cookie = httpCookie.toString();
-        if (cookie.contains("catan.user"))
-        {
-            this.catanUserCookie = cookie.substring(cookie.indexOf("=") + 1);
-        }
-        else if (cookie.contains("catan.game"))
-        {
-            this.catanGameCookie = cookie.substring(cookie.indexOf("=") + 1);
-        }
-    }
 
-             */
-            //Set cookie
-            httpExchange.getResponseHeaders().set("Set-cookie", cookie);
-            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-            //Handling response to request
-            //String result = command.execute(-1);
-            OutputStream responseBody = httpExchange.getResponseBody();
-            ObjectOutput out = new ObjectOutputStream(responseBody);
-            //out.writeObject(result);
-            out.close();
-            responseBody.close();
+            // create cookie
+            HttpCookie cookie = new HttpCookie("catan.user", user.toString());
+
+            // add cookie to CookieStore
+            cookieJar.add(uri, cookie);
+
+            // set cookie
+            Headers respHeaders = httpExchange.getResponseHeaders();
+            respHeaders.set("Set-cookie", cookie.getValue() + ";Path=/");
+            respHeaders.set("Content-Type", "application/json");
+
+            // send response
+            String result = user.toString();
+            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, result.length());
+            OutputStream os = httpExchange.getResponseBody();
+
+            os.write(result.getBytes());
+            os.close();
 
         }
         catch(Exception e)

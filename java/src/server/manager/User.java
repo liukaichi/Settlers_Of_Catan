@@ -1,6 +1,7 @@
 package server.manager;
 
 import shared.communication.Credentials;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.definitions.exceptions.SignInException;
 
 /**
@@ -35,8 +36,7 @@ public class User
         {
             this.credentials = new Credentials(username, password);
             this.playerID = id;
-        } catch (SignInException e)
-        {
+        } catch (InvalidCredentialsException e) {
             e.printStackTrace();
         }
 
@@ -49,5 +49,12 @@ public class User
     public void assignUserID(int id)
     {
         this.playerID = id;
+    }
+
+    public String toString(){
+        return String.format("{\"name\":\"%s\", \"password\": \"%s\", \"playerID\": %d}",
+                credentials.getUsername(),
+                credentials.getPassword(),
+                playerID);
     }
 }

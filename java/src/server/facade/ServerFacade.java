@@ -1,15 +1,19 @@
 package server.facade;
 
+import server.manager.User;
+import server.manager.UserManager;
 import client.data.PlayerInfo;
 import server.ServerModel;
-import server.manager.User;
 import shared.communication.*;
 import shared.definitions.*;
-import shared.definitions.exceptions.SignInException;
+import shared.definitions.exceptions.ExistingRegistrationException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.TradeOffer;
+
+import java.util.List;
 
 /**
  * The actual Facade that interacts for real.
@@ -17,6 +21,11 @@ import shared.model.player.TradeOffer;
 public class ServerFacade extends AbstractServerFacade
 {
     private ServerModel model;
+    private UserManager userMan;
+    public ServerFacade(){
+        userMan = UserManager.getInstance();
+    }
+    
 
     @Override public ClientModel getGameState(int version)
     {
@@ -141,13 +150,13 @@ public class ServerFacade extends AbstractServerFacade
         return null;
     }
 
-    @Override public User signInUser(Credentials credentials) throws SignInException
+    @Override public User signInUser(Credentials credentials) throws InvalidCredentialsException
     {
-        throw new SignInException("Failed to login - bad username or password.");
+        throw new InvalidCredentialsException("Failed to login - bad username or password.");
     }
-
-    @Override public User registerUser(Credentials credentials) throws SignInException
-    {
-        throw new SignInException("Failed to register - someone already has that username.");
+    
+    @Override public User registerUser(Credentials credentials) throws InvalidCredentialsException, ExistingRegistrationException {
+        return userMan.userRegister(credentials);
+//        throw new InvalidCredentialsException("Failed to register - someone already has that username.");
     }
 }

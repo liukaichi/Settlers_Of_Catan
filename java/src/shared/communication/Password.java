@@ -1,6 +1,7 @@
 package shared.communication;
 
-import shared.definitions.exceptions.SignInException;
+import shared.definitions.StructureType;
+import shared.definitions.exceptions.InvalidCredentialsException;
 
 import java.util.HashSet;
 
@@ -18,9 +19,9 @@ public class Password
     /**
      * Creates a password from te given string.
      * @param password the password.
-     * @throws SignInException if the password is not a valid password.
+     * @throws InvalidCredentialsException if the password is not a valid password.
      */
-    public Password(String password) throws SignInException
+    public Password(String password) throws InvalidCredentialsException
     {
         buildAllowedPasswords();
         setPassword(password);
@@ -50,20 +51,36 @@ public class Password
     /**
      * Inputs a password to be validated and added.
      * @param password the password.
-     * @throws SignInException if the password is invalid.
+     * @throws InvalidCredentialsException if the password is invalid.
      */
-    public void setPassword(String password) throws SignInException
+    public void setPassword(String password) throws InvalidCredentialsException
     {
         validatePassword(password);
         this.password = password;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Password password1 = (Password) o;
+
+        return !(password != null ? !password.equals(password1.password) : password1.password != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return password != null ? password.hashCode() : 0;
+    }
+
     /**
      * Validates a password.
      * @param password the password to validate.
-     * @throws SignInException if the password is invalid.
+     * @throws InvalidCredentialsException if the password is invalid.
      */
-    private void validatePassword(String password) throws SignInException
+    private void validatePassword(String password) throws InvalidCredentialsException
     {
         if (allowedInvalidPasswords.contains(password))
             return;
@@ -72,19 +89,22 @@ public class Password
 
         if (password.length() < MIN_PASS_LENGTH)
         {
-            throw new SignInException("Password must be at least 5 characters.");
+            throw new InvalidCredentialsException("Password must be at least 5 characters.");
         } else
         {
             for (char c : password.toCharArray())
             {
                 if (!Character.isLetterOrDigit(c) && c != '_' && c != '-')
                 {
-                    throw new SignInException("Password consists of invalid characters.");
+                    throw new InvalidCredentialsException("Password consists of invalid characters.");
                 }
             }
         }
     }
 
+    public String toString(){
+        return password;
+    }
     /**
      * Returns the password as plain text.
      * 

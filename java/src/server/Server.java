@@ -3,6 +3,7 @@ package server;
 import com.sun.net.httpserver.HttpServer;
 import server.facade.AbstractServerFacade;
 import server.facade.MockServerFacade;
+import server.facade.ServerFacade;
 import server.handler.*;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class Server {
 
         switch(args.length) {
             case 0:
-                AbstractServerFacade.setFacade(new MockServerFacade());
+                AbstractServerFacade.setFacade(new ServerFacade());
                 Server.run();
                 break;
         }

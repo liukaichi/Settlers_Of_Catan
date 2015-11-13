@@ -4,7 +4,7 @@ import client.base.*;
 import client.facade.ClientFacade;
 import client.misc.IMessageView;
 import shared.communication.Credentials;
-import shared.definitions.exceptions.SignInException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 
 /**
  * Implementation for the login controller
@@ -94,7 +94,7 @@ public class LoginController extends Controller implements ILoginController
             getLoginView().closeModal();
             loginAction.execute();
         }
-        catch (SignInException e)
+        catch (InvalidCredentialsException e)
         {
             getMessageView().setTitle("Error Yo!");
             getMessageView().setMessage("Yo Homie, that login shiz there aint gonna work!");
@@ -119,7 +119,7 @@ public class LoginController extends Controller implements ILoginController
             String passwordRepeat = getLoginView().getRegisterPasswordRepeat();
             if (!password.equals(passwordRepeat))
             {
-                throw new SignInException("Passwords must match");
+                throw new InvalidCredentialsException("Passwords must match");
             }
             Credentials credentials = new Credentials(username, password);
             ClientFacade.getInstance().registerUser(credentials);
@@ -127,7 +127,7 @@ public class LoginController extends Controller implements ILoginController
             getLoginView().closeModal();
             loginAction.execute();
         }
-        catch (SignInException e)
+        catch (InvalidCredentialsException e)
         {
             getMessageView().setTitle("Invalid Sign-In Homes!");
             getMessageView().setMessage("Yo, Homie, " + e.getMessage());

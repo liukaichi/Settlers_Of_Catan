@@ -8,6 +8,8 @@ import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
 import shared.communication.ListGamesResponse;
 import shared.definitions.AIType;
+import shared.definitions.exceptions.ExistingRegistrationException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.definitions.exceptions.SignInException;
 
 import java.util.ArrayList;
@@ -47,28 +49,28 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
         _instance = facade;
     }
 
-    @Override public User signInUser(Credentials credentials) throws SignInException
-    {
-        User user = UserManager.getInstance().userLogin(credentials);
-        if (user == null)
-        {
-            throw new SignInException("Failed to login - bad username or password.");
-        } else
-        {
-            return user;
-        }
+    @Override public User signInUser(Credentials credentials) throws SignInException, InvalidCredentialsException {
+//        User user = UserManager.getInstance().userLogin(credentials);
+//        if (user == null)
+//        {
+//            throw new SignInException("Failed to login - bad username or password.");
+//        } else
+//        {
+//            return user;
+//        }
+        return null;
     }
 
-    @Override public User registerUser(Credentials credentials) throws SignInException
-    {
-        User user = UserManager.getInstance().userRegister(credentials);
-        if (user == null)
-        {
-            throw new SignInException("Failed to register - someone already has that username.");
-        } else
-        {
-            return user;
-        }
+    @Override public User registerUser(Credentials credentials) throws SignInException, InvalidCredentialsException, ExistingRegistrationException {
+//        User user = UserManager.getInstance().userRegister(credentials);
+//        if (user == null)
+//        {
+//            throw new SignInException("Failed to register - someone already has that username.");
+//        } else
+//        {
+//            return user;
+//        }
+        return null;
     }
 
     @Override public ListAIResponse listAI()

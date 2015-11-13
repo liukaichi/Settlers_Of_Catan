@@ -1,8 +1,13 @@
 package server.manager;
 
 import shared.communication.Credentials;
+import shared.definitions.exceptions.ExistingRegistrationException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +20,8 @@ import java.util.Map;
 public class UserManager
 {
     private static UserManager _instance;
+    private HashMap<Integer, Credentials> creds;
+    private List<User> users;
 
     private Map<Integer, User> idToUser;
 
@@ -22,9 +29,17 @@ public class UserManager
 
     private UserManager()
     {
-        addDefaultUsers();
+        creds = new HashMap<>();
+        users = new ArrayList<>();
+//        addDefaultUsers();
+        try{
+            creds.put(1, new Credentials("Sam", "sam"));
+        }
+        catch (InvalidCredentialsException e){
+            e.printStackTrace();
+        }
     }
-
+    
     private void addDefaultUsers()
     {
         idToUser = new HashMap<>();
@@ -59,7 +74,7 @@ public class UserManager
      */
     public User userLogin(Credentials credentials)
     {
-        return new User("Sam", "sam", 0);
+        return null;
     }
 
     /**
@@ -67,9 +82,19 @@ public class UserManager
      * @param credentials the registration credentials.
      * @return the User that will be used to set the client's cookie.
      */
-    public User userRegister(Credentials credentials)
+    public User userRegister(Credentials credentials) throws ExistingRegistrationException
     {
-        return new User("Sam", "sam", 0);
+
+        if(creds.containsValue(credentials)){
+            throw new ExistingRegistrationException();
+        }
+        else {
+            // playerID is the new size of the creds
+            creds.put(creds.size() + 1, credentials);
+            User user  = new User(credentials, creds.size());
+            users.add(user);
+            return user;
+        }
     }
 
     /**
@@ -79,7 +104,14 @@ public class UserManager
      */
     public User getUser(int id)
     {
+        if(id < users.size()){
+            return users.get(id - 1);
+        }
         //TODO this could throw an exception instead of returning null.
         return null;
+    }
+
+    public List<User> getUserList(){
+        return users;
     }
 }
