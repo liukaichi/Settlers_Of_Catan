@@ -69,6 +69,6 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().sendChat(getPlayerIndex(), this.content).toString();
+        return AbstractServerFacade.getInstance().sendChat(gameID, getPlayerIndex(), this.content).toString();
     }
 }

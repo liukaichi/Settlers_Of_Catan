@@ -70,6 +70,7 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
     @Override public String execute(int gameID)
 
     {
-        return AbstractServerFacade.getInstance().yearOfPlenty(getPlayerIndex(), this.resource1, this.resource2).toString();
+        return AbstractServerFacade.getInstance().yearOfPlenty(gameID, getPlayerIndex(), this.resource1, this.resource2)
+                .toString();
     }
 }

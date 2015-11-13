@@ -65,6 +65,6 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().rollNumber(getPlayerIndex(), this.number).toString();
+        return AbstractServerFacade.getInstance().rollNumber(gameID, getPlayerIndex(), this.number).toString();
     }
 }

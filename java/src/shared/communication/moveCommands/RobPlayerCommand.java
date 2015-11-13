@@ -83,7 +83,8 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().robPlayer(getPlayerIndex(), this.victimIndex, this.location).toString();
+        return AbstractServerFacade.getInstance().robPlayer(gameID, getPlayerIndex(), this.victimIndex, this.location)
+                .toString();
     }
 
     public PlayerIndex getVictimIndex() {

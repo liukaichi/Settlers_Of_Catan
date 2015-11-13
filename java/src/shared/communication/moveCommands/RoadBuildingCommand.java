@@ -69,6 +69,7 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().roadBuilding(getPlayerIndex(), this.spot1, this.spot1).toString();
+        return AbstractServerFacade.getInstance().roadBuilding(gameID, getPlayerIndex(), this.spot1, this.spot1)
+                .toString();
     }
 }
