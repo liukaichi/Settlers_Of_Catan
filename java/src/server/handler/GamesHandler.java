@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class GamesHandler implements HttpHandler
 {
-    AbstractServerFacade facade = new MockServerFacade();
+    AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
     /**
      * Parses the HTTP Context for the command and executes it

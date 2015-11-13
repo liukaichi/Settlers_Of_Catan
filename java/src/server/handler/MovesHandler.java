@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class MovesHandler implements HttpHandler
 {
-    AbstractServerFacade facade = new MockServerFacade();
+    AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
 
     /**

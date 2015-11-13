@@ -35,7 +35,7 @@ public class MockServerFacade extends AbstractServerFacade
 {
 	private final static String modelFilePath = "sample/mockServerJsons/";
 
-    private MockServerFacade()
+    public MockServerFacade()
     {
 
     }
