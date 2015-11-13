@@ -127,9 +127,8 @@ public interface IMovesFacade
      * @return the updated ClientModel
      * @param playerIndex the index of the player building the city.
      * @param vertexLocation the location of the city.
-     * @param isFree whether or not to charge the player.
      */
-    ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree);
+    ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation);
     /**
      * Update model with a new TradeOffer object
      * Player to be traded is asked to trade.

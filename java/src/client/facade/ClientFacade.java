@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  * else will call the Facade to do actions. This class contains all available
  * communications with the model.
  */
-public class ClientFacade implements IUserFacade
+public class ClientFacade
 {
     private static ClientFacade _instance = null;
     private ClientModel model;
@@ -428,7 +428,7 @@ public class ClientFacade implements IUserFacade
      * Signs in the player with the given credentials.
      *
      * @param credentials the player's credentials
-     * @throws SignInException
+     * @throws SignInException if the user doesn't exist in the server.
      */
 
     public void signInUser(Credentials credentials) throws SignInException
@@ -447,7 +447,7 @@ public class ClientFacade implements IUserFacade
      * Registers the user with the given credentials.
      *
      * @param credentials the credentials of the user registering.
-     * @throws SignInException
+     * @throws SignInException if the registration fails (username already taken).
      */
 
     public void registerUser(Credentials credentials) throws SignInException

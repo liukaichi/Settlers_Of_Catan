@@ -20,7 +20,8 @@ import shared.model.player.TradeOffer;
 import java.util.Set;
 
 /**
- * Created by cstaheli on 11/5/2015.
+ * Representation of the Model that is cached by the server. This has additional "do" methods that the client model
+ * does not have.
  */
 public class ServerModel extends ClientModel implements IMovesFacade
 {
@@ -105,12 +106,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
         }
         return this;
     }
-    /**
-     * Builds a settlement for the given player at the given location.
-     * @param playerIndex the player who is building the settlement.
-     * @param location the location where the settlement is being built.
-     * @param isFree whether or not to charge the player.
-     */
+
     @Override public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree)
     {
         try
@@ -126,19 +122,13 @@ public class ServerModel extends ClientModel implements IMovesFacade
         }
         return this;
     }
-    /**
-     * Builds a city for the given player at the given location.
-     * @param playerIndex the player who is building the city.
-     * @param location the location where the city is being built.
-     * @param isFree whether or not to charge the player.
-     */
-    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation location, boolean isFree)
+
+    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation location)
     {
         try
         {
             Player player = getGameInfo().getPlayers().get(playerIndex.getIndex());
-            if(isFree)
-                player.buyCity();
+            player.buyCity();
             getMap().placeCity(playerIndex, location);
             this.setChanged();
         }

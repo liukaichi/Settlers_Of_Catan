@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class UserHandler implements HttpHandler
 {
-    AbstractServerFacade facade = new MockServerFacade();
+    private AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
     /**
      * Parses the HTTP Context for the command and executes it.
@@ -86,10 +86,10 @@ public class UserHandler implements HttpHandler
             httpExchange.getResponseHeaders().set("Set-cookie", cookie);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             //Handling response to request
-            String result = command.execute(-1);
+            //String result = command.execute(-1);
             OutputStream responseBody = httpExchange.getResponseBody();
             ObjectOutput out = new ObjectOutputStream(responseBody);
-            out.writeObject(result);
+            //out.writeObject(result);
             out.close();
             responseBody.close();
 

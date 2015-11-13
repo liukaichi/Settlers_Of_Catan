@@ -24,6 +24,12 @@ public class ListGamesResponse
         games = new ArrayList<>();
     }
 
+    public ListGamesResponse(List<GameInfo> games)
+    {
+        this();
+        this.games = games;
+    }
+
     /**
      * Instantiate a ListGamesResponse from JSON with the injected facade
      * @param json JSON of the ListGamesResponse
@@ -55,6 +61,11 @@ public class ListGamesResponse
             games.add(gameInfo);
         }
 
+    }
+
+    public void addGame(GameInfo info)
+    {
+        this.games.add(info);
     }
 
     public List<GameInfo> getGames()

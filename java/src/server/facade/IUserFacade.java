@@ -1,5 +1,6 @@
 package server.facade;
 
+import server.manager.User;
 import shared.communication.Credentials;
 import shared.definitions.exceptions.SignInException;
 
@@ -12,13 +13,15 @@ public interface IUserFacade
      * Signs in the player with the given credentials
      * @param credentials the credentials that the person is using to sign in.
      * @throws SignInException if the login fails
+     * @return the user that results from signing in. This is used to create the client's catan.user cookie.
      */
-    void signInUser(Credentials credentials) throws SignInException;
+    User signInUser(Credentials credentials) throws SignInException;
 
     /**
      * Registers a new player with the given credentials
      * @param credentials the credentials that the person is using to register.
      * @throws SignInException if registration fails.
+     * @return the user that results from signing in. This is used to create the client's catan.user cookie.
      */
-    void registerUser(Credentials credentials) throws SignInException;
+    User registerUser(Credentials credentials) throws SignInException;
 }

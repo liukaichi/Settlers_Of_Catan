@@ -10,8 +10,7 @@ import com.google.gson.*;
 import shared.definitions.AIType;
 
 /**
- * @author cstaheli
- *
+ * Represents the Json that is returned from the server using the context "games/list".
  */
 public class ListAIResponse
 {
@@ -23,6 +22,16 @@ public class ListAIResponse
     public ListAIResponse()
     {
         aiTypes = new ArrayList<>();
+    }
+
+    /**
+     * Constructs the ListAIResponse from a list of AIType
+     * @param types the types of AI to add.
+     */
+    public ListAIResponse(List<AIType> types)
+    {
+        this();
+        this.aiTypes = types;
     }
 
     /**

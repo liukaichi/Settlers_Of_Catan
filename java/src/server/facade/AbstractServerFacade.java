@@ -2,7 +2,7 @@ package server.facade;
 
 /**
  * The AbstractServerFacade allows singleton access to a facade. This can be the real ServerFacade, or the
- * MockServerFacade for testing purposes.
+ * MockServerFacade for testing purposes. This allows for Dependency injection.
  * @see ServerFacade
  * @see MockServerFacade
  */
@@ -25,7 +25,8 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
     }
 
     /**
-     * Allows a MockFacade to be used in place of a real one. This can be useful for testing purposes.
+     * Allows a MockFacade to be used in place of a real one. This allows for Dependency injection.
+     * This can be useful for testing purposes.
      */
 
     public static void setFacade(AbstractServerFacade facade)

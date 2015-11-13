@@ -11,20 +11,22 @@ public interface IGameFacade
 {
     /**
      * Retrieves the current GameplayState
-     * @return the current GameplayState
-     * @param version
+     * @return the current GameplayState. If the version in the server's game is older than the version supplied,
+     * null is returned to indicate that nothing has changed.
+     * @param version the version to check the game against.
      */
     ClientModel getGameState(int version);
 
     /**
-     * Add an AI player to the game
-     * @param aiType
+     * Add an AI player to the game specified by the id.
+     * @param aiType the type of AI to the game.
+     * @param gameID the id of the game to add the AI to.
      */
-    void addAI(AIType aiType);
+    void addAI(AIType aiType, int gameID);
 
     /**
-     * List the types of AI available
-     * @return ListAIResponse
+     * List the types of AI available.
+     * @return ListAIResponse holds the list of AI's that are available.
      */
     ListAIResponse listAI();
 }

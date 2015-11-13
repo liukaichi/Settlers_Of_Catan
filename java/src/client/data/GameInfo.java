@@ -20,9 +20,12 @@ public class GameInfo
 {
     private int id;
     private String title;
-    private List<Player> players; // Use list of player.
-    // private List<player> players;
+    private List<Player> players;
 
+    /**
+     * Creates an empty GameInfo with nothing in it.
+     * @see shared.model.ClientModel#ClientModel(String) Used by ClientModel(Json) to hold a list of players.
+     */
     public GameInfo()
     {
         setId(-1);
@@ -30,6 +33,11 @@ public class GameInfo
         players = new ArrayList<Player>();
     }
 
+    /**
+     * Instantiates a GameInfo with the given id, title, and an empty list of players.
+     * @param id the id of the game.
+     * @param title the title of the game.
+     */
     public GameInfo(int id, String title)
     {
         this();
@@ -57,6 +65,10 @@ public class GameInfo
         this.title = title;
     }
 
+    /**
+     * Adds a player to the list of players in the game.
+     * @param newPlayer the player to add.
+     */
     public void addPlayer(Player newPlayer)
     {
         if (players.size() < 4)
@@ -65,6 +77,10 @@ public class GameInfo
         }
     }
 
+    /**
+     * Adds a player to the list of players in the game.
+     * @param newPlayer the player to add.
+     */
     public void addPlayer(PlayerInfo newPlayer)
     {
         if (players.size() < 4)
@@ -116,6 +132,11 @@ public class GameInfo
         return 0;
     }
 
+    /**
+     * Gets the color of the player with the given index.
+     * @param index the index of the player.
+     * @return the color of the player with the given index.
+     */
     public CatanColor getPlayerColor(PlayerIndex index)
     {
         return players.get(index.getIndex()).getPlayerColor();
