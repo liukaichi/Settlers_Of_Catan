@@ -40,6 +40,7 @@ public class MovesHandler implements HttpHandler
             in.close();
             requestBody.close();
 
+
             //Handling response to request
             httpExchange.getResponseHeaders().set("Set-cookie", cookie);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
