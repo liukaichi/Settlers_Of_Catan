@@ -55,39 +55,42 @@ public class ServerFacade extends AbstractServerFacade
         return null;
     }
 
-    @Override public ClientModel sendChat(PlayerIndex sender, String content)
+    @Override public ClientModel sendChat(int gameID, PlayerIndex sender, String content)
     {
         return null;
     }
 
-    @Override public ClientModel rollNumber(PlayerIndex playerIndex, int number)
+    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number)
     {
         return null;
     }
 
-    @Override public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
+    @Override public ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim,
+            HexLocation location)
     {
         return null;
     }
 
-    @Override public ClientModel finishTurn(PlayerIndex playerIndex)
+    @Override public ClientModel finishTurn(int gameID, PlayerIndex playerIndex)
     {
     	model.finishTurn(); 
         return null;
     }
 
-    @Override public ClientModel buyDevCard(PlayerIndex playerIndex)
+    @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex)
     {
         //model.buyDevCard();
         return null;
     }
 
-    @Override public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
+    @Override public ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1,
+            ResourceType resource2)
     {
         return null;
     }
 
-    @Override public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+    @Override public ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1,
+            EdgeLocation spot2)
     {
         return null;
     }

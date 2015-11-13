@@ -25,7 +25,7 @@ import java.util.Set;
  */
 public class ServerModel extends ClientModel implements IMovesFacade
 {
-    @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
+    @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
     {
         this.getChat().addMessageLine(getPlayerName(playerIndex.getIndex()), content);
         this.setChanged();
@@ -36,7 +36,9 @@ public class ServerModel extends ClientModel implements IMovesFacade
         PlayerInfo player = getGameInfo().getPlayerInfos().get(index);
         return player.getName();
     }
-    @Override public ClientModel rollNumber(PlayerIndex playerIndex, int number) //TODO refactor to reduce dependency
+
+    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex,
+            int number) //TODO refactor to reduce dependency
     {
         for(Hex hex : getMap().getHexesByNumber(number))
         {
@@ -48,25 +50,33 @@ public class ServerModel extends ClientModel implements IMovesFacade
         this.setChanged();
         return this;
     }
-    @Override public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
+
+    @Override public ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim,
+            HexLocation location)
     {
         return null;
     }
-    @Override public ClientModel finishTurn(PlayerIndex playerIndex)
+
+    @Override public ClientModel finishTurn(int gameID, PlayerIndex playerIndex)
     {
         this.getTurnTracker().finishTurn(playerIndex);
         this.setChanged();
         return this;
     }
-    @Override public ClientModel buyDevCard(PlayerIndex playerIndex)
+
+    @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex)
     {
         return null;
     }
-    @Override public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
+
+    @Override public ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1,
+            ResourceType resource2)
     {
         return null;
     }
-    @Override public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+
+    @Override public ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1,
+            EdgeLocation spot2)
     {
         try
         {

@@ -102,23 +102,24 @@ public class MockServerFacade extends AbstractServerFacade
         return new CreateGameResponse(newGameID, name);
     }
 
-    @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
+    @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
     {
 
         return getModelFromFile("sendChat");
     }
 
-    @Override public ClientModel rollNumber(PlayerIndex playerIndex, int number)
+    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number)
     {
         return getModelFromFile("basicGame");
     }
 
-    @Override public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
+    @Override public ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim,
+            HexLocation location)
     {
         return getModelFromFile("basicGame");
     }
 
-    @Override public ClientModel finishTurn(PlayerIndex playerIndex)
+    @Override public ClientModel finishTurn(int gameID, PlayerIndex playerIndex)
     {
         ClientModel model = new ClientModel();
         switch (playerIndex)
@@ -139,17 +140,19 @@ public class MockServerFacade extends AbstractServerFacade
         return model;
     }
 
-    @Override public ClientModel buyDevCard(PlayerIndex playerIndex)
+    @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex)
     {
         return getModelFromFile("playersHaveCards");
     }
 
-    @Override public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
+    @Override public ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1,
+            ResourceType resource2)
     {
         return getModelFromFile("playersHaveCards");
     }
 
-    @Override public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+    @Override public ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1,
+            EdgeLocation spot2)
     {
         return getModelFromFile("playersHaveCards");
     }
