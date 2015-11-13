@@ -161,7 +161,6 @@ public class PlayerInfo
 
     @Override
     public String toString() {
-        JsonParser parser = new JsonParser();
         JsonObject gameInfo = new JsonObject();
 
         //add all gameInfo properties

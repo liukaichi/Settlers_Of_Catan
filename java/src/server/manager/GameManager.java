@@ -87,7 +87,7 @@ public class GameManager
      */
     public List<GameInfo> listGames()
     {
-        return new ArrayList<GameInfo>(gameInfoMap.values());
+        return new ArrayList<>(gameInfoMap.values());
     }
 
     /**
