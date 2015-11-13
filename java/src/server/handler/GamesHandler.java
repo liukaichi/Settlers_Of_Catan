@@ -52,7 +52,8 @@ public class GamesHandler implements HttpHandler
             String commandString = uri.getPath().split("/")[2];
             InputStream requestBody = httpExchange.getRequestBody();
             //TODO get the class name from the context
-            String className = Character.toUpperCase(commandString.charAt(0))
+            String className = "shared.communication."
+                    + Character.toUpperCase(commandString.charAt(0))
                     + commandString.substring(1)
                     + "GameRequest";
             Constructor c = Class.forName(className).getConstructor(String.class);
@@ -77,6 +78,9 @@ public class GamesHandler implements HttpHandler
         catch(Exception e)
         {
             e.printStackTrace();
+            response = e.getLocalizedMessage();
+            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
+
         }
         finally {
             OutputStream os = httpExchange.getResponseBody();
