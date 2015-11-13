@@ -1,9 +1,8 @@
 package shared.communication;
 
-import com.google.gson.*;
-
 import client.data.GameInfo;
-import server.facade.AbstractServerFacade;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Class that creates the game response
@@ -48,4 +47,11 @@ public class CreateGameResponse
         return gameInfo.getId();
     }
 
+    @Override public String toString()
+    {
+        JsonObject response = new JsonObject();
+        response.addProperty("title", gameInfo.getTitle());
+        response.addProperty("id", gameInfo.getId());
+        return response.toString();
+    }
 }

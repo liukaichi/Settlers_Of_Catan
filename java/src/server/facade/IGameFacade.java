@@ -5,7 +5,8 @@ import shared.definitions.AIType;
 import shared.model.ClientModel;
 
 /**
- * Created by cstaheli on 11/4/2015.
+ * The interface for the actions available when the player has joined a game. Includes getting the game state, as well
+ * as adding AI's to the game.
  */
 public interface IGameFacade
 {
