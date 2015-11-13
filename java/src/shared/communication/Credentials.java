@@ -14,7 +14,7 @@ import shared.definitions.exceptions.SignInException;
  * @author amandafisher
  *
  */
-public class Credentials implements JsonSerializer<Credentials>, CatanCommand
+public class Credentials implements JsonSerializer<Credentials>
 {
 
     private Username username;
@@ -150,17 +150,4 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         return credentials;
     }
 
-    @Override public String execute(int gameID)
-    {
-        try
-        {
-            AbstractServerFacade.getInstance().signInUser(this);
-            return "SUCCESS";
-        } catch (InvalidCredentialsException e)
-        {
-            return e.getMessage();
-        } catch (SignInException e) {
-            return e.getMessage();
-        }
-    }
 }
