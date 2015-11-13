@@ -10,7 +10,9 @@ import java.util.List;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.utils.BufferedReaderParser;
+import server.manager.GameManager;
 import server.manager.User;
+import server.manager.UserManager;
 import shared.communication.CreateGameResponse;
 import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
@@ -33,32 +35,38 @@ import shared.model.player.TradeOffer;
  */
 public class MockServerFacade extends AbstractServerFacade
 {
-	private final static String modelFilePath = "sample/mockServerJsons/";
+    private final static String modelFilePath = "sample/mockServerJsons/";
+
+    private List<PlayerInfo> aiPlayers, validUsers;
+
+    private List<GameInfo> games;
+
+    private GameInfo joinedGame;
 
     public MockServerFacade()
     {
+        games = new ArrayList<>();
 
     }
 
-	private ClientModel getModelFromFile(String fileName)
-	{
-		File file = new File(modelFilePath + fileName + "");
-   	 	BufferedReader reader;
-   	 	ClientModel model = new ClientModel();
-		try 
-		{
-			reader = new BufferedReader(new FileReader(file));
-			String json = BufferedReaderParser.parse(reader);
-	         model = new ClientModel(json);
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
-        
-		return model;
-	}
-	
+    private ClientModel getModelFromFile(String fileName)
+    {
+        File file = new File(modelFilePath + fileName + "");
+        BufferedReader reader;
+        ClientModel model = new ClientModel();
+        try
+        {
+            reader = new BufferedReader(new FileReader(file));
+            String json = BufferedReaderParser.parse(reader);
+            model = new ClientModel(json);
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        return model;
+    }
+
     @Override public ClientModel getGameState(int version)
     {
         if (version == -1 || version < 50)
@@ -74,44 +82,40 @@ public class MockServerFacade extends AbstractServerFacade
 
     @Override public void addAI(AIType aiType, int gameID)
     {
-        //TODO how on earth do we have AI's?
-    }
-
-    @Override public ListAIResponse listAI()
-    {
-        List<AIType> types = new ArrayList<>();
-        types.add(AIType.LARGEST_ARMY);
-        return new ListAIResponse(types);
-    }
-
-    @Override public ListGamesResponse listGames()
-    {
-        List<GameInfo> games = new ArrayList<>();
-        for (int i = 1; i < 3; ++i)
+        int joinedGameSize = joinedGame.getPlayers().size();
+        if (joinedGameSize < 4)
         {
-            GameInfo game = new GameInfo(i, "Game_" + i);
-            game.addPlayer(new PlayerInfo(0,"Cache", CatanColor.YELLOW));
-            game.addPlayer(new PlayerInfo(1,"Amanda", CatanColor.BLUE));
-            game.addPlayer(new PlayerInfo(2,"Justin", CatanColor.ORANGE));
-            game.addPlayer(new PlayerInfo(3,"David", CatanColor.BROWN));
-            games.add(game);
+            this.joinedGame.addPlayer(aiPlayers.get(joinedGameSize - 1));
         }
-        return new ListGamesResponse(games);
     }
 
-    @Override public void joinGame(int playerID, int gameID, CatanColor color)
-    {
 
+    @Override public void joinGame(PlayerInfo player, int gameID, CatanColor color)
+    {
+        for (GameInfo game : games)
+        {
+            if (game.getId() == gameID)
+            {
+                if (game.getPlayers().size() < 4)
+                {
+                    game.addPlayer(player);
+                    this.joinedGame = game;
+                }
+            }
+        }
     }
 
-    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts,
+            String name)
     {
-        return null;
+        int newGameID = games.size() + 1;
+        games.add(new GameInfo(newGameID, name));
+        return new CreateGameResponse(newGameID, name);
     }
 
     @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
-    	
+
         return getModelFromFile("sendChat");
     }
 
@@ -210,16 +214,5 @@ public class MockServerFacade extends AbstractServerFacade
     @Override public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
     {
         return getModelFromFile("basicGameTurn");
-    }
-
-    @Override public User signInUser(Credentials credentials) throws SignInException
-    {
-
-        throw new SignInException("Failed to login - bad username or password.");
-    }
-
-    @Override public User registerUser(Credentials credentials) throws SignInException
-    {
-        throw new SignInException( "Failed to register - someone already has that username.");
     }
 }

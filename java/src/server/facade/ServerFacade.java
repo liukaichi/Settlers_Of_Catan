@@ -1,5 +1,6 @@
 package server.facade;
 
+import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.User;
 import shared.communication.*;
@@ -38,7 +39,7 @@ public class ServerFacade extends AbstractServerFacade
     }
 
     @Override
-    public void joinGame(int playerID, int gameID, CatanColor color)
+    public void joinGame(PlayerInfo player, int gameID, CatanColor color)
     {
 
     }

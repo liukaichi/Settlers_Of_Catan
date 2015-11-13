@@ -1,12 +1,16 @@
 package server.manager;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import server.ServerModel;
 import server.facade.*;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Manager that holds all of the games. Various options that the facades take use this manager. Uses the singleton
@@ -19,9 +23,36 @@ public class GameManager
 {
     private static GameManager _instance = null;
 
+    private Map<Integer, GameInfo> gameInfoMap;
+
+    private List<PlayerInfo> aiPlayers;
+
     private GameManager()
     {
+        gameInfoMap = new HashMap<>();
+        this.addDefaultAIs();
+        this.addDefaultGames();
+    }
 
+    private void addDefaultAIs()
+    {
+        aiPlayers = new ArrayList<>();
+        aiPlayers.add(new PlayerInfo(-2, "Miguel", CatanColor.PUCE));
+        aiPlayers.add(new PlayerInfo(-3, "Quinn", CatanColor.PURPLE));
+        aiPlayers.add(new PlayerInfo(-4, "Hannah", CatanColor.RED));
+    }
+
+    private void addDefaultGames()
+    {
+        for (int i = 1; i < 3; ++i)
+        {
+            GameInfo game = new GameInfo(i, "Game_" + i);
+            game.addPlayer(new PlayerInfo(0, "Cache", CatanColor.YELLOW));
+            game.addPlayer(new PlayerInfo(1, "Amanda", CatanColor.BLUE));
+            game.addPlayer(new PlayerInfo(2, "Justin", CatanColor.ORANGE));
+            game.addPlayer(new PlayerInfo(3, "David", CatanColor.BROWN));
+            gameInfoMap.put(i, game);
+        }
     }
 
     /**
@@ -44,7 +75,8 @@ public class GameManager
      */
     public ServerModel getGame(int gameID)
     {
-        return null;
+        gameInfoMap.get(gameID); //TODO this should be used somehow.
+        return new ServerModel();
     }
 
     /**
@@ -53,18 +85,27 @@ public class GameManager
      */
     public List<GameInfo> listGames()
     {
-        return null;
+        return (List<GameInfo>) gameInfoMap.values();
     }
 
     /**
      * Places the player with the given id in the game specified with the given color.
-     * @param playerID the id of the player joining the game.
+     * @param player the id of the player joining the game.
      * @param gameID the id of the game to join.
      * @param color the color that the player is joining the game with.
      */
-    public void joinGame(int playerID, int gameID, CatanColor color)
+    public void joinGame(PlayerInfo player, int gameID, CatanColor color)
     {
-
+        for (GameInfo game: gameInfoMap.values())
+        {
+            if (game.getId() == gameID)
+            {
+                if (game.getPlayers().size() < 4)
+                {
+                    game.addPlayer(player);
+                }
+            }
+        }
     }
 
     /**
@@ -74,7 +115,12 @@ public class GameManager
      */
     public void addAI(int gameID, AIType type)
     {
-
+        GameInfo game = gameInfoMap.get(gameID);
+        int joinedGameSize = game.getPlayers().size();
+        if (joinedGameSize < 4)
+        {
+            game.addPlayer(aiPlayers.get(joinedGameSize - 1));
+        }
     }
 
     /**
@@ -83,6 +129,8 @@ public class GameManager
      */
     public List<AIType> listAI()
     {
-        return null;
+        List<AIType> types = new ArrayList<>();
+        types.add(AIType.LARGEST_ARMY);
+        return types;
     }
 }

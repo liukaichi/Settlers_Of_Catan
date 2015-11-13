@@ -1,6 +1,7 @@
 package server.manager;
 
 import shared.communication.Credentials;
+import shared.definitions.exceptions.SignInException;
 
 /**
  * Contains the server-side representation of a user.
@@ -22,8 +23,23 @@ public class User
      */
     public User(Credentials credentials, int playerID)
     {
+        this();
         this.credentials = credentials;
         this.playerID = playerID;
+    }
+
+    public User(String username, String password, int id)
+    {
+        this();
+        try
+        {
+            this.credentials = new Credentials(username, password);
+            this.playerID = id;
+        } catch (SignInException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     /**
