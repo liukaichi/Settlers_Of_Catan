@@ -358,6 +358,11 @@ public class ClientFacade
         poller = new Poller(proxy);
     }
 
+    public boolean pollerStarted()
+    {
+        return poller != null ? true : false;
+    }
+
     /**
      * Adds an AI to the game.
      *
