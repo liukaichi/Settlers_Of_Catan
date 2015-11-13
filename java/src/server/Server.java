@@ -6,9 +6,7 @@ import server.facade.MockServerFacade;
 import server.facade.ServerFacade;
 import server.handler.*;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.rmi.ServerException;
 import java.util.logging.Logger;
 
 /**
@@ -18,16 +16,18 @@ public class Server {
 
     private static final int MAX_WAITING_CONNECTIONS = 10;
     private HttpServer server;
-    private static int SERVER_PORT_NUMBER = 8081;
+    private static int DEFAULT_PORT_NUMBER = 8081;
+    private static String DEFAULT_HOST_NAME = "localhost";
     private Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
     public Server(int server) {
-        SERVER_PORT_NUMBER = server;
+        DEFAULT_PORT_NUMBER = server;
     }
 
     public Server(String address, int port) {
         try {
-            server = HttpServer.create(new InetSocketAddress(address, 8081), 0);
+            //TODO: Change this to accept the port instead of the DEFAULT PORT NUMBER
+            server = HttpServer.create(new InetSocketAddress(address, DEFAULT_PORT_NUMBER), 0);
             server.createContext("/game/", new GameHandler());
             server.createContext("/games/", new GamesHandler());
             server.createContext("/moves/", new MovesHandler());
@@ -45,7 +45,7 @@ public class Server {
     }
     public static Server run()
     {
-        Server server = new Server("localhost",8081);
+        Server server = new Server(DEFAULT_HOST_NAME, DEFAULT_PORT_NUMBER);
         server.start();
         return server;
     }

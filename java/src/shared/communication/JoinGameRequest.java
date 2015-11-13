@@ -2,6 +2,7 @@ package shared.communication;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import server.facade.AbstractServerFacade;
 import shared.definitions.CatanColor;
 
 /**

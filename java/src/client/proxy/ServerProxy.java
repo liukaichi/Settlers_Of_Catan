@@ -135,7 +135,7 @@ public class ServerProxy implements IProxy
         String request = gson.toJson(credentials);
         String response = doPost(USER_LOGIN, request);
         LOGGER.log(Level.INFO, "User Login Response:" + response);
-        if (response == null)
+        if (response == null || response.matches(""))
         {
             throw new InvalidCredentialsException("Login response returned null");
         }

@@ -57,6 +57,7 @@ public class Credentials implements JsonSerializer<Credentials>, CatanCommand
         try
         {
             this.setUsername(credentialsObject.getAsJsonPrimitive("username").getAsString());
+            this.setPassword(credentialsObject.getAsJsonPrimitive("password").getAsString());
         }
         catch (InvalidCredentialsException e)
         {

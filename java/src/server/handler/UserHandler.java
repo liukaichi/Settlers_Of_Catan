@@ -71,19 +71,27 @@ public class UserHandler implements HttpHandler
             // set cookie
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Set-cookie", cookie.getValue() + ";Path=/");
-            respHeaders.set("Content-Type", "application/json");
+            respHeaders.set("Content-Type", "text");
 
             // send response
-            String result = user.toString();
+            String result = "Success";
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, result.length());
             OutputStream os = httpExchange.getResponseBody();
 
             os.write(result.getBytes());
             os.close();
-
+//{"Access-Control-Allow-Origin":"*","Date":"Fri, 13 Nov 2015 09:14:22 GMT","Content-Length":"7","Content-Type":"text/html"}
         } catch (Exception e)
         {
             e.printStackTrace();
+            Headers respHeaders = httpExchange.getResponseHeaders();
+            respHeaders.set("Content-Type", "text");
+            String result = e.getLocalizedMessage();
+            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, result.length());
+            OutputStream os = httpExchange.getResponseBody();
+
+            os.write(result.getBytes());
+            os.close();
         } finally
         {
             if (httpExchange != null)
