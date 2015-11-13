@@ -1,10 +1,11 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.*;
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
+
+import java.lang.reflect.Type;
 
 /**
  * sendChat command object.
@@ -68,6 +69,6 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().sendChat(getPlayerIndex(), this.content).toString();
     }
 }

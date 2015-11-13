@@ -80,90 +80,100 @@ public interface IMovesFacade
      * Decrease the robber player's PlayerBank with the robber resource.
      * Display robbed message.
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player playing the card.
      * @param victimIndex the index of the player being robbed.
      * @param location the new location of the robber.
      */
-    ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location);
+    ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location);
     /**
      * Updates the client player's PlayerBank with the resources gained.
      * Updates all other players' PlayerBank with the resources lost.
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player playing the card.
      * @param resource the resource the card is being played for.
      */
-    ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource);
+    ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource);
    
     /**
      * Increase the client player's Victory Points by 1
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player playing the card.
      */
-    ClientModel monument(PlayerIndex playerIndex);
+    ClientModel monument(int gameID, PlayerIndex playerIndex);
     /**
      * Increase the client player's road of AmountType.BUILT by 1.
      * Decrease the client player's road of AmountType.AVAILABLE by 1.
      * Update the map with a new road.
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player building the road.
      * @param roadLocation the location where the road is being built.
      * @param isFree if the road is free (only in setup state).
      */
-    ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean isFree);
+    ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation roadLocation, boolean isFree);
     /**
      * Increase the client player's settlement of AmountType.BUILT by 1.
      * Decrease the client player's settlement of AmountType.AVAILABLE by 1.
      * Update the map with a new settlement
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player building the settlement.
      * @param vertexLocation the location of the settlement.
      * @param isFree if the settlement is free (only in setup state).
      */
-    ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree);
+    ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree);
     /**
      * Increase the client player's city of AmountType.BUILT by 1.
      * Decrease the client player's city of AmountType.AVAILABLE by 1.
      * Update the map with a new city
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player building the city.
      * @param vertexLocation the location of the city.
      */
-    ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation);
+    ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation);
     /**
      * Update model with a new TradeOffer object
      * Player to be traded is asked to trade.
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player offering the trade.
      * @param offer the offer being sent.
      * @param receiver the intended receiver of the trade.
      */
-    ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver);
+    ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver);
     /**
      * Update model and remove the TradeOffer
      * Update both players' PlayerBank depending on whether
      * the TradeOffer is accepted or not.
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player sending the command.
      * @param willAccept whether or not the player will accept the trade offered them.
      */
-    ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept);
+    ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept);
     /**
      * The client player trades with the game bank based on the
      * trade ratio that is available to the player
      * @return the updated ClientModel
+     * @param gameID
      * @param playerIndex the index of the player doing the trade.
      * @param ratio the ratio at which to trade.
      * @param inputResource the resource the player is trading away.
      * @param outputResource the resource the player is trading for.
      */
-    ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
-            ResourceType outputResource);
+    ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
+                              ResourceType outputResource);
     /**
      * The client player discards a number of each resource.
      * The resources are returned to the game bank
      * @return the updated CLientModel
+     * @param gameID
      * @param playerIndex the index of the player discarding.
      * @param discardedCards the cards discarded.
      */
-    ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards);
+    ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards);
 }

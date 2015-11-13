@@ -64,6 +64,6 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().acceptTrade(this.getPlayerIndex(), willAccept).toString();
+        return AbstractServerFacade.getInstance().acceptTrade(-1, this.getPlayerIndex(), willAccept).toString();
     }
 }

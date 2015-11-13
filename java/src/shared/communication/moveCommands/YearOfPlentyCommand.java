@@ -1,10 +1,15 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+
+import java.lang.reflect.Type;
 
 /**
  * Year_of_Plenty command object.
@@ -63,7 +68,8 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
      * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
+
     {
-        return null;
+        return AbstractServerFacade.getInstance().yearOfPlenty(getPlayerIndex(), this.resource1, this.resource2).toString();
     }
 }

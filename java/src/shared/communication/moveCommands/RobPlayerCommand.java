@@ -1,11 +1,15 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.*;
-
-import shared.definitions.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import server.facade.AbstractServerFacade;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 import shared.locations.HexLocation;
+
+import java.lang.reflect.Type;
 
 /**
  * robPlayer command object
@@ -79,6 +83,18 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().robPlayer(getPlayerIndex(), this.victimIndex, this.location).toString();
+    }
+
+    public PlayerIndex getVictimIndex() {
+        return victimIndex;
+    }
+
+    public void setVictimIndex(PlayerIndex victimIndex) {
+        this.victimIndex = victimIndex;
+    }
+
+    public HexLocation getLocation() {
+        return location;
     }
 }

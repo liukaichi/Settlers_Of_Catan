@@ -1,12 +1,15 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.*;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 import shared.locations.EdgeLocation;
+
+import java.lang.reflect.Type;
 
 /**
  * Road_Building command object.
@@ -66,6 +69,6 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().roadBuilding(getPlayerIndex(), this.spot1, this.spot1).toString();
     }
 }

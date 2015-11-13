@@ -3,10 +3,15 @@ package server.facade;
 import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.User;
-import shared.communication.*;
+import shared.communication.CreateGameResponse;
+import shared.communication.Credentials;
+import shared.communication.ListAIResponse;
+import shared.communication.ListGamesResponse;
 import shared.definitions.*;
 import shared.definitions.exceptions.SignInException;
-import shared.locations.*;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.TradeOffer;
@@ -87,56 +92,66 @@ public class ServerFacade extends AbstractServerFacade
         return null;
     }
 
-    @Override public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
+    @Override
+    public ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
         return null;
     }
 
-    @Override public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource)
+    @Override
+    public ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource)
     {
         return null;
     }
 
-    @Override public ClientModel monument(PlayerIndex playerIndex)
+    @Override
+    public ClientModel monument(int gameID, PlayerIndex playerIndex)
     {
         return null;
     }
 
-    @Override public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
+    @Override
+    public ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
     {
         model.buildRoad(null, null);
         return null;
     }
 
-    @Override public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean free)
+    @Override
+    public ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation, boolean free)
     {
         //model.buildSettlement(null, null);
         return null;
     }
 
-    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation)
+    @Override
+    public ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation)
     {
         //model.buildCity(null, null);
         return null;
     }
 
-    @Override public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
+    @Override
+    public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
         return null;
     }
 
-    @Override public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept)
+    @Override
+    public ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept)
     {
         return null;
     }
 
-    @Override public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
-            ResourceType outputResource)
+    @Override
+    public ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
+                                     ResourceType outputResource)
     {
         return null;
     }
 
-    @Override public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
+    @Override
+    public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
     }

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileUtils { //http://stackoverflow.com/questions/4246360/java­loading­binary­files
+public class FileUtils { //http://stackoverflow.com/questions/4246360/java-loading-binary-files
     private static final Map<String, String> MIMETYPES = makeMimeTypes();
 
     private static Map<String, String> makeMimeTypes() {

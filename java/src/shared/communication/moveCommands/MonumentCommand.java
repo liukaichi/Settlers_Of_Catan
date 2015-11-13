@@ -1,7 +1,7 @@
 package shared.communication.moveCommands;
 
-import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 
 /**
  * Monument command object.
