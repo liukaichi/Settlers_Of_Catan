@@ -6,15 +6,16 @@ package shared.definitions.exceptions;
  * @author dtaylor
  *
  */
-public class InvalidCredentialsException extends CatanException
+public class InvalidCredentialsException extends SignInException
 {
 
     /**
-     * @param string
+     * Creates a new exception with a message.
+     * @param message the message to be thrown.
      */
-    public InvalidCredentialsException(String string)
+    public InvalidCredentialsException(String message)
     {
-        super(string);
+        super(message);
     }
 
     /**
@@ -26,12 +27,13 @@ public class InvalidCredentialsException extends CatanException
     }
 
     /**
-     * @param string
-     * @param e
+     * Creates a new exception with a message and stack trace/exception.
+     * @param message the message to be thrown.
+     * @param e the stack trace/exception.
      */
-    public InvalidCredentialsException(String string, Exception e)
+    public InvalidCredentialsException(String message, Exception e)
     {
-        super(string, e);
+        super(message, e);
     }
 
 }

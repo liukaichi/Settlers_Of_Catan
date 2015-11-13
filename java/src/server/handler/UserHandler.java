@@ -1,22 +1,17 @@
 package server.handler;
 
-import com.google.gson.JsonStreamParser;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.facade.AbstractServerFacade;
-import server.facade.MockServerFacade;
-import server.facade.ServerFacade;
 import server.manager.User;
-import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 
-import java.io.*;
-import java.lang.reflect.Constructor;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -24,17 +19,20 @@ import java.util.logging.Logger;
  */
 public class UserHandler implements HttpHandler
 {
-    private AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
+    private AbstractServerFacade facade = AbstractServerFacade.getInstance();
+
     /**
      * Parses the HTTP Context for the command and executes it.
+     *
      * @param httpExchange the httpExchange to parse.
      * @throws IOException
      */
     @Override public void handle(HttpExchange httpExchange) throws IOException
     {
         LOGGER.entering(this.getClass().getCanonicalName(), "handle");
-        try {
+        try
+        {
             URI uri = httpExchange.getRequestURI();
             String commandString = uri.getPath().split("/")[2];
 
@@ -56,17 +54,16 @@ public class UserHandler implements HttpHandler
 
             User user = null;
 
-            if(commandString.equalsIgnoreCase("login"))
+            if (commandString.equalsIgnoreCase("login"))
             {
                 user = facade.signInUser(creds);
-            }
-            else if(commandString.equalsIgnoreCase("register"))
+            } else if (commandString.equalsIgnoreCase("register"))
             {
                 user = facade.registerUser(creds);
             }
 
             // create cookie
-            HttpCookie cookie = new HttpCookie("catan.user", user.toString());
+            HttpCookie cookie = new HttpCookie("catan.user", user.toString()); //TODO this might cause a NullPointer.
 
             // add cookie to CookieStore
             cookieJar.add(uri, cookie);
@@ -84,13 +81,13 @@ public class UserHandler implements HttpHandler
             os.write(result.getBytes());
             os.close();
 
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
-        }
-        finally {
-            if (httpExchange != null) {
+        } finally
+        {
+            if (httpExchange != null)
+            {
                 httpExchange.close();
             }
             LOGGER.exiting(this.getClass().getCanonicalName(), "handle");

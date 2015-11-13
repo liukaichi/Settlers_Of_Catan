@@ -1,27 +1,12 @@
 package server.facade;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-
-import client.data.GameInfo;
-import client.data.PlayerInfo;
 import client.utils.BufferedReaderParser;
-import server.manager.GameManager;
 import server.manager.User;
-import server.manager.UserManager;
-import shared.communication.CreateGameResponse;
 import shared.communication.Credentials;
-import shared.communication.ListAIResponse;
-import shared.communication.ListGamesResponse;
-import shared.definitions.AIType;
-import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
+import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -30,6 +15,11 @@ import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.TradeOffer;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 /**
  * Uses dependency injection to allow this object to be used as the facade for testing purposes.
  */
@@ -37,15 +27,8 @@ public class MockServerFacade extends AbstractServerFacade
 {
     private final static String modelFilePath = "sample/mockServerJsons/";
 
-    private List<PlayerInfo> aiPlayers, validUsers;
-
-    private List<GameInfo> games;
-
-    private GameInfo joinedGame;
-
     public MockServerFacade()
     {
-        games = new ArrayList<>();
 
     }
 
@@ -78,39 +61,6 @@ public class MockServerFacade extends AbstractServerFacade
         else
             return null;
 
-    }
-
-    @Override public void addAI(AIType aiType, int gameID)
-    {
-        int joinedGameSize = joinedGame.getPlayers().size();
-        if (joinedGameSize < 4)
-        {
-            this.joinedGame.addPlayer(aiPlayers.get(joinedGameSize - 1));
-        }
-    }
-
-
-    @Override public void joinGame(PlayerInfo player, int gameID, CatanColor color)
-    {
-        for (GameInfo game : games)
-        {
-            if (game.getId() == gameID)
-            {
-                if (game.getPlayers().size() < 4)
-                {
-                    game.addPlayer(player);
-                    this.joinedGame = game;
-                }
-            }
-        }
-    }
-
-    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts,
-            String name)
-    {
-        int newGameID = games.size() + 1;
-        games.add(new GameInfo(newGameID, name));
-        return new CreateGameResponse(newGameID, name);
     }
 
     @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
@@ -221,8 +171,9 @@ public class MockServerFacade extends AbstractServerFacade
         throw new InvalidCredentialsException("Failed to login - bad username or password.");
     }
 
-    @Override public User registerUser(Credentials credentials) throws InvalidCredentialsException
+    @Override public User registerUser(Credentials credentials)
+            throws InvalidCredentialsException, ExistingRegistrationException
     {
-        throw new InvalidCredentialsException( "Failed to register - someone already has that username.");
+        throw new ExistingRegistrationException("Failed to register - someone already has that username.");
     }
 }

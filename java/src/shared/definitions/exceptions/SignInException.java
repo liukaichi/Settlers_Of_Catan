@@ -1,10 +1,22 @@
 package shared.definitions.exceptions;
 
 /**
- * Created by Adrian on 11/12/2015.
+ * Thrown whenever a Sign-in problem happens.
  */
-public class SignInException extends CatanException {
-    public SignInException(String s) {
+public class SignInException extends CatanException
+{
+    public SignInException(String s)
+    {
         super(s);
+    }
+
+    public SignInException()
+    {
+        super();
+    }
+
+    public SignInException(String string, Exception e)
+    {
+        super(string, e);
     }
 }

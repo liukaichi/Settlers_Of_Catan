@@ -1,12 +1,17 @@
 package shared.definitions.exceptions;
 
 /**
- * Created by Adrian on 11/12/2015.
+ * Exception thrown when registration is invalid because the person has already registered.
  */
-public class ExistingRegistrationException extends CatanException {
-    public ExistingRegistrationException(String string){
+public class ExistingRegistrationException extends SignInException
+{
+    public ExistingRegistrationException(String string)
+    {
         super(string);
     }
 
-    public ExistingRegistrationException(){}
+    public ExistingRegistrationException()
+    {
+        super();
+    }
 }

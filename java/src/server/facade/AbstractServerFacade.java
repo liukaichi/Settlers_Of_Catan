@@ -1,23 +1,25 @@
 package server.facade;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import server.manager.GameManager;
 import server.manager.User;
 import server.manager.UserManager;
+import shared.communication.CreateGameResponse;
 import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
 import shared.communication.ListGamesResponse;
 import shared.definitions.AIType;
+import shared.definitions.CatanColor;
 import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.InvalidCredentialsException;
-import shared.definitions.exceptions.SignInException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The AbstractServerFacade allows singleton access to a facade. This can be the real ServerFacade, or the
  * MockServerFacade for testing purposes. This allows for Dependency injection.
+ *
  * @see ServerFacade
  * @see MockServerFacade
  */
@@ -27,6 +29,7 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
 
     /**
      * Singleton pattern to return either the real ServerFacade, or the MockServerFacade
+     *
      * @return the singleton instance.
      */
     public static AbstractServerFacade getInstance()
@@ -49,28 +52,15 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
         _instance = facade;
     }
 
-    @Override public User signInUser(Credentials credentials) throws SignInException, InvalidCredentialsException {
-//        User user = UserManager.getInstance().userLogin(credentials);
-//        if (user == null)
-//        {
-//            throw new SignInException("Failed to login - bad username or password.");
-//        } else
-//        {
-//            return user;
-//        }
-        return null;
+    @Override public User signInUser(Credentials credentials) throws InvalidCredentialsException
+    {
+        return UserManager.getInstance().userLogin(credentials);
     }
 
-    @Override public User registerUser(Credentials credentials) throws SignInException, InvalidCredentialsException, ExistingRegistrationException {
-//        User user = UserManager.getInstance().userRegister(credentials);
-//        if (user == null)
-//        {
-//            throw new SignInException("Failed to register - someone already has that username.");
-//        } else
-//        {
-//            return user;
-//        }
-        return null;
+    @Override public User registerUser(Credentials credentials)
+            throws InvalidCredentialsException, ExistingRegistrationException
+    {
+        return UserManager.getInstance().userRegister(credentials);
     }
 
     @Override public ListAIResponse listAI()
@@ -79,10 +69,26 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
         return new ListAIResponse(types);
     }
 
+    @Override public void addAI(AIType aiType, int gameID)
+    {
+        GameManager.getInstance().addAI(aiType, gameID);
+    }
 
     @Override public ListGamesResponse listGames()
     {
         List<GameInfo> games = GameManager.getInstance().listGames();
         return new ListGamesResponse(games);
+    }
+
+    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts,
+            String name)
+    {
+        return new CreateGameResponse(
+                GameManager.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name));
+    }
+
+    @Override public void joinGame(PlayerInfo player, int gameID, CatanColor color)
+    {
+        GameManager.getInstance().joinGame(player, gameID, color);
     }
 }

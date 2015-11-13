@@ -1,19 +1,16 @@
 package server.facade;
 
-import server.manager.User;
-import server.manager.UserManager;
-import client.data.PlayerInfo;
 import server.ServerModel;
-import shared.communication.*;
-import shared.definitions.*;
-import shared.definitions.exceptions.ExistingRegistrationException;
-import shared.definitions.exceptions.InvalidCredentialsException;
-import shared.locations.*;
+import server.manager.UserManager;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+import shared.definitions.TradeRatio;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.bank.resource.Resources;
 import shared.model.player.TradeOffer;
-
-import java.util.List;
 
 /**
  * The actual Facade that interacts for real.
@@ -25,36 +22,8 @@ public class ServerFacade extends AbstractServerFacade
     public ServerFacade(){
         userMan = UserManager.getInstance();
     }
-    
 
     @Override public ClientModel getGameState(int version)
-    {
-        return null;
-    }
-
-    @Override public void addAI(AIType aiType, int gameID)
-    {
-
-    }
-
-    @Override public ListAIResponse listAI()
-    {
-        return null;
-    }
-
-    @Override public ListGamesResponse listGames()
-    {
-        return null;
-    }
-
-    @Override
-    public void joinGame(PlayerInfo player, int gameID, CatanColor color)
-    {
-
-    }
-
-    @Override
-    public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
         return null;
     }
@@ -148,15 +117,5 @@ public class ServerFacade extends AbstractServerFacade
     @Override public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
-    }
-
-    @Override public User signInUser(Credentials credentials) throws InvalidCredentialsException
-    {
-        throw new InvalidCredentialsException("Failed to login - bad username or password.");
-    }
-    
-    @Override public User registerUser(Credentials credentials) throws InvalidCredentialsException, ExistingRegistrationException {
-        return userMan.userRegister(credentials);
-//        throw new InvalidCredentialsException("Failed to register - someone already has that username.");
     }
 }

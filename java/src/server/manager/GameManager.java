@@ -3,7 +3,8 @@ package server.manager;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import server.ServerModel;
-import server.facade.*;
+import server.facade.IGameFacade;
+import server.facade.IGamesFacade;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 
@@ -34,6 +35,20 @@ public class GameManager
         this.addDefaultGames();
     }
 
+    /**
+     * Singleton pattern for GameManager.
+     *
+     * @return a singleton instance for GameManager.
+     */
+    public static GameManager getInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new GameManager();
+        }
+        return _instance;
+    }
+
     private void addDefaultAIs()
     {
         aiPlayers = new ArrayList<>();
@@ -53,19 +68,6 @@ public class GameManager
             game.addPlayer(new PlayerInfo(3, "David", CatanColor.BROWN));
             gameInfoMap.put(i, game);
         }
-    }
-
-    /**
-     * Singleton pattern for GameManager.
-     * @return a singleton instance for GameManager.
-     */
-    public static GameManager getInstance()
-    {
-        if (_instance == null)
-        {
-            _instance = new GameManager();
-        }
-        return _instance;
     }
 
     /**
@@ -113,7 +115,7 @@ public class GameManager
      * @param gameID the id of the game to add the AI to.
      * @param type the type of AI to add to the game.
      */
-    public void addAI(int gameID, AIType type)
+    public void addAI(AIType type, int gameID)
     {
         GameInfo game = gameInfoMap.get(gameID);
         int joinedGameSize = game.getPlayers().size();
@@ -132,5 +134,13 @@ public class GameManager
         List<AIType> types = new ArrayList<>();
         types.add(AIType.LARGEST_ARMY);
         return types;
+    }
+
+    public GameInfo createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+    {
+        int version = gameInfoMap.size() + 1;
+        GameInfo createdGame = new GameInfo(version, name);
+        gameInfoMap.put(version, createdGame);
+        return createdGame;
     }
 }
