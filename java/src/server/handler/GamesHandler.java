@@ -70,7 +70,7 @@ public class GamesHandler implements HttpHandler
                 cookieJar.add(uri, new HttpCookie("catan.game", gameId));
                 response = "Success";
             }
-            else if(commandString.equalsIgnoreCase("list")){
+            else {
                 response = newCommand.execute(-1);
             }
 
@@ -79,8 +79,6 @@ public class GamesHandler implements HttpHandler
             respHeaders.set("Content-Type", "text");
 
             // create cookie
-
-
             String cookie = "";
             for(HttpCookie co : cookieJar.getCookies()){
                 cookie += co.getValue() + ";";
