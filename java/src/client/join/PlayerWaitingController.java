@@ -1,6 +1,5 @@
 package client.join;
 
-import client.base.Controller;
 import client.base.ObserverController;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
@@ -20,26 +19,27 @@ import java.util.logging.Logger;
  */
 public class PlayerWaitingController extends ObserverController implements IPlayerWaitingController
 {
+    private final static Logger LOGGER = Logger.getLogger(PlayerWaitingController.class.getName());
     private ClientFacade facade;
     private ClientModel model;
-    private ActionListener action = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
+    private ActionListener action = new ActionListener()
+    {
+        @Override public void actionPerformed(ActionEvent e)
+        {
             LOGGER.info("PLAYER WAITING CONTROLLER TIMER UPDATING");
-            if(model.getGameInfo().getPlayerInfos().size() != 4)
+            if (model.getGameInfo().getPlayerInfos().size() != 4)
             {
-                model = facade.getGameState(-1); /// should make it not update the model if players less than 4 and state = -1
+                model = facade
+                        .getGameState(-1); /// should make it not update the model if players less than 4 and state = -1
                 updateView();
-            }
-            else
+            } else
             {
                 LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPPING");
                 timer.stop();
             }
         }
     };
-    final private Timer timer = new Timer(3000,action);
-    private final static Logger LOGGER = Logger.getLogger(PlayerWaitingController.class.getName());
+    final private Timer timer = new Timer(3000, action);
 
     public PlayerWaitingController(IPlayerWaitingView view)
     {
@@ -73,7 +73,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
         List<PlayerInfo> players = game.getPlayerInfos();
         getView().setPlayers(players.toArray(new PlayerInfo[players.size()]));
         getView().setAIChoices(new String[] { AIType.LARGEST_ARMY.toString() });
-        if(getView().isModalShowing())
+        if (getView().isModalShowing())
             getView().closeModal();
         getView().showModal();
         if (players.size() == 4)
@@ -81,7 +81,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
             getView().closeModal();
             LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPPING");
             timer.stop();
-            if(!facade.pollerStarted())
+            if (!facade.pollerStarted())
             {
                 LOGGER.info("PLAYER WAITING CONTROLLER STARTING POLLER");
                 facade.startPoller();

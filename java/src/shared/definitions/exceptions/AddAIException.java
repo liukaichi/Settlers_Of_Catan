@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package shared.definitions.exceptions;
 
 /**
  * @author cstaheli
- *
  */
 public class AddAIException extends CatanException
 {
@@ -20,7 +19,7 @@ public class AddAIException extends CatanException
     }
 
     /**
-     * 
+     *
      */
     public AddAIException()
     {

@@ -7,17 +7,19 @@ package shared.communication;
  * For example, suppose that a context is moves/buildRoad. The MovesHandler will look at the last part of that,
  * capitalize the first letter, and append Command to it. Then, the handler would then only have to call
  * Class.forName(BuildRoadCommand).execute()
+ *
  * @see <a href="http://stackoverflow.com/questions/5658182/initializing-a-class-with-class-forname-and-which-have-a-constructor-which-tak">
- *     Using Constructors with Class.forName()</a>
+ * Using Constructors with Class.forName()</a>
  */
 public interface CatanCommand
 {
     /**
      * Executes a command on the server side. <br>
      * This is to be implemented in different ways depending on the type of command.
+     *
+     * @param gameID the ID of the game for which to execute the command.
      * @return the Json response for this command. Typically, this will be a serialized form of the ClientModel, but
      * some commands return some other response object.
-     * @param gameID the ID of the game for which to execute the command.
      * @see shared.model.ClientModel
      */
     String execute(int gameID);

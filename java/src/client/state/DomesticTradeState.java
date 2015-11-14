@@ -6,7 +6,6 @@ import client.domestic.DomesticTradeController;
 import client.domestic.IAcceptTradeOverlay;
 import client.domestic.IDomesticTradeOverlay;
 import client.facade.ClientFacade;
-import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.model.bank.resource.Resources;
@@ -31,12 +30,13 @@ public class DomesticTradeState extends GameplayState
 
     /**
      * Creates a new Domestic trade state with the given controller.
+     *
      * @param controller the controller.
      */
     public DomesticTradeState(ObserverController controller)
     {
         super(controller);
-        if(controller instanceof DomesticTradeController)
+        if (controller instanceof DomesticTradeController)
         {
             facade = ClientFacade.getInstance();
             control = ((DomesticTradeController) controller);
@@ -58,20 +58,19 @@ public class DomesticTradeState extends GameplayState
 
     private void updateAcceptView()
     {
-        if(controller instanceof DomesticTradeController)
+        if (controller instanceof DomesticTradeController)
         {
             accept.reset();
             offer = facade.getModel().getTradeOffer();
             Resources giveResources = new Resources();
-            for(ResourceType type : ResourceType.values())
+            for (ResourceType type : ResourceType.values())
             {
                 int value = offer.getOffer(type);
-                if(value > 0)
+                if (value > 0)
                 {
                     int getAmount = Math.abs(value);
                     accept.addGetResource(type, getAmount);
-                }
-                else if(value < 0)
+                } else if (value < 0)
                 {
                     int giveAmount = Math.abs(value);
                     accept.addGiveResource(type, giveAmount);
@@ -89,7 +88,7 @@ public class DomesticTradeState extends GameplayState
 
     private void updateTradeView()
     {
-        if(controller instanceof  DomesticTradeController)
+        if (controller instanceof DomesticTradeController)
         {
             if (offer == null)
             {
@@ -115,34 +114,31 @@ public class DomesticTradeState extends GameplayState
     @Override public void updateView()
     {
         super.updateView();
-        if(controller instanceof DomesticTradeController)
+        if (controller instanceof DomesticTradeController)
         {
             offer = facade.getModel().getTradeOffer();
-            DomesticTradeController control = ((DomesticTradeController)controller);
+            DomesticTradeController control = ((DomesticTradeController) controller);
             int currentPlayer = facade.getClientPlayer().getNormalizedPlayerIndex();
-            if(offer.getReceiver() == currentPlayer)
+            if (offer.getReceiver() == currentPlayer)
             {
-                if(!control.getAcceptOverlay().isModalShowing() && !accepted)
+                if (!control.getAcceptOverlay().isModalShowing() && !accepted)
                 {
                     updateAcceptView();
-                    if(accept.isModalShowing())
+                    if (accept.isModalShowing())
                         accept.closeModal();
                     accept.showModal();
-                }
-                else if(accepted)
+                } else if (accepted)
                 {
-                    if(accept.isModalShowing())
+                    if (accept.isModalShowing())
                         accept.closeModal();
                     control.getAcceptOverlay().closeModal();
                 }
-            }
-            else if(offer.getSender() == currentPlayer)
+            } else if (offer.getSender() == currentPlayer)
             {
-                if(!control.getWaitOverlay().isModalShowing())
+                if (!control.getWaitOverlay().isModalShowing())
                 {
                     control.getWaitOverlay().showModal();
-                }
-                else if(accepted)
+                } else if (accepted)
                 {
                     control.getWaitOverlay().closeModal();
                 }
@@ -155,14 +151,14 @@ public class DomesticTradeState extends GameplayState
     {
         int playerAmount = playerHand.getAmount(type);
         int offerAmount = offer.getOffer(type);
-        switch(offer.getResourceHand(type))
+        switch (offer.getResourceHand(type))
         {
         case send:
-            if(playerAmount - offerAmount > 0)
+            if (playerAmount - offerAmount > 0)
                 return true;
             break;
         case receive:
-            if(offerAmount > -19)
+            if (offerAmount > -19)
                 return true;
             break;
         }
@@ -172,14 +168,14 @@ public class DomesticTradeState extends GameplayState
     private boolean canDecrease(ResourceType type)
     {
         int offerAmount = offer.getOffer(type);
-        switch(offer.getResourceHand(type))
+        switch (offer.getResourceHand(type))
         {
         case send:
-            if(offerAmount > 0)
+            if (offerAmount > 0)
                 return true;
             break;
         case receive:
-            if(offerAmount < 0)
+            if (offerAmount < 0)
                 return true;
             break;
         }
@@ -196,28 +192,24 @@ public class DomesticTradeState extends GameplayState
         return offer.getResourceHand(type).equals(TradeOffer.Hand.receive);
     }
 
-
-    @Override
-    public void startTrade()
+    @Override public void startTrade()
     {
         updateTradeView();
-        if(trade.isModalShowing())
+        if (trade.isModalShowing())
             trade.closeModal();
         trade.showModal();
     }
 
-    @Override
-    public void cancelTrade()
+    @Override public void cancelTrade()
     {
-        if(trade.isModalShowing())
+        if (trade.isModalShowing())
             trade.closeModal();
         controller.setState(new PlayingState(controller));
     }
 
-    @Override
-    public void increaseAmount(ResourceType resource)
+    @Override public void increaseAmount(ResourceType resource)
     {
-        switch(offer.getResourceHand(resource))
+        switch (offer.getResourceHand(resource))
         {
         case receive:
             offer.subFromOffer(resource, 1);
@@ -229,10 +221,9 @@ public class DomesticTradeState extends GameplayState
         updateTradeView();
     }
 
-    @Override
-    public void decreaseAmount(ResourceType resource)
+    @Override public void decreaseAmount(ResourceType resource)
     {
-        switch(offer.getResourceHand(resource))
+        switch (offer.getResourceHand(resource))
         {
         case receive:
             offer.addToOffer(resource, 1);
@@ -244,29 +235,25 @@ public class DomesticTradeState extends GameplayState
         updateTradeView();
     }
 
-    @Override
-    public void unsetResource(ResourceType resource)
+    @Override public void unsetResource(ResourceType resource)
     {
         offer.setResourceHand(resource, TradeOffer.Hand.none);
         updateTradeView();
     }
 
-    @Override
-    public void setResourceToSend(ResourceType resource)
+    @Override public void setResourceToSend(ResourceType resource)
     {
         offer.setResourceHand(resource, TradeOffer.Hand.send);
         updateTradeView();
     }
 
-    @Override
-    public void setResourceToReceive(ResourceType resource)
+    @Override public void setResourceToReceive(ResourceType resource)
     {
         offer.setResourceHand(resource, TradeOffer.Hand.receive);
         updateTradeView();
     }
 
-    @Override
-    public void setPlayerToTradeWith(int playerIndex)
+    @Override public void setPlayerToTradeWith(int playerIndex)
     {
         offer.setReceiver(playerIndex);
         updateTradeView();
@@ -274,7 +261,7 @@ public class DomesticTradeState extends GameplayState
 
     @Override public void sendTradeOffer()
     {
-        if(trade.isModalShowing())
+        if (trade.isModalShowing())
             trade.closeModal();
         accepted = true;
         facade.sendTradeOffer(offer);
@@ -284,11 +271,10 @@ public class DomesticTradeState extends GameplayState
     {
         accepted = true;
         facade.acceptTrade(willAccept);
-        if(accept.isModalShowing())
+        if (accept.isModalShowing())
         {
             accept.closeModal();
         }
     }
-
 
 }

@@ -7,7 +7,7 @@ import client.proxy.IProxyPlayingCommands;
  * <br>
  * These values are also the same string that will be passed throught to the
  * server via Json.
- * 
+ *
  * @see IProxyPlayingCommands
  */
 public enum MoveType

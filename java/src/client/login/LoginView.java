@@ -1,20 +1,19 @@
 package client.login;
 
-import java.awt.*;
-import java.awt.event.*;
+import client.base.OverlayView;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.*;
-
-import client.base.OverlayView;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Implementation for the login view, which lets the user create a new account
  * and login
  */
-@SuppressWarnings({ "serial", "unused" })
-public class LoginView extends OverlayView implements ILoginView
+@SuppressWarnings({ "serial", "unused" }) public class LoginView extends OverlayView implements ILoginView
 {
 
     private final int LABEL_TEXT_SIZE = 40;
@@ -25,20 +24,13 @@ public class LoginView extends OverlayView implements ILoginView
 
     private SignInPanel signInPanel = null;
     private RegisterPanel registerPanel = null;
-
-    public static void main(String[] args)
+    private ActionListener actionListener = new ActionListener()
     {
-        JFrame jf = new JFrame();
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        JPanel mainPanel = new JPanel();
-        LoginView loginView = new LoginView();
-        mainPanel.add(loginView);
-
-        jf.getContentPane().add(mainPanel);
-        jf.setSize(640, 480);
-        jf.setVisible(true);
-    }
+        @Override public void actionPerformed(ActionEvent e)
+        {
+            getController().signIn();
+        }
+    };
 
     public LoginView()
     {
@@ -67,6 +59,20 @@ public class LoginView extends OverlayView implements ILoginView
         // this.add(buttonPanel, BorderLayout.SOUTH);
 
         initComponents();
+    }
+
+    public static void main(String[] args)
+    {
+        JFrame jf = new JFrame();
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel mainPanel = new JPanel();
+        LoginView loginView = new LoginView();
+        mainPanel.add(loginView);
+
+        jf.getContentPane().add(mainPanel);
+        jf.setSize(640, 480);
+        jf.setVisible(true);
     }
 
     private void initComponents()
@@ -127,50 +133,91 @@ public class LoginView extends OverlayView implements ILoginView
         return wholeCompound;
     }
 
-    private ActionListener actionListener = new ActionListener()
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            getController().signIn();
-        }
-    };
-
-    @Override
-    public ILoginController getController()
+    @Override public ILoginController getController()
     {
 
         return (ILoginController) super.getController();
     }
 
-    @Override
-    public String getLoginUsername()
+    @Override public String getLoginUsername()
     {
         return signInPanel.txtUsername.getText();
     }
 
-    @Override
-    public String getLoginPassword()
+    @Override public String getLoginPassword()
     {
         return signInPanel.txtPassword.getText();
     }
 
-    @Override
-    public String getRegisterUsername()
+    @Override public String getRegisterUsername()
     {
         return registerPanel.txtUsername.getText();
     }
 
-    @Override
-    public String getRegisterPassword()
+    @Override public String getRegisterPassword()
     {
         return registerPanel.txtPassword.getText();
     }
 
-    @Override
-    public String getRegisterPasswordRepeat()
+    @Override public String getRegisterPasswordRepeat()
     {
         return registerPanel.txtPasswordAgain.getText();
+    }
+
+    private static abstract class TextFieldValidator implements DocumentListener, FocusListener
+    {
+
+        private JTextField textFieldValidate = null;
+        private Border originalBorder = null;
+        private Border redBorder = null;
+
+        public TextFieldValidator(JTextField textFieldValidate)
+        {
+            this.textFieldValidate = textFieldValidate;
+            originalBorder = textFieldValidate.getBorder();
+            redBorder = BorderFactory.createLineBorder(Color.RED, 2);
+        }
+
+        public abstract boolean validateContents(String input);
+
+        @Override public void focusGained(FocusEvent e)
+        {
+            validateInput();
+        }
+
+        @Override public void focusLost(FocusEvent e)
+        {
+            validateInput();
+        }
+
+        @Override public void insertUpdate(DocumentEvent e)
+        {
+            validateInput();
+        }
+
+        @Override public void removeUpdate(DocumentEvent e)
+        {
+            validateInput();
+        }
+
+        @Override public void changedUpdate(DocumentEvent e)
+        {
+            validateInput();
+        }
+
+        private void validateInput()
+        {
+            String contents = textFieldValidate.getText();
+
+            if (validateContents(contents))
+            {
+                textFieldValidate.setBorder(originalBorder);
+            } else
+            {
+                Border errorBorder = BorderFactory.createCompoundBorder(originalBorder, redBorder);
+                textFieldValidate.setBorder(errorBorder);
+            }
+        }
     }
 
     private class SignInPanel extends JPanel
@@ -205,7 +252,8 @@ public class LoginView extends OverlayView implements ILoginView
             txtPassword = new JPasswordField(NUM_TXT_COLS);
 
             btnSignIn = new JButton("Sign in");
-            this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+            this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                    .put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
             this.getActionMap().put("Enter", new AbstractAction()
             {
                 @Override public void actionPerformed(ActionEvent e)
@@ -252,8 +300,7 @@ public class LoginView extends OverlayView implements ILoginView
             btnSignIn.addActionListener(new ActionListener()
             {
 
-                @Override
-                public void actionPerformed(ActionEvent e)
+                @Override public void actionPerformed(ActionEvent e)
                 {
                     getController().signIn();
                 }
@@ -305,8 +352,9 @@ public class LoginView extends OverlayView implements ILoginView
         {
             txtUsername.setToolTipText("The username must be between three and seven "
                     + "characters: letters, digits, underscore, or dash.");
-            txtPassword.setToolTipText("Please match the requested format.  "
-                    + "The password must be five or more characters: " + "letters, digits, underscore, or dash.");
+            txtPassword.setToolTipText(
+                    "Please match the requested format.  " + "The password must be five or more characters: "
+                            + "letters, digits, underscore, or dash.");
             txtPasswordAgain.setToolTipText("Make sure the two passwords match!");
         }
 
@@ -352,8 +400,7 @@ public class LoginView extends OverlayView implements ILoginView
             btnRegister.addActionListener(new ActionListener()
             {
 
-                @Override
-                public void actionPerformed(ActionEvent e)
+                @Override public void actionPerformed(ActionEvent e)
                 {
                     getController().register();
                 }
@@ -363,8 +410,7 @@ public class LoginView extends OverlayView implements ILoginView
             // Code to check if the username length is correct!
             TextFieldValidator usernameValidator = new TextFieldValidator(txtUsername)
             {
-                @Override
-                public boolean validateContents(String username)
+                @Override public boolean validateContents(String username)
                 {
                     final int MIN_UNAME_LENGTH = 3;
                     final int MAX_UNAME_LENGTH = 7;
@@ -372,8 +418,7 @@ public class LoginView extends OverlayView implements ILoginView
                     if (username.length() < MIN_UNAME_LENGTH || username.length() > MAX_UNAME_LENGTH)
                     {
                         return false;
-                    }
-                    else
+                    } else
                     {
                         for (char c : username.toCharArray())
                         {
@@ -392,16 +437,14 @@ public class LoginView extends OverlayView implements ILoginView
             TextFieldValidator passValidator = new TextFieldValidator(txtPassword)
             {
 
-                @Override
-                public boolean validateContents(String input)
+                @Override public boolean validateContents(String input)
                 {
                     final int MIN_PASS_LENGTH = 5;
 
                     if (input.length() < MIN_PASS_LENGTH)
                     {
                         return false;
-                    }
-                    else
+                    } else
                     {
                         for (char c : input.toCharArray())
                         {
@@ -420,8 +463,7 @@ public class LoginView extends OverlayView implements ILoginView
             TextFieldValidator passAgainValidator = new TextFieldValidator(txtPasswordAgain)
             {
 
-                @Override
-                public boolean validateContents(String input)
+                @Override public boolean validateContents(String input)
                 {
                     return input.equals(txtPassword.getText());
                 }
@@ -437,68 +479,6 @@ public class LoginView extends OverlayView implements ILoginView
             txtPasswordAgain.addFocusListener(passAgainValidator);
             txtPasswordAgain.getDocument().addDocumentListener(passAgainValidator);
 
-        }
-    }
-
-    private static abstract class TextFieldValidator implements DocumentListener, FocusListener
-    {
-
-        public abstract boolean validateContents(String input);
-
-        private JTextField textFieldValidate = null;
-        private Border originalBorder = null;
-        private Border redBorder = null;
-
-        public TextFieldValidator(JTextField textFieldValidate)
-        {
-            this.textFieldValidate = textFieldValidate;
-            originalBorder = textFieldValidate.getBorder();
-            redBorder = BorderFactory.createLineBorder(Color.RED, 2);
-        }
-
-        @Override
-        public void focusGained(FocusEvent e)
-        {
-            validateInput();
-        }
-
-        @Override
-        public void focusLost(FocusEvent e)
-        {
-            validateInput();
-        }
-
-        @Override
-        public void insertUpdate(DocumentEvent e)
-        {
-            validateInput();
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent e)
-        {
-            validateInput();
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e)
-        {
-            validateInput();
-        }
-
-        private void validateInput()
-        {
-            String contents = textFieldValidate.getText();
-
-            if (validateContents(contents))
-            {
-                textFieldValidate.setBorder(originalBorder);
-            }
-            else
-            {
-                Border errorBorder = BorderFactory.createCompoundBorder(originalBorder, redBorder);
-                textFieldValidate.setBorder(errorBorder);
-            }
         }
     }
 

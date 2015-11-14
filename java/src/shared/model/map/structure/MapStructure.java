@@ -1,17 +1,16 @@
 package shared.model.map.structure;
 
 import com.google.gson.JsonObject;
-
 import shared.definitions.PlayerIndex;
-import shared.locations.*;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 
 /**
  * Structures in our design include settlements, cities and roads. These are
  * represented by the structure object in our Catan game. They are each worth a
  * certain number of victory points.
- * 
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public abstract class MapStructure
 {
@@ -66,8 +65,7 @@ public abstract class MapStructure
      * 
      * @see java.lang.Object#toString()
      */
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         JsonObject structure = new JsonObject();
         structure.addProperty("owner", this.owner.getIndex());
@@ -86,8 +84,7 @@ public abstract class MapStructure
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    @Override
-    public boolean equals(Object obj)
+    @Override public boolean equals(Object obj)
     {
         if (this == obj)
             return true;

@@ -9,30 +9,32 @@ import shared.model.bank.resource.Resources;
 import java.util.Collections;
 import java.util.Stack;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Adrian on 9/30/2015.
  */
-public class BankTest {
+public class BankTest
+{
 
     Bank test;
     Stack<DevCardType> deck;
 
-    @Before
-    public void setUp() {
+    @Before public void setUp()
+    {
         test = new Bank(false);
         deck = test.getDevCardDeck();
     }
 
-    @Test
-    public void devCardDeckShouldBeInitializedWith25DevCards() {
+    @Test public void devCardDeckShouldBeInitializedWith25DevCards()
+    {
         deck = test.getDevCardDeck();
         assertEquals(25, deck.size());
     }
 
-    @Test
-    public void devCardDeckShouldHaveCorrectNumberofEachCard() {
+    @Test public void devCardDeckShouldHaveCorrectNumberofEachCard()
+    {
 
         int monopoly = Collections.frequency(deck, DevCardType.MONOPOLY);
         int monument = Collections.frequency(deck, DevCardType.MONUMENT);
@@ -47,16 +49,16 @@ public class BankTest {
         assertEquals(14, soldier);
     }
 
-    @Test
-    public void devCardsShouldBeInitializedWithZeroCards() {
+    @Test public void devCardsShouldBeInitializedWithZeroCards()
+    {
         DevCards list = test.getDevCards();
 
         assertNotNull(list);
         assertEquals(0, list.totalCards());
     }
 
-    @Test
-    public void resourcesShouldBeInitializedWithZeroResources() {
+    @Test public void resourcesShouldBeInitializedWithZeroResources()
+    {
         Resources list = test.getResources();
 
         assertNotNull(list);

@@ -1,18 +1,15 @@
 package shared.communication;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.*;
-import server.facade.AbstractServerFacade;
 import shared.definitions.exceptions.InvalidCredentialsException;
-import shared.definitions.exceptions.SignInException;
+
+import java.lang.reflect.Type;
 
 /**
  * Credentials class holds the login information for each player. This validates
  * that the user can login and begin game play.
  *
  * @author amandafisher
- *
  */
 public class Credentials implements JsonSerializer<Credentials>
 {
@@ -34,6 +31,7 @@ public class Credentials implements JsonSerializer<Credentials>
 
     /**
      * Creates credentials with the given username and password.
+     *
      * @param username the username.
      * @param password the password.
      * @throws InvalidCredentialsException if either the username or password are invalid.
@@ -47,6 +45,7 @@ public class Credentials implements JsonSerializer<Credentials>
 
     /**
      * Instantiate a Credentials object from JSON.
+     *
      * @param json JSON of the Credentials
      */
     public Credentials(String json)
@@ -58,8 +57,7 @@ public class Credentials implements JsonSerializer<Credentials>
         {
             this.setUsername(credentialsObject.getAsJsonPrimitive("username").getAsString());
             this.setPassword(credentialsObject.getAsJsonPrimitive("password").getAsString());
-        }
-        catch (InvalidCredentialsException e)
+        } catch (InvalidCredentialsException e)
         {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -91,15 +89,13 @@ public class Credentials implements JsonSerializer<Credentials>
      *
      * @see java.lang.Object#toString()
      */
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         return "{\"username\":\"" + username.getUsername() + "\",\"password\":\"" + password.getPasswordPlainText()
                 + "\"}";
     }
 
-    @Override
-    public int hashCode()
+    @Override public int hashCode()
     {
         final int prime = 31;
         int result = 1;
@@ -108,8 +104,7 @@ public class Credentials implements JsonSerializer<Credentials>
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj)
+    @Override public boolean equals(Object obj)
     {
         if (this == obj)
             return true;
@@ -122,15 +117,13 @@ public class Credentials implements JsonSerializer<Credentials>
         {
             if (other.password != null)
                 return false;
-        }
-        else if (!password.equals(other.password))
+        } else if (!password.equals(other.password))
             return false;
         if (username == null)
         {
             if (other.username != null)
                 return false;
-        }
-        else if (!username.equals(other.username))
+        } else if (!username.equals(other.username))
             return false;
         return true;
     }
@@ -141,8 +134,7 @@ public class Credentials implements JsonSerializer<Credentials>
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(Credentials src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(Credentials src, Type srcType, JsonSerializationContext context)
     {
         JsonObject credentials = new JsonObject();
         credentials.addProperty("username", src.getUsername());

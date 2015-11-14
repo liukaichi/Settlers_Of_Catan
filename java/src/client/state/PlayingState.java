@@ -33,9 +33,9 @@ public class PlayingState extends GameplayState
     {
         super(controller);
         currentTurnStatus = TurnStatus.Playing;
-        if(controller instanceof MapController)
+        if (controller instanceof MapController)
         {
-            mapController = (MapController)controller;
+            mapController = (MapController) controller;
             robView = mapController.getRobView();
         }
     }
@@ -89,25 +89,27 @@ public class PlayingState extends GameplayState
 
     @Override public void placeRoad(EdgeLocation edgeLoc)
     {
-        if(mapController.isDevCard()){
-            if(mapController.getRoadBuildingLoc1() == null){
+        if (mapController.isDevCard())
+        {
+            if (mapController.getRoadBuildingLoc1() == null)
+            {
                 mapController.setRoadBuildingLoc1(edgeLoc);
                 mapController.getView().placeRoad(edgeLoc, facade.getPlayer().getPlayerColor());
-                try {
+                try
+                {
                     facade.getModel().getMap().placeRoad(facade.getPlayer().getPlayerIndex(), edgeLoc);
-                } catch (PlacementException e) {
+                } catch (PlacementException e)
+                {
                     e.printStackTrace();
                 }
                 mapController.startMove(PieceType.ROAD, true, false);
-            }
-            else
+            } else
             {
                 facade.playRoadBuildingCard(mapController.getRoadBuildingLoc1(), edgeLoc);
                 mapController.setIsDevCard(false);
                 mapController.setRoadBuildingLoc1(null);
             }
-        }
-        else
+        } else
         {
             facade.placeRoad(edgeLoc, false);
         }
@@ -165,20 +167,21 @@ public class PlayingState extends GameplayState
     {
         facade.playSoldierCard(info, location);
     }
-    @Override
-    public void placeRobber(HexLocation hexLoc){
+
+    @Override public void placeRobber(HexLocation hexLoc)
+    {
 
         if (controller instanceof MapController)
         {
             robView.setPlayers(facade.getRobPlayerInfo(hexLoc));
             mapController.setRobberLocation(hexLoc);
-            if(robView.isModalShowing())
+            if (robView.isModalShowing())
                 robView.closeModal();
             robView.showModal();
         }
     }
-    @Override
-    public void robPlayer(RobPlayerInfo victim, HexLocation location)
+
+    @Override public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
         if (robView.isModalShowing())
         {
@@ -200,33 +203,29 @@ public class PlayingState extends GameplayState
         if (controller instanceof DiscardController)
         {
             DiscardController control = (DiscardController) controller;
-            if(control.getWaitView().isModalShowing())
+            if (control.getWaitView().isModalShowing())
             {
                 control.getWaitView().closeModal();
             }
-        }
-        else if (controller instanceof TurnTrackerController){
+        } else if (controller instanceof TurnTrackerController)
+        {
             ((TurnTrackerController) controller).updatePlayers(facade.getModel());
-        }
-        else if (controller instanceof DomesticTradeController)
+        } else if (controller instanceof DomesticTradeController)
         {
             DomesticTradeController control = (DomesticTradeController) controller;
             control.getTradeView().enableDomesticTrade(true);
-            if(control.getWaitOverlay().isModalShowing())
+            if (control.getWaitOverlay().isModalShowing())
             {
                 control.getWaitOverlay().closeModal();
-            }
-            else if(control.getTradeOverlay().isModalShowing())
+            } else if (control.getTradeOverlay().isModalShowing())
             {
                 control.getTradeOverlay().closeModal();
             }
-        }
-        else if (controller instanceof MaritimeTradeController)
+        } else if (controller instanceof MaritimeTradeController)
         {
             MaritimeTradeController control = (MaritimeTradeController) controller;
             control.getTradeView().enableMaritimeTrade(true);
-        }
-        else if (controller instanceof ResourceBarController)
+        } else if (controller instanceof ResourceBarController)
         {
             ResourceBarController control = (ResourceBarController) controller;
             control.enableActions();

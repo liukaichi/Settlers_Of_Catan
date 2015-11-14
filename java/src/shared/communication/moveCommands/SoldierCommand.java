@@ -9,16 +9,16 @@ import shared.locations.HexLocation;
  * Soldier command object.
  *
  * @author Cache Staheli
- *
  */
 public class SoldierCommand extends RobPlayerCommand
 {
 
     /**
      * Instantiates a SoldierCommand with the given player, victim, and location of the new robber.
+     *
      * @param playerIndex the index of the player calling the command
      * @param victimIndex the index of the player being robbed.
-     * @param location the new location of the robber.
+     * @param location    the new location of the robber.
      */
     public SoldierCommand(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
@@ -28,6 +28,7 @@ public class SoldierCommand extends RobPlayerCommand
 
     /**
      * Instantiate a SoldierCommand from JSON.
+     *
      * @param json JSON of the SoldierCommand.
      */
     public SoldierCommand(String json)
@@ -37,12 +38,14 @@ public class SoldierCommand extends RobPlayerCommand
 
     /**
      * Robs the player that is specified
-     * @return the Json representation of the model after the command is executed.
+     *
      * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().soldier(gameID, getPlayerIndex(), this.getVictimIndex(), this.getLocation()).toString();
+        return AbstractServerFacade.getInstance()
+                .soldier(gameID, getPlayerIndex(), this.getVictimIndex(), this.getLocation()).toString();
     }
 
 }

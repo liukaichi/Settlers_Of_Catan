@@ -27,6 +27,7 @@ public enum ResourceType
             return null;
         }
     }
+
     public static PortType toPortType(ResourceType type)
     {
         switch (type)

@@ -10,10 +10,12 @@ public class BufferedReaderParser
 {
     /**
      * Takes in a BufferedReader and will return the string contained in the reader.
+     *
      * @param reader the BufferedReader to be parsed.
      * @return
      */
-    public static String parse(BufferedReader reader){
+    public static String parse(BufferedReader reader)
+    {
         String response = "";
         try
         {

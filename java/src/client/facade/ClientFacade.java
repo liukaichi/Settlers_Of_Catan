@@ -12,8 +12,6 @@ import shared.definitions.*;
 import shared.definitions.exceptions.AddAIException;
 import shared.definitions.exceptions.GameQueryException;
 import shared.definitions.exceptions.InvalidCredentialsException;
-import shared.definitions.exceptions.SignInException;
-import server.facade.IUserFacade;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -36,11 +34,11 @@ import java.util.logging.Logger;
  */
 public class ClientFacade
 {
+    private final static Logger LOGGER = Logger.getLogger(ClientFacade.class.getName());
     private static ClientFacade _instance = null;
     private ClientModel model;
     private IProxy proxy;
     private PlayerInfo clientPlayer;
-    private final static Logger LOGGER = Logger.getLogger(ClientFacade.class.getName());
     private Poller poller;
 
     private ClientFacade()
@@ -49,14 +47,40 @@ public class ClientFacade
         proxy = new ServerProxy();
     }
 
-    public void setClientPlayer(PlayerInfo clientPlayer)
+    /**
+     * Singleton Pattern to have a single instance of the Facade, since it
+     * contains the models.
+     *
+     * @return the static instance of the Client Facade.
+     */
+    public static ClientFacade getInstance()
     {
-        this.clientPlayer = clientPlayer;
+        if (_instance == null)
+        {
+            LOGGER.info("Creating new instance of ClientFacade");
+            _instance = new ClientFacade();
+        }
+        return _instance;
+    }
+
+    /**
+     * Resets the instance of the facade to null. It saves the proxy so that the client still has their cookie set.
+     */
+    public static void resetInstance()
+    {
+        IProxy proxy = _instance.getProxy();
+        _instance = new ClientFacade();
+        _instance.setProxy(proxy);
     }
 
     public PlayerInfo getClientPlayer()
     {
         return clientPlayer;
+    }
+
+    public void setClientPlayer(PlayerInfo clientPlayer)
+    {
+        this.clientPlayer = clientPlayer;
     }
 
     /**
@@ -98,6 +122,7 @@ public class ClientFacade
 
     /**
      * Gets the color of the player with the given name.
+     *
      * @param name the name of the player to get the color for.
      * @return the color of the player with the given name.
      */
@@ -120,8 +145,13 @@ public class ClientFacade
         return null;
     }
 
+    /*
+     * Chat Controller methods
+     */
+
     /**
      * Gets the player with the given index.
+     *
      * @param player the player's index.
      * @return the  player with the given index.
      */
@@ -134,24 +164,8 @@ public class ClientFacade
         return getPlayers().get(player.getIndex());
     }
 
-    /**
-     * Singleton Pattern to have a single instance of the Facade, since it
-     * contains the models.
-     *
-     * @return the static instance of the Client Facade.
-     */
-    public static ClientFacade getInstance()
-    {
-        if (_instance == null)
-        {
-            LOGGER.info("Creating new instance of ClientFacade");
-            _instance = new ClientFacade();
-        }
-        return _instance;
-    }
-
     /*
-     * Chat Controller methods
+     * Dev Card Controller Methods
      */
 
     /**
@@ -164,10 +178,6 @@ public class ClientFacade
     {
         model.updateModel(proxy.sendChat(new SendChatCommand(clientPlayer.getPlayerIndex(), message)));
     }
-
-    /*
-     * Dev Card Controller Methods
-     */
 
     /**
      * Determines if the player can buy a dev card.
@@ -182,6 +192,7 @@ public class ClientFacade
 
     /**
      * Checks whether the client player can play the given dev card type.
+     *
      * @param type the type of Dev card.
      * @return true if the player can play the card type, false otherwise.
      */
@@ -241,6 +252,10 @@ public class ClientFacade
         model.updateModel(proxy.roadBuilding(new RoadBuildingCommand(clientPlayer.getPlayerIndex(), edge1, edge2)));
     }
 
+    /*
+     * Discard Controller methods
+     */
+
     /**
      * Plays a Soldier Card.
      *
@@ -249,12 +264,9 @@ public class ClientFacade
      */
     public void playSoldierCard(RobPlayerInfo info, HexLocation location)
     {
-        model.updateModel(proxy.soldier(new SoldierCommand(clientPlayer.getPlayerIndex(), info.getPlayerIndex(), location)));
+        model.updateModel(
+                proxy.soldier(new SoldierCommand(clientPlayer.getPlayerIndex(), info.getPlayerIndex(), location)));
     }
-
-    /*
-     * Discard Controller methods
-     */
 
     /**
      * Discards the amount of resources set in the Resources object.
@@ -267,6 +279,10 @@ public class ClientFacade
         model.updateModel(
                 proxy.discardCards(new DiscardCardsCommand(clientPlayer.getPlayerIndex(), discardedResources)));
     }
+
+    /*
+     * Domestic trade controller methods
+     */
 
     /**
      * Discards the amount of resources specified.
@@ -283,24 +299,25 @@ public class ClientFacade
                 new DiscardCardsCommand(clientPlayer.getPlayerIndex(), brick, ore, sheep, wheat, wood)));
     }
 
-    /*
-     * Domestic trade controller methods
-     */
-
     /**
      * Sends a trade offer to a player.
+     *
      * @param receiver the index of the player receiving the offer.
-     * @param brick the amount of brick.
-     * @param ore the amount of ore.
-     * @param sheep the amount of sheep.
-     * @param wheat the amount of wheat.
-     * @param wood the amount of wood.
+     * @param brick    the amount of brick.
+     * @param ore      the amount of ore.
+     * @param sheep    the amount of sheep.
+     * @param wheat    the amount of wheat.
+     * @param wood     the amount of wood.
      */
     public void sendTradeOffer(PlayerIndex receiver, int brick, int ore, int sheep, int wheat, int wood)
     {
         model.updateModel(proxy.offerTrade(
                 new OfferTradeCommand(clientPlayer.getPlayerIndex(), receiver, brick, wood, sheep, wheat, ore)));
     }
+
+    /*
+     * Join Game Controller methods
+     */
 
     /**
      * Used for accepting/rejecting a trade.
@@ -313,12 +330,9 @@ public class ClientFacade
         model.updateModel(proxy.acceptTrade(new AcceptTradeCommand(clientPlayer.getPlayerIndex(), willAccept)));
     }
 
-    /*
-     * Join Game Controller methods
-     */
-
     /**
      * Gets the list of games available on the server.
+     *
      * @return the list of game available on the server.
      */
     public ListGamesResponse listGames()
@@ -340,10 +354,14 @@ public class ClientFacade
 
     }
 
+    /*
+     * player Waiting Controller methods
+     */
+
     /**
      * Joins an already existent game.
      *
-     * @param id the Id of the game to join.
+     * @param id    the Id of the game to join.
      * @param color the color for the client player to join with.
      */
 
@@ -352,19 +370,15 @@ public class ClientFacade
         try
         {
             proxy.joinGame(new JoinGameRequest(id, color));
-        }
-        catch (GameQueryException e)
+        } catch (GameQueryException e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Join Game", e);
         }
     }
 
-    /*
-     * player Waiting Controller methods
-     */
-
     /**
      * Gets the state of the game given a version.
+     *
      * @param version the version to check for. -1 grabs the game state regardless.
      * @return the representation of the game.
      */
@@ -373,11 +387,7 @@ public class ClientFacade
         ClientModel model = proxy.getGameState(version);
         List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
         buildClientPlayerFromPlayerInfos(players);
-        if(version == -1 && players.size() < 4)
-        {
-
-        }
-        else
+        if (version != -1 || players.size() == 4)
         {
             this.model.updateModel(model);
         }
@@ -387,6 +397,7 @@ public class ClientFacade
 
     /**
      * Starts the ServerPoller.
+     *
      * @see Poller
      */
     public void startPoller()
@@ -396,7 +407,7 @@ public class ClientFacade
 
     public boolean pollerStarted()
     {
-        return poller != null ? true : false;
+        return poller != null;
     }
 
     /**
@@ -416,8 +427,13 @@ public class ClientFacade
         }
     }
 
+    /*
+     * Login Controller methods
+     */
+
     /**
      * Lists the AITypes available to add to the currently joined game.
+     *
      * @return the list of AITypes available to add to the currently joined game.
      */
     public List<AIType> listAI()
@@ -426,15 +442,11 @@ public class ClientFacade
         return response.getAITypes();
     }
 
-    /*
-     * Login Controller methods
-     */
-
     /**
      * Signs in the player with the given credentials.
      *
      * @param credentials the player's credentials
-     * @throws SignInException if the user doesn't exist in the server.
+     * @throws InvalidCredentialsException if the user doesn't exist in the server.
      */
 
     public void signInUser(Credentials credentials) throws InvalidCredentialsException
@@ -449,11 +461,15 @@ public class ClientFacade
         }
     }
 
+    /*
+     * Map controller methods
+     */
+
     /**
      * Registers the user with the given credentials.
      *
      * @param credentials the credentials of the user registering.
-     * @throws SignInException if the registration fails (username already taken).
+     * @throws InvalidCredentialsException if the registration fails (username already taken).
      */
 
     public void registerUser(Credentials credentials) throws InvalidCredentialsException
@@ -468,14 +484,10 @@ public class ClientFacade
         }
     }
 
-    /*
-     * Map controller methods
-     */
-
     /**
      * Checks to see if the player meets the conditions to place a road
      *
-     * @param edgeLoc the location of the Road
+     * @param edgeLoc           the location of the Road
      * @param allowDisconnected whether or not the road is being placed in the setup round.
      * @return boolean - true if the player has the required resources and the
      * location is vacant and the player owns a settlement or city at a
@@ -491,6 +503,7 @@ public class ClientFacade
 
     /**
      * Determines if the client player can buy a road.
+     *
      * @return true if the player can buy a road, false otherwise.
      */
     public boolean canBuyRoad()
@@ -501,7 +514,7 @@ public class ClientFacade
     /**
      * Checks to see if the player meets the condition to place a settlement
      *
-     * @param vertexLocation the location of the Vertex
+     * @param vertexLocation    the location of the Vertex
      * @param allowDisconnected whether or not the settlement is being placed in the setup round.
      * @return boolean - true if player has the required resources and the
      * location is 2 edges or more from another settlement
@@ -516,6 +529,7 @@ public class ClientFacade
 
     /**
      * Checks to see if the player meets the condition to buy a settlement.
+     *
      * @return if the player meets the requirements, false otherwise.
      */
     public boolean canBuySettlement()
@@ -540,6 +554,7 @@ public class ClientFacade
 
     /**
      * Checks to see if the player meets the condition to buy a city.
+     *
      * @return true if the player meets all the conditions to buy a city, false otherwise.
      */
     public boolean canBuyCity()
@@ -565,7 +580,7 @@ public class ClientFacade
      * player purchases and places a road
      *
      * @param location the location of the road
-     * @param isFree whether or not the road is free to place.
+     * @param isFree   whether or not the road is free to place.
      * @pre player clicks on a location to place road
      * @post player met conditions and road is on map
      */
@@ -579,7 +594,7 @@ public class ClientFacade
      * player purchases and places a settlement
      *
      * @param location the location of the Settlement
-     * @param isFree whether or not the settlement is free to place.
+     * @param isFree   whether or not the settlement is free to place.
      * @pre player clicks on a location to place a settlement
      * @post player met conditions and settlement is now on map
      */
@@ -603,10 +618,14 @@ public class ClientFacade
         model.updateModel(proxy.buildCity(new BuildCityCommand(clientPlayer.getPlayerIndex(), location)));
     }
 
+    /*
+     * Martitime Trade Controller methods
+     */
+
     /**
      * Robs a player, player receives one resource from the player being robbed
      *
-     * @param victim the victim of the brutal armed robbery
+     * @param victim   the victim of the brutal armed robbery
      * @param location the new location of the robber.
      * @pre robber is placed
      * @post player has an extra resource
@@ -614,17 +633,20 @@ public class ClientFacade
 
     public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
-        model.updateModel(proxy.robPlayer(new RobPlayerCommand(clientPlayer.getPlayerIndex(), victim.getPlayerIndex(), location)));
+        model.updateModel(proxy.robPlayer(
+                new RobPlayerCommand(clientPlayer.getPlayerIndex(), victim.getPlayerIndex(), location)));
     }
 
+
     /*
-     * Martitime Trade Controller methods
+     * Roll Dice Controller methods
      */
 
     /**
      * Completes a maritime trade
-     * @param ratio the ratio to trade at.
-     * @param inputResource the resource the client player is trading away.
+     *
+     * @param ratio          the ratio to trade at.
+     * @param inputResource  the resource the client player is trading away.
      * @param outputResource the resourec the client player is receiving.
      * @see TradeRatio
      */
@@ -635,9 +657,8 @@ public class ClientFacade
                 new MaritimeTradeCommand(clientPlayer.getPlayerIndex(), ratio, inputResource, outputResource)));
     }
 
-
     /*
-     * Roll Dice Controller methods
+     * Turn tracker controller methods
      */
 
     /**
@@ -652,10 +673,6 @@ public class ClientFacade
         model.updateModel(proxy.rollNumber(new RollNumberCommand(clientPlayer.getPlayerIndex(), diceRollResult)));
     }
 
-    /*
-     * Turn tracker controller methods
-     */
-
     /**
      * Ends the players turn
      *
@@ -667,14 +684,14 @@ public class ClientFacade
         model.updateModel(proxy.finishTurn(new FinishTurnCommand(clientPlayer.getPlayerIndex())));
     }
 
-    public void setModel(ClientModel newModel)
-    {
-        model = newModel;
-    }
-
     public ClientModel getModel()
     {
         return model;
+    }
+
+    public void setModel(ClientModel newModel)
+    {
+        model = newModel;
     }
 
     /**
@@ -736,6 +753,7 @@ public class ClientFacade
 
     /**
      * Gets the rob player info associated with the given hex.
+     *
      * @param hexLocation the location of the hex to check.
      * @return a list of RobPlayerInfo associated with the given hex.
      */
@@ -750,7 +768,7 @@ public class ClientFacade
                 robPlayerInfos.add(new RobPlayerInfo(index, getPlayerByIndex(index).getResourceCount()));
             }
         }
-        if(robPlayerInfos.size() == 0)
+        if (robPlayerInfos.size() == 0)
         {
             robPlayerInfos.add(new RobPlayerInfo(PlayerIndex.NONE, 0));
         }
@@ -760,6 +778,7 @@ public class ClientFacade
 
     /**
      * Gets the Player object based on the given index.
+     *
      * @param index the index of the player.
      * @return the Player object based on the given index.
      * @see Player
@@ -771,6 +790,7 @@ public class ClientFacade
 
     /**
      * Determines if it is the client player's turn.
+     *
      * @return true if it is client player's turn, false otherwise.
      */
     public boolean isMyTurn()
@@ -779,7 +799,6 @@ public class ClientFacade
         PlayerIndex currentPlayerIndex = getClientPlayer().getPlayerIndex();
         return currentTurn.equals(currentPlayerIndex);
     }
-
 
     public int getClientPlayerRoadCount()
     {
@@ -822,14 +841,9 @@ public class ClientFacade
         }
     }
 
-    /**
-     * Resets the instance of the facade to null. It saves the proxy so that the client still has their cookie set.
-     */
-    public static void resetInstance()
+    public IProxy getProxy()
     {
-        IProxy proxy = _instance.getProxy();
-        _instance = new ClientFacade();
-        _instance.setProxy(proxy);
+        return proxy;
     }
 
     private void setProxy(IProxy proxy)
@@ -837,18 +851,15 @@ public class ClientFacade
         this.proxy = proxy;
     }
 
-    public IProxy getProxy()
-    {
-        return proxy;
-    }
-
     /**
      * Sends a trade offer based off of the TradeOffer object, which contains all of the important information.
+     *
      * @param offer the trade offer.
      */
-    public void sendTradeOffer(TradeOffer offer) {
+    public void sendTradeOffer(TradeOffer offer)
+    {
         sendTradeOffer(PlayerIndex.fromInt(offer.getReceiver()), offer.getOffer(ResourceType.BRICK),
-                offer.getOffer(ResourceType.ORE),offer.getOffer(ResourceType.SHEEP),
-                offer.getOffer(ResourceType.WHEAT),offer.getOffer(ResourceType.WOOD));
+                offer.getOffer(ResourceType.ORE), offer.getOffer(ResourceType.SHEEP),
+                offer.getOffer(ResourceType.WHEAT), offer.getOffer(ResourceType.WOOD));
     }
 }

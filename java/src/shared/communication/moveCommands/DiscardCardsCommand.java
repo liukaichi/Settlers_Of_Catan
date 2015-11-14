@@ -26,12 +26,13 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
 
     /**
      * Packages a discard cards command for use by the server.
-     * @param index the player discarding cards.
+     *
+     * @param index       the player discarding cards.
      * @param brickAmount the amount of brick to discard.
-     * @param oreAmount the amount of ore to discard.
+     * @param oreAmount   the amount of ore to discard.
      * @param sheepAmount the amount of sheep to discard.
      * @param wheatAmount the amount of wheat to discard.
-     * @param woodAmount the amount of wood to discard.
+     * @param woodAmount  the amount of wood to discard.
      */
     public DiscardCardsCommand(PlayerIndex index, int brickAmount, int woodAmount, int sheepAmount, int wheatAmount,
             int oreAmount)
@@ -42,6 +43,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
 
     /**
      * Instantiate a DiscardCardsCommand from JSON.
+     *
      * @param json JSON of the DiscardCardsCommand.
      */
     public DiscardCardsCommand(String json)
@@ -51,7 +53,8 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
 
     /**
      * Packages a discard cards command for use by the server.
-     * @param index the player discarding cards.
+     *
+     * @param index     the player discarding cards.
      * @param resources the resources to discard.
      */
     public DiscardCardsCommand(PlayerIndex index, Resources resources)
@@ -66,8 +69,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(DiscardCardsCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(DiscardCardsCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         // obj.add("discardedCards", context.serialize(src.discardedCards));
@@ -76,15 +78,16 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
         return obj;
     }
 
-
     /**
      * This will discard the amount of cards within the resources object to subtract from the ServerModel
-     * @return the Json representation of the model after the command is executed.
+     *
      * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().discardCards(gameID, getPlayerIndex(), this.discardedCards).toString();
+        return AbstractServerFacade.getInstance().discardCards(gameID, getPlayerIndex(), this.discardedCards)
+                .toString();
 
     }
 }

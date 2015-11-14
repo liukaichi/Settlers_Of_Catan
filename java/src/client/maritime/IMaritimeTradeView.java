@@ -1,6 +1,6 @@
 package client.maritime;
 
-import client.base.*;
+import client.base.IView;
 
 /**
  * Interface for the maritime trade view, which displays the "Maritime Trade"
@@ -8,14 +8,13 @@ import client.base.*;
  */
 public interface IMaritimeTradeView extends IView
 {
-	
-	/**
-	 * Enables or disables the maritime trade button.
-	 * 
-	 * @param value
-	 *            Whether or not the maritime trade button is enabled
-	 */
-	void enableMaritimeTrade(boolean value);
-	
+
+    /**
+     * Enables or disables the maritime trade button.
+     *
+     * @param value Whether or not the maritime trade button is enabled
+     */
+    void enableMaritimeTrade(boolean value);
+
 }
 

@@ -18,12 +18,9 @@ public class DiscardController extends ObserverController implements IDiscardCon
     /**
      * DiscardController constructor
      *
-     * @param view
-     *        View displayed to let the user select cards to discard
-     * @param waitView
-     *        View displayed to notify the user that they are waiting for other
-     *        players to discard disable discardbutton in the getDiscardView()
-     *
+     * @param view     View displayed to let the user select cards to discard
+     * @param waitView View displayed to notify the user that they are waiting for other
+     *                 players to discard disable discardbutton in the getDiscardView()
      */
     public DiscardController(IDiscardView view, IWaitView waitView)
     {
@@ -49,8 +46,7 @@ public class DiscardController extends ObserverController implements IDiscardCon
      * of required amount have been selected enable discard button if enough
      * cards (but not more) have been selected
      */
-    @Override
-    public void increaseAmount(ResourceType resource)
+    @Override public void increaseAmount(ResourceType resource)
     {
         state.increaseAmount(resource);
     }
@@ -58,8 +54,7 @@ public class DiscardController extends ObserverController implements IDiscardCon
     /**
      * undoes things you did in increase function
      */
-    @Override
-    public void decreaseAmount(ResourceType resource)
+    @Override public void decreaseAmount(ResourceType resource)
     {
         state.decreaseAmount(resource);
     }
@@ -68,14 +63,12 @@ public class DiscardController extends ObserverController implements IDiscardCon
      * send request to server with a map of resource types and how many of each
      * are discarded
      */
-    @Override
-    public void discard()
+    @Override public void discard()
     {
         state.discardResources();
     }
 
-    @Override
-    public void update(Observable o, Object arg)
+    @Override public void update(Observable o, Object arg)
     {
         ClientModel model = (ClientModel) o;
         state.update(this, model, arg);

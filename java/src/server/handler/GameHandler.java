@@ -4,15 +4,12 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.facade.AbstractServerFacade;
-import server.facade.MockServerFacade;
-import server.manager.User;
-import shared.communication.CatanCommand;
-import shared.communication.Credentials;
-import shared.definitions.exceptions.CatanException;
 import shared.model.ClientModel;
 
-import java.io.*;
-import java.lang.reflect.Constructor;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.*;
 import java.util.HashMap;
 import java.util.List;
@@ -24,22 +21,27 @@ import java.util.logging.Logger;
  */
 public class GameHandler implements HttpHandler
 {
-    AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private static Logger LOGGER = Logger.getLogger(GameHandler.class.getName());
+    AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private String response;
 
     /**
      * returns the url parameters in a map
+     *
      * @param query
      * @return map
      */
-    public static Map<String, String> parseQuery(String query){
+    public static Map<String, String> parseQuery(String query)
+    {
         Map<String, String> result = new HashMap<String, String>();
-        for (String param : query.split("&")) {
+        for (String param : query.split("&"))
+        {
             String pair[] = param.split("=");
-            if (pair.length>1) {
+            if (pair.length > 1)
+            {
                 result.put(pair[0], pair[1]);
-            }else{
+            } else
+            {
                 result.put(pair[0], "");
             }
         }
@@ -48,11 +50,13 @@ public class GameHandler implements HttpHandler
 
     /**
      * Parses the HTTP Context for the command and executes it
+     *
      * @param httpExchange the httpExchange to parse.
      */
     @Override public void handle(HttpExchange httpExchange) throws IOException
     {
-        try {
+        try
+        {
             URI uri = httpExchange.getRequestURI();
             String commandString = uri.getPath().split("/")[2];
 
@@ -72,29 +76,31 @@ public class GameHandler implements HttpHandler
             String method = httpExchange.getRequestMethod();
             List<String> cookies = httpExchange.getRequestHeaders().get("Cookie");
 
+            //            Credentials creds = new Credentials(request);
 
-//            Credentials creds = new Credentials(request);
+            //            String className = "shared.communication."
+            //                    + Character.toUpperCase(commandString.charAt(0))
+            //                    + commandString.substring(1);
 
-//            String className = "shared.communication."
-//                    + Character.toUpperCase(commandString.charAt(0))
-//                    + commandString.substring(1);
-
-            if(commandString.toLowerCase() == "model"){
+            if (commandString.toLowerCase().equals("model"))
+            {
                 Map<String, String> params = parseQuery(uri.getQuery());
                 int version = Integer.parseInt(params.get("version"));
                 ClientModel model;
 
-                if(params.isEmpty()){
-                    model = facade.getGameState();
-                }
-                else{
+                if (params.isEmpty())
+                {
+                    model = facade.getGameState(-1);
+                } else
+                {
                     model = facade.getGameState(version);
                 }
 
-                if(model == null){
+                if (model == null)
+                {
                     response = "true";
-                }
-                else{
+                } else
+                {
                     response = model.toString();
                 }
             }
@@ -115,8 +121,7 @@ public class GameHandler implements HttpHandler
             // send response
             response = "Success";
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
             response = e.getLocalizedMessage();
@@ -132,39 +137,39 @@ public class GameHandler implements HttpHandler
             }
             LOGGER.exiting(this.getClass().getCanonicalName(), "handle");
         }
-//        LOGGER.entering(this.getClass().getCanonicalName(), "handle");
-//        try {
-//            //Handling cookie
-//            String cookie =  httpExchange.getRequestHeaders().getFirst("Cookie");
-//            //Handling input Request
-//            InputStream requestBody = httpExchange.getRequestBody();
-//            ObjectInput in = new ObjectInputStream(requestBody);
-//            String className = httpExchange.getRequestURI().getPath().split("/")[1]; //TODO get the class name from the context
-//            Constructor c = Class.forName(className).getConstructor(String.class, AbstractServerFacade.class);
-//            CatanCommand request = (CatanCommand)c.newInstance(in.readObject(), facade);
-//            in.close();
-//            requestBody.close();
-//
-//            //Handling response to request
-//            httpExchange.getResponseHeaders().set("Set-cookie", cookie);
-//            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-//            String result = request.execute(-1);
-//            OutputStream responseBody = httpExchange.getResponseBody();
-//            ObjectOutput out = new ObjectOutputStream(responseBody);
-//            out.writeObject(result);
-//            out.close();
-//            responseBody.close();
-//
-//        }
-//        catch(Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        finally {
-//            if (httpExchange != null) {
-//                httpExchange.close();
-//            }
-//            LOGGER.exiting(this.getClass().getCanonicalName(), "handle");
-//        }
+        //        LOGGER.entering(this.getClass().getCanonicalName(), "handle");
+        //        try {
+        //            //Handling cookie
+        //            String cookie =  httpExchange.getRequestHeaders().getFirst("Cookie");
+        //            //Handling input Request
+        //            InputStream requestBody = httpExchange.getRequestBody();
+        //            ObjectInput in = new ObjectInputStream(requestBody);
+        //            String className = httpExchange.getRequestURI().getPath().split("/")[1]; //TODO get the class name from the context
+        //            Constructor c = Class.forName(className).getConstructor(String.class, AbstractServerFacade.class);
+        //            CatanCommand request = (CatanCommand)c.newInstance(in.readObject(), facade);
+        //            in.close();
+        //            requestBody.close();
+        //
+        //            //Handling response to request
+        //            httpExchange.getResponseHeaders().set("Set-cookie", cookie);
+        //            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+        //            String result = request.execute(-1);
+        //            OutputStream responseBody = httpExchange.getResponseBody();
+        //            ObjectOutput out = new ObjectOutputStream(responseBody);
+        //            out.writeObject(result);
+        //            out.close();
+        //            responseBody.close();
+        //
+        //        }
+        //        catch(Exception e)
+        //        {
+        //            e.printStackTrace();
+        //        }
+        //        finally {
+        //            if (httpExchange != null) {
+        //                httpExchange.close();
+        //            }
+        //            LOGGER.exiting(this.getClass().getCanonicalName(), "handle");
+        //        }
     }
 }

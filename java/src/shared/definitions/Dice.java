@@ -4,9 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Holds the values of two dice, and has dice functionality
- * 
- * @author dtaylor
  *
+ * @author dtaylor
  */
 public class Dice
 {
@@ -15,12 +14,13 @@ public class Dice
 
     /**
      * Rolling two dice and returning the results
+     *
      * @return the amount rolled.
      */
     public int rollDice()
-    { 
+    {
         die1 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         die2 = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        return die1 + die2; 
+        return die1 + die2;
     }
 }

@@ -2,7 +2,6 @@ package server.manager;
 
 import shared.communication.Credentials;
 import shared.definitions.exceptions.InvalidCredentialsException;
-import shared.definitions.exceptions.SignInException;
 
 /**
  * Contains the server-side representation of a user.
@@ -19,8 +18,9 @@ public class User
 
     /**
      * Initializes a player with credentials and an id.
+     *
      * @param credentials the credentials of the user.
-     * @param playerID the id of the player.
+     * @param playerID    the id of the player.
      */
     public User(Credentials credentials, int playerID)
     {
@@ -36,7 +36,8 @@ public class User
         {
             this.credentials = new Credentials(username, password);
             this.playerID = id;
-        } catch (InvalidCredentialsException e) {
+        } catch (InvalidCredentialsException e)
+        {
             e.printStackTrace();
         }
 
@@ -44,6 +45,7 @@ public class User
 
     /**
      * Assigns an id to the User.
+     *
      * @param id the id to assign.
      */
     public void assignUserID(int id)
@@ -51,10 +53,9 @@ public class User
         this.playerID = id;
     }
 
-    public String toString(){
-        return String.format("{\"name\":\"%s\", \"password\": \"%s\", \"playerID\": %d}",
-                credentials.getUsername(),
-                credentials.getPassword(),
-                playerID);
+    public String toString()
+    {
+        return String.format("{\"name\":\"%s\", \"password\": \"%s\", \"playerID\": %d}", credentials.getUsername(),
+                credentials.getPassword(), playerID);
     }
 }

@@ -1,13 +1,15 @@
 package shared.definitions;
 
-import java.lang.reflect.Type;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
-import com.google.gson.*;
+import java.lang.reflect.Type;
 
 /**
  * The allowed AI player types. <br>
  * Currently, LARGEST_ARMY is the only supported type.
- *
  */
 public enum AIType implements JsonSerializer<AIType>
 {
@@ -22,8 +24,7 @@ public enum AIType implements JsonSerializer<AIType>
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(AIType src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(AIType src, Type srcType, JsonSerializationContext context)
     {
         JsonObject type = new JsonObject();
         type.addProperty("AIType", src.toString());

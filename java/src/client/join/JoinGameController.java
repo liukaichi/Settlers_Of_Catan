@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  */
 public class JoinGameController extends ObserverController implements IJoinGameController
 {
+    private static final Logger LOGGER = Logger.getLogger(JoinGameController.class.getName());
     private static JoinGameController instance;
     private INewGameView newGameView;
     private ISelectColorView selectColorView;
@@ -30,7 +31,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     private IAction joinAction;
     private ClientFacade facade;
     private GameInfo currentGame;
-    private static final Logger LOGGER = Logger.getLogger(JoinGameController.class.getName());
+    private boolean joiningGame;
     private ActionListener action = new ActionListener()
     {
         @Override public void actionPerformed(ActionEvent e)
@@ -40,12 +41,6 @@ public class JoinGameController extends ObserverController implements IJoinGameC
         }
     };
     final private Timer timer = new Timer(2000, action);
-    private boolean joiningGame;
-
-    public static JoinGameController getInstance()
-    {
-        return instance;
-    }
 
     /**
      * JoinGameController constructor
@@ -66,6 +61,11 @@ public class JoinGameController extends ObserverController implements IJoinGameC
         setSelectColorView(selectColorView);
         setMessageView(messageView);
         facade = ClientFacade.getInstance();
+    }
+
+    public static JoinGameController getInstance()
+    {
+        return instance;
     }
 
     public IJoinGameView getJoinGameView()
@@ -172,14 +172,14 @@ public class JoinGameController extends ObserverController implements IJoinGameC
 
     @Override public void startCreateNewGame()
     {
-        if(getNewGameView().isModalShowing())
+        if (getNewGameView().isModalShowing())
             getNewGameView().closeModal();
         getNewGameView().showModal();
     }
 
     @Override public void cancelCreateNewGame()
     {
-        if(getNewGameView().isModalShowing())
+        if (getNewGameView().isModalShowing())
             getNewGameView().closeModal();
     }
 
@@ -199,7 +199,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
         String name = getNewGameView().getTitle();
 
         facade.createNewGame(new CreateGameRequest(randomTiles, randomNumbers, randomPorts, name));
-        if(getNewGameView().isModalShowing())
+        if (getNewGameView().isModalShowing())
             getNewGameView().closeModal();
         this.start();
     }
@@ -255,7 +255,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
     @Override public void cancelJoinGame()
     {
         joiningGame = false;
-        if(getJoinGameView().isModalShowing())
+        if (getJoinGameView().isModalShowing())
             getJoinGameView().closeModal();
     }
 

@@ -1,8 +1,11 @@
 package shared.locations;
 
-import java.lang.reflect.Type;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
-import com.google.gson.*;
+import java.lang.reflect.Type;
 
 /**
  * Represents the location of an edge on a hex map
@@ -43,14 +46,12 @@ public class EdgeLocation implements JsonSerializer<EdgeLocation>
         this.dir = dir;
     }
 
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         return "EdgeLocation [hexLoc=" + hexLoc + ", dir=" + dir + "]";
     }
 
-    @Override
-    public int hashCode()
+    @Override public int hashCode()
     {
         final int prime = 31;
         int result = 1;
@@ -62,12 +63,10 @@ public class EdgeLocation implements JsonSerializer<EdgeLocation>
     /**
      * Equals function comparing Direction and Hex Location
      *
-     * @param obj
-     *        Object to be compared with
+     * @param obj Object to be compared with
      * @return returns true if equals, false if not.
      */
-    @Override
-    public boolean equals(Object obj)
+    @Override public boolean equals(Object obj)
     {
         if (this == obj)
             return true;
@@ -82,8 +81,7 @@ public class EdgeLocation implements JsonSerializer<EdgeLocation>
         {
             if (other.hexLoc != null)
                 return false;
-        }
-        else if (!hexLoc.equals(other.hexLoc))
+        } else if (!hexLoc.equals(other.hexLoc))
             return false;
         return true;
     }
@@ -93,7 +91,7 @@ public class EdgeLocation implements JsonSerializer<EdgeLocation>
      * each edge has two different locations on a map, this method converts a
      * hex location to a single canonical form. This is useful for using hex
      * locations as map keys.
-     * 
+     *
      * @return Normalized hex location
      */
     public EdgeLocation getNormalizedLocation()
@@ -123,8 +121,7 @@ public class EdgeLocation implements JsonSerializer<EdgeLocation>
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(EdgeLocation src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(EdgeLocation src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = new JsonObject();
         obj.addProperty("direction", EdgeDirection.toAbreviation(src.dir));

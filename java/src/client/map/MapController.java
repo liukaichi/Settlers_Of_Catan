@@ -90,7 +90,7 @@ public class MapController extends ObserverController implements IMapController
         for (Hex hex : hexes.values())
         {
             getView().addHex(hex.getLocation(), hex.getHexType());
-            if(hex.getNumberTile() != -1)
+            if (hex.getNumberTile() != -1)
                 getView().addNumber(hex.getLocation(), hex.getNumberTile());
 
             LOGGER.fine("Adding Hex." + hex);
@@ -130,106 +130,96 @@ public class MapController extends ObserverController implements IMapController
 
     }
 
-    @Override
-    public boolean canPlaceRoad(EdgeLocation edgeLocation)
+    @Override public boolean canPlaceRoad(EdgeLocation edgeLocation)
     {
         return state.canPlaceRoad(edgeLocation.getNormalizedLocation());
     }
 
-    @Override
-    public boolean canPlaceSettlement(VertexLocation vertexLocation)
+    @Override public boolean canPlaceSettlement(VertexLocation vertexLocation)
     {
         return state.canPlaceSettlement(vertexLocation.getNormalizedLocation());
     }
 
-    @Override
-    public boolean canPlaceCity(VertexLocation vertexLocation)
+    @Override public boolean canPlaceCity(VertexLocation vertexLocation)
     {
         return state.canPlaceCity(vertexLocation.getNormalizedLocation());
     }
 
-    @Override
-    public boolean canPlaceRobber(HexLocation hexLocation)
+    @Override public boolean canPlaceRobber(HexLocation hexLocation)
     {
 
         return state.canPlaceRobber(hexLocation);
     }
 
-    @Override
-    public void placeRoad(EdgeLocation edgeLocation)
+    @Override public void placeRoad(EdgeLocation edgeLocation)
     {
         state.placeRoad(edgeLocation.getNormalizedLocation());
     }
 
-    @Override
-    public void placeSettlement(VertexLocation vertexLocation)
+    @Override public void placeSettlement(VertexLocation vertexLocation)
     {
         state.placeSettlement(vertexLocation.getNormalizedLocation());
     }
 
-
-    @Override
-    public void placeCity(VertexLocation vertexLocation)
+    @Override public void placeCity(VertexLocation vertexLocation)
     {
         state.placeCity(vertexLocation.getNormalizedLocation());
     }
 
-    @Override
-    public void placeRobber(HexLocation hexLocation)
+    @Override public void placeRobber(HexLocation hexLocation)
     {
         state.placeRobber(hexLocation);
 
     }
 
-    @Override
-    public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
+    @Override public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected)
     {
         state.startMove(pieceType, isFree, allowDisconnected);
     }
 
-    @Override
-    public void cancelMove()
+    @Override public void cancelMove()
     {
 
     }
 
-    @Override
-    public void playSoldierCard()
+    @Override public void playSoldierCard()
     {
         getView().startDrop(PieceType.ROBBER, null, false);
     }
 
-    public boolean isDevCard() {
+    public boolean isDevCard()
+    {
         return isDevCard;
     }
 
-    public void setIsDevCard(boolean isDevCard) {
+    public void setIsDevCard(boolean isDevCard)
+    {
         this.isDevCard = isDevCard;
     }
 
-    @Override
-    public void playRoadBuildingCard()
+    @Override public void playRoadBuildingCard()
     {
         setIsDevCard(true);
         startMove(PieceType.ROAD, true, false);
     }
 
-    @Override
-    public void robPlayer(RobPlayerInfo victim)
+    @Override public void robPlayer(RobPlayerInfo victim)
     {
         state.robPlayer(victim, robberLocation);
     }
 
-    public void setRoadBuildingLoc1(EdgeLocation edgeLoc){
-        this.roadBuildingLoc1 = edgeLoc;
-    }
-
-    public EdgeLocation getRoadBuildingLoc1(){
+    public EdgeLocation getRoadBuildingLoc1()
+    {
         return this.roadBuildingLoc1;
     }
 
+    public void setRoadBuildingLoc1(EdgeLocation edgeLoc)
+    {
+        this.roadBuildingLoc1 = edgeLoc;
+    }
 
-    public EdgeLocation getRoadBuildingLoc2(){
+    public EdgeLocation getRoadBuildingLoc2()
+    {
         return this.roadBuildingLoc2;
     }
 
@@ -238,8 +228,7 @@ public class MapController extends ObserverController implements IMapController
      * 
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
-    @Override
-    public void update(Observable o, Object arg)
+    @Override public void update(Observable o, Object arg)
     {
         ClientModel model = (ClientModel) o;
         state.update(this, model, arg);

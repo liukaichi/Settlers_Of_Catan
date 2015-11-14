@@ -1,14 +1,21 @@
 package shared.model.bank;
 
-import java.util.*;
-
 import client.facade.ClientFacade;
-import shared.definitions.*;
-import shared.definitions.exceptions.*;
-import shared.model.bank.card.*;
+import shared.definitions.DevCardType;
+import shared.definitions.PortType;
+import shared.definitions.ResourceType;
+import shared.definitions.StructureType;
+import shared.definitions.exceptions.CatanException;
+import shared.definitions.exceptions.InsufficientResourcesException;
+import shared.model.bank.card.DevCard;
+import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resource;
 import shared.model.bank.resource.Resources;
-import shared.model.bank.structure.*;
+import shared.model.bank.structure.BankStructure;
+import shared.model.bank.structure.Structures;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class extends Bank with properties and methods specific to the player
@@ -47,21 +54,6 @@ public class PlayerBank extends Bank
         return playerResources;
     }
 
-    public void setKnights(int knights)
-    {
-        this.knights = knights;
-    }
-
-    public void setVictoryPoints(int victoryPoints)
-    {
-        this.victoryPoints = victoryPoints;
-    }
-
-    public void setMonuments(int monuments)
-    {
-        this.monuments = monuments;
-    }
-
     public void setPlayerResources(Resources playerResources)
     {
         this.playerResources = playerResources;
@@ -77,6 +69,11 @@ public class PlayerBank extends Bank
         return knights;
     }
 
+    public void setKnights(int knights)
+    {
+        this.knights = knights;
+    }
+
     public void addKnights(int knights)
     {
         this.knights += knights;
@@ -87,6 +84,11 @@ public class PlayerBank extends Bank
         return victoryPoints;
     }
 
+    public void setVictoryPoints(int victoryPoints)
+    {
+        this.victoryPoints = victoryPoints;
+    }
+
     public void addVictoryPoints(int victoryPoints)
     {
         this.victoryPoints += victoryPoints;
@@ -95,6 +97,11 @@ public class PlayerBank extends Bank
     public int getMonuments()
     {
         return monuments;
+    }
+
+    public void setMonuments(int monuments)
+    {
+        this.monuments = monuments;
     }
 
     public void addMonuments(int monuments)
@@ -182,7 +189,7 @@ public class PlayerBank extends Bank
      */
     public boolean canBuyDevCard()
     {
-        Resources cost = new Resources(0,0,1,1,1);
+        Resources cost = new Resources(0, 0, 1, 1, 1);
         //TODO this might not properly get the game bank's dev cards.
         //if (hasEnoughResources(cost) && (!super.getDevCardDeck().empty()))
         return hasEnoughResources(cost) && !ClientFacade.getInstance().getBank().getDevCardDeck().empty();

@@ -1,7 +1,5 @@
 package shared.communication;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
 
 /**
@@ -9,7 +7,6 @@ import server.facade.AbstractServerFacade;
  * key-value pairs as well. The new game's ID can be read from the response.
  *
  * @author Cache Staheli
- *
  */
 public class ListGameRequest implements CatanCommand
 {
@@ -21,13 +18,14 @@ public class ListGameRequest implements CatanCommand
      */
     public ListGameRequest(String json)
     {
-       //do nothing
+        //do nothing
     }
 
     /**
      * Calls createGame method on the Server Facade
-     * @return Json String representing the current state of the Server Model
+     *
      * @param gameID possibly not used.
+     * @return Json String representing the current state of the Server Model
      */
     @Override public String execute(int gameID)
     {

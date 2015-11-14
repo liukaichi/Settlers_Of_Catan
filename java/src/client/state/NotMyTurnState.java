@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package client.state;
 
@@ -9,13 +9,9 @@ import client.domestic.IAcceptTradeOverlay;
 import client.maritime.MaritimeTradeController;
 import client.resources.ResourceBarController;
 import client.turntracker.TurnTrackerController;
-import shared.model.TurnTracker;
-
-import java.util.logging.Logger;
 
 /**
  * @author cstaheli
- *
  */
 public class NotMyTurnState extends GameplayState
 {
@@ -31,12 +27,13 @@ public class NotMyTurnState extends GameplayState
         turnTrackerController.getView().updateGameState("Just hangin' out.", false);
     }
 
-    @Override
-    public void acceptTrade(boolean willAccept)
+    @Override public void acceptTrade(boolean willAccept)
     {
-        if(controller instanceof DomesticTradeController) {
-            IAcceptTradeOverlay accept = ((DomesticTradeController)controller).getAcceptOverlay();
-            if (accept.isModalShowing()) {
+        if (controller instanceof DomesticTradeController)
+        {
+            IAcceptTradeOverlay accept = ((DomesticTradeController) controller).getAcceptOverlay();
+            if (accept.isModalShowing())
+            {
                 accept.closeModal();
             }
             LOGGER.fine("State calling facade willAccept(" + willAccept + ").");
@@ -49,17 +46,14 @@ public class NotMyTurnState extends GameplayState
         if (controller instanceof MaritimeTradeController)
         {
             ((MaritimeTradeController) controller).getTradeView().enableMaritimeTrade(false);
-        }
-        else if (controller instanceof DomesticTradeController)
+        } else if (controller instanceof DomesticTradeController)
         {
             ((DomesticTradeController) controller).getTradeView().enableDomesticTrade(false);
 
-        }
-        else if (controller instanceof TurnTrackerController)
+        } else if (controller instanceof TurnTrackerController)
         {
             ((TurnTrackerController) controller).updatePlayers(facade.getModel());
-        }
-        else if (controller instanceof ResourceBarController)
+        } else if (controller instanceof ResourceBarController)
         {
             ((ResourceBarController) controller).disableAllActions();
         }

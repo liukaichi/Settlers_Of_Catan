@@ -1,6 +1,7 @@
 package client.login;
 
-import client.base.*;
+import client.base.Controller;
+import client.base.IAction;
 import client.facade.ClientFacade;
 import client.misc.IMessageView;
 import shared.communication.Credentials;
@@ -18,11 +19,9 @@ public class LoginController extends Controller implements ILoginController
     /**
      * LoginController constructor
      *
-     * @param view
-     *        Login view
-     * @param messageView
-     *        Message view (used to display error messages that occur during the
-     *        login process)
+     * @param view        Login view
+     * @param messageView Message view (used to display error messages that occur during the
+     *                    login process)
      */
     public LoginController(ILoginView view, IMessageView messageView)
     {
@@ -45,18 +44,6 @@ public class LoginController extends Controller implements ILoginController
     }
 
     /**
-     * Sets the action to be executed when the user logs in
-     *
-     * @param value
-     *        The action to be executed when the user logs in
-     */
-    public void setLoginAction(IAction value)
-    {
-
-        loginAction = value;
-    }
-
-    /**
      * Returns the action to be executed when the user logs in
      *
      * @return The action to be executed when the user logs in
@@ -67,10 +54,20 @@ public class LoginController extends Controller implements ILoginController
         return loginAction;
     }
 
-    @Override
-    public void start()
+    /**
+     * Sets the action to be executed when the user logs in
+     *
+     * @param value The action to be executed when the user logs in
+     */
+    public void setLoginAction(IAction value)
     {
-        if(getLoginView().isModalShowing())
+
+        loginAction = value;
+    }
+
+    @Override public void start()
+    {
+        if (getLoginView().isModalShowing())
             getLoginView().closeModal();
         getLoginView().showModal();
     }
@@ -81,8 +78,7 @@ public class LoginController extends Controller implements ILoginController
      * pre-game state close theModal, loginAction.execute else show a dialogue
      * to reprompt user for info
      */
-    @Override
-    public void signIn()
+    @Override public void signIn()
     {
         String username = getLoginView().getLoginUsername();
         String password = getLoginView().getLoginPassword();
@@ -93,12 +89,11 @@ public class LoginController extends Controller implements ILoginController
             // If log in succeeded
             getLoginView().closeModal();
             loginAction.execute();
-        }
-        catch (InvalidCredentialsException e)
+        } catch (InvalidCredentialsException e)
         {
             getMessageView().setTitle("Error Yo!");
             getMessageView().setMessage("Yo Homie, that login shiz there aint gonna work!");
-            if(getMessageView().isModalShowing())
+            if (getMessageView().isModalShowing())
                 getMessageView().closeModal();
             getMessageView().showModal();
         }
@@ -108,8 +103,7 @@ public class LoginController extends Controller implements ILoginController
     /**
      * pretty much the same as above but with different error message
      */
-    @Override
-    public void register()
+    @Override public void register()
     {
 
         try
@@ -126,12 +120,11 @@ public class LoginController extends Controller implements ILoginController
             // If register succeeded
             getLoginView().closeModal();
             loginAction.execute();
-        }
-        catch (InvalidCredentialsException e)
+        } catch (InvalidCredentialsException e)
         {
             getMessageView().setTitle("Invalid Sign-In Homes!");
             getMessageView().setMessage("Yo, Homie, " + e.getMessage());
-            if(getMessageView().isModalShowing())
+            if (getMessageView().isModalShowing())
                 getMessageView().closeModal();
             getMessageView().showModal();
         }

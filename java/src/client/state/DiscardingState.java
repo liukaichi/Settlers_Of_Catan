@@ -24,15 +24,16 @@ public class DiscardingState extends GameplayState
 
     /**
      * Creates a new Discarding state with the given controller.
+     *
      * @param controller the controller.
      */
     public DiscardingState(ObserverController controller)
     {
         super(controller);
         currentTurnStatus = TurnStatus.Discarding;
-        if(controller instanceof DiscardController)
+        if (controller instanceof DiscardController)
         {
-            discardController = (DiscardController)controller;
+            discardController = (DiscardController) controller;
         }
         facade = ClientFacade.getInstance();
     }
@@ -43,16 +44,15 @@ public class DiscardingState extends GameplayState
         if (controller instanceof DiscardController)
         {
             playersHand = facade.getPlayer().getResources();
-            if(playersHand.totalResources() > 7)
+            if (playersHand.totalResources() > 7)
             {
                 updateResources();
-                if(discardController.getDiscardView().isModalShowing())
+                if (discardController.getDiscardView().isModalShowing())
                     discardController.getDiscardView().closeModal();
                 discardController.getDiscardView().showModal();
-            }
-            else
+            } else
             {
-                if(discardController.getWaitView().isModalShowing())
+                if (discardController.getWaitView().isModalShowing())
                     discardController.getWaitView().closeModal();
                 discardController.getWaitView().showModal();
             }
@@ -100,9 +100,9 @@ public class DiscardingState extends GameplayState
 
     @Override public void discardResources()
     {
-        if(discardController.getDiscardView().isModalShowing())
+        if (discardController.getDiscardView().isModalShowing())
             discardController.getDiscardView().closeModal();
-        if(discardController.getWaitView().isModalShowing())
+        if (discardController.getWaitView().isModalShowing())
             discardController.getWaitView().closeModal();
         discardController.getWaitView().showModal();
         facade.discardResources(discardHand);

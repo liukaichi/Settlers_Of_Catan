@@ -4,9 +4,8 @@ import shared.definitions.exceptions.InvalidCredentialsException;
 
 /**
  * Object that represents a string holding the username of the player.
- * 
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public class Username
 {
@@ -43,8 +42,7 @@ public class Username
         if (username.length() < MIN_UNAME_LENGTH || username.length() > MAX_UNAME_LENGTH)
         {
             throw new InvalidCredentialsException("Username must be between 3 and 7 characters.");
-        }
-        else
+        } else
         {
             for (char c : username.toCharArray())
             {
@@ -56,10 +54,12 @@ public class Username
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Username username1 = (Username) o;
 
@@ -67,8 +67,8 @@ public class Username
 
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode()
+    {
         return username != null ? username.hashCode() : 0;
     }
 }

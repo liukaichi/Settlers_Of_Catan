@@ -9,9 +9,8 @@ import java.util.List;
 
 /**
  * List of the resource objects
- * 
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public class Resources implements JsonSerializer<Resources>
 {
@@ -47,7 +46,7 @@ public class Resources implements JsonSerializer<Resources>
 
     public Resources()
     {
-        this(0,0,0,0,0);
+        this(0, 0, 0, 0, 0);
     }
 
     private void initialize(boolean isGameBank)
@@ -113,8 +112,7 @@ public class Resources implements JsonSerializer<Resources>
         return brick.getAmount() + ore.getAmount() + sheep.getAmount() + wheat.getAmount() + wood.getAmount();
     }
 
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         JsonObject resources = toJsonObject();
         System.out.println("JSON-izing resources\n" + resources.toString());
@@ -141,8 +139,7 @@ public class Resources implements JsonSerializer<Resources>
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(Resources src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(Resources src, Type srcType, JsonSerializationContext context)
     {
         JsonObject jsonOffer = new JsonObject();
         {
@@ -155,8 +152,7 @@ public class Resources implements JsonSerializer<Resources>
         return jsonOffer;
     }
 
-    @Override
-    public boolean equals(Object o)
+    @Override public boolean equals(Object o)
     {
         if (this == o)
             return true;
@@ -179,6 +175,7 @@ public class Resources implements JsonSerializer<Resources>
 
     /**
      * Increases the specified resource in this collection by 1. This behaves identically to increase(type, 1).
+     *
      * @param resource the resource type to increase.
      */
     public void increase(ResourceType resource)
@@ -188,6 +185,7 @@ public class Resources implements JsonSerializer<Resources>
 
     /**
      * Decreases the specified resource in this collection by 1
+     *
      * @param resource
      */
     public void decrease(ResourceType resource)

@@ -122,7 +122,7 @@ public class ResourceBarController extends ObserverController implements IResour
 
     @Override public void buyCard()
     {
-       executeElementAction(ResourceBarElement.BUY_CARD);
+        executeElementAction(ResourceBarElement.BUY_CARD);
     }
 
     /**
@@ -145,9 +145,9 @@ public class ResourceBarController extends ObserverController implements IResour
 
     @Override public void update(Observable o, Object arg)
     {
-        if(facade.getClientPlayer().getNormalizedPlayerIndex() != -1)
+        if (facade.getClientPlayer().getNormalizedPlayerIndex() != -1)
         {
-            state.update(this, (ClientModel)o, arg);
+            state.update(this, (ClientModel) o, arg);
             state.updateView();
             updateView();
         }
@@ -158,11 +158,11 @@ public class ResourceBarController extends ObserverController implements IResour
      */
     public void disableAllActions()
     {
-        getView().setElementEnabled(ResourceBarElement.BUY_CARD,false);
-        getView().setElementEnabled(ResourceBarElement.PLAY_CARD,false);
-        getView().setElementEnabled(ResourceBarElement.ROAD,false);
-        getView().setElementEnabled(ResourceBarElement.CITY,false);
-        getView().setElementEnabled(ResourceBarElement.SETTLEMENT,false);
+        getView().setElementEnabled(ResourceBarElement.BUY_CARD, false);
+        getView().setElementEnabled(ResourceBarElement.PLAY_CARD, false);
+        getView().setElementEnabled(ResourceBarElement.ROAD, false);
+        getView().setElementEnabled(ResourceBarElement.CITY, false);
+        getView().setElementEnabled(ResourceBarElement.SETTLEMENT, false);
     }
 }
 

@@ -24,13 +24,14 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
     /**
      * Instantiates a OfferTradeCommand. If resources are negative, it means they are being sent, and positive
      * means they are being received.
-     * @param sender the PlayerIndex of the sender.
-     * @param receiver  the PlayerIndex of the receiver.
-     * @param brick the amount of brick being sent or received.
-     * @param wood the amount of wood being sent or received.
-     * @param sheep the amount of sheep being sent or received.
-     * @param wheat the amount of wheat being sent or received.
-     * @param ore the amount of ore being sent or received.
+     *
+     * @param sender   the PlayerIndex of the sender.
+     * @param receiver the PlayerIndex of the receiver.
+     * @param brick    the amount of brick being sent or received.
+     * @param wood     the amount of wood being sent or received.
+     * @param sheep    the amount of sheep being sent or received.
+     * @param wheat    the amount of wheat being sent or received.
+     * @param ore      the amount of ore being sent or received.
      * @see TradeOffer
      */
     public OfferTradeCommand(PlayerIndex sender, PlayerIndex receiver, int brick, int wood, int sheep, int wheat,
@@ -43,6 +44,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
 
     /**
      * Instantiate a OfferTradeCommand from JSON.
+     *
      * @param json JSON of the OfferTradeCommand.
      */
     public OfferTradeCommand(String json)
@@ -61,7 +63,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
 
         this.type = MoveType.valueOf(moveType);
         this.playerIndex = PlayerIndex.fromInt(sender);
-        this.offer = new TradeOffer(playerIndex, PlayerIndex.fromInt(receiver),brick,wood,sheep,wheat,ore);
+        this.offer = new TradeOffer(playerIndex, PlayerIndex.fromInt(receiver), brick, wood, sheep, wheat, ore);
     }
 
     /*
@@ -81,11 +83,13 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
 
     /**
      * Calls offerTrade method on the Server Facade
-     * @return the Json representation of the model after the command is executed.
+     *
      * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().offerTrade(gameID, offer.getSenderIndex(), this.offer, offer.getReceiverIndex()).toString();
+        return AbstractServerFacade.getInstance()
+                .offerTrade(gameID, offer.getSenderIndex(), this.offer, offer.getReceiverIndex()).toString();
     }
 }

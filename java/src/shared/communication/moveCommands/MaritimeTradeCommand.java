@@ -21,7 +21,6 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
 {
     /**
      * The ratio at which the maritime offer is being extended.
-     *
      */
     private TradeRatio ratio;
     /**
@@ -31,9 +30,10 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
 
     /**
      * Instantiates a MaritimeTradeCommand with the given player, ratio of trade, and which resources area being traded.
-     * @param playerIndex the player sending the maritime trade.
-     * @param ratio the ratio at which the trade is being offered.
-     * @param inputResource the resource the player is sending.
+     *
+     * @param playerIndex    the player sending the maritime trade.
+     * @param ratio          the ratio at which the trade is being offered.
+     * @param inputResource  the resource the player is sending.
      * @param outputResource the resource the player is receiving.
      */
     public MaritimeTradeCommand(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
@@ -47,6 +47,7 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
 
     /**
      * Instantiate a MaritimeTradeCommand from JSON.
+     *
      * @param json JSON of the MaritimeTradeCommand.
      */
     public MaritimeTradeCommand(String json)
@@ -60,15 +61,13 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
         this.outputResource = ResourceType.valueOf(tradeObject.get("outputResource").getAsString());
     }
 
-
     /*
      * (non-Javadoc)
      *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(MaritimeTradeCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(MaritimeTradeCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.addProperty("ratio", src.ratio.getRatio());
@@ -79,12 +78,15 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
 
     /**
      * Calls maritimeTrade method on the Server Facade
-     * @return the Json representation of the model after the command is executed.
+     *
      * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
     {
-        return AbstractServerFacade.getInstance().maritimeTrade(gameID, getPlayerIndex(), this.ratio, this.inputResource, this.outputResource).toString();
+        return AbstractServerFacade.getInstance()
+                .maritimeTrade(gameID, getPlayerIndex(), this.ratio, this.inputResource, this.outputResource)
+                .toString();
 
     }
 }

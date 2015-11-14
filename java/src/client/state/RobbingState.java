@@ -13,8 +13,6 @@ import shared.definitions.PieceType;
 import shared.definitions.TurnStatus;
 import shared.locations.HexLocation;
 
-import java.util.logging.Logger;
-
 /**
  * @author cstaheli
  *         This state contains the methods that are available for use when robbing.
@@ -27,9 +25,9 @@ public class RobbingState extends GameplayState
     public RobbingState(ObserverController controller)
     {
         super(controller);
-        if(controller instanceof MapController)
+        if (controller instanceof MapController)
         {
-            mapController = (MapController)controller;
+            mapController = (MapController) controller;
             robView = mapController.getRobView();
         }
         currentTurnStatus = TurnStatus.Robbing;
@@ -51,11 +49,10 @@ public class RobbingState extends GameplayState
         if (controller instanceof MapController && facade.isMyTurn())
         {
             mapController.getView().startDrop(PieceType.ROBBER, null, false);
-        }
-        else if (controller instanceof DiscardController)
+        } else if (controller instanceof DiscardController)
         {
             DiscardController control = (DiscardController) controller;
-            if(control.getWaitView().isModalShowing())
+            if (control.getWaitView().isModalShowing())
             {
                 control.getWaitView().closeModal();
             }
@@ -68,14 +65,14 @@ public class RobbingState extends GameplayState
         {
             robView.setPlayers(facade.getRobPlayerInfo(hexLoc));
             mapController.setRobberLocation(hexLoc);
-            if(robView.isModalShowing())
+            if (robView.isModalShowing())
                 robView.closeModal();
             robView.showModal();
         }
 
     }
-    @Override
-    public void robPlayer(RobPlayerInfo victim, HexLocation location)
+
+    @Override public void robPlayer(RobPlayerInfo victim, HexLocation location)
     {
         if (robView.isModalShowing())
         {

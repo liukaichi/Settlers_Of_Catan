@@ -3,22 +3,27 @@
  */
 package facades;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
+import client.data.GameInfo;
+import client.proxy.IProxy;
+import client.proxy.ServerProxy;
 import org.junit.*;
-
-import client.data.*;
-import client.proxy.*;
-import shared.communication.*;
+import shared.communication.CreateGameRequest;
+import shared.communication.CreateGameResponse;
+import shared.communication.Credentials;
+import shared.communication.JoinGameRequest;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;
-import shared.definitions.exceptions.*;
+import shared.definitions.exceptions.AddAIException;
+import shared.definitions.exceptions.GameQueryException;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.message.Chat;
 import shared.model.message.MessageLine;
+
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * @author cstaheli
@@ -233,9 +238,8 @@ public class ProxyTester
         games = proxy.listGames().getGames();
         assertTrue(games.size() > size);
         boolean found = false;
-        for (int i = 0; i < games.size(); ++i)
+        for (GameInfo info : games)
         {
-            GameInfo info = games.get(i);
             if (info.getTitle().equals("list1"))
             {
                 found = true;
@@ -246,9 +250,8 @@ public class ProxyTester
         proxy.createGame(new CreateGameRequest(true, true, true, "list1"));
         int count = 0;
         games = proxy.listGames().getGames();
-        for (int i = 0; i < games.size(); ++i)
+        for (GameInfo info : games)
         {
-            GameInfo info = games.get(i);
             if (info.getTitle().equals("list1"))
             {
                 ++count;
@@ -259,9 +262,8 @@ public class ProxyTester
         found = false;
         proxy.createGame(new CreateGameRequest(true, true, true, "list2"));
         games = proxy.listGames().getGames();
-        for (int i = 0; i < games.size(); ++i)
+        for (GameInfo info : games)
         {
-            GameInfo info = games.get(i);
             if (info.getTitle().equals("list2"))
             {
                 found = true;
@@ -287,9 +289,8 @@ public class ProxyTester
         int id = info.getId();
         List<GameInfo> games = proxy.listGames().getGames();
         boolean found = false;
-        for (int i = 0; i < games.size(); ++i)
+        for (GameInfo gameInfo : games)
         {
-            GameInfo gameInfo = games.get(i);
             if (id == gameInfo.getId())
             {
                 found = true;
@@ -539,8 +540,9 @@ public class ProxyTester
         testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
                 new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthWest), true));
         assertNotNull(testingModel);
-        testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
-                new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North), true));
+        testingModel = proxy.buildRoad(
+                new BuildRoadCommand(PlayerIndex.PLAYER_0, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North),
+                        true));
         assertNotNull(testingModel);
         testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
                 new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthEast), true));
@@ -620,7 +622,7 @@ public class ProxyTester
         assertNotNull(testingModel);
 
         proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_2,
-                new VertexLocation(new HexLocation(1,0), VertexDirection.NorthWest), false));
+                new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest), false));
         proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_0,
                 new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthEast), false));
         testingModel = proxy

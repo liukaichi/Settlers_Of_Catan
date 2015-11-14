@@ -144,8 +144,7 @@ public class GameManager
             try
             {
                 game.addPlayer(aiManager.createAIPlayer(game));
-            }
-            catch (CatanException e)
+            } catch (CatanException e)
             {
                 throw new GameQueryException(e.getMessage());
             }
@@ -174,6 +173,7 @@ public class GameManager
         games.put(newGameID, game);
         return game;
     }
+
     private class AIManager
     {
         ArrayList<String> aiNames;
@@ -193,12 +193,12 @@ public class GameManager
         {
             ArrayList<CatanColor> usedColors = new ArrayList<>();
             ArrayList<String> usedNames = new ArrayList<>();
-            for(PlayerInfo info : gameInfo.getPlayerInfos())
+            for (PlayerInfo info : gameInfo.getPlayerInfos())
             {
                 usedColors.add(info.getColor());
                 usedNames.add(info.getName());
             }
-            PlayerInfo aiPlayerInfo = new PlayerInfo(--id,randomName(usedNames),randomColor(usedColors));
+            PlayerInfo aiPlayerInfo = new PlayerInfo(--id, randomName(usedNames), randomColor(usedColors));
             return new Player(aiPlayerInfo);
         }
 
@@ -206,7 +206,7 @@ public class GameManager
         {
             Random rand = new Random();
             CatanColor color = CatanColor.values()[rand.nextInt(8)];
-            while(usedColors.contains(color))
+            while (usedColors.contains(color))
             {
                 color = CatanColor.values()[rand.nextInt(8)];
             }
@@ -217,7 +217,7 @@ public class GameManager
         {
             Random rand = new Random();
             String name = aiNames.get(rand.nextInt(4));
-            while(usedNames.contains(name))
+            while (usedNames.contains(name))
             {
                 name = aiNames.get(rand.nextInt(4));
             }

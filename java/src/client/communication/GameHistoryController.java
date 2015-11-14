@@ -22,8 +22,7 @@ public class GameHistoryController extends ObserverController implements IGameHi
         //updateView();
     }
 
-    @Override
-    public IGameHistoryView getView()
+    @Override public IGameHistoryView getView()
     {
 
         return (IGameHistoryView) super.getView();
@@ -33,9 +32,10 @@ public class GameHistoryController extends ObserverController implements IGameHi
     {
         ClientFacade facade = ClientFacade.getInstance();
         // <temp>
-        List<MessageLine> messages =  model.getLog().getMessages();
+        List<MessageLine> messages = model.getLog().getMessages();
         ArrayList<LogEntry> entries = new ArrayList<>();
-        for (MessageLine messageLine : messages){
+        for (MessageLine messageLine : messages)
+        {
             entries.add(new LogEntry(facade.getColorByName(messageLine.getSourceName()), messageLine.getMessage()));
         }
 /*
@@ -65,8 +65,7 @@ public class GameHistoryController extends ObserverController implements IGameHi
      * 
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
-    @Override
-    public void update(Observable o, Object arg)
+    @Override public void update(Observable o, Object arg)
     {
         ClientModel model = (ClientModel) o;
         this.initFromModel(model);

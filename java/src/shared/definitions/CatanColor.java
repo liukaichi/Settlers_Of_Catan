@@ -1,19 +1,17 @@
 package shared.definitions;
 
-import java.awt.Color;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.awt.*;
 
 /**
  * Defines the colors that a player can be.
  */
 public enum CatanColor
 {
-    @SerializedName("red") RED, @SerializedName("orange") ORANGE, @SerializedName("yellow") YELLOW,
-    @SerializedName("blue") BLUE, @SerializedName("green") GREEN, @SerializedName("purple") PURPLE,
-    @SerializedName("puce") PUCE, @SerializedName("white") WHITE, @SerializedName("brown") BROWN;
-
-    private Color color;
+    @SerializedName("red")RED, @SerializedName("orange")ORANGE, @SerializedName("yellow")YELLOW,
+    @SerializedName("blue")BLUE, @SerializedName("green")GREEN, @SerializedName("purple")PURPLE,
+    @SerializedName("puce")PUCE, @SerializedName("white")WHITE, @SerializedName("brown")BROWN;
 
     static
     {
@@ -27,6 +25,8 @@ public enum CatanColor
         WHITE.color = new Color(223, 223, 223);
         BROWN.color = new Color(161, 143, 112);
     }
+
+    private Color color;
 
     public Color getJavaColor()
     {

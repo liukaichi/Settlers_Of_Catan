@@ -14,25 +14,29 @@ public enum PlayerIndex
 {
     NONE(-1), PLAYER_0(0), PLAYER_1(1), PLAYER_2(2), PLAYER_3(3);
 
-    private final int index;
     private static final Map<Integer, PlayerIndex> intToTypeMap = new HashMap<>();
-    
-    static {
-        for (PlayerIndex type : PlayerIndex.values()) {
+
+    static
+    {
+        for (PlayerIndex type : PlayerIndex.values())
+        {
             intToTypeMap.put(type.getIndex(), type);
         }
     }
 
-    public static PlayerIndex fromInt(int i) {
-    	PlayerIndex type = intToTypeMap.get(i);
-        if (type == null) 
-            return PlayerIndex.NONE;
-        return type;
-    }
+    private final int index;
 
     PlayerIndex(int index)
     {
         this.index = index;
+    }
+
+    public static PlayerIndex fromInt(int i)
+    {
+        PlayerIndex type = intToTypeMap.get(i);
+        if (type == null)
+            return PlayerIndex.NONE;
+        return type;
     }
 
     public int getIndex()
@@ -42,6 +46,6 @@ public enum PlayerIndex
 
     public PlayerIndex getNext()
     {
-        return index < 3 ? PlayerIndex.fromInt(index+1) : PlayerIndex.PLAYER_0;
+        return index < 3 ? PlayerIndex.fromInt(index + 1) : PlayerIndex.PLAYER_0;
     }
 }

@@ -1,8 +1,9 @@
 package client.data;
 
-import com.google.gson.*;
-
-import shared.definitions.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import shared.definitions.CatanColor;
+import shared.definitions.PlayerIndex;
 
 /**
  * Used to pass player information into views<br>
@@ -14,7 +15,6 @@ import shared.definitions.*;
  * <li>Name: player's name (non-empty string)</li>
  * <li>Color: player's color (cannot be null)</li>
  * </ul>
- * 
  */
 public class PlayerInfo
 {
@@ -51,10 +51,9 @@ public class PlayerInfo
      * Catan User Cookie. This should only contain the name and ID of the
      * player. The password is also returned, but the password is not currently
      * stored locally.
-     * 
-     * @param json
-     *        the json representation of this. Invoked from
-     *        ServerProxy#buildPlayerInfoFromCookie().
+     *
+     * @param json the json representation of this. Invoked from
+     *             ServerProxy#buildPlayerInfoFromCookie().
      */
     public PlayerInfo(String json)
     {
@@ -90,6 +89,11 @@ public class PlayerInfo
         return playerIndex;
     }
 
+    public void setPlayerIndex(PlayerIndex playerIndex)
+    {
+        this.playerIndex = playerIndex;
+    }
+
     public void setPlayerIndex(int playerIndex)
     {
         // this.playerIndex = playerIndex;
@@ -112,11 +116,6 @@ public class PlayerInfo
         }
     }
 
-    public void setPlayerIndex(PlayerIndex playerIndex)
-    {
-        this.playerIndex = playerIndex;
-    }
-
     public String getName()
     {
         return name;
@@ -137,14 +136,12 @@ public class PlayerInfo
         this.color = color;
     }
 
-    @Override
-    public int hashCode()
+    @Override public int hashCode()
     {
         return 31 * this.id;
     }
 
-    @Override
-    public boolean equals(Object obj)
+    @Override public boolean equals(Object obj)
     {
         if (obj == null)
         {
@@ -159,8 +156,8 @@ public class PlayerInfo
         return this.id == other.id;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString()
+    {
         JsonParser parser = new JsonParser();
         JsonObject gameInfo = new JsonObject();
 

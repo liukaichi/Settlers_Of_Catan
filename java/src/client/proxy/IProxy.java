@@ -12,11 +12,10 @@ package client.proxy;
  * <br>
  * Nothing much is actually defined in this interface, as it simply extends
  * others. See these interfaces for further documentation.
- * 
+ *
  * @author Cache Staheli
  * @see IProxyNonMoveAPI
  * @see IProxyMoveAPI
- *
  */
 public interface IProxy extends IProxyNonMoveAPI, IProxyMoveAPI
 {
