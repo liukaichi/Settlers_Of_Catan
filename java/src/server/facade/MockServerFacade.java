@@ -3,8 +3,9 @@ package server.facade;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.utils.BufferedReaderParser;
-import shared.communication.CreateGameResponse;
-import shared.definitions.*;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+import shared.definitions.TradeRatio;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -67,39 +68,6 @@ public class MockServerFacade extends AbstractServerFacade
         else
             return null;
 
-    }
-
-    @Override public void addAI(AIType aiType, int gameID)
-    {
-        int joinedGameSize = joinedGame.getPlayers().size();
-        if (joinedGameSize < 4)
-        {
-            this.joinedGame.addPlayer(aiPlayers.get(joinedGameSize - 1));
-        }
-    }
-
-
-    @Override public void joinGame(PlayerInfo player, int gameID, CatanColor color)
-    {
-        for (GameInfo game : games)
-        {
-            if (game.getId() == gameID)
-            {
-                if (game.getPlayers().size() < 4)
-                {
-                    game.addPlayer(player);
-                    this.joinedGame = game;
-                }
-            }
-        }
-    }
-
-    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts,
-            String name)
-    {
-        int newGameID = games.size() + 1;
-        games.add(new GameInfo(newGameID, name));
-        return new CreateGameResponse(newGameID, name);
     }
 
     @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)

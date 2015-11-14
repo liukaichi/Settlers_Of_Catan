@@ -1,14 +1,9 @@
 package server.facade;
 
-import client.data.PlayerInfo;
 import server.ServerModel;
-import server.manager.User;
-import shared.communication.CreateGameResponse;
-import shared.communication.Credentials;
-import shared.communication.ListAIResponse;
-import shared.communication.ListGamesResponse;
-import shared.definitions.*;
-import shared.definitions.exceptions.SignInException;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+import shared.definitions.TradeRatio;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -24,33 +19,6 @@ public class ServerFacade extends AbstractServerFacade
     private ServerModel model;
 
     @Override public ClientModel getGameState(int version)
-    {
-        return null;
-    }
-
-    @Override public void addAI(AIType aiType, int gameID)
-    {
-
-    }
-
-    @Override public ListAIResponse listAI()
-    {
-        return null;
-    }
-
-    @Override public ListGamesResponse listGames()
-    {
-        return null;
-    }
-
-    @Override
-    public void joinGame(PlayerInfo player, int gameID, CatanColor color)
-    {
-
-    }
-
-    @Override
-    public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
         return null;
     }
@@ -157,15 +125,5 @@ public class ServerFacade extends AbstractServerFacade
     public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
-    }
-
-    @Override public User signInUser(Credentials credentials) throws SignInException
-    {
-        throw new SignInException("Failed to login - bad username or password.");
-    }
-
-    @Override public User registerUser(Credentials credentials) throws SignInException
-    {
-        throw new SignInException("Failed to register - someone already has that username.");
     }
 }

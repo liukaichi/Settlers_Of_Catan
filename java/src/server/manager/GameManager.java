@@ -3,9 +3,11 @@ package server.manager;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import server.ServerModel;
-import server.facade.*;
+import server.facade.IGameFacade;
+import server.facade.IGamesFacade;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
+import shared.definitions.exceptions.GameQueryException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ import java.util.Map;
 /**
  * The Manager that holds all of the games. Various options that the facades take use this manager. Uses the singleton
  * pattern so that there will only be one instance of the games available on the server.
+ *
  * @see IGameFacade
  * @see IGamesFacade
  * @see UserManager
@@ -23,15 +26,30 @@ public class GameManager
 {
     private static GameManager _instance = null;
 
-    private Map<Integer, GameInfo> gameInfoMap;
-
+    private Map<Integer, GameInfo> games;
+    private Map<Integer, ServerModel> models;
     private List<PlayerInfo> aiPlayers;
 
     private GameManager()
     {
-        gameInfoMap = new HashMap<>();
+        games = new HashMap<>();
+        models = new HashMap<>();
         this.addDefaultAIs();
         this.addDefaultGames();
+    }
+
+    /**
+     * Singleton pattern for GameManager.
+     *
+     * @return a singleton instance for GameManager.
+     */
+    public static GameManager getInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = new GameManager();
+        }
+        return _instance;
     }
 
     private void addDefaultAIs()
@@ -51,80 +69,83 @@ public class GameManager
             game.addPlayer(new PlayerInfo(1, "Amanda", CatanColor.BLUE));
             game.addPlayer(new PlayerInfo(2, "Justin", CatanColor.ORANGE));
             game.addPlayer(new PlayerInfo(3, "David", CatanColor.BROWN));
-            gameInfoMap.put(i, game);
+            games.put(i, game);
         }
-    }
-
-    /**
-     * Singleton pattern for GameManager.
-     * @return a singleton instance for GameManager.
-     */
-    public static GameManager getInstance()
-    {
-        if (_instance == null)
-        {
-            _instance = new GameManager();
-        }
-        return _instance;
     }
 
     /**
      * Gets the Game with the given gameID.
+     *
      * @param gameID the id of the game to get.
      * @return the Model of the game that matches the games requested.
      */
     public ServerModel getGame(int gameID)
     {
-        gameInfoMap.get(gameID); //TODO this should be used somehow.
+        games.get(gameID); //TODO this should be used somehow.
         return new ServerModel();
     }
 
     /**
      * Lists the games that are currently in the server.
+     *
      * @return a list of games that are currently in the server.
      */
     public List<GameInfo> listGames()
     {
-        return (List<GameInfo>) gameInfoMap.values();
+        return (List<GameInfo>) games.values();
     }
 
     /**
      * Places the player with the given id in the game specified with the given color.
+     *
      * @param player the id of the player joining the game.
      * @param gameID the id of the game to join.
-     * @param color the color that the player is joining the game with.
+     * @param color  the color that the player is joining the game with.
      */
-    public void joinGame(PlayerInfo player, int gameID, CatanColor color)
+    public void joinGame(PlayerInfo player, int gameID, CatanColor color) throws GameQueryException
     {
-        for (GameInfo game: gameInfoMap.values())
+        for (GameInfo game : games.values())
         {
             if (game.getId() == gameID)
             {
                 if (game.getPlayers().size() < 4)
                 {
                     game.addPlayer(player);
+                } else
+                {
+                    throw new GameQueryException("Four players in game. Unable to join.");
                 }
             }
         }
+        throw new GameQueryException("Game id not found.");
     }
 
     /**
      * Adds an AI player to the game with the given id.
+     *
      * @param gameID the id of the game to add the AI to.
-     * @param type the type of AI to add to the game.
+     * @param type   the type of AI to add to the game.
      */
-    public void addAI(int gameID, AIType type)
+    public void addAI(int gameID, AIType type) throws GameQueryException
     {
-        GameInfo game = gameInfoMap.get(gameID);
+        GameInfo game = games.get(gameID);
+        if (game == null)
+        {
+            throw new GameQueryException("Game id not found.");
+        }
         int joinedGameSize = game.getPlayers().size();
         if (joinedGameSize < 4)
         {
             game.addPlayer(aiPlayers.get(joinedGameSize - 1));
+        } else
+        {
+            throw new GameQueryException("Unable to add AI. Four players in game already.");
         }
     }
 
     /**
      * Lists the AI's available to add to a game.
+     *
      * @return a list of AI's available in the server.
      */
     public List<AIType> listAI()
@@ -132,5 +153,13 @@ public class GameManager
         List<AIType> types = new ArrayList<>();
         types.add(AIType.LARGEST_ARMY);
         return types;
+    }
+
+    public GameInfo createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
+    {
+        int newGameID = games.size() + 1;
+        GameInfo game = new GameInfo(newGameID, name);
+        games.put(newGameID, game);
+        return game;
     }
 }

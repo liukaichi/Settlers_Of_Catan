@@ -1,16 +1,19 @@
 package server.facade;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import server.manager.GameManager;
 import server.manager.User;
 import server.manager.UserManager;
+import shared.communication.CreateGameResponse;
 import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
 import shared.communication.ListGamesResponse;
 import shared.definitions.AIType;
+import shared.definitions.CatanColor;
+import shared.definitions.exceptions.GameQueryException;
 import shared.definitions.exceptions.SignInException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,10 +80,41 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
         return new ListAIResponse(types);
     }
 
+    @Override public String addAI(int gameID, AIType type)
+    {
+        try
+        {
+            GameManager.getInstance().addAI(gameID, type);
+            return "SUCCESS";
+        } catch (GameQueryException e)
+        {
+            return e.getMessage();
+        }
+    }
+
 
     @Override public ListGamesResponse listGames()
     {
         List<GameInfo> games = GameManager.getInstance().listGames();
         return new ListGamesResponse(games);
+    }
+
+    @Override public String joinGame(PlayerInfo player, int gameID, CatanColor color)
+    {
+        try
+        {
+            GameManager.getInstance().joinGame(player, gameID, color);
+            return "SUCCESS";
+        } catch (GameQueryException e)
+        {
+            return e.getMessage();
+        }
+    }
+
+    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts,
+            String name)
+    {
+        GameInfo game = GameManager.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name);
+        return new CreateGameResponse(game);
     }
 }
