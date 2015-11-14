@@ -79,57 +79,32 @@ public class GameHandler implements HttpHandler
 //                    + Character.toUpperCase(commandString.charAt(0))
 //                    + commandString.substring(1);
 
-            switch(commandString.toLowerCase()){
-                case "model":
-                    Map<String, String> params = parseQuery(uri.getQuery());
-                    int version = Integer.parseInt(params.get("version"));
-                    ClientModel model;
+            if(commandString.toLowerCase() == "model"){
+                Map<String, String> params = parseQuery(uri.getQuery());
+                int version = Integer.parseInt(params.get("version"));
+                ClientModel model;
 
-                    if(params.isEmpty()){
-                        model = facade.getGameState();
-                    }
-                    else{
-                        model = facade.getGameState(version);
-                    }
+                if(params.isEmpty()){
+                    model = facade.getGameState();
+                }
+                else{
+                    model = facade.getGameState(version);
+                }
 
-                    if(model == null){
-                        response = "true";
-                    }
-                    else{
-                        response = model.toString();
-                    }
-
-                    break;
-                case "reset":
-                    break;
-                case "commands":
-                    break;
-                case "addai":
-                    break;
-                case "listai":
-                    break;
+                if(model == null){
+                    response = "true";
+                }
+                else{
+                    response = model.toString();
+                }
             }
-
-//            Constructor c = Class.forName(className).getConstructor(String.class);
-//            CatanCommand newCommand = (CatanCommand)c.newInstance(json);
-
-            User user = null;
 
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
 
-
-//            if (commandString.equalsIgnoreCase("login"))
-//            {
-//                user = facade.signInUser(creds);
-//            } else if (commandString.equalsIgnoreCase("register"))
-//            {
-//                user = facade.registerUser(creds);
-//            }
-
             // create cookie
-            HttpCookie cookie = new HttpCookie("catan.user", user.toString()); //TODO this might cause a NullPointer.
+            HttpCookie cookie = new HttpCookie("catan.user", cookies.get(0));
 
             // add cookie to CookieStore
             cookieJar.add(uri, cookie);
