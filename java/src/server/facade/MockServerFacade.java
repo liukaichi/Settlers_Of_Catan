@@ -41,7 +41,7 @@ public class MockServerFacade extends AbstractServerFacade
 
     private ClientModel getModelFromFile(String fileName)
     {
-        File file = new File(modelFilePath + fileName + "");
+        File file = new File(modelFilePath + fileName + ".json");
         BufferedReader reader;
         ClientModel model = new ClientModel();
         try
