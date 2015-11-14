@@ -5,7 +5,8 @@ import shared.definitions.AIType;
 import shared.model.ClientModel;
 
 /**
- * Created by cstaheli on 11/4/2015.
+ * The interface for the actions available when the player has joined a game. Includes getting the game state, as well
+ * as adding AI's to the game.
  */
 public interface IGameFacade
 {
@@ -21,10 +22,10 @@ public interface IGameFacade
 
     /**
      * Add an AI player to the game specified by the id.
-     * @param aiType the type of AI to the game.
      * @param gameID the id of the game to add the AI to.
+     * @param aiType the type of AI to the game.
      */
-    void addAI(AIType aiType, int gameID);
+    String addAI(int gameID, AIType aiType);
 
     /**
      * List the types of AI available.

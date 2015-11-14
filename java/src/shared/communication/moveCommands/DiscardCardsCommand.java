@@ -1,12 +1,15 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.*;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 import shared.model.bank.resource.Resources;
+
+import java.lang.reflect.Type;
 
 /**
  * discardCards command object.
@@ -81,6 +84,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().discardCards(gameID, getPlayerIndex(), this.discardedCards).toString();
+
     }
 }

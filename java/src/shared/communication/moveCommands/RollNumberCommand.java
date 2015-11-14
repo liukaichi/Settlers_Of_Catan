@@ -1,11 +1,14 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.*;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
+
+import java.lang.reflect.Type;
 
 /**
  * rollNumber command object.
@@ -62,6 +65,6 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().rollNumber(gameID, getPlayerIndex(), this.number).toString();
     }
 }

@@ -1,12 +1,12 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.*;
-
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 import shared.locations.VertexLocation;
+
+import java.lang.reflect.Type;
 
 /**
  * buildCity command object.
@@ -70,6 +70,6 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().buildCity(gameID, getPlayerIndex(), cityLocation).toString();
     }
 }

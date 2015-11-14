@@ -25,6 +25,15 @@ public class CreateGameResponse
     }
 
     /**
+     * Initializes a new CreateGameResponse from a GameInfo.
+     * @param game the game to initialize from.
+     */
+    public CreateGameResponse(GameInfo game)
+    {
+        this.gameInfo = game;
+    }
+
+    /**
      * Instantiate a CreateGameResponse from JSON with the injected facade
      * @param json JSON of the CreateGameResponse
      */
@@ -52,4 +61,11 @@ public class CreateGameResponse
         return gameInfo.getId();
     }
 
+    @Override public String toString()
+    {
+        JsonObject response = new JsonObject();
+        response.addProperty("title", gameInfo.getTitle());
+        response.addProperty("id", gameInfo.getId());
+        return response.toString();
+    }
 }

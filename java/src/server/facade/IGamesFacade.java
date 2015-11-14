@@ -22,7 +22,7 @@ public interface IGamesFacade
      * @param gameID the id of the game to join.
      * @param color the color that the player is joining with.
      */
-    void joinGame(PlayerInfo player, int gameID, CatanColor color);
+    String joinGame(PlayerInfo player, int gameID, CatanColor color);
 
     /**
      * Creates a game with the given properties.

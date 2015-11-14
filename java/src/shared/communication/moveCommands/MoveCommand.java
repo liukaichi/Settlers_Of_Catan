@@ -1,9 +1,10 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.*;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import shared.communication.CatanCommand;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 
 /**
  * All move commands objects contain at least the following properties. These
@@ -57,5 +58,10 @@ public abstract class MoveCommand implements CatanCommand
         obj.addProperty("type", src.type.toString());
         obj.addProperty("playerIndex", src.playerIndex.getIndex());
         return obj;
+    }
+
+    public PlayerIndex getPlayerIndex()
+    {
+        return playerIndex;
     }
 }

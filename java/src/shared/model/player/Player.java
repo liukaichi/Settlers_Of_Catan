@@ -35,20 +35,10 @@ public class Player
     private boolean playedDev;
     private int resourceNumber;
 
-    public boolean isDiscarded()
-    {
-        return discarded;
-    }
-
-    public void setDiscarded(boolean discarded)
-    {
-        this.discarded = discarded;
-    }
-
     /**
      * A player bank is instantiated with the creation of each new player
      */
-    public Player() throws CatanException
+    public Player()
     {
         bank = new PlayerBank();
         info = new PlayerInfo();
@@ -58,6 +48,7 @@ public class Player
 
     public Player(PlayerInfo playerInfo)
     {
+        this();
         info = playerInfo;
         bank = new PlayerBank();
         discarded = false;
@@ -92,6 +83,16 @@ public class Player
         this.info.setId(jobj.get("playerID").getAsInt());
         this.playedDev = jobj.get("playedDevCard").getAsBoolean();
         this.discarded = jobj.get("discarded").getAsBoolean();
+    }
+
+    public boolean isDiscarded()
+    {
+        return discarded;
+    }
+
+    public void setDiscarded(boolean discarded)
+    {
+        this.discarded = discarded;
     }
 
     public PlayerInfo getPlayerInfo()
