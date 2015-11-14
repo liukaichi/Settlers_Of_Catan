@@ -9,8 +9,6 @@ public class ExistingRegistrationException extends SignInException
     {
         super(string);
     }
-}
-
 
     public ExistingRegistrationException()
     {

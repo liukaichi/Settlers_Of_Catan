@@ -1,8 +1,10 @@
 package server.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import client.data.GameInfo;
+import client.utils.BufferedReaderParser;
+import shared.model.ClientModel;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,5 +43,42 @@ public class FileUtils { //http://stackoverflow.com/questions/4246360/java-loadi
         else {
             return "";
         }
+    }
+
+    public static ClientModel getModelFromFile(String fileName)
+    {
+        String modelFilePath = "sample/mockServerJsons/";
+        File file = new File(modelFilePath + fileName + ".json");
+        BufferedReader reader;
+        ClientModel model = new ClientModel();
+        try
+        {
+            reader = new BufferedReader(new FileReader(file));
+            String json = BufferedReaderParser.parse(reader);
+            model = new ClientModel(json);
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        return model;
+    }
+
+    public static GameInfo getGameInfoFromFile(String fileName)
+    {
+        String gameFilePath = "sample/mockServerJsons/";
+        File file = new File(gameFilePath + fileName + ".json");
+        BufferedReader reader;
+        GameInfo game = new GameInfo();
+        try
+        {
+            reader = new BufferedReader(new FileReader(file));
+            String json = BufferedReaderParser.parse(reader);
+            game = new GameInfo(json);
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return game;
     }
 }

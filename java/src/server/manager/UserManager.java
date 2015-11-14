@@ -4,8 +4,6 @@ import shared.communication.Credentials;
 import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.definitions.exceptions.SignInException;
-import shared.definitions.exceptions.ExistingRegistrationException;
-import shared.definitions.exceptions.InvalidCredentialsException;
 
 import java.util.*;
 
@@ -26,18 +24,6 @@ public class UserManager
     {
         this.credentials = new HashMap<>();
         addDefaultUsers();
-
-    private void addDefaultUsers()
-    {
-        idToUser = new HashMap<>();
-        credentialsToUser = new HashMap<>();
-        idToUser.put(1, new User("Cache", "cache", 1));
-        idToUser.put(2, new User("Amanda", "amanda", 2));
-        idToUser.put(3, new User("Justin", "justin", 3));
-        idToUser.put(4, new User("David", "david", 4));
-        idToUser.put(5, new User("Adrian", "adrian", 5));
-        idToUser.put(6, new User("Sam", "sam", 6));
-        idToUser.put(7, new User("Pete", "pete", 7));
     }
 
     /**
@@ -85,6 +71,8 @@ public class UserManager
             //Do nothing.
         }
     }
+
+
 
     /**
      * Finds the user in the system that matches the credentials provided and returns the information necessary to set

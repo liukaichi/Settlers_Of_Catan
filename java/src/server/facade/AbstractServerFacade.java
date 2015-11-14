@@ -13,6 +13,9 @@ import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.InvalidCredentialsException;
+import shared.definitions.CatanColor;
+import shared.definitions.exceptions.GameQueryException;
+import shared.definitions.exceptions.SignInException;
 
 import java.util.List;
 
@@ -69,10 +72,18 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
         return new ListAIResponse(types);
     }
 
-    @Override public void addAI(AIType aiType, int gameID)
+    @Override public String addAI(int gameID, AIType type)
     {
-        GameManager.getInstance().addAI(aiType, gameID);
+        try
+        {
+            GameManager.getInstance().addAI(gameID, type);
+            return "Success";
+        } catch (GameQueryException e)
+        {
+            return e.getMessage();
+        }
     }
+
 
     @Override public ListGamesResponse listGames()
     {
@@ -80,15 +91,22 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
         return new ListGamesResponse(games);
     }
 
+    @Override public String joinGame(PlayerInfo player, int gameID, CatanColor color)
+    {
+        try
+        {
+            GameManager.getInstance().joinGame(player, gameID, color);
+            return "Success";
+        } catch (GameQueryException e)
+        {
+            return e.getMessage();
+        }
+    }
+
     @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts,
             String name)
     {
-        return new CreateGameResponse(
-                GameManager.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name));
-    }
-
-    @Override public void joinGame(PlayerInfo player, int gameID, CatanColor color)
-    {
-        GameManager.getInstance().joinGame(player, gameID, color);
+        GameInfo game = GameManager.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name);
+        return new CreateGameResponse(game);
     }
 }
