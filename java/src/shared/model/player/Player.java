@@ -56,8 +56,9 @@ public class Player
         playedDev = false;
     }
 
-    public Player(PlayerInfo playerInfo)
+    public Player(PlayerInfo playerInfo) throws CatanException
     {
+        this();
         info = playerInfo;
     }
 

@@ -2,17 +2,17 @@ package server.manager;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.main.Catan;
 import server.ServerModel;
 import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
+import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.GameQueryException;
+import shared.model.player.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The Manager that holds all of the games. Various options that the facades take use this manager. Uses the singleton
@@ -25,6 +25,7 @@ import java.util.Map;
 public class GameManager
 {
     private static GameManager _instance = null;
+    private static AIManager aiManager;
 
     private Map<Integer, GameInfo> games;
     private Map<Integer, ServerModel> models;
@@ -34,6 +35,7 @@ public class GameManager
     {
         games = new HashMap<>();
         models = new HashMap<>();
+        aiManager = new AIManager();
         this.addDefaultAIs();
         this.addDefaultGames();
     }
@@ -136,7 +138,15 @@ public class GameManager
         int joinedGameSize = game.getPlayers().size();
         if (joinedGameSize < 4)
         {
-            game.addPlayer(aiPlayers.get(joinedGameSize - 1));
+            //game.addPlayer(aiPlayers.get(joinedGameSize - 1));
+            try
+            {
+                game.addPlayer(aiManager.createAIPlayer(game));
+            }
+            catch (CatanException e)
+            {
+                throw new GameQueryException(e.getMessage());
+            }
         } else
         {
             throw new GameQueryException("Unable to add AI. Four players in game already.");
@@ -161,5 +171,56 @@ public class GameManager
         GameInfo game = new GameInfo(newGameID, name);
         games.put(newGameID, game);
         return game;
+    }
+    private class AIManager
+    {
+        private int id = 0;
+        ArrayList<String> aiNames;
+
+        public AIManager()
+        {
+            aiNames = new ArrayList<>();
+            aiNames.add("Miguel");
+            aiNames.add("Hannah");
+            aiNames.add("Quinn");
+            aiNames.add("Ken");
+            aiNames.add("Squall");
+        }
+
+        private Player createAIPlayer(GameInfo gameInfo) throws CatanException
+        {
+            ArrayList<CatanColor> usedColors = new ArrayList<>();
+            ArrayList<String> usedNames = new ArrayList<>();
+            for(PlayerInfo info : gameInfo.getPlayerInfos())
+            {
+                usedColors.add(info.getColor());
+                usedNames.add(info.getName());
+            }
+            PlayerInfo aiPlayerInfo = new PlayerInfo(--id,randomName(usedNames),randomColor(usedColors));
+            Player player = new Player(aiPlayerInfo);
+            return player;
+        }
+
+        private CatanColor randomColor(ArrayList<CatanColor> usedColors)
+        {
+            Random rand = new Random();
+            CatanColor color = CatanColor.values()[rand.nextInt(8)];
+            while(usedColors.contains(color))
+            {
+                color = CatanColor.values()[rand.nextInt(8)];
+            }
+            return color;
+        }
+
+        private String randomName(ArrayList<String> usedNames)
+        {
+            Random rand = new Random();
+            String name = aiNames.get(rand.nextInt(4));
+            while(usedNames.contains(name))
+            {
+                name = aiNames.get(rand.nextInt(4));
+            }
+            return name;
+        }
     }
 }
