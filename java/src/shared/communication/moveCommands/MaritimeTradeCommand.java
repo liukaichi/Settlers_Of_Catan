@@ -1,12 +1,14 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
 import com.google.gson.*;
-
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+import shared.definitions.TradeRatio;
 import shared.model.player.TradeOffer;
+
+import java.lang.reflect.Type;
 
 /**
  * maritimeTrade command object.
@@ -82,6 +84,7 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().maritimeTrade(gameID, getPlayerIndex(), this.ratio, this.inputResource, this.outputResource).toString();
+
     }
 }

@@ -1,10 +1,15 @@
 package shared.communication.moveCommands;
 
-import java.lang.reflect.Type;
-
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+
+import java.lang.reflect.Type;
 
 /**
  * Monopoly command object.
@@ -63,6 +68,7 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().monopoly(gameID, getPlayerIndex(), this.resource).toString();
+
     }
 }

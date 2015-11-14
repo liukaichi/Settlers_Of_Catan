@@ -1,7 +1,8 @@
 package shared.communication.moveCommands;
 
 import server.facade.AbstractServerFacade;
-import shared.definitions.*;
+import shared.definitions.MoveType;
+import shared.definitions.PlayerIndex;
 import shared.locations.HexLocation;
 
 /**
@@ -41,7 +42,7 @@ public class SoldierCommand extends RobPlayerCommand
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().soldier(gameID, getPlayerIndex(), this.getVictimIndex(), this.getLocation()).toString();
     }
 
 }

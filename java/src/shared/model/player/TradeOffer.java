@@ -1,12 +1,12 @@
 package shared.model.player;
 
+import com.google.gson.*;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
+import shared.model.bank.resource.Resources;
+
 import java.lang.reflect.Type;
 import java.util.HashMap;
-
-import com.google.gson.*;
-
-import shared.definitions.*;
-import shared.model.bank.resource.Resources;
 
 /**
  * This class represents a tradeOffer made by one of the four players
@@ -20,6 +20,39 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
      * player index of the sender and receiver of player trade
      */
     private PlayerIndex sender, receiver;
+    /**
+     * Object that represents the trade offer made by a player
+     */
+    private HashMap<ResourceType, Hand> resourceHand = new HashMap<>();
+    private Resources offer;
+
+    public TradeOffer(Player sender, Player receiver) {
+        this.sender = sender.getPlayerInfo().getPlayerIndex();
+        this.receiver = receiver.getPlayerInfo().getPlayerIndex();
+        this.offer = new Resources();
+    }
+
+    public TradeOffer(PlayerIndex sender, PlayerIndex receiver) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.offer = new Resources();
+    }
+
+    public TradeOffer(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat, int ore) {
+        this.sender = sender;
+        this.receiver = reciever;
+        this.offer = new Resources(brick, wood, sheep, wheat, ore);
+    }
+
+    public TradeOffer(String json) {
+        JsonParser parser = new JsonParser();
+        JsonObject tradeObject = (JsonObject) parser.parse(json);
+        this.sender = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("sender").getAsInt());
+        this.receiver = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("receiver").getAsInt());
+        JsonObject newOffer = (JsonObject) tradeObject.get("offer");
+        this.offer = new Resources(newOffer.toString());
+
+    }
 
     public Hand getResourceHand(ResourceType resource)
     {
@@ -53,18 +86,9 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         return false;
     }
 
-    public enum Hand{
-        send, none, receive
-    }
-    /**
-     * Object that represents the trade offer made by a player
-     */
-    private HashMap<ResourceType, Hand> resourceHand = new HashMap<>();
-    private Resources offer;
-
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -77,14 +101,16 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         result = prime * result + sender.hashCode();
         return result;
     }
+
     public void setResourceHand(ResourceType type, Hand value)
     {
         resourceHand.put(type, value);
         this.setOffer(type, 0);
     }
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -110,41 +136,24 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         return sender == other.sender;
     }
 
-    public TradeOffer(Player sender, Player receiver)
-    {
-        this.sender = sender.getPlayerInfo().getPlayerIndex();
-        this.receiver = receiver.getPlayerInfo().getPlayerIndex();
-        this.offer = new Resources();
-    }
-
-    public TradeOffer(PlayerIndex sender, PlayerIndex receiver)
-    {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.offer = new Resources();
-    }
-
-    public TradeOffer(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat, int ore)
-    {
-        this.sender = sender;
-        this.receiver = reciever;
-        this.offer = new Resources(brick, wood, sheep, wheat, ore);
-    }
-
-    public TradeOffer(String json)
-    {
-        JsonParser parser = new JsonParser();
-        JsonObject tradeObject = (JsonObject) parser.parse(json);
-        this.sender = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("sender").getAsInt());
-        this.receiver = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("receiver").getAsInt());
-        JsonObject newOffer = (JsonObject) tradeObject.get("offer");
-        this.offer = new Resources(newOffer.toString());
-
-    }
-
     public int getSender()
     {
         return sender.getIndex();
+    }
+
+    public void setSender(int sender)
+    {
+        this.sender = PlayerIndex.fromInt(sender);
+    }
+
+    public PlayerIndex getSenderIndex()
+    {
+        return sender;
+    }
+
+    public PlayerIndex getReceiverIndex()
+    {
+        return receiver;
     }
 
     @Override
@@ -172,11 +181,6 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
             tradeOffer.addProperty("receiver", this.receiver.getIndex());
         }
         return tradeOffer.toString();
-    }
-
-    public void setSender(int sender)
-    {
-        this.sender = PlayerIndex.fromInt(sender);
     }
 
     public int getReceiver()
@@ -216,7 +220,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
@@ -230,5 +234,9 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
             tradeOffer.add("offer", src.offer.serialize(src.offer, src.offer.getClass(), context));
         }
         return tradeOffer;
+    }
+
+    public enum Hand {
+        send, none, receive
     }
 }

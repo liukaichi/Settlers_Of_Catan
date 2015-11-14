@@ -52,4 +52,11 @@ public class CreateGameResponse
         return gameInfo.getId();
     }
 
+    @Override public String toString()
+    {
+        JsonObject response = new JsonObject();
+        response.addProperty("title", gameInfo.getTitle());
+        response.addProperty("id", gameInfo.getId());
+        return response.toString();
+    }
 }

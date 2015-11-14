@@ -2,6 +2,7 @@ package shared.communication;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import server.facade.AbstractServerFacade;
 
 /**
  * The name and settings to use for the new game. Can be sent as form encoded
@@ -51,6 +52,6 @@ public class CreateGameRequest implements CatanCommand
      */
     @Override public String execute(int gameID)
     {
-        return null;
+        return AbstractServerFacade.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name).toString();
     }
 }

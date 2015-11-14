@@ -21,6 +21,7 @@
       <sourceFolder url="file://$MODULE_DIR$/java/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/java/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/java/lib" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/java/test" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
@@ -96,8 +97,5 @@
       </library>
     </orderEntry>
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="src" level="project" />
-    <orderEntry type="library" name="commons-io-2.4" level="project" />
-    <orderEntry type="library" name="commons-io-2.4-javadoc" level="project" />
   </component>
 </module>

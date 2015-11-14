@@ -1,5 +1,7 @@
 package server.facade;
 
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.utils.BufferedReaderParser;
 import server.manager.User;
 import shared.communication.Credentials;
@@ -8,6 +10,8 @@ import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
 import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.InvalidCredentialsException;
+import shared.communication.CreateGameResponse;
+import shared.definitions.*;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -20,6 +24,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Uses dependency injection to allow this object to be used as the facade for testing purposes.
  */
@@ -27,8 +38,15 @@ public class MockServerFacade extends AbstractServerFacade
 {
     private final static String modelFilePath = "sample/mockServerJsons/";
 
+    private List<PlayerInfo> aiPlayers, validUsers;
+
+    private List<GameInfo> games;
+
+    private GameInfo joinedGame;
+
     public MockServerFacade()
     {
+        games = new ArrayList<>();
 
     }
 
@@ -63,23 +81,57 @@ public class MockServerFacade extends AbstractServerFacade
 
     }
 
-    @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
+    @Override public void addAI(AIType aiType, int gameID)
+    {
+        int joinedGameSize = joinedGame.getPlayers().size();
+        if (joinedGameSize < 4)
+        {
+            this.joinedGame.addPlayer(aiPlayers.get(joinedGameSize - 1));
+        }
+    }
+
+
+    @Override public void joinGame(PlayerInfo player, int gameID, CatanColor color)
+    {
+        for (GameInfo game : games)
+        {
+            if (game.getId() == gameID)
+            {
+                if (game.getPlayers().size() < 4)
+                {
+                    game.addPlayer(player);
+                    this.joinedGame = game;
+                }
+            }
+        }
+    }
+
+    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts,
+            String name)
+    {
+        int newGameID = games.size() + 1;
+        games.add(new GameInfo(newGameID, name));
+        return new CreateGameResponse(newGameID, name);
+    }
+
+    @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
     {
 
         return getModelFromFile("sendChat");
     }
 
-    @Override public ClientModel rollNumber(PlayerIndex playerIndex, int number)
+    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number)
     {
         return getModelFromFile("basicGame");
     }
 
-    @Override public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
+    @Override public ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim,
+            HexLocation location)
     {
         return getModelFromFile("basicGame");
     }
 
-    @Override public ClientModel finishTurn(PlayerIndex playerIndex)
+    @Override public ClientModel finishTurn(int gameID, PlayerIndex playerIndex)
     {
         ClientModel model = new ClientModel();
         switch (playerIndex)
@@ -100,68 +152,80 @@ public class MockServerFacade extends AbstractServerFacade
         return model;
     }
 
-    @Override public ClientModel buyDevCard(PlayerIndex playerIndex)
+    @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex)
     {
         return getModelFromFile("playersHaveCards");
     }
 
-    @Override public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
+    @Override public ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1,
+            ResourceType resource2)
     {
         return getModelFromFile("playersHaveCards");
     }
 
-    @Override public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+    @Override public ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1,
+            EdgeLocation spot2)
     {
         return getModelFromFile("playersHaveCards");
     }
 
-    @Override public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
+    @Override
+    public ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
         return getModelFromFile("playersHaveCards");
     }
 
-    @Override public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource)
+    @Override
+    public ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource)
     {
         return getModelFromFile("playersHaveCards");
     }
 
-    @Override public ClientModel monument(PlayerIndex playerIndex)
+    @Override
+    public ClientModel monument(int gameID, PlayerIndex playerIndex)
     {
         return getModelFromFile("playersHaveCards");
     }
 
-    @Override public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
+    @Override
+    public ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
     {
         return getModelFromFile("advancedGame");
     }
 
-    @Override public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation vertexLocation, boolean free)
+    @Override
+    public ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation, boolean free)
     {
         return getModelFromFile("advancedGame");
     }
 
-    @Override public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation vertexLocation)
+    @Override
+    public ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation)
     {
         return getModelFromFile("advancedGame");
     }
 
-    @Override public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
+    @Override
+    public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
         return getModelFromFile("tradeAvailable");
     }
 
-    @Override public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept)
+    @Override
+    public ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept)
     {
         return getModelFromFile("tradeAvailable");
     }
 
-    @Override public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
-            ResourceType outputResource)
+    @Override
+    public ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
+                                     ResourceType outputResource)
     {
         return getModelFromFile("tradeAvailable");
     }
 
-    @Override public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
+    @Override
+    public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
         return getModelFromFile("basicGameTurn");
     }
