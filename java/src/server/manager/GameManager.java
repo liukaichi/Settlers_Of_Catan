@@ -9,7 +9,6 @@ import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.GameQueryException;
-import shared.model.player.Player;
 
 import java.util.*;
 
@@ -174,54 +173,5 @@ public class GameManager
         games.put(newGameID, game);
         return game;
     }
-    private class AIManager
-    {
-        ArrayList<String> aiNames;
-        private int id = 0;
 
-        public AIManager()
-        {
-            aiNames = new ArrayList<>();
-            aiNames.add("Miguel");
-            aiNames.add("Hannah");
-            aiNames.add("Quinn");
-            aiNames.add("Ken");
-            aiNames.add("Squall");
-        }
-
-        private Player createAIPlayer(GameInfo gameInfo) throws CatanException
-        {
-            ArrayList<CatanColor> usedColors = new ArrayList<>();
-            ArrayList<String> usedNames = new ArrayList<>();
-            for(PlayerInfo info : gameInfo.getPlayerInfos())
-            {
-                usedColors.add(info.getColor());
-                usedNames.add(info.getName());
-            }
-            PlayerInfo aiPlayerInfo = new PlayerInfo(--id,randomName(usedNames),randomColor(usedColors));
-            return new Player(aiPlayerInfo);
-        }
-
-        private CatanColor randomColor(ArrayList<CatanColor> usedColors)
-        {
-            Random rand = new Random();
-            CatanColor color = CatanColor.values()[rand.nextInt(8)];
-            while(usedColors.contains(color))
-            {
-                color = CatanColor.values()[rand.nextInt(8)];
-            }
-            return color;
-        }
-
-        private String randomName(ArrayList<String> usedNames)
-        {
-            Random rand = new Random();
-            String name = aiNames.get(rand.nextInt(4));
-            while(usedNames.contains(name))
-            {
-                name = aiNames.get(rand.nextInt(4));
-            }
-            return name;
-        }
-    }
 }
