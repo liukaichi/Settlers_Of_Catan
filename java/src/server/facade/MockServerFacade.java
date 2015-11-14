@@ -81,40 +81,12 @@ public class MockServerFacade extends AbstractServerFacade
 
     }
 
-    @Override public void addAI(AIType aiType, int gameID)
-    {
-        int joinedGameSize = joinedGame.getPlayers().size();
-        if (joinedGameSize < 4)
-        {
-            this.joinedGame.addPlayer(aiPlayers.get(joinedGameSize - 1));
-        }
+    @Override
+    public ClientModel getGameState() {
+        return null;
     }
 
-
-    @Override public void joinGame(PlayerInfo player, int gameID, CatanColor color)
-    {
-        for (GameInfo game : games)
-        {
-            if (game.getId() == gameID)
-            {
-                if (game.getPlayers().size() < 4)
-                {
-                    game.addPlayer(player);
-                    this.joinedGame = game;
-                }
-            }
-        }
-    }
-
-    @Override public CreateGameResponse createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts,
-            String name)
-    {
-        int newGameID = games.size() + 1;
-        games.add(new GameInfo(newGameID, name));
-        return new CreateGameResponse(newGameID, name);
-    }
-
-    @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
+    @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
 
         return getModelFromFile("sendChat");

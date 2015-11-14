@@ -35,15 +35,18 @@ public class ServerFacade extends AbstractServerFacade
 
     @Override public ClientModel getGameState(int version)
     {
+        if(model.getVersion() != version){
+            return model;
+        }
         return null;
     }
 
-    @Override public void addAI(AIType aiType, int gameID)
-    {
-
+    @Override
+    public ClientModel getGameState() {
+        return model;
     }
 
-    @Override public ListAIResponse listAI()
+    @Override public ClientModel sendChat(PlayerIndex sender, String content)
     {
         return null;
     }
@@ -167,14 +170,5 @@ public class ServerFacade extends AbstractServerFacade
     public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
-    }
-    @Override public User signInUser(Credentials credentials) throws SignInException
-    {
-        throw new SignInException("Failed to login - bad username or password.");
-    }
-
-    @Override public User registerUser(Credentials credentials) throws SignInException
-    {
-        throw new SignInException("Failed to register - someone already has that username.");
     }
 }

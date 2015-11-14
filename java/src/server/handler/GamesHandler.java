@@ -33,10 +33,15 @@ public class GamesHandler implements HttpHandler
     {
         LOGGER.entering(this.getClass().getCanonicalName(), "handle");
         try {
+            URI uri = httpExchange.getRequestURI();
+
+            // instantiate CookieManager
+            CookieManager manager = new CookieManager();
+            CookieHandler.setDefault(manager);
+            CookieStore cookieJar = manager.getCookieStore();
+
             //Handling cookie
-            String receivedCookie =  httpExchange.getRequestHeaders().getFirst("Cookie");
-
-
+            cookieJar.add(uri, new HttpCookie("catan.user", httpExchange.getRequestHeaders().getFirst("Cookie")));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
@@ -48,9 +53,7 @@ public class GamesHandler implements HttpHandler
             String json = jsonBuilder.toString();
 
             //Handling input Request
-            URI uri = httpExchange.getRequestURI();
             String commandString = uri.getPath().split("/")[2];
-            InputStream requestBody = httpExchange.getRequestBody();
             //TODO get the class name from the context
             String className = "shared.communication."
                     + Character.toUpperCase(commandString.charAt(0))
@@ -59,21 +62,32 @@ public class GamesHandler implements HttpHandler
             Constructor c = Class.forName(className).getConstructor(String.class);
             CatanCommand newCommand = (CatanCommand)c.newInstance(json);
 
+            // set response
+            if(commandString.equalsIgnoreCase("join")){
+                String gameId = newCommand.execute(-1);
+                // testing
+                gameId = "1";
+                cookieJar.add(uri, new HttpCookie("catan.game", gameId));
+                response = "Success";
+            }
+            else if(commandString.equalsIgnoreCase("list")){
+                response = newCommand.execute(-1);
+            }
+
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
 
             // create cookie
-            //TODO change this empty string to be the real cookie!!!!
-            HttpCookie cookie = new HttpCookie("catan.user", "");
 
-            // send response
-            response = newCommand.execute(-1);
+
+            String cookie = "";
+            for(HttpCookie co : cookieJar.getCookies()){
+                cookie += co.getValue() + ";";
+            }
+            respHeaders.set("Set-cookie", cookie);
+
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-
-            requestBody.close();
-
-
         }
         catch(Exception e)
         {
