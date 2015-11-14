@@ -9,7 +9,6 @@ import server.facade.AbstractServerFacade;
  * key-value pairs as well. The new game's ID can be read from the response.
  *
  * @author Cache Staheli
- *
  */
 public class CreateGameRequest implements CatanCommand
 {
@@ -18,10 +17,11 @@ public class CreateGameRequest implements CatanCommand
 
     /**
      * Creates a CreateGameRequest with the specified options and name.
-     * @param randomTiles whether the created game will have randomly generated hexes.
+     *
+     * @param randomTiles   whether the created game will have randomly generated hexes.
      * @param randomNumbers whether the created game will have randomly placed numbers on the hexes.
-     * @param randomPorts whether the created game will have randomly placed ports.
-     * @param name the name of the game.
+     * @param randomPorts   whether the created game will have randomly placed ports.
+     * @param name          the name of the game.
      */
     public CreateGameRequest(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
@@ -33,6 +33,7 @@ public class CreateGameRequest implements CatanCommand
 
     /**
      * Instantiate a CreateGameRequest from JSON.
+     *
      * @param json JSON of the CreateGameRequest
      */
     public CreateGameRequest(String json)
@@ -47,8 +48,9 @@ public class CreateGameRequest implements CatanCommand
 
     /**
      * Calls createGame method on the Server Facade
-     * @return Json String representing the current state of the Server Model
+     *
      * @param gameID possibly not used.
+     * @return Json String representing the current state of the Server Model
      */
     @Override public String execute(int gameID)
     {

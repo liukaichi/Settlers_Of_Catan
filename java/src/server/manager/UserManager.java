@@ -72,8 +72,6 @@ public class UserManager
         }
     }
 
-
-
     /**
      * Finds the user in the system that matches the credentials provided and returns the information necessary to set
      * the client's cookie.

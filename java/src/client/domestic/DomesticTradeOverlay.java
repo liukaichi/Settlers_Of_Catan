@@ -7,8 +7,6 @@ import shared.definitions.ResourceType;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.ButtonUI;
-import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.basic.BasicToggleButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,8 +22,7 @@ import java.util.Map;
  * Implementation of the domestic trade overlay, which allows the user to
  * propose a domestic trade
  */
-@SuppressWarnings("serial")
-public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeOverlay
+@SuppressWarnings("serial") public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeOverlay
 {
 
     private final int LABEL_TEXT_SIZE = 40;
@@ -46,6 +43,17 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
     private Map<ResourceType, JLabel> resourceCounts;
     private Map<ResourceType, ArrayList<JButton>> resourceButtonsMap;
+    private ActionListener playerSelectActionListener = new ActionListener()
+    {
+
+        @Override public void actionPerformed(ActionEvent e)
+        {
+            JToggleButton button = (JToggleButton) e.getSource();
+            PlayerInfo pi = getPlayerByName(button.getText());
+            getController().setPlayerToTradeWith(pi.getPlayerIndex().getIndex());
+        }
+
+    };
 
     public DomesticTradeOverlay()
     {
@@ -107,8 +115,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         this.tradeButton.addActionListener(new ActionListener()
         {
 
-            @Override
-            public void actionPerformed(ActionEvent e)
+            @Override public void actionPerformed(ActionEvent e)
             {
                 getController().sendTradeOffer();
             }
@@ -120,8 +127,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         this.cancelButton.addActionListener(new ActionListener()
         {
 
-            @Override
-            public void actionPerformed(ActionEvent e)
+            @Override public void actionPerformed(ActionEvent e)
             {
                 getController().cancelTrade();
                 // reset();// TODO, this may not be needed here
@@ -150,8 +156,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         noneToggle.addActionListener(new ActionListener()
         {
 
-            @Override
-            public void actionPerformed(ActionEvent e)
+            @Override public void actionPerformed(ActionEvent e)
             {
                 getController().setPlayerToTradeWith(-1);
             }
@@ -202,8 +207,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
             sendToggle.addActionListener(new ActionListener()
             {
 
-                @Override
-                public void actionPerformed(ActionEvent e)
+                @Override public void actionPerformed(ActionEvent e)
                 {
                     upDownPanelByResourceType.get(resourceType).setVisible(true);
                     getController().setResourceToSend(resourceType);
@@ -220,8 +224,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
             noneToggle.addActionListener(new ActionListener()
             {
 
-                @Override
-                public void actionPerformed(ActionEvent e)
+                @Override public void actionPerformed(ActionEvent e)
                 {
                     upDownPanelByResourceType.get(resourceType).setVisible(false);
                     resourceCounts.get(resourceType).setText("0");
@@ -238,8 +241,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
             recieveToggle.addActionListener(new ActionListener()
             {
 
-                @Override
-                public void actionPerformed(ActionEvent e)
+                @Override public void actionPerformed(ActionEvent e)
                 {
                     upDownPanelByResourceType.get(resourceType).setVisible(true);
                     getController().setResourceToReceive(resourceType);
@@ -274,11 +276,11 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
                     new Dimension((int) (RESOURCE_IMAGE_WIDTH * 1.6), (int) (RESOURCE_IMAGE_WIDTH * 1.7)));
 
             return tile;
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
-            throw new RuntimeException("Failed to setup resource tile for image path: " + imageFilePath + ", error: "
-                    + e.getLocalizedMessage());
+            throw new RuntimeException(
+                    "Failed to setup resource tile for image path: " + imageFilePath + ", error: " + e
+                            .getLocalizedMessage());
         }
     }
 
@@ -300,8 +302,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
             upButton.addActionListener(new ActionListener()
             {
 
-                @Override
-                public void actionPerformed(ActionEvent e)
+                @Override public void actionPerformed(ActionEvent e)
                 {
                     Integer currentAmount = Integer.parseInt(resourceCounts.get(resourceType).getText());
                     getController().increaseResourceAmount(resourceType);
@@ -317,8 +318,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
             downButton.addActionListener(new ActionListener()
             {
 
-                @Override
-                public void actionPerformed(ActionEvent e)
+                @Override public void actionPerformed(ActionEvent e)
                 {
                     Integer currentAmount = Integer.parseInt(resourceCounts.get(resourceType).getText());
                     if (currentAmount > 0)
@@ -335,8 +335,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
             upDownButtonsPanel.add(resourceCountLabel);
             upDownButtonsPanel.add(downButton);
 
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             throw new RuntimeException("error possibly with image path, error: " + e.getLocalizedMessage());
         }
@@ -346,13 +345,10 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
     /**
      * Resizes an image using a Graphics2D object backed by a BufferedImage.
-     * 
-     * @param src
-     *        - source image to scale
-     * @param w
-     *        - desired width
-     * @param h
-     *        - desired height
+     *
+     * @param src - source image to scale
+     * @param w   - desired width
+     * @param h   - desired height
      * @return - the new resized image
      */
     private BufferedImage getScaledImage(BufferedImage src, int w, int h)
@@ -364,8 +360,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         {
             factor = ((double) src.getHeight() / (double) src.getWidth());
             finalh = (int) (finalw * factor);
-        }
-        else
+        } else
         {
             factor = ((double) src.getWidth() / (double) src.getHeight());
             finalw = (int) (finalh * factor);
@@ -379,35 +374,19 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         return resizedImg;
     }
 
-    private ActionListener playerSelectActionListener = new ActionListener()
-    {
-
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            JToggleButton button = (JToggleButton) e.getSource();
-            PlayerInfo pi = getPlayerByName(button.getText());
-            getController().setPlayerToTradeWith(pi.getPlayerIndex().getIndex());
-        }
-
-    };
-
-    @Override
-    public IDomesticTradeController getController()
+    @Override public IDomesticTradeController getController()
     {
         return (IDomesticTradeController) super.getController();
     }
 
-    @Override
-    public void reset()
+    @Override public void reset()
     {
         this.removeAll();
         this.buildView();
         this.setPlayers(this.players);
     }
 
-    @Override
-    public void setPlayers(PlayerInfo[] value)
+    @Override public void setPlayers(PlayerInfo[] value)
     {
         for (int i = 0; i < value.length; i++)
         {
@@ -446,28 +425,25 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
     // }
     // }
 
-    @Override
-    public void setPlayerSelectionEnabled(boolean enable)
+    @Override public void setPlayerSelectionEnabled(boolean enable)
     {
         this.playerSelectionPanel.setVisible(enable);
     }
 
-    @Override
-    public void setResourceAmount(ResourceType resource, String amount)
+    @Override public void setResourceAmount(ResourceType resource, String amount)
     {
         this.resourceCounts.get(resource).setText(amount);
     }
 
-    @Override
-    public void setResourceAmountChangeEnabled(ResourceType resource, boolean canIncrease, boolean canDecrease)
+    @Override public void setResourceAmountChangeEnabled(ResourceType resource, boolean canIncrease,
+            boolean canDecrease)
     {
         // up button is index 0, down is index 1
         this.resourceButtonsMap.get(resource).get(0).setEnabled(canIncrease);
         this.resourceButtonsMap.get(resource).get(1).setEnabled(canDecrease);
     }
 
-    @Override
-    public void setResourceSelectionEnabled(boolean enable)
+    @Override public void setResourceSelectionEnabled(boolean enable)
     {
         for (JPanel panel : this.resourceSelectionPanels)
         {
@@ -475,20 +451,17 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         }
     }
 
-    @Override
-    public void setStateMessage(String message)
+    @Override public void setStateMessage(String message)
     {
         this.tradeButton.setText(message);
     }
 
-    @Override
-    public void setTradeEnabled(boolean enable)
+    @Override public void setTradeEnabled(boolean enable)
     {
         this.tradeButton.setEnabled(enable);
     }
 
-    @Override
-    public void setCancelEnabled(boolean enabled)
+    @Override public void setCancelEnabled(boolean enabled)
     {
         this.cancelButton.setEnabled(enabled);
     }

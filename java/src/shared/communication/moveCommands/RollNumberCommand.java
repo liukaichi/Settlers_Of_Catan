@@ -14,7 +14,6 @@ import java.lang.reflect.Type;
  * rollNumber command object.
  *
  * @author Cache Staheli
- *
  */
 public class RollNumberCommand extends MoveCommand implements JsonSerializer<RollNumberCommand>
 {
@@ -25,16 +24,19 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
 
     /**
      * Instantiates a RollNumberCommand with the given player and number.
+     *
      * @param playerIndex the index of the player rolling the number.
-     * @param number the number to roll.
+     * @param number      the number to roll.
      */
     public RollNumberCommand(PlayerIndex playerIndex, int number)
     {
         super(MoveType.rollNumber, playerIndex);
         this.number = number;
     }
+
     /**
      * Instantiate a RollNumberCommand from JSON.
+     *
      * @param json JSON of the RollNumberCommand.
      */
     public RollNumberCommand(String json)
@@ -48,20 +50,19 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(RollNumberCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(RollNumberCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.addProperty("number", number);
         return obj;
     }
 
-
     /**
      * Rolls the number for the player and gives all the players the earned resources.
      * Also changes the state to robbing state if a 7 is rolled.
-     * @return the Json representation of the model after the command is executed.
+     *
      * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
     {

@@ -6,7 +6,6 @@ import client.facade.ClientFacade;
 import com.google.gson.*;
 import shared.definitions.PlayerIndex;
 import shared.definitions.TurnStatus;
-import shared.definitions.exceptions.CatanException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -28,12 +27,12 @@ import java.util.Observable;
  */
 public class ClientModel extends Observable
 {
+    protected TradeOffer tradeOffer;
     private GameInfo gameInfo;
     private Bank bank;
     private Chat chat;
     private Log log;
     private CatanMap map;
-    protected TradeOffer tradeOffer;
     private TurnTracker turnTracker;
     private int version;
     private PlayerIndex winner;
@@ -55,43 +54,8 @@ public class ClientModel extends Observable
     }
 
     /**
-     * Per the Observer pattern, this method replaces the pieces of the model and then notifies the Observers to the
-     * model that a change has been made.
-     * @param model the model to replace
-     * @see Observable
-     * @see java.util.Observer
-     */
-    public void updateModel(ClientModel model)
-    {
-        /*
-        For thread safety, don't update if previous update has not finished.
-         */
-        if(!isUpdating) {
-            isUpdating = true;
-            this.gameInfo = model.gameInfo;
-            this.bank = model.bank;
-            this.chat = model.chat;
-            this.log = model.log;
-            this.map = model.map;
-            this.tradeOffer = model.tradeOffer;
-            this.turnTracker = model.turnTracker;
-            this.version = model.version;
-            this.winner = model.winner;
-            this.setChanged();
-            if (turnTracker != null){
-                this.notifyObservers(turnTracker.getStatus());
-            }
-            else
-            {
-                this.notifyObservers();
-            }
-
-            isUpdating = false;
-        }
-    }
-
-    /**
      * Initializes a ClientModel from Json.
+     *
      * @param json the Json to initialize from.
      */
     public ClientModel(String json)
@@ -130,6 +94,44 @@ public class ClientModel extends Observable
             tradeOffer = new TradeOffer(model.getAsJsonObject("tradeOffer").toString());
         }
 
+    }
+
+    /**
+     * Per the Observer pattern, this method replaces the pieces of the model and then notifies the Observers to the
+     * model that a change has been made.
+     *
+     * @param model the model to replace
+     * @see Observable
+     * @see java.util.Observer
+     */
+    public void updateModel(ClientModel model)
+    {
+        /*
+        For thread safety, don't update if previous update has not finished.
+         */
+        if (!isUpdating)
+        {
+            isUpdating = true;
+            this.gameInfo = model.gameInfo;
+            this.bank = model.bank;
+            this.chat = model.chat;
+            this.log = model.log;
+            this.map = model.map;
+            this.tradeOffer = model.tradeOffer;
+            this.turnTracker = model.turnTracker;
+            this.version = model.version;
+            this.winner = model.winner;
+            this.setChanged();
+            if (turnTracker != null)
+            {
+                this.notifyObservers(turnTracker.getStatus());
+            } else
+            {
+                this.notifyObservers();
+            }
+
+            isUpdating = false;
+        }
     }
 
     public GameInfo getGameInfo()
@@ -177,6 +179,11 @@ public class ClientModel extends Observable
         return version;
     }
 
+    public void setVersion(int version)
+    {
+        this.version = version;
+    }
+
     public PlayerIndex getWinner()
     {
         return winner;
@@ -187,13 +194,9 @@ public class ClientModel extends Observable
         this.winner = winner;
     }
 
-    public void setVersion(int version)
-    {
-        this.version = version;
-    }
-
     /**
      * Determines if there are any dev cards to buy.
+     *
      * @return true if there are any dev cards to buy, false otherwise.
      */
     public boolean canBuyDevCard()
@@ -204,13 +207,13 @@ public class ClientModel extends Observable
     /**
      * Method that indicates whether a player has the ability to place a
      * settlement in a certain location on the map
-     * 
-     * @param player this will be the player placing the settlement
-     * @param location this will be the location of the settlement; must ensure that
-     *        this space on the map is empty
+     *
+     * @param player            this will be the player placing the settlement
+     * @param location          this will be the location of the settlement; must ensure that
+     *                          this space on the map is empty
      * @param allowDisconnected whether or not the settlement can be disconnected. Only true during setup. Not currently used.
      * @return boolean  returns true if the location is vacant and at least
-     *         two spaces away from another settlement otherwise returns false
+     * two spaces away from another settlement otherwise returns false
      */
     public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
     {
@@ -220,12 +223,12 @@ public class ClientModel extends Observable
     /**
      * Method that indicates whether a player has the ability to place a city in
      * a certain location on the map
-     * 
-     * @param player this will be the player placing the city
+     *
+     * @param player   this will be the player placing the city
      * @param location this will be the location of the city; must ensure that this
-     *        space already has a settlement located their owned by this player
+     *                 space already has a settlement located their owned by this player
      * @return boolean returns true if there is a settlement at the specified
-     *         location and it is owned by the player otherwise returns false
+     * location and it is owned by the player otherwise returns false
      */
     public boolean canPlaceCity(PlayerIndex player, VertexLocation location)
     {
@@ -235,14 +238,14 @@ public class ClientModel extends Observable
     /**
      * Method that indicates whether a player has the ability to place a city on
      * a certain edge on the map
-     * 
-     * @param player this will be the player placing the road
-     * @param location this will be the edge location where the road will be placed;
-     *        must ensure this space is empty on the map
+     *
+     * @param player            this will be the player placing the road
+     * @param location          this will be the edge location where the road will be placed;
+     *                          must ensure this space is empty on the map
      * @param allowDisconnected whether or not the road can be disconnected. Only true during setup.
      * @return boolean  returns true if the player owns a settlement or city
-     *         at the neighboring vertex locations and there is no current road
-     *         there otherwise returns false
+     * at the neighboring vertex locations and there is no current road
+     * there otherwise returns false
      */
     public boolean canPlaceRoad(PlayerIndex player, EdgeLocation location, boolean allowDisconnected)
     {
@@ -251,7 +254,8 @@ public class ClientModel extends Observable
 
     /**
      * Builds a city for the given player at the given location.
-     * @param player the player who is building the road.
+     *
+     * @param player   the player who is building the road.
      * @param location the location where the road is being built.
      */
     public void buildRoad(PlayerIndex player, EdgeLocation location)
@@ -262,12 +266,12 @@ public class ClientModel extends Observable
     /**
      * Method that indicates whether a player has the ability to move a robber
      * on a certain Hex
-     * 
-     * @param player this will be the player placing the robber
+     *
+     * @param player   this will be the player placing the robber
      * @param location this will be the hex location where the robber will be placed;
-     *        cannot place on water or where the robber already is
+     *                 cannot place on water or where the robber already is
      * @return boolean  returns true if it is not moving to its current
-     *         location and it is not a sea piece otherwise returns false
+     * location and it is not a sea piece otherwise returns false
      */
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
@@ -276,6 +280,7 @@ public class ClientModel extends Observable
 
     /**
      * Determines if the given player can buy a road.
+     *
      * @param player the player to check.
      * @return true if the given player can buy a road, false otherwise.
      */
@@ -287,7 +292,7 @@ public class ClientModel extends Observable
     /**
      * Determines if the PlayerBank has Settlements left to purchase AND if the
      * resources required are available
-     * 
+     *
      * @param player the player to check.
      * @return true if both conditions are met
      */
@@ -299,7 +304,7 @@ public class ClientModel extends Observable
     /**
      * Determines if the PlayerBank has Cities left to purchase AND if the
      * resources required are available
-     * 
+     *
      * @param player the player to check.
      * @return true if both conditions are met
      */
@@ -310,6 +315,7 @@ public class ClientModel extends Observable
 
     /**
      * Updates the currentTurn counter
+     *
      * @param playerCurrentTurn the info of the player to update the current turn for.
      */
     public void updateCurrentTurn(PlayerInfo playerCurrentTurn)
@@ -320,6 +326,7 @@ public class ClientModel extends Observable
     /**
      * Updates the longestRoad counter. A player has the longest road if he or
      * she has at least 5 roads
+     *
      * @param playerLongestRoad the info of the player to update the longest road for.
      */
     public void updateLongestRoad(PlayerBank playerLongestRoad)
@@ -330,6 +337,7 @@ public class ClientModel extends Observable
     /**
      * Updates the largest army counter A player has the largest army if he or
      * she has at least 3 knights
+     *
      * @param playerLargestArmy the info of the player to update the largest army for.
      */
     public void updateLargestArmy(PlayerBank playerLargestArmy)
@@ -339,6 +347,7 @@ public class ClientModel extends Observable
 
     /**
      * Updates the status string based on the current phase of the player's turn
+     *
      * @param playerTurnStatus the info of the player to update the status for.
      */
     public void updateStatus(TurnStatus playerTurnStatus)
@@ -348,11 +357,10 @@ public class ClientModel extends Observable
 
     /**
      * returns a serialized json representation of the object.
-     * 
+     *
      * @return a string of json
      */
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         JsonParser parser = new JsonParser();
         JsonObject model = new JsonObject();
@@ -379,8 +387,7 @@ public class ClientModel extends Observable
         return model.toString();
     }
 
-    @Override
-    public boolean equals(Object o)
+    @Override public boolean equals(Object o)
     {
         if (this == o)
             return true;
@@ -411,6 +418,7 @@ public class ClientModel extends Observable
 
     /**
      * if client player is being offered a trade this returns true
+     *
      * @return true if the model contains a trade offer, false otherwise.
      */
     public boolean hasTradeOffer()
@@ -421,11 +429,12 @@ public class ClientModel extends Observable
         return (offer != null && (offer.getReceiver() == currentPlayer || offer.getSender() == currentPlayer));
     }
 
-	/**
-	 * 
-	 */
-	public void finishTurn() {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     *
+     */
+    public void finishTurn()
+    {
+        // TODO Auto-generated method stub
+
+    }
 }

@@ -10,12 +10,12 @@ import shared.definitions.PlayerIndex;
  * finishTurn command object.
  *
  * @author Cache Staheli
- *
  */
 public class FinishTurnCommand extends SimpleSerializableCommand
 {
     /**
      * Instantiates a FinishTurnCommand from the given PlayerIndex.
+     *
      * @param playerIndex the index of the player finishing the turn.
      */
     public FinishTurnCommand(PlayerIndex playerIndex)
@@ -25,6 +25,7 @@ public class FinishTurnCommand extends SimpleSerializableCommand
 
     /**
      * Instantiate a FinishTurnCommand from JSON.
+     *
      * @param json JSON of the FinishTurnCommand.
      */
     public FinishTurnCommand(String json)
@@ -37,8 +38,9 @@ public class FinishTurnCommand extends SimpleSerializableCommand
 
     /**
      * Calls FinishTurn method on the Server Facade
-     * @return the Json representation of the model after the command is executed.
+     *
      * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
     {

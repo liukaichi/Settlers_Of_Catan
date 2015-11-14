@@ -16,55 +16,68 @@ import java.util.Stack;
 
 /**
  * The base class bank, used to hold resources and dev cards
- * @author dtaylor
  *
+ * @author dtaylor
  */
 public class Bank
 {
     private static Resources resources;
-    private DevCards devCards;
     private static Stack<DevCardType> devCardDeck;
+    private DevCards devCards;
 
     /**
      * Initializes the Bank with resources. If the bank is specified to be the game bank, it is given 19 of each resource.
+     *
      * @param isGameBank if the Bank is the game bank.
      */
-    public Bank(boolean isGameBank){
+    public Bank(boolean isGameBank)
+    {
         initialize(isGameBank);
     }
 
-    private void initializeDevCardDeck(){
-        for (int i = 0; i < 2; i++) {
+    private void initializeDevCardDeck()
+    {
+        for (int i = 0; i < 2; i++)
+        {
             devCardDeck.push(DevCardType.MONOPOLY);
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++)
+        {
             devCardDeck.push(DevCardType.ROAD_BUILD);
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++)
+        {
             devCardDeck.push(DevCardType.YEAR_OF_PLENTY);
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             devCardDeck.push(DevCardType.MONUMENT);
         }
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < 14; i++)
+        {
             devCardDeck.push(DevCardType.SOLDIER);
         }
         Collections.shuffle(devCardDeck);
     }
 
-    private void initialize(boolean isGameBank){
+    private void initialize(boolean isGameBank)
+    {
         resources = new Resources(isGameBank);
-        if (devCardDeck == null){
+        if (devCardDeck == null)
+        {
             devCardDeck = new Stack<>();
             initializeDevCardDeck();
         }
     }
 
-    public Stack<DevCardType> getDevCardDeck(){ return devCardDeck; }
+    public Stack<DevCardType> getDevCardDeck()
+    {
+        return devCardDeck;
+    }
 
     /**
      * Returns a Resources object
-     * 
+     *
      * @return the Resources in this Bank
      */
     public Resources getResources()
@@ -74,7 +87,7 @@ public class Bank
 
     /**
      * Returns a DevCardHand object
-     * 
+     *
      * @return the DevCardHand in this Bank
      */
     public DevCards getDevCards()
@@ -84,51 +97,59 @@ public class Bank
 
     /**
      * Initializes the deck of dev cards from Json
+     *
      * @param json the Json to initialize the deck from.
      */
-    public void initDevCards(String json){
+    public void initDevCards(String json)
+    {
         devCards = new DevCards(json, DevCard.AmountType.PLAYABLE);
     }
 
     /**
      * Initializes the resources from Json.
+     *
      * @param json the Json to initialize the resources from.
      */
-    public void initResources(String json){
+    public void initResources(String json)
+    {
         resources = new Resources(json);
     }
 
     /**
      * Gives an amount of resources of the given type.
+     *
      * @param type the type to give.
-     * @param num the amount to give.
+     * @param num  the amount to give.
      * @throws InsufficientResourcesException if there are insufficient resources to execute the transactions.
      */
-    public void giveResource(ResourceType type, int num) throws InsufficientResourcesException {
-        if ((resources.getResource(type).getAmount() - num) < 0){
+    public void giveResource(ResourceType type, int num) throws InsufficientResourcesException
+    {
+        if ((resources.getResource(type).getAmount() - num) < 0)
+        {
             throw new InsufficientResourcesException();
-        }
-        else{
+        } else
+        {
             resources.getResource(type).subResource(num);
         }
     }
 
     /**
      * Takes an amount of resources of the given type.
+     *
      * @param type the type to take.
-     * @param num the amount to take.
+     * @param num  the amount to take.
      * @throws CatanException if something goes wrong.
      */
-    public void takeResource(ResourceType type, int num) throws CatanException {
-        if ((resources.getResource(type).getAmount() + num) > 19){
+    public void takeResource(ResourceType type, int num) throws CatanException
+    {
+        if ((resources.getResource(type).getAmount() + num) > 19)
+        {
             throw new CatanException();
-        }
-        else{
+        } else
+        {
             resources.getResource(type).addResource(num);
         }
     }
-
-
 
     @Override public int hashCode()
     {
@@ -151,11 +172,11 @@ public class Bank
     public void awardPlayers(ResourceType resourceType, StructureType type, Set<PlayerIndex> players)
     {
         int num = 1;
-        if(type.equals(StructureType.CITY))
+        if (type.equals(StructureType.CITY))
         {
             num = 2;
         }
-        for(PlayerIndex playerIndex : players)
+        for (PlayerIndex playerIndex : players)
         {
             try
             {

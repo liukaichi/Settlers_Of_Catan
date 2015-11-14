@@ -22,20 +22,15 @@ public class DevCardController extends ObserverController implements IDevCardCon
     private IAction roadAction;
     private ClientFacade facade;
 
-
     /**
      * DevCardController constructor
-     * 
-     * @param view
-     *        "Play dev card" view
-     * @param buyCardView
-     *        "Buy dev card" view
-     * @param soldierAction
-     *        Action to be executed when the user plays a soldier card. It calls
-     *        "mapController.playSoldierCard()".
-     * @param roadAction
-     *        Action to be executed when the user plays a road building card. It
-     *        calls "mapController.playRoadBuildingCard()".
+     *
+     * @param view          "Play dev card" view
+     * @param buyCardView   "Buy dev card" view
+     * @param soldierAction Action to be executed when the user plays a soldier card. It calls
+     *                      "mapController.playSoldierCard()".
+     * @param roadAction    Action to be executed when the user plays a road building card. It
+     *                      calls "mapController.playRoadBuildingCard()".
      */
     public DevCardController(IPlayDevCardView view, IBuyDevCardView buyCardView, IAction soldierAction,
             IAction roadAction)
@@ -59,27 +54,31 @@ public class DevCardController extends ObserverController implements IDevCardCon
         return buyCardView;
     }
 
-    public void updateView(){
+    public void updateView()
+    {
         Player player = facade.getPlayer();
         DevCards devCards = player.getBank().getDevCards();
 
         setCards(devCards);
-
 
         disableCards();
         //getPlayCardView().setCardAmount(DevCardType.MONUMENT,10);
         //getPlayCardView().setCardEnabled(DevCardType.MONUMENT, true);
     }
 
-    private void setCards(DevCards devCards){
+    private void setCards(DevCards devCards)
+    {
         getPlayCardView().setCardAmount(DevCardType.MONOPOLY, devCards.getCard(DevCardType.MONOPOLY).getAmountInHand());
         getPlayCardView().setCardAmount(DevCardType.MONUMENT, devCards.getCard(DevCardType.MONUMENT).getAmountInHand());
-        getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, devCards.getCard(DevCardType.ROAD_BUILD).getAmountInHand());
+        getPlayCardView()
+                .setCardAmount(DevCardType.ROAD_BUILD, devCards.getCard(DevCardType.ROAD_BUILD).getAmountInHand());
         getPlayCardView().setCardAmount(DevCardType.SOLDIER, devCards.getCard(DevCardType.SOLDIER).getAmountInHand());
-        getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, devCards.getCard(DevCardType.YEAR_OF_PLENTY).getAmountInHand());
+        getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY,
+                devCards.getCard(DevCardType.YEAR_OF_PLENTY).getAmountInHand());
     }
 
-    private void disableCards(){
+    private void disableCards()
+    {
         getPlayCardView().setCardEnabled(DevCardType.MONOPOLY, state.canPlayDevCard(DevCardType.MONOPOLY));
         getPlayCardView().setCardEnabled(DevCardType.MONUMENT, state.canPlayDevCard(DevCardType.MONUMENT));
         getPlayCardView().setCardEnabled(DevCardType.ROAD_BUILD, state.canPlayDevCard(DevCardType.ROAD_BUILD));
@@ -87,71 +86,61 @@ public class DevCardController extends ObserverController implements IDevCardCon
         getPlayCardView().setCardEnabled(DevCardType.YEAR_OF_PLENTY, state.canPlayDevCard(DevCardType.YEAR_OF_PLENTY));
     }
 
-    @Override
-    public void startBuyCard()
+    @Override public void startBuyCard()
     {
-        if(getBuyCardView().isModalShowing())
+        if (getBuyCardView().isModalShowing())
             getBuyCardView().closeModal();
         getBuyCardView().showModal();
     }
 
-    @Override
-    public void cancelBuyCard()
+    @Override public void cancelBuyCard()
     {
-        if(getBuyCardView().isModalShowing())
+        if (getBuyCardView().isModalShowing())
             getBuyCardView().closeModal();
     }
 
-    @Override
-    public void buyCard()
+    @Override public void buyCard()
     {
         state.buyDevCard();
-        if(getBuyCardView().isModalShowing())
+        if (getBuyCardView().isModalShowing())
             getBuyCardView().closeModal();
 
     }
 
-    @Override
-    public void startPlayCard()
+    @Override public void startPlayCard()
     {
-        if(getPlayCardView().isModalShowing())
+        if (getPlayCardView().isModalShowing())
             getPlayCardView().closeModal();
         getPlayCardView().showModal();
     }
 
-    @Override
-    public void cancelPlayCard()
+    @Override public void cancelPlayCard()
     {
-        if(getPlayCardView().isModalShowing())
+        if (getPlayCardView().isModalShowing())
             getPlayCardView().closeModal();
     }
 
-    @Override
-    public void playMonopolyCard(ResourceType resource)
+    @Override public void playMonopolyCard(ResourceType resource)
     {
         state.playMonopolyCard(resource);
     }
 
-    @Override
-    public void playMonumentCard()
+    @Override public void playMonumentCard()
     {
         state.playMonumentCard();
     }
 
-    @Override
-    public void playRoadBuildCard()
+    @Override public void playRoadBuildCard()
     {
         roadAction.execute();
     }
 
-    @Override
-    public void playSoldierCard()
+    @Override public void playSoldierCard()
     {
         soldierAction.execute();
     }
 
-    @Override
-    public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
+    @Override public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
         state.playYearOfPlentyCard(resource1, resource2);
     }
@@ -161,12 +150,12 @@ public class DevCardController extends ObserverController implements IDevCardCon
      * 
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
-    @Override
-    public void update(Observable o, Object arg)
+    @Override public void update(Observable o, Object arg)
     {
         //Does nothing at the moment.
         ClientModel model = (ClientModel) o;
-        if(facade.getClientPlayer().getNormalizedPlayerIndex() != -1) {
+        if (facade.getClientPlayer().getNormalizedPlayerIndex() != -1)
+        {
             state.update(this, model, arg);
             updateView();
         }

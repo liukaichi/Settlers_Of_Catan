@@ -1,13 +1,17 @@
 /**
- * 
+ *
  */
 package shared.communication;
 
-import java.util.*;
-
-import com.google.gson.*;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import shared.definitions.AIType;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents the Json that is returned from the server using the context "games/list".
@@ -26,6 +30,7 @@ public class ListAIResponse
 
     /**
      * Constructs the ListAIResponse from a list of AIType
+     *
      * @param types the types of AI to add.
      */
     public ListAIResponse(List<AIType> types)
@@ -36,6 +41,7 @@ public class ListAIResponse
 
     /**
      * Instantiate a ListAIResponse from JSON with the injected facade
+     *
      * @param json JSON of the ListAIResponse
      */
     public ListAIResponse(String json)

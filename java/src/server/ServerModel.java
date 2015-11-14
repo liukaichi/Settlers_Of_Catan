@@ -31,6 +31,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
         this.setChanged();
         return this;
     }
+
     private String getPlayerName(int index)
     {
         PlayerInfo player = getGameInfo().getPlayerInfos().get(index);
@@ -40,7 +41,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
     @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex,
             int number) //TODO refactor to reduce dependency
     {
-        for(Hex hex : getMap().getHexesByNumber(number))
+        for (Hex hex : getMap().getHexesByNumber(number))
         {
             Set<PlayerIndex> players = getMap().getHexPlayersWithCity(hex.getLocation());
             getBank().awardPlayers(hex.getResourceType(), StructureType.CITY, players);
@@ -90,26 +91,23 @@ public class ServerModel extends ClientModel implements IMovesFacade
         return this;
     }
 
-    @Override
-    public ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
+    @Override public ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex,
+            HexLocation location)
     {
         return null;
     }
 
-    @Override
-    public ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource)
+    @Override public ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource)
     {
         return null;
     }
 
-    @Override
-    public ClientModel monument(int gameID, PlayerIndex playerIndex)
+    @Override public ClientModel monument(int gameID, PlayerIndex playerIndex)
     {
         return null;
     }
 
-    @Override
-    public ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation location, boolean isFree)
+    @Override public ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation location, boolean isFree)
     {
         try
         {
@@ -117,16 +115,15 @@ public class ServerModel extends ClientModel implements IMovesFacade
             player.buyRoad(isFree);
             getMap().placeRoad(playerIndex, location);
             this.setChanged();
-        }
-        catch(CatanException e)
+        } catch (CatanException e)
         {
             e.printStackTrace();
         }
         return this;
     }
 
-    @Override
-    public ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation location, boolean isFree)
+    @Override public ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation location,
+            boolean isFree)
     {
         try
         {
@@ -134,16 +131,14 @@ public class ServerModel extends ClientModel implements IMovesFacade
             player.buySettlement(isFree);
             getMap().placeSettlement(playerIndex, location);
             this.setChanged();
-        }
-        catch(CatanException e)
+        } catch (CatanException e)
         {
             e.printStackTrace();
         }
         return this;
     }
 
-    @Override
-    public ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation location)
+    @Override public ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation location)
     {
         try
         {
@@ -151,37 +146,32 @@ public class ServerModel extends ClientModel implements IMovesFacade
             player.buyCity();
             getMap().placeCity(playerIndex, location);
             this.setChanged();
-        }
-        catch(CatanException e)
+        } catch (CatanException e)
         {
             e.printStackTrace();
         }
         return this;
     }
 
-    @Override
-    public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
+    @Override public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
         tradeOffer = offer;
         this.setChanged();
         return this;
     }
 
-    @Override
-    public ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept)
+    @Override public ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept)
     {
         return null;
     }
 
-    @Override
-    public ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
-                                     ResourceType outputResource)
+    @Override public ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio,
+            ResourceType inputResource, ResourceType outputResource)
     {
         return null;
     }
 
-    @Override
-    public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
+    @Override public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
     }

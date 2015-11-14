@@ -1,19 +1,19 @@
 package client.join;
 
-import java.awt.*;
-import java.awt.event.*;
+import client.base.OverlayView;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 
 import javax.swing.*;
-
-import client.base.OverlayView;
-import client.data.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Implementation for the join game view, which lets the user select a game to
  * join
  */
-@SuppressWarnings("serial")
-public class JoinGameView extends OverlayView implements IJoinGameView
+@SuppressWarnings("serial") public class JoinGameView extends OverlayView implements IJoinGameView
 {
 
     private final int LABEL_TEXT_SIZE = 40;
@@ -38,6 +38,41 @@ public class JoinGameView extends OverlayView implements IJoinGameView
 
     private GameInfo[] games;
     private PlayerInfo localPlayer;
+    private ActionListener actionListener = new ActionListener()
+    {
+        @Override public void actionPerformed(ActionEvent e)
+        {
+            if (e.getSource() == createButton)
+            {
+                getController().startCreateNewGame();
+            }
+            //            else if (e.getSource() == tempJoinButton)
+            //            {
+            //                getController().startJoinGame(null);
+            //            }
+            else
+            {
+                try
+                {
+                    // System.out.println(e.getActionCommand());
+                    int gameId = Integer.parseInt(e.getActionCommand());
+                    GameInfo game = null;
+                    for (GameInfo g : games)
+                    {
+                        if (g.getId() == gameId)
+                        {
+                            game = g;
+                            break;
+                        }
+                    }
+                    getController().startJoinGame(game);
+                } catch (NumberFormatException ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    };
 
     public JoinGameView()
     {
@@ -106,8 +141,7 @@ public class JoinGameView extends OverlayView implements IJoinGameView
                     if (j < game.getPlayers().size() - 1)
                     {
                         players = players + game.getPlayers().get(j).getName() + ", ";
-                    }
-                    else
+                    } else
                     {
                         players = players + game.getPlayers().get(j).getName();
                     }
@@ -122,13 +156,11 @@ public class JoinGameView extends OverlayView implements IJoinGameView
                 if (game.getPlayerInfos().contains(localPlayer))
                 {
                     joinButton = new JButton("Re-Join");
-                }
-                else if (game.getPlayers().size() >= 4)
+                } else if (game.getPlayers().size() >= 4)
                 {
                     joinButton = new JButton("Full");
                     joinButton.setEnabled(false);
-                }
-                else
+                } else
                 {
                     joinButton = new JButton("Join");
                 }
@@ -141,11 +173,11 @@ public class JoinGameView extends OverlayView implements IJoinGameView
         // Add all the above
         this.add(gamePanel, BorderLayout.CENTER);
 
-//        tempJoinButton = new JButton("Temporary Join Button");
-//        tempJoinButton.addActionListener(actionListener);
-//        Font buttonFont = tempJoinButton.getFont();
-//        buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
-//        tempJoinButton.setFont(buttonFont);
+        //        tempJoinButton = new JButton("Temporary Join Button");
+        //        tempJoinButton.addActionListener(actionListener);
+        //        Font buttonFont = tempJoinButton.getFont();
+        //        buttonFont = buttonFont.deriveFont(buttonFont.getStyle(), BUTTON_TEXT_SIZE);
+        //        tempJoinButton.setFont(buttonFont);
 
         createButton = new JButton("Create Game");
         createButton.addActionListener(actionListener);
@@ -156,60 +188,20 @@ public class JoinGameView extends OverlayView implements IJoinGameView
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(createButton);
-//        buttonPanel.add(tempJoinButton);
+        //        buttonPanel.add(tempJoinButton);
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    @Override
-    public IJoinGameController getController()
+    @Override public IJoinGameController getController()
     {
         return (IJoinGameController) super.getController();
     }
 
-    @Override
-    public void setGames(GameInfo[] games, PlayerInfo localPlayer)
+    @Override public void setGames(GameInfo[] games, PlayerInfo localPlayer)
     {
         this.games = games;
         this.localPlayer = localPlayer;
         this.removeAll();
         this.initialize();
     }
-
-    private ActionListener actionListener = new ActionListener()
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            if (e.getSource() == createButton)
-            {
-                getController().startCreateNewGame();
-            }
-//            else if (e.getSource() == tempJoinButton)
-//            {
-//                getController().startJoinGame(null);
-//            }
-            else
-            {
-                try
-                {
-                    // System.out.println(e.getActionCommand());
-                    int gameId = Integer.parseInt(e.getActionCommand());
-                    GameInfo game = null;
-                    for (GameInfo g : games)
-                    {
-                        if (g.getId() == gameId)
-                        {
-                            game = g;
-                            break;
-                        }
-                    }
-                    getController().startJoinGame(game);
-                }
-                catch (NumberFormatException ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-        }
-    };
 }

@@ -52,60 +52,52 @@ public class Hex
 
     /**
      * Parses a JSON object into a Hex
-     * 
-     * @param json
-     *        the JSON to parse.
+     *
+     * @param json the JSON to parse.
      */
     public Hex(String json)
     {
         this();
         JsonParser parser = new JsonParser();
-        JsonObject hex = (JsonObject)parser.parse(json);
-        if(hex.has("resource"))
+        JsonObject hex = (JsonObject) parser.parse(json);
+        if (hex.has("resource"))
         {
             this.resourceType = ResourceType.valueOf(hex.get("resource").getAsString().toUpperCase());
             this.hexType = HexType.valueOf(hex.get("resource").getAsString().toUpperCase());
-        }
-        else
+        } else
         {
             this.resourceType = null;
             this.hexType = HexType.DESERT;
         }
-        
+
         JsonObject location = (JsonObject) hex.get("location");
-        this.location = new HexLocation(location.get("x").getAsInt(),location.get("y").getAsInt());
-        if(hex.has("number"))
+        this.location = new HexLocation(location.get("x").getAsInt(), location.get("y").getAsInt());
+        if (hex.has("number"))
         {
             this.numberTile = hex.get("number").getAsInt();
-        }
-        else
+        } else
         {
             this.numberTile = -1;
         }
-        if(this.location != null)
+        if (this.location != null)
         {
-            for(VertexDirection dir : VertexDirection.values())
+            for (VertexDirection dir : VertexDirection.values())
             {
-                vertices.put(dir, new VertexLocation(this.location,dir).getNormalizedLocation());
+                vertices.put(dir, new VertexLocation(this.location, dir).getNormalizedLocation());
             }
-            for(EdgeDirection dir : EdgeDirection.values())
+            for (EdgeDirection dir : EdgeDirection.values())
             {
-                edges.put(dir, new EdgeLocation(this.location,dir).getNormalizedLocation());
+                edges.put(dir, new EdgeLocation(this.location, dir).getNormalizedLocation());
             }
         }
     }
 
     /**
-     * @param location
-     *        the location of the hex
-     * @param hexType
-     *        the type of the hex
-     * @param resourceType
-     *        the resource type of the hex
-     * @param numberTile
-     *        the number tile on the hex
-     * @param robberPresent
-     *        if the robber is present on the hex
+     * @param location      the location of the hex
+     * @param hexType       the type of the hex
+     * @param resourceType  the resource type of the hex
+     * @param numberTile    the number tile on the hex
+     * @param robberPresent if the robber is present on the hex
      */
     public Hex(HexLocation location, HexType hexType, ResourceType resourceType, int numberTile, boolean robberPresent)
     {
@@ -120,98 +112,108 @@ public class Hex
         this();
         this.location = location;
         this.hexType = hexType;
-        if(location != null)
+        if (location != null)
         {
-            for(VertexDirection dir : VertexDirection.values())
+            for (VertexDirection dir : VertexDirection.values())
             {
-                vertices.put(dir, new VertexLocation(location,dir));
+                vertices.put(dir, new VertexLocation(location, dir));
             }
-            for(EdgeDirection dir : EdgeDirection.values())
+            for (EdgeDirection dir : EdgeDirection.values())
             {
-                edges.put(dir, new EdgeLocation(location,dir));
+                edges.put(dir, new EdgeLocation(location, dir));
             }
         }
     }
-    
+
     public VertexLocation getVertexLocation(VertexDirection dir)
     {
         return vertices.get(dir).getNormalizedLocation();
     }
-    
+
     public EdgeLocation getEdgeLocation(EdgeDirection dir)
     {
         return edges.get(dir).getNormalizedLocation();
     }
 
     /**
-	 * @return the location
-	 */
-	public HexLocation getLocation() {
-		return location;
-	}
+     * @return the location
+     */
+    public HexLocation getLocation()
+    {
+        return location;
+    }
 
-	/**
-	 * @param location the location to set
-	 */
-	public void setLocation(HexLocation location) {
-		this.location = location;
-	}
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(HexLocation location)
+    {
+        this.location = location;
+    }
 
-	/**
-	 * @return the hexType
-	 */
-	public HexType getHexType() {
-		return hexType;
-	}
+    /**
+     * @return the hexType
+     */
+    public HexType getHexType()
+    {
+        return hexType;
+    }
 
-	/**
-	 * @param hexType the hexType to set
-	 */
-	public void setHexType(HexType hexType) {
-		this.hexType = hexType;
-	}
+    /**
+     * @param hexType the hexType to set
+     */
+    public void setHexType(HexType hexType)
+    {
+        this.hexType = hexType;
+    }
 
-	/**
-	 * @return the resourceType
-	 */
-	public ResourceType getResourceType() {
-		return resourceType;
-	}
+    /**
+     * @return the resourceType
+     */
+    public ResourceType getResourceType()
+    {
+        return resourceType;
+    }
 
-	/**
-	 * @param resourceType the resourceType to set
-	 */
-	public void setResourceType(ResourceType resourceType) {
-		this.resourceType = resourceType;
-	}
+    /**
+     * @param resourceType the resourceType to set
+     */
+    public void setResourceType(ResourceType resourceType)
+    {
+        this.resourceType = resourceType;
+    }
 
-	/**
-	 * @return the numberTile
-	 */
-	public int getNumberTile() {
-		return numberTile;
-	}
+    /**
+     * @return the numberTile
+     */
+    public int getNumberTile()
+    {
+        return numberTile;
+    }
 
-	/**
-	 * @param numberTile the numberTile to set
-	 */
-	public void setNumberTile(int numberTile) {
-		this.numberTile = numberTile;
-	}
+    /**
+     * @param numberTile the numberTile to set
+     */
+    public void setNumberTile(int numberTile)
+    {
+        this.numberTile = numberTile;
+    }
 
-	/**
-	 * @return the robberPresent
-	 */
-	public boolean isRobberPresent() {
-		return robberPresent;
-	}
+    /**
+     * @return the robberPresent
+     */
+    public boolean isRobberPresent()
+    {
+        return robberPresent;
+    }
 
-	/**
-	 * @param robberPresent the robberPresent to set
-	 */
-	public void setRobberPresent(boolean robberPresent) {
-		this.robberPresent = robberPresent;
-	}
+    /**
+     * @param robberPresent the robberPresent to set
+     */
+    public void setRobberPresent(boolean robberPresent)
+    {
+        this.robberPresent = robberPresent;
+    }
 
     public void setHasRobber(boolean newHasRobber)
     {
@@ -222,16 +224,15 @@ public class Hex
     {
         return robberPresent;
     }
-    
+
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         JsonObject hex = new JsonObject();
         {
-            if(this.resourceType != null)
+            if (this.resourceType != null)
                 hex.addProperty("resource", this.resourceType.toString().toLowerCase());
             JsonObject location = new JsonObject();
             {
@@ -239,16 +240,16 @@ public class Hex
                 location.addProperty("y", this.location.getY());
             }
             hex.add("location", location);
-            if(this.numberTile != -1)
+            if (this.numberTile != -1)
                 hex.addProperty("number", this.numberTile);
         }
         return hex.toString();
     }
+
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    @Override
-    public boolean equals(Object obj)
+    @Override public boolean equals(Object obj)
     {
         if (this == obj)
             return true;
@@ -256,13 +257,13 @@ public class Hex
             return false;
         if (getClass() != obj.getClass())
             return false;
-        
+
         Hex other = (Hex) obj;
-        if(this.edges.keySet().size() != other.edges.keySet().size())
+        if (this.edges.keySet().size() != other.edges.keySet().size())
             return false;
-        for(EdgeDirection key : this.edges.keySet())
+        for (EdgeDirection key : this.edges.keySet())
         {
-            if(!this.edges.get(key).equals(other.edges.get(key)))
+            if (!this.edges.get(key).equals(other.edges.get(key)))
                 return false;
         }
         if (!this.hexType.equals(other.hexType))
@@ -271,22 +272,21 @@ public class Hex
             return false;
         if (this.numberTile != other.numberTile)
             return false;
-        if(this.resourceType == null)
+        if (this.resourceType == null)
         {
-        	if(other.resourceType != null)
-        		return false;
-        }
-        else if (!this.resourceType.equals(other.resourceType))
+            if (other.resourceType != null)
+                return false;
+        } else if (!this.resourceType.equals(other.resourceType))
         {
             return false;
         }
         if (this.robberPresent != other.robberPresent)
             return false;
-        if(this.vertices.keySet().size() != other.vertices.keySet().size())
+        if (this.vertices.keySet().size() != other.vertices.keySet().size())
             return false;
-        for(VertexDirection key : this.vertices.keySet())
+        for (VertexDirection key : this.vertices.keySet())
         {
-            if(!this.vertices.get(key).equals(other.vertices.get(key)))
+            if (!this.vertices.get(key).equals(other.vertices.get(key)))
                 return false;
         }
         return true;

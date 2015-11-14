@@ -5,10 +5,10 @@ package client.base;
  */
 public interface IAction
 {
-	
-	/**
-	 * Execute the action
-	 */
-	void execute();
+
+    /**
+     * Execute the action
+     */
+    void execute();
 }
 

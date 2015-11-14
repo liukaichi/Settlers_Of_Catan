@@ -12,8 +12,6 @@ import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
-import java.util.logging.Logger;
-
 /**
  * This state is used in the first two rounds of the game, where players place roads and cities only.
  */
@@ -27,6 +25,7 @@ public class SetupState extends GameplayState
         super(controller);
         currentTurnStatus = round;
     }
+
     @Override public boolean canPlaceRoad(EdgeLocation edgeLoc)
     {
         return facade.canPlaceRoad(edgeLoc, true);
@@ -66,84 +65,88 @@ public class SetupState extends GameplayState
         if (controller instanceof MapController)
         {
             playRound();
-        }
-        else if (controller instanceof TurnTrackerController)
+        } else if (controller instanceof TurnTrackerController)
         {
             ((TurnTrackerController) controller).updatePlayers(facade.getModel());
         }
     }
+
     private void playRound()
     {
         switch (currentTurnStatus)
         {
-            case FirstRound:
-                firstRound();
-                break;
-            case SecondRound:
-                secondRound();
-                break;
+        case FirstRound:
+            firstRound();
+            break;
+        case SecondRound:
+            secondRound();
+            break;
         }
     }
 
-    private void firstRound() {
+    private void firstRound()
+    {
         switch (facade.getClientPlayerRoadCount())
         {
+        case 0:
+            if (!road2)
+            {
+                LOGGER.severe("------------------CALLING startMove Road 1---------------");
+                road2 = true;
+                startMove(PieceType.ROAD, true, true);
+            }
+            break;
+        case 1:
+            switch (facade.getClientPlayerSettlementCount())
+            {
             case 0:
-                if(!road2)
+                if (!roundComplete && facade.getClientPlayerRoadCount() == 1)
                 {
-                    LOGGER.severe("------------------CALLING startMove Road 1---------------");
-                    road2 = true;
-                    startMove(PieceType.ROAD, true, true);
+                    roundComplete = true;
+                    LOGGER.severe("------------------CALLING startMove Settlement 1---------------");
+                    startMove(PieceType.SETTLEMENT, true, true);
                 }
                 break;
             case 1:
-                switch (facade.getClientPlayerSettlementCount())
+                if (roundComplete)
                 {
-                    case 0:
-                        if(!roundComplete && facade.getClientPlayerRoadCount() == 1) {
-                            roundComplete = true;
-                            LOGGER.severe("------------------CALLING startMove Settlement 1---------------");
-                            startMove(PieceType.SETTLEMENT, true, true);
-                        }
-                        break;
-                    case 1:
-                        if (roundComplete)
-                        {
-                            roundComplete = false;
-                            this.endTurn();
-                        }
-                        break;
+                    roundComplete = false;
+                    this.endTurn();
                 }
                 break;
+            }
+            break;
         }
     }
 
-    private void secondRound() {
+    private void secondRound()
+    {
         switch (facade.getClientPlayerRoadCount())
         {
+        case 1:
+            LOGGER.info("------------------CALLING startMove Road 2---------------");
+            startMove(PieceType.ROAD, true, true);
+            break;
+        case 2:
+            switch (facade.getClientPlayerSettlementCount())
+            {
             case 1:
-                    LOGGER.info("------------------CALLING startMove Road 2---------------");
-                    startMove(PieceType.ROAD, true, true);
+                if (!roundComplete && facade.getClientPlayerRoadCount() == 2)
+                {
+                    roundComplete = true;
+                    LOGGER.info("------------------CALLING startMove Settlement 2---------------");
+                    startMove(PieceType.SETTLEMENT, true, true);
+                }
                 break;
             case 2:
-                switch (facade.getClientPlayerSettlementCount())
+                if (roundComplete)
                 {
-                    case 1:
-                        if(!roundComplete && facade.getClientPlayerRoadCount() == 2) {
-                            roundComplete = true;
-                            LOGGER.info("------------------CALLING startMove Settlement 2---------------");
-                            startMove(PieceType.SETTLEMENT, true, true);
-                        }
-                        break;
-                    case 2:
-                        if (roundComplete)
-                        {
-                            roundComplete = false;
-                            this.endTurn();
-                        }
-                        break;
+                    roundComplete = false;
+                    this.endTurn();
                 }
                 break;
+            }
+            break;
         }
     }
 }

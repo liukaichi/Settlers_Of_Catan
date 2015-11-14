@@ -1,15 +1,17 @@
 package shared.model.map.structure;
 
-import com.google.gson.*;
-
-import shared.definitions.*;
-import shared.locations.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import shared.definitions.PortType;
+import shared.definitions.TradeRatio;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 
 /**
  * Object representing a port in the Catan game
- * 
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public class Port
 {
@@ -41,8 +43,7 @@ public class Port
         if (port.has("resource"))
         {
             this.resource = PortType.valueOf(port.get("resource").getAsString().toUpperCase());
-        }
-        else
+        } else
         {
             this.resource = PortType.THREE;
         }
@@ -96,8 +97,7 @@ public class Port
      * 
      * @see java.lang.Object#toString()
      */
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         JsonObject port = new JsonObject();
         {
@@ -125,8 +125,7 @@ public class Port
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    @Override
-    public boolean equals(Object obj)
+    @Override public boolean equals(Object obj)
     {
         if (this == obj)
             return true;

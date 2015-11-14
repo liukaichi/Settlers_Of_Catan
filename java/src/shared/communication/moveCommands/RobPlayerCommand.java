@@ -20,7 +20,6 @@ import java.lang.reflect.Type;
 public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobPlayerCommand>
 {
 
-
     /**
      * The information about the player being robbed.
      */
@@ -30,16 +29,17 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      */
     private HexLocation location;
 
-
     public RobPlayerCommand()
     {
         super(MoveType.robPlayer, PlayerIndex.NONE);
     }
+
     /**
      * Instantiates a RobPlayerCommand  with the given player, victim, and new location of the robber.
+     *
      * @param playerIndex the index of the player who is robbing.
      * @param victimIndex the idex of the player being robbed.
-     * @param location the location where the robber is now.
+     * @param location    the location where the robber is now.
      */
     public RobPlayerCommand(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
     {
@@ -50,6 +50,7 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
 
     /**
      * Instantiate a RobPlayerCommand from JSON.
+     *
      * @param json JSON of the RobPlayerCommand.
      */
     public RobPlayerCommand(String json)
@@ -57,15 +58,13 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
 
     }
 
-
     /*
      * (non-Javadoc)
      *
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(RobPlayerCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(RobPlayerCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.addProperty("victimIndex", src.victimIndex.getIndex());
@@ -78,8 +77,9 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
 
     /**
      * Robs the player and moves the robber the new hex location
-     * @return the Json representation of the model after the command is executed.
+     *
      * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
     {
@@ -87,15 +87,18 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
                 .toString();
     }
 
-    public PlayerIndex getVictimIndex() {
+    public PlayerIndex getVictimIndex()
+    {
         return victimIndex;
     }
 
-    public void setVictimIndex(PlayerIndex victimIndex) {
+    public void setVictimIndex(PlayerIndex victimIndex)
+    {
         this.victimIndex = victimIndex;
     }
 
-    public HexLocation getLocation() {
+    public HexLocation getLocation()
+    {
         return location;
     }
 }

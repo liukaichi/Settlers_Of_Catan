@@ -1,11 +1,11 @@
 package facades;
 
 import client.data.GameInfo;
+import client.proxy.MockProxy;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import client.proxy.MockProxy;
 import shared.communication.CreateGameRequest;
 import shared.communication.CreateGameResponse;
 import shared.communication.ListGamesResponse;
@@ -24,22 +24,19 @@ public class MockProxyTester extends TestCase
 {
     MockProxy proxy = new MockProxy();
 
-    @Before
-    public void before() throws Exception
+    @Before public void before() throws Exception
     {
 
     }
 
-    @After
-    public void after() throws Exception
+    @After public void after() throws Exception
     {
     }
 
     /**
      * Method: getServerModel()
      */
-    @Test
-    public void testGetServerModel() throws Exception
+    @Test public void testGetServerModel() throws Exception
     {
         //TODO: Test goes here...
 
@@ -48,8 +45,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: userLogin(Credentials credentials)
      */
-    @Test
-    public void testUserLogin() throws Exception
+    @Test public void testUserLogin() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -57,8 +53,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: userRegister(Credentials credentials)
      */
-    @Test
-    public void testUserRegister() throws Exception
+    @Test public void testUserRegister() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -66,8 +61,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: changeLogLevel(Level level)
      */
-    @Test
-    public void testChangeLogLevel() throws Exception
+    @Test public void testChangeLogLevel() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -75,12 +69,12 @@ public class MockProxyTester extends TestCase
     /**
      * Method: listGames()
      */
-    @Test
-    public void testListGames() throws Exception
+    @Test public void testListGames() throws Exception
     {
         ListGamesResponse listGamesResponse = proxy.listGames();
         List<GameInfo> games = listGamesResponse.getGames();
-        for (GameInfo info : games){
+        for (GameInfo info : games)
+        {
             String title = info.getTitle();
             assertTrue(title != null && !title.equals(""));
             List<Player> players = info.getPlayers();
@@ -92,20 +86,18 @@ public class MockProxyTester extends TestCase
     /**
      * Method: createGame(CreateGameRequest createGameRequest)
      */
-    @Test
-    public void testCreateGame() throws Exception
+    @Test public void testCreateGame() throws Exception
     {
         CreateGameRequest gameRequest = new CreateGameRequest(true, true, true, "mockGame");
         CreateGameResponse gameResponse = proxy.createGame(gameRequest);
         assertEquals(3, gameResponse.getGameID());
-        assertEquals("mockGame",gameResponse.getGameInfo().getTitle());
+        assertEquals("mockGame", gameResponse.getGameInfo().getTitle());
     }
 
     /**
      * Method: joinGame(JoinGameRequest joinGameRequest)
      */
-    @Test
-    public void testJoinGame() throws Exception
+    @Test public void testJoinGame() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -113,8 +105,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: saveGame(SaveGameRequest saveGameRequest)
      */
-    @Test
-    public void testSaveGame() throws Exception
+    @Test public void testSaveGame() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -122,8 +113,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: loadGame(LoadGameRequest loadGameRequest)
      */
-    @Test
-    public void testLoadGame() throws Exception
+    @Test public void testLoadGame() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -131,8 +121,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: getGameState(int versionNumber)
      */
-    @Test
-    public void testGetGameState() throws Exception
+    @Test public void testGetGameState() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -140,8 +129,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: resetGame()
      */
-    @Test
-    public void testResetGame() throws Exception
+    @Test public void testResetGame() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -149,8 +137,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: getCommands()
      */
-    @Test
-    public void testGetCommands() throws Exception
+    @Test public void testGetCommands() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -158,8 +145,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: postCommands(List<MoveCommand> commands)
      */
-    @Test
-    public void testPostCommands() throws Exception
+    @Test public void testPostCommands() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -167,8 +153,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: listAI()
      */
-    @Test
-    public void testListAI() throws Exception
+    @Test public void testListAI() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -176,8 +161,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: addAI(AIType aiType)
      */
-    @Test
-    public void testAddAI() throws Exception
+    @Test public void testAddAI() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -185,8 +169,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: sendChat(SendChatCommand sendChat)
      */
-    @Test
-    public void testSendChat() throws Exception
+    @Test public void testSendChat() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -194,8 +177,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: rollNumber(RollNumberCommand rollNumber)
      */
-    @Test
-    public void testRollNumber() throws Exception
+    @Test public void testRollNumber() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -203,8 +185,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: acceptTrade(AcceptTradeCommand acceptTrade)
      */
-    @Test
-    public void testAcceptTrade() throws Exception
+    @Test public void testAcceptTrade() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -212,8 +193,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: discardCards(DiscardCardsCommand discardCards)
      */
-    @Test
-    public void testDiscardCards() throws Exception
+    @Test public void testDiscardCards() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -221,8 +201,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: buildRoad(BuildRoadCommand buildRoad)
      */
-    @Test
-    public void testBuildRoad() throws Exception
+    @Test public void testBuildRoad() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -230,8 +209,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: buildSettlement(BuildSettlementCommand buildSettlement)
      */
-    @Test
-    public void testBuildSettlement() throws Exception
+    @Test public void testBuildSettlement() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -239,8 +217,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: buildCity(BuildCityCommand buildCity)
      */
-    @Test
-    public void testBuildCity() throws Exception
+    @Test public void testBuildCity() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -248,8 +225,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: offerTrade(OfferTradeCommand offerTrade)
      */
-    @Test
-    public void testOfferTrade() throws Exception
+    @Test public void testOfferTrade() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -257,8 +233,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: maritimeTrade(MaritimeTradeCommand maritimeTrade)
      */
-    @Test
-    public void testMaritimeTrade() throws Exception
+    @Test public void testMaritimeTrade() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -266,8 +241,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: robPlayer(RobPlayerCommand robPlayer)
      */
-    @Test
-    public void testRobPlayer() throws Exception
+    @Test public void testRobPlayer() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -275,8 +249,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: finishTurn(FinishTurnCommand finishTurn)
      */
-    @Test
-    public void testFinishTurn() throws Exception
+    @Test public void testFinishTurn() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -284,8 +257,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: buyDevCard(BuyDevCardCommand buyDevCard)
      */
-    @Test
-    public void testBuyDevCard() throws Exception
+    @Test public void testBuyDevCard() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -293,8 +265,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: soldier(SoldierCommand soldier)
      */
-    @Test
-    public void testSoldier() throws Exception
+    @Test public void testSoldier() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -302,8 +273,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
      */
-    @Test
-    public void testYearOfPlenty() throws Exception
+    @Test public void testYearOfPlenty() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -311,8 +281,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: roadBuilding(RoadBuildingCommand roadBuilding)
      */
-    @Test
-    public void testRoadBuilding() throws Exception
+    @Test public void testRoadBuilding() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -320,8 +289,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: monopoly(MonopolyCommand monopoly)
      */
-    @Test
-    public void testMonopoly() throws Exception
+    @Test public void testMonopoly() throws Exception
     {
         //TODO: Test goes here...
     }
@@ -329,8 +297,7 @@ public class MockProxyTester extends TestCase
     /**
      * Method: monument(MonumentCommand monument)
      */
-    @Test
-    public void testMonument() throws Exception
+    @Test public void testMonument() throws Exception
     {
         //TODO: Test goes here...
     }

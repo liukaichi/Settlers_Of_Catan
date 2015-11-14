@@ -1,7 +1,6 @@
 package client.turntracker;
 
 import client.base.ObserverController;
-import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import client.state.InitialState;
 import shared.definitions.TurnStatus;
@@ -52,12 +51,14 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
      * getView().updatePlayer(...) to update the player's acheivements and
      * score.
      */
-    public void updatePlayers(ClientModel model){
+    public void updatePlayers(ClientModel model)
+    {
         List<Player> players = facade.getPlayers();
         TurnTracker turnTracker = model.getTurnTracker();
         getView().setLocalPlayerColor(facade.getPlayer().getPlayerColor());
 
-        for(Player p : players){
+        for (Player p : players)
+        {
 
             getView().initializePlayer(p.getPlayerIndex().getIndex(), p.getName(), p.getPlayerColor());
 
@@ -65,7 +66,8 @@ public class TurnTrackerController extends ObserverController implements ITurnTr
             boolean hasLongestRoad = (turnTracker.getLongestRoad().equals(p.getPlayerIndex()));
             boolean isCurrentTurn = (turnTracker.getCurrentTurn().equals(p.getPlayerIndex()));
 
-            getView().updatePlayer(p.getPlayerIndex().getIndex(), p.getVictoryPoints(), isCurrentTurn, hasLargestArmy, hasLongestRoad);
+            getView().updatePlayer(p.getPlayerIndex().getIndex(), p.getVictoryPoints(), isCurrentTurn, hasLargestArmy,
+                    hasLongestRoad);
         }
 
         stateButtonEnabled = turnTracker.getStatus().equals(TurnStatus.Playing);

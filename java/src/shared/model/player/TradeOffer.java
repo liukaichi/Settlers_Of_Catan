@@ -10,9 +10,8 @@ import java.util.HashMap;
 
 /**
  * This class represents a tradeOffer made by one of the four players
- * 
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public class TradeOffer implements JsonSerializer<TradeOffer>
 {
@@ -26,25 +25,29 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
     private HashMap<ResourceType, Hand> resourceHand = new HashMap<>();
     private Resources offer;
 
-    public TradeOffer(Player sender, Player receiver) {
+    public TradeOffer(Player sender, Player receiver)
+    {
         this.sender = sender.getPlayerInfo().getPlayerIndex();
         this.receiver = receiver.getPlayerInfo().getPlayerIndex();
         this.offer = new Resources();
     }
 
-    public TradeOffer(PlayerIndex sender, PlayerIndex receiver) {
+    public TradeOffer(PlayerIndex sender, PlayerIndex receiver)
+    {
         this.sender = sender;
         this.receiver = receiver;
         this.offer = new Resources();
     }
 
-    public TradeOffer(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat, int ore) {
+    public TradeOffer(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat, int ore)
+    {
         this.sender = sender;
         this.receiver = reciever;
         this.offer = new Resources(brick, wood, sheep, wheat, ore);
     }
 
-    public TradeOffer(String json) {
+    public TradeOffer(String json)
+    {
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
         this.sender = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("sender").getAsInt());
@@ -56,17 +59,17 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
 
     public Hand getResourceHand(ResourceType resource)
     {
-        if(resourceHand.containsKey(resource))
-        return resourceHand.get(resource);
+        if (resourceHand.containsKey(resource))
+            return resourceHand.get(resource);
         else
             return Hand.none;
     }
 
     public boolean isSending()
     {
-        for(ResourceType type : ResourceType.values())
+        for (ResourceType type : ResourceType.values())
         {
-            if(getResourceHand(type).equals(Hand.send) && getOffer(type) > 0)
+            if (getResourceHand(type).equals(Hand.send) && getOffer(type) > 0)
             {
                 return true;
             }
@@ -76,9 +79,9 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
 
     public boolean isReceiving()
     {
-        for(ResourceType type : ResourceType.values())
+        for (ResourceType type : ResourceType.values())
         {
-            if(getResourceHand(type).equals(Hand.receive) && getOffer(type) < 0)
+            if (getResourceHand(type).equals(Hand.receive) && getOffer(type) < 0)
             {
                 return true;
             }
@@ -91,8 +94,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
      *
      * @see java.lang.Object#hashCode()
      */
-    @Override
-    public int hashCode()
+    @Override public int hashCode()
     {
         final int prime = 31;
         int result = 1;
@@ -113,8 +115,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
      *
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    @Override
-    public boolean equals(Object obj)
+    @Override public boolean equals(Object obj)
     {
         if (this == obj)
             return true;
@@ -128,8 +129,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         {
             if (other.offer != null)
                 return false;
-        }
-        else if (!offer.equals(other.offer))
+        } else if (!offer.equals(other.offer))
             return false;
         if (receiver != other.receiver)
             return false;
@@ -156,8 +156,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         return receiver;
     }
 
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         /*
          * { "type": "offerTrade", "playerIndex": "integer", "offer": { "brick":
@@ -224,8 +223,7 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(TradeOffer src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(TradeOffer src, Type srcType, JsonSerializationContext context)
     {
         JsonObject tradeOffer = new JsonObject();
         {
@@ -236,7 +234,8 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
         return tradeOffer;
     }
 
-    public enum Hand {
+    public enum Hand
+    {
         send, none, receive
     }
 }

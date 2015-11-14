@@ -143,8 +143,7 @@ public class GameManager
             try
             {
                 game.addPlayer(aiManager.createAIPlayer(game));
-            }
-            catch (CatanException e)
+            } catch (CatanException e)
             {
                 throw new GameQueryException(e.getMessage());
             }
@@ -173,5 +172,4 @@ public class GameManager
         games.put(newGameID, game);
         return game;
     }
-
 }

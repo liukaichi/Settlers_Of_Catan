@@ -8,9 +8,10 @@ import java.util.TimerTask;
 public class RollTask extends TimerTask
 {
     RollView view;
+
     RollTask(RollView view)
     {
-       this.view = view;
+        this.view = view;
     }
 
     public void roll()

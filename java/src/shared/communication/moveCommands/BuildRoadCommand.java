@@ -15,7 +15,6 @@ import java.lang.reflect.Type;
  * buildRoad command object.
  *
  * @author Cache Staheli
- *
  */
 public class BuildRoadCommand extends MoveCommand implements JsonSerializer<BuildRoadCommand>
 {
@@ -29,12 +28,12 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
      */
     private boolean isFree;
 
-
     /**
      * Constructs a BuildRoadCommand based off of the index of the builder, the location, and whether it is free or not.
-     * @param playerIndex the builder of the road.
+     *
+     * @param playerIndex  the builder of the road.
      * @param roadLocation the location of the road.
-     * @param isFree whether or not the road is free. True in setup round.
+     * @param isFree       whether or not the road is free. True in setup round.
      */
     public BuildRoadCommand(PlayerIndex playerIndex, EdgeLocation roadLocation, boolean isFree)
     {
@@ -45,6 +44,7 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
 
     /**
      * Instantiate a BuildRoadCommand from JSON.
+     *
      * @param json JSON of the BuildRoadCommand
      */
     public BuildRoadCommand(String json)
@@ -58,8 +58,7 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(BuildRoadCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(BuildRoadCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.add("roadLocation", src.roadLocation.serialize(src.roadLocation, src.roadLocation.getClass(), context));
@@ -69,6 +68,7 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
 
     /**
      * Calls the ServerFacade to build a road for the person and at the location specified in this command.
+     *
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */

@@ -1,19 +1,19 @@
-
 /**
- * 
+ *
  */
 package shared.communication;
 
-import java.util.*;
-
+import client.data.GameInfo;
+import client.data.PlayerInfo;
 import com.google.gson.*;
-
-import client.data.*;
 import shared.definitions.CatanColor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author cstaheli
- *
  */
 public class ListGamesResponse
 {
@@ -32,6 +32,7 @@ public class ListGamesResponse
 
     /**
      * Instantiate a ListGamesResponse from JSON with the injected facade
+     *
      * @param json JSON of the ListGamesResponse
      */
     public ListGamesResponse(String json)
@@ -73,8 +74,8 @@ public class ListGamesResponse
         return Collections.unmodifiableList(games);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString()
+    {
         JsonParser parser = new JsonParser();
 
         JsonArray gameInfos = new JsonArray();

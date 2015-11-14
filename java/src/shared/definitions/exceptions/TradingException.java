@@ -2,9 +2,8 @@ package shared.definitions.exceptions;
 
 /**
  * Exception thrown when unable to trade
- * 
- * @author dtaylor
  *
+ * @author dtaylor
  */
 public class TradingException extends CatanException
 {
@@ -19,7 +18,7 @@ public class TradingException extends CatanException
     }
 
     /**
-     * 
+     *
      */
     public TradingException()
     {

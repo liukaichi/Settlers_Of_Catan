@@ -8,10 +8,39 @@ import shared.definitions.exceptions.CatanException;
  */
 public class BankStructure
 {
+    private final int amountMax;
     private StructureType type;
     private int amountBuilt;
     private int amountRemaining;
-    private final int amountMax;
+
+    /**
+     * Initializes a BankStructure of the given type.
+     *
+     * @param type the type of BankStructure.
+     */
+    public BankStructure(StructureType type)
+    {
+        this.type = type;
+        amountBuilt = 0;
+        switch (type)
+        {
+        case CITY:
+            amountMax = 4;
+            amountRemaining = 4;
+            break;
+        case SETTLEMENT:
+            amountMax = 5;
+            amountRemaining = 5;
+            break;
+        case ROAD:
+            amountMax = 15;
+            amountRemaining = 15;
+            break;
+        default:
+            amountMax = -1;
+            amountRemaining = -1;
+        }
+    }
 
     @Override public boolean equals(Object o)
     {
@@ -43,51 +72,10 @@ public class BankStructure
         return amountRemaining;
     }
 
-    /**
-     * Used to define the type of amount for structures.
-     */
-    public enum AmountType
+    public void setAmountRemaining(int amountRemaining)
     {
-        /**
-         * Amount Built
-         */
-        BUILT,
-        /**
-         * Maximum amount
-         */
-        MAX,
-        /**
-         * Amount remaining.
-         */
-        REMAINING
-    }
-
-    /**
-     * Initializes a BankStructure of the given type.
-     * @param type the type of BankStructure.
-     */
-    public BankStructure(StructureType type)
-    {
-        this.type = type;
-        amountBuilt = 0;
-        switch (type)
-        {
-        case CITY:
-            amountMax = 4;
-            amountRemaining = 4;
-            break;
-        case SETTLEMENT:
-            amountMax = 5;
-            amountRemaining = 5;
-            break;
-        case ROAD:
-            amountMax = 15;
-            amountRemaining = 15;
-            break;
-        default:
-            amountMax = -1;
-            amountRemaining = -1;
-        }
+        this.amountRemaining = amountRemaining;
+        this.amountBuilt = this.amountMax - this.amountRemaining;
     }
 
     public int getAmountBuilt()
@@ -111,14 +99,9 @@ public class BankStructure
         return type;
     }
 
-    public void setAmountRemaining(int amountRemaining)
-    {
-        this.amountRemaining = amountRemaining;
-        this.amountBuilt = this.amountMax - this.amountRemaining;
-    }
-
     /**
      * Gets the amount built of a certain type.
+     *
      * @param type the type.
      * @return the amount built of the type.
      */
@@ -157,7 +140,7 @@ public class BankStructure
     /**
      * Decrement the specified amount from this BankStructure
      *
-     * @param subAmount  amount to decrement by
+     * @param subAmount amount to decrement by
      * @throws CatanException if there are currently none built.
      */
     public void subAmountBuilt(int subAmount) throws CatanException
@@ -168,6 +151,25 @@ public class BankStructure
         }
         amountBuilt -= subAmount;
         amountRemaining += subAmount;
+    }
+
+    /**
+     * Used to define the type of amount for structures.
+     */
+    public enum AmountType
+    {
+        /**
+         * Amount Built
+         */
+        BUILT,
+        /**
+         * Maximum amount
+         */
+        MAX,
+        /**
+         * Amount remaining.
+         */
+        REMAINING
     }
 
 }

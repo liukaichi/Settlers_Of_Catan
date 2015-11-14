@@ -8,13 +8,13 @@ import shared.definitions.PlayerIndex;
  * buyDevCard command object.
  *
  * @author Cache Staheli
- *
  */
 public class BuyDevCardCommand extends SimpleSerializableCommand
 {
 
     /**
      * Player of playerIndex receives a Development Card and loses a sheep, ore and wheat each.
+     *
      * @param playerIndex Index of player buying a Development Card
      */
     public BuyDevCardCommand(PlayerIndex playerIndex)
@@ -24,6 +24,7 @@ public class BuyDevCardCommand extends SimpleSerializableCommand
 
     /**
      * Instantiate a BuyDevCardCommand from JSON.
+     *
      * @param json JSON of the BuyDevCardCommand.
      */
     public BuyDevCardCommand(String json)
@@ -32,7 +33,6 @@ public class BuyDevCardCommand extends SimpleSerializableCommand
     }
 
     /**
-     *
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */

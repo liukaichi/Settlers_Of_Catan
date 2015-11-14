@@ -1,31 +1,31 @@
 package shared.model.bank;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import org.junit.Test;
 import shared.definitions.ResourceType;
 import shared.model.bank.resource.Resources;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Adrian on 9/28/2015.
  */
-public class ResourcesTest {
+public class ResourcesTest
+{
 
     Resources list;
 
-    public void setUpNonGame() {
+    public void setUpNonGame()
+    {
         list = new Resources(false);
     }
 
-    public void setUpGame() {
+    public void setUpGame()
+    {
         list = new Resources(true);
     }
 
-    @Test
-    public void GameBankShouldInitializeWithZeroOfEach() throws Exception {
+    @Test public void GameBankShouldInitializeWithZeroOfEach() throws Exception
+    {
         setUpNonGame();
         assertEquals(0, list.getResource(ResourceType.BRICK).getAmount());
         assertEquals(0, list.getResource(ResourceType.SHEEP).getAmount());
@@ -34,8 +34,8 @@ public class ResourcesTest {
         assertEquals(0, list.getResource(ResourceType.WOOD).getAmount());
     }
 
-    @Test
-    public void GameBankShouldInitializeWith19OfEach() throws Exception {
+    @Test public void GameBankShouldInitializeWith19OfEach() throws Exception
+    {
         setUpGame();
         assertEquals(19, list.getResource(ResourceType.BRICK).getAmount());
         assertEquals(19, list.getResource(ResourceType.SHEEP).getAmount());
@@ -44,8 +44,8 @@ public class ResourcesTest {
         assertEquals(19, list.getResource(ResourceType.WOOD).getAmount());
     }
 
-    @Test
-    public void testSerialization(){
+    @Test public void testSerialization()
+    {
         setUpGame();
         String json = list.toString();
         assertEquals("{\"brick\":19,\"ore\":19,\"sheep\":19,\"wheat\":19,\"wood\":19}", json);

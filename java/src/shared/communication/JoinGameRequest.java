@@ -2,14 +2,12 @@ package shared.communication;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import server.facade.AbstractServerFacade;
 import shared.definitions.CatanColor;
 
 /**
  * The ID of the game the player wants to join, and the color they want.
  *
  * @author Cache Staheli
- *
  */
 public class JoinGameRequest implements CatanCommand
 {
@@ -18,7 +16,8 @@ public class JoinGameRequest implements CatanCommand
 
     /**
      * Initializes a JoinGameRequest with the id of the game to join, and the color the player is joining with.
-     * @param id the id of the game to join.
+     *
+     * @param id    the id of the game to join.
      * @param color the color the player the is joining.
      */
     public JoinGameRequest(int id, CatanColor color)
@@ -29,6 +28,7 @@ public class JoinGameRequest implements CatanCommand
 
     /**
      * Instantiate a CreateGameRequest from JSON.
+     *
      * @param json JSON of the CreateGameRequest
      */
     public JoinGameRequest(String json)
@@ -41,8 +41,9 @@ public class JoinGameRequest implements CatanCommand
 
     /**
      * Calls JoinGame method on the Server Facade
-     * @return Json String representing the current state of the Server Model
+     *
      * @param gameID possibly not used.
+     * @return Json String representing the current state of the Server Model
      */
     @Override public String execute(int gameID)
     {

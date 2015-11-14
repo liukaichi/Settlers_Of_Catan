@@ -5,20 +5,19 @@ package client.base;
  */
 public interface IView
 {
-	
-	/**
-	 * Controller setter
-	 * 
-	 * @param controller
-	 *            The view's controller
-	 */
-	void setController(IController controller);
-	
-	/**
-	 * Controller getter
-	 * 
-	 * @return The view's controller
-	 */
-	IController getController();
+
+    /**
+     * Controller getter
+     *
+     * @return The view's controller
+     */
+    IController getController();
+
+    /**
+     * Controller setter
+     *
+     * @param controller The view's controller
+     */
+    void setController(IController controller);
 }
 

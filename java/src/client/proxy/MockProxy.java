@@ -1,8 +1,5 @@
 package client.proxy;
 
-import java.io.*;
-import java.nio.file.*;
-
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import client.utils.BufferedReaderParser;
@@ -12,6 +9,10 @@ import shared.definitions.AIType;
 import shared.definitions.exceptions.GameQueryException;
 import shared.model.ClientModel;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
  * MockProxy is used in Dependency injection, along with ServerProxy, to return
  * specific results from the server. <br>
@@ -20,9 +21,8 @@ import shared.model.ClientModel;
  * hard-coded to return specific results for specific actions. Used mostly for
  * testing. This acts identically to the ServerProxy, but its server
  * interactions are not real.
- * 
- * @author cstaheli
  *
+ * @author cstaheli
  */
 public class MockProxy implements IProxy
 {
@@ -35,8 +35,7 @@ public class MockProxy implements IProxy
         {
             serverModel = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/modelWithTradeOffer.json"))));
 
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -50,8 +49,7 @@ public class MockProxy implements IProxy
         return serverModel;
     }
 
-    @Override
-    public PlayerInfo userLogin(Credentials credentials)
+    @Override public PlayerInfo userLogin(Credentials credentials)
     {
         PlayerInfo player = new PlayerInfo();
         player.setId(3);
@@ -59,8 +57,7 @@ public class MockProxy implements IProxy
         return player;
     }
 
-    @Override
-    public PlayerInfo userRegister(Credentials credentials)
+    @Override public PlayerInfo userRegister(Credentials credentials)
     {
         PlayerInfo player = new PlayerInfo();
         player.setId(3);
@@ -68,8 +65,7 @@ public class MockProxy implements IProxy
         return player;
     }
 
-    @Override
-    public ListGamesResponse listGames()
+    @Override public ListGamesResponse listGames()
     {
         String json = "";
 
@@ -77,8 +73,7 @@ public class MockProxy implements IProxy
         try
         {
             json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
-        }
-        catch (FileNotFoundException e)
+        } catch (FileNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -87,16 +82,14 @@ public class MockProxy implements IProxy
         return listGamesResponse;
     }
 
-    @Override
-    public CreateGameResponse createGame(CreateGameRequest createGameRequest)
+    @Override public CreateGameResponse createGame(CreateGameRequest createGameRequest)
     {
         String json = "";
         File file = new File(jsonFileDir + "createGameResponse.json");
         try
         {
             json = BufferedReaderParser.parse(new BufferedReader(new FileReader(file)));
-        }
-        catch (FileNotFoundException e)
+        } catch (FileNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -105,14 +98,12 @@ public class MockProxy implements IProxy
         return createGameResponse;
     }
 
-    @Override
-    public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
+    @Override public void joinGame(JoinGameRequest joinGameRequest) throws GameQueryException
     {
 
     }
 
-    @Override
-    public ClientModel getGameState(int versionNumber)
+    @Override public ClientModel getGameState(int versionNumber)
     {
         if (versionNumber == serverModel.getVersion())
         {
@@ -121,134 +112,115 @@ public class MockProxy implements IProxy
         return serverModel;
     }
 
-    @Override
-    public ListAIResponse listAI()
+    @Override public ListAIResponse listAI()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public void addAI(AIType aiType)
+    @Override public void addAI(AIType aiType)
     {
         // TODO Auto-generated method stub
 
     }
 
-    @Override
-    public ClientModel sendChat(SendChatCommand sendChat)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public ClientModel rollNumber(RollNumberCommand rollNumber)
+    @Override public ClientModel sendChat(SendChatCommand sendChat)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel acceptTrade(AcceptTradeCommand acceptTrade)
+    @Override public ClientModel rollNumber(RollNumberCommand rollNumber)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel discardCards(DiscardCardsCommand discardCards)
+    @Override public ClientModel acceptTrade(AcceptTradeCommand acceptTrade)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel buildRoad(BuildRoadCommand buildRoad)
+    @Override public ClientModel discardCards(DiscardCardsCommand discardCards)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel buildSettlement(BuildSettlementCommand buildSettlement)
+    @Override public ClientModel buildRoad(BuildRoadCommand buildRoad)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel buildCity(BuildCityCommand buildCity)
+    @Override public ClientModel buildSettlement(BuildSettlementCommand buildSettlement)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel offerTrade(OfferTradeCommand offerTrade)
+    @Override public ClientModel buildCity(BuildCityCommand buildCity)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel maritimeTrade(MaritimeTradeCommand maritimeTrade)
+    @Override public ClientModel offerTrade(OfferTradeCommand offerTrade)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel robPlayer(RobPlayerCommand robPlayer)
+    @Override public ClientModel maritimeTrade(MaritimeTradeCommand maritimeTrade)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel finishTurn(FinishTurnCommand finishTurn)
+    @Override public ClientModel robPlayer(RobPlayerCommand robPlayer)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel buyDevCard(BuyDevCardCommand buyDevCard)
+    @Override public ClientModel finishTurn(FinishTurnCommand finishTurn)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel soldier(SoldierCommand soldier)
+    @Override public ClientModel buyDevCard(BuyDevCardCommand buyDevCard)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
+    @Override public ClientModel soldier(SoldierCommand soldier)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
+    @Override public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel monopoly(MonopolyCommand monopoly)
+    @Override public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public ClientModel monument(MonumentCommand monument)
+    @Override public ClientModel monopoly(MonopolyCommand monopoly)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override public ClientModel monument(MonumentCommand monument)
     {
         // TODO Auto-generated method stub
         return null;

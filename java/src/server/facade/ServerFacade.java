@@ -1,5 +1,7 @@
 package server.facade;
 
+import server.ServerModel;
+import server.manager.GameManager;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
@@ -114,5 +116,10 @@ public class ServerFacade extends AbstractServerFacade
     @Override public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
+    }
+
+    private ServerModel getGame(int gameID)
+    {
+        return GameManager.getInstance().getGame(gameID);
     }
 }

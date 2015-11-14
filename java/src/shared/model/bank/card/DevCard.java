@@ -6,9 +6,18 @@ import shared.model.bank.PlayerBank;
 /**
  * This class represents a Development Card
  */
-public abstract class DevCard {
+public abstract class DevCard
+{
     private DevCardType type;
     private int amountPlayable, amountUnplayable, amountPlayed;
+
+    public DevCard(DevCardType inType)
+    {
+        type = inType;
+        amountUnplayable = 0;
+        amountPlayable = 0;
+        amountPlayed = 0;
+    }
 
     @Override public boolean equals(Object o)
     {
@@ -34,56 +43,54 @@ public abstract class DevCard {
         return 0;
     }
 
-    public enum AmountType {
-        PLAYABLE, UNPLAYABLE, PLAYED
-    }
-
-    public DevCardType getType() {
+    public DevCardType getType()
+    {
         return type;
     }
 
-    public int getAmount(AmountType type){
-        switch (type){
-            case PLAYABLE:
-                return amountPlayable;
-            case UNPLAYABLE:
-                return amountUnplayable;
-            case PLAYED:
-                return amountPlayed;
+    public void setType(DevCardType type)
+    {
+        this.type = type;
+    }
+
+    public int getAmount(AmountType type)
+    {
+        switch (type)
+        {
+        case PLAYABLE:
+            return amountPlayable;
+        case UNPLAYABLE:
+            return amountUnplayable;
+        case PLAYED:
+            return amountPlayed;
         }
         return -1;
     }
+
     public int getAmountInHand()
     {
         return amountPlayable + amountUnplayable;
     }
 
-    public DevCard(DevCardType inType){
-        type = inType;
-        amountUnplayable = 0;
-        amountPlayable = 0;
-        amountPlayed = 0;
-    }
-
-    public void setType(DevCardType type) {
-        this.type = type;
-    }
-
-    public void setAmounts(int playable, int unplayable, int played){
+    public void setAmounts(int playable, int unplayable, int played)
+    {
         setAmountPlayable(playable);
         setAmountPlayed(played);
         setAmountUnplayable(unplayable);
     }
 
-    public void setAmountPlayable(int amountPlayable) {
+    public void setAmountPlayable(int amountPlayable)
+    {
         this.amountPlayable = amountPlayable;
     }
 
-    public void setAmountUnplayable(int amountUnplayable) {
+    public void setAmountUnplayable(int amountUnplayable)
+    {
         this.amountUnplayable = amountUnplayable;
     }
 
-    public void setAmountPlayed(int amountPlayed) {
+    public void setAmountPlayed(int amountPlayed)
+    {
         this.amountPlayed = amountPlayed;
     }
 
@@ -94,48 +101,61 @@ public abstract class DevCard {
 
     /**
      * Increments the specified amount for this DevCard
-     * @param type -- amount to increment
+     *
+     * @param type      -- amount to increment
      * @param addAmount -- amount to increment by
      */
-    public void addCard(AmountType type, int addAmount){
-        switch (type){
-            case PLAYABLE:
-                amountPlayable += addAmount;
-                break;
-            case PLAYED:
-                amountPlayed += addAmount;
-                break;
-            case UNPLAYABLE:
-                amountUnplayable += addAmount;
-                break;
+    public void addCard(AmountType type, int addAmount)
+    {
+        switch (type)
+        {
+        case PLAYABLE:
+            amountPlayable += addAmount;
+            break;
+        case PLAYED:
+            amountPlayed += addAmount;
+            break;
+        case UNPLAYABLE:
+            amountUnplayable += addAmount;
+            break;
         }
     }
 
     /**
      * Decrements the specified amount for this DevCard
-     * @param type -- amount to decrement
+     *
+     * @param type      -- amount to decrement
      * @param subAmount -- amount to decrement by
      */
-    public void subCard(AmountType type, int subAmount){
+    public void subCard(AmountType type, int subAmount)
+    {
         //TODO: Throw exception if already 0
-        switch (type){
-            case PLAYABLE:
-                amountPlayable -= subAmount;
-                break;
-            case PLAYED:
-                amountPlayed -= subAmount;
-                break;
-            case UNPLAYABLE:
-                amountUnplayable -= subAmount;
-                break;
+        switch (type)
+        {
+        case PLAYABLE:
+            amountPlayable -= subAmount;
+            break;
+        case PLAYED:
+            amountPlayed -= subAmount;
+            break;
+        case UNPLAYABLE:
+            amountUnplayable -= subAmount;
+            break;
         }
     }
 
     /**
      * Sums the numbers amountPlayable, amountUnplayable and amountPlayed.
+     *
      * @return the sum of all three numbers
      */
-    public int total(){
+    public int total()
+    {
         return amountPlayable + amountUnplayable + amountPlayed;
+    }
+
+    public enum AmountType
+    {
+        PLAYABLE, UNPLAYABLE, PLAYED
     }
 }

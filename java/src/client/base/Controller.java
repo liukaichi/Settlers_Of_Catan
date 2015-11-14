@@ -13,15 +13,14 @@ public abstract class Controller implements IController
         setView(view);
     }
 
+    @Override public IView getView()
+    {
+        return this.view;
+    }
+
     private void setView(IView view)
     {
         this.view = view;
-    }
-
-    @Override
-    public IView getView()
-    {
-        return this.view;
     }
 
 }

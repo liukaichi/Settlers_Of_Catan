@@ -1,15 +1,13 @@
 package shared.communication;
 
-import shared.definitions.StructureType;
 import shared.definitions.exceptions.InvalidCredentialsException;
 
 import java.util.HashSet;
 
 /**
  * Object that holds the player's password for the Catan game
- * 
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public class Password
 {
@@ -18,6 +16,7 @@ public class Password
 
     /**
      * Creates a password from te given string.
+     *
      * @param password the password.
      * @throws InvalidCredentialsException if the password is not a valid password.
      */
@@ -41,6 +40,7 @@ public class Password
 
     /**
      * Adds an invalid password to the list of accepted passwords.
+     *
      * @param password the password to add.
      */
     public void addAllowedPassword(String password)
@@ -50,6 +50,7 @@ public class Password
 
     /**
      * Inputs a password to be validated and added.
+     *
      * @param password the password.
      * @throws InvalidCredentialsException if the password is invalid.
      */
@@ -59,10 +60,12 @@ public class Password
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @Override public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Password password1 = (Password) o;
 
@@ -70,13 +73,14 @@ public class Password
 
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode()
+    {
         return password != null ? password.hashCode() : 0;
     }
 
     /**
      * Validates a password.
+     *
      * @param password the password to validate.
      * @throws InvalidCredentialsException if the password is invalid.
      */
@@ -102,12 +106,14 @@ public class Password
         }
     }
 
-    public String toString(){
+    public String toString()
+    {
         return password;
     }
+
     /**
      * Returns the password as plain text.
-     * 
+     *
      * @return the password as plain text.
      */
     public String getPasswordPlainText()

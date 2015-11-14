@@ -9,8 +9,6 @@ import client.turntracker.TurnTrackerController;
 import shared.definitions.Dice;
 import shared.definitions.TurnStatus;
 
-import java.util.logging.Logger;
-
 /**
  * This state allows all of the rolling options.
  */
@@ -32,11 +30,11 @@ public class RollingState extends GameplayState
             diceRollResult = dice.rollDice();
             rollController.getResultView().setRollValue(diceRollResult);
             facade.rollDice(diceRollResult);
-            if(rollController.getResultView().isModalShowing())
+            if (rollController.getResultView().isModalShowing())
                 rollController.getResultView().closeModal();
             rollController.getResultView().showModal();
-        }
-        else{
+        } else
+        {
             LOGGER.severe("The controller who called rollDice() was not RollController");
         }
 
@@ -47,11 +45,10 @@ public class RollingState extends GameplayState
     {
         if (controller instanceof RollController)
         {
-            if(((RollController) controller).getRollView().isModalShowing())
+            if (((RollController) controller).getRollView().isModalShowing())
                 ((RollController) controller).getRollView().closeModal();
             ((RollController) controller).getRollView().showModal();
-        }
-        else if (controller instanceof TurnTrackerController)
+        } else if (controller instanceof TurnTrackerController)
         {
             ((TurnTrackerController) controller).updatePlayers(facade.getModel());
         }

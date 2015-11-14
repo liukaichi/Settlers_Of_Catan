@@ -12,7 +12,6 @@ import shared.model.player.Player;
  * <li>PlayerIndex: player's order in the game [0-3]</li>
  * <li>NumCards: Number of resources cards the player has (less than 0)</li>
  * </ul>
- * 
  */
 public class RobPlayerInfo extends PlayerInfo
 {
@@ -34,8 +33,7 @@ public class RobPlayerInfo extends PlayerInfo
             super.setName(player.getName());
             super.setColor(player.getPlayerColor());
             super.setId(player.getPlayerInfo().getId());
-        }
-        else
+        } else
         {
             super.setName("NONE");
             //super.setColor(CatanColor.);

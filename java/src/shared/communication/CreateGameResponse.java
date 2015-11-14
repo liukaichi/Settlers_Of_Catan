@@ -6,9 +6,8 @@ import com.google.gson.JsonParser;
 
 /**
  * Class that creates the game response
- * 
- * @author dtaylor
  *
+ * @author dtaylor
  */
 public class CreateGameResponse
 {
@@ -16,7 +15,8 @@ public class CreateGameResponse
 
     /**
      * Initializes the response from the server with the given ID and title.
-     * @param id the id of the game that was created.
+     *
+     * @param id    the id of the game that was created.
      * @param title the title of the game that was created.
      */
     public CreateGameResponse(int id, String title)
@@ -26,6 +26,7 @@ public class CreateGameResponse
 
     /**
      * Initializes a new CreateGameResponse from a GameInfo.
+     *
      * @param game the game to initialize from.
      */
     public CreateGameResponse(GameInfo game)
@@ -35,6 +36,7 @@ public class CreateGameResponse
 
     /**
      * Instantiate a CreateGameResponse from JSON with the injected facade
+     *
      * @param json JSON of the CreateGameResponse
      */
     public CreateGameResponse(String json)

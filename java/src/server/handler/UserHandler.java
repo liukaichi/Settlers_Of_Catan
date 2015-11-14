@@ -1,22 +1,17 @@
 package server.handler;
 
-import com.google.gson.JsonStreamParser;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.facade.AbstractServerFacade;
-import server.facade.MockServerFacade;
-import server.facade.ServerFacade;
 import server.manager.User;
-import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 
-import java.io.*;
-import java.lang.reflect.Constructor;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -24,18 +19,21 @@ import java.util.logging.Logger;
  */
 public class UserHandler implements HttpHandler
 {
-    private AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
+    private AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private String response;
+
     /**
      * Parses the HTTP Context for the command and executes it.
+     *
      * @param httpExchange the httpExchange to parse.
      * @throws IOException
      */
     @Override public void handle(HttpExchange httpExchange) throws IOException
     {
         LOGGER.entering(this.getClass().getCanonicalName(), "handle");
-        try {
+        try
+        {
             URI uri = httpExchange.getRequestURI();
             String commandString = uri.getPath().split("/")[2];
 
@@ -80,8 +78,7 @@ public class UserHandler implements HttpHandler
             // send response
             response = "Success";
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
             response = e.getLocalizedMessage();

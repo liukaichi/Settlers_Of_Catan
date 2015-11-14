@@ -4,12 +4,12 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.facade.AbstractServerFacade;
-import server.facade.MockServerFacade;
-import server.manager.User;
 import shared.communication.CatanCommand;
-import shared.communication.Credentials;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.net.*;
 import java.util.logging.Logger;
@@ -19,20 +19,21 @@ import java.util.logging.Logger;
  */
 public class GamesHandler implements HttpHandler
 {
-    AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
+    AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private String response;
-
 
     /**
      * Parses the HTTP Context for the command and executes it
+     *
      * @param httpExchange the httpExchange to parse.
      * @throws IOException
      */
     @Override public void handle(HttpExchange httpExchange) throws IOException
     {
         LOGGER.entering(this.getClass().getCanonicalName(), "handle");
-        try {
+        try
+        {
             URI uri = httpExchange.getRequestURI();
 
             // instantiate CookieManager
@@ -55,22 +56,21 @@ public class GamesHandler implements HttpHandler
             //Handling input Request
             String commandString = uri.getPath().split("/")[2];
             //TODO get the class name from the context
-            String className = "shared.communication."
-                    + Character.toUpperCase(commandString.charAt(0))
-                    + commandString.substring(1)
-                    + "GameRequest";
+            String className = "shared.communication." + Character.toUpperCase(commandString.charAt(0)) + commandString
+                    .substring(1) + "GameRequest";
             Constructor c = Class.forName(className).getConstructor(String.class);
-            CatanCommand newCommand = (CatanCommand)c.newInstance(json);
+            CatanCommand newCommand = (CatanCommand) c.newInstance(json);
 
             // set response
-            if(commandString.equalsIgnoreCase("join")){
+            if (commandString.equalsIgnoreCase("join"))
+            {
                 String gameId = newCommand.execute(-1);
                 // testing
                 gameId = "1";
                 cookieJar.add(uri, new HttpCookie("catan.game", gameId));
                 response = "Success";
-            }
-            else {
+            } else
+            {
                 response = newCommand.execute(-1);
             }
 
@@ -80,26 +80,27 @@ public class GamesHandler implements HttpHandler
 
             // create cookie
             String cookie = "";
-            for(HttpCookie co : cookieJar.getCookies()){
+            for (HttpCookie co : cookieJar.getCookies())
+            {
                 cookie += co.getValue() + ";";
             }
             respHeaders.set("Set-cookie", cookie);
 
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
             response = e.getLocalizedMessage();
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 
-        }
-        finally {
+        } finally
+        {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
 
-            if (httpExchange != null) {
+            if (httpExchange != null)
+            {
                 httpExchange.close();
             }
             LOGGER.exiting(this.getClass().getCanonicalName(), "handle");

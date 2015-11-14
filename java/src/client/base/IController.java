@@ -5,12 +5,12 @@ package client.base;
  */
 public interface IController
 {
-	
-	/**
-	 * View getter
-	 * 
-	 * @return The controller's view
-	 */
-	IView getView();
+
+    /**
+     * View getter
+     *
+     * @return The controller's view
+     */
+    IView getView();
 }
 

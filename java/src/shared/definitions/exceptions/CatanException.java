@@ -2,9 +2,8 @@ package shared.definitions.exceptions;
 
 /**
  * General Catan game exception
- * 
- * @author amandafisher
  *
+ * @author amandafisher
  */
 public class CatanException extends Exception
 {

@@ -22,32 +22,12 @@ public class CatanMap
     // populated on buy
     private Map<EdgeLocation, Road> roads = new HashMap<>();
     private Map<VertexLocation, MapStructure> structures = new HashMap<>();
-
-    public List<Port> getPorts()
-    {
-        return ports;
-    }
-
-    public Map<VertexLocation, MapStructure> getStructures()
-    {
-        return structures;
-    }
-
-    public int getRadius()
-    {
-        return radius;
-    }
-
-    public HexLocation getRobberLocation()
-    {
-        return robberLocation;
-    }
-
     private int radius;
     private HexLocation robberLocation;
 
     /**
      * Initializes a CatanMap from Json.
+     *
      * @param json the Json to initialize from.
      */
     public CatanMap(String json)
@@ -94,6 +74,76 @@ public class CatanMap
         JsonObject robber = map.getAsJsonObject("robber");
         this.hexes.get(new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt())).setHasRobber(true);
         this.robberLocation = new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt());
+    }
+
+    /**
+     * Initializes an empty map.
+     */
+    public CatanMap()
+    {
+        ports = new ArrayList<>();
+        hexes = new HashMap<>();
+        roads = new HashMap<>();
+        structures = new HashMap<>();
+        radius = -1;
+        robberLocation = new HexLocation(0, 0);
+    }
+
+    /**
+     * Creates a map with the given ports, hexes, roads, structures, radius, and robber location.
+     *
+     * @param ports          the list of ports in the map.
+     * @param hexes          the hexes in the map.
+     * @param roads          the roads in the map.
+     * @param structures     the structures in the map.
+     * @param radius         the radius of the map.
+     * @param robberLocation the location of the robber in the map.
+     */
+    public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, Road> roads,
+            Map<VertexLocation, MapStructure> structures, int radius, HexLocation robberLocation)
+    {
+        this();
+        this.ports = ports;
+        this.hexes = hexes;
+        this.roads = roads;
+        this.structures = structures;
+        this.radius = radius;
+        this.robberLocation = robberLocation;
+    }
+
+    public List<Port> getPorts()
+    {
+        return ports;
+    }
+
+    public void setPorts(List<Port> ports)
+    {
+        this.ports = ports;
+    }
+
+    public Map<VertexLocation, MapStructure> getStructures()
+    {
+        return structures;
+    }
+
+    public void setStructures(Map<VertexLocation, MapStructure> structures)
+    {
+        this.structures = structures;
+    }
+
+    public int getRadius()
+    {
+        return radius;
+    }
+
+    public void setRadius(int radius)
+    {
+        this.radius = radius;
+    }
+
+    public HexLocation getRobberLocation()
+    {
+        return robberLocation;
     }
 
     /**
@@ -193,42 +243,6 @@ public class CatanMap
         return map.toString();
     }
 
-    /**
-     * Initializes an empty map.
-     */
-    public CatanMap()
-    {
-        ports = new ArrayList<>();
-        hexes = new HashMap<>();
-        roads = new HashMap<>();
-        structures = new HashMap<>();
-        radius = -1;
-        robberLocation = new HexLocation(0, 0);
-    }
-
-    /**
-     * Creates a map with the given ports, hexes, roads, structures, radius, and robber location.
-     * @param ports the list of ports in the map.
-     * @param hexes the hexes in the map.
-     * @param roads the roads in the map.
-     * @param structures the structures in the map.
-     * @param radius the radius of the map.
-     * @param robberLocation the location of the robber in the map.
-     */
-    public CatanMap(List<Port> ports, Map<HexLocation, Hex> hexes, Map<EdgeLocation, Road> roads,
-            Map<VertexLocation, MapStructure> structures, int radius, HexLocation robberLocation)
-    {
-        this();
-        this.ports = ports;
-        this.hexes = hexes;
-        this.roads = roads;
-        this.structures = structures;
-        this.radius = radius;
-        this.robberLocation = robberLocation;
-    }
-
-
-
     private boolean isTwoRoadsAwayFromOpponents(VertexLocation location)
     {
         List<VertexLocation> vertices = getNearbyVertices(location);
@@ -262,8 +276,8 @@ public class CatanMap
     /**
      * Method that indicates whether a player has the ability to place a settlement in a certain location on the map
      *
-     * @param player this will be the player placing the settlement.
-     * @param location this will be the location of the settlement; must ensure that this space on the map is empty.
+     * @param player            this will be the player placing the settlement.
+     * @param location          this will be the location of the settlement; must ensure that this space on the map is empty.
      * @param allowDisconnected unused currently.
      * @return true if the location is vacant and at least
      * two spaces away from another settlement otherwise returns false
@@ -277,7 +291,8 @@ public class CatanMap
             // check if location exists, and is empty
             if (atLocation == null)
             {
-                return ((isTwoRoadsAwayFromOpponents(location)) && (isSettlementConnectedToPlayersRoads(location, player)));
+                return ((isTwoRoadsAwayFromOpponents(location)) && (isSettlementConnectedToPlayersRoads(location,
+                        player)));
             }
         }
         return false;
@@ -286,7 +301,8 @@ public class CatanMap
 
     /**
      * Forces a settlement to be placed without any checks.
-     * @param player the player to build for.
+     *
+     * @param player   the player to build for.
      * @param location the location to build at.
      * @throws PlacementException if something goes wrong.
      */
@@ -300,7 +316,7 @@ public class CatanMap
      * Method that indicates whether a player has the ability to place a city in
      * a certain location on the map
      *
-     * @param player this will be the player placing the city
+     * @param player   this will be the player placing the city
      * @param location this will be the location of the city; must ensure that this space already has a settlement
      *                 located their owned by this player
      * @return true if there is a settlement at the specified location and it is owned by the player otherwise
@@ -325,7 +341,8 @@ public class CatanMap
 
     /**
      * Builds a city for the given player at the given location.
-     * @param player the player who is building the city.
+     *
+     * @param player   the player who is building the city.
      * @param location the location where the city is being built.
      */
     public void buildCity(PlayerIndex player, VertexLocation location)
@@ -337,9 +354,9 @@ public class CatanMap
      * Method that indicates whether a player has the ability to place a city on
      * a certain edge on the map
      *
-     * @param player this will be the player placing the road
-     * @param location this will be the edge location where the road will be placed;
-     *                 must ensure this space is empty on the map
+     * @param player            this will be the player placing the road
+     * @param location          this will be the edge location where the road will be placed;
+     *                          must ensure this space is empty on the map
      * @param allowDisconnected whether this road must be connected to a settlement/road to place. True only during the setup phase.
      * @return true if the player owns a settlement or city at the neighboring vertex locations and there is no current
      * road there. False otherwise
@@ -372,13 +389,12 @@ public class CatanMap
                 if (!allowDisconnected)
                 {
                     return isRoadConnectedToPlayersRoads(location, player);
-                }
-                else
+                } else
                 {
                     List<VertexLocation> vertexes = getNearbyVertices(location);
                     for (VertexLocation vertex : vertexes)
                     {
-                        if(structures.get(vertex) == null && isTwoRoadsAwayFromOpponents(vertex))
+                        if (structures.get(vertex) == null && isTwoRoadsAwayFromOpponents(vertex))
                         {
                             return true;
                         }
@@ -394,7 +410,8 @@ public class CatanMap
 
     /**
      * Builds a road for the given player at the given location.
-     * @param player the player who is building the road.
+     *
+     * @param player   the player who is building the road.
      * @param location the location where the road is being built.
      */
     public void buildRoad(PlayerIndex player, EdgeLocation location)
@@ -404,8 +421,9 @@ public class CatanMap
 
     /**
      * Checks to see if the given hex is within the radius of the map.
+     *
      * @param hexLocation the location of the hex in question.
-     * @param radius the radius of the map.
+     * @param radius      the radius of the map.
      * @return true if the hex is within the radius of the map, false otherwise.
      */
     private boolean isHexWithinMapRadius(HexLocation hexLocation, int radius)
@@ -415,7 +433,8 @@ public class CatanMap
 
     /**
      * Checks to see if the edge (from the hex) is only located on water (used for bounds checking)
-     * @param hexLocation the location of the hex.
+     *
+     * @param hexLocation   the location of the hex.
      * @param roadDirection the direction of the hex that edge is on.
      * @return false if the edge is on land (always or on the edge of land or water) and true otherwise.
      */
@@ -434,15 +453,15 @@ public class CatanMap
                 return true;
             }
 
-
         }
         return false;
     }
 
     /**
      * Checks to see if a player is at an edge (road).
+     *
      * @param location the location to check.
-     * @param player the player's index.
+     * @param player   the player's index.
      * @return true if the player is at the location, false otherwise.
      */
     private boolean isPlayerAtLocation(EdgeLocation location, PlayerIndex player)
@@ -453,8 +472,9 @@ public class CatanMap
 
     /**
      * Checks to see if a player is at a vertex (settlement or city).
+     *
      * @param location the location to check.
-     * @param player the player's index.
+     * @param player   the player's index.
      * @return true if the player is at the location, false otherwise.
      */
     private boolean isPlayerAtLocation(VertexLocation location, PlayerIndex player)
@@ -466,6 +486,7 @@ public class CatanMap
 
     /**
      * Checks to see if there is a settlement or city between the two adjacent edges.
+     *
      * @param edge1 the first edge.
      * @param edge2 the second edge.
      * @return true if there is a structure between the two, false otherwise.
@@ -485,8 +506,9 @@ public class CatanMap
 
     /**
      * Checks to see if the given edge is connected to a player's already existing road.
+     *
      * @param location the location of the edge in question.
-     * @param player the player's index.
+     * @param player   the player's index.
      * @return true if the edge is adjacent to one of the player's already existing roads, false otherwise.
      */
     private boolean isRoadConnectedToPlayersRoads(EdgeLocation location, PlayerIndex player)
@@ -514,12 +536,14 @@ public class CatanMap
      */
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
-        return ((hexes.get(location) != null) && (!robberLocation.equals(location)) && !hexes.get(location).getHexType().equals(HexType.WATER));
+        return ((hexes.get(location) != null) && (!robberLocation.equals(location)) && !hexes.get(location).getHexType()
+                .equals(HexType.WATER));
     }
 
     /**
      * Places a Road without any checks.
-     * @param player the player to build the road for.
+     *
+     * @param player   the player to build the road for.
      * @param location the location of the road.
      * @throws PlacementException if something goes wrong.
      */
@@ -532,7 +556,8 @@ public class CatanMap
 
     /**
      * Places a City without any checks.
-     * @param player the player to build the city for.
+     *
+     * @param player   the player to build the city for.
      * @param location the location of the city.
      * @throws PlacementException if something goes wrong.
      */
@@ -542,49 +567,22 @@ public class CatanMap
         structures.put(location, city);
     }
 
-    public void setHexes(Map<HexLocation, Hex> hexes)
-    {
-        this.hexes = hexes;
-    }
-
     public Map<HexLocation, Hex> getHexes()
     {
         return hexes;
     }
 
-    public void setPorts(List<Port> ports)
+    public void setHexes(Map<HexLocation, Hex> hexes)
     {
-        this.ports = ports;
+        this.hexes = hexes;
     }
-
-    public void setRoads(Map<EdgeLocation, Road> roads)
-    {
-        this.roads = roads;
-    }
-
-    public void setStructures(Map<VertexLocation, MapStructure> structures)
-    {
-        this.structures = structures;
-    }
-
-    public void setRadius(int radius)
-    {
-        this.radius = radius;
-    }
-
-    /*
-    public void setRobberLocation(HexLocation robberLocation)
-    {
-        this.robberLocation = robberLocation;
-    }
-    */
 
     /**
      * Gets vertices that are one vertex away.
      *
      * @param normalized the normalized vertex to find neighbors for.
-     * @pre the vertex location passed in is normalized.
      * @return a list of adjacent vertices.
+     * @pre the vertex location passed in is normalized.
      */
     private List<VertexLocation> getNearbyVertices(VertexLocation normalized)
     {
@@ -601,8 +599,16 @@ public class CatanMap
         return vertices;
     }
 
+    /*
+    public void setRobberLocation(HexLocation robberLocation)
+    {
+        this.robberLocation = robberLocation;
+    }
+    */
+
     /**
      * Gets the vertices that are adjacent to the North East Vertex of a hex.
+     *
      * @param vertexLocation the location of the NE vertex.
      * @return a list of adjacent vertices.
      */
@@ -626,6 +632,7 @@ public class CatanMap
 
     /**
      * Gets the vertices that are adjacent to the North West Vertex of a hex.
+     *
      * @param vertexLocation the location of the NW vertex.
      * @return a list of adjacent vertices.
      */
@@ -651,8 +658,8 @@ public class CatanMap
      * Gets the nearby vertices from an edge one distance away from the current road.
      *
      * @param normalized the normalized location of the edge.
-     * @pre the location is normalized.
      * @return a list of vertices one distance away.
+     * @pre the location is normalized.
      */
     public List<VertexLocation> getNearbyVertices(EdgeLocation normalized)
     {
@@ -681,6 +688,7 @@ public class CatanMap
 
     /**
      * Gets edges adjacent to the given vertexLocation.
+     *
      * @param normalized the normalized location of the vertex.
      * @return a list of edges adjacent to the location of the vertex.
      */
@@ -701,6 +709,7 @@ public class CatanMap
 
     /**
      * Gets edges adjacent to the North East Vertex
+     *
      * @param vertexLocation the NE Vertex
      * @return a list of edges adjacent to the location of the vertex.
      */
@@ -723,6 +732,7 @@ public class CatanMap
 
     /**
      * Gets edges adjacent to the North West Vertex
+     *
      * @param vertexLocation the NW Vertex
      * @return a list of edges adjacent to the location of the vertex.
      */
@@ -828,6 +838,7 @@ public class CatanMap
 
     /**
      * Gets the players with settlements or cities at the given HexLocation.
+     *
      * @param hexLocation the location to check.
      * @return a unique set of players at the hex.
      */
@@ -861,7 +872,6 @@ public class CatanMap
         return players;
     }
 
-
     public Set<PlayerIndex> getHexPlayersWithCity(HexLocation hexLocation)
     {
         Set<PlayerIndex> players = new HashSet<>();
@@ -876,6 +886,7 @@ public class CatanMap
         }
         return players;
     }
+
     /*
      * (non-Javadoc)
      *
@@ -931,12 +942,17 @@ public class CatanMap
         return roads;
     }
 
+    public void setRoads(Map<EdgeLocation, Road> roads)
+    {
+        this.roads = roads;
+    }
+
     public ArrayList<Hex> getHexesByNumber(int number)
     {
         ArrayList<Hex> selectedHexes = new ArrayList<>();
-        for(Hex hex : hexes.values())
+        for (Hex hex : hexes.values())
         {
-            if(hex.getNumberTile() == number)
+            if (hex.getNumberTile() == number)
                 selectedHexes.add(hex);
         }
         return selectedHexes;

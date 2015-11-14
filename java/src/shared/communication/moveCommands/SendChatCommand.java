@@ -11,7 +11,6 @@ import java.lang.reflect.Type;
  * sendChat command object.
  *
  * @author Cache Staheli
- *
  */
 public class SendChatCommand extends MoveCommand implements JsonSerializer<SendChatCommand>
 {
@@ -22,7 +21,8 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
 
     /**
      * Instantiates a SendChatCommand with the given player and message.
-     * @param sender the index of the player sending the message.
+     *
+     * @param sender  the index of the player sending the message.
      * @param content the content of the message being sent.
      */
     public SendChatCommand(PlayerIndex sender, String content)
@@ -33,6 +33,7 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
 
     /**
      * Instantiate a SendChatCommand from JSON.
+     *
      * @param json JSON of the SendChatCommand.
      */
     public SendChatCommand(String json)
@@ -54,8 +55,7 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override
-    public JsonElement serialize(SendChatCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(SendChatCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.addProperty("content", content);
@@ -64,8 +64,9 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
 
     /**
      * Calls sendChat method from the Server Facade
-     * @return the Json representation of the model after the command is executed.
+     *
      * @param gameID the ID of the game for which to execute the command.
+     * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID)
     {

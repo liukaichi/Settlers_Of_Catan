@@ -198,8 +198,8 @@ public class PlayerBankTest
 
             test.buySettlement();
 
-            assertEquals(1,
-                    test.getStructures().getStructure(StructureType.SETTLEMENT).getAmount(BankStructure.AmountType.BUILT));
+            assertEquals(1, test.getStructures().getStructure(StructureType.SETTLEMENT)
+                    .getAmount(BankStructure.AmountType.BUILT));
 
             assertEquals(16, gameSheep().getAmount());
             assertEquals(16, gameWood().getAmount());
@@ -252,8 +252,8 @@ public class PlayerBankTest
 
             assertEquals(1,
                     test.getStructures().getStructure(StructureType.CITY).getAmount(BankStructure.AmountType.BUILT));
-            assertEquals(0,
-                    test.getStructures().getStructure(StructureType.SETTLEMENT).getAmount(BankStructure.AmountType.BUILT));
+            assertEquals(0, test.getStructures().getStructure(StructureType.SETTLEMENT)
+                    .getAmount(BankStructure.AmountType.BUILT));
 
             assertEquals(1, wheat().getAmount());
             assertEquals(0, ore().getAmount());

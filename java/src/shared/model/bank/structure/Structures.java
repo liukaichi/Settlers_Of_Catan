@@ -9,26 +9,30 @@ public class Structures
 {
     private BankStructure road, settlement, city;
 
-    public Structures(){
+    public Structures()
+    {
         initialize();
     }
 
-    private void initialize(){
+    private void initialize()
+    {
         road = new BankStructure(StructureType.ROAD);
         settlement = new BankStructure(StructureType.SETTLEMENT);
         city = new BankStructure(StructureType.CITY);
     }
 
-    public BankStructure getStructure(StructureType type) {
-        switch (type){
-            case ROAD:
-                return road;
-            case SETTLEMENT:
-                return settlement;
-            case CITY:
-                return city;
-            default:
-                return null;
+    public BankStructure getStructure(StructureType type)
+    {
+        switch (type)
+        {
+        case ROAD:
+            return road;
+        case SETTLEMENT:
+            return settlement;
+        case CITY:
+            return city;
+        default:
+            return null;
         }
     }
 

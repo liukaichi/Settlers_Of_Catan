@@ -36,7 +36,8 @@ public abstract class MoveCommand implements CatanCommand
 
     /**
      * Instantiates the type of command and player index who is sending this command.
-     * @param type the type of command that this is (specified by sub-class)
+     *
+     * @param type        the type of command that this is (specified by sub-class)
      * @param playerIndex the index of the player that is executing this command to the server.
      */
     public MoveCommand(MoveType type, PlayerIndex playerIndex)

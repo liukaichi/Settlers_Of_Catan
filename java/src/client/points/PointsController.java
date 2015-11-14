@@ -15,10 +15,9 @@ public class PointsController extends ObserverController implements IPointsContr
 
     /**
      * PointsController constructor
-     * @param view
-     *        Points view
-     * @param finishedView
-     *        Game finished view, which is displayed when the game is over
+     *
+     * @param view         Points view
+     * @param finishedView Game finished view, which is displayed when the game is over
      */
     public PointsController(IPointsView view, IGameFinishedView finishedView)
     {
@@ -41,8 +40,7 @@ public class PointsController extends ObserverController implements IPointsContr
         this.finishedView = finishedView;
     }
 
-    @Override
-    public void update(Observable o, Object arg)
+    @Override public void update(Observable o, Object arg)
     {
         ClientFacade facade = ClientFacade.getInstance();
         int clientPlayerPoints = facade.getPlayerPoints(facade.getPlayer().getPlayerIndex());
@@ -56,8 +54,7 @@ public class PointsController extends ObserverController implements IPointsContr
                 {
                     getFinishedView().setWinner(player.getName(), true);
 
-                }
-                else
+                } else
                 {
                     getFinishedView().setWinner(player.getName(), false);
                 }

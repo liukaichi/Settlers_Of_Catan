@@ -7,23 +7,24 @@ import shared.definitions.exceptions.CatanException;
 import shared.model.bank.structure.BankStructure;
 import shared.model.bank.structure.Structures;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Adrian on 9/29/2015.
  */
-public class StructuresTest {
+public class StructuresTest
+{
 
     private Structures list;
 
     // Used a constructor so that an Exception can be thrown
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception
+    {
         list = new Structures();
     }
 
-    @Test
-    public void testGetStructure() throws CatanException {
+    @Test public void testGetStructure() throws CatanException
+    {
         BankStructure test = list.getStructure(StructureType.CITY);
 
         assertEquals(test.getType(), StructureType.CITY);
