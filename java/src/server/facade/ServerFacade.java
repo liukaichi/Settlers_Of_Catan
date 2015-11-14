@@ -25,7 +25,15 @@ public class ServerFacade extends AbstractServerFacade
 
     @Override public ClientModel getGameState(int version)
     {
+        if(model.getVersion() != version){
+            return model;
+        }
         return null;
+    }
+
+    @Override
+    public ClientModel getGameState() {
+        return model;
     }
 
     @Override public ClientModel sendChat(PlayerIndex sender, String content)

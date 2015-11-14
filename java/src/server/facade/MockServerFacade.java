@@ -63,6 +63,11 @@ public class MockServerFacade extends AbstractServerFacade
 
     }
 
+    @Override
+    public ClientModel getGameState() {
+        return null;
+    }
+
     @Override public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
 

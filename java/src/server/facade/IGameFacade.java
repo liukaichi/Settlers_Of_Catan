@@ -17,6 +17,8 @@ public interface IGameFacade
      */
     ClientModel getGameState(int version);
 
+    ClientModel getGameState();
+
     /**
      * Add an AI player to the game specified by the id.
      * @param aiType the type of AI to the game.

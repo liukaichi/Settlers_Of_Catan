@@ -36,7 +36,7 @@ public class JoinGameRequest implements CatanCommand
         JsonParser parser = new JsonParser();
         JsonObject joinGameObject = (JsonObject) parser.parse(json);
         this.id = joinGameObject.getAsJsonPrimitive("id").getAsInt();
-        this.color = CatanColor.valueOf(joinGameObject.getAsJsonPrimitive("color").getAsString());
+        this.color = CatanColor.valueOf(joinGameObject.getAsJsonPrimitive("color").getAsString().toUpperCase());
     }
 
     /**
