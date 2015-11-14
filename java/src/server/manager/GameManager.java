@@ -2,7 +2,6 @@ package server.manager;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
-import client.main.Catan;
 import server.ServerModel;
 import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
@@ -64,6 +63,7 @@ public class GameManager
 
     private void addDefaultGames()
     {
+        /*
         for (int i = 1; i < 3; ++i)
         {
             GameInfo game = new GameInfo(i, "Game_" + i);
@@ -73,6 +73,8 @@ public class GameManager
             game.addPlayer(new PlayerInfo(3, "David", CatanColor.BROWN));
             games.put(i, game);
         }
+        */
+        //GameInfo game1 = ;
     }
 
     /**
@@ -174,8 +176,8 @@ public class GameManager
     }
     private class AIManager
     {
-        private int id = 0;
         ArrayList<String> aiNames;
+        private int id = 0;
 
         public AIManager()
         {

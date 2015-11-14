@@ -1,9 +1,16 @@
 package client.data;
 
-import java.util.*;
-
-import shared.definitions.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import shared.definitions.CatanColor;
+import shared.definitions.PlayerIndex;
 import shared.model.player.Player;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Used to pass game information into views<br>
@@ -43,6 +50,27 @@ public class GameInfo
         this();
         setId(id);
         setTitle(title);
+    }
+
+    public GameInfo(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject obj = (JsonObject) parser.parse(json);
+        this.title = obj.get("title").getAsString();
+        this.id = obj.get("id").getAsInt();
+        JsonArray players = obj.getAsJsonArray("players");
+        for (JsonElement element : players)
+        {
+            JsonObject jsonPlayer = (JsonObject) element;
+            if (jsonPlayer.has("color") && jsonPlayer.has("name") && jsonPlayer.has("id"))
+            {
+                CatanColor color = CatanColor.valueOf(jsonPlayer.get("color").getAsString().toUpperCase());
+                String name = jsonPlayer.get("name").getAsString();
+                int playerID = jsonPlayer.get("id").getAsInt();
+                PlayerInfo player = new PlayerInfo(playerID, name, color);
+                this.addPlayer(player);
+            }
+        }
     }
 
     public int getId()
@@ -94,6 +122,10 @@ public class GameInfo
         return Collections.unmodifiableList(players);
     }
 
+    public void setPlayers(String json)
+    {
+    }
+
     public List<PlayerInfo> getPlayerInfos()
     {
         List<PlayerInfo> playerInfos = new ArrayList<>();
@@ -102,10 +134,6 @@ public class GameInfo
             playerInfos.add(player.getPlayerInfo());
         }
         return Collections.unmodifiableList(playerInfos);
-    }
-
-    public void setPlayers(String json)
-    {
     }
 
     @Override

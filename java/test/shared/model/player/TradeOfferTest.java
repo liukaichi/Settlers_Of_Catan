@@ -1,11 +1,10 @@
 package shared.model.player;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
 
-import shared.definitions.*;
-import shared.definitions.exceptions.CatanException;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Adrian on 10/1/2015.
@@ -13,55 +12,42 @@ import shared.definitions.exceptions.CatanException;
 public class TradeOfferTest
 {
 
-    @Test
-    public void createTradeOffer()
+    @Test public void createTradeOffer()
     {
-        try
-        {
-            // FIRST CONSTRUCTOR
-            Player player = new Player();
-            Player player2 = new Player();
+        // FIRST CONSTRUCTOR
+        Player player = new Player();
+        Player player2 = new Player();
 
-            player.getPlayerInfo().setPlayerIndex(0);
-            player2.getPlayerInfo().setPlayerIndex(1);
+        player.getPlayerInfo().setPlayerIndex(0);
+        player2.getPlayerInfo().setPlayerIndex(1);
 
-            TradeOffer offer = player.createOffer(player2);
+        TradeOffer offer = player.createOffer(player2);
 
-            assertEquals(0, offer.getSender());
-            assertEquals(1, offer.getReceiver());
-            assertEquals(0, offer.getOffer().totalResources());
+        assertEquals(0, offer.getSender());
+        assertEquals(1, offer.getReceiver());
+        assertEquals(0, offer.getOffer().totalResources());
 
-            offer.addToOffer(ResourceType.SHEEP, 2);
-            offer.addToOffer(ResourceType.BRICK, -2);
+        offer.addToOffer(ResourceType.SHEEP, 2);
+        offer.addToOffer(ResourceType.BRICK, -2);
 
-            assertEquals(-2, offer.getOffer().getResource(ResourceType.BRICK).getAmount());
-            assertEquals(2, offer.getOffer().getResource(ResourceType.SHEEP).getAmount());
+        assertEquals(-2, offer.getOffer().getResource(ResourceType.BRICK).getAmount());
+        assertEquals(2, offer.getOffer().getResource(ResourceType.SHEEP).getAmount());
 
-            // SECOND CONSTRUCTOR
-            TradeOffer offer2 = new TradeOffer(PlayerIndex.fromInt(0), PlayerIndex.fromInt(1), 1, 1, -1, -1, 1);
-            assertEquals(0, offer2.getSender());
-            assertEquals(1, offer2.getReceiver());
-            assertEquals(1, offer2.getOffer().getResource(ResourceType.BRICK).getAmount());
-            assertEquals(1, offer2.getOffer().getResource(ResourceType.ORE).getAmount());
-            assertEquals(-1, offer2.getOffer().getResource(ResourceType.SHEEP).getAmount());
-            assertEquals(-1, offer2.getOffer().getResource(ResourceType.WHEAT).getAmount());
-            assertEquals(1, offer2.getOffer().getResource(ResourceType.WOOD).getAmount());
-
-        }
-        catch (CatanException e)
-        {
-            e.printStackTrace();
-        }
-
+        // SECOND CONSTRUCTOR
+        TradeOffer offer2 = new TradeOffer(PlayerIndex.fromInt(0), PlayerIndex.fromInt(1), 1, 1, -1, -1, 1);
+        assertEquals(0, offer2.getSender());
+        assertEquals(1, offer2.getReceiver());
+        assertEquals(1, offer2.getOffer().getResource(ResourceType.BRICK).getAmount());
+        assertEquals(1, offer2.getOffer().getResource(ResourceType.ORE).getAmount());
+        assertEquals(-1, offer2.getOffer().getResource(ResourceType.SHEEP).getAmount());
+        assertEquals(-1, offer2.getOffer().getResource(ResourceType.WHEAT).getAmount());
+        assertEquals(1, offer2.getOffer().getResource(ResourceType.WOOD).getAmount());
     }
 
     /**
-     *
      * Method: toString()
-     *
      */
-    @Test
-    public void testSerialize() throws Exception
+    @Test public void testSerialize() throws Exception
     {
         Player player = new Player();
         Player player2 = new Player();
@@ -87,8 +73,7 @@ public class TradeOfferTest
         System.out.println(offer2.toString());
     }
 
-    @Test
-    public void testDeserialize() throws Exception
+    @Test public void testDeserialize() throws Exception
     {
         TradeOffer offer = new TradeOffer(PlayerIndex.fromInt(0), PlayerIndex.fromInt(1), 1, 1, -1, -1, 1);
         String json = offer.toString();
