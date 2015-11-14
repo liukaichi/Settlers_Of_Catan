@@ -96,7 +96,7 @@ public class GameManager
      */
     public List<GameInfo> listGames()
     {
-        return new ArrayList<GameInfo>(gameInfoMap.values());
+        return new ArrayList<>(games.values());
     }
 
     /**
@@ -199,8 +199,7 @@ public class GameManager
                 usedNames.add(info.getName());
             }
             PlayerInfo aiPlayerInfo = new PlayerInfo(--id,randomName(usedNames),randomColor(usedColors));
-            Player player = new Player(aiPlayerInfo);
-            return player;
+            return new Player(aiPlayerInfo);
         }
 
         private CatanColor randomColor(ArrayList<CatanColor> usedColors)

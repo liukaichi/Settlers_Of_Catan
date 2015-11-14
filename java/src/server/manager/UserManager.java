@@ -72,36 +72,7 @@ public class UserManager
         }
     }
 
-    private User getUserFromCredentials(Credentials credentials)
-    {
-        User user = new User(credentials, -1);
-        for (Map.Entry<Integer, Credentials> entry : this.credentials.entrySet())
-        {
-            if (Objects.equals(credentials, entry.getValue()))
-            {
-                user.assignUserID(entry.getKey());
-                break;
-            }
-        }
-        return user;
-    }
 
-    private void addDefaultUsers()
-    {
-        try
-        {
-            credentials.put(1, new Credentials("Cache", "cache"));
-            credentials.put(2, new Credentials("Amanda", "amanda"));
-            credentials.put(3, new Credentials("Justin", "justin"));
-            credentials.put(4, new Credentials("David", "david"));
-            credentials.put(5, new Credentials("Adrian", "adrian"));
-            credentials.put(6, new Credentials("Sam", "sam"));
-            credentials.put(7, new Credentials("Pete", "pete"));
-        } catch (InvalidCredentialsException e)
-        {
-            //Do nothing.
-        }
-    }
 
     /**
      * Finds the user in the system that matches the credentials provided and returns the information necessary to set

@@ -46,11 +46,6 @@ public class CreateGameResponse
         this.gameInfo = new GameInfo(id, title);
     }
 
-    public CreateGameResponse(GameInfo game)
-    {
-        this.gameInfo = game;
-    }
-
     public GameInfo getGameInfo()
     {
         return gameInfo;
