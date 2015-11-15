@@ -35,14 +35,7 @@ public class GamesHandler implements HttpHandler
         try
         {
             URI uri = httpExchange.getRequestURI();
-
-            // instantiate CookieManager
-            CookieManager manager = new CookieManager();
-            CookieHandler.setDefault(manager);
-            CookieStore cookieJar = manager.getCookieStore();
-
-            //Handling cookie
-            cookieJar.add(uri, new HttpCookie("catan.user", httpExchange.getRequestHeaders().getFirst("Cookie")));
+            String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
@@ -67,7 +60,7 @@ public class GamesHandler implements HttpHandler
                 String gameId = newCommand.execute(-1);
                 // testing
                 gameId = "1";
-                cookieJar.add(uri, new HttpCookie("catan.game", gameId));
+                cookie = "catan.game=" + gameId;
                 response = "Success";
             } else
             {
@@ -77,15 +70,8 @@ public class GamesHandler implements HttpHandler
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
-
-            // create cookie
-            String cookie = "";
-            for (HttpCookie co : cookieJar.getCookies())
-            {
-                cookie += co.getValue() + ";";
-            }
-            respHeaders.set("Set-cookie", cookie);
-
+            // set cookie
+            respHeaders.set("Set-cookie", cookie + ";Path=/");
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
         } catch (Exception e)
         {
