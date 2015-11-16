@@ -45,18 +45,12 @@ public enum EdgeDirection
 
     public static String toAbreviation(EdgeDirection dir)
     {
-        String abreviation = typeToAbreviation.get(dir);
-        if (abreviation == null)
-            return null;
-        return abreviation;
+        return typeToAbreviation.get(dir);
     }
 
     public static EdgeDirection fromAbreviation(String abreviation)
     {
-        EdgeDirection type = abreviationToType.get(abreviation);
-        if (type == null)
-            return null;
-        return type;
+        return  abreviationToType.get(abreviation);
     }
 
     public EdgeDirection getOppositeDirection()

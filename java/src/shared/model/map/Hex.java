@@ -116,11 +116,11 @@ public class Hex
         {
             for (VertexDirection dir : VertexDirection.values())
             {
-                vertices.put(dir, new VertexLocation(location, dir));
+                vertices.put(dir, new VertexLocation(location, dir).getNormalizedLocation());
             }
             for (EdgeDirection dir : EdgeDirection.values())
             {
-                edges.put(dir, new EdgeLocation(location, dir));
+                edges.put(dir, new EdgeLocation(location, dir).getNormalizedLocation());
             }
         }
     }
@@ -261,7 +261,7 @@ public class Hex
         Hex other = (Hex) obj;
         if (this.edges.keySet().size() != other.edges.keySet().size())
             return false;
-        for (EdgeDirection key : this.edges.keySet())
+        for (EdgeDirection key : EdgeDirection.values())
         {
             if (!this.edges.get(key).equals(other.edges.get(key)))
                 return false;

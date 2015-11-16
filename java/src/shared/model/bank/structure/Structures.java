@@ -41,4 +41,17 @@ public class Structures
         return getStructure(type).getAmountRemaining();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Structures that = (Structures) o;
+
+        if (road != null ? !road.equals(that.road) : that.road != null) return false;
+        if (settlement != null ? !settlement.equals(that.settlement) : that.settlement != null) return false;
+        return !(city != null ? !city.equals(that.city) : that.city != null);
+
+    }
+
 }

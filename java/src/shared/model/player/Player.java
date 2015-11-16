@@ -250,9 +250,9 @@ public class Player
             player.add("newDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.UNPLAYABLE));
             player.addProperty("roads", bank.getStructures().getStructure(StructureType.ROAD).getAmountRemaining());
             player.addProperty("cities",
-                    bank.getStructures().getStructure(StructureType.SETTLEMENT).getAmountRemaining());
-            player.addProperty("settlements",
                     bank.getStructures().getStructure(StructureType.CITY).getAmountRemaining());
+            player.addProperty("settlements",
+                    bank.getStructures().getStructure(StructureType.SETTLEMENT).getAmountRemaining());
             player.addProperty("soldiers", bank.getKnights());
             player.addProperty("victoryPoints", bank.getVictoryPoints());
             player.addProperty("monuments", bank.getMonuments());
