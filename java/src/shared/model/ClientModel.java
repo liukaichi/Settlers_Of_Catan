@@ -279,17 +279,6 @@ public class ClientModel extends Observable
     }
 
     /**
-     * Builds a city for the given player at the given location.
-     *
-     * @param player   the player who is building the road.
-     * @param location the location where the road is being built.
-     */
-    public void buildRoad(PlayerIndex player, EdgeLocation location)
-    {
-        map.buildRoad(player, location);
-    }
-
-    /**
      * Method that indicates whether a player has the ability to move a robber
      * on a certain Hex
      *

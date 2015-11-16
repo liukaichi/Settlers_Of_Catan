@@ -31,7 +31,7 @@ public class Server
         try
         {
             //TODO: Change this to accept the port instead of the DEFAULT PORT NUMBER
-            server = HttpServer.create(new InetSocketAddress(address, DEFAULT_PORT_NUMBER), 0);
+            server = HttpServer.create(new InetSocketAddress(address, port), 0);
             server.createContext("/game/", new GameHandler());
             server.createContext("/games/", new GamesHandler());
             server.createContext("/moves/", new MovesHandler());
@@ -49,7 +49,11 @@ public class Server
 
     public static Server run()
     {
-        Server server = new Server(DEFAULT_HOST_NAME, DEFAULT_PORT_NUMBER);
+        return run(DEFAULT_PORT_NUMBER);
+    }
+    public static Server run(int port)
+    {
+        Server server = new Server(DEFAULT_HOST_NAME, port);
         server.start();
         return server;
     }
@@ -70,6 +74,11 @@ public class Server
             case 0:
                 AbstractServerFacade.setFacade(new MockServerFacade());
                 Server.run();
+                break;
+            case 1:
+                int port = Integer.parseInt(args[0]);
+                AbstractServerFacade.setFacade(new MockServerFacade());
+                Server.run(port);
                 break;
         }
     }

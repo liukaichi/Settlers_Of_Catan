@@ -130,49 +130,38 @@ public class ServerModel extends ClientModel
         return null;
     }
 
-    public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree)
+
+    /**
+     * Builds a city for the given player at the given location.
+     *
+     * @param playerIndex   the player who is building the road.
+     * @param location the location where the road is being built.
+     * @param isFree whether or not the player should be charged.
+     */
+    public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree) throws CatanException
     {
-        try
-        {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.buyRoad(isFree);
-            getMap().placeRoad(playerIndex, location);
-            this.setChanged();
-        } catch (CatanException e)
-        {
-            e.printStackTrace();
-        }
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.buyRoad(isFree);
+        getMap().placeRoad(playerIndex, location);
+        this.setChanged();
         return this;
     }
 
-    public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location,
-            boolean isFree)
+    public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree) throws CatanException
     {
-        try
-        {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.buySettlement(isFree);
-            getMap().placeSettlement(playerIndex, location);
-            this.setChanged();
-        } catch (CatanException e)
-        {
-            e.printStackTrace();
-        }
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.buySettlement(isFree);
+        getMap().placeSettlement(playerIndex, location);
+        this.setChanged();
         return this;
     }
 
-    public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation location)
+    public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation location) throws CatanException
     {
-        try
-        {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.buyCity();
-            getMap().placeCity(playerIndex, location);
-            this.setChanged();
-        } catch (CatanException e)
-        {
-            e.printStackTrace();
-        }
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.buyCity();
+        getMap().placeCity(playerIndex, location);
+        this.setChanged();
         return this;
     }
 

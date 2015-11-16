@@ -60,7 +60,17 @@
 			</assertions>
 		</java>
 	</target>
-    
+
+	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
+		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
+			<arg value="${port.arg}"/>
+			<sysproperty key="com.sun.management.jmxremote" value=""/>
+			<assertions>
+				<enable/>
+			</assertions>
+		</java>
+	</target>
+
 	<target name="client" description="Runs the demo client">
 		<java jar="${client.jar.file}" fork="true" dir="${demo.dir}">
 			<assertions>
@@ -68,7 +78,18 @@
 			</assertions>
 		</java>
 	</target>
-    
+
+	<target name="our-client" depends="package" description="compiles, packages, and runs the student client">
+		<java jar="${java.dist}/catan-client.jar" dir="${java.dist}" fork="yes">
+			<arg value="${host.arg}"/>
+			<arg value="${port.arg}"/>
+			<sysproperty key="com.sun.management.jmxremote" value=""/>
+			<assertions>
+				<enable/>
+			</assertions>
+		</java>
+	</target>
+
     <target name="make-java-doc" description="Generate the Java docs">
         <echo> Making Java documentation </echo>
         <delete dir="${javadoc.dir}"/>
@@ -144,29 +165,6 @@
 					value="lib/gson-2.2.4.jar" />
 			</manifest>
 		</jar>
-	</target>
-	
-	<target name="our-client" depends="package" description="compiles, packages, and runs the student client">
-		<java jar="${java.dist}/catan-client.jar" dir="${java.dist}" fork="yes">
-			<arg value="${host.arg}"/>
-			<arg value="${port.arg}"/>
-			<sysproperty key="com.sun.management.jmxremote" value=""/>
-			<assertions>
-				<enable/>
-			</assertions>
-		</java>
-	</target>
- 	
-	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
-		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
-            <arg value="${port.arg}"/>
-            <arg value="${web.arg}"/>
-            <arg value="${options.arg}"/>
-			<sysproperty key="com.sun.management.jmxremote" value=""/>
-			<assertions>
-				<enable/>
-			</assertions>
-		</java>
 	</target>
     
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
