@@ -10,9 +10,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -33,7 +33,7 @@ public class GameHandler implements HttpHandler
      */
     public static Map<String, String> parseQuery(String query)
     {
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<>();
         for (String param : query.split("&"))
         {
             String pair[] = param.split("=");

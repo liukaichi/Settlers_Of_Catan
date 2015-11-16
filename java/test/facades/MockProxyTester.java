@@ -1,17 +1,19 @@
 package facades;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import client.proxy.MockProxy;
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import shared.communication.CreateGameRequest;
 import shared.communication.CreateGameResponse;
 import shared.communication.ListGamesResponse;
-import shared.model.player.Player;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * MockProxy Tester.
@@ -20,7 +22,7 @@ import java.util.List;
  * @version 1.0
  * @since <pre>Oct 1, 2015</pre>
  */
-public class MockProxyTester extends TestCase
+public class MockProxyTester
 {
     MockProxy proxy = new MockProxy();
 
@@ -77,8 +79,9 @@ public class MockProxyTester extends TestCase
         {
             String title = info.getTitle();
             assertTrue(title != null && !title.equals(""));
-            List<Player> players = info.getPlayers();
+            List<PlayerInfo> players = info.getPlayers();
             assertTrue(players != null);
+            assertTrue(players.size() >= 0 && players.size() <= 4);
         }
 
     }

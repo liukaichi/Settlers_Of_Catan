@@ -10,20 +10,12 @@ public class PlacementException extends CatanException
 {
 
     /**
-     * @param string
+     * @param string the message to throw.
      */
     public PlacementException(String string)
     {
         super(string);
-        // TODO Auto-generated constructor stub
     }
 
-    /**
-     *
-     */
-    public PlacementException()
-    {
-        // TODO Auto-generated constructor stub
-    }
 
 }

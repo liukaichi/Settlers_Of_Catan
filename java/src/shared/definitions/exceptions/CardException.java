@@ -14,14 +14,5 @@ public class CardException extends CatanException
     public CardException(String string)
     {
         super(string);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     *
-     */
-    public CardException()
-    {
-        // TODO Auto-generated constructor stub
     }
 }

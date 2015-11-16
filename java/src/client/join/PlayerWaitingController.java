@@ -1,7 +1,6 @@
 package client.join;
 
 import client.base.ObserverController;
-import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import shared.definitions.AIType;
@@ -27,7 +26,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
         @Override public void actionPerformed(ActionEvent e)
         {
             LOGGER.info("PLAYER WAITING CONTROLLER TIMER UPDATING");
-            if (model.getGameInfo().getPlayerInfos().size() != 4)
+            if (model.getPlayerInfos().size() != 4)
             {
                 model = facade
                         .getGameState(-1); /// should make it not update the model if players less than 4 and state = -1
@@ -69,8 +68,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
 
     private void updateView()
     {
-        GameInfo game = model.getGameInfo();
-        List<PlayerInfo> players = game.getPlayerInfos();
+        List<PlayerInfo> players = model.getPlayerInfos();
         getView().setPlayers(players.toArray(new PlayerInfo[players.size()]));
         getView().setAIChoices(new String[] { AIType.LARGEST_ARMY.toString() });
         if (getView().isModalShowing())

@@ -54,6 +54,6 @@ public class GameManagerTest
         assertNotNull(model);
         Log log = model.getLog();
         assertEquals(0, log.size());
-        assertEquals(4, model.getGameInfo().getPlayers().size());
+        assertEquals(4, model.getPlayers().size());
     }
 }

@@ -9,20 +9,10 @@ public class TradingException extends CatanException
 {
 
     /**
-     * @param string
+     * @param string the message to throw.
      */
     public TradingException(String string)
     {
         super(string);
-        // TODO Auto-generated constructor stub
     }
-
-    /**
-     *
-     */
-    public TradingException()
-    {
-        // TODO Auto-generated constructor stub
-    }
-
 }

@@ -20,10 +20,7 @@ public class ListAIResponse
 {
     private List<AIType> aiTypes;
 
-    /**
-     * TODO
-     */
-    public ListAIResponse()
+    private ListAIResponse()
     {
         aiTypes = new ArrayList<>();
     }

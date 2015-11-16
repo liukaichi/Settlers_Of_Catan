@@ -1,7 +1,9 @@
 package shared.model.map.structure;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import shared.definitions.PlayerIndex;
+import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
@@ -29,6 +31,17 @@ public abstract class MapStructure
         this.owner = owner;
         this.location = location;
     }
+
+    public MapStructure(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject settlement = (JsonObject) parser.parse(json);
+        this.setOwner(PlayerIndex.fromInt(settlement.get("owner").getAsInt()));
+        JsonObject location = (JsonObject) settlement.get("location");
+        this.setLocation(new VertexLocation(new HexLocation(location.get("x").getAsInt(), location.get("y").getAsInt()),
+                VertexDirection.fromAbreviation(location.get("direction").getAsString())).getNormalizedLocation());
+    }
+
 
     public PlayerIndex getOwner()
     {

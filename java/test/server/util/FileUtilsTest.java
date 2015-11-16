@@ -21,7 +21,7 @@ public class FileUtilsTest
     @Test public void testGetModelFromFile() throws Exception
     {
         ServerModel testModel = FileUtils.getModelFromFile("sample/serverDefaults/", "game-0", null);
-        List<PlayerInfo> players = testModel.getGameInfo().getPlayerInfos();
+        List<PlayerInfo> players = testModel.getPlayerInfos();
         assertEquals(4, players.size());
         PlayerInfo player0 = players.get(0);
         assertEquals(0, player0.getId());

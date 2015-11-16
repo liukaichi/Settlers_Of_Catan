@@ -16,7 +16,7 @@ import java.util.Map;
 public class Hex
 {
     private Map<VertexDirection, VertexLocation> vertices;
-    private Map<EdgeDirection, EdgeLocation> edges = new HashMap<EdgeDirection, EdgeLocation>();
+    private Map<EdgeDirection, EdgeLocation> edges;
     /**
      * @see shared.definitions.ResourceType
      */

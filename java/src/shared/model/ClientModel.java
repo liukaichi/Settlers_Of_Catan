@@ -4,13 +4,12 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.facade.ClientFacade;
 import com.google.gson.*;
+import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
-import shared.definitions.TurnStatus;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.bank.Bank;
-import shared.model.bank.PlayerBank;
 import shared.model.bank.card.DevCard;
 import shared.model.map.CatanMap;
 import shared.model.message.Chat;
@@ -18,11 +17,13 @@ import shared.model.message.Log;
 import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
 /**
- * The client model for the Catan game
+ * The client model for the Catan game.
  *
  * @author amandafisher
  */
@@ -30,6 +31,7 @@ public class ClientModel extends Observable
 {
     protected TradeOffer tradeOffer;
     private GameInfo gameInfo;
+    private List<Player> players;
     private Bank bank;
     private Chat chat;
     private Log log;
@@ -77,8 +79,7 @@ public class ClientModel extends Observable
             {
                 Player newPlayer = new Player(player.toString());
                 newPlayer.populatePorts(map);
-                gameInfo.addPlayer(newPlayer);
-
+                this.players.add(newPlayer);
             }
         }
 
@@ -97,6 +98,11 @@ public class ClientModel extends Observable
 
     }
 
+    public void setGameInfo(GameInfo gameInfo)
+    {
+        this.gameInfo = gameInfo;
+    }
+
     /**
      * Per the Observer pattern, this method replaces the pieces of the model and then notifies the Observers to the
      * model that a change has been made.
@@ -113,7 +119,7 @@ public class ClientModel extends Observable
         if (!isUpdating)
         {
             isUpdating = true;
-            this.gameInfo = model.gameInfo;
+            this.players = model.players;
             this.bank = model.bank;
             this.chat = model.chat;
             this.log = model.log;
@@ -123,6 +129,7 @@ public class ClientModel extends Observable
             this.version = model.version;
             this.winner = model.winner;
             this.setChanged();
+
             if (turnTracker != null)
             {
                 this.notifyObservers(turnTracker.getStatus());
@@ -135,24 +142,30 @@ public class ClientModel extends Observable
         }
     }
 
-    public GameInfo getGameInfo()
-    {
-        return gameInfo;
-    }
-
-    public void setGameInfo(GameInfo gameInfo)
-    {
-        this.gameInfo = gameInfo;
-    }
-
     public List<PlayerInfo> getPlayerInfos()
     {
-        return gameInfo.getPlayerInfos();
+        List<PlayerInfo> playerInfos = new ArrayList<>();
+        for (Player player : players)
+        {
+            playerInfos.add(player.getPlayerInfo());
+        }
+        return Collections.unmodifiableList(playerInfos);
     }
 
     public List<Player> getPlayers()
     {
-        return gameInfo.getPlayers();
+        return Collections.unmodifiableList(players);
+    }
+
+    /**
+     * Gets the color of the player with the given index.
+     *
+     * @param index the index of the player.
+     * @return the color of the player with the given index.
+     */
+    public CatanColor getPlayerColor(PlayerIndex index)
+    {
+        return players.get(index.getIndex()).getPlayerColor();
     }
 
     public Bank getBank()
@@ -324,47 +337,6 @@ public class ClientModel extends Observable
         return player.canBuyCity();
     }
 
-    /**
-     * Updates the currentTurn counter
-     *
-     * @param playerCurrentTurn the info of the player to update the current turn for.
-     */
-    public void updateCurrentTurn(PlayerInfo playerCurrentTurn)
-    {
-        turnTracker.updateCurrentTurn(playerCurrentTurn);
-    }
-
-    /**
-     * Updates the longestRoad counter. A player has the longest road if he or
-     * she has at least 5 roads
-     *
-     * @param playerLongestRoad the info of the player to update the longest road for.
-     */
-    public void updateLongestRoad(PlayerBank playerLongestRoad)
-    {
-        turnTracker.updateLongestRoad(playerLongestRoad);
-    }
-
-    /**
-     * Updates the largest army counter A player has the largest army if he or
-     * she has at least 3 knights
-     *
-     * @param playerLargestArmy the info of the player to update the largest army for.
-     */
-    public void updateLargestArmy(PlayerBank playerLargestArmy)
-    {
-        turnTracker.updateLargestArmy(playerLargestArmy);
-    }
-
-    /**
-     * Updates the status string based on the current phase of the player's turn
-     *
-     * @param playerTurnStatus the info of the player to update the status for.
-     */
-    public void updateStatus(TurnStatus playerTurnStatus)
-    {
-        turnTracker.updateStatus(playerTurnStatus);
-    }
 
     /**
      * returns a serialized json representation of the object.
@@ -378,7 +350,7 @@ public class ClientModel extends Observable
         model.add("deck", parser.parse(bank.getDevCards().toString(DevCard.AmountType.PLAYABLE)));
         model.add("map", parser.parse(map.toString()));
         JsonArray players = new JsonArray();
-        for (Player player : gameInfo.getPlayers())
+        for (Player player : this.players)
         {
             players.add(parser.parse(player.toString()));
         }
@@ -409,7 +381,9 @@ public class ClientModel extends Observable
 
         if (version != that.version)
             return false;
-        if (gameInfo != null ? !gameInfo.equals(that.gameInfo) : that.gameInfo != null)
+        //        if (gameInfo != null ? !gameInfo.equals(that.gameInfo) : that.gameInfo != null)
+        //            return false;
+        if (players != null ? !players.equals(that.players) : that.players != null)
             return false;
         if (bank != null ? !bank.equals(that.bank) : that.bank != null)
             return false;
@@ -438,14 +412,5 @@ public class ClientModel extends Observable
         PlayerInfo clientPlayer = ClientFacade.getInstance().getClientPlayer();
         int currentPlayer = clientPlayer.getNormalizedPlayerIndex();
         return (offer != null && (offer.getReceiver() == currentPlayer || offer.getSender() == currentPlayer));
-    }
-
-    /**
-     *
-     */
-    public void finishTurn()
-    {
-        // TODO Auto-generated method stub
-
     }
 }

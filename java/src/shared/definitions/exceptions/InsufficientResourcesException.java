@@ -10,20 +10,12 @@ public class InsufficientResourcesException extends CatanException
 {
 
     /**
-     * @param string
+     * @param string the message to throw.
      */
     public InsufficientResourcesException(String string)
     {
         super(string);
-        // TODO Auto-generated constructor stub
     }
 
-    /**
-     *
-     */
-    public InsufficientResourcesException()
-    {
-        // TODO Auto-generated constructor stub
-    }
 
 }

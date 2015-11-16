@@ -237,7 +237,7 @@ public abstract class GameplayState
                 }
             } else if (facade.getClientPlayer().getPlayerIndex().equals(PlayerIndex.NONE))
             {
-                facade.buildClientPlayerFromPlayerInfos(model.getGameInfo().getPlayerInfos());
+                facade.buildClientPlayerFromPlayerInfos(model.getPlayerInfos());
                 LOGGER.severe("Client player index is -1");
             }
 

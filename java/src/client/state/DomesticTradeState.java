@@ -15,7 +15,7 @@ import shared.model.player.TradeOffer;
 import java.util.ArrayList;
 
 /**
- * Created by dtaylor on 10/29/2015.
+ * Representative of the actions the user can take during a domestic trade.
  */
 public class DomesticTradeState extends GameplayState
 {
@@ -50,7 +50,7 @@ public class DomesticTradeState extends GameplayState
     private void initializeTradeView()
     {
         ArrayList<PlayerInfo> infos = new ArrayList<>();
-        infos.addAll(facade.getModel().getGameInfo().getPlayerInfos());
+        infos.addAll(facade.getModel().getPlayerInfos());
         infos.remove(player.getPlayerInfo());
         trade.setPlayers(infos.toArray(new PlayerInfo[infos.size()]));
         trade.reset();

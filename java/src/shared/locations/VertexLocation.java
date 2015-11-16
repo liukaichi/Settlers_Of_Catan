@@ -13,8 +13,9 @@ public class VertexLocation implements JsonSerializer<VertexLocation>
     private VertexDirection dir;
 
     /**
-     * @param hexLoc
-     * @param dir
+     * Creates a VertexLocation with the given location and direction.
+     * @param hexLoc the hex that this vertex is on.
+     * @param dir the direction on the hex.
      */
     public VertexLocation(HexLocation hexLoc, VertexDirection dir)
     {

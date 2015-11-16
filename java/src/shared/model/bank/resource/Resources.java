@@ -186,7 +186,7 @@ public class Resources implements JsonSerializer<Resources>
     /**
      * Decreases the specified resource in this collection by 1
      *
-     * @param resource
+     * @param resource the resource type to decrease.
      */
     public void decrease(ResourceType resource)
     {

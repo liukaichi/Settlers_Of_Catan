@@ -10,8 +10,8 @@ public enum VertexDirection
 {
     West, NorthWest, NorthEast, East, SouthEast, SouthWest;
 
-    private static final Map<String, VertexDirection> abreviationToType = new HashMap<String, VertexDirection>();
-    private static final Map<VertexDirection, String> typeToAbreviation = new HashMap<VertexDirection, String>();
+    private static final Map<String, VertexDirection> abreviationToType = new HashMap<>();
+    private static final Map<VertexDirection, String> typeToAbreviation = new HashMap<>();
 
     static
     {
@@ -51,7 +51,8 @@ public enum VertexDirection
     }
 
     /**
-     * @return
+     * Returns the abbreviation of this Vertex Direction.
+     * @return the abbreviation of this Vertex Direction.
      */
     public static String toAbreviation(VertexDirection dir)
     {

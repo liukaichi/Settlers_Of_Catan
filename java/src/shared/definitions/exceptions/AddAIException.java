@@ -15,15 +15,6 @@ public class AddAIException extends CatanException
     public AddAIException(String string)
     {
         super(string);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     *
-     */
-    public AddAIException()
-    {
-        // TODO Auto-generated constructor stub
     }
 
 }

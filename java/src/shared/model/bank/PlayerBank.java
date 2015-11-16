@@ -138,7 +138,7 @@ public class PlayerBank extends Bank
     {
         if ((playerResources.getResource(type).getAmount() - num) < 0)
         {
-            throw new InsufficientResourcesException();
+            throw new InsufficientResourcesException("Not enough of resource to give.");
         } else
         {
             playerResources.getResource(type).subResource(num);
@@ -190,8 +190,6 @@ public class PlayerBank extends Bank
     public boolean canBuyDevCard()
     {
         Resources cost = new Resources(0, 0, 1, 1, 1);
-        //TODO this might not properly get the game bank's dev cards.
-        //if (hasEnoughResources(cost) && (!super.getDevCardDeck().empty()))
         return hasEnoughResources(cost) && !ClientFacade.getInstance().getBank().getDevCardDeck().empty();
     }
 

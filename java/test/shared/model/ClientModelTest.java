@@ -10,10 +10,11 @@ import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by liukaichi on 10/3/2015.
+ * Test the ClientModel.
  */
 public class ClientModelTest
 {
@@ -27,13 +28,13 @@ public class ClientModelTest
             String json = BufferedReaderParser.parse(reader);
             ClientModel model = new ClientModel(json);
 
-            assert (model.getBank() != null);
-            assert (model.getMap() != null);
-            assert (model.getChat() != null);
-            assert (model.getGameInfo() != null);
-            assert (model.getLog() != null);
-            assert (model.getTurnTracker() != null);
-            assert (model.getWinner() != null);
+            assertNotNull(model.getBank());
+            assertNotNull(model.getMap());
+            assertNotNull(model.getChat());
+            assertNotNull(model.getPlayers());
+            assertNotNull(model.getLog());
+            assertNotNull(model.getTurnTracker());
+            assertNotNull(model.getWinner());
 
         } catch (FileNotFoundException e)
         {

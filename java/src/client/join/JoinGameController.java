@@ -9,7 +9,6 @@ import client.misc.IMessageView;
 import shared.communication.CreateGameRequest;
 import shared.communication.ListGamesResponse;
 import shared.definitions.CatanColor;
-import shared.model.player.Player;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -241,13 +240,13 @@ public class JoinGameController extends ObserverController implements IJoinGameC
 
     private void disablePlayerColors(GameInfo game)
     {
-        List<Player> players = game.getPlayers();
-        for (Player player : players)
+        List<PlayerInfo> players = game.getPlayers();
+        for (PlayerInfo player : players)
         {
-            getSelectColorView().setColorEnabled(player.getPlayerColor(), false);
-            if (facade.getClientPlayer().equals(player.getPlayerInfo()))
+            getSelectColorView().setColorEnabled(player.getColor(), false);
+            if (facade.getClientPlayer().equals(player))
             {
-                getSelectColorView().setColorEnabled(player.getPlayerColor(), true);
+                getSelectColorView().setColorEnabled(player.getColor(), true);
             }
         }
     }
@@ -267,7 +266,7 @@ public class JoinGameController extends ObserverController implements IJoinGameC
 
         updateView();
         boolean colorAlreadyExists = false;
-        for (PlayerInfo info : currentGame.getPlayerInfos())
+        for (PlayerInfo info : currentGame.getPlayers())
         {
             if (info.getColor().equals(color) && info.getId() != facade.getClientPlayer().getId())
             {
