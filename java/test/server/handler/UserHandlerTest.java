@@ -16,7 +16,6 @@ import static org.junit.Assert.fail;
  */
 public class UserHandlerTest
 {
-    static Server server;
     ServerProxy proxy = new ServerProxy();
 
     @BeforeClass public static void setupServer()
@@ -27,7 +26,7 @@ public class UserHandlerTest
 
     @Test public void loginTest()
     {
-        PlayerInfo playerInfo;
+
         invalidUsernameLoginTest();
         validUsernameLoginTest();
     }
@@ -47,7 +46,7 @@ public class UserHandlerTest
     {
         try
         {
-            proxy.userLogin(new Credentials("Sam", "sam"));
+            proxy.userLogin(new Credentials("Justin", "justin"));
         } catch (SignInException e)
         {
             fail();

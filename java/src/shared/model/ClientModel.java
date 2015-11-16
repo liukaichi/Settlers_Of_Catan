@@ -369,7 +369,9 @@ public class ClientModel extends Observable
             model.add("tradeOffer", parser.parse(tradeOffer.toString()));
         }
 
-        return model.toString();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(model);
+        return json.toString();
     }
 
     @Override public boolean equals(Object o)

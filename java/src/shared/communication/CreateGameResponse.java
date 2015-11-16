@@ -1,8 +1,8 @@
 package shared.communication;
 
 import client.data.GameInfo;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+import shared.model.player.Player;
 
 /**
  * Class that creates the game response
@@ -60,9 +60,24 @@ public class CreateGameResponse
 
     @Override public String toString()
     {
+        JsonParser parser = new JsonParser();
         JsonObject response = new JsonObject();
+
+        JsonArray playerList = new JsonArray();
+        //just add 4 empty "players"
+        for (int x = 0; x < 4; x++)
+        {
+            playerList.add(parser.parse("{}"));
+        }
+
+        //adding properties
         response.addProperty("title", gameInfo.getTitle());
         response.addProperty("id", gameInfo.getId());
-        return response.toString();
+        response.add("players",playerList);
+
+        //pretty printing
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(response);
+        return json.toString();
     }
 }

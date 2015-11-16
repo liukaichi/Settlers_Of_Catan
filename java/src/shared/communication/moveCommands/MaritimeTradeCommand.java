@@ -55,10 +55,10 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
         this.type = MoveType.valueOf(tradeObject.getAsJsonPrimitive("type").getAsString());
-        this.playerIndex = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("receiver").getAsInt());
-        this.ratio = TradeRatio.valueOf(tradeObject.get("ratio").getAsString());
-        this.inputResource = ResourceType.valueOf(tradeObject.get("inputResource").getAsString());
-        this.outputResource = ResourceType.valueOf(tradeObject.get("outputResource").getAsString());
+        this.playerIndex = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("playerIndex").getAsInt());
+        this.ratio = TradeRatio.fromInt(tradeObject.get("ratio").getAsInt());
+        this.inputResource = ResourceType.valueOf(tradeObject.get("inputResource").getAsString().toUpperCase());
+        this.outputResource = ResourceType.valueOf(tradeObject.get("outputResource").getAsString().toUpperCase());
     }
 
     /*

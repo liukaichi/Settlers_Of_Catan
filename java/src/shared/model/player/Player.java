@@ -50,9 +50,6 @@ public class Player
     {
         this();
         info = playerInfo;
-        bank = new PlayerBank();
-        discarded = false;
-        playedDev = false;
     }
 
     public Player(String json)
@@ -246,7 +243,6 @@ public class Player
 
     @Override public String toString()
     {
-
         JsonObject player = new JsonObject();
         {
             player.add("resources", bank.getResources().toJsonObject());

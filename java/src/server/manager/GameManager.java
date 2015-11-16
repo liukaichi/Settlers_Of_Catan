@@ -56,24 +56,24 @@ public class GameManager
 
     private void addExistingGames()
     {
-        GameInfo game0Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-0", null);
+        GameInfo game0Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-0");
         games.put(game0Info.getId(), game0Info);
-        ServerModel game0Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-0", null);
+        ServerModel game0Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-0");
         models.put(game0Info.getId(), game0Model);
 
-        GameInfo game1Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-1", null);
+        GameInfo game1Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-1");
         games.put(game1Info.getId(), game1Info);
-        ServerModel game1Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-1", null);
+        ServerModel game1Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-1");
         models.put(game1Info.getId(), game1Model);
 
-        GameInfo game2Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-2", null);
+        GameInfo game2Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-2");
         games.put(game2Info.getId(), game2Info);
-        ServerModel game2Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-2", null);
+        ServerModel game2Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-2");
         models.put(game2Info.getId(), game2Model);
 
-        GameInfo customGameInfo = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-CS340", null);
+        GameInfo customGameInfo = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-CS340");
         games.put(customGameInfo.getId(), customGameInfo);
-        ServerModel customGame = FileUtils.getModelFromFile("sample/serverDefaults/", "game-CS340", null);
+        ServerModel customGame = FileUtils.getModelFromFile("sample/serverDefaults/", "game-CS340");
         models.put(customGameInfo.getId(), customGame);
     }
 

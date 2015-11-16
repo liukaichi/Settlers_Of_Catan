@@ -24,11 +24,11 @@ public class MockServerFacade extends AbstractServerFacade
     @Override public ClientModel getGameState(int version)
     {
         if (version == -1 || version < 50)
-            return FileUtils.getModelFromFile("sample/mockServerJson", "basicGameTurn", ".json");
+            return FileUtils.getModelFromFile(null, "basicGameTurn");
         else if (version >= 50 && version < 100)
-            return FileUtils.getModelFromFile("sample/mockServerJson", "playersHaveCards", ".json");
+            return FileUtils.getModelFromFile(null, "playersHaveCards");
         else if (version >= 100)
-            return FileUtils.getModelFromFile("sample/mockServerJson", "advancedGame", ".json");
+            return FileUtils.getModelFromFile(null, "advancedGame");
         else
             return null;
 
@@ -37,18 +37,18 @@ public class MockServerFacade extends AbstractServerFacade
     @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
     {
 
-        return FileUtils.getModelFromFile("sample/mockServerJson", "sendChat", ".json");
+        return FileUtils.getModelFromFile(null, "sendChat");
     }
 
     @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "basicGame", ".json");
+        return FileUtils.getModelFromFile(null, "basicGame");
     }
 
     @Override public ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim,
             HexLocation location)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "basicGame", ".json");
+        return FileUtils.getModelFromFile(null, "basicGame");
 
     }
 
@@ -58,16 +58,16 @@ public class MockServerFacade extends AbstractServerFacade
         switch (playerIndex)
         {
         case PLAYER_0:
-            model = FileUtils.getModelFromFile("sample/mockServerJson", "player1Turn", ".json");
+            model = FileUtils.getModelFromFile(null, "player1Turn");
             break;
         case PLAYER_1:
-            model = FileUtils.getModelFromFile("sample/mockServerJson", "player2Turn", ".json");
+            model = FileUtils.getModelFromFile(null, "player2Turn");
             break;
         case PLAYER_2:
-            model = FileUtils.getModelFromFile("sample/mockServerJson", "player3Turn", ".json");
+            model = FileUtils.getModelFromFile(null, "player3Turn");
             break;
         case PLAYER_3:
-            model = FileUtils.getModelFromFile("sample/mockServerJson", "player0Turn", ".json");
+            model = FileUtils.getModelFromFile(null, "player0Turn");
             break;
         }
         return model;
@@ -75,71 +75,71 @@ public class MockServerFacade extends AbstractServerFacade
 
     @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "playersHaveCards", ".json");
+        return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1,
             ResourceType resource2)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "playersHaveCards", ".json");
+        return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1,
             EdgeLocation spot2)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "playersHaveCards", ".json");
+        return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex,
             HexLocation location)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "playersHaveCards", ".json");
+        return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "playersHaveCards", ".json");
+        return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel monument(int gameID, PlayerIndex playerIndex)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "playersHaveCards", ".json");
+        return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "advancedGame", ".json");
+        return FileUtils.getModelFromFile(null, "advancedGame");
     }
 
     @Override public ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation,
             boolean free)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "advancedGame", ".json");
+        return FileUtils.getModelFromFile(null, "advancedGame");
     }
 
     @Override public ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "advancedGame", ".json");
+        return FileUtils.getModelFromFile(null, "advancedGame");
     }
 
     @Override public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "tradeAvailable", ".json");
+        return FileUtils.getModelFromFile(null, "tradeAvailable");
     }
 
     @Override public ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "tradeAvailable", ".json");
+        return FileUtils.getModelFromFile(null, "tradeAvailable");
     }
 
     @Override public ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio,
             ResourceType inputResource, ResourceType outputResource)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "tradeAvailable", ".json");
+        return FileUtils.getModelFromFile(null, "tradeAvailable");
     }
 
     @Override public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
-        return FileUtils.getModelFromFile("sample/mockServerJson", "basicGameTurn", ".json");
+        return FileUtils.getModelFromFile(null, "basicGameTurn");
     }
 }

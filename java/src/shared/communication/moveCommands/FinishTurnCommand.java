@@ -33,7 +33,7 @@ public class FinishTurnCommand extends SimpleSerializableCommand
         JsonParser parser = new JsonParser();
         JsonObject finishTurnObject = (JsonObject) parser.parse(json);
         this.type = MoveType.valueOf(finishTurnObject.getAsJsonPrimitive("type").getAsString());
-        this.playerIndex = PlayerIndex.fromInt(finishTurnObject.getAsJsonPrimitive("playerindex").getAsInt());
+        this.playerIndex = PlayerIndex.fromInt(finishTurnObject.getAsJsonPrimitive("playerIndex").getAsInt());
     }
 
     /**

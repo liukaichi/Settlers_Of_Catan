@@ -2,8 +2,6 @@ package server.util;
 
 import client.data.GameInfo;
 import client.utils.BufferedReaderParser;
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import server.ServerModel;
 
 import java.io.*;
@@ -62,21 +60,15 @@ public class FileUtils
      *
      * @param filePath      the path to the file. If null, set to "sample/mockServerJsons/";
      * @param fileName      the name of the file, without file extension.
-     * @param fileExtension the file extension to look for. If null, ".json" is used.
      * @return a Model initialized from the Json in the file.
      */
-    public static ServerModel getModelFromFile(@Nullable String filePath, @NotNull String fileName,
-            @Nullable String fileExtension)
+    public static ServerModel getModelFromFile(String filePath, String fileName)
     {
         if (filePath == null)
         {
             filePath = "sample/mockServerJsons/";
         }
-        if (fileExtension == null)
-        {
-            fileExtension = ".json";
-        }
-        File file = new File(filePath + fileName + fileExtension);
+        File file = new File(filePath + fileName + ".json");
         BufferedReader reader;
         ServerModel model = new ServerModel();
         try
@@ -97,21 +89,16 @@ public class FileUtils
      *
      * @param filePath      the path to the file. If null, set to "sample/serverDefaults/";
      * @param fileName      the name of the file, without file extension.
-     * @param fileExtension the file ending type to look for. If null, ".json" is used.
      * @return a GameInfo initialized from the Json in the file.
      */
-    public static GameInfo getGameInfoFromFile(@Nullable String filePath, @NotNull String fileName,
-            @Nullable String fileExtension)
+    public static GameInfo getGameInfoFromFile(String filePath, String fileName)
     {
         if (filePath == null)
         {
             filePath = "sample/mockServerJsons/";
         }
-        if (fileExtension == null)
-        {
-            fileExtension = ".json";
-        }
-        File file = new File(filePath + fileName + fileExtension);
+
+        File file = new File(filePath + fileName + ".json");
         BufferedReader reader;
         GameInfo game = new GameInfo();
         try

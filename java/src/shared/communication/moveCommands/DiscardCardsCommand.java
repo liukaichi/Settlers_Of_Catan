@@ -1,9 +1,6 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
@@ -48,6 +45,11 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      */
     public DiscardCardsCommand(String json)
     {
+        JsonParser parser = new JsonParser();
+        JsonObject discardCardsObject = (JsonObject) parser.parse(json);
+        this.type = MoveType.valueOf(discardCardsObject.getAsJsonPrimitive("type").getAsString());
+        this.playerIndex = PlayerIndex.fromInt(discardCardsObject.getAsJsonPrimitive("playerIndex").getAsInt());
+        this.discardedCards = new Resources(discardCardsObject.get("discardedCards").toString());
 
     }
 

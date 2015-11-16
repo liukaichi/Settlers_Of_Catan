@@ -2,6 +2,7 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 import server.facade.AbstractServerFacade;
+import server.facade.MockServerFacade;
 import server.facade.ServerFacade;
 import server.handler.*;
 
@@ -52,19 +53,6 @@ public class Server
         server.start();
         return server;
     }
-
-    public static void main(String[] args)
-    {
-
-        switch (args.length)
-        {
-        case 0:
-            AbstractServerFacade.setFacade(new ServerFacade());
-            Server.run();
-            break;
-        }
-    }
-
     public void start()
     {
         LOGGER.info("Starting Server...");
@@ -74,5 +62,15 @@ public class Server
     public void stop()
     {
         server.stop(0);
+    }
+
+    public static void main(String[] args) {
+
+        switch(args.length) {
+            case 0:
+                AbstractServerFacade.setFacade(new MockServerFacade());
+                Server.run();
+                break;
+        }
     }
 }

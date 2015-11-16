@@ -60,6 +60,7 @@ public class UserHandler implements HttpHandler
             {
                 user = facade.registerUser(creds);
             }
+            //passing this point means login/register was successful.
 
             // create cookie
             String cookie = "catan.user=" + user.toString();
