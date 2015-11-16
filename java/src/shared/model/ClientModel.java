@@ -54,6 +54,7 @@ public class ClientModel extends Observable
         turnTracker = null;
         version = 0;
         winner = PlayerIndex.NONE;
+        players = new ArrayList<>();
     }
 
     /**
