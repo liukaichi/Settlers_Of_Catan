@@ -1,25 +1,12 @@
 package shared.model.message;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents the list of messages in the chat.
  *
  * @see MessageLine
  */
-public class Chat
+public class Chat extends MessageList
 {
-
-    /**
-     * An array of MessageLine.
-     */
-    private List<MessageLine> lines;
 
     /**
      * Initializes the Chat log from Json.
@@ -28,68 +15,7 @@ public class Chat
      */
     public Chat(String json)
     {
-        lines = new ArrayList<>();
-        JsonParser parser = new JsonParser();
-        JsonObject chat = (JsonObject) parser.parse(json);
-        JsonArray messageLines = chat.getAsJsonArray("lines");
-        for (JsonElement messageLine : messageLines)
-        {
-            JsonObject messageLineObj = (JsonObject) messageLine;
-
-            MessageLine newMessageLine = new MessageLine(messageLineObj.toString());
-            lines.add(newMessageLine);
-        }
-    }
-
-    /**
-     * Returns a list of the messages.
-     *
-     * @return a list of the messages.
-     */
-    public List<MessageLine> getMessages()
-    {
-        return lines;
-    }
-
-    /**
-     * Adds the message to the list.
-     *
-     * @param sourceName the player from whom this message originates, or NONE, if the
-     *                   server.
-     * @param message    the message to add.
-     */
-    public void addMessageLine(String sourceName, String message)
-    {
-        MessageLine line = new MessageLine(sourceName, message);
-        lines.add(line);
-    }
-
-    /**
-     * Adds a line to the log.
-     *
-     * @param messageLine the message line to add.
-     */
-    public void addMessageLine(MessageLine messageLine)
-    {
-        lines.add(messageLine);
-    }
-
-    @Override public String toString()
-    {
-        JsonParser parser = new JsonParser();
-        // map
-        JsonObject chat = new JsonObject();
-        {
-            JsonArray lines = new JsonArray();
-
-            for (MessageLine line : this.lines)
-            {
-                lines.add(parser.parse(line.toString()));
-            }
-
-            chat.add("lines", lines);
-        }
-        return chat.toString();
+        super(json);
     }
 
     /* (non-Javadoc)
@@ -99,7 +25,7 @@ public class Chat
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((lines == null) ? 0 : lines.hashCode());
+        result = prime * result + ((getMessages() == null) ? 0 : getMessages().hashCode());
         return result;
     }
 
@@ -116,13 +42,12 @@ public class Chat
             return false;
 
         Chat other = (Chat) obj;
-        if (lines == null)
+        if (getMessages() == null)
         {
-            if (other.lines.toString() != null)
+            if (other.getMessages().toString() != null)
                 return false;
-        } else if (!(lines.toString()).equals(other.lines.toString()))
+        } else if (!(getMessages().toString()).equals(other.getMessages().toString()))
             return false;
         return true;
     }
-
 }

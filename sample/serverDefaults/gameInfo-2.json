@@ -1,6 +1,6 @@
 {
-  "title": "Default Game",
-  "id": 0,
+  "title": "Empty Game",
+  "id": 2,
   "players": [
     {
       "color": "orange",

@@ -5,12 +5,16 @@ import client.data.PlayerInfo;
 import server.ServerModel;
 import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
+import server.util.FileUtils;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.GameQueryException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Manager that holds all of the games. Various options that the facades take use this manager. Uses the singleton
@@ -27,15 +31,13 @@ public class GameManager
 
     private Map<Integer, GameInfo> games;
     private Map<Integer, ServerModel> models;
-    private List<PlayerInfo> aiPlayers;
 
     private GameManager()
     {
         games = new HashMap<>();
         models = new HashMap<>();
         aiManager = new AIManager();
-        this.addDefaultAIs();
-        this.addDefaultGames();
+        this.addExistingGames();
     }
 
     /**
@@ -52,40 +54,38 @@ public class GameManager
         return _instance;
     }
 
-    private void addDefaultAIs()
+    private void addExistingGames()
     {
-        aiPlayers = new ArrayList<>();
-        aiPlayers.add(new PlayerInfo(-2, "Miguel", CatanColor.PUCE));
-        aiPlayers.add(new PlayerInfo(-3, "Quinn", CatanColor.PURPLE));
-        aiPlayers.add(new PlayerInfo(-4, "Hannah", CatanColor.RED));
-    }
+        GameInfo game0Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-0", null);
+        games.put(game0Info.getId(), game0Info);
+        ServerModel game0Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-0", null);
+        models.put(game0Info.getId(), game0Model);
 
-    private void addDefaultGames()
-    {
-        /*
-        for (int i = 1; i < 3; ++i)
-        {
-            GameInfo game = new GameInfo(i, "Game_" + i);
-            game.addPlayer(new PlayerInfo(0, "Cache", CatanColor.YELLOW));
-            game.addPlayer(new PlayerInfo(1, "Amanda", CatanColor.BLUE));
-            game.addPlayer(new PlayerInfo(2, "Justin", CatanColor.ORANGE));
-            game.addPlayer(new PlayerInfo(3, "David", CatanColor.BROWN));
-            games.put(i, game);
-        }
-        */
-        //GameInfo game1 = ;
+        GameInfo game1Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-1", null);
+        games.put(game1Info.getId(), game1Info);
+        ServerModel game1Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-1", null);
+        models.put(game1Info.getId(), game1Model);
+
+        GameInfo game2Info = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-2", null);
+        games.put(game2Info.getId(), game2Info);
+        ServerModel game2Model = FileUtils.getModelFromFile("sample/serverDefaults/", "game-2", null);
+        models.put(game2Info.getId(), game2Model);
+
+        GameInfo customGameInfo = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-CS340", null);
+        games.put(customGameInfo.getId(), customGameInfo);
+        ServerModel customGame = FileUtils.getModelFromFile("sample/serverDefaults/", "game-CS340", null);
+        models.put(customGameInfo.getId(), customGame);
     }
 
     /**
      * Gets the Game with the given gameID.
      *
      * @param gameID the id of the game to get.
-     * @return the Model of the game that matches the games requested.
+     * @return the Model of the game that matches the games requested. Null if the game doesn't exist.
      */
     public ServerModel getGame(int gameID)
     {
-        games.get(gameID); //TODO this should be used somehow.
-        return new ServerModel();
+        return models.get(gameID);
     }
 
     /**
@@ -101,11 +101,11 @@ public class GameManager
     /**
      * Places the player with the given id in the game specified with the given color.
      *
-     * @param player the id of the player joining the game.
+     * @param playerID the id of the player joining the game.
      * @param gameID the id of the game to join.
      * @param color  the color that the player is joining the game with.
      */
-    public void joinGame(PlayerInfo player, int gameID, CatanColor color) throws GameQueryException
+    public void joinGame(int playerID, int gameID, CatanColor color) throws GameQueryException
     {
         for (GameInfo game : games.values())
         {
@@ -113,6 +113,8 @@ public class GameManager
             {
                 if (game.getPlayers().size() < 4)
                 {
+                    User user = UserManager.getInstance().getUser(playerID);
+                    PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
                     game.addPlayer(player);
                 } else
                 {
