@@ -5,8 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.CatanColor;
-import shared.definitions.PlayerIndex;
-import shared.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +24,7 @@ public class GameInfo
 {
     private int id;
     private String title;
-    private List<Player> players;
+    private List<PlayerInfo> players;
 
     /**
      * Creates an empty GameInfo with nothing in it.
@@ -100,7 +98,7 @@ public class GameInfo
      *
      * @param newPlayer the player to add.
      */
-    public void addPlayer(Player newPlayer)
+    public void addPlayer(PlayerInfo newPlayer)
     {
         if (players.size() < 4)
         {
@@ -108,36 +106,9 @@ public class GameInfo
         }
     }
 
-    /**
-     * Adds a player to the list of players in the game.
-     *
-     * @param newPlayer the player to add.
-     */
-    public void addPlayer(PlayerInfo newPlayer)
-    {
-        if (players.size() < 4)
-        {
-            players.add(new Player(newPlayer));
-        }
-    }
-
-    public List<Player> getPlayers()
+    public List<PlayerInfo> getPlayers()
     {
         return Collections.unmodifiableList(players);
-    }
-
-    public void setPlayers(String json)
-    {
-    }
-
-    public List<PlayerInfo> getPlayerInfos()
-    {
-        List<PlayerInfo> playerInfos = new ArrayList<>();
-        for (Player player : players)
-        {
-            playerInfos.add(player.getPlayerInfo());
-        }
-        return Collections.unmodifiableList(playerInfos);
     }
 
     @Override public boolean equals(Object o)
@@ -162,17 +133,6 @@ public class GameInfo
         return 0;
     }
 
-    /**
-     * Gets the color of the player with the given index.
-     *
-     * @param index the index of the player.
-     * @return the color of the player with the given index.
-     */
-    public CatanColor getPlayerColor(PlayerIndex index)
-    {
-        return players.get(index.getIndex()).getPlayerColor();
-    }
-
     @Override public String toString()
     {
 
@@ -180,16 +140,16 @@ public class GameInfo
         JsonObject gameInfo = new JsonObject();
 
         //create list of players
-        JsonArray playerList = new JsonArray();
-        for (Player player : players)
+        JsonArray players = new JsonArray();
+        for (PlayerInfo player : this.players)
         {
-            playerList.add(parser.parse(player.getPlayerInfo().toString()));
+            players.add(parser.parse(player.toString()));
         }
 
         //add all gameInfo properties
         gameInfo.addProperty("title", title);
         gameInfo.addProperty("id", id);
-        gameInfo.add("players", playerList);
+        gameInfo.add("players", players);
 
         return gameInfo.toString();
 

@@ -296,7 +296,7 @@ public class Player
     }
 
     /**
-     * @return
+     * @return gets the color of the player.
      */
     public CatanColor getPlayerColor()
     {

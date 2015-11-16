@@ -59,8 +59,7 @@ public class Credentials implements JsonSerializer<Credentials>
             this.setPassword(credentialsObject.getAsJsonPrimitive("password").getAsString());
         } catch (InvalidCredentialsException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            //TODO Do I want anything to happen here?
         }
     }
 

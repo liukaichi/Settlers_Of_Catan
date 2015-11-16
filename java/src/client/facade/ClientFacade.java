@@ -385,7 +385,7 @@ public class ClientFacade
     public ClientModel getGameState(int version)
     {
         ClientModel model = proxy.getGameState(version);
-        List<PlayerInfo> players = model.getGameInfo().getPlayerInfos();
+        List<PlayerInfo> players = model.getPlayerInfos();
         buildClientPlayerFromPlayerInfos(players);
         if (version != -1 || players.size() == 4)
         {
@@ -724,11 +724,7 @@ public class ClientFacade
 
     public List<Player> getPlayers()
     {
-        if (model.getGameInfo() == null)
-        {
-            return null;
-        }
-        return model.getGameInfo().getPlayers();
+        return model.getPlayers();
     }
 
     /**
@@ -820,7 +816,7 @@ public class ClientFacade
      */
     public void updateClientPlayer()
     {
-        for (PlayerInfo playerInfo : model.getGameInfo().getPlayerInfos())
+        for (PlayerInfo playerInfo : model.getPlayerInfos())
         {
             if (playerInfo.getId() == clientPlayer.getId())
             {

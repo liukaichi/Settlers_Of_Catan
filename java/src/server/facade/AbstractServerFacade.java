@@ -1,7 +1,6 @@
 package server.facade;
 
 import client.data.GameInfo;
-import client.data.PlayerInfo;
 import server.manager.GameManager;
 import server.manager.User;
 import server.manager.UserManager;
@@ -82,7 +81,7 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
         return new ListGamesResponse(games);
     }
 
-    @Override public String joinGame(PlayerInfo player, int gameID, CatanColor color) throws GameQueryException
+    @Override public String joinGame(int player, int gameID, CatanColor color) throws GameQueryException
     {
 
         GameManager.getInstance().joinGame(player, gameID, color);

@@ -85,7 +85,6 @@ public class ListGamesResponse
         }
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(gameInfos);
-        return json.toString();
+        return gson.toJson(gameInfos);
     }
 }

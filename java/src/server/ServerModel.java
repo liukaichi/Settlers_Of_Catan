@@ -2,16 +2,14 @@ package server;
 
 import client.data.PlayerInfo;
 import server.facade.IMovesFacade;
-import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceType;
-import shared.definitions.StructureType;
-import shared.definitions.TradeRatio;
+import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.ClientModel;
+import shared.model.bank.PlayerBank;
 import shared.model.bank.resource.Resources;
 import shared.model.map.Hex;
 import shared.model.player.Player;
@@ -52,12 +50,12 @@ public class ServerModel extends ClientModel implements IMovesFacade
 
     private String getPlayerName(int index)
     {
-        PlayerInfo player = getGameInfo().getPlayerInfos().get(index);
+        PlayerInfo player = getPlayerInfos().get(index);
         return player.getName();
     }
 
-    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex,
-            int number) //TODO refactor to reduce dependency
+    //TODO refactor to reduce dependency
+    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number)
     {
         for (Hex hex : getMap().getHexesByNumber(number))
         {
@@ -129,7 +127,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
     {
         try
         {
-            Player player = getGameInfo().getPlayers().get(playerIndex.getIndex());
+            Player player = getPlayers().get(playerIndex.getIndex());
             player.buyRoad(isFree);
             getMap().placeRoad(playerIndex, location);
             this.setChanged();
@@ -145,7 +143,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
     {
         try
         {
-            Player player = getGameInfo().getPlayers().get(playerIndex.getIndex());
+            Player player = getPlayers().get(playerIndex.getIndex());
             player.buySettlement(isFree);
             getMap().placeSettlement(playerIndex, location);
             this.setChanged();
@@ -160,7 +158,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
     {
         try
         {
-            Player player = getGameInfo().getPlayers().get(playerIndex.getIndex());
+            Player player = getPlayers().get(playerIndex.getIndex());
             player.buyCity();
             getMap().placeCity(playerIndex, location);
             this.setChanged();
@@ -197,6 +195,48 @@ public class ServerModel extends ClientModel implements IMovesFacade
     @Override public boolean equals(Object o)
     {
         return super.equals(o);
+    }
+
+    /**
+     * Updates the currentTurn counter
+     *
+     * @param playerCurrentTurn the info of the player to update the current turn for.
+     */
+    public void updateCurrentTurn(PlayerInfo playerCurrentTurn)
+    {
+        getTurnTracker().updateCurrentTurn(playerCurrentTurn);
+    }
+
+    /**
+     * Updates the longestRoad counter. A player has the longest road if he or
+     * she has at least 5 roads
+     *
+     * @param playerLongestRoad the info of the player to update the longest road for.
+     */
+    public void updateLongestRoad(PlayerBank playerLongestRoad)
+    {
+        getTurnTracker().updateLongestRoad(playerLongestRoad);
+    }
+
+    /**
+     * Updates the largest army counter A player has the largest army if he or
+     * she has at least 3 knights
+     *
+     * @param playerLargestArmy the info of the player to update the largest army for.
+     */
+    public void updateLargestArmy(PlayerBank playerLargestArmy)
+    {
+        getTurnTracker().updateLargestArmy(playerLargestArmy);
+    }
+
+    /**
+     * Updates the status string based on the current phase of the player's turn
+     *
+     * @param playerTurnStatus the info of the player to update the status for.
+     */
+    public void updateStatus(TurnStatus playerTurnStatus)
+    {
+        getTurnTracker().updateStatus(playerTurnStatus);
     }
 
 }

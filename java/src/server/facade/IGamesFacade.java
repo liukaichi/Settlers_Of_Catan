@@ -1,6 +1,5 @@
 package server.facade;
 
-import client.data.PlayerInfo;
 import shared.communication.CreateGameResponse;
 import shared.communication.ListGamesResponse;
 import shared.definitions.CatanColor;
@@ -20,12 +19,11 @@ public interface IGamesFacade
 
     /**
      * Places a player in the given game, if it exists.
-     *
-     * @param player the player joining the game.
+     *  @param player the player joining the game.
      * @param gameID the id of the game to join.
      * @param color  the color that the player is joining with.
      */
-    String joinGame(PlayerInfo player, int gameID, CatanColor color) throws GameQueryException;
+    String joinGame(int player, int gameID, CatanColor color) throws GameQueryException;
 
     /**
      * Creates a game with the given properties.

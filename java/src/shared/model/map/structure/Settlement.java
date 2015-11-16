@@ -1,10 +1,6 @@
 package shared.model.map.structure;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import shared.definitions.PlayerIndex;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 /**
@@ -16,8 +12,9 @@ public class Settlement extends MapStructure
 {
 
     /**
-     * @param owner
-     * @param location
+     * Creates a new settlement.
+     * @param owner the owner of the settlement.
+     * @param location the location of the settlement.
      */
     public Settlement(PlayerIndex owner, VertexLocation location)
     {
@@ -27,14 +24,7 @@ public class Settlement extends MapStructure
 
     public Settlement(String json)
     {
-        JsonParser parser = new JsonParser();
-        JsonObject settlement = (JsonObject) parser.parse(json);
-        super.setOwner(PlayerIndex.fromInt(settlement.get("owner").getAsInt()));
-        JsonObject location = (JsonObject) settlement.get("location");
-        super.setLocation(
-                new VertexLocation(new HexLocation(location.get("x").getAsInt(), location.get("y").getAsInt()),
-                        VertexDirection.fromAbreviation(location.get("direction").getAsString()))
-                        .getNormalizedLocation());
+        super(json);
     }
 
 }

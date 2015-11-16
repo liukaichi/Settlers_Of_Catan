@@ -4,13 +4,12 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
-import shared.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by dtaylor on 11/14/2015.
+ * Manager for all things "AI."
  */
 class AIManager
 {
@@ -27,17 +26,16 @@ class AIManager
         aiNames.add("Squall");
     }
 
-    public Player createAIPlayer(GameInfo gameInfo) throws CatanException
+    public PlayerInfo createAIPlayer(GameInfo gameInfo) throws CatanException
     {
         ArrayList<CatanColor> usedColors = new ArrayList<>();
         ArrayList<String> usedNames = new ArrayList<>();
-        for (PlayerInfo info : gameInfo.getPlayerInfos())
+        for (PlayerInfo info : gameInfo.getPlayers())
         {
             usedColors.add(info.getColor());
             usedNames.add(info.getName());
         }
-        PlayerInfo aiPlayerInfo = new PlayerInfo(--id, randomName(usedNames), randomColor(usedColors));
-        return new Player(aiPlayerInfo);
+        return new PlayerInfo(--id, randomName(usedNames), randomColor(usedColors));
     }
 
     private CatanColor randomColor(ArrayList<CatanColor> usedColors)

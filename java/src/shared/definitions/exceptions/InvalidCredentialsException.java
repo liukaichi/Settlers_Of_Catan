@@ -19,14 +19,6 @@ public class InvalidCredentialsException extends SignInException
     }
 
     /**
-     *
-     */
-    public InvalidCredentialsException()
-    {
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
      * Creates a new exception with a message and stack trace/exception.
      *
      * @param message the message to be thrown.

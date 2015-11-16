@@ -22,7 +22,8 @@ public class Road
     }
 
     /**
-     * @param json
+     * Creates a road from Json.
+     * @param json the Json to parse.
      */
     public Road(String json)
     {

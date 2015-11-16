@@ -34,7 +34,7 @@ public class SwaggerHandler
             {
                 LOGGER.log(Level.FINE, "Requesting " + filepath);
                 byte[] response = FileUtils.readFile(filepath);
-                ArrayList<String> mimetypes = new ArrayList<String>();
+                ArrayList<String> mimetypes = new ArrayList<>();
                 mimetypes.add(FileUtils.getMimeType(filepath));
                 exchange.getResponseHeaders().put("Content-type", mimetypes);
                 exchange.sendResponseHeaders(200, response.length);

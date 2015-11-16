@@ -186,7 +186,7 @@ public class ServerProxy implements IProxy
         LOGGER.log(Level.INFO, "Join Game Response:" + response);
         if (response == null)
         {
-            throw new GameQueryException();
+            throw new GameQueryException("Game not joined.");
         }
     }
 
@@ -227,7 +227,7 @@ public class ServerProxy implements IProxy
         LOGGER.log(Level.INFO, "Add AI Response:" + response);
         if (response == null)
         {
-            throw new AddAIException();
+            throw new AddAIException("Failed to Add AI");
         }
 
     }

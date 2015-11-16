@@ -1,7 +1,6 @@
 package client.map;
 
 import client.base.ObserverController;
-import client.data.GameInfo;
 import client.data.RobPlayerInfo;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -98,10 +97,9 @@ public class MapController extends ObserverController implements IMapController
         getView().placeRobber(map.getRobberLocation());
 
         HashMap<EdgeLocation, Road> roads = (HashMap<EdgeLocation, Road>) map.getRoads();
-        GameInfo game = model.getGameInfo();
         for (Road road : roads.values())
         {
-            CatanColor playerColor = game.getPlayerColor(road.getOwner());
+            CatanColor playerColor = model.getPlayerColor(road.getOwner());
             getView().placeRoad(road.getLocation(), playerColor);
             LOGGER.fine("building Road." + road);
         }
@@ -109,7 +107,7 @@ public class MapController extends ObserverController implements IMapController
         HashMap<VertexLocation, MapStructure> structures = (HashMap<VertexLocation, MapStructure>) map.getStructures();
         for (MapStructure mapStructure : structures.values())
         {
-            CatanColor color = game.getPlayerColor(mapStructure.getOwner());
+            CatanColor color = model.getPlayerColor(mapStructure.getOwner());
             if (mapStructure instanceof Settlement)
             {
                 getView().placeSettlement(mapStructure.getLocation(), color);

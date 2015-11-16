@@ -150,10 +150,7 @@ import java.awt.event.ActionListener;
                 tmp3.setFont(labelFont);
                 gamePanel.add(tmp3);
                 JButton joinButton;
-                /* Custom Modification */
-                // if (game.getPlayers().contains(localPlayer))
-                /* End Modification */
-                if (game.getPlayerInfos().contains(localPlayer))
+                if (game.getPlayers().contains(localPlayer))
                 {
                     joinButton = new JButton("Re-Join");
                 } else if (game.getPlayers().size() >= 4)

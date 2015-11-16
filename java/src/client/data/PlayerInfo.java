@@ -34,9 +34,10 @@ public class PlayerInfo
     }
 
     /**
-     * @param id
-     * @param name
-     * @param color
+     * Creates a PlayerInfo with the given information.
+     * @param id the id of the player.
+     * @param name the name of the player.
+     * @param color the color of the player.
      */
     public PlayerInfo(int id, String name, CatanColor color)
     {

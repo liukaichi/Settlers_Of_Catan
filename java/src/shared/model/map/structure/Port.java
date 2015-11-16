@@ -33,7 +33,8 @@ public class Port
     private TradeRatio ratio;
 
     /**
-     * @param json
+     * Initializes a Port from Json.
+     * @param json the Json to parse.
      */
     public Port(String json)
     {

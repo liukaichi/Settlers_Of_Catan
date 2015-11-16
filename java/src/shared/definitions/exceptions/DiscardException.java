@@ -9,19 +9,10 @@ public class DiscardException extends CatanException
 {
 
     /**
-     * @param string
+     * @param string the message to throw.
      */
     public DiscardException(String string)
     {
         super(string);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     *
-     */
-    public DiscardException()
-    {
-        // TODO Auto-generated constructor stub
     }
 }

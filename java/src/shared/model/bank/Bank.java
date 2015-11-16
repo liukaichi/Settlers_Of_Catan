@@ -126,7 +126,7 @@ public class Bank
     {
         if ((resources.getResource(type).getAmount() - num) < 0)
         {
-            throw new InsufficientResourcesException();
+            throw new InsufficientResourcesException("Not enough resources to give.");
         } else
         {
             resources.getResource(type).subResource(num);
