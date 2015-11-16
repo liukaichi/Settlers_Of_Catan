@@ -18,6 +18,7 @@ import shared.model.message.Log;
 import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
+import java.util.List;
 import java.util.Observable;
 
 /**
@@ -142,6 +143,16 @@ public class ClientModel extends Observable
     public void setGameInfo(GameInfo gameInfo)
     {
         this.gameInfo = gameInfo;
+    }
+
+    public List<PlayerInfo> getPlayerInfos()
+    {
+        return gameInfo.getPlayerInfos();
+    }
+
+    public List<Player> getPlayers()
+    {
+        return gameInfo.getPlayers();
     }
 
     public Bank getBank()

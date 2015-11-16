@@ -58,4 +58,19 @@ public class User
         return String.format("{\"name\":\"%s\", \"password\": \"%s\", \"playerID\": %d}", credentials.getUsername(),
                 credentials.getPassword(), playerID);
     }
+
+    public int getPlayerID()
+    {
+        return playerID;
+    }
+
+    /**
+     * Gets the username of the user.
+     *
+     * @return the username of the user.
+     */
+    public String getUserName()
+    {
+        return credentials.getUsername();
+    }
 }

@@ -25,6 +25,24 @@ import java.util.Set;
  */
 public class ServerModel extends ClientModel implements IMovesFacade
 {
+    /**
+     * Initializes a default copy of the Server's model.
+     */
+    public ServerModel()
+    {
+        super();
+    }
+
+    /**
+     * Initializes a Model from Json. Typically for testing.
+     *
+     * @param json the Json to initialize from.
+     */
+    public ServerModel(String json)
+    {
+        super(json);
+    }
+
     @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
     {
         this.getChat().addMessageLine(getPlayerName(playerIndex.getIndex()), content);
@@ -175,4 +193,10 @@ public class ServerModel extends ClientModel implements IMovesFacade
     {
         return null;
     }
+
+    @Override public boolean equals(Object o)
+    {
+        return super.equals(o);
+    }
+
 }

@@ -37,11 +37,6 @@ public class UserHandler implements HttpHandler
             URI uri = httpExchange.getRequestURI();
             String commandString = uri.getPath().split("/")[2];
 
-            // instantiate CookieManager
-            CookieManager manager = new CookieManager();
-            CookieHandler.setDefault(manager);
-            CookieStore cookieJar = manager.getCookieStore();
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
             String nextLine;
@@ -67,13 +62,10 @@ public class UserHandler implements HttpHandler
             }
 
             // create cookie
-            HttpCookie cookie = new HttpCookie("catan.user", user.toString()); //TODO this might cause a NullPointer.
-
-            // add cookie to CookieStore
-            cookieJar.add(uri, cookie);
+            String cookie = "catan.user=" + user.toString();
 
             // set cookie
-            respHeaders.set("Set-cookie", cookie.getValue() + ";Path=/");
+            respHeaders.set("Set-cookie", cookie + ";Path=/");
 
             // send response
             response = "Success";

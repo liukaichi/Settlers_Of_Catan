@@ -37,7 +37,7 @@ public class GameInfo
     {
         setId(-1);
         setTitle("");
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
     }
 
     /**
@@ -51,11 +51,11 @@ public class GameInfo
         this();
         setId(id);
         setTitle(title);
-        players = new ArrayList<Player>();
     }
 
     public GameInfo(String json)
     {
+        this();
         JsonParser parser = new JsonParser();
         JsonObject obj = (JsonObject) parser.parse(json);
         this.title = obj.get("title").getAsString();
