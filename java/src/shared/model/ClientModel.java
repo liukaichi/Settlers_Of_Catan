@@ -63,6 +63,7 @@ public class ClientModel extends Observable
      */
     public ClientModel(String json)
     {
+        this();
         JsonParser parser = new JsonParser();
         JsonObject model = (JsonObject) parser.parse(json);
         String resourceJson = model.get("deck").toString();

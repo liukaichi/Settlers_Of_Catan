@@ -21,7 +21,7 @@ import java.util.Set;
  * Representation of the Model that is cached by the server. This has additional "do" methods that the client model
  * does not have.
  */
-public class ServerModel extends ClientModel implements IMovesFacade
+public class ServerModel extends ClientModel
 {
     /**
      * Initializes a default copy of the Server's model.
@@ -41,7 +41,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
         super(json);
     }
 
-    @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
+     public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
         this.getChat().addMessageLine(getPlayerName(playerIndex.getIndex()), content);
         this.setChanged();
@@ -55,7 +55,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
     }
 
     //TODO refactor to reduce dependency
-    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number)
+    public ClientModel rollNumber(PlayerIndex playerIndex, int number)
     {
         for (Hex hex : getMap().getHexesByNumber(number))
         {
@@ -68,31 +68,31 @@ public class ServerModel extends ClientModel implements IMovesFacade
         return this;
     }
 
-    @Override public ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim,
+    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim,
             HexLocation location)
     {
         return null;
     }
 
-    @Override public ClientModel finishTurn(int gameID, PlayerIndex playerIndex)
+    public ClientModel finishTurn(PlayerIndex playerIndex)
     {
         this.getTurnTracker().finishTurn(playerIndex);
         this.setChanged();
         return this;
     }
 
-    @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex)
+    public ClientModel buyDevCard(PlayerIndex playerIndex)
     {
         return null;
     }
 
-    @Override public ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1,
+    public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1,
             ResourceType resource2)
     {
         return null;
     }
 
-    @Override public ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1,
+    public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1,
             EdgeLocation spot2)
     {
         try
@@ -107,23 +107,30 @@ public class ServerModel extends ClientModel implements IMovesFacade
         return this;
     }
 
-    @Override public ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex,
+    public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex,
             HexLocation location)
     {
         return null;
     }
 
-    @Override public ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource)
+    public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource)
+    {
+        try {
+            Player player = getPlayers().get(playerIndex.getIndex());
+            player.playDevCard(DevCardType.MONOPOLY);
+            this.setChanged();
+        } catch (CatanException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    public ClientModel monument(PlayerIndex playerIndex)
     {
         return null;
     }
 
-    @Override public ClientModel monument(int gameID, PlayerIndex playerIndex)
-    {
-        return null;
-    }
-
-    @Override public ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation location, boolean isFree)
+    public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree)
     {
         try
         {
@@ -138,7 +145,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
         return this;
     }
 
-    @Override public ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation location,
+    public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location,
             boolean isFree)
     {
         try
@@ -154,7 +161,7 @@ public class ServerModel extends ClientModel implements IMovesFacade
         return this;
     }
 
-    @Override public ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation location)
+    public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation location)
     {
         try
         {
@@ -169,30 +176,30 @@ public class ServerModel extends ClientModel implements IMovesFacade
         return this;
     }
 
-    @Override public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
+    public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
         tradeOffer = offer;
         this.setChanged();
         return this;
     }
 
-    @Override public ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept)
+    public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept)
     {
         return null;
     }
 
-    @Override public ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio,
+    public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio,
             ResourceType inputResource, ResourceType outputResource)
     {
         return null;
     }
 
-    @Override public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
+    public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
     {
         return null;
     }
 
-    @Override public boolean equals(Object o)
+    public boolean equals(Object o)
     {
         return super.equals(o);
     }

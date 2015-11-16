@@ -1,13 +1,9 @@
 package server.facade;
 
-import server.manager.User;
 import server.util.FileUtils;
-import shared.communication.Credentials;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
-import shared.definitions.exceptions.ExistingRegistrationException;
-import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -145,16 +141,5 @@ public class MockServerFacade extends AbstractServerFacade
     @Override public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
         return FileUtils.getModelFromFile("sample/mockServerJson", "basicGameTurn", ".json");
-    }
-
-    @Override public User signInUser(Credentials credentials) throws InvalidCredentialsException
-    {
-        throw new InvalidCredentialsException("Failed to login - bad username or password.");
-    }
-
-    @Override public User registerUser(Credentials credentials)
-            throws InvalidCredentialsException, ExistingRegistrationException
-    {
-        throw new ExistingRegistrationException("Failed to register - someone already has that username.");
     }
 }
