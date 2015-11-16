@@ -41,7 +41,7 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
         this.type = MoveType.valueOf(tradeObject.getAsJsonPrimitive("type").getAsString());
-        this.playerIndex = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("receiver").getAsInt());
+        this.playerIndex = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("playerIndex").getAsInt());
         this.willAccept = tradeObject.get("willAccept").getAsBoolean();
     }
 

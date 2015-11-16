@@ -20,7 +20,7 @@ public class FileUtilsTest
 
     @Test public void testGetModelFromFile() throws Exception
     {
-        ServerModel testModel = FileUtils.getModelFromFile("sample/serverDefaults/", "game-0", null);
+        ServerModel testModel = FileUtils.getModelFromFile("sample/serverDefaults/", "game-0");
         List<PlayerInfo> players = testModel.getPlayerInfos();
         assertEquals(4, players.size());
         PlayerInfo player0 = players.get(0);
@@ -32,13 +32,13 @@ public class FileUtilsTest
         Chat chat = testModel.getChat();
         assertEquals(0, chat.size());
 
-        testModel = FileUtils.getModelFromFile("sample/serverDefaults/", "game-2", null);
+        testModel = FileUtils.getModelFromFile("sample/serverDefaults/", "game-2");
         TurnTracker turnTracker = testModel.getTurnTracker();
         assertEquals(PlayerIndex.NONE, turnTracker.getLargestArmy());
         assertEquals(PlayerIndex.NONE, turnTracker.getLongestRoad());
         assertEquals(PlayerIndex.PLAYER_0, turnTracker.getCurrentTurn());
 
-        ServerModel secondModel = FileUtils.getModelFromFile("sample/serverDefaults/", "game-2", null);
+        ServerModel secondModel = FileUtils.getModelFromFile("sample/serverDefaults/", "game-2");
         //Fails. Not sure why... assertEquals(testModel,secondModel);
     }
 
