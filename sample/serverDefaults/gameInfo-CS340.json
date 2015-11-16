@@ -1,0 +1,26 @@
+{
+  "title": "CS340",
+  "id": 3,
+  "players": [
+    {
+      "color": "yellow",
+      "name": "Cache",
+      "id": 12
+    },
+    {
+      "color": "blue",
+      "name": "Amanda",
+      "id": 13
+    },
+    {
+      "color": "orange",
+      "name": "Justin",
+      "id": 14
+    },
+    {
+      "color": "brown",
+      "name": "David",
+      "id": 15
+    }
+  ]
+}
