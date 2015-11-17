@@ -44,11 +44,14 @@ public class ClientModelTest
 
     @Test public void testToString() throws Exception
     {
-        ClientModel model1 = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/complexJSONModel.json"))));
- //       ClientModel model2 = new ClientModel(new String(Files.readAllBytes(Paths.get("sample/complexJSONModel.json"))));
-
-        ClientModel model2 = new ClientModel(model1.toString());
+        String jsonModel = new String(Files.readAllBytes(Paths.get("sample/complexJSONModel.json")));
+        ClientModel model1 = new ClientModel(jsonModel);
+        String model1Json = model1.toString();
+        ClientModel model2 = new ClientModel(model1Json);
+        ClientModel model3 = new ClientModel(jsonModel);
         assertTrue(model1.equals(model2));
         assertTrue(model2.equals(model1));
+        assertTrue(model1.equals(model3));
+        assertTrue(model3.equals(model1));
     }
 }

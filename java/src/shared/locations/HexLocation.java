@@ -3,7 +3,7 @@ package shared.locations;
 /**
  * Represents the location of a hex on a hex map
  */
-public class HexLocation
+public class HexLocation implements Comparable<HexLocation>
 {
 
     private int x;
@@ -97,5 +97,24 @@ public class HexLocation
         }
     }
 
+    @Override
+    public int compareTo(HexLocation o) {
+        if(this.getY() < o.getY())
+        {
+            return -1;
+        }
+        else if(this.getY() == o.getY())
+        {
+            if(this.getX() < o.getX())
+            {
+                return -1;
+            }
+            else if(this.getX() == o.getX())
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
 }
 

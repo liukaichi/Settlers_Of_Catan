@@ -18,7 +18,7 @@ public class CatanMap
 {
     // populated on map initialization
     private List<Port> ports = new ArrayList<>();
-    private Map<HexLocation, Hex> hexes = new HashMap<>();
+    private Map<HexLocation, Hex> hexes = new TreeMap<>();
     // populated on buy
     private Map<EdgeLocation, Road> roads = new HashMap<>();
     private Map<VertexLocation, MapStructure> structures = new HashMap<>();
@@ -72,8 +72,9 @@ public class CatanMap
             this.ports.add(new Port(port.toString()));
         }
         JsonObject robber = map.getAsJsonObject("robber");
-        this.hexes.get(new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt())).setHasRobber(true);
-        this.robberLocation = new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt());
+        Hex robberHex = this.hexes.get(new HexLocation(robber.get("x").getAsInt(), robber.get("y").getAsInt()));
+        robberHex.setHasRobber(true);
+        this.robberLocation = robberHex.getLocation();
     }
 
     /**
@@ -82,7 +83,7 @@ public class CatanMap
     public CatanMap()
     {
         ports = new ArrayList<>();
-        hexes = new HashMap<>();
+        hexes = new TreeMap<>();
         roads = new HashMap<>();
         structures = new HashMap<>();
         radius = -1;
@@ -178,6 +179,18 @@ public class CatanMap
         }
     }
 
+    private boolean isPort(Hex hex)
+    {
+        for(Port port : ports)
+        {
+            if(port.getLocation().equals(hex.getLocation()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override public String toString()
     {
         JsonParser parser = new JsonParser();
@@ -189,7 +202,8 @@ public class CatanMap
             {
                 for (Hex hex : this.hexes.values())
                 {
-                    hexes.add(parser.parse(hex.toString()));
+                    if(!isPort(hex) && !hex.getHexType().equals(HexType.WATER))
+                        hexes.add(parser.parse(hex.toString()));
                 }
             }
             map.add("hexes", hexes);

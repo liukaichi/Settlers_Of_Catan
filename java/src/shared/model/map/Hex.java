@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Represents a Hex tile on the map.
  */
-public class Hex
+public class Hex implements Comparable<Hex>
 {
     private Map<VertexDirection, VertexLocation> vertices;
     private Map<EdgeDirection, EdgeLocation> edges;
@@ -68,6 +68,7 @@ public class Hex
         {
             this.resourceType = null;
             this.hexType = HexType.DESERT;
+            this.robberPresent = true;
         }
 
         JsonObject location = (JsonObject) hex.get("location");
@@ -83,11 +84,11 @@ public class Hex
         {
             for (VertexDirection dir : VertexDirection.values())
             {
-                vertices.put(dir, new VertexLocation(this.location, dir).getNormalizedLocation());
+                vertices.put(dir, new VertexLocation(this.location, dir));
             }
             for (EdgeDirection dir : EdgeDirection.values())
             {
-                edges.put(dir, new EdgeLocation(this.location, dir).getNormalizedLocation());
+                edges.put(dir, new EdgeLocation(this.location, dir));
             }
         }
     }
@@ -247,8 +248,8 @@ public class Hex
     }
 
     /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
     @Override public boolean equals(Object obj)
     {
         if (this == obj)
@@ -295,5 +296,10 @@ public class Hex
     public Collection<VertexLocation> getVertices()
     {
         return vertices.values();
+    }
+
+    @Override
+    public int compareTo(Hex o) {
+        return this.getLocation().compareTo(o.getLocation());
     }
 }
