@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.CatanException;
 
 /**
  * finishTurn command object.
@@ -42,9 +43,9 @@ public class FinishTurnCommand extends SimpleSerializableCommand
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance().finishTurn(gameID, getPlayerIndex()).toString();
+            return AbstractServerFacade.getInstance().finishTurn(gameID, getPlayerIndex()).toString();
 
     }
 }

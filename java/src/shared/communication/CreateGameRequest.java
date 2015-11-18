@@ -3,6 +3,7 @@ package shared.communication;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
+import shared.definitions.exceptions.CatanException;
 
 /**
  * The name and settings to use for the new game. Can be sent as form encoded
@@ -52,7 +53,7 @@ public class CreateGameRequest implements CatanCommand
      * @param gameID possibly not used.
      * @return Json String representing the current state of the Server Model
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
         return AbstractServerFacade.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name).toString();
     }

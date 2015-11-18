@@ -3,6 +3,7 @@ package server.facade;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
+import shared.definitions.exceptions.CatanException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -23,7 +24,7 @@ public interface IMovesFacade
      * @param content the content of the chat.
      * @return the updated ClientModel
      */
-    ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content);
+    ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content) throws CatanException;
 
     /**
      * Distribute resources to players based on the number rolled
@@ -33,7 +34,7 @@ public interface IMovesFacade
      * @param number      the number rolled.
      * @return the updated ClientModel
      */
-    ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number);
+    ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number) throws CatanException;
 
     /**
      * Move the robber to the new given location.
@@ -46,7 +47,8 @@ public interface IMovesFacade
      * @param location    the new location of the robber.
      * @return the updated ClientModel
      */
-    ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim, HexLocation location);
+    ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
+            throws CatanException;
 
     /**
      * Calls finish turn from the model to progress to next state.
@@ -55,7 +57,7 @@ public interface IMovesFacade
      * @param playerIndex the index of the player finishing the turn.
      * @return the updated ClientModel
      */
-    ClientModel finishTurn(int gameID, PlayerIndex playerIndex);
+    ClientModel finishTurn(int gameID, PlayerIndex playerIndex) throws CatanException;
 
     /**
      * Add a random Development Card to the client player's PlayerBank
@@ -66,7 +68,7 @@ public interface IMovesFacade
      * @param playerIndex the index of the player buying a card.
      * @return the updated ClientModel
      */
-    ClientModel buyDevCard(int gameID, PlayerIndex playerIndex);
+    ClientModel buyDevCard(int gameID, PlayerIndex playerIndex) throws CatanException;
 
     /**
      * Increase up to two resources to the client player's PlayerBank
@@ -79,7 +81,8 @@ public interface IMovesFacade
      * @param resource2   the second resource.
      * @return the updated ClientModel
      */
-    ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2);
+    ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
+            throws CatanException;
 
     /**
      * Increase the client player's roads of AmountType.BUILT by 2
@@ -93,7 +96,8 @@ public interface IMovesFacade
      * @param spot2       the second location to build a road.
      * @return the updated ClientModel
      */
-    ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2);
+    ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+            throws CatanException;
 
     /**
      * Update the map with the new Robber location.
@@ -107,7 +111,8 @@ public interface IMovesFacade
      * @param location    the new location of the robber.
      * @return the updated ClientModel
      */
-    ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location);
+    ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
+            throws CatanException;
 
     /**
      * Updates the client player's PlayerBank with the resources gained.
@@ -118,7 +123,7 @@ public interface IMovesFacade
      * @param resource    the resource the card is being played for.
      * @return the updated ClientModel
      */
-    ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource);
+    ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource) throws CatanException;
 
     /**
      * Increase the client player's Victory Points by 1
@@ -127,7 +132,7 @@ public interface IMovesFacade
      * @param playerIndex the index of the player playing the card.
      * @return the updated ClientModel
      */
-    ClientModel monument(int gameID, PlayerIndex playerIndex);
+    ClientModel monument(int gameID, PlayerIndex playerIndex) throws CatanException;
 
     /**
      * Increase the client player's road of AmountType.BUILT by 1.
@@ -140,7 +145,8 @@ public interface IMovesFacade
      * @param isFree       if the road is free (only in setup state).
      * @return the updated ClientModel
      */
-    ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation roadLocation, boolean isFree);
+    ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation roadLocation, boolean isFree)
+            throws CatanException;
 
     /**
      * Increase the client player's settlement of AmountType.BUILT by 1.
@@ -153,7 +159,8 @@ public interface IMovesFacade
      * @param isFree         if the settlement is free (only in setup state).
      * @return the updated ClientModel
      */
-    ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree);
+    ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation, boolean isFree)
+            throws CatanException;
 
     /**
      * Increase the client player's city of AmountType.BUILT by 1.
@@ -165,7 +172,7 @@ public interface IMovesFacade
      * @param vertexLocation the location of the city.
      * @return the updated ClientModel
      */
-    ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation);
+    ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation) throws CatanException;
 
     /**
      * Update model with a new TradeOffer object
@@ -189,7 +196,7 @@ public interface IMovesFacade
      * @param willAccept  whether or not the player will accept the trade offered them.
      * @return the updated ClientModel
      */
-    ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept);
+    ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept) throws CatanException;
 
     /**
      * The client player trades with the game bank based on the
@@ -203,7 +210,7 @@ public interface IMovesFacade
      * @return the updated ClientModel
      */
     ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
-            ResourceType outputResource);
+            ResourceType outputResource) throws CatanException;
 
     /**
      * The client player discards a number of each resource.
@@ -214,5 +221,5 @@ public interface IMovesFacade
      * @param discardedCards the cards discarded.
      * @return the updated CLientModel
      */
-    ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards);
+    ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards) throws CatanException;
 }

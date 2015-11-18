@@ -4,6 +4,7 @@ import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.CatanException;
 import shared.locations.VertexLocation;
 
 import java.lang.reflect.Type;
@@ -69,7 +70,7 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
      * @param gameID the ID of the game for which to build the city.
      * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
         return AbstractServerFacade.getInstance().buildCity(gameID, getPlayerIndex(), cityLocation).toString();
     }

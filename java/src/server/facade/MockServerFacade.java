@@ -4,6 +4,7 @@ import server.util.FileUtils;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
+import shared.definitions.exceptions.CatanException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -34,25 +35,25 @@ public class MockServerFacade extends AbstractServerFacade
 
     }
 
-    @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
+    @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content) throws CatanException
     {
 
         return FileUtils.getModelFromFile(null, "sendChat");
     }
 
-    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number)
+    @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "basicGame");
     }
 
     @Override public ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim,
-            HexLocation location)
+            HexLocation location) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "basicGame");
 
     }
 
-    @Override public ClientModel finishTurn(int gameID, PlayerIndex playerIndex)
+    @Override public ClientModel finishTurn(int gameID, PlayerIndex playerIndex) throws CatanException
     {
         ClientModel model = new ClientModel();
         switch (playerIndex)
@@ -73,51 +74,54 @@ public class MockServerFacade extends AbstractServerFacade
         return model;
     }
 
-    @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex)
+    @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1,
-            ResourceType resource2)
+            ResourceType resource2) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1,
-            EdgeLocation spot2)
+            EdgeLocation spot2) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex,
-            HexLocation location)
+            HexLocation location) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource)
+            throws CatanException
     {
         return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
-    @Override public ClientModel monument(int gameID, PlayerIndex playerIndex)
+    @Override public ClientModel monument(int gameID, PlayerIndex playerIndex) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "playersHaveCards");
     }
 
     @Override public ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
+            throws CatanException
     {
         return FileUtils.getModelFromFile(null, "advancedGame");
     }
 
     @Override public ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation,
-            boolean free)
+            boolean free) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "advancedGame");
     }
 
     @Override public ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation)
+            throws CatanException
     {
         return FileUtils.getModelFromFile(null, "advancedGame");
     }
@@ -128,17 +132,19 @@ public class MockServerFacade extends AbstractServerFacade
     }
 
     @Override public ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept)
+            throws CatanException
     {
         return FileUtils.getModelFromFile(null, "tradeAvailable");
     }
 
     @Override public ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio,
-            ResourceType inputResource, ResourceType outputResource)
+            ResourceType inputResource, ResourceType outputResource) throws CatanException
     {
         return FileUtils.getModelFromFile(null, "tradeAvailable");
     }
 
     @Override public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
+            throws CatanException
     {
         return FileUtils.getModelFromFile(null, "basicGame");
     }

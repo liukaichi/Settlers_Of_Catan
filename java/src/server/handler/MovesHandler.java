@@ -8,11 +8,9 @@ import shared.communication.CatanCommand;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.rmi.ServerException;
 import java.util.logging.Logger;
 
 /**

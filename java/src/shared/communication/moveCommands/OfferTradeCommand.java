@@ -4,6 +4,7 @@ import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.CatanException;
 import shared.model.player.TradeOffer;
 
 import java.lang.reflect.Type;
@@ -87,7 +88,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
         return AbstractServerFacade.getInstance()
                 .offerTrade(gameID, offer.getSenderIndex(), this.offer, offer.getReceiverIndex()).toString();

@@ -8,6 +8,7 @@ import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
+import shared.definitions.exceptions.CatanException;
 
 import java.lang.reflect.Type;
 
@@ -64,9 +65,10 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance().monopoly(gameID, getPlayerIndex(), this.resource).toString();
+
+            return AbstractServerFacade.getInstance().monopoly(gameID, getPlayerIndex(), this.resource).toString();
 
     }
 }

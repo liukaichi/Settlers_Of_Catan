@@ -1,5 +1,7 @@
 package shared.communication;
 
+import shared.definitions.exceptions.CatanException;
+
 /**
  * This is the Super Class for all commands sent across this server. It is intended that ServerHandlers will be able to
  * take server contexts and create classes from the context name, and call Object.execute() on them, and the
@@ -22,5 +24,5 @@ public interface CatanCommand
      * some commands return some other response object.
      * @see shared.model.ClientModel
      */
-    String execute(int gameID);
+    String execute(int gameID) throws CatanException;
 }

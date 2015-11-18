@@ -7,6 +7,7 @@ import com.google.gson.JsonSerializer;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.CatanException;
 import shared.locations.VertexLocation;
 
 import java.lang.reflect.Type;
@@ -74,7 +75,7 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
         return AbstractServerFacade.getInstance().buildSettlement(gameID, getPlayerIndex(), settlementLocation, isFree)
                 .toString();

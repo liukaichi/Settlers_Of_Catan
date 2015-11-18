@@ -4,6 +4,7 @@ import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.CatanException;
 import shared.model.bank.resource.Resources;
 
 import java.lang.reflect.Type;
@@ -86,10 +87,9 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance().discardCards(gameID, getPlayerIndex(), this.discardedCards)
-                .toString();
-
+            return AbstractServerFacade.getInstance().discardCards(gameID, getPlayerIndex(), this.discardedCards)
+                    .toString();
     }
 }

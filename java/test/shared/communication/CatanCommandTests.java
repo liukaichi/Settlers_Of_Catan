@@ -32,19 +32,28 @@ public class CatanCommandTests
 
     @Test public void testAcceptTradeCommand()
     {
-        AcceptTradeCommand command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
-        ServerModel model = new ServerModel(command.execute(-1)); //id doesn't matter.
-        assertNotNull(model);
-        TradeOffer offer = model.getTradeOffer();
-        assertNotNull(offer);
-        TradeOffer testOffer = new TradeOffer(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_1, 0, 0, -1, 1, 0);
-        assertEquals(testOffer, offer);
-        testOffer.addToOffer(ResourceType.BRICK, 1);
-        assertNotEquals(testOffer, offer);
+        try
+        {
+            AcceptTradeCommand command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
 
-        AbstractServerFacade.setFacade(new ServerFacade());
-        command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
-        model = new ServerModel(command.execute(1));
+            ServerModel model = new ServerModel(command.execute(-1)); //id doesn't matter.
+
+            assertNotNull(model);
+            TradeOffer offer = model.getTradeOffer();
+            assertNotNull(offer);
+            TradeOffer testOffer = new TradeOffer(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_1, 0, 0, -1, 1, 0);
+            assertEquals(testOffer, offer);
+            testOffer.addToOffer(ResourceType.BRICK, 1);
+            assertNotEquals(testOffer, offer);
+
+            AbstractServerFacade.setFacade(new ServerFacade());
+            command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
+
+            model = new ServerModel(command.execute(1));
+        } catch (shared.definitions.exceptions.CatanException e)
+        {
+            e.printStackTrace();
+        }
         //        assertNotNull(model);
         //        offer = model.getTradeOffer();
         //        assertNotNull(offer);

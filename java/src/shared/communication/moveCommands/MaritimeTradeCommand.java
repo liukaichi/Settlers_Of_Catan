@@ -6,6 +6,7 @@ import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
+import shared.definitions.exceptions.CatanException;
 import shared.model.player.TradeOffer;
 
 import java.lang.reflect.Type;
@@ -82,11 +83,11 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance()
-                .maritimeTrade(gameID, getPlayerIndex(), this.ratio, this.inputResource, this.outputResource)
-                .toString();
+            return AbstractServerFacade.getInstance()
+                    .maritimeTrade(gameID, getPlayerIndex(), this.ratio, this.inputResource, this.outputResource)
+                    .toString();
 
     }
 }

@@ -7,6 +7,7 @@ import com.google.gson.JsonSerializer;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.CatanException;
 import shared.locations.EdgeLocation;
 
 import java.lang.reflect.Type;
@@ -67,9 +68,9 @@ public class Road_BuildingCommand extends MoveCommand implements JsonSerializer<
      * @param gameID the ID of the game for which to execute the command.
      * @return the Json representation of the model after the command is executed.
      */
-    @Override public String execute(int gameID)
+    @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance().roadBuilding(gameID, getPlayerIndex(), this.spot1, this.spot1)
-                .toString();
+            return AbstractServerFacade.getInstance().roadBuilding(gameID, getPlayerIndex(), this.spot1, this.spot1)
+                    .toString();
     }
 }
