@@ -10,6 +10,7 @@ import shared.definitions.exceptions.CatanException;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.model.bank.resource.Resources;
 import shared.model.player.Player;
 
 import static org.junit.Assert.*;
@@ -42,13 +43,18 @@ public class ServerModelTest
         try
         {
             model.buildRoad(player1.getPlayerIndex(), waterOnly, false);
+            assertNotNull(model.getMap().getRoads().get(waterOnly));
+            model.getMap().getRoads().put(waterOnly,null);
             return true;
         }
         catch ( CatanException e )
         {
             try
             {
+                player1.getBank().setPlayerResources(new Resources(2,2,2,2,2));
                 model.buildRoad(player1.getPlayerIndex(), waterOnly, true);
+                assertNotNull(model.getMap().getRoads().get(waterOnly));
+                model.getMap().getRoads().put(waterOnly,null);
                 return true;
             }
             catch ( CatanException e2 )
@@ -62,9 +68,16 @@ public class ServerModelTest
     {
         try
         {
+            //without money
             EdgeLocation landOnly = new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North);
             model.buildRoad(player1.getPlayerIndex(), landOnly, false);
+            assertNotNull(model.getMap().getRoads().get(landOnly));
+            model.getMap().getRoads().put(landOnly,null);
+            //with money
+            player1.getBank().setPlayerResources(new Resources(2,2,2,2,2));
             model.buildRoad(player1.getPlayerIndex(), landOnly, true);
+            assertNotNull(model.getMap().getRoads().get(landOnly));
+            model.getMap().getRoads().put(landOnly,null);
             return true;
         }
         catch ( CatanException e )
