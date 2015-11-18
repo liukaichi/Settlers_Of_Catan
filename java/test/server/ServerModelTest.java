@@ -7,9 +7,7 @@ import org.junit.Test;
 import server.util.FileUtils;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
+import shared.locations.*;
 import shared.model.bank.resource.Resources;
 import shared.model.player.Player;
 
@@ -35,11 +33,23 @@ public class ServerModelTest
     {
         assertTrue(buildRoadOnLand());
         assertFalse(buildRoadOnWater());
+        assertFalse(buildRoadOnRoad());
+        assertFalse(buildRoadWithoutSettlement());
+    }
+
+    private boolean buildRoadWithoutSettlement()
+    {
+        return false;
+    }
+
+    private boolean buildRoadOnRoad()
+    {
+        return false;
     }
 
     private boolean buildRoadOnWater()
     {
-        EdgeLocation waterOnly = new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North);
+        EdgeLocation waterOnly = new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North);
         try
         {
             model.buildRoad(player1.getPlayerIndex(), waterOnly, false);
@@ -69,6 +79,8 @@ public class ServerModelTest
         try
         {
             //without money
+            VertexLocation settlement = new VertexLocation(new HexLocation(0, 0), VertexDirection.NorthEast);
+            //model.buildSettlement(player1, settlement, )
             EdgeLocation landOnly = new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North);
             model.buildRoad(player1.getPlayerIndex(), landOnly, false);
             assertNotNull(model.getMap().getRoads().get(landOnly));

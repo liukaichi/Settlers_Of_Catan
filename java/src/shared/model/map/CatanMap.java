@@ -292,11 +292,10 @@ public class CatanMap
      *
      * @param player            this will be the player placing the settlement.
      * @param location          this will be the location of the settlement; must ensure that this space on the map is empty.
-     * @param allowDisconnected unused currently.
      * @return true if the location is vacant and at least
      * two spaces away from another settlement otherwise returns false
      */
-    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
+    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
     {
         HexLocation hexLocation = location.getHexLoc();
         if (isHexWithinMapRadius(hexLocation, this.radius))
@@ -423,17 +422,6 @@ public class CatanMap
     }
 
     /**
-     * Builds a road for the given player at the given location.
-     *
-     * @param player   the player who is building the road.
-     * @param location the location where the road is being built.
-     */
-    public void buildRoad(PlayerIndex player, EdgeLocation location)
-    {
-
-    }
-
-    /**
      * Checks to see if the given hex is within the radius of the map.
      *
      * @param hexLocation the location of the hex in question.
@@ -542,13 +530,12 @@ public class CatanMap
      * Method that indicates whether a player has the ability to move a robber
      * on a certain Hex
      *
-     * @param player   -- this will be the player placing the robber
      * @param location -- this will be the hex location where the robber will be placed;
      *                 cannot place on water or where the robber already is
      * @return boolean -- returns true if it is not moving to its current
      * location and it is not a sea piece otherwise returns false
      */
-    public boolean canMoveRobber(PlayerIndex player, HexLocation location)
+    public boolean canMoveRobber(HexLocation location)
     {
         return ((hexes.get(location) != null) && (!robberLocation.equals(location)) && !hexes.get(location).getHexType()
                 .equals(HexType.WATER));
@@ -565,7 +552,6 @@ public class CatanMap
     {
         Road road = new Road(player, location);
         roads.put(location, road);
-
     }
 
     /**
@@ -613,12 +599,14 @@ public class CatanMap
         return vertices;
     }
 
-    /*
-    public void setRobberLocation(HexLocation robberLocation)
+
+    public void setRobberLocation(HexLocation robberLocation) throws PlacementException
     {
-        this.robberLocation = robberLocation;
+        if(canMoveRobber(robberLocation))
+            this.robberLocation = robberLocation;
+        else
+            throw new PlacementException("Can't place robber at this location");
     }
-    */
 
     /**
      * Gets the vertices that are adjacent to the North East Vertex of a hex.

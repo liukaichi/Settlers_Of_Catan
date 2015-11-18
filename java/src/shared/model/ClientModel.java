@@ -243,7 +243,7 @@ public class ClientModel extends Observable
      */
     public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
     {
-        return map.canPlaceSettlement(player, location, allowDisconnected);
+        return map.canPlaceSettlement(player, location);
     }
 
     /**
@@ -290,7 +290,7 @@ public class ClientModel extends Observable
      */
     public boolean canMoveRobber(PlayerIndex player, HexLocation location)
     {
-        return map.canMoveRobber(player, location);
+        return map.canMoveRobber(location);
     }
 
     /**
