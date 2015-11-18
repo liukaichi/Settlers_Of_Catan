@@ -6,6 +6,7 @@ import shared.definitions.ResourceType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * List of the resource objects
@@ -15,6 +16,8 @@ import java.util.List;
 public class Resources implements JsonSerializer<Resources>
 {
     private Resource brick, wood, sheep, wheat, ore;
+
+    private static final Logger LOGGER = Logger.getLogger(Resource.class.getName());
 
     public Resources(boolean isGameBank)
     {
@@ -115,7 +118,7 @@ public class Resources implements JsonSerializer<Resources>
     @Override public String toString()
     {
         JsonObject resources = toJsonObject();
-        System.out.println("JSON-izing resources\n" + resources.toString());
+        LOGGER.fine("JSON-izing resources\n" + resources.toString());
         return resources.toString();
     }
 
@@ -176,20 +179,30 @@ public class Resources implements JsonSerializer<Resources>
     /**
      * Increases the specified resource in this collection by 1. This behaves identically to increase(type, 1).
      *
-     * @param resource the resource type to increase.
+     * @param type the resource type to increase.
      */
-    public void increase(ResourceType resource)
+    public void increase(ResourceType type)
     {
-        getResource(resource).addResource(1);
+        this.increase(type, 1);
+    }
+
+    public void increase(ResourceType type, int amount)
+    {
+        getResource(type).addResource(amount);
     }
 
     /**
      * Decreases the specified resource in this collection by 1
      *
-     * @param resource the resource type to decrease.
+     * @param type the resource type to decrease.
      */
-    public void decrease(ResourceType resource)
+    public void decrease(ResourceType type)
     {
-        getResource(resource).subResource(1);
+        this.decrease(type, 1);
+    }
+
+    public void decrease(ResourceType type, int amount)
+    {
+        getResource(type).subResource(amount);
     }
 }

@@ -3,13 +3,10 @@ package server;
 import client.data.PlayerInfo;
 import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
-import shared.definitions.exceptions.InsufficientResourcesException;
-import shared.definitions.exceptions.PlacementException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.ClientModel;
-import shared.model.bank.PlayerBank;
 import shared.model.bank.resource.Resources;
 import shared.model.map.Hex;
 import shared.model.player.Player;
@@ -41,16 +38,16 @@ public class ServerModel extends ClientModel
         super(json);
     }
 
-     public ClientModel sendChat(PlayerIndex playerIndex, String content)
+    public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
-        this.getChat().addMessageLine(getPlayerName(playerIndex.getIndex()), content);
+        this.getChat().addMessageLine(getPlayerName(playerIndex), content);
         this.setChanged();
         return this;
     }
 
-    private String getPlayerName(int index)
+    private String getPlayerName(PlayerIndex index)
     {
-        PlayerInfo player = getPlayerInfos().get(index);
+        PlayerInfo player = getPlayerInfos().get(index.getIndex());
         return player.getName();
     }
 
@@ -68,8 +65,7 @@ public class ServerModel extends ClientModel
         return this;
     }
 
-    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim,
-            HexLocation location)
+    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
     {
         return null;
     }
@@ -81,111 +77,86 @@ public class ServerModel extends ClientModel
         return this;
     }
 
-    public ClientModel buyDevCard(PlayerIndex playerIndex)
+    public ClientModel buyDevCard(PlayerIndex playerIndex) throws CatanException
     {
-        try {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.buyDevCard();
-            this.setChanged();
-        } catch (InsufficientResourcesException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1,
-            ResourceType resource2)
-    {
-        try {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.playDevCard(DevCardType.YEAR_OF_PLENTY);
-            player.getResources().getResource(resource1).addResource(1);
-            player.getResources().getResource(resource2).addResource(1);
-            this.setChanged();
-        } catch (CatanException e) {
-            e.printStackTrace();
-        }
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.buyDevCard();
+        this.setChanged();
         return this;
     }
 
-    public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1,
-            EdgeLocation spot2)
+    public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
+            throws CatanException
     {
-        try
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.playDevCard(DevCardType.YEAR_OF_PLENTY);
+        player.getResources().getResource(resource1).addResource(1);
+        player.getResources().getResource(resource2).addResource(1);
+        this.setChanged();
+        return this;
+    }
+
+    public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+            throws CatanException
+    {
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.playDevCard(DevCardType.ROAD_BUILD);
+        getMap().placeRoad(playerIndex, spot1);
+        getMap().placeRoad(playerIndex, spot2);
+        this.setChanged();
+
+        return this;
+    }
+
+    public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
+            throws CatanException
+    {
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.getBank().addKnights(1);
+        player.playDevCard(DevCardType.SOLDIER, playerIndex, victimIndex, location);
+        robPlayer(playerIndex, victimIndex, location);
+        updateLargestArmy();
+
+        return this;
+    }
+
+    public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource) throws CatanException
+    {
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.playDevCard(DevCardType.MONOPOLY);
+        int total = 0;
+        for (Player p : getPlayers())
         {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.playDevCard(DevCardType.ROAD_BUILD);
-            getMap().placeRoad(playerIndex, spot1);
-            getMap().placeRoad(playerIndex, spot2);
-            this.setChanged();
-        } catch (PlacementException e)
-        {
-            e.printStackTrace();
-        } catch (CatanException e) {
-            e.printStackTrace();
+            total += p.getBank().amountOf(resource);
+            p.getResources().setAmount(resource, 0);
         }
+        player.getResources().setAmount(resource, total);
+
         return this;
     }
 
-    public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex,
-            HexLocation location)
+    public ClientModel monument(PlayerIndex playerIndex) throws CatanException
     {
-
-        try {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.getBank().addKnights(1);
-            player.playDevCard(DevCardType.SOLDIER, playerIndex, victimIndex, location);
-            robPlayer(playerIndex, victimIndex, location);
-            this.setChanged();
-        } catch (CatanException e) {
-            e.printStackTrace();
-        }
+        Player player = getPlayers().get(playerIndex.getIndex());
+        player.playDevCard(DevCardType.MONUMENT);
+        player.getBank().addMonuments(1);
 
         return this;
     }
-
-    public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource)
-    {
-        try {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.playDevCard(DevCardType.MONOPOLY);
-            int total = 0;
-            for(Player p : getPlayers()){
-                total += p.getBank().amountOf(resource);
-                p.getResources().setAmount(resource, 0);
-            }
-            player.getResources().setAmount(resource, total);
-            this.setChanged();
-        } catch (CatanException e) {
-            e.printStackTrace();
-        }
-        return this;
-    }
-
-    public ClientModel monument(PlayerIndex playerIndex)
-    {
-        try {
-            Player player = getPlayers().get(playerIndex.getIndex());
-            player.playDevCard(DevCardType.MONUMENT);
-            player.getBank().addMonuments(1);
-            this.setChanged();
-        } catch (CatanException e) {
-            e.printStackTrace();
-        }
-        return this;
-    }
-
 
     /**
      * Builds a city for the given player at the given location.
      *
-     * @param playerIndex   the player who is building the road.
-     * @param location the location where the road is being built.
-     * @param isFree whether or not the player should be charged.
+     * @param playerIndex the player who is building the road.
+     * @param location    the location where the road is being built.
+     * @param isFree      whether or not the player should be charged.
      */
     public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree) throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
+        getMap().placeRoad(playerIndex, location);
+        updateLongestRoad();
+
         if(isFree)
             getMap().placeRoad(playerIndex, location);
         else if(canBuyRoad(getPlayerByIndex(playerIndex)))
@@ -195,7 +166,8 @@ public class ServerModel extends ClientModel
         return this;
     }
 
-    public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree) throws CatanException
+    public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree)
+            throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
         if(canPlaceSettlement(playerIndex, location) && canBuySettlement(getPlayerByIndex(playerIndex)))
@@ -227,27 +199,59 @@ public class ServerModel extends ClientModel
         return this;
     }
 
-    public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
+    public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver) throws CatanException
     {
-        tradeOffer = offer;
-        this.setChanged();
+
+        Player sender = getPlayers().get(playerIndex.getIndex());
+        if (sender.hasEnoughResources(offer.getOffer()))
+        {
+            this.setTradeOffer(offer);
+        } else
+        {
+            throw new CatanException("Sender does not have enough resources to trade this.");
+        }
         return this;
     }
 
-    public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept)
+    public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept) throws CatanException
     {
-        return null;
+        if (!willAccept)
+        {
+            getLog().addMessageLine(getPlayerName(playerIndex),
+                    getPlayerName(playerIndex) + " did not accept the trade.");
+            this.removeTradeOffer();
+        } else
+        {
+            TradeOffer offer = getTradeOffer();
+            Player receiver = getPlayer(playerIndex);
+            Player sender = getPlayer(PlayerIndex.fromInt(offer.getSender()));
+            receiver.acceptOffer(offer);
+            sender.sendOffer(offer);
+
+            getLog().addMessageLine(getPlayerName(playerIndex), getPlayerName(playerIndex) + " accepted the trade.");
+        }
+        return this;
     }
 
-    public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio,
-            ResourceType inputResource, ResourceType outputResource)
+    public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
+            ResourceType outputResource) throws CatanException
     {
-        return null;
+        Player player = getPlayer(playerIndex);
+        player.maritimeTrade(ratio, inputResource, outputResource);
+        getBank().maritimeTrade(ratio, inputResource, outputResource);
+        return this;
     }
 
     public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
     {
-        return null;
+        Player player = getPlayer(playerIndex);
+        player.discardCards(discardedCards);
+        return this;
+    }
+
+    public Player getPlayer(PlayerIndex playerIndex)
+    {
+        return getPlayers().get(playerIndex.getIndex());
     }
 
     public boolean equals(Object o)
@@ -268,23 +272,19 @@ public class ServerModel extends ClientModel
     /**
      * Updates the longestRoad counter. A player has the longest road if he or
      * she has at least 5 roads
-     *
-     * @param playerLongestRoad the info of the player to update the longest road for.
      */
-    public void updateLongestRoad(PlayerBank playerLongestRoad)
+    private void updateLongestRoad()
     {
-        getTurnTracker().updateLongestRoad(playerLongestRoad);
+        getTurnTracker().updateLongestRoad(getPlayers());
     }
 
     /**
      * Updates the largest army counter A player has the largest army if he or
      * she has at least 3 knights
-     *
-     * @param playerLargestArmy the info of the player to update the largest army for.
      */
-    public void updateLargestArmy(PlayerBank playerLargestArmy)
+    public void updateLargestArmy()
     {
-        getTurnTracker().updateLargestArmy(playerLargestArmy);
+        getTurnTracker().updateLargestArmy(getPlayers());
     }
 
     /**

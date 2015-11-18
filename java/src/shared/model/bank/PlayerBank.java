@@ -182,6 +182,16 @@ public class PlayerBank extends Bank
         return true;
     }
 
+    public void subtractResources(Resources cost)
+    {
+        List<Resource> resourcesList = playerResources.getAllResources();
+        List<Resource> costList = cost.getAllResources();
+        for (int i = 0; i < resourcesList.size(); ++i)
+        {
+            resourcesList.get(i).subResource(costList.get(i).getAmount());
+        }
+    }
+
     /**
      * Determines if PlayerBank has the resources to purchase a DevCard
      *
@@ -322,7 +332,7 @@ public class PlayerBank extends Bank
             DevCard card = playerDevCards.getCard(type);
             card.subCard(DevCard.AmountType.PLAYABLE, 1);
             card.addCard(DevCard.AmountType.PLAYED, 1);
-//            card.playAction(this, data);
+            //            card.playAction(this, data);
         }
     }
 
@@ -371,4 +381,5 @@ public class PlayerBank extends Bank
     {
         return 0;
     }
+
 }

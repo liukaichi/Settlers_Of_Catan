@@ -4,8 +4,11 @@ import client.data.PlayerInfo;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.PlayerIndex;
+import shared.definitions.StructureType;
 import shared.definitions.TurnStatus;
-import shared.model.bank.PlayerBank;
+import shared.model.player.Player;
+
+import java.util.List;
 
 /**
  * This class manages player's turns during the Catan game
@@ -45,19 +48,55 @@ public class TurnTracker
     /**
      * Updates the longestRoad counter.
      * A player has the longest road if he or she has at least 5 roads
+     * @param players the list of players to look through.
      */
-    public void updateLongestRoad(PlayerBank playerLongestRoad)
+    public void updateLongestRoad(List<Player> players)
     {
-
+        int longestRoadCount = 5;
+        Player longestRoadPlayer = null;
+        if (!longestRoad.equals(PlayerIndex.NONE))
+        {
+            longestRoadPlayer = players.get(longestRoad.getIndex());
+            longestRoadCount = longestRoadPlayer.getStructureCount(StructureType.ROAD);
+        }
+        for (Player player : players)
+        {
+            if (player.getStructureCount(StructureType.ROAD) > longestRoadCount)
+            {
+                longestRoadPlayer = player;
+            }
+        }
+        if (longestRoadPlayer != null)
+        {
+            longestRoad = longestRoadPlayer.getPlayerIndex();
+        }
     }
 
     /**
      * Updates the largest army counter
      * A player has the largest army if he or she has at least 3 knights
+     * @param players the list of players to look through.
      */
-    public void updateLargestArmy(PlayerBank playerLargestArmy)
+    public void updateLargestArmy(List<Player> players)
     {
-
+        int largestArmyCount = 4;
+        Player largestArmyPlayer = null;
+        if (!largestArmy.equals(PlayerIndex.NONE))
+        {
+            largestArmyPlayer = players.get(largestArmy.getIndex());
+            largestArmyCount = largestArmyPlayer.getKnights();
+        }
+        for (Player player : players)
+        {
+            if (player.getKnights() > largestArmyCount)
+            {
+                largestArmyPlayer = player;
+            }
+        }
+        if (largestArmyPlayer != null)
+        {
+            largestArmy = largestArmyPlayer.getPlayerIndex();
+        }
     }
 
     /**

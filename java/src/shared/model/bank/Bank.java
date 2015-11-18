@@ -1,9 +1,6 @@
 package shared.model.bank;
 
-import shared.definitions.DevCardType;
-import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceType;
-import shared.definitions.StructureType;
+import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.card.DevCard;
@@ -23,6 +20,7 @@ public class Bank
 {
     private static Resources resources;
     private static Stack<DevCardType> devCardDeck;
+
     private DevCards devCards;
 
     /**
@@ -186,5 +184,22 @@ public class Bank
                 e.printStackTrace();
             }
         }
+    }
+
+    public void maritimeTrade(TradeRatio ratio, ResourceType inputResource, ResourceType outputResource)
+    {
+        int amountToTrade = ratio.getRatio();
+        resources.increase(inputResource);
+        resources.decrease(outputResource, amountToTrade);
+    }
+
+    public void subResource(ResourceType type, int amount)
+    {
+        resources.getResource(type).subResource(amount);
+    }
+
+    public void addResource(ResourceType type, int amount)
+    {
+        resources.getResource(type).addResource(amount);
     }
 }

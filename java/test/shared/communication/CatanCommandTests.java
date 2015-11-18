@@ -1,6 +1,5 @@
 package shared.communication;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import server.ServerModel;
@@ -8,8 +7,13 @@ import server.facade.AbstractServerFacade;
 import server.facade.MockServerFacade;
 import server.facade.ServerFacade;
 import shared.communication.moveCommands.AcceptTradeCommand;
+import shared.communication.moveCommands.BuildCityCommand;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
+import shared.definitions.exceptions.CatanException;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 import shared.model.player.TradeOffer;
 
 import static org.junit.Assert.*;
@@ -19,12 +23,6 @@ import static org.junit.Assert.*;
  */
 public class CatanCommandTests
 {
-
-    @After public void tearDown() throws Exception
-    {
-
-    }
-
     @Before public void initializeFacade()
     {
         AbstractServerFacade.setFacade(new MockServerFacade());
@@ -34,10 +32,8 @@ public class CatanCommandTests
     {
         try
         {
-            AcceptTradeCommand command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
-
+            CatanCommand command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
             ServerModel model = new ServerModel(command.execute(-1)); //id doesn't matter.
-
             assertNotNull(model);
             TradeOffer offer = model.getTradeOffer();
             assertNotNull(offer);
@@ -48,31 +44,60 @@ public class CatanCommandTests
 
             AbstractServerFacade.setFacade(new ServerFacade());
             command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
-
             model = new ServerModel(command.execute(1));
-        } catch (shared.definitions.exceptions.CatanException e)
+            assertNotNull(model);
+            offer = model.getTradeOffer();
+            assertNotNull(offer);
+        } catch (CatanException e)
         {
             e.printStackTrace();
         }
-        //        assertNotNull(model);
-        //        offer = model.getTradeOffer();
-        //        assertNotNull(offer);
 
     }
 
     @Test public void testBuildCityCommand()
     {
+        CatanCommand command = new BuildCityCommand(PlayerIndex.PLAYER_0,
+                new VertexLocation(new HexLocation(0, 0), VertexDirection.NorthWest));
+        ServerModel model = null;
+        try
+        {
+            model = new ServerModel(command.execute(-1));
+        } catch (CatanException e)
+        {
+            e.printStackTrace();
+        }
+        assertNotNull(model);
 
     }
 
     @Test public void testBuildRoadCommand()
     {
-
+        CatanCommand command = new BuildCityCommand(PlayerIndex.PLAYER_0,
+                new VertexLocation(new HexLocation(0, 0), VertexDirection.NorthWest));
+        ServerModel model = null;
+        try
+        {
+            model = new ServerModel(command.execute(-1));
+        } catch (CatanException e)
+        {
+            e.printStackTrace();
+        }
+        assertNotNull(model);
     }
 
     @Test public void testBuildSettlementCommand()
     {
-
+        CatanCommand command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
+        ServerModel model = null;
+        try
+        {
+            model = new ServerModel(command.execute(-1));
+        } catch (CatanException e)
+        {
+            e.printStackTrace();
+        }
+        assertNotNull(model);
     }
 
     @Test public void testBuyDevCardCommand()

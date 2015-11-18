@@ -184,7 +184,8 @@ public interface IMovesFacade
      * @param receiver    the intended receiver of the trade.
      * @return the updated ClientModel
      */
-    ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver);
+    ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
+            throws CatanException;
 
     /**
      * Update model and remove the TradeOffer

@@ -12,9 +12,12 @@ import shared.model.bank.Bank;
 import shared.model.bank.PlayerBank;
 import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
+import shared.model.bank.resource.Resource;
 import shared.model.bank.resource.Resources;
 import shared.model.map.CatanMap;
 import shared.model.map.structure.Port;
+
+import java.util.List;
 
 /**
  * Represents a player playing the game. There can be up to 4 players in a
@@ -107,6 +110,53 @@ public class Player
         return new TradeOffer(this, receiver);
     }
 
+    public void sendOffer(TradeOffer offer) throws CatanException
+    {
+        List<Resource> resources = offer.getOffer().getAllResources();
+        for (Resource resource : resources)
+        {
+            ResourceType type = resource.getType();
+            int amount = resource.getAmount();
+            if (amount < 0)
+            {
+                resource.addResource(resource.getAmount());
+
+            } else if (amount > 0)
+            {
+                if (getResources().getAmount(type) < amount)
+                {
+                    throw new InsufficientResourcesException("Sender does not have enough of " + type);
+                } else
+                {
+                    resource.subResource(resource.getAmount());
+                }
+            }
+        }
+    }
+
+    public void acceptOffer(TradeOffer offer) throws CatanException
+    {
+        List<Resource> resources = offer.getOffer().getAllResources();
+        for (Resource resource : resources)
+        {
+            ResourceType type = resource.getType();
+            int amount = resource.getAmount();
+            if (amount < 0)
+            {
+                if (getResources().getAmount(type) < amount)
+                {
+                    throw new InsufficientResourcesException("Receiver does not have enough of " + type);
+                } else
+                {
+                    bank.subResource(resource.getType(), resource.getAmount());
+                }
+            } else if (amount > 0)
+            {
+                resource.addResource(resource.getAmount());
+            }
+        }
+    }
+
     public boolean canBuyRoad()
     {
         return bank.canBuyRoad();
@@ -179,11 +229,13 @@ public class Player
         return bank.canBuyDevCard();
     }
 
-    public boolean hasPlayedDev() {
+    public boolean hasPlayedDev()
+    {
         return playedDev;
     }
 
-    public void setPlayedDev(boolean playedDev) {
+    public void setPlayedDev(boolean playedDev)
+    {
         this.playedDev = playedDev;
     }
 
@@ -230,7 +282,8 @@ public class Player
             try
             {
                 bank.playDevCard(type, data);
-                if(type != DevCardType.MONUMENT){
+                if (type != DevCardType.MONUMENT)
+                {
                     playedDev = true;
                 }
             } catch (InsufficientResourcesException e)
@@ -261,8 +314,7 @@ public class Player
             player.add("oldDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.PLAYABLE));
             player.add("newDevCards", bank.getDevCards().toJsonObject(DevCard.AmountType.UNPLAYABLE));
             player.addProperty("roads", bank.getStructures().getStructure(StructureType.ROAD).getAmountRemaining());
-            player.addProperty("cities",
-                    bank.getStructures().getStructure(StructureType.CITY).getAmountRemaining());
+            player.addProperty("cities", bank.getStructures().getStructure(StructureType.CITY).getAmountRemaining());
             player.addProperty("settlements",
                     bank.getStructures().getStructure(StructureType.SETTLEMENT).getAmountRemaining());
             player.addProperty("soldiers", bank.getKnights());
@@ -394,6 +446,30 @@ public class Player
     public boolean hasEnoughResources(Resources cost)
     {
         return bank.hasEnoughResources(cost);
+    }
+
+    public int getKnights()
+    {
+        return bank.getKnights();
+    }
+
+    public void maritimeTrade(TradeRatio ratio, ResourceType inputResource, ResourceType outputResource)
+            throws InsufficientResourcesException
+    {
+        int amountToTrade = ratio.getRatio();
+        if (getResources().getAmount(inputResource) < amountToTrade)
+        {
+            throw new InsufficientResourcesException("Not enough resources to trade away for maritime trade!");
+        } else
+        {
+            bank.getResources().increase(outputResource);
+            bank.getResources().decrease(inputResource, amountToTrade);
+        }
+    }
+
+    public void discardCards(Resources discardedCards)
+    {
+        bank.subtractResources(discardedCards);
     }
 }
 

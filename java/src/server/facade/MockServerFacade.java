@@ -127,6 +127,7 @@ public class MockServerFacade extends AbstractServerFacade
     }
 
     @Override public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
+            throws CatanException
     {
         return FileUtils.getModelFromFile(null, "tradeAvailable");
     }

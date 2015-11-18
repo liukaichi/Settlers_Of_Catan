@@ -109,6 +109,7 @@ public class ServerFacade extends AbstractServerFacade
     }
 
     @Override public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
+            throws CatanException
     {
         return getGame(gameID).offerTrade(playerIndex, offer, receiver);
     }

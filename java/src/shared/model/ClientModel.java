@@ -406,6 +406,16 @@ public class ClientModel extends Observable
         return (offer != null && (offer.getReceiver() == currentPlayer || offer.getSender() == currentPlayer));
     }
 
+    public void removeTradeOffer()
+    {
+        this.tradeOffer = null;
+    }
+
+    public void setTradeOffer(TradeOffer offer)
+    {
+        this.tradeOffer = offer;
+    }
+
     public Player getPlayerByIndex(PlayerIndex index)
     {
         return getPlayers().get(index.getIndex());
