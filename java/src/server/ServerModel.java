@@ -186,8 +186,8 @@ public class ServerModel extends ClientModel
     public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree) throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
-        player.buyRoad(isFree);
         getMap().placeRoad(playerIndex, location);
+        player.buyRoad(isFree);
         this.setChanged();
         return this;
     }
@@ -195,8 +195,8 @@ public class ServerModel extends ClientModel
     public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree) throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
-        player.buySettlement(isFree);
         getMap().placeSettlement(playerIndex, location);
+        player.buySettlement(isFree);
         this.setChanged();
         return this;
     }
@@ -204,8 +204,8 @@ public class ServerModel extends ClientModel
     public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation location) throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
-        player.buyCity();
         getMap().placeCity(playerIndex, location);
+        player.buyCity();
         this.setChanged();
         return this;
     }
