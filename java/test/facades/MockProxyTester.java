@@ -274,7 +274,7 @@ public class MockProxyTester
     }
 
     /**
-     * Method: yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
+     * Method: yearOfPlenty(Year_of_PlentyCommand yearOfPlenty)
      */
     @Test public void testYearOfPlenty() throws Exception
     {
@@ -282,7 +282,7 @@ public class MockProxyTester
     }
 
     /**
-     * Method: roadBuilding(RoadBuildingCommand roadBuilding)
+     * Method: roadBuilding(Road_BuildingCommand roadBuilding)
      */
     @Test public void testRoadBuilding() throws Exception
     {

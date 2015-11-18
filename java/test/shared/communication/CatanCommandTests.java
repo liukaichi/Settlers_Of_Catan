@@ -126,7 +126,7 @@ public class CatanCommandTests
 
     }
 
-    @Test public void testYearOfPlentyCommand()
+    @Test public void testYear_of_PlentyCommand()
     {
 
     }

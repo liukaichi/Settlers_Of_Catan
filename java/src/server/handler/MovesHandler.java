@@ -34,14 +34,21 @@ public class MovesHandler implements HttpHandler {
         LOGGER.entering(this.getClass().getCanonicalName(), "handle");
         try {
             String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+            if (cookie == null)
+            {
+                throw new Exception("Game cookie not set. Login and join a game before calling this method");
+            }
             String[] cookies = cookie.split(";");
+
+            //parse GameID
+            int gameID = Integer.parseInt(cookies[1].substring(12));
 
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
 
             if (cookies.length < 2) {
-                throw new Exception("Game cookie not set. Login and join before calling this method");
+                throw new Exception("Game cookie not set. Login and join a game before calling this method");
             }
             else {
                 // create cookie
@@ -69,7 +76,7 @@ public class MovesHandler implements HttpHandler {
             CatanCommand newCommand = (CatanCommand) c.newInstance(json);
 
             // send response
-            response = newCommand.execute(-1);
+            response = newCommand.execute(gameID);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
             requestBody.close();
@@ -77,7 +84,7 @@ public class MovesHandler implements HttpHandler {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             response = e.getLocalizedMessage();
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 

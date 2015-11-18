@@ -230,7 +230,7 @@ public class ClientFacade
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2)
     {
         model.updateModel(
-                proxy.yearOfPlenty(new YearOfPlentyCommand(clientPlayer.getPlayerIndex(), resource1, resource2)));
+                proxy.yearOfPlenty(new Year_of_PlentyCommand(clientPlayer.getPlayerIndex(), resource1, resource2)));
     }
 
     /**
@@ -249,7 +249,7 @@ public class ClientFacade
      */
     public void playRoadBuildingCard(EdgeLocation edge1, EdgeLocation edge2)
     {
-        model.updateModel(proxy.roadBuilding(new RoadBuildingCommand(clientPlayer.getPlayerIndex(), edge1, edge2)));
+        model.updateModel(proxy.roadBuilding(new Road_BuildingCommand(clientPlayer.getPlayerIndex(), edge1, edge2)));
     }
 
     /*

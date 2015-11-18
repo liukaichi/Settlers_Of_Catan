@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
  * @author Cache Staheli
  * @see ResourceType
  */
-public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<YearOfPlentyCommand>
+public class Year_of_PlentyCommand extends MoveCommand implements JsonSerializer<Year_of_PlentyCommand>
 {
     /**
      * The resource(s) you collect.
@@ -31,7 +31,7 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
      * @param resource1   first free resource
      * @param resource2   second free resource
      */
-    public YearOfPlentyCommand(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
+    public Year_of_PlentyCommand(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
     {
         super(MoveType.Year_of_Plenty, playerIndex);
         this.resource1 = resource1;
@@ -39,11 +39,11 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
     }
 
     /**
-     * Instantiate a YearOfPlentyCommand from JSON.
+     * Instantiate a Year_of_PlentyCommand from JSON.
      *
-     * @param json JSON of the YearOfPlentyCommand
+     * @param json JSON of the Year_of_PlentyCommand
      */
-    public YearOfPlentyCommand(String json)
+    public Year_of_PlentyCommand(String json)
     {
 
     }
@@ -54,7 +54,7 @@ public class YearOfPlentyCommand extends MoveCommand implements JsonSerializer<Y
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override public JsonElement serialize(YearOfPlentyCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(Year_of_PlentyCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.addProperty("resource1", src.resource1.toString().toLowerCase());

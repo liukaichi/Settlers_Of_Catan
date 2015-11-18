@@ -223,7 +223,10 @@ public class ServerProxy implements IProxy
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(AIType.class, aiType).create();
         String request = gson.toJson(aiType);
-        String response = doPost(ADD_AI, request);
+        //String response = doPost(ADD_AI, request);
+
+        //TO-DO remove this test response and put back the doPost one.
+        String response = "Yay";
         LOGGER.log(Level.INFO, "Add AI Response:" + response);
         if (response == null)
         {
@@ -349,18 +352,18 @@ public class ServerProxy implements IProxy
         return new ClientModel(response);
     }
 
-    @Override public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
+    @Override public ClientModel yearOfPlenty(Year_of_PlentyCommand yearOfPlenty)
     {
-        Gson gson = new GsonBuilder().registerTypeAdapter(YearOfPlentyCommand.class, yearOfPlenty).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Year_of_PlentyCommand.class, yearOfPlenty).create();
         String request = gson.toJson(yearOfPlenty);
         String response = doPost(YEAR_OF_PLENTY, request);
         LOGGER.log(Level.INFO, "Year Of Plenty Response:" + response);
         return new ClientModel(response);
     }
 
-    @Override public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
+    @Override public ClientModel roadBuilding(Road_BuildingCommand roadBuilding)
     {
-        Gson gson = new GsonBuilder().registerTypeAdapter(RoadBuildingCommand.class, roadBuilding).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Road_BuildingCommand.class, roadBuilding).create();
         String request = gson.toJson(roadBuilding);
         String response = doPost(ROAD_BUILDING, request);
         LOGGER.log(Level.INFO, "Road Building Response:" + response);

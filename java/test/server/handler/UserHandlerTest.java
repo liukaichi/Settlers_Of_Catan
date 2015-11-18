@@ -26,7 +26,7 @@ public class UserHandlerTest
         Server.main(args);
     }
 
-    @Test public void loginTest()
+    @Test public void loginTests()
     {
 
         invalidUsernameLoginTest();
@@ -61,7 +61,8 @@ public class UserHandlerTest
 
     public void validRegister()
     {
-        try {
+        try
+        {
             PlayerInfo info = proxy.userRegister(new Credentials("ABC", "ABCDE"));
             assertTrue(info.getId() != -1);
 
@@ -70,37 +71,41 @@ public class UserHandlerTest
 
             info = proxy.userRegister(new Credentials("Justin_", "goodpassword"));
             assertTrue(info.getId() != -1);
-        }
-        catch (InvalidCredentialsException e) {
+        } catch (InvalidCredentialsException e)
+        {
             fail();
             e.printStackTrace();
         }
     }
+
     public void invalidRegister()
     {
         PlayerInfo info = null;
-        try { //too short of a username
+        try
+        { //too short of a username
             info = proxy.userRegister(new Credentials("AB", "goodpassword"));
             fail();
-            }
-        catch (InvalidCredentialsException e) {
+        } catch (InvalidCredentialsException e)
+        {
             assertTrue(info == null);
             assertTrue(e.getMessage().matches("Username must be between 3 and 7 characters."));
         }
 
-        try { //too long of a username
+        try
+        { //too long of a username
             info = proxy.userRegister(new Credentials("Abittoolong", "stuff"));
             fail();
-        }
-        catch (InvalidCredentialsException e) {
+        } catch (InvalidCredentialsException e)
+        {
             assertTrue(info == null);
             assertTrue(e.getMessage().matches("Username must be between 3 and 7 characters."));
         }
-        try { //too short of a password
+        try
+        { //too short of a password
             info = proxy.userRegister(new Credentials("David", "good"));
             fail();
-        }
-        catch (InvalidCredentialsException e) {
+        } catch (InvalidCredentialsException e)
+        {
             assertTrue(info == null);
             assertTrue(e.getMessage().matches("Password must be at least 5 characters."));
         }

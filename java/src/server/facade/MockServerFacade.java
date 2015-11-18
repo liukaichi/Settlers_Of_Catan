@@ -140,6 +140,6 @@ public class MockServerFacade extends AbstractServerFacade
 
     @Override public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
-        return FileUtils.getModelFromFile(null, "basicGameTurn");
+        return FileUtils.getModelFromFile(null, "basicGame");
     }
 }

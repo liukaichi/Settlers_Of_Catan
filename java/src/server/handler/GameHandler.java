@@ -112,7 +112,7 @@ public class GameHandler implements HttpHandler
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
         } catch (Exception e)
         {
-            e.printStackTrace();
+            //e.printStackTrace();
             response = e.getLocalizedMessage();
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
         } finally

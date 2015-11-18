@@ -66,7 +66,7 @@ public interface IProxyDevCardCommands
      * </ul>
      * @post You gained the two specified resources.
      */
-    ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty);
+    ClientModel yearOfPlenty(Year_of_PlentyCommand yearOfPlenty);
 
     /**
      * Calls the server to have a player play a Road Building card.
@@ -98,7 +98,7 @@ public interface IProxyDevCardCommands
      * with the longest road.
      * </ul>
      */
-    ClientModel roadBuilding(RoadBuildingCommand roadBuilding);
+    ClientModel roadBuilding(Road_BuildingCommand roadBuilding);
 
     /**
      * Calls the server to have a player play a Monopoly card.

@@ -202,13 +202,13 @@ public class MockProxy implements IProxy
         return null;
     }
 
-    @Override public ClientModel yearOfPlenty(YearOfPlentyCommand yearOfPlenty)
+    @Override public ClientModel yearOfPlenty(Year_of_PlentyCommand yearOfPlenty)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override public ClientModel roadBuilding(RoadBuildingCommand roadBuilding)
+    @Override public ClientModel roadBuilding(Road_BuildingCommand roadBuilding)
     {
         // TODO Auto-generated method stub
         return null;

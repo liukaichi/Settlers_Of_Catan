@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
  * @author Cache Staheli
  * @see EdgeLocation
  */
-public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<RoadBuildingCommand>
+public class Road_BuildingCommand extends MoveCommand implements JsonSerializer<Road_BuildingCommand>
 {
 
     /**
@@ -26,13 +26,13 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
     private EdgeLocation spot1, spot2;
 
     /**
-     * Instantiates a RoadBuildingCommand based the given player, and two locations to build the roads.
+     * Instantiates a Road_BuildingCommand based the given player, and two locations to build the roads.
      *
      * @param playerIndex the index of the player playing the card.
      * @param spot1       the first location to build a road.
      * @param spot2       the second location to build a road.
      */
-    public RoadBuildingCommand(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
+    public Road_BuildingCommand(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
     {
         super(MoveType.Road_Building, playerIndex);
         this.spot1 = spot1;
@@ -40,11 +40,11 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
     }
 
     /**
-     * Instantiate a RoadBuildingCommand from JSON.
+     * Instantiate a Road_BuildingCommand from JSON.
      *
-     * @param json JSON of the RoadBuildingCommand.
+     * @param json JSON of the Road_BuildingCommand.
      */
-    public RoadBuildingCommand(String json)
+    public Road_BuildingCommand(String json)
     {
 
     }
@@ -55,7 +55,7 @@ public class RoadBuildingCommand extends MoveCommand implements JsonSerializer<R
      * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
-    @Override public JsonElement serialize(RoadBuildingCommand src, Type srcType, JsonSerializationContext context)
+    @Override public JsonElement serialize(Road_BuildingCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         obj.add("spot1", src.spot1.serialize(src.spot1, src.spot1.getClass(), context));
