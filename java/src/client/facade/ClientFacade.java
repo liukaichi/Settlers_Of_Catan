@@ -524,7 +524,7 @@ public class ClientFacade
 
     public boolean canPlaceSettlement(VertexLocation vertexLocation, boolean allowDisconnected)
     {
-        return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertexLocation, allowDisconnected);
+        return model.canPlaceSettlement(clientPlayer.getPlayerIndex(), vertexLocation);
     }
 
     /**
@@ -781,7 +781,7 @@ public class ClientFacade
      */
     public Player getPlayerByIndex(PlayerIndex index)
     {
-        return getPlayers().get(index.getIndex());
+        return model.getPlayerByIndex(index);
     }
 
     /**

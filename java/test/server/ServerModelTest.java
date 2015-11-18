@@ -6,10 +6,20 @@ import org.junit.Before;
 import org.junit.Test;
 import server.util.FileUtils;
 import shared.definitions.CatanColor;
+import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
+import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.bank.resource.Resources;
+import shared.model.map.CatanMap;
+import shared.model.map.structure.MapStructure;
+import shared.model.map.structure.Road;
 import shared.model.player.Player;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -21,80 +31,70 @@ public class ServerModelTest
     ServerModel model;
     Player player1;
     Player player2;
+
     @Before public void setUp()
     {
         model = new ServerModel();
         model.updateModel(FileUtils.getModelFromFile("sample/serverDefaults/", "game-2"));
-        player1 = new Player(new PlayerInfo(0,"player1", CatanColor.BLUE));
-        player2 = new Player(new PlayerInfo(1,"player2", CatanColor.BLUE));
+        player1 = new Player(new PlayerInfo(0, "player1", CatanColor.BLUE));
+        player2 = new Player(new PlayerInfo(1, "player2", CatanColor.BLUE));
     }
 
     @Test public void testBuildRoad()
     {
-        assertTrue(buildRoadOnLand());
-        assertFalse(buildRoadOnWater());
-        assertFalse(buildRoadOnRoad());
-        assertFalse(buildRoadWithoutSettlement());
-    }
-
-    private boolean buildRoadWithoutSettlement()
-    {
-        return false;
-    }
-
-    private boolean buildRoadOnRoad()
-    {
-        return false;
-    }
-
-    private boolean buildRoadOnWater()
-    {
-        EdgeLocation waterOnly = new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North);
         try
         {
-            model.buildRoad(player1.getPlayerIndex(), waterOnly, false);
-            assertNotNull(model.getMap().getRoads().get(waterOnly));
-            model.getMap().getRoads().put(waterOnly,null);
-            return true;
-        }
-        catch ( CatanException e )
-        {
+            CatanMap catanMap = model.getMap();
+            //vacant no settlement
+            catanMap.setStructures(new HashMap<>());
+            catanMap.setRoads(new HashMap<>());
             try
             {
-                player1.getBank().setPlayerResources(new Resources(2,2,2,2,2));
-                model.buildRoad(player1.getPlayerIndex(), waterOnly, true);
-                assertNotNull(model.getMap().getRoads().get(waterOnly));
-                model.getMap().getRoads().put(waterOnly,null);
-                return true;
-            }
-            catch ( CatanException e2 )
+                model.buildRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0, -1), EdgeDirection.NorthEast),
+                        false);
+            } catch (CatanException e)
             {
-                return false;
+                fail(e.getMessage());
             }
-        }
-    }
+            //vacant and has settlement
+            catanMap.placeSettlement(PlayerIndex.PLAYER_1,
+                    new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast));
+            try
+            {
+                model.buildRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0, -1), EdgeDirection.NorthEast),
+                        false);
+            } catch (CatanException e)
+            {
+                fail(e.getMessage());
+            }
+            //vacant and not his settlement
+            catanMap.placeSettlement(PlayerIndex.PLAYER_0,
+                    new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast));
+            try
+            {
+                model.buildRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0, -1), EdgeDirection.NorthEast),
+                        false);
+            } catch (CatanException e)
+            {
+                fail(e.getMessage());
+            }
 
-    private boolean buildRoadOnLand()
-    {
-        try
+            //existing road
+            catanMap.placeSettlement(PlayerIndex.PLAYER_1,
+                    new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast));
+            catanMap.placeRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0, -1), EdgeDirection.NorthEast));
+            try
+            {
+                model.buildRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0, -1), EdgeDirection.NorthEast),
+                        false);
+            } catch (CatanException e)
+            {
+                e.printStackTrace();
+            }
+
+        } catch (PlacementException e)
         {
-            //without money
-            VertexLocation settlement = new VertexLocation(new HexLocation(0, 0), VertexDirection.NorthEast);
-            //model.buildSettlement(player1, settlement, )
-            EdgeLocation landOnly = new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North);
-            model.buildRoad(player1.getPlayerIndex(), landOnly, false);
-            assertNotNull(model.getMap().getRoads().get(landOnly));
-            model.getMap().getRoads().put(landOnly,null);
-            //with money
-            player1.getBank().setPlayerResources(new Resources(2,2,2,2,2));
-            model.buildRoad(player1.getPlayerIndex(), landOnly, true);
-            assertNotNull(model.getMap().getRoads().get(landOnly));
-            model.getMap().getRoads().put(landOnly,null);
-            return true;
-        }
-        catch ( CatanException e )
-        {
-            return false;
+            fail(e.getMessage());
         }
     }
 
@@ -105,7 +105,48 @@ public class ServerModelTest
 
     @Test public void testBuildCity()
     {
+        try
+        {
+            CatanMap catanMap = model.getMap();
+            //vacant
+            catanMap.setStructures(new HashMap<>());
 
+            try
+            {
+                model.buildCity(PlayerIndex.PLAYER_1,
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+                fail("shouldn't be able to build city without settlement");
+            } catch (CatanException e)
+            {
+                //good
+            }
+            //existing settlement
+            catanMap.placeSettlement(PlayerIndex.PLAYER_1,
+                    new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+
+            try
+            {
+                model.buildCity(PlayerIndex.PLAYER_1,
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+            } catch (CatanException e)
+            {
+                fail(e.getMessage());
+            }
+            //existing city
+                catanMap.placeCity(PlayerIndex.PLAYER_1,
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+            try
+            {
+                model.buildCity(PlayerIndex.PLAYER_1,
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+            } catch (CatanException e)
+            {
+                fail(e.getMessage());
+            }
+        } catch (PlacementException e)
+        {
+            fail(e.getMessage());
+        }
     }
 
     @Test public void testSendChat()

@@ -186,8 +186,11 @@ public class ServerModel extends ClientModel
     public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree) throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
-        getMap().placeRoad(playerIndex, location);
-        player.buyRoad(isFree);
+        if(isFree)
+            getMap().placeRoad(playerIndex, location);
+        else if(canBuyRoad(getPlayerByIndex(playerIndex)))
+            getMap().placeRoad(playerIndex, location);
+            player.buyRoad(isFree);
         this.setChanged();
         return this;
     }
@@ -195,8 +198,15 @@ public class ServerModel extends ClientModel
     public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree) throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
-        getMap().placeSettlement(playerIndex, location);
-        player.buySettlement(isFree);
+        if(canPlaceSettlement(playerIndex, location) && canBuySettlement(getPlayerByIndex(playerIndex)))
+        {
+            getMap().placeSettlement(playerIndex, location);
+            player.buySettlement(isFree);
+        }
+        else
+        {
+            throw new CatanException("can't build settlement");
+        }
         this.setChanged();
         return this;
     }
@@ -204,8 +214,15 @@ public class ServerModel extends ClientModel
     public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation location) throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
-        getMap().placeCity(playerIndex, location);
-        player.buyCity();
+        if(canPlaceCity(playerIndex, location) && canBuyCity(getPlayerByIndex(playerIndex)))
+        {
+            getMap().placeCity(playerIndex, location);
+            player.buyCity();
+        }
+        else
+        {
+            throw new CatanException("can't build city");
+        }
         this.setChanged();
         return this;
     }

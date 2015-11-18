@@ -237,11 +237,10 @@ public class ClientModel extends Observable
      * @param player            this will be the player placing the settlement
      * @param location          this will be the location of the settlement; must ensure that
      *                          this space on the map is empty
-     * @param allowDisconnected whether or not the settlement can be disconnected. Only true during setup. Not currently used.
      * @return boolean  returns true if the location is vacant and at least
      * two spaces away from another settlement otherwise returns false
      */
-    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location, boolean allowDisconnected)
+    public boolean canPlaceSettlement(PlayerIndex player, VertexLocation location)
     {
         return map.canPlaceSettlement(player, location);
     }
@@ -405,5 +404,10 @@ public class ClientModel extends Observable
         PlayerInfo clientPlayer = ClientFacade.getInstance().getClientPlayer();
         int currentPlayer = clientPlayer.getNormalizedPlayerIndex();
         return (offer != null && (offer.getReceiver() == currentPlayer || offer.getSender() == currentPlayer));
+    }
+
+    public Player getPlayerByIndex(PlayerIndex index)
+    {
+        return getPlayers().get(index.getIndex());
     }
 }
