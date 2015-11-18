@@ -6,8 +6,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import server.Server;
 import shared.communication.Credentials;
+import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.definitions.exceptions.SignInException;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -29,6 +31,8 @@ public class UserHandlerTest
 
         invalidUsernameLoginTest();
         validUsernameLoginTest();
+        validRegister();
+        invalidRegister();
     }
 
     public void invalidUsernameLoginTest()
@@ -47,10 +51,58 @@ public class UserHandlerTest
         try
         {
             proxy.userLogin(new Credentials("Justin", "justin"));
+
         } catch (SignInException e)
         {
             fail();
         }
         assertTrue(true);
+    }
+
+    public void validRegister()
+    {
+        try {
+            PlayerInfo info = proxy.userRegister(new Credentials("ABC", "ABCDE"));
+            assertTrue(info.getId() != -1);
+
+            info = proxy.userRegister(new Credentials("ABC-EFG", "ABCDEFGH"));
+            assertTrue(info.getId() != -1);
+
+            info = proxy.userRegister(new Credentials("Justin_", "goodpassword"));
+            assertTrue(info.getId() != -1);
+        }
+        catch (InvalidCredentialsException e) {
+            fail();
+            e.printStackTrace();
+        }
+    }
+    public void invalidRegister()
+    {
+        PlayerInfo info = null;
+        try { //too short of a username
+            info = proxy.userRegister(new Credentials("AB", "goodpassword"));
+            fail();
+            }
+        catch (InvalidCredentialsException e) {
+            assertTrue(info == null);
+            assertTrue(e.getMessage().matches("Username must be between 3 and 7 characters."));
+        }
+
+        try { //too long of a username
+            info = proxy.userRegister(new Credentials("Abittoolong", "stuff"));
+            fail();
+        }
+        catch (InvalidCredentialsException e) {
+            assertTrue(info == null);
+            assertTrue(e.getMessage().matches("Username must be between 3 and 7 characters."));
+        }
+        try { //too short of a password
+            info = proxy.userRegister(new Credentials("David", "good"));
+            fail();
+        }
+        catch (InvalidCredentialsException e) {
+            assertTrue(info == null);
+            assertTrue(e.getMessage().matches("Password must be at least 5 characters."));
+        }
     }
 }

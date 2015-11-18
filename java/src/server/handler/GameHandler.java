@@ -67,7 +67,7 @@ public class GameHandler implements HttpHandler
             respHeaders.set("Content-Type", "text");
 
             if(cookies.length < 2){
-                throw new Exception("Game cookie not set");
+                throw new Exception("Game cookie not set. Login and join before calling this method.");
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
