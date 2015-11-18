@@ -209,10 +209,10 @@ public class ProxyTester
         }
         try
         {
-            credentials = new Credentials("user1", "pass");
+            credentials = new Credentials("user1", "password");
         } catch (InvalidCredentialsException e)
         {
-            e.printStackTrace();
+            fail("Failed making new credentials");
         }
         try
         {

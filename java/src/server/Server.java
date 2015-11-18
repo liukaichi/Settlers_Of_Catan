@@ -77,7 +77,7 @@ public class Server
                 break;
             case 1:
                 int port = Integer.parseInt(args[0]);
-                AbstractServerFacade.setFacade(new MockServerFacade());
+                AbstractServerFacade.setFacade(new ServerFacade());
                 Server.run(port);
                 break;
         }

@@ -51,6 +51,9 @@ public class MovesHandler implements HttpHandler
                 throw new Exception("Game cookie not set");
             }
 
+            //set gameID
+            int gameID = Integer.parseInt(cookies[1].substring(cookies[1].indexOf('=') + 1));
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
             String nextLine;
@@ -77,7 +80,7 @@ public class MovesHandler implements HttpHandler
             HttpCookie cookie = new HttpCookie("catan.user", "");
 
             // send response
-            response = newCommand.execute(-1);
+            response = newCommand.execute(gameID);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
             requestBody.close();
