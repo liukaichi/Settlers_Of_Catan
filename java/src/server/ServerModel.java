@@ -170,16 +170,15 @@ public class ServerModel extends ClientModel
             throws CatanException
     {
         Player player = getPlayers().get(playerIndex.getIndex());
-        if(canPlaceSettlement(playerIndex, location) && canBuySettlement(getPlayerByIndex(playerIndex)))
+        if(canPlaceSettlement(playerIndex, location))
         {
-            getMap().placeSettlement(playerIndex, location);
             player.buySettlement(isFree);
+            getMap().placeSettlement(playerIndex, location);
         }
         else
         {
             throw new CatanException("can't build settlement");
         }
-        this.setChanged();
         return this;
     }
 
@@ -195,7 +194,6 @@ public class ServerModel extends ClientModel
         {
             throw new CatanException("can't build city");
         }
-        this.setChanged();
         return this;
     }
 

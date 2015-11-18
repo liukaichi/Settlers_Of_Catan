@@ -100,7 +100,52 @@ public class ServerModelTest
 
     @Test public void testBuildSettlement()
     {
+        try
+        {
+            CatanMap catanMap = model.getMap();
+            //vacant
+            catanMap.setStructures(new HashMap<VertexLocation, MapStructure>());
+            try
+            {
+                model.buildRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0, -1), EdgeDirection.North),
+                        true);
+                model.getPlayerByIndex(PlayerIndex.PLAYER_1).getBank().setPlayerResources(new Resources(3, 3, 3, 3, 3));
+                model.buildSettlement(PlayerIndex.PLAYER_1,
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast), false);
+            } catch (CatanException e)
+            {
+                fail(e.getMessage());
+            }
+            //Nearby settlement
+            catanMap.placeSettlement(PlayerIndex.PLAYER_2,
+                    new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthWest));
+            try
+            {
+                model.buildSettlement(PlayerIndex.PLAYER_1,
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast),false);
+                fail("should fail with nearby settlement");
+            } catch (CatanException e)
+            {
+                //should fail with nearby settlement
+            }
+            //existing settlement
+            catanMap.placeSettlement(PlayerIndex.PLAYER_1,
+                    new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast));
+            try
+            {
+                model.buildSettlement(PlayerIndex.PLAYER_1,
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast),false);
+                fail("should fail with nearby settlement");
+            } catch (CatanException e)
+            {
+                //should fail
+            }
 
+        } catch (PlacementException e)
+        {
+            // TODO Auto-generated catch block
+            fail(e.getMessage());
+        }
     }
 
     @Test public void testBuildCity()
@@ -110,40 +155,46 @@ public class ServerModelTest
             CatanMap catanMap = model.getMap();
             //vacant
             catanMap.setStructures(new HashMap<>());
+            catanMap.setRoads(new HashMap<>());
 
             try
             {
                 model.buildCity(PlayerIndex.PLAYER_1,
-                        new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast));
                 fail("shouldn't be able to build city without settlement");
             } catch (CatanException e)
             {
                 //good
             }
-            //existing settlement
-            catanMap.placeSettlement(PlayerIndex.PLAYER_1,
-                    new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
 
+            //existing settlement
             try
             {
+                model.buildRoad(PlayerIndex.PLAYER_1, new EdgeLocation(new HexLocation(0, -1), EdgeDirection.NorthEast),
+                        true);
+                model.buildSettlement(PlayerIndex.PLAYER_1,
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast), true);
+                model.getPlayerByIndex(PlayerIndex.PLAYER_1).getBank().setPlayerResources(new Resources(3, 3, 3, 3, 3));
                 model.buildCity(PlayerIndex.PLAYER_1,
-                        new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast));
             } catch (CatanException e)
             {
                 fail(e.getMessage());
             }
             //existing city
-                catanMap.placeCity(PlayerIndex.PLAYER_1,
-                        new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+            catanMap.placeCity(PlayerIndex.PLAYER_1,
+                    new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast));
             try
             {
+                player1.getBank().setPlayerResources(new Resources(3, 3, 3, 3, 3));
                 model.buildCity(PlayerIndex.PLAYER_1,
-                        new VertexLocation(new HexLocation(0, -1), VertexDirection.SouthEast));
+                        new VertexLocation(new HexLocation(0, -1), VertexDirection.NorthEast));
+                fail("can't place a city on a city");
             } catch (CatanException e)
             {
-                fail(e.getMessage());
+                //good
             }
-        } catch (PlacementException e)
+        } catch (CatanException e)
         {
             fail(e.getMessage());
         }

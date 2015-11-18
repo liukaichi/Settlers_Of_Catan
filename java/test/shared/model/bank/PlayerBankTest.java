@@ -189,14 +189,14 @@ public class PlayerBankTest
     {
         try
         {
-            test.buySettlement();
+            test.buySettlement(false);
 
             brick().addResource(1);
             wood().addResource(1);
             wheat().addResource(2);
             sheep().addResource(1);
 
-            test.buySettlement();
+            test.buySettlement(false);
 
             assertEquals(1, test.getStructures().getStructure(StructureType.SETTLEMENT)
                     .getAmount(BankStructure.AmountType.BUILT));

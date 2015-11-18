@@ -264,17 +264,25 @@ public class PlayerBank extends Bank
      * resources
      *
      * @throws InsufficientResourcesException
+     * @param isFree
      */
-    public void buySettlement() throws CatanException
+    public void buySettlement(boolean isFree) throws CatanException
     {
-        if (canBuySettlement())
+        if(isFree)
+        {
+            structures.getStructure(StructureType.SETTLEMENT).addAmountBuilt(1);
+        }
+        else if (canBuySettlement())
         {
             payResource(ResourceType.SHEEP, 1);
             payResource(ResourceType.WOOD, 1);
             payResource(ResourceType.WHEAT, 1);
             payResource(ResourceType.BRICK, 1);
-
             structures.getStructure(StructureType.SETTLEMENT).addAmountBuilt(1);
+        }
+        else
+        {
+            throw new InsufficientResourcesException("not enough resources");
         }
     }
 
@@ -303,6 +311,10 @@ public class PlayerBank extends Bank
             payResource(ResourceType.WHEAT, 2);
             structures.getStructure(StructureType.CITY).addAmountBuilt(1);
             structures.getStructure(StructureType.SETTLEMENT).subAmountBuilt(1);
+        }
+        else
+        {
+            throw new InsufficientResourcesException("Not enough resources");
         }
     }
 

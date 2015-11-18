@@ -192,7 +192,7 @@ public class Player
      */
     public void buySettlement(boolean isFree) throws CatanException
     {
-        bank.buySettlement();
+        bank.buySettlement(isFree);
     }
 
     /**
