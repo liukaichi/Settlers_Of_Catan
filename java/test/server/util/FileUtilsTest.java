@@ -7,10 +7,12 @@ import shared.definitions.PlayerIndex;
 import shared.model.TurnTracker;
 import shared.model.message.Chat;
 import shared.model.message.Log;
+import shared.model.player.Player;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test getting models from File.
@@ -22,7 +24,10 @@ public class FileUtilsTest
     {
         ServerModel testModel = FileUtils.getModelFromFile("sample/serverDefaults/", "game-0");
         List<PlayerInfo> players = testModel.getPlayerInfos();
+        List<Player> playerList = testModel.getPlayers();
+        assertNotNull(playerList);
         assertEquals(4, players.size());
+        assertEquals(4, playerList.size());
         PlayerInfo player0 = players.get(0);
         assertEquals(0, player0.getId());
         assertEquals(PlayerIndex.PLAYER_0, player0.getPlayerIndex());
