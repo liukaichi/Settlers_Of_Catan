@@ -50,4 +50,99 @@ public class CatanCommandTests
         //        assertNotNull(offer);
 
     }
+
+    @Test public void testBuildCityCommand()
+    {
+
+    }
+
+    @Test public void testBuildRoadCommand()
+    {
+
+    }
+
+    @Test public void testBuildSettlementCommand()
+    {
+
+    }
+
+    @Test public void testBuyDevCardCommand()
+    {
+
+    }
+
+    @Test public void testDiscardCardsCommand()
+    {
+
+    }
+
+    @Test public void testFinishTurnCommand()
+    {
+
+    }
+
+    @Test public void testMaritimeTradeCommand()
+    {
+
+    }
+
+    @Test public void testMonopolyCommand()
+    {
+
+    }
+
+    @Test public void testMonumentCommand()
+    {
+
+    }
+
+    @Test public void testOfferTradeCommand()
+    {
+
+    }
+
+    @Test public void testRoadBuildingCommand()
+    {
+
+    }
+
+    @Test public void testRobPlayerCommand()
+    {
+
+    }
+
+    @Test public void testRollNumberCommand()
+    {
+
+    }
+
+    @Test public void testSendChatCommand()
+    {
+
+    }
+
+    @Test public void testSoldierCommand()
+    {
+
+    }
+
+    @Test public void testYearOfPlentyCommand()
+    {
+
+    }
+
+    @Test public void testCreateGameRequest()
+    {
+
+    }
+
+    @Test public void testJoinGameRequest()
+    {
+
+    }
+
+    @Test public void testListGameRequest()
+    {
+
+    }
 }
