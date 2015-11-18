@@ -179,6 +179,14 @@ public class Player
         return bank.canBuyDevCard();
     }
 
+    public boolean hasPlayedDev() {
+        return playedDev;
+    }
+
+    public void setPlayedDev(boolean playedDev) {
+        this.playedDev = playedDev;
+    }
+
     /**
      * Updates the PlayerBank to decrement resources used and increment the
      * appropriate DevCard count
@@ -212,15 +220,19 @@ public class Player
      * Plays the action of the specified DevCard
      *
      * @param type -- the type of DevCard to play
+     * @param data
      * @throws InsufficientResourcesException
      */
-    public void playDevCard(DevCardType type) throws CatanException
+    public void playDevCard(DevCardType type, Object... data) throws CatanException
     {
         if (!playedDev)
         {
             try
             {
-                bank.playDevCard(type);
+                bank.playDevCard(type, data);
+                if(type != DevCardType.MONUMENT){
+                    playedDev = true;
+                }
             } catch (InsufficientResourcesException e)
             {
                 e.printStackTrace();

@@ -59,12 +59,17 @@ public class GameHandler implements HttpHandler
         {
             URI uri = httpExchange.getRequestURI();
             String commandString = uri.getPath().split("/")[2];
-            String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
-            String[] cookies = cookie.split(";");
+
 
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
+
+            String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+            if(cookie == null){
+                throw new Exception("No cookie found");
+            }
+            String[] cookies = cookie.split(";");
 
             if(cookies.length < 2){
                 throw new Exception("Game cookie not set. Login and join before calling this method.");

@@ -292,11 +292,11 @@ public class PlayerBankTest
         {
             player = new Player();
 
-            test.playDevCard(DevCardType.MONUMENT);
+            test.playDevCard(DevCardType.MONUMENT, null);
 
             assertEquals(0, test.getMonuments());
             test.getDevCards().getCard(DevCardType.MONUMENT).addCard(DevCard.AmountType.PLAYABLE, 2);
-            test.playDevCard(DevCardType.MONUMENT);
+            test.playDevCard(DevCardType.MONUMENT, null);
 
             assertEquals(1, test.getDevCards().getCard(DevCardType.MONUMENT).getAmount(DevCard.AmountType.PLAYABLE));
             assertEquals(1, test.getMonuments());

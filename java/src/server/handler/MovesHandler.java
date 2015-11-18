@@ -18,7 +18,8 @@ import java.util.logging.Logger;
 /**
  * The handler for all contexts of the form /moves/*
  */
-public class MovesHandler implements HttpHandler {
+public class MovesHandler implements HttpHandler
+{
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
     AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private String response;
@@ -30,35 +31,31 @@ public class MovesHandler implements HttpHandler {
      * @throws IOException
      */
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(HttpExchange httpExchange) throws IOException
+    {
         LOGGER.entering(this.getClass().getCanonicalName(), "handle");
-        try {
-            String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
-            if (cookie == null)
-            {
-                throw new Exception("Game cookie not set. Login and join a game before calling this method");
-            }
-            String[] cookies = cookie.split(";");
-
-            //parse GameID
-            int gameID = Integer.parseInt(cookies[1].substring(12));
-
+        try
+        {
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
+            //Handling cookie
+            String receivedCookie =  httpExchange.getRequestHeaders().getFirst("Cookie");
 
-            if (cookies.length < 2) {
-                throw new Exception("Game cookie not set. Login and join a game before calling this method");
+            if(receivedCookie == null){
+                throw new Exception("No cookie found");
             }
-            else {
-                // create cookie
-                respHeaders.set("Set-cookie", cookie);
+
+            String[] cookies = receivedCookie.split(";");
+            if(cookies.length < 2){
+                throw new Exception("Game cookie not set");
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
             String nextLine;
-            while ((nextLine = reader.readLine()) != null) {
+            while ((nextLine = reader.readLine()) != null)
+            {
                 jsonBuilder.append(nextLine);
             }
             String json = jsonBuilder.toString();
@@ -73,18 +70,22 @@ public class MovesHandler implements HttpHandler {
                     + commandString.substring(1)
                     + "Command";
             Constructor c = Class.forName(className).getConstructor(String.class);
-            CatanCommand newCommand = (CatanCommand) c.newInstance(json);
+            CatanCommand newCommand = (CatanCommand)c.newInstance(json);
+
+            // create cookie
+            //TODO change this empty string to be the real cookie!!!!
+            HttpCookie cookie = new HttpCookie("catan.user", "");
 
             // send response
-            response = newCommand.execute(gameID);
+            response = newCommand.execute(-1);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
             requestBody.close();
 
 
-        }
-        catch (Exception e) {
-            //e.printStackTrace();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
             response = e.getLocalizedMessage();
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 

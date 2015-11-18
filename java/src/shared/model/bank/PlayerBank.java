@@ -312,16 +312,17 @@ public class PlayerBank extends Bank
      * Calls playAction() on the DevCard
      *
      * @param type the type of DevCard to play
+     * @param data
      * @throws InsufficientResourcesException
      */
-    public void playDevCard(DevCardType type) throws InsufficientResourcesException
+    public void playDevCard(DevCardType type, Object... data) throws InsufficientResourcesException
     {
         if (canPlayDevCard(type))
         {
             DevCard card = playerDevCards.getCard(type);
             card.subCard(DevCard.AmountType.PLAYABLE, 1);
             card.addCard(DevCard.AmountType.PLAYED, 1);
-            card.playAction(this);
+//            card.playAction(this, data);
         }
     }
 

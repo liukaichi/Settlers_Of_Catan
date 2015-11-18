@@ -14,7 +14,7 @@ public class DevCardTest extends TestCase
     {
         return new DevCard(DevCardType.MONUMENT)
         {
-            @Override public void playAction(PlayerBank context)
+            @Override public void playAction(PlayerBank context, Object data)
             {
                 //vp ++
             }
@@ -25,7 +25,7 @@ public class DevCardTest extends TestCase
     {
         DevCard test = new DevCard(DevCardType.ROAD_BUILD)
         {
-            @Override public void playAction(PlayerBank context)
+            @Override public void playAction(PlayerBank context, Object data)
             {
                 //road +2
             }

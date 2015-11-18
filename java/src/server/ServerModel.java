@@ -1,9 +1,9 @@
 package server;
 
 import client.data.PlayerInfo;
-import server.facade.IMovesFacade;
 import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
+import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -83,13 +83,29 @@ public class ServerModel extends ClientModel
 
     public ClientModel buyDevCard(PlayerIndex playerIndex)
     {
+        try {
+            Player player = getPlayers().get(playerIndex.getIndex());
+            player.buyDevCard();
+            this.setChanged();
+        } catch (InsufficientResourcesException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1,
             ResourceType resource2)
     {
-        return null;
+        try {
+            Player player = getPlayers().get(playerIndex.getIndex());
+            player.playDevCard(DevCardType.YEAR_OF_PLENTY);
+            player.getResources().getResource(resource1).addResource(1);
+            player.getResources().getResource(resource2).addResource(1);
+            this.setChanged();
+        } catch (CatanException e) {
+            e.printStackTrace();
+        }
+        return this;
     }
 
     public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1,
@@ -97,11 +113,15 @@ public class ServerModel extends ClientModel
     {
         try
         {
+            Player player = getPlayers().get(playerIndex.getIndex());
+            player.playDevCard(DevCardType.ROAD_BUILD);
             getMap().placeRoad(playerIndex, spot1);
             getMap().placeRoad(playerIndex, spot2);
             this.setChanged();
         } catch (PlacementException e)
         {
+            e.printStackTrace();
+        } catch (CatanException e) {
             e.printStackTrace();
         }
         return this;
@@ -110,7 +130,18 @@ public class ServerModel extends ClientModel
     public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex,
             HexLocation location)
     {
-        return null;
+
+        try {
+            Player player = getPlayers().get(playerIndex.getIndex());
+            player.getBank().addKnights(1);
+            player.playDevCard(DevCardType.SOLDIER, playerIndex, victimIndex, location);
+            robPlayer(playerIndex, victimIndex, location);
+            this.setChanged();
+        } catch (CatanException e) {
+            e.printStackTrace();
+        }
+
+        return this;
     }
 
     public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource)
@@ -118,6 +149,12 @@ public class ServerModel extends ClientModel
         try {
             Player player = getPlayers().get(playerIndex.getIndex());
             player.playDevCard(DevCardType.MONOPOLY);
+            int total = 0;
+            for(Player p : getPlayers()){
+                total += p.getBank().amountOf(resource);
+                p.getResources().setAmount(resource, 0);
+            }
+            player.getResources().setAmount(resource, total);
             this.setChanged();
         } catch (CatanException e) {
             e.printStackTrace();
@@ -127,7 +164,15 @@ public class ServerModel extends ClientModel
 
     public ClientModel monument(PlayerIndex playerIndex)
     {
-        return null;
+        try {
+            Player player = getPlayers().get(playerIndex.getIndex());
+            player.playDevCard(DevCardType.MONUMENT);
+            player.getBank().addMonuments(1);
+            this.setChanged();
+        } catch (CatanException e) {
+            e.printStackTrace();
+        }
+        return this;
     }
 
 

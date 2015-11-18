@@ -97,7 +97,7 @@ public abstract class DevCard
     /**
      * Plays the action on a specified DevCard
      */
-    public abstract void playAction(PlayerBank context);
+    public abstract void playAction(PlayerBank context, Object data);
 
     /**
      * Increments the specified amount for this DevCard

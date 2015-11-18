@@ -76,21 +76,16 @@ public class DevCards
     {
         monopoly = new DevCard(DevCardType.MONOPOLY)
         {
-            @Override public void playAction(PlayerBank context)
+            @Override public void playAction(PlayerBank context, Object data)
             {
                 //name 1 resource
                 //ALL players give all of that resource
-            }
-
-            private void action(ResourceType type)
-            {
-
             }
         };
 
         roadBuilding = new DevCard(DevCardType.ROAD_BUILD)
         {
-            @Override public void playAction(PlayerBank context)
+            @Override public void playAction(PlayerBank context, Object data)
             {
                 try
                 {
@@ -109,7 +104,7 @@ public class DevCards
 
         yearOfPlenty = new DevCard(DevCardType.YEAR_OF_PLENTY)
         {
-            @Override public void playAction(PlayerBank context)
+            @Override public void playAction(PlayerBank context, Object data)
             {
                 //take 2 resources from supply
             }
@@ -123,7 +118,7 @@ public class DevCards
 
         soldier = new DevCard(DevCardType.SOLDIER)
         {
-            @Override public void playAction(PlayerBank context)
+            @Override public void playAction(PlayerBank context, Object data)
             {
                 //move robber
                 context.addKnights(1);
@@ -132,7 +127,7 @@ public class DevCards
 
         monument = new DevCard(DevCardType.MONUMENT)
         {
-            @Override public void playAction(PlayerBank context)
+            @Override public void playAction(PlayerBank context, Object data)
             {
                 context.addMonuments(1);
             }
