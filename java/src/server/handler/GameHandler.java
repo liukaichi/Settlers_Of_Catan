@@ -86,12 +86,13 @@ public class GameHandler implements HttpHandler
                 int version = Integer.parseInt(params.get("version"));
                 ClientModel model;
 
+
                 if (params.isEmpty())
                 {
-                    model = facade.getGameState(-1);
+                    model = facade.getGameState(-1, -1);//TODO these need to get the proper game
                 } else
                 {
-                    model = facade.getGameState(version);
+                    model = facade.getGameState(-1, version);
                 }
 
                 if (model == null)

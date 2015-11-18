@@ -21,7 +21,7 @@ public class MockServerFacade extends AbstractServerFacade
 
     }
 
-    @Override public ClientModel getGameState(int version)
+    @Override public ClientModel getGameState(int gameID, int version)
     {
         if (version == -1 || version < 50)
             return FileUtils.getModelFromFile(null, "basicGame");

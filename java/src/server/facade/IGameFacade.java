@@ -14,11 +14,13 @@ public interface IGameFacade
     /**
      * Retrieves the current GameplayState
      *
+     *
+     * @param gameID
      * @param version the version to check the game against.
      * @return the current GameplayState. If the version in the server's game is older than the version supplied,
      * null is returned to indicate that nothing has changed.
      */
-    ClientModel getGameState(int version);
+    ClientModel getGameState(int gameID, int version);
 
     /**
      * Add an AI player to the game specified by the id.

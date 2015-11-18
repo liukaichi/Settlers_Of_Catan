@@ -19,11 +19,11 @@ public interface IMovesFacade
      * Add a message to the ClientModel with the sender's id
      *
      * @param gameID  the id of the game to execute the command on.
-     * @param sender  the person sending the chat.
+     * @param playerIndex  the person sending the chat.
      * @param content the content of the chat.
      * @return the updated ClientModel
      */
-    ClientModel sendChat(int gameID, PlayerIndex sender, String content);
+    ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content);
 
     /**
      * Distribute resources to players based on the number rolled

@@ -22,35 +22,45 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
     /**
      * Object that represents the trade offer made by a player
      */
-    private HashMap<ResourceType, Hand> resourceHand = new HashMap<>();
+    private HashMap<ResourceType, Hand> resourceHand;
     private Resources offer;
+
+    private TradeOffer()
+    {
+        resourceHand = new HashMap<>();
+        this.offer = new Resources();
+    }
 
     public TradeOffer(Player sender, Player receiver)
     {
-        this.sender = sender.getPlayerInfo().getPlayerIndex();
-        this.receiver = receiver.getPlayerInfo().getPlayerIndex();
-        this.offer = new Resources();
+        this(sender.getPlayerInfo().getPlayerIndex(), receiver.getPlayerInfo().getPlayerIndex());
     }
 
     public TradeOffer(PlayerIndex sender, PlayerIndex receiver)
     {
+        this();
         this.sender = sender;
         this.receiver = receiver;
-        this.offer = new Resources();
     }
 
-    public TradeOffer(PlayerIndex sender, PlayerIndex reciever, int brick, int wood, int sheep, int wheat, int ore)
+    public TradeOffer(PlayerIndex sender, PlayerIndex receiver, int brick, int wood, int sheep, int wheat, int ore)
     {
-        this.sender = sender;
-        this.receiver = reciever;
+        this(sender, receiver);
         this.offer = new Resources(brick, wood, sheep, wheat, ore);
     }
 
     public TradeOffer(String json)
     {
+        this();
         JsonParser parser = new JsonParser();
         JsonObject tradeObject = (JsonObject) parser.parse(json);
-        this.sender = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("sender").getAsInt());
+        if (tradeObject.has("sender"))
+        {
+            this.sender = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("sender").getAsInt());
+        } else
+        {
+            this.sender = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("playerIndex").getAsInt());
+        }
         this.receiver = PlayerIndex.fromInt(tradeObject.getAsJsonPrimitive("receiver").getAsInt());
         JsonObject newOffer = (JsonObject) tradeObject.get("offer");
         this.offer = new Resources(newOffer.toString());

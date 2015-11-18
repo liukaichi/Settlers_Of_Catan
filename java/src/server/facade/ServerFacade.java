@@ -17,105 +17,112 @@ import shared.model.player.TradeOffer;
  */
 public class ServerFacade extends AbstractServerFacade
 {
-    @Override public ClientModel getGameState(int version)
+    @Override public ClientModel getGameState(int gameID, int version)
     {
-        return null;
+        ClientModel model = getGame(gameID);
+        int modelVersion = model.getVersion();
+        if (version == -1 || version <= modelVersion)
+        {
+            return model;
+        } else
+        {
+            return null;
+        }
     }
 
-    @Override public ClientModel sendChat(int gameID, PlayerIndex sender, String content)
+    @Override public ClientModel sendChat(int gameID, PlayerIndex playerIndex, String content)
     {
-        return null;
+        return getGame(gameID).sendChat(playerIndex, content);
     }
 
     @Override public ClientModel rollNumber(int gameID, PlayerIndex playerIndex, int number)
     {
-        return null;
+        return getGame(gameID).rollNumber(playerIndex, number);
     }
 
     @Override public ClientModel robPlayer(int gameID, PlayerIndex playerIndex, PlayerIndex victim,
             HexLocation location)
     {
-        return null;
+        return getGame(gameID).robPlayer(playerIndex, victim, location);
     }
 
     @Override public ClientModel finishTurn(int gameID, PlayerIndex playerIndex)
     {
-        //model.finishTurn();
-        return null;
+        return new ClientModel();
+        //return getGame(gameID).
     }
 
     @Override public ClientModel buyDevCard(int gameID, PlayerIndex playerIndex)
     {
-        //model.buyDevCard();
-        return null;
+        return getGame(gameID).buyDevCard(playerIndex);
     }
 
     @Override public ClientModel yearOfPlenty(int gameID, PlayerIndex playerIndex, ResourceType resource1,
             ResourceType resource2)
     {
-        return null;
+        return getGame(gameID).yearOfPlenty(playerIndex, resource1, resource2);
     }
 
     @Override public ClientModel roadBuilding(int gameID, PlayerIndex playerIndex, EdgeLocation spot1,
             EdgeLocation spot2)
     {
-        return null;
+        return getGame(gameID).roadBuilding(playerIndex, spot1, spot2);
     }
 
     @Override public ClientModel soldier(int gameID, PlayerIndex playerIndex, PlayerIndex victimIndex,
             HexLocation location)
     {
-        return null;
+        return getGame(gameID).soldier(playerIndex, victimIndex, location);
     }
 
     @Override public ClientModel monopoly(int gameID, PlayerIndex playerIndex, ResourceType resource)
     {
-        return null;
+        return getGame(gameID).monopoly(playerIndex, resource);
     }
 
     @Override public ClientModel monument(int gameID, PlayerIndex playerIndex)
     {
-        return null;
+        return getGame(gameID).monument(playerIndex);
     }
 
     @Override public ClientModel buildRoad(int gameID, PlayerIndex playerIndex, EdgeLocation roadLocation, boolean free)
     {
-        //model.buildRoad(null, null);
-        return null;
+        return new ClientModel(); //TODO fix this.
+        //return getGame(gameID).buildRoad(playerIndex,roadLocation,free);
     }
 
     @Override public ClientModel buildSettlement(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation,
             boolean free)
     {
-        //model.buildSettlement(null, null);
-        return null;
+        return new ClientModel(); //TODO fix this.
+        //return getGame(gameID).buildSettlement(playerIndex,vertexLocation, isFree);
     }
 
     @Override public ClientModel buildCity(int gameID, PlayerIndex playerIndex, VertexLocation vertexLocation)
     {
-        //model.buildCity(null, null);
-        return null;
+        return new ClientModel(); //TODO fix this.
+        //return getGame(gameID).buildCity(playerIndex,vertexLocation);
     }
 
     @Override public ClientModel offerTrade(int gameID, PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver)
     {
-        return null;
+        return getGame(gameID).offerTrade(playerIndex, offer, receiver);
     }
 
     @Override public ClientModel acceptTrade(int gameID, PlayerIndex playerIndex, boolean willAccept)
     {
-        return null;
+        return getGame(gameID).acceptTrade(playerIndex, willAccept);
     }
 
     @Override public ClientModel maritimeTrade(int gameID, PlayerIndex playerIndex, TradeRatio ratio,
             ResourceType inputResource, ResourceType outputResource)
     {
-        return null;
+        return getGame(gameID).maritimeTrade(playerIndex, ratio, inputResource, outputResource);
     }
 
     @Override public ClientModel discardCards(int gameID, PlayerIndex playerIndex, Resources discardedCards)
     {
-        return null;
+        return getGame(gameID).discardCards(playerIndex, discardedCards);
     }
 
     private ServerModel getGame(int gameID)

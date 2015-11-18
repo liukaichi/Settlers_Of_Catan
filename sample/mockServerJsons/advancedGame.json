@@ -845,6 +845,17 @@
     "longestRoad": 1,
     "largestArmy": -1
   },
+  "tradeOffer": {
+    "sender": 0,
+    "receiver": 1,
+    "offer": {
+      "brick": 0,
+      "wood": 0,
+      "sheep": -1,
+      "wheat": 1,
+      "ore": 0
+    }
+  },
   "winner": -1,
   "version": 262
 }
