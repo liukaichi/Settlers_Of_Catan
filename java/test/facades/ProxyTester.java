@@ -33,6 +33,7 @@ public class ProxyTester
 {
     private ClientModel expectedModel, testingModel;
     private IProxy proxy;
+    final int DEFAULTGAME = 0;
 
     /**
      * @throws java.lang.Exception
@@ -432,11 +433,14 @@ public class ProxyTester
     {
         logUserIn();
 
-        CreateGameResponse response = proxy.createGame(new CreateGameRequest(true, true, true, gameName));
-        int id = response.getGameID();
+        //CreateGameResponse response = proxy.createGame(new CreateGameRequest(true, true, true, gameName));
+        //int id = response.getGameID();
         try
         {
-            proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
+            //proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
+
+            proxy.joinGame(new JoinGameRequest(DEFAULTGAME, CatanColor.YELLOW));
+
         } catch (GameQueryException e)
         {
             fail("shouldn't have failed");
@@ -585,8 +589,9 @@ public class ProxyTester
     @Test public void testOfferTrade()
     {
         startGame("OfferTrade");
+
         testingModel = proxy
-                .offerTrade(new OfferTradeCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_2, 1, 1, -1, 0, 0));
+                .offerTrade(new OfferTradeCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_1, -1, 1, 1, 1, -1));
         assertNotNull(testingModel);
     }
 

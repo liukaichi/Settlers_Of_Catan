@@ -73,6 +73,18 @@ public class GameInfo
         }
     }
 
+    public boolean hasPlayer(int playerID)
+    {
+        for (PlayerInfo player : players)
+        {
+            if (player.getId() == playerID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getId()
     {
         return id;

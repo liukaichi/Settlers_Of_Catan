@@ -1,9 +1,6 @@
 package shared.locations;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
@@ -20,6 +17,14 @@ public class EdgeLocation implements JsonSerializer<EdgeLocation>
     {
         setHexLoc(hexLoc);
         setDir(dir);
+    }
+
+    public EdgeLocation(String json)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject edgeLocationObject = (JsonObject) parser.parse(json);
+        this.hexLoc = new HexLocation(edgeLocationObject.get("x").getAsInt(), edgeLocationObject.get("y").getAsInt());
+        this.dir = EdgeDirection.fromAbreviation(edgeLocationObject.get("direction").getAsString());
     }
 
     public HexLocation getHexLoc()

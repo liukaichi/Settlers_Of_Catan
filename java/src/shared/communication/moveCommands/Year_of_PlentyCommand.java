@@ -1,14 +1,12 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
+import shared.locations.EdgeLocation;
 
 import java.lang.reflect.Type;
 
@@ -46,7 +44,12 @@ public class Year_of_PlentyCommand extends MoveCommand implements JsonSerializer
      */
     public Year_of_PlentyCommand(String json)
     {
-
+        JsonParser parser = new JsonParser();
+        JsonObject Year_of_PlentyObject = (JsonObject) parser.parse(json);
+        this.resource1 = ResourceType.valueOf(Year_of_PlentyObject.get("resource1").getAsString().toUpperCase());
+        this.resource2 = ResourceType.valueOf(Year_of_PlentyObject.get("resource2").getAsString().toUpperCase());
+        setPlayerIndex(PlayerIndex.fromInt(Year_of_PlentyObject.get("playerIndex").getAsInt()));
+        setType(MoveType.Year_of_Plenty);
     }
 
     /*

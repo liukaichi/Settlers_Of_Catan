@@ -57,9 +57,11 @@ public class GamesHandler implements HttpHandler
             // set response
             if (commandString.equalsIgnoreCase("join"))
             {
-                String gameId = newCommand.execute(-1);
+                String playerIDLabel = "\"playerID\": ";
+                int playerID = Integer.parseInt(
+                        cookie.substring(cookie.indexOf(playerIDLabel) + playerIDLabel.length(), cookie.indexOf('}')));
+                String gameId = newCommand.execute(playerID);
                 // testing
-                gameId = "1";
                 cookie = "catan.game=" + gameId;
                 response = "Success";
             } else

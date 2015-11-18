@@ -65,4 +65,14 @@ public abstract class MoveCommand implements CatanCommand
     {
         return playerIndex;
     }
+
+    public void setType(MoveType type)
+    {
+        this.type = type;
+    }
+
+    public void setPlayerIndex(PlayerIndex playerIndex)
+    {
+        this.playerIndex = playerIndex;
+    }
 }

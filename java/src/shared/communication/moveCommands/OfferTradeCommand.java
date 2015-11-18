@@ -57,10 +57,10 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
         int receiver = offerTradeCommand.get("receiver").getAsInt();
         JsonObject offer = offerTradeCommand.get("offer").getAsJsonObject();
         int brick = offer.get("brick").getAsInt();
-        int ore = offer.get("ore").getAsInt();
+        int wood = offer.get("wood").getAsInt();
         int sheep = offer.get("sheep").getAsInt();
         int wheat = offer.get("wheat").getAsInt();
-        int wood = offer.get("wood").getAsInt();
+        int ore = offer.get("ore").getAsInt();
 
         this.type = MoveType.valueOf(moveType);
         this.playerIndex = PlayerIndex.fromInt(sender);

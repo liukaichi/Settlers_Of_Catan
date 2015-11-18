@@ -2,6 +2,7 @@ package shared.communication;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import server.manager.GameManager;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 
@@ -48,6 +49,7 @@ public class JoinGameRequest implements CatanCommand
      */
     @Override public String execute(int gameID) throws CatanException
     {
-        return null;
+        GameManager.getInstance().joinGame(gameID, id, color);
+        return Integer.toString(id);
     }
 }

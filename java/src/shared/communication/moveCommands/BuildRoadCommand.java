@@ -1,9 +1,7 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
+import jdk.nashorn.internal.parser.JSONParser;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
@@ -51,6 +49,12 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
     public BuildRoadCommand(String json)
     {
 
+        JsonParser parser = new JsonParser();
+        JsonObject buildRoadObject = (JsonObject) parser.parse(json);
+        this.isFree = buildRoadObject.getAsJsonPrimitive("free").getAsBoolean();
+        this.roadLocation = new EdgeLocation(buildRoadObject.get("roadLocation").toString());
+        setPlayerIndex(PlayerIndex.fromInt(buildRoadObject.get("playerIndex").getAsInt()));
+        setType(MoveType.buildRoad);
     }
 
     /*

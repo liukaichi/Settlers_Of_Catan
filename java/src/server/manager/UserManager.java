@@ -63,7 +63,7 @@ public class UserManager
             credentials.put(3, new Credentials("Justin", "justin"));
             credentials.put(4, new Credentials("David", "david"));
             credentials.put(5, new Credentials("Adrian", "adrian"));
-            credentials.put(6, new Credentials("Sam", "sam"));
+            credentials.put(0, new Credentials("Sam", "sam"));
             credentials.put(7, new Credentials("Pete", "pete"));
             credentials.put(8, new Credentials("sheila", "parker"));
         } catch (SignInException e)

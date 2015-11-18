@@ -102,8 +102,8 @@ public class GameManager
      * Places the player with the given id in the game specified with the given color.
      *
      * @param playerID the id of the player joining the game.
-     * @param gameID the id of the game to join.
-     * @param color  the color that the player is joining the game with.
+     * @param gameID   the id of the game to join.
+     * @param color    the color that the player is joining the game with.
      */
     public void joinGame(int playerID, int gameID, CatanColor color) throws GameQueryException
     {
@@ -116,9 +116,17 @@ public class GameManager
                     User user = UserManager.getInstance().getUser(playerID);
                     PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
                     game.addPlayer(player);
+                    return;
                 } else
                 {
-                    throw new GameQueryException("Four players in game. Unable to join.");
+
+                    if (!game.hasPlayer(playerID))
+                    {
+                        throw new GameQueryException("Four players in game. Unable to join.");
+                    } else
+                    {
+                        return;
+                    }
                 }
             }
         }
