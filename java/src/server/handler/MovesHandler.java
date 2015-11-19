@@ -11,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.logging.Logger;
 
 /**
@@ -38,7 +39,7 @@ public class MovesHandler implements HttpHandler
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
             //Handling cookie
-            String receivedCookie =  httpExchange.getRequestHeaders().getFirst("Cookie");
+            String receivedCookie =  URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"),"UTF-8");
 
             if(receivedCookie == null){
                 throw new Exception("No cookie found");
@@ -53,8 +54,7 @@ public class MovesHandler implements HttpHandler
             int gameID = Integer.parseInt(cookies[1].substring(cookies[1].indexOf('=') + 1));
 
             //resend the cookie
-            respHeaders.set("Set-cookie", receivedCookie + ";Path=/");
-            LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
+            respHeaders.set("Set-cookie", receivedCookie + ";Path=/;");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();

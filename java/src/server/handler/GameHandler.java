@@ -1,5 +1,8 @@
 package server.handler;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -12,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -65,7 +69,7 @@ public class GameHandler implements HttpHandler
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
 
-            String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+            String cookie = URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"),"UTF-8");
             LOGGER.info("Received Cookie: "+cookie+"\n");
             if(cookie == null){
                 throw new Exception("No cookie found");
@@ -118,19 +122,22 @@ public class GameHandler implements HttpHandler
             }
             else if(commandString.toLowerCase().equals("listai"))
             {
-                response = "[LARGEST_ARMY]";
+                JsonArray array = new JsonArray();
+                array.add(new JsonPrimitive("LARGEST_ARMY"));
+                response = array.toString();
+                respHeaders.set("Content-Type", "application/json");
             }
             else if(commandString.toLowerCase().equals("addai"))
             {
                 response = "Not implemented for this phase";
-                respHeaders.set("Set-cookie", cookie + ";Path=/");
+                respHeaders.set("Set-cookie", cookie + ";Path=/;");
                 LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
                 httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND, response.length());
                 return;
             }
 
             // set cookie
-            respHeaders.set("Set-cookie", cookie + ";Path=/");
+            respHeaders.set("Set-cookie", cookie + ";Path=/;");
             LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
 
             // send response

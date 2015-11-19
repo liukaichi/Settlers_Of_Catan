@@ -63,10 +63,10 @@ public class UserHandler implements HttpHandler
             //passing this point means login/register was successful.
 
             // create cookie
-            String cookie = "catan.user=" + user.toString();
+            String cookie = "catan.user=" + URLEncoder.encode(user.toString().replaceAll("\\s",""), "UTF-8");
 
             // set cookie
-            respHeaders.set("Set-cookie", cookie + ";Path=/");
+            respHeaders.set("Set-cookie", cookie + ";Path=/;");
             LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
 
             // send response

@@ -1,5 +1,6 @@
 package server.handler;
 
+import client.data.PlayerInfo;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -35,7 +36,7 @@ public class GamesHandler implements HttpHandler
         try
         {
             URI uri = httpExchange.getRequestURI();
-            String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+            String cookie = URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"),"UTF-8");
 
             LOGGER.info("Received Cookie from uri "+uri.toString()+": "+cookie+"\n");
 
@@ -60,12 +61,9 @@ public class GamesHandler implements HttpHandler
             if (commandString.equalsIgnoreCase("join"))
             {
                 String playerIDLabel = "\"playerID\": ";
-                if(!cookie.contains("}"))
-                {
-                    cookie+="}";
-                }
-                int playerID = Integer.parseInt(
-                        cookie.substring(cookie.indexOf(playerIDLabel) + playerIDLabel.length(), cookie.indexOf('}')));
+                cookie = cookie.substring(cookie.indexOf("=") + 1);
+                PlayerInfo playerInfo = new PlayerInfo(cookie);
+                int playerID = playerInfo.getId();
                 String gameId = newCommand.execute(playerID);
                 // testing
                 cookie = "catan.game=" + gameId;
@@ -77,11 +75,11 @@ public class GamesHandler implements HttpHandler
 
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
-            respHeaders.set("Content-Type", "text");
+            respHeaders.set("Content-Type", "text/html");
             // set cookie
-            respHeaders.set("Set-cookie", cookie + ";Path=/");
+            respHeaders.set("Set-cookie", cookie + ";Path=/;");
             LOGGER.info(commandString + "- Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
-            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
         } catch (Exception e)
         {
             e.printStackTrace();
