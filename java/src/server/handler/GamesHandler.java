@@ -37,6 +37,8 @@ public class GamesHandler implements HttpHandler
             URI uri = httpExchange.getRequestURI();
             String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
 
+            LOGGER.info("Received Cookie from uri "+uri.toString()+": "+cookie+"\n");
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
             String nextLine;
@@ -58,6 +60,10 @@ public class GamesHandler implements HttpHandler
             if (commandString.equalsIgnoreCase("join"))
             {
                 String playerIDLabel = "\"playerID\": ";
+                if(!cookie.contains("}"))
+                {
+                    cookie+="}";
+                }
                 int playerID = Integer.parseInt(
                         cookie.substring(cookie.indexOf(playerIDLabel) + playerIDLabel.length(), cookie.indexOf('}')));
                 String gameId = newCommand.execute(playerID);
@@ -74,6 +80,7 @@ public class GamesHandler implements HttpHandler
             respHeaders.set("Content-Type", "text");
             // set cookie
             respHeaders.set("Set-cookie", cookie + ";Path=/");
+            LOGGER.info(commandString + "- Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
         } catch (Exception e)
         {

@@ -15,6 +15,7 @@ import shared.model.map.structure.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -85,7 +86,7 @@ public class MapController extends ObserverController implements IMapController
     {
 
         CatanMap map = model.getMap();
-        HashMap<HexLocation, Hex> hexes = (HashMap<HexLocation, Hex>) map.getHexes();
+        Map<HexLocation, Hex> hexes = map.getHexes();
         for (Hex hex : hexes.values())
         {
             getView().addHex(hex.getLocation(), hex.getHexType());

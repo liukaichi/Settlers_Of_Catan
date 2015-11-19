@@ -67,6 +67,7 @@ public class UserHandler implements HttpHandler
 
             // set cookie
             respHeaders.set("Set-cookie", cookie + ";Path=/");
+            LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
 
             // send response
             response = "Success";

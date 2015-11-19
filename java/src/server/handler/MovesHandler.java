@@ -54,6 +54,7 @@ public class MovesHandler implements HttpHandler
 
             //resend the cookie
             respHeaders.set("Set-cookie", receivedCookie + ";Path=/");
+            LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();

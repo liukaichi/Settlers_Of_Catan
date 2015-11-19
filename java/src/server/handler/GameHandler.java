@@ -66,6 +66,7 @@ public class GameHandler implements HttpHandler
             respHeaders.set("Content-Type", "text");
 
             String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+            LOGGER.info("Received Cookie: "+cookie+"\n");
             if(cookie == null){
                 throw new Exception("No cookie found");
             }
@@ -122,12 +123,15 @@ public class GameHandler implements HttpHandler
             else if(commandString.toLowerCase().equals("addai"))
             {
                 response = "Not implemented for this phase";
+                respHeaders.set("Set-cookie", cookie + ";Path=/");
+                LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
                 httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND, response.length());
                 return;
             }
 
             // set cookie
             respHeaders.set("Set-cookie", cookie + ";Path=/");
+            LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
 
             // send response
 //            response = "Success";
