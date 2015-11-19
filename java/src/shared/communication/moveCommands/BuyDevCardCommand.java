@@ -1,9 +1,12 @@
 package shared.communication.moveCommands;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
+import shared.model.bank.resource.Resources;
 
 /**
  * buyDevCard command object.
@@ -30,7 +33,10 @@ public class BuyDevCardCommand extends SimpleSerializableCommand
      */
     public BuyDevCardCommand(String json)
     {
-
+        JsonParser parser = new JsonParser();
+        JsonObject buyDevCardObject = (JsonObject) parser.parse(json);
+        this.type = MoveType.valueOf(buyDevCardObject.getAsJsonPrimitive("type").getAsString());
+        this.playerIndex = PlayerIndex.fromInt(buyDevCardObject.getAsJsonPrimitive("playerIndex").getAsInt());
     }
 
     /**

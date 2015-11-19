@@ -1,14 +1,12 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
 import shared.locations.VertexLocation;
+import shared.model.bank.resource.Resources;
 
 import java.lang.reflect.Type;
 
@@ -51,6 +49,12 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
      */
     public BuildSettlementCommand(String json)
     {
+        JsonParser parser = new JsonParser();
+        JsonObject buildSettlementObject = (JsonObject) parser.parse(json);
+        this.type = MoveType.valueOf(buildSettlementObject.getAsJsonPrimitive("type").getAsString());
+        this.playerIndex = PlayerIndex.fromInt(buildSettlementObject.getAsJsonPrimitive("playerIndex").getAsInt());
+        this.settlementLocation = new VertexLocation(buildSettlementObject.get("vertexLocation").toString());
+        this.isFree = buildSettlementObject.get("free").getAsBoolean();
 
     }
 

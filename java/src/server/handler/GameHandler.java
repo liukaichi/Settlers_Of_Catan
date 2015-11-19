@@ -110,7 +110,7 @@ public class GameHandler implements HttpHandler
             }
 
             // set cookie
-//            respHeaders.set("Set-cookie", cookie + ";Path=/");
+            respHeaders.set("Set-cookie", cookie + ";Path=/");
 
             // send response
 //            response = "Success";

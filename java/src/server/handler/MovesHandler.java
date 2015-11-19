@@ -52,6 +52,9 @@ public class MovesHandler implements HttpHandler
             //set gameID
             int gameID = Integer.parseInt(cookies[1].substring(cookies[1].indexOf('=') + 1));
 
+            //resend the cookie
+            respHeaders.set("Set-cookie", receivedCookie + ";Path=/");
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
             String nextLine;
@@ -73,10 +76,6 @@ public class MovesHandler implements HttpHandler
             Constructor c = Class.forName(className).getConstructor(String.class);
             CatanCommand newCommand = (CatanCommand)c.newInstance(json);
 
-            // create cookie
-            //TODO change this empty string to be the real cookie!!!!
-            HttpCookie cookie = new HttpCookie("catan.user", "");
-
             // send response
             response = newCommand.execute(gameID);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
@@ -86,7 +85,7 @@ public class MovesHandler implements HttpHandler
 
         } catch (Exception e)
         {
-            e.printStackTrace();
+            //e.printStackTrace();
             response = e.getLocalizedMessage();
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 

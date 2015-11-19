@@ -383,8 +383,8 @@
         "brick": 0,
         "wood": 1,
         "sheep": 1,
-        "wheat": 1,
-        "ore": 0
+        "wheat": 2,
+        "ore": 3
       },
       "oldDevCards": {
         "yearOfPlenty": 0,
@@ -623,11 +623,11 @@
     "lines": []
   },
   "bank": {
-    "brick": 23,
-    "wood": 21,
-    "sheep": 20,
-    "wheat": 22,
-    "ore": 22
+    "brick": 10,
+    "wood": 10,
+    "sheep": 10,
+    "wheat": 10,
+    "ore": 10
   },
   "turnTracker": {
     "status": "Rolling",
