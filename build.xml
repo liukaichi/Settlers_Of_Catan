@@ -116,6 +116,7 @@
 
   	<property name="java.dir" location="java"/>
 	<property name="java.src" location="${java.dir}/src"/>
+	<property name="java.sample" location="./sample"/>
 	<property name="java.images" location="${java.dir}/images"/>
 	<property name="java.build" location="${java.dir}/build"/>
 	<property name="java.dist" location="${java.dir}/dist"/>
@@ -148,6 +149,12 @@
 		<mkdir dir="${java.dist}/images"/>
 		<copy todir="${java.dist}/images">
 			<fileset dir="${java.images}">
+				<include name="**"/>
+			</fileset>
+		</copy>
+		<mkdir dir="${java.dist}/sample"/>
+		<copy todir="${java.dist}/sample">
+			<fileset dir="${java.sample}">
 				<include name="**"/>
 			</fileset>
 		</copy>
