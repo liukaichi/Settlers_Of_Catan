@@ -42,8 +42,8 @@ public class ProxyTester
      */
     @BeforeClass public static void setupServer() throws Exception
     {
-        /*String args[] = {"8081"};
-        Server.main(args);*/
+        String args[] = {"8081"};
+        Server.main(args);
 
 
         // Class[] parameterTypes = new Class[1];
@@ -72,13 +72,13 @@ public class ProxyTester
         expectedModel = new ClientModel();
         testingModel = new ClientModel();
         proxy = new ServerProxy();
-        server = new Server("localhost",8081);
+        /*server = new Server("localhost",8081);
         server.start();
         try {
             Thread.sleep(2500);
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
-        }
+        }*/
     }
 
     /**
@@ -89,8 +89,8 @@ public class ProxyTester
         expectedModel = null;
         testingModel = null;
         proxy = null;
-        server.stop();
-        server = null;
+       /* server.stop();
+        server = null;*/
     }
 
     // @Test
