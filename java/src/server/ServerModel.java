@@ -61,19 +61,29 @@ public class ServerModel extends ClientModel
             players = getMap().getHexPlayersWithSettlement(hex.getLocation());
             getBank().awardPlayers(hex.getResourceType(), StructureType.SETTLEMENT, players);
         }
-        this.setChanged();
+        String playerName = getPlayerName(playerIndex);
+        getLog().addMessageLine(playerName, playerName + " just rolled a " + number);
         return this;
     }
 
-    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
+    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location) throws CatanException
     {
-        return null;
+        getMap().setRobberLocation(location);
+        Player robberPlayer = getPlayer(playerIndex);
+        Player victimPlayer = getPlayer(victim);
+        ResourceType robbedType = victimPlayer.robPlayer();
+        robberPlayer.increaseResource(robbedType, 1);
+        String robberName = robberPlayer.getName();
+        String victimName = victimPlayer.getName();
+        getLog().addMessageLine(robberName, robberName + " moved the robber and robbed " + victimName + ".");
+        return this;
     }
 
     public ClientModel finishTurn(PlayerIndex playerIndex)
     {
         this.getTurnTracker().finishTurn(playerIndex);
-        this.setChanged();
+        String playerName = getPlayerName(playerIndex);
+        getLog().addMessageLine(playerName, playerName +"'s turn just ended.");
         return this;
     }
 
@@ -81,7 +91,8 @@ public class ServerModel extends ClientModel
     {
         Player player = getPlayers().get(playerIndex.getIndex());
         player.buyDevCard();
-        this.setChanged();
+        String playerName = player.getName();
+        getLog().addMessageLine(playerName, playerName + " bought a Development Card.");
         return this;
     }
 
@@ -162,7 +173,8 @@ public class ServerModel extends ClientModel
         else if(canBuyRoad(getPlayerByIndex(playerIndex)))
             getMap().placeRoad(playerIndex, location);
             player.buyRoad(isFree);
-        this.setChanged();
+        String playerName = player.getName();
+        getLog().addMessageLine(playerName, playerName + " built a road.");
         return this;
     }
 
@@ -179,6 +191,8 @@ public class ServerModel extends ClientModel
         {
             throw new CatanException("can't build settlement");
         }
+        String playerName = player.getName();
+        getLog().addMessageLine(playerName, playerName + " built a settlement.");
         return this;
     }
 
@@ -194,6 +208,8 @@ public class ServerModel extends ClientModel
         {
             throw new CatanException("can't build city");
         }
+        String playerName = player.getName();
+        getLog().addMessageLine(playerName, playerName + " built a city.");
         return this;
     }
 

@@ -383,6 +383,12 @@ public class Player
         return getBank().getResources();
     }
 
+    public List<Resource> getAllResources()
+    {
+        return bank.getResources().getAllResources();
+    }
+
+
     /**
      * Checks if the player can currently trade using a given resource
      *
@@ -470,6 +476,18 @@ public class Player
     public void discardCards(Resources discardedCards)
     {
         bank.subtractResources(discardedCards);
+    }
+
+    /**
+     * Robs the player of a random resource, and returns the type removed.
+     * @return the type of resource that the victim lost.
+     */
+    public ResourceType robPlayer() throws InsufficientResourcesException {
+        return bank.rob();
+    }
+
+    public void increaseResource(ResourceType robbedType, int amount) {
+        bank.addResource(robbedType,amount);
     }
 }
 

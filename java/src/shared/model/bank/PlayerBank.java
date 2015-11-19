@@ -15,6 +15,7 @@ import shared.model.bank.structure.BankStructure;
 import shared.model.bank.structure.Structures;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,6 +54,12 @@ public class PlayerBank extends Bank
     {
         return playerResources;
     }
+
+    public List<Resource> getAllResources()
+    {
+        return getResources().getAllResources();
+    }
+
 
     public void setPlayerResources(Resources playerResources)
     {
@@ -392,6 +399,30 @@ public class PlayerBank extends Bank
     @Override public int hashCode()
     {
         return 0;
+    }
+
+    public ResourceType rob() throws InsufficientResourcesException {
+        List<ResourceType> resources = new ArrayList<>();
+        for (Resource resource: getAllResources())
+        {
+            if (resource.getAmount() > 0)
+            {
+                resources.add(resource.getType());
+            }
+        }
+        if (resources.size() > 0)
+        {
+            Collections.shuffle(resources);
+            ResourceType robbedType = resources.get(0);
+            subResource(robbedType, 1);
+            return robbedType;
+        }
+        else
+        {
+            throw new InsufficientResourcesException("No resources to rob");
+        }
+
+
     }
 
 }
