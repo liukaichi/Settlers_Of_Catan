@@ -74,6 +74,8 @@ public class GameHandler implements HttpHandler
             if(cookies.length < 2){
                 throw new Exception("Game cookie not set. Login and join before calling this method.");
             }
+            //set gameID
+            int gameID = Integer.parseInt(cookies[1].substring(cookies[1].indexOf('=') + 1));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder builder = new StringBuilder();
@@ -87,17 +89,22 @@ public class GameHandler implements HttpHandler
 
             if (commandString.toLowerCase().equals("model"))
             {
-                Map<String, String> params = parseQuery(uri.getQuery());
-                int version = Integer.parseInt(params.get("version"));
+                int version = -1;
+                Map<String, String> params = new HashMap<>();
+                if(uri.getQuery() != null)
+                {
+                    params = parseQuery(uri.getQuery());
+                    version = Integer.parseInt(params.get("version"));
+                }
                 ClientModel model;
 
 
                 if (params.isEmpty())
                 {
-                    model = facade.getGameState(-1, -1);//TODO these need to get the proper game
+                    model = facade.getGameState(gameID, -1);//TODO these need to get the proper game
                 } else
                 {
-                    model = facade.getGameState(-1, version);
+                    model = facade.getGameState(gameID, version);
                 }
 
                 if (model == null)
@@ -107,6 +114,16 @@ public class GameHandler implements HttpHandler
                 {
                     response = model.toString();
                 }
+            }
+            else if(commandString.toLowerCase().equals("listai"))
+            {
+                response = "[LARGEST_ARMY]";
+            }
+            else if(commandString.toLowerCase().equals("addai"))
+            {
+                response = "Not implemented for this phase";
+                httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND, response.length());
+                return;
             }
 
             // set cookie
