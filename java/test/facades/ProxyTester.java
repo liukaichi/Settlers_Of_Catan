@@ -35,14 +35,17 @@ public class ProxyTester
     private ClientModel expectedModel, testingModel;
     private IProxy proxy;
     final int DEFAULTGAME = 0;
+    private Server server;
 
     /**
      * @throws java.lang.Exception
      */
     @BeforeClass public static void setupServer() throws Exception
     {
-        String args[] = {"8081"};
-        Server.main(args);
+        /*String args[] = {"8081"};
+        Server.main(args);*/
+
+
         // Class[] parameterTypes = new Class[1];
         // parameterTypes[1] = Credentials.class;
         // Method method = ServerProxy.class.getMethod("userLogin",
@@ -69,6 +72,13 @@ public class ProxyTester
         expectedModel = new ClientModel();
         testingModel = new ClientModel();
         proxy = new ServerProxy();
+        server = new Server("localhost",8081);
+        server.start();
+        try {
+            Thread.sleep(2500);
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
@@ -79,6 +89,8 @@ public class ProxyTester
         expectedModel = null;
         testingModel = null;
         proxy = null;
+        server.stop();
+        server = null;
     }
 
     // @Test
