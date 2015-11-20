@@ -62,6 +62,10 @@ public class GamesHandler implements HttpHandler
             {
                 String playerIDLabel = "\"playerID\": ";
                 cookie = cookie.substring(cookie.indexOf("=") + 1);
+                if (cookie.contains("catan.game"))
+                {
+                    cookie = cookie.substring(0,cookie.indexOf("; catan.game"));
+                }
                 PlayerInfo playerInfo = new PlayerInfo(cookie);
                 int playerID = playerInfo.getId();
                 String gameId = newCommand.execute(playerID);

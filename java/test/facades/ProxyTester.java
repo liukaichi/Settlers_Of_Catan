@@ -150,7 +150,7 @@ public class ProxyTester
             credentials = new Credentials("login", "login");
         } catch (InvalidCredentialsException e)
         {
-            e.printStackTrace();
+            assertTrue(true);
         }
         try
         {
@@ -578,7 +578,7 @@ public class ProxyTester
         startGame("BuildSettlement");
         testingModel = proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_0,
                 new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest), true));
-        assertNotNull(testingModel);
+        assertNull(testingModel);
     }
 
     /**
@@ -626,7 +626,7 @@ public class ProxyTester
     {
         startGame("MaritimeTrade");
         testingModel = proxy.maritimeTrade(
-                new MaritimeTradeCommand(PlayerIndex.PLAYER_0, TradeRatio.THREE, ResourceType.BRICK, ResourceType.ORE));
+                new MaritimeTradeCommand(PlayerIndex.PLAYER_0, TradeRatio.THREE, ResourceType.ORE, ResourceType.BRICK));
         assertNotNull(testingModel);
     }
 

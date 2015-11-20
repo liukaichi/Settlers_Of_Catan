@@ -1,8 +1,11 @@
 package shared.communication.moveCommands;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 import shared.locations.HexLocation;
 
@@ -34,7 +37,8 @@ public class SoldierCommand extends RobPlayerCommand
      */
     public SoldierCommand(String json)
     {
-
+        super(json);
+        setType(MoveType.Soldier);
     }
 
     /**

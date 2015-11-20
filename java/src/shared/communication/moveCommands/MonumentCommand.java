@@ -1,9 +1,12 @@
 package shared.communication.moveCommands;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
+import shared.locations.HexLocation;
 
 /**
  * Monument command object.
@@ -30,6 +33,10 @@ public class MonumentCommand extends SimpleSerializableCommand
      */
     public MonumentCommand(String json)
     {
+        JsonParser parser = new JsonParser();
+        JsonObject monumentObject = (JsonObject) parser.parse(json);
+         setPlayerIndex(PlayerIndex.fromInt(monumentObject.get("playerIndex").getAsInt()));
+        setType(MoveType.Monument);
 
     }
 

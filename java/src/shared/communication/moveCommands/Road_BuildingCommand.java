@@ -1,14 +1,13 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 
 import java.lang.reflect.Type;
 
@@ -47,7 +46,14 @@ public class Road_BuildingCommand extends MoveCommand implements JsonSerializer<
      */
     public Road_BuildingCommand(String json)
     {
+        JsonParser parser = new JsonParser();
+        JsonObject road_BuildingObject = (JsonObject) parser.parse(json);
 
+        this.spot1 = new EdgeLocation(road_BuildingObject.get("spot1").getAsJsonObject().toString());
+        this.spot2 = new EdgeLocation(road_BuildingObject.get("spot2").getAsJsonObject().toString());
+
+        setPlayerIndex(PlayerIndex.fromInt(road_BuildingObject.get("playerIndex").getAsInt()));
+        setType(MoveType.robPlayer);
     }
 
     /*

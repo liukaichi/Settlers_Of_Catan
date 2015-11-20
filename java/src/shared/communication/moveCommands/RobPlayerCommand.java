@@ -1,12 +1,10 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 import shared.locations.HexLocation;
 
@@ -56,7 +54,14 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      */
     public RobPlayerCommand(String json)
     {
+        JsonParser parser = new JsonParser();
+        JsonObject robPlayerObject = (JsonObject) parser.parse(json);
+        this.victimIndex = PlayerIndex.fromInt(robPlayerObject.get("victimIndex").getAsInt());
 
+        JsonObject locationObject = robPlayerObject.get("location").getAsJsonObject();
+        this.location = new HexLocation(locationObject.get("x").getAsInt(), locationObject.get("y").getAsInt());
+        setPlayerIndex(PlayerIndex.fromInt(robPlayerObject.get("playerIndex").getAsInt()));
+        setType(MoveType.robPlayer);
     }
 
     /*

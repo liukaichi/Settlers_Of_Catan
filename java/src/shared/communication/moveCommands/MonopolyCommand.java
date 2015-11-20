@@ -1,9 +1,6 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
@@ -45,8 +42,12 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
      */
     public MonopolyCommand(String json)
     {
+        JsonParser parser = new JsonParser();
+        JsonObject monopolyObject = (JsonObject) parser.parse(json);
+        setPlayerIndex(PlayerIndex.fromInt(monopolyObject.get("playerIndex").getAsInt()));
+        this.resource = ResourceType.valueOf(monopolyObject.get("resource").getAsString().toUpperCase());
 
-    }
+        setType(MoveType.Monopoly);    }
 
     /*
      * (non-Javadoc)
