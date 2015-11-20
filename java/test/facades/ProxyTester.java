@@ -45,7 +45,6 @@ public class ProxyTester
         String args[] = {"8081"};
         Server.main(args);
 
-
         // Class[] parameterTypes = new Class[1];
         // parameterTypes[1] = Credentials.class;
         // Method method = ServerProxy.class.getMethod("userLogin",
@@ -75,7 +74,7 @@ public class ProxyTester
         /*server = new Server("localhost",8081);
         server.start();
         try {
-            Thread.sleep(2500);
+            Thread.sleep(4000);
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }*/
