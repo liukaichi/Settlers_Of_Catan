@@ -11,7 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.logging.Logger;
 
 /**
@@ -36,6 +38,7 @@ public class UserHandler implements HttpHandler
         {
             URI uri = httpExchange.getRequestURI();
             String commandString = uri.getPath().split("/")[2];
+            LOGGER.fine(httpExchange.getRequestMethod()+" "+uri.getPath()+" "+httpExchange.getResponseCode());
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
@@ -67,7 +70,7 @@ public class UserHandler implements HttpHandler
 
             // set cookie
             respHeaders.set("Set-cookie", cookie + ";Path=/;");
-            LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
+            LOGGER.info("Set Response Header: Set-cookie: '"+respHeaders.get("Set-cookie")+"'\n");
 
             // send response
             response = "Success";

@@ -1,7 +1,6 @@
 package server.handler;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -62,6 +61,7 @@ public class GameHandler implements HttpHandler
         try
         {
             URI uri = httpExchange.getRequestURI();
+            LOGGER.fine(httpExchange.getRequestMethod()+" "+uri.getPath()+" "+httpExchange.getResponseCode());
             String commandString = uri.getPath().split("/")[2];
 
 

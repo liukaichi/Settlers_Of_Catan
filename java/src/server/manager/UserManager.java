@@ -19,6 +19,7 @@ public class UserManager
 {
     private static UserManager _instance;
     private Map<Integer, Credentials> credentials;
+    private int lastId = 16;
 
     private UserManager()
     {
@@ -58,14 +59,16 @@ public class UserManager
     {
         try
         {
-            credentials.put(1, new Credentials("Cache", "cache"));
-            credentials.put(2, new Credentials("Amanda", "amanda"));
-            credentials.put(3, new Credentials("Justin", "justin"));
-            credentials.put(4, new Credentials("David", "david"));
-            credentials.put(5, new Credentials("Adrian", "adrian"));
             credentials.put(0, new Credentials("Sam", "sam"));
-            credentials.put(7, new Credentials("Pete", "pete"));
+            credentials.put(1, new Credentials("Brooke", "brooke"));
             credentials.put(8, new Credentials("sheila", "parker"));
+            credentials.put(10, new Credentials("Pete", "pete"));
+            credentials.put(11, new Credentials("Mark", "mark"));
+            credentials.put(12, new Credentials("Cache", "cache"));
+            credentials.put(13, new Credentials("Amanda", "amanda"));
+            credentials.put(14, new Credentials("Justin", "justin"));
+            credentials.put(15, new Credentials("David", "david"));
+            credentials.put(16, new Credentials("Adrian", "adrian"));
         } catch (SignInException e)
         {
             //Do nothing.
@@ -104,8 +107,8 @@ public class UserManager
         } else
         {
             // playerID is the new size of the credentials
-            this.credentials.put(this.credentials.size() + 1, credentials);
-            return new User(credentials, this.credentials.size());
+            this.credentials.put(++lastId, credentials);
+            return new User(credentials, lastId);
         }
     }
 

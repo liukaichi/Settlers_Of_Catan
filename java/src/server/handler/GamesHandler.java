@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Constructor;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URLDecoder;
 import java.util.logging.Logger;
 
 /**
@@ -36,6 +38,7 @@ public class GamesHandler implements HttpHandler
         try
         {
             URI uri = httpExchange.getRequestURI();
+            LOGGER.fine(httpExchange.getRequestMethod()+" "+uri.getPath()+" "+httpExchange.getResponseCode());
             String cookie = URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"),"UTF-8");
 
             LOGGER.info("Received Cookie from uri "+uri.toString()+": "+cookie+"\n");
