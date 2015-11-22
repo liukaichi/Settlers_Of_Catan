@@ -107,7 +107,29 @@ public class GameManager
      */
     public void joinGame(int playerID, int gameID, CatanColor color) throws GameQueryException
     {
-        for (GameInfo game : games.values())
+        GameInfo game = games.get(gameID);
+        if(game != null)
+        {
+            if(game.playerAlreadyJoined(playerID))
+            {
+                return;
+            }
+            else if (game.getPlayers().size() < 4) {
+                User user = UserManager.getInstance().getUser(playerID);
+                PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
+                game.addPlayer(player);
+                return;
+            } else {
+
+                if (!game.hasPlayer(playerID)) {
+                    throw new GameQueryException("Four players in game. Unable to join.");
+                } else {
+                    return;
+                }
+            }
+        }
+        throw new GameQueryException("Game id not found.");
+        /*for (GameInfo game : games.values())
         {
             if (game.getId() == gameID)
             {
@@ -130,7 +152,7 @@ public class GameManager
                 }
             }
         }
-        throw new GameQueryException("Game id not found.");
+        throw new GameQueryException("Game id not found.");*/
     }
 
     /**
@@ -177,7 +199,7 @@ public class GameManager
 
     public GameInfo createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
-        int newGameID = games.size() + 1;
+        int newGameID = games.size();
         GameInfo game = new GameInfo(newGameID, name);
         games.put(newGameID, game);
         return game;

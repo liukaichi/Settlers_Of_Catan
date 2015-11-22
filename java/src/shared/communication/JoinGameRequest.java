@@ -44,12 +44,12 @@ public class JoinGameRequest implements CatanCommand
     /**
      * Calls JoinGame method on the Server Facade
      *
-     * @param gameID possibly not used.
+     * @param playerId id of the player.
      * @return Json String representing the current state of the Server Model
      */
-    @Override public String execute(int gameID) throws CatanException
+    @Override public String execute(int playerId) throws CatanException
     {
-        GameManager.getInstance().joinGame(gameID, id, color);
+        GameManager.getInstance().joinGame(playerId, id, color);
         return Integer.toString(id);
     }
 }

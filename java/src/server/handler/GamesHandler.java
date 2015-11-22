@@ -39,7 +39,9 @@ public class GamesHandler implements HttpHandler
         {
             URI uri = httpExchange.getRequestURI();
             LOGGER.fine(httpExchange.getRequestMethod()+" "+uri.getPath()+" "+httpExchange.getResponseCode());
-            String cookie = URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"),"UTF-8");
+            String cookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+            if(cookie != null)
+                cookie = URLDecoder.decode(cookie,"UTF-8");
 
             LOGGER.info("Received Cookie from uri "+uri.toString()+": "+cookie+"\n");
 
@@ -91,7 +93,7 @@ public class GamesHandler implements HttpHandler
         {
             e.printStackTrace();
             response = e.getLocalizedMessage();
-            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
+            httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 
         } finally
         {

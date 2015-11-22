@@ -123,6 +123,14 @@ public class GameInfo
         return Collections.unmodifiableList(players);
     }
 
+    public boolean playerAlreadyJoined(int playerId)
+    {
+        if(players.size() > playerId)
+            return players.get(playerId) != null;
+        else
+            return false;
+    }
+
     @Override public boolean equals(Object o)
     {
         if (this == o)
