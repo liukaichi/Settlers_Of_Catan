@@ -24,6 +24,7 @@ public class DevCards
 
     public DevCards(boolean isBank)
     {
+        this();
         if (isBank)
         {
             monopoly.setAmountPlayable(2);

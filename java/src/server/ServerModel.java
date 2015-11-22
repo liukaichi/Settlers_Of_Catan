@@ -47,6 +47,8 @@ public class ServerModel extends ClientModel
     }
 
     public ServerModel(GameInfo gameInfo, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
+        this();
+        this.setGameInfo(gameInfo);
         populatePlayers(gameInfo.getPlayers());
         this.bank = new Bank(true);
         this.chat = new Chat();
@@ -367,5 +369,10 @@ public class ServerModel extends ClientModel
                 player.getPlayerInfo().setColor(color);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

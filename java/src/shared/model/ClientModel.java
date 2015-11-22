@@ -338,19 +338,27 @@ public class ClientModel extends Observable
     {
         JsonParser parser = new JsonParser();
         JsonObject model = new JsonObject();
-        model.add("deck", parser.parse(bank.getDevCards().toString(DevCard.AmountType.PLAYABLE)));
-        model.add("map", parser.parse(map.toString()));
+        if(bank != null && bank.getDevCards() != null)
+            model.add("deck", parser.parse(bank.getDevCards().toString(DevCard.AmountType.PLAYABLE)));
+        if(map != null)
+            model.add("map", parser.parse(map.toString()));
         JsonArray players = new JsonArray();
-        for (Player player : this.players)
-        {
-            players.add(parser.parse(player.toString()));
+        if(players != null) {
+            for (Player player : this.players) {
+                players.add(parser.parse(player.toString()));
+            }
+            model.add("players", players);
         }
-        model.add("players", players);
-        model.add("log", parser.parse(log.toString()));
-        model.add("chat", parser.parse(chat.toString()));
-        model.add("bank", parser.parse(bank.getResources().toString()));
-        model.add("turnTracker", parser.parse(turnTracker.toString()));
-        model.addProperty("winner", winner.getIndex());
+        if(log != null)
+            model.add("log", parser.parse(log.toString()));
+        if(chat != null)
+            model.add("chat", parser.parse(chat.toString()));
+        if(bank != null)
+            model.add("bank", parser.parse(bank.getResources().toString()));
+        if(turnTracker != null)
+            model.add("turnTracker", parser.parse(turnTracker.toString()));
+        if(winner != null)
+            model.addProperty("winner", winner.getIndex());
         model.addProperty("version", version);
 
         if (tradeOffer != null)
