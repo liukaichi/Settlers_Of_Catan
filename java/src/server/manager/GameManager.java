@@ -202,6 +202,7 @@ public class GameManager
         int newGameID = games.size();
         GameInfo game = new GameInfo(newGameID, name);
         games.put(newGameID, game);
+        models.put(newGameID, new ServerModel(game, randomTiles, randomNumbers, randomPorts));
         return game;
     }
 }

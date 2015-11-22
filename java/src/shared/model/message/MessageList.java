@@ -18,6 +18,11 @@ public abstract class MessageList
 {
     private List<MessageLine> lines;
 
+    public MessageList()
+    {
+        lines = new ArrayList<>();
+    }
+
     public MessageList(String json)
     {
         lines = new ArrayList<>();

@@ -1,5 +1,6 @@
 package server;
 
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
@@ -7,11 +8,18 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.ClientModel;
+import shared.model.TurnTracker;
+import shared.model.bank.Bank;
 import shared.model.bank.resource.Resources;
+import shared.model.map.CatanMap;
 import shared.model.map.Hex;
+import shared.model.message.Chat;
+import shared.model.message.Log;
 import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,6 +44,26 @@ public class ServerModel extends ClientModel
     public ServerModel(String json)
     {
         super(json);
+    }
+
+    public ServerModel(GameInfo gameInfo, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
+        populatePlayers(gameInfo.getPlayers());
+        this.bank = new Bank(true);
+        this.chat = new Chat();
+        this.log = new Log();
+        this.map = new CatanMap(randomTiles, randomNumbers, randomPorts);
+        this.tradeOffer = null;
+        this.turnTracker = new TurnTracker();
+        this.version = 0;
+        this.winner = PlayerIndex.NONE;
+    }
+
+    private void populatePlayers(List<PlayerInfo> players) {
+        this.players = new ArrayList<>();
+        for(PlayerInfo pInfo : players)
+        {
+            this.players.add(new Player(pInfo));
+        }
     }
 
     public ClientModel sendChat(PlayerIndex playerIndex, String content)

@@ -31,14 +31,14 @@ public class ClientModel extends Observable
 {
     protected TradeOffer tradeOffer;
     private GameInfo gameInfo;
-    private List<Player> players;
-    private Bank bank;
-    private Chat chat;
-    private Log log;
-    private CatanMap map;
-    private TurnTracker turnTracker;
-    private int version;
-    private PlayerIndex winner;
+    protected List<Player> players;
+    protected Bank bank;
+    protected Chat chat;
+    protected Log log;
+    protected CatanMap map;
+    protected TurnTracker turnTracker;
+    protected int version;
+    protected PlayerIndex winner;
     private boolean isUpdating;
 
     /**

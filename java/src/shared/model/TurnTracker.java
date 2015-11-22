@@ -37,6 +37,13 @@ public class TurnTracker
         largestArmy = PlayerIndex.fromInt(largestArmyInt);
     }
 
+    public TurnTracker() {
+        status = TurnStatus.FirstRound;
+        currentTurn = PlayerIndex.PLAYER_0;
+        longestRoad = PlayerIndex.NONE;
+        largestArmy = PlayerIndex.NONE;
+    }
+
     /**
      * Updates the currentTurn counter
      */

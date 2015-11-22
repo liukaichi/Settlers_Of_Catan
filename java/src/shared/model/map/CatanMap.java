@@ -86,7 +86,7 @@ public class CatanMap
         hexes = new TreeMap<>();
         roads = new HashMap<>();
         structures = new HashMap<>();
-        radius = -1;
+        radius = 3;
         robberLocation = new HexLocation(0, 0);
     }
 
@@ -110,6 +110,13 @@ public class CatanMap
         this.structures = structures;
         this.radius = radius;
         this.robberLocation = robberLocation;
+    }
+
+    public CatanMap(boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
+        this();
+        //initialize with water
+        populateWaterTiles();
+        do stuff
     }
 
     public List<Port> getPorts()

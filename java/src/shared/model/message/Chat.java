@@ -8,6 +8,11 @@ package shared.model.message;
 public class Chat extends MessageList
 {
 
+
+    public Chat()
+    {
+        super();
+    }
     /**
      * Initializes the Chat log from Json.
      *

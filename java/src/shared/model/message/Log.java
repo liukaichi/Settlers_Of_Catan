@@ -7,6 +7,10 @@ package shared.model.message;
  */
 public class Log extends MessageList
 {
+    public Log()
+    {
+        super();
+    }
     /**
      * Initializes the Log from Json.
      *
