@@ -1,6 +1,7 @@
 package shared.model.map;
 
 import com.google.gson.*;
+import server.util.FileUtils;
 import shared.definitions.HexType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
@@ -34,6 +35,7 @@ public class CatanMap
      */
     public CatanMap(String json)
     {
+        this();
         JsonParser parser = new JsonParser();
         JsonObject map = (JsonObject) parser.parse(json);
         JsonArray hexes = map.getAsJsonArray("hexes");
@@ -114,15 +116,15 @@ public class CatanMap
         this.robberLocation = robberLocation;
     }
 
-    public CatanMap(boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
+    public CatanMap(boolean randomTiles, boolean randomNumbers, boolean randomPorts)
+    {
         this();
         //initialize with water
         populateWaterTiles();
         if (randomTiles)
         {
             populateRandomHexes();
-        }
-        else
+        } else
         {
             populateDefaultHexes();
         }
@@ -130,8 +132,7 @@ public class CatanMap
         if (randomNumbers)
         {
             placeRandomNumbers();
-        }
-        else
+        } else
         {
             placeDefaultNumbers();
         }
@@ -139,12 +140,12 @@ public class CatanMap
         if (randomPorts)
         {
             populateRandomPorts();
-        }
-        else
+        } else
         {
             populateDefaultPorts();
         }
     }
+
     public List<Port> getPorts()
     {
         return ports;
@@ -211,43 +212,48 @@ public class CatanMap
             }
         }
     }
+
     //assuming hex objects are by reference, this should modify the map
     private void populateRandomHexes()
     {
         //3 ore,4 wood,3 brick,4 sheep,4 wheat,1 desert
         int assignedHexes = 0;
         //Lambda expression filters the list of hexes so none of the outer water tiles/ports are included in this operation
-        ArrayList<Hex> hexes = this.hexes.values().stream().filter(h -> (((h.getLocation().getY() < 3) && (h.getLocation().getY() > -3))&&((h.getLocation().getX() < 3) && (h.getLocation().getX() > -3))) ).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Hex> hexes = this.hexes.values().stream()
+                .filter(h -> (((h.getLocation().getY() < 3) && (h.getLocation().getY() > -3)) && (
+                        (h.getLocation().getX() < 3) && (h.getLocation().getX() > -3))))
+                .collect(Collectors.toCollection(ArrayList::new));
         //randomize who gets what resource
         Collections.shuffle(hexes);
-        for(Hex hex : hexes)
+        for (Hex hex : hexes)
         {
-            if (assignedHexes < 3) {
+            if (assignedHexes < 3)
+            {
                 hex.setHexType(HexType.ORE);
                 hex.setResourceType(ResourceType.ORE);
                 assignedHexes++;
-            }
-            else if (assignedHexes < 7) {
+            } else if (assignedHexes < 7)
+            {
                 hex.setHexType(HexType.WOOD);
                 hex.setResourceType(ResourceType.WOOD);
                 assignedHexes++;
-            }
-            else if (assignedHexes < 10) {
+            } else if (assignedHexes < 10)
+            {
                 hex.setHexType(HexType.BRICK);
                 hex.setResourceType(ResourceType.BRICK);
                 assignedHexes++;
-            }
-            else if (assignedHexes < 14) {
+            } else if (assignedHexes < 14)
+            {
                 hex.setHexType(HexType.SHEEP);
                 hex.setResourceType(ResourceType.SHEEP);
                 assignedHexes++;
-            }
-            else if (assignedHexes < 18) {
+            } else if (assignedHexes < 18)
+            {
                 hex.setHexType(HexType.WHEAT);
                 hex.setResourceType(ResourceType.WHEAT);
                 assignedHexes++;
-            }
-            else {
+            } else
+            {
                 hex.setHexType(HexType.DESERT);
                 hex.setResourceType(null);
                 hex.setHasRobber(true);
@@ -259,7 +265,8 @@ public class CatanMap
 
     private void populateDefaultHexes()
     {
-
+        CatanMap map = FileUtils.getCatanMapFromFile(null, "defaultMap");
+        this.setHexes(map.getHexes());
     }
 
     private void placeRandomNumbers()
@@ -267,43 +274,52 @@ public class CatanMap
         //  2-12, 1 of 2,12, 2 of the rest
         int assignedHexes = 0;
         //Lambda expression filters the list of hexes so desert and none of the outer water tiles/ports are included in this operation
-        ArrayList<Hex> hexes = this.hexes.values().stream().filter(h -> !h.hasRobber() && (((h.getLocation().getY() < 3) && (h.getLocation().getY() > -3)) && ((h.getLocation().getX() < 3) && (h.getLocation().getX() > -3)))).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Hex> hexes = this.hexes.values().stream()
+                .filter(h -> !h.hasRobber() && (((h.getLocation().getY() < 3) && (h.getLocation().getY() > -3)) && (
+                        (h.getLocation().getX() < 3) && (h.getLocation().getX() > -3))))
+                .collect(Collectors.toCollection(ArrayList::new));
         //randomize who gets what number
         Collections.shuffle(hexes);
-        for(Hex hex : hexes)
+        for (Hex hex : hexes)
         {
-            if (assignedHexes < 1) {
+            if (assignedHexes < 1)
+            {
                 hex.setNumberTile(2);
                 assignedHexes++;
-            }
-            else if (assignedHexes < 3) {
+            } else if (assignedHexes < 3)
+            {
                 hex.setNumberTile(3);
                 assignedHexes++;
-            }
-            else if (assignedHexes < 5) {
+            } else if (assignedHexes < 5)
+            {
                 hex.setNumberTile(4);
                 assignedHexes++;
-            }
-            else if (assignedHexes < 7) {
+            } else if (assignedHexes < 7)
+            {
                 hex.setNumberTile(5);
                 assignedHexes++;
-            }
-            else if (assignedHexes < 9) {
+            } else if (assignedHexes < 9)
+            {
                 hex.setNumberTile(6);
                 assignedHexes++;
-            }else if (assignedHexes < 11) {
+            } else if (assignedHexes < 11)
+            {
                 hex.setNumberTile(8);
                 assignedHexes++;
-            }else if (assignedHexes < 13) {
+            } else if (assignedHexes < 13)
+            {
                 hex.setNumberTile(9);
                 assignedHexes++;
-            }else if (assignedHexes < 15) {
+            } else if (assignedHexes < 15)
+            {
                 hex.setNumberTile(10);
                 assignedHexes++;
-            }else if (assignedHexes < 17) {
+            } else if (assignedHexes < 17)
+            {
                 hex.setNumberTile(11);
                 assignedHexes++;
-            }else {
+            } else
+            {
                 hex.setNumberTile(12);
                 assignedHexes++;
             }
@@ -312,7 +328,12 @@ public class CatanMap
 
     private void placeDefaultNumbers()
     {
-
+        CatanMap map = FileUtils.getCatanMapFromFile(null, "defaultMap");
+        for (Map.Entry<HexLocation, Hex> hex : map.getHexes().entrySet())
+        {
+            int number = hex.getValue().getNumberTile();
+            hexes.get(hex.getKey()).setNumberTile(number);
+        }
     }
 
     private void populateRandomPorts()
@@ -321,24 +342,26 @@ public class CatanMap
         //  5 2to1 (1 for each resource), 4 3to1
         int assignedHexes = 0;
         //Lambda expression filters out any tiles within the radius 3, so should return all surrounding water edges
-        ArrayList<Hex> hexes = this.hexes.values().stream().filter(h -> ((h.getLocation().getY() > 3) || (h.getLocation().getY() < -3) || (h.getLocation().getX() > 3) || (h.getLocation().getX() < -3))).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Hex> hexes = this.hexes.values().stream()
+                .filter(h -> ((h.getLocation().getY() > 3) || (h.getLocation().getY() < -3) || (h.getLocation().getX()
+                        > 3) || (h.getLocation().getX() < -3))).collect(Collectors.toCollection(ArrayList::new));
         //randomize who gets what number
         Collections.shuffle(hexes);
         ResourceType type = ResourceType.WOOD;
-        for(Hex hex : hexes)
+        for (Hex hex : hexes)
         {
-            if (assignedHexes < 5) {
+            if (assignedHexes < 5)
+            {
                 hex.setResourceType(type);
                 ports.add(new Port(hex));
                 type = type.next();
                 assignedHexes++;
-            }
-            else if (assignedHexes < 9) {
+            } else if (assignedHexes < 9)
+            {
                 hex.setResourceType(null);
                 ports.add(new Port(hex));
                 assignedHexes++;
-            }
-            else
+            } else
             {
 
             }
@@ -347,14 +370,15 @@ public class CatanMap
 
     private void populateDefaultPorts()
     {
-
+        CatanMap map = FileUtils.getCatanMapFromFile(null, "defaultMap");
+        this.setPorts(map.getPorts());
     }
 
     private boolean isPort(Hex hex)
     {
-        for(Port port : ports)
+        for (Port port : ports)
         {
-            if(port.getLocation().equals(hex.getLocation()))
+            if (port.getLocation().equals(hex.getLocation()))
             {
                 return true;
             }
@@ -373,7 +397,7 @@ public class CatanMap
             {
                 for (Hex hex : this.hexes.values())
                 {
-                    if(!isPort(hex) && !hex.getHexType().equals(HexType.WATER))
+                    if (!isPort(hex) && !hex.getHexType().equals(HexType.WATER))
                         hexes.add(parser.parse(hex.toString()));
                 }
             }
@@ -461,8 +485,8 @@ public class CatanMap
     /**
      * Method that indicates whether a player has the ability to place a settlement in a certain location on the map
      *
-     * @param player            this will be the player placing the settlement.
-     * @param location          this will be the location of the settlement; must ensure that this space on the map is empty.
+     * @param player   this will be the player placing the settlement.
+     * @param location this will be the location of the settlement; must ensure that this space on the map is empty.
      * @return true if the location is vacant and at least
      * two spaces away from another settlement otherwise returns false
      */
@@ -770,10 +794,9 @@ public class CatanMap
         return vertices;
     }
 
-
     public void setRobberLocation(HexLocation robberLocation) throws PlacementException
     {
-        if(canMoveRobber(robberLocation))
+        if (canMoveRobber(robberLocation))
             this.robberLocation = robberLocation;
         else
             throw new PlacementException("Can't place robber at this location");

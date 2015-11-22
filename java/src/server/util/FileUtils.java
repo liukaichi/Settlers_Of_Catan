@@ -2,7 +2,11 @@ package server.util;
 
 import client.data.GameInfo;
 import client.utils.BufferedReaderParser;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import jdk.nashorn.internal.parser.JSONParser;
 import server.ServerModel;
+import shared.model.map.CatanMap;
 
 import java.io.*;
 import java.util.HashMap;
@@ -79,6 +83,7 @@ public class FileUtils
         } catch (FileNotFoundException e)
         {
             e.printStackTrace();
+            return null;
         }
 
         return model;
@@ -111,5 +116,29 @@ public class FileUtils
             e.printStackTrace();
         }
         return game;
+    }
+
+    public static CatanMap getCatanMapFromFile(String filePath, String fileName)
+    {
+        if (filePath == null)
+        {
+            filePath = "sample/serverDefaults/";
+        }
+
+        File file = new File(filePath + fileName + ".json");
+        BufferedReader reader;
+        CatanMap catanMap = new CatanMap();
+        try
+        {
+            reader = new BufferedReader(new FileReader(file));
+            String json = BufferedReaderParser.parse(reader);
+            JsonParser parser = new JsonParser();
+            JsonObject map = (JsonObject) parser.parse(BufferedReaderParser.parse(reader));
+            catanMap = new CatanMap(map.getAsJsonObject("map").toString());
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return catanMap;
     }
 }
