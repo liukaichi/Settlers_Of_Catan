@@ -116,7 +116,7 @@ public class CatanMap
         this();
         //initialize with water
         populateWaterTiles();
-        do stuff
+        //do stuff
     }
 
     public List<Port> getPorts()
