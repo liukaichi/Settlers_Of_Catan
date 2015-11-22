@@ -116,7 +116,32 @@ public class CatanMap
         this();
         //initialize with water
         populateWaterTiles();
-        do stuff
+        if (randomTiles)
+        {
+            populateRandomHexes();
+        }
+        else
+        {
+            populateDefaultHexes();
+        }
+
+        if (randomNumbers)
+        {
+            placeRandomNumbers();
+        }
+        else
+        {
+            placeDefaultNumbers();
+        }
+
+        if (randomPorts)
+        {
+            populateRandomPorts();
+        }
+        else
+        {
+            populateDefaultPorts();
+        }
     }
 
     public List<Port> getPorts()
@@ -184,6 +209,36 @@ public class CatanMap
                 }
             }
         }
+    }
+
+    private void populateRandomHexes()
+    {
+
+    }
+
+    private void populateDefaultHexes()
+    {
+
+    }
+
+    private void placeRandomNumbers()
+    {
+
+    }
+
+    private void placeDefaultNumbers()
+    {
+
+    }
+
+    private void populateRandomPorts()
+    {
+
+    }
+
+    private void populateDefaultPorts()
+    {
+
     }
 
     private boolean isPort(Hex hex)
