@@ -375,4 +375,9 @@ public class ServerModel extends ClientModel
     public String toString() {
         return super.toString();
     }
+
+    public void addPlayer(PlayerInfo playerInfo) {
+        this.players.add(new Player(playerInfo));
+
+    }
 }

@@ -119,7 +119,9 @@ public class GameManager
             else if (game.getPlayers().size() < 4) {
                 User user = UserManager.getInstance().getUser(playerID);
                 PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
+                player.setPlayerIndex(game.getPlayers().size());
                 game.addPlayer(player);
+                models.get(gameID).addPlayer(player);
                 return;
             } else {
 
