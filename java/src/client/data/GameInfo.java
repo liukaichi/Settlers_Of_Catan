@@ -174,4 +174,14 @@ public class GameInfo
         return gameInfo.toString();
 
     }
+    public void setPlayerColor(CatanColor color, int playerID)
+    {
+        for (PlayerInfo player : players)
+        {
+            if (player.getId() == playerID)
+            {
+                player.setColor(color);
+            }
+        }
+    }
 }

@@ -111,7 +111,7 @@ public class TurnTracker
      */
     public void updateStatus(TurnStatus playerTurnStatus)
     {
-
+        status = playerTurnStatus;
     }
 
     public PlayerIndex getCurrentTurn()
@@ -187,5 +187,6 @@ public class TurnTracker
         {
             currentTurn = currentTurn.getNext();
         }
+        this.status = TurnStatus.Rolling;
     }
 }
