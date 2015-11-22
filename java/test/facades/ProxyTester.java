@@ -637,12 +637,12 @@ public class ProxyTester
     @Test public void testRobPlayer()
     {
         startGame("RobPlayer");
-        proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_3, new EdgeLocation(new HexLocation(-1, 0), EdgeDirection.NorthEast),
+       /* proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_3, new EdgeLocation(new HexLocation(-1, 0), EdgeDirection.NorthEast),
                 true));
         proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_3,
-                new VertexLocation(new HexLocation(-1, 0), VertexDirection.East), true));
+                new VertexLocation(new HexLocation(-1, 0), VertexDirection.NorthEast), true));*/
         testingModel = proxy
-                .robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_3, new HexLocation(-1, 0)));
+                .robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_3, new HexLocation(1, -1)));
         assertNotNull(testingModel);
 
        /* proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_1,
