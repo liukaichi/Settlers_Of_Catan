@@ -150,11 +150,11 @@ public class PlayerBankTest
     {
         try
         {
-            test.buyRoad();
+            test.buyRoad(false);
 
             brick().addResource(3);
             wood().addResource(2);
-            test.buyRoad();
+            test.buyRoad(false);
 
             assertEquals(1,
                     test.getStructures().getStructure(StructureType.ROAD).getAmount(BankStructure.AmountType.BUILT));

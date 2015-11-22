@@ -89,8 +89,8 @@ public class DevCards
             {
                 try
                 {
-                    context.buyRoad();
-                    context.buyRoad();
+                    context.buyRoad(true);
+                    context.buyRoad(true);
                 } catch (InsufficientResourcesException e)
                 {
                     e.printStackTrace();

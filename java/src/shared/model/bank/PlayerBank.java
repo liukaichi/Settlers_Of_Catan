@@ -245,9 +245,13 @@ public class PlayerBank extends Bank
      *
      * @throws InsufficientResourcesException
      */
-    public void buyRoad() throws CatanException
+    public void buyRoad(boolean isFree) throws CatanException
     {
-        if (canBuyRoad())
+        if (isFree)
+        {
+            structures.getStructure(StructureType.ROAD).addAmountBuilt(1);
+        }
+        else if (canBuyRoad())
         {
             payResource(ResourceType.BRICK, 1);
             payResource(ResourceType.WOOD, 1);

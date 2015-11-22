@@ -8,6 +8,7 @@ import server.facade.IGamesFacade;
 import server.util.FileUtils;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
+import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.GameQueryException;
 
@@ -112,6 +113,8 @@ public class GameManager
         {
             if(game.playerAlreadyJoined(playerID))
             {
+                games.get(gameID).setPlayerColor(color, playerID);
+                models.get(gameID).setPlayerColor(color, playerID);
                 return;
             }
             else if (game.getPlayers().size() < 4) {

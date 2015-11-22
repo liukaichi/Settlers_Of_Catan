@@ -443,7 +443,7 @@
       "monuments": 0,
       "playedDevCard": false,
       "discarded": false,
-      "playerID": 2,
+      "playerID": 13,
       "playerIndex": 1,
       "name": "Amanda",
       "color": "blue"
@@ -478,7 +478,7 @@
       "monuments": 0,
       "playedDevCard": false,
       "discarded": false,
-      "playerID": 7,
+      "playerID": 10,
       "playerIndex": 2,
       "name": "Pete",
       "color": "red"

@@ -91,6 +91,16 @@ public class ServerModel extends ClientModel
         }
         String playerName = getPlayerName(playerIndex);
         getLog().addMessageLine(playerName, playerName + " just rolled a " + number);
+
+        //set the turn according to the roll number
+        if (number == 7)
+        {
+            turnTracker.updateStatus(TurnStatus.Robbing);
+        }
+        else
+        {
+            turnTracker.updateStatus(TurnStatus.Playing);
+        }
         return this;
     }
 
@@ -104,12 +114,14 @@ public class ServerModel extends ClientModel
         String robberName = robberPlayer.getName();
         String victimName = victimPlayer.getName();
         getLog().addMessageLine(robberName, robberName + " moved the robber and robbed " + victimName + ".");
+        turnTracker.updateStatus(TurnStatus.Playing);
+
         return this;
     }
 
     public ClientModel finishTurn(PlayerIndex playerIndex)
     {
-        this.getTurnTracker().finishTurn(playerIndex);
+        turnTracker.finishTurn(playerIndex);
         String playerName = getPlayerName(playerIndex);
         getLog().addMessageLine(playerName, playerName +"'s turn just ended.");
         return this;
@@ -155,6 +167,7 @@ public class ServerModel extends ClientModel
         player.playDevCard(DevCardType.SOLDIER, playerIndex, victimIndex, location);
         robPlayer(playerIndex, victimIndex, location);
         updateLargestArmy();
+        turnTracker.updateStatus(TurnStatus.Playing);
 
         return this;
     }
@@ -192,17 +205,23 @@ public class ServerModel extends ClientModel
      */
     public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree) throws CatanException
     {
+
         Player player = getPlayers().get(playerIndex.getIndex());
-        getMap().placeRoad(playerIndex, location);
-        updateLongestRoad();
 
         if(isFree)
+        {
             getMap().placeRoad(playerIndex, location);
+        }
         else if(canBuyRoad(getPlayerByIndex(playerIndex)))
+        {
             getMap().placeRoad(playerIndex, location);
+        }
+
             player.buyRoad(isFree);
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " built a road.");
+
+        updateLongestRoad();
         return this;
     }
 
@@ -339,4 +358,14 @@ public class ServerModel extends ClientModel
         getTurnTracker().updateStatus(playerTurnStatus);
     }
 
+    public void setPlayerColor(CatanColor color, int playerID)
+    {
+        for (Player player : players)
+        {
+            if (player.getPlayerInfo().getId() == playerID)
+            {
+                player.getPlayerInfo().setColor(color);
+            }
+        }
+    }
 }
