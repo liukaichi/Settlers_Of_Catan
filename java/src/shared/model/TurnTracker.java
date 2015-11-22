@@ -19,6 +19,8 @@ public class TurnTracker
 {
     private PlayerIndex currentTurn, longestRoad, largestArmy;
     private TurnStatus status;
+    private int LAST_PLAYER = 3;
+    private int FIRST_PLAYER = 0;
 
     public TurnTracker(String json)
     {
@@ -37,7 +39,8 @@ public class TurnTracker
         largestArmy = PlayerIndex.fromInt(largestArmyInt);
     }
 
-    public TurnTracker() {
+    public TurnTracker()
+    {
         status = TurnStatus.FirstRound;
         currentTurn = PlayerIndex.PLAYER_0;
         longestRoad = PlayerIndex.NONE;
@@ -55,6 +58,7 @@ public class TurnTracker
     /**
      * Updates the longestRoad counter.
      * A player has the longest road if he or she has at least 5 roads
+     *
      * @param players the list of players to look through.
      */
     public void updateLongestRoad(List<Player> players)
@@ -82,6 +86,7 @@ public class TurnTracker
     /**
      * Updates the largest army counter
      * A player has the largest army if he or she has at least 3 knights
+     *
      * @param players the list of players to look through.
      */
     public void updateLargestArmy(List<Player> players)
@@ -183,10 +188,34 @@ public class TurnTracker
 
     public void finishTurn(PlayerIndex playerIndex)
     {
-        if (currentTurn.equals(playerIndex))
+        if (this.status == TurnStatus.FirstRound)
+        {
+            if (currentTurn.equals(playerIndex))
+            {
+                if (currentTurn.getIndex() == LAST_PLAYER)
+                {
+                    status = TurnStatus.SecondRound;
+                } else
+                {
+                    currentTurn = currentTurn.getNext();
+                }
+            }
+        } else if (this.status == TurnStatus.SecondRound)
+        {
+            if (currentTurn.equals(playerIndex))
+            {
+                if (currentTurn == PlayerIndex.PLAYER_0)
+                {
+                    status = TurnStatus.Rolling;
+                } else
+                {
+                    currentTurn = currentTurn.getLast();
+                }
+            }
+        } else if (currentTurn.equals(playerIndex))
         {
             currentTurn = currentTurn.getNext();
+            this.status = TurnStatus.Rolling;
         }
-        this.status = TurnStatus.Rolling;
     }
 }

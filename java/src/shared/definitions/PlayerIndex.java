@@ -48,4 +48,8 @@ public enum PlayerIndex
     {
         return index < 3 ? PlayerIndex.fromInt(index + 1) : PlayerIndex.PLAYER_0;
     }
+    public PlayerIndex getLast()
+    {
+        return index > 0 ? PlayerIndex.fromInt(index - 1) : PlayerIndex.PLAYER_3;
+    }
 }
