@@ -8,7 +8,6 @@ import server.facade.IGamesFacade;
 import server.util.FileUtils;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
-import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.GameQueryException;
 

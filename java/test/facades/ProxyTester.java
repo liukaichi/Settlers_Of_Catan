@@ -15,13 +15,11 @@ import shared.communication.JoinGameRequest;
 import shared.communication.moveCommands.*;
 import shared.definitions.*;
 import shared.definitions.exceptions.AddAIException;
-import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.GameQueryException;
 import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.message.Chat;
-import shared.model.message.MessageLine;
 
 import java.util.List;
 
