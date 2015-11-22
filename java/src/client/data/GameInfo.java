@@ -125,10 +125,14 @@ public class GameInfo
 
     public boolean playerAlreadyJoined(int playerId)
     {
-        if(players.size() > playerId)
-            return players.get(playerId) != null;
-        else
-            return false;
+        for (PlayerInfo player : players)
+        {
+            if (player.getId() == playerId)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override public boolean equals(Object o)

@@ -227,6 +227,7 @@ public class ClientModel extends Observable
      */
     public boolean canBuyDevCard()
     {
+
         return bank.getDevCards().totalCards() > 0;
     }
 
