@@ -3,10 +3,12 @@ package shared.model.map.structure;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.PortType;
+import shared.definitions.ResourceType;
 import shared.definitions.TradeRatio;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.model.map.Hex;
 
 /**
  * Object representing a port in the Catan game
@@ -51,6 +53,47 @@ public class Port
         this.direction = EdgeDirection.fromAbreviation(port.get("direction").getAsString());
         JsonObject location = port.getAsJsonObject("location");
         this.location = new HexLocation(location.get("x").getAsInt(), location.get("y").getAsInt());
+    }
+
+    public Port(Hex hex) {
+        this.resource = ResourceType.toPortType(hex.getResourceType());
+        this.ratio = TradeRatio.TWO;
+        this.location = hex.getLocation();
+        int x = location.getX();
+        int y = location.getY();
+
+        if(y > 3 && x < 3)//bottom left
+        {
+            this.direction = EdgeDirection.NorthEast;
+        }
+        else if(y > 3 && x > 3)//bottom right
+        {
+            this.direction = EdgeDirection.NorthWest;
+        }
+        else if(y < 3 && x < 3)//top left
+        {
+            this.direction = EdgeDirection.SouthEast;
+        }
+        else if(y < 3 && x > 3)//top right
+        {
+            this.direction = EdgeDirection.SouthWest;
+        }
+        else if(y < 3)//top
+        {
+            this.direction = EdgeDirection.South;
+        }
+        else if(y > 3)//bottom
+        {
+            this.direction = EdgeDirection.North;
+        }
+        else if(x > 3)//right
+        {
+            this.direction = EdgeDirection.NorthWest;
+        }
+        else if(x < 3)//left
+        {
+            this.direction = EdgeDirection.NorthEast;
+        }
     }
 
     public PortType getResource()

@@ -46,4 +46,23 @@ public enum ResourceType
             return null;
         }
     }
+
+    public ResourceType next()
+    {
+        switch (this)
+        {
+            case WOOD:
+                return ResourceType.BRICK;
+            case BRICK:
+                return ResourceType.SHEEP;
+            case SHEEP:
+                return ResourceType.WHEAT;
+            case WHEAT:
+                return ResourceType.ORE;
+            case ORE:
+                return ResourceType.WOOD;
+            default:
+                return null;
+        }
+    }
 }

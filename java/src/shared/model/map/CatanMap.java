@@ -3,11 +3,13 @@ package shared.model.map;
 import com.google.gson.*;
 import shared.definitions.HexType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.ResourceType;
 import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.map.structure.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents the board game map of the Catan game
@@ -143,7 +145,6 @@ public class CatanMap
             populateDefaultPorts();
         }
     }
-
     public List<Port> getPorts()
     {
         return ports;
@@ -210,10 +211,50 @@ public class CatanMap
             }
         }
     }
-
+    //assuming hex objects are by reference, this should modify the map
     private void populateRandomHexes()
     {
-
+        //3 ore,4 wood,3 brick,4 sheep,4 wheat,1 desert
+        int assignedHexes = 0;
+        //Lambda expression filters the list of hexes so none of the outer water tiles/ports are included in this operation
+        ArrayList<Hex> hexes = this.hexes.values().stream().filter(h -> (((h.getLocation().getY() < 3) && (h.getLocation().getY() > -3))&&((h.getLocation().getX() < 3) && (h.getLocation().getX() > -3))) ).collect(Collectors.toCollection(ArrayList::new));
+        //randomize who gets what resource
+        Collections.shuffle(hexes);
+        for(Hex hex : hexes)
+        {
+            if (assignedHexes < 3) {
+                hex.setHexType(HexType.ORE);
+                hex.setResourceType(ResourceType.ORE);
+                assignedHexes++;
+            }
+            else if (assignedHexes < 7) {
+                hex.setHexType(HexType.WOOD);
+                hex.setResourceType(ResourceType.WOOD);
+                assignedHexes++;
+            }
+            else if (assignedHexes < 10) {
+                hex.setHexType(HexType.BRICK);
+                hex.setResourceType(ResourceType.BRICK);
+                assignedHexes++;
+            }
+            else if (assignedHexes < 14) {
+                hex.setHexType(HexType.SHEEP);
+                hex.setResourceType(ResourceType.SHEEP);
+                assignedHexes++;
+            }
+            else if (assignedHexes < 18) {
+                hex.setHexType(HexType.WHEAT);
+                hex.setResourceType(ResourceType.WHEAT);
+                assignedHexes++;
+            }
+            else {
+                hex.setHexType(HexType.DESERT);
+                hex.setResourceType(null);
+                hex.setHasRobber(true);
+                robberLocation = hex.getLocation();
+                assignedHexes++;
+            }
+        }
     }
 
     private void populateDefaultHexes()
@@ -223,7 +264,50 @@ public class CatanMap
 
     private void placeRandomNumbers()
     {
-
+        //  2-12, 1 of 2,12, 2 of the rest
+        int assignedHexes = 0;
+        //Lambda expression filters the list of hexes so desert and none of the outer water tiles/ports are included in this operation
+        ArrayList<Hex> hexes = this.hexes.values().stream().filter(h -> !h.hasRobber() && (((h.getLocation().getY() < 3) && (h.getLocation().getY() > -3)) && ((h.getLocation().getX() < 3) && (h.getLocation().getX() > -3)))).collect(Collectors.toCollection(ArrayList::new));
+        //randomize who gets what number
+        Collections.shuffle(hexes);
+        for(Hex hex : hexes)
+        {
+            if (assignedHexes < 1) {
+                hex.setNumberTile(2);
+                assignedHexes++;
+            }
+            else if (assignedHexes < 3) {
+                hex.setNumberTile(3);
+                assignedHexes++;
+            }
+            else if (assignedHexes < 5) {
+                hex.setNumberTile(4);
+                assignedHexes++;
+            }
+            else if (assignedHexes < 7) {
+                hex.setNumberTile(5);
+                assignedHexes++;
+            }
+            else if (assignedHexes < 9) {
+                hex.setNumberTile(6);
+                assignedHexes++;
+            }else if (assignedHexes < 11) {
+                hex.setNumberTile(8);
+                assignedHexes++;
+            }else if (assignedHexes < 13) {
+                hex.setNumberTile(9);
+                assignedHexes++;
+            }else if (assignedHexes < 15) {
+                hex.setNumberTile(10);
+                assignedHexes++;
+            }else if (assignedHexes < 17) {
+                hex.setNumberTile(11);
+                assignedHexes++;
+            }else {
+                hex.setNumberTile(12);
+                assignedHexes++;
+            }
+        }
     }
 
     private void placeDefaultNumbers()
@@ -234,6 +318,31 @@ public class CatanMap
     private void populateRandomPorts()
     {
 
+        //  5 2to1 (1 for each resource), 4 3to1
+        int assignedHexes = 0;
+        //Lambda expression filters out any tiles within the radius 3, so should return all surrounding water edges
+        ArrayList<Hex> hexes = this.hexes.values().stream().filter(h -> ((h.getLocation().getY() > 3) || (h.getLocation().getY() < -3) || (h.getLocation().getX() > 3) || (h.getLocation().getX() < -3))).collect(Collectors.toCollection(ArrayList::new));
+        //randomize who gets what number
+        Collections.shuffle(hexes);
+        ResourceType type = ResourceType.WOOD;
+        for(Hex hex : hexes)
+        {
+            if (assignedHexes < 5) {
+                hex.setResourceType(type);
+                ports.add(new Port(hex));
+                type = type.next();
+                assignedHexes++;
+            }
+            else if (assignedHexes < 9) {
+                hex.setResourceType(null);
+                ports.add(new Port(hex));
+                assignedHexes++;
+            }
+            else
+            {
+
+            }
+        }
     }
 
     private void populateDefaultPorts()
