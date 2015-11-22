@@ -207,16 +207,21 @@ public class ServerModel extends ClientModel
     {
 
         Player player = getPlayers().get(playerIndex.getIndex());
-        getMap().placeRoad(playerIndex, location);
-        updateLongestRoad();
 
         if(isFree)
+        {
             getMap().placeRoad(playerIndex, location);
+        }
         else if(canBuyRoad(getPlayerByIndex(playerIndex)))
+        {
             getMap().placeRoad(playerIndex, location);
+        }
+
             player.buyRoad(isFree);
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " built a road.");
+
+        updateLongestRoad();
         return this;
     }
 
