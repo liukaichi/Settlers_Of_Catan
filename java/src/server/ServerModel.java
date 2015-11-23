@@ -244,11 +244,23 @@ public class ServerModel extends ClientModel
     public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree)
             throws CatanException
     {
+        location = location.getNormalizedLocation();
         Player player = getPlayer(playerIndex);
         if (canPlaceSettlement(playerIndex, location))
         {
             player.buySettlement(isFree);
             getMap().placeSettlement(playerIndex, location);
+            if (turnTracker.getStatus() == TurnStatus.SecondRound)
+            {
+                for (Hex hex : getMap().getHexes().values())
+                {
+                    if (location.getHexLoc().equals(hex.getLocation()))
+                    {
+                        player.getResources().increase(ResourceType.toResourceType(hex.getHexType()));
+                        continue;
+                    }
+                }
+            }
         } else
         {
             throw new CatanException("can't build settlement");
