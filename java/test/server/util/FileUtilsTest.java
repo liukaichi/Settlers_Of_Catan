@@ -59,7 +59,7 @@ public class FileUtilsTest
         assertEquals(testModel,secondModel);
     }
 
-    @Test public void testGetGameInfoFromFile()
+    @Test public void testGetGameInfoFromFile() throws Exception
     {
         GameInfo testGameInfo = FileUtils.getGameInfoFromFile("sample/serverDefaults/", "gameInfo-0");
         assertNotNull(testGameInfo);
@@ -76,7 +76,6 @@ public class FileUtilsTest
 
     @Test public void testGetCatanMapFromFile()
     {
-        fail("Failed");
         CatanMap map = FileUtils.getCatanMapFromFile(null, "defaultMap");
         assertNotNull(map);
         Map<HexLocation, Hex> hexes = map.getHexes();

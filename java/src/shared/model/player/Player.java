@@ -100,6 +100,15 @@ public class Player
         return info;
     }
 
+    public int getID()
+    {
+        return info.getId();
+    }
+    public void setColor(CatanColor color)
+    {
+        info.setColor(color);
+    }
+
     public PlayerBank getBank()
     {
         return bank;

@@ -46,7 +46,8 @@ public class ServerModel extends ClientModel
         super(json);
     }
 
-    public ServerModel(GameInfo gameInfo, boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
+    public ServerModel(GameInfo gameInfo, boolean randomTiles, boolean randomNumbers, boolean randomPorts)
+    {
         this();
         this.setGameInfo(gameInfo);
         populatePlayers(gameInfo.getPlayers());
@@ -60,9 +61,10 @@ public class ServerModel extends ClientModel
         this.winner = PlayerIndex.NONE;
     }
 
-    private void populatePlayers(List<PlayerInfo> players) {
+    private void populatePlayers(List<PlayerInfo> players)
+    {
         this.players = new ArrayList<>();
-        for(PlayerInfo pInfo : players)
+        for (PlayerInfo pInfo : players)
         {
             this.players.add(new Player(pInfo));
         }
@@ -98,15 +100,15 @@ public class ServerModel extends ClientModel
         if (number == 7)
         {
             turnTracker.updateStatus(TurnStatus.Robbing);
-        }
-        else
+        } else
         {
             turnTracker.updateStatus(TurnStatus.Playing);
         }
         return this;
     }
 
-    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location) throws CatanException
+    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
+            throws CatanException
     {
         getMap().setRobberLocation(location);
         Player robberPlayer = getPlayer(playerIndex);
@@ -125,13 +127,13 @@ public class ServerModel extends ClientModel
     {
         turnTracker.finishTurn(playerIndex);
         String playerName = getPlayerName(playerIndex);
-        getLog().addMessageLine(playerName, playerName +"'s turn just ended.");
+        getLog().addMessageLine(playerName, playerName + "'s turn just ended.");
         return this;
     }
 
     public ClientModel buyDevCard(PlayerIndex playerIndex) throws CatanException
     {
-        Player player = getPlayers().get(playerIndex.getIndex());
+        Player player = getPlayer(playerIndex);
         player.buyDevCard();
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " bought a Development Card.");
@@ -141,22 +143,24 @@ public class ServerModel extends ClientModel
     public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
             throws CatanException
     {
-        Player player = getPlayers().get(playerIndex.getIndex());
+        Player player = getPlayer(playerIndex);
         player.playDevCard(DevCardType.YEAR_OF_PLENTY);
         player.getResources().getResource(resource1).addResource(1);
         player.getResources().getResource(resource2).addResource(1);
-        this.setChanged();
+        String playerName = player.getName();
+        getLog().addMessageLine(playerName,
+                playerName + " used a Year of Plenty and got a " + resource1 + "and a " + resource2 + ".");
         return this;
     }
 
     public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
             throws CatanException
     {
-        Player player = getPlayers().get(playerIndex.getIndex());
+        Player player = getPlayer(playerIndex);
         player.playDevCard(DevCardType.ROAD_BUILD);
         getMap().placeRoad(playerIndex, spot1);
         getMap().placeRoad(playerIndex, spot2);
-        this.setChanged();
+        getLog().addMessageLine(player.getName(), player.getName() + " built 2 roads.");
 
         return this;
     }
@@ -164,9 +168,11 @@ public class ServerModel extends ClientModel
     public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
             throws CatanException
     {
-        Player player = getPlayers().get(playerIndex.getIndex());
+        Player player = getPlayer(playerIndex);
         player.getBank().addKnights(1);
         player.playDevCard(DevCardType.SOLDIER, playerIndex, victimIndex, location);
+        String playerName = player.getName();
+        getLog().addMessageLine(playerName, playerName + "used a soldier.");
         robPlayer(playerIndex, victimIndex, location);
         updateLargestArmy();
         turnTracker.updateStatus(TurnStatus.Playing);
@@ -176,7 +182,7 @@ public class ServerModel extends ClientModel
 
     public ClientModel monopoly(PlayerIndex playerIndex, ResourceType resource) throws CatanException
     {
-        Player player = getPlayers().get(playerIndex.getIndex());
+        Player player = getPlayer(playerIndex);
         player.playDevCard(DevCardType.MONOPOLY);
         int total = 0;
         for (Player p : getPlayers())
@@ -185,16 +191,18 @@ public class ServerModel extends ClientModel
             p.getResources().setAmount(resource, 0);
         }
         player.getResources().setAmount(resource, total);
-
+        String playerName = player.getName();
+        getLog().addMessageLine(playerName, playerName + " stole everyone's " + resource);
         return this;
     }
 
     public ClientModel monument(PlayerIndex playerIndex) throws CatanException
     {
-        Player player = getPlayers().get(playerIndex.getIndex());
+        Player player = getPlayer(playerIndex);
         player.playDevCard(DevCardType.MONUMENT);
         player.getBank().addMonuments(1);
 
+        getLog().addMessageLine(player.getName(), player.getName() + " built a monument and gained a victory point");
         return this;
     }
 
@@ -208,18 +216,17 @@ public class ServerModel extends ClientModel
     public ClientModel buildRoad(PlayerIndex playerIndex, EdgeLocation location, boolean isFree) throws CatanException
     {
 
-        Player player = getPlayers().get(playerIndex.getIndex());
+        Player player = getPlayer(playerIndex);
 
-        if(isFree)
+        if (isFree)
+        {
+            getMap().placeRoad(playerIndex, location);
+        } else if (canBuyRoad(getPlayerByIndex(playerIndex)))
         {
             getMap().placeRoad(playerIndex, location);
         }
-        else if(canBuyRoad(getPlayerByIndex(playerIndex)))
-        {
-            getMap().placeRoad(playerIndex, location);
-        }
 
-            player.buyRoad(isFree);
+        player.buyRoad(isFree);
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " built a road.");
 
@@ -230,13 +237,12 @@ public class ServerModel extends ClientModel
     public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree)
             throws CatanException
     {
-        Player player = getPlayers().get(playerIndex.getIndex());
-        if(canPlaceSettlement(playerIndex, location))
+        Player player = getPlayer(playerIndex);
+        if (canPlaceSettlement(playerIndex, location))
         {
             player.buySettlement(isFree);
             getMap().placeSettlement(playerIndex, location);
-        }
-        else
+        } else
         {
             throw new CatanException("can't build settlement");
         }
@@ -247,13 +253,12 @@ public class ServerModel extends ClientModel
 
     public ClientModel buildCity(PlayerIndex playerIndex, VertexLocation location) throws CatanException
     {
-        Player player = getPlayers().get(playerIndex.getIndex());
-        if(canPlaceCity(playerIndex, location) && canBuyCity(getPlayerByIndex(playerIndex)))
+        Player player = getPlayer(playerIndex);
+        if (canPlaceCity(playerIndex, location) && canBuyCity(getPlayerByIndex(playerIndex)))
         {
             getMap().placeCity(playerIndex, location);
             player.buyCity();
-        }
-        else
+        } else
         {
             throw new CatanException("can't build city");
         }
@@ -265,7 +270,7 @@ public class ServerModel extends ClientModel
     public ClientModel offerTrade(PlayerIndex playerIndex, TradeOffer offer, PlayerIndex receiver) throws CatanException
     {
 
-        Player sender = getPlayers().get(playerIndex.getIndex());
+        Player sender = getPlayer(playerIndex);
         if (sender.hasEnoughResources(offer.getOffer()))
         {
             this.setTradeOffer(offer);
@@ -287,7 +292,7 @@ public class ServerModel extends ClientModel
         {
             TradeOffer offer = getTradeOffer();
             Player receiver = getPlayer(playerIndex);
-            Player sender = getPlayer(PlayerIndex.fromInt(offer.getSender()));
+            Player sender = getPlayer(offer.getSenderIndex());
             receiver.acceptOffer(offer);
             sender.sendOffer(offer);
 
@@ -342,7 +347,7 @@ public class ServerModel extends ClientModel
     }
 
     /**
-     * Updates the largest army counter A player has the largest army if he or
+     * Updates the largest army counter. A player has the largest army if he or
      * she has at least 3 knights
      */
     public void updateLargestArmy()
@@ -364,20 +369,20 @@ public class ServerModel extends ClientModel
     {
         for (Player player : players)
         {
-            if (player.getPlayerInfo().getId() == playerID)
+            if (player.getID() == playerID)
             {
-                player.getPlayerInfo().setColor(color);
+                player.setColor(color);
             }
         }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString()
+    {
         return super.toString();
     }
 
-    public void addPlayer(PlayerInfo playerInfo) {
+    public void addPlayer(PlayerInfo playerInfo)
+    {
         this.players.add(new Player(playerInfo));
-
     }
 }

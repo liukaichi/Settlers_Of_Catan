@@ -1,5 +1,6 @@
 package shared.model.player;
 
+import client.data.PlayerInfo;
 import com.google.gson.*;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
