@@ -56,43 +56,54 @@ public class Port
     }
 
     public Port(Hex hex) {
-        this.resource = ResourceType.toPortType(hex.getResourceType());
-        this.ratio = TradeRatio.TWO;
+        if(hex.getResourceType() != null) {
+            this.resource = ResourceType.toPortType(hex.getResourceType());
+            this.ratio = TradeRatio.TWO;
+        }
+        else
+        {
+            this.resource = PortType.THREE;
+            this.ratio = TradeRatio.THREE;
+        }
         this.location = hex.getLocation();
         int x = location.getX();
         int y = location.getY();
 
-        if(y > 3 && x < 3)//bottom left
+        if(y == 3)//bottom left
         {
-            this.direction = EdgeDirection.NorthEast;
+            if(x == 0)
+                this.direction = EdgeDirection.North;
+            else
+                this.direction = EdgeDirection.NorthEast;
         }
-        else if(y > 3 && x > 3)//bottom right
+        else if(y == -3)//top right
+        {
+            if(x != 3)
+                this.direction = EdgeDirection.South;
+            else
+                this.direction = EdgeDirection.SouthWest;
+        }
+        else if(x == -3)//left
+        {
+            if(y!=0)
+                this.direction = EdgeDirection.NorthEast;
+            else
+                this.direction = EdgeDirection.SouthEast;
+        }
+        else if(x == 3)//right
+        {
+            if(y!=0)
+                this.direction = EdgeDirection.SouthWest;
+            else
+                this.direction = EdgeDirection.NorthWest;
+        }
+        else if(x>0)//bottom right
         {
             this.direction = EdgeDirection.NorthWest;
         }
-        else if(y < 3 && x < 3)//top left
+        else if(x<0)//top left
         {
             this.direction = EdgeDirection.SouthEast;
-        }
-        else if(y < 3 && x > 3)//top right
-        {
-            this.direction = EdgeDirection.SouthWest;
-        }
-        else if(y < 3)//top
-        {
-            this.direction = EdgeDirection.South;
-        }
-        else if(y > 3)//bottom
-        {
-            this.direction = EdgeDirection.North;
-        }
-        else if(x > 3)//right
-        {
-            this.direction = EdgeDirection.NorthWest;
-        }
-        else if(x < 3)//left
-        {
-            this.direction = EdgeDirection.NorthEast;
         }
     }
 

@@ -1,9 +1,10 @@
-package server;
+package server.model;
 
-import client.base.IAction;
 import client.data.PlayerInfo;
+import client.map.MapComponent;
 import org.junit.Before;
 import org.junit.Test;
+import server.ServerModel;
 import server.util.FileUtils;
 import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
@@ -12,16 +13,18 @@ import shared.definitions.exceptions.PlacementException;
 import shared.locations.*;
 import shared.model.bank.resource.Resources;
 import shared.model.map.CatanMap;
+import shared.model.map.Hex;
 import shared.model.map.structure.MapStructure;
-import shared.model.map.structure.Road;
+import shared.model.map.structure.Port;
 import shared.model.player.Player;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 /**
  * Created by dtaylor on 11/16/2015.
@@ -288,5 +291,59 @@ public class ServerModelTest
     @Test public void testUpdateStatus()
     {
 
+    }
+
+    @Test public void createModel()
+    {
+        createCatanMap();
+    }
+
+    private boolean createCatanMap()
+    {
+        CatanMap map = new CatanMap(true,true,true);
+        createMapGui(map);
+        return true;
+    }
+
+    private static void createMapGui(CatanMap map) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame();
+            JPanel contentPane = new JPanel();
+            contentPane.setLayout(new BorderLayout());
+            frame.setContentPane(contentPane);
+            MapComponent mapComponent = new MapComponent();
+//populate mapview---------------------------------------------------------------
+            Map<HexLocation, Hex> hexes = map.getHexes();
+            for (Hex hex : hexes.values())
+            {
+                mapComponent.addHex(hex.getLocation(), hex.getHexType());
+                if (hex.getNumberTile() != -1)
+                    mapComponent.addNumber(hex.getLocation(), hex.getNumberTile());
+            }
+            mapComponent.placeRobber(map.getRobberLocation());
+            ArrayList<Port> ports = (ArrayList<Port>) map.getPorts();
+            for (Port port : ports)
+            {
+                mapComponent.placePort(port.getEdgeLocation(), port.getResource());
+            }
+//--------------------------------------------------------------------------------
+            frame.add(mapComponent, BorderLayout.CENTER);
+            frame.setSize(800, 700);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            frame.setVisible(true);
+        });
+    }
+
+    public static void main(String[] args) {
+        CatanMap map = new CatanMap(true,true,true);
+        createMapGui(map);
     }
 }

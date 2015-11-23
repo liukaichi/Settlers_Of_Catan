@@ -159,6 +159,24 @@ import java.util.Map;
         PORT_ROTATIONS.put(EdgeDirection.SouthWest, new java.lang.Double(Math.toRadians(60)));
     }
 
+    private static BufferedImage process(HexLocation loc, BufferedImage old) {
+        int w = old.getWidth();
+        int h = old.getHeight();
+        BufferedImage img = new BufferedImage(
+                w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = img.createGraphics();
+        g2d.drawImage(old, 0, 0, null);
+        g2d.setPaint(Color.red);
+        g2d.setFont(new Font("Serif", Font.BOLD, 50));
+        String s = "x:"+loc.getX() + " y:"+loc.getY();
+        FontMetrics fm = g2d.getFontMetrics();
+        int x = img.getWidth() - fm.stringWidth(s) - 5-50;
+        int y = fm.getHeight()+30;
+        g2d.drawString(s, x, y);
+        g2d.dispose();
+        return img;
+    }
+
     private IMapController controller;
     private Map<HexLocation, HexType> hexes;
     private Map<EdgeLocation, CatanColor> roads;
@@ -826,8 +844,8 @@ import java.util.Map;
 
         for (Map.Entry<HexLocation, HexType> entry : hexes.entrySet())
         {
-
-            BufferedImage hexImage = getHexImage(entry.getValue());
+//TODO return to normal
+            BufferedImage hexImage = process(entry.getKey(), getHexImage(entry.getValue()));
 
             Point2D hexCenter = getHexPoint(entry.getKey());
             Point2D hexCorner = new Point2D.Double((int) (hexCenter.getX() - HEX_IMAGE_WIDTH / 2),
@@ -1058,14 +1076,19 @@ import java.util.Map;
 
     private void drawRotatedImage(Graphics2D g2, BufferedImage image, Point2D location, double radians)
     {
+        try {
+            int centerX = image.getWidth() / 2;
+            int centerY = image.getHeight() / 2;
 
-        int centerX = image.getWidth() / 2;
-        int centerY = image.getHeight() / 2;
+            AffineTransform tx = AffineTransform.getRotateInstance(radians, centerX, centerY);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
-        AffineTransform tx = AffineTransform.getRotateInstance(radians, centerX, centerY);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-
-        drawImage(g2, op.filter(image, null), location);
+            drawImage(g2, op.filter(image, null), location);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void drawImage(Graphics2D g2, BufferedImage image, Point2D location)
