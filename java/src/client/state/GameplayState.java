@@ -230,7 +230,7 @@ public abstract class GameplayState
                     {
                     case FirstRound:
                     case SecondRound:
-                        controller.getState().updateView();
+                            controller.getState().updateView();
                         break;
                     }
                     return;
