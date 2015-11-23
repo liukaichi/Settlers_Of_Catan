@@ -93,7 +93,7 @@ public class GamesHandler implements HttpHandler
         {
             e.printStackTrace();
             response = e.getLocalizedMessage();
-            LOGGER.severe("Bad Request: "+HttpURLConnection.HTTP_BAD_REQUEST +" "+ e.getLocalizedMessage());
+            LOGGER.fine("Bad Request: "+HttpURLConnection.HTTP_BAD_REQUEST +" "+ e.getLocalizedMessage());
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 
         } finally

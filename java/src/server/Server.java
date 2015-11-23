@@ -64,6 +64,13 @@ public class Server
     public void start()
     {
         LOGGER.info("Starting Server on Host:"+DEFAULT_HOST_NAME +" Port:"+DEFAULT_PORT_NUMBER);
+        try
+        {
+            LOGGER.info("Address: "+InetAddress.getLocalHost());
+        } catch (UnknownHostException e)
+        {
+            e.printStackTrace();
+        }
         server.start();
     }
 
