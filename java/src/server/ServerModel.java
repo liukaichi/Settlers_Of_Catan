@@ -73,7 +73,7 @@ public class ServerModel extends ClientModel
     public ClientModel sendChat(PlayerIndex playerIndex, String content)
     {
         this.getChat().addMessageLine(getPlayerName(playerIndex), content);
-        this.setChanged();
+        increaseVersionNumber();
         return this;
     }
 
@@ -104,6 +104,7 @@ public class ServerModel extends ClientModel
         {
             turnTracker.updateStatus(TurnStatus.Playing);
         }
+        increaseVersionNumber();
         return this;
     }
 
@@ -119,7 +120,7 @@ public class ServerModel extends ClientModel
         String victimName = victimPlayer.getName();
         getLog().addMessageLine(robberName, robberName + " moved the robber and robbed " + victimName + ".");
         turnTracker.updateStatus(TurnStatus.Playing);
-
+        increaseVersionNumber();
         return this;
     }
 
@@ -128,6 +129,7 @@ public class ServerModel extends ClientModel
         turnTracker.finishTurn(playerIndex);
         String playerName = getPlayerName(playerIndex);
         getLog().addMessageLine(playerName, playerName + "'s turn just ended.");
+        increaseVersionNumber();
         return this;
     }
 
@@ -137,6 +139,7 @@ public class ServerModel extends ClientModel
         player.buyDevCard();
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " bought a Development Card.");
+        increaseVersionNumber();
         return this;
     }
 
@@ -150,6 +153,7 @@ public class ServerModel extends ClientModel
         String playerName = player.getName();
         getLog().addMessageLine(playerName,
                 playerName + " used a Year of Plenty and got a " + resource1 + "and a " + resource2 + ".");
+        increaseVersionNumber();
         return this;
     }
 
@@ -161,7 +165,7 @@ public class ServerModel extends ClientModel
         getMap().placeRoad(playerIndex, spot1);
         getMap().placeRoad(playerIndex, spot2);
         getLog().addMessageLine(player.getName(), player.getName() + " built 2 roads.");
-
+        increaseVersionNumber();
         return this;
     }
 
@@ -176,7 +180,7 @@ public class ServerModel extends ClientModel
         robPlayer(playerIndex, victimIndex, location);
         updateLargestArmy();
         turnTracker.updateStatus(TurnStatus.Playing);
-
+        increaseVersionNumber();
         return this;
     }
 
@@ -193,6 +197,7 @@ public class ServerModel extends ClientModel
         player.getResources().setAmount(resource, total);
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " stole everyone's " + resource);
+        increaseVersionNumber();
         return this;
     }
 
@@ -203,6 +208,7 @@ public class ServerModel extends ClientModel
         player.getBank().addMonuments(1);
 
         getLog().addMessageLine(player.getName(), player.getName() + " built a monument and gained a victory point");
+        increaseVersionNumber();
         return this;
     }
 
@@ -231,6 +237,7 @@ public class ServerModel extends ClientModel
         getLog().addMessageLine(playerName, playerName + " built a road.");
 
         updateLongestRoad();
+        increaseVersionNumber();
         return this;
     }
 
@@ -248,6 +255,7 @@ public class ServerModel extends ClientModel
         }
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " built a settlement.");
+        increaseVersionNumber();
         return this;
     }
 
@@ -264,6 +272,7 @@ public class ServerModel extends ClientModel
         }
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " built a city.");
+        increaseVersionNumber();
         return this;
     }
 
@@ -278,6 +287,7 @@ public class ServerModel extends ClientModel
         {
             throw new CatanException("Sender does not have enough resources to trade this.");
         }
+        increaseVersionNumber();
         return this;
     }
 
@@ -298,6 +308,7 @@ public class ServerModel extends ClientModel
 
             getLog().addMessageLine(getPlayerName(playerIndex), getPlayerName(playerIndex) + " accepted the trade.");
         }
+        increaseVersionNumber();
         return this;
     }
 
@@ -307,6 +318,7 @@ public class ServerModel extends ClientModel
         Player player = getPlayer(playerIndex);
         player.maritimeTrade(ratio, inputResource, outputResource);
         getBank().maritimeTrade(ratio, inputResource, outputResource);
+        increaseVersionNumber();
         return this;
     }
 
@@ -314,6 +326,7 @@ public class ServerModel extends ClientModel
     {
         Player player = getPlayer(playerIndex);
         player.discardCards(discardedCards);
+        increaseVersionNumber();
         return this;
     }
 

@@ -429,4 +429,9 @@ public class ClientModel extends Observable
     {
         return getPlayers().get(index.getIndex());
     }
+
+    public void increaseVersionNumber()
+    {
+        version++;
+    }
 }
