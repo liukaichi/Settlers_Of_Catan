@@ -65,8 +65,8 @@ public class GamesHandler implements HttpHandler
             // set response
             if (commandString.equalsIgnoreCase("join"))
             {
-                String playerIDLabel = "\"playerID\": ";
-                cookie = cookie.substring(cookie.indexOf("=") + 1);
+                String USER_TAG = "catan.user=";
+                cookie = cookie.substring(cookie.indexOf(USER_TAG) + USER_TAG.length());
                 if (cookie.contains("catan.game"))
                 {
                     cookie = cookie.substring(0,cookie.indexOf("; catan.game"));
