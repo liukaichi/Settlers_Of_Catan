@@ -56,7 +56,7 @@ public class Server
     public static Server run(int port)
     {
         Server server = null;
-            server = new Server(DEFAULT_HOST_NAME, port);
+            server = new Server("0.0.0.0", port);
             //DEFAULT_HOST_NAME = InetAddress.getLocalHost().getHostName();
         server.start();
         return server;
