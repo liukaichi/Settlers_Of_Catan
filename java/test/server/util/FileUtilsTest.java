@@ -89,5 +89,6 @@ public class FileUtilsTest
         assertEquals(duplicateHex, hex);
         List<Port> ports = map.getPorts();
         assertEquals(11, ports.size());
+        fail("More things to test");
     }
 }
