@@ -59,6 +59,7 @@ public class Server
         try
         {
             server = new Server(InetAddress.getLocalHost().getHostAddress(), port);
+            DEFAULT_HOST_NAME = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e)
         {
             server = new Server(DEFAULT_HOST_NAME, port);
@@ -68,7 +69,7 @@ public class Server
     }
     public void start()
     {
-        LOGGER.info("Starting Server...");
+        LOGGER.info("Starting Server on Host:"+DEFAULT_HOST_NAME +" Port:"+DEFAULT_PORT_NUMBER);
         server.start();
     }
 
