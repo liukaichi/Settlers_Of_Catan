@@ -202,7 +202,7 @@ public class ServerProxy implements IProxy
         /* If the model has changed */
         if (response != null)
         {
-            if (!response.equals("\"true\""))
+            if (!response.equals("\"true\"") && !response.equals("true"))
             {
                 responseModel = new ClientModel(response);
                 LOGGER.log(Level.INFO, "Get Game Response:" + response);
