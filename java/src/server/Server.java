@@ -43,6 +43,17 @@ public class Server
             server.createContext("/docs/api/view", new SwaggerHandler.BasicFile(""));
 
             server.setExecutor(null); // creates a default executor
+            //do for localhost as well
+            server = HttpServer.create(new InetSocketAddress("localhost", port), 0);
+            server.createContext("/game/", new GameHandler());
+            server.createContext("/games/", new GamesHandler());
+            server.createContext("/moves/", new MovesHandler());
+            server.createContext("/user/", new UserHandler());
+
+            server.createContext("/docs/api/data", new SwaggerHandler.JSONAppender(""));
+            server.createContext("/docs/api/view", new SwaggerHandler.BasicFile(""));
+
+            server.setExecutor(null); // creates a default executor
         } catch (Exception e)
         {
             e.printStackTrace();
