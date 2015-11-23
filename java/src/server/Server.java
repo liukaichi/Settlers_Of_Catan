@@ -58,8 +58,8 @@ public class Server
         Server server = null;
         try
         {
-            server = new Server(InetAddress.getLocalHost().getHostAddress(), port);
-            DEFAULT_HOST_NAME = InetAddress.getLocalHost().getHostAddress();
+            server = new Server(InetAddress.getLocalHost().getHostName(), port);
+            DEFAULT_HOST_NAME = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e)
         {
             server = new Server(DEFAULT_HOST_NAME, port);
