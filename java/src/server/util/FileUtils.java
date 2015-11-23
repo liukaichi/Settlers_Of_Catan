@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import jdk.nashorn.internal.parser.JSONParser;
 import server.ServerModel;
+import shared.model.ClientModel;
 import shared.model.map.CatanMap;
 
 import java.io.*;
@@ -132,9 +133,8 @@ public class FileUtils
         {
             reader = new BufferedReader(new FileReader(file));
             String json = BufferedReaderParser.parse(reader);
-            JsonParser parser = new JsonParser();
-            JsonObject map = (JsonObject) parser.parse(BufferedReaderParser.parse(reader));
-            catanMap = new CatanMap(map.getAsJsonObject("map").toString());
+            ClientModel model = new ClientModel(json);
+            catanMap = model.getMap();
         } catch (FileNotFoundException e)
         {
             e.printStackTrace();
