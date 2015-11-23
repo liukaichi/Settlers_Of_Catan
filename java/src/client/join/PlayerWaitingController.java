@@ -60,6 +60,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
     @Override public void start()
     {
         model = facade.getGameState(-1);
+
         updateView();
         LOGGER.info("PLAYER WAITING CONTROLLER TIMER STARTING");
         timer.start();
@@ -79,9 +80,12 @@ public class PlayerWaitingController extends ObserverController implements IPlay
         }
         else
         {
-            getView().closeModal();
-            LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPPING");
-            timer.stop();
+            if (getView().isModalShowing())
+            {
+                getView().closeModal();
+                LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPPING");
+                timer.stop();
+            }
 
             if (!facade.pollerStarted())
             {
@@ -92,7 +96,7 @@ public class PlayerWaitingController extends ObserverController implements IPlay
     }
 
     /**
-     * Do whatever you need to do to generate an AI and and it to the player
+     * Do whatever you need to do to generate an AI and add it to the player
      * list;
      */
     @Override public void addAI()

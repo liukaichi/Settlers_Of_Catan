@@ -192,7 +192,7 @@ public class TurnTracker
         {
             if (currentTurn.equals(playerIndex))
             {
-                if (currentTurn.getIndex() == LAST_PLAYER)
+                if (currentTurn == PlayerIndex.PLAYER_3)
                 {
                     status = TurnStatus.SecondRound;
                 } else

@@ -3,6 +3,7 @@ package client.facade;
 import client.base.ObserverController;
 import client.data.PlayerInfo;
 import client.data.RobPlayerInfo;
+import client.join.PlayerWaitingController;
 import client.poller.Poller;
 import client.proxy.IProxy;
 import client.proxy.ServerProxy;
@@ -722,6 +723,12 @@ public class ClientFacade
         model.addObserver(observerController);
     }
 
+
+    public void removeObserver(ObserverController controller)
+    {
+        model.deleteObserver(controller);
+    }
+
     public List<Player> getPlayers()
     {
         return model.getPlayers();
@@ -858,4 +865,5 @@ public class ClientFacade
                 offer.getOffer(ResourceType.ORE), offer.getOffer(ResourceType.SHEEP),
                 offer.getOffer(ResourceType.WHEAT), offer.getOffer(ResourceType.WOOD));
     }
+
 }

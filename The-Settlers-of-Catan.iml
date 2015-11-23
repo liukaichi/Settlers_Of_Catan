@@ -21,7 +21,6 @@
       <sourceFolder url="file://$MODULE_DIR$/java/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/java/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/java/lib" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/java/test" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
@@ -96,6 +95,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
   </component>
 </module>
