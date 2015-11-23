@@ -69,16 +69,20 @@ public class PlayerWaitingController extends ObserverController implements IPlay
     private void updateView()
     {
         List<PlayerInfo> players = model.getPlayerInfos();
-        getView().setPlayers(players.toArray(new PlayerInfo[players.size()]));
-        getView().setAIChoices(new String[] { AIType.LARGEST_ARMY.toString() });
-        if (getView().isModalShowing())
-            getView().closeModal();
-        getView().showModal();
-        if (players.size() == 4)
+        if (players.size() != 4)
+        {
+            getView().setPlayers(players.toArray(new PlayerInfo[players.size()]));
+            getView().setAIChoices(new String[] { AIType.LARGEST_ARMY.toString() });
+            if (getView().isModalShowing())
+                getView().closeModal();
+            getView().showModal();
+        }
+        else
         {
             getView().closeModal();
             LOGGER.info("PLAYER WAITING CONTROLLER TIMER STOPPING");
             timer.stop();
+
             if (!facade.pollerStarted())
             {
                 LOGGER.info("PLAYER WAITING CONTROLLER STARTING POLLER");
