@@ -254,10 +254,12 @@ public class ServerModel extends ClientModel
             {
                 for (Hex hex : getMap().getHexes().values())
                 {
-                    if (location.getHexLoc().equals(hex.getLocation()))
+                    for (VertexLocation vertex : hex.getVertices())
                     {
-                        player.getResources().increase(ResourceType.toResourceType(hex.getHexType()));
-                        continue;
+                        if (vertex.getNormalizedLocation().equals(location))
+                        {
+                            player.getResources().increase(ResourceType.toResourceType(hex.getHexType()));
+                        }
                     }
                 }
             }
