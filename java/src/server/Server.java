@@ -6,7 +6,9 @@ import server.facade.MockServerFacade;
 import server.facade.ServerFacade;
 import server.handler.*;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 /**
@@ -53,7 +55,14 @@ public class Server
     }
     public static Server run(int port)
     {
-        Server server = new Server(DEFAULT_HOST_NAME, port);
+        Server server = null;
+        try
+        {
+            server = new Server(InetAddress.getLocalHost().getHostAddress(), port);
+        } catch (UnknownHostException e)
+        {
+            server = new Server(DEFAULT_HOST_NAME, port);
+        }
         server.start();
         return server;
     }

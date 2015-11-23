@@ -22,7 +22,7 @@ public class ServerFacade extends AbstractServerFacade
     {
         ClientModel model = getGame(gameID);
         int modelVersion = model.getVersion();
-        if (version == -1 || version <= modelVersion)
+        if (version == -1 || version < modelVersion)
         {
             return model;
         } else
