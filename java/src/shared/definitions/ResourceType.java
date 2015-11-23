@@ -50,7 +50,7 @@ public enum ResourceType
     public ResourceType next()
     {
         switch (this)
-        {
+            {
             case WOOD:
                 return ResourceType.BRICK;
             case BRICK:
@@ -63,6 +63,25 @@ public enum ResourceType
                 return ResourceType.WOOD;
             default:
                 return null;
+        }
+    }
+
+    public static ResourceType toResourceType(HexType hexType)
+    {
+        switch (hexType)
+        {
+        case WOOD:
+            return ResourceType.WOOD;
+        case BRICK:
+            return ResourceType.BRICK;
+        case SHEEP:
+            return ResourceType.SHEEP;
+        case WHEAT:
+            return ResourceType.WHEAT;
+        case ORE:
+            return ResourceType.ORE;
+        default:
+            return null;
         }
     }
 }
