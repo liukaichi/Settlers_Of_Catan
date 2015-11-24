@@ -2,6 +2,7 @@ package client.points;
 
 import client.base.ObserverController;
 import client.facade.ClientFacade;
+import shared.model.ClientModel;
 import shared.model.player.Player;
 
 import java.util.Observable;
@@ -43,28 +44,30 @@ public class PointsController extends ObserverController implements IPointsContr
     @Override public void update(Observable o, Object arg)
     {
         ClientFacade facade = ClientFacade.getInstance();
+        ClientModel model = (ClientModel) o;
         int clientPlayerPoints = facade.getPlayerPoints(facade.getPlayer().getPlayerIndex());
         getPointsView().setPoints(clientPlayerPoints);
-
-        for (Player player : facade.getPlayers())
+        if (model.getWinner().getIndex() == -1)
         {
-            if (player.getVictoryPoints() >= 10)
+            return;
+        }
+        else
+        {
+            if (facade.getPlayer(model.getWinner()).getPlayerIndex() == facade.getPlayer().getPlayerIndex())
             {
-                if (player.getPlayerIndex() == facade.getPlayer().getPlayerIndex())
-                {
-                    getFinishedView().setWinner(player.getName(), true);
+                getFinishedView().setWinner(facade.getPlayer(model.getWinner()).getName(), true);
 
-                } else
-                {
-                    getFinishedView().setWinner(player.getName(), false);
-                }
+            } else
+            {
+                getFinishedView().setWinner(facade.getPlayer(model.getWinner()).getName(), false);
+            }
 
-                if (!getFinishedView().isModalShowing())
-                {
-                    getFinishedView().showModal();
-                }
+            if (!getFinishedView().isModalShowing())
+            {
+                getFinishedView().showModal();
             }
         }
+
     }
 
 }
