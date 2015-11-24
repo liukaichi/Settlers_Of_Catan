@@ -148,7 +148,7 @@ public class PlayerBank extends Bank
         } else
         {
             //
-            super.addResource(type, num);
+            super.addResourceToGameBank(type, num);
             playerResources.getResource(type).subResource(num);
         }
     }
@@ -164,7 +164,7 @@ public class PlayerBank extends Bank
             throw new CatanException();
         } else
         {
-            super.subResource(type, num);
+            super.subtractResourceFromGameBank(type, num);
             playerResources.getResource(type).addResource(num);
         }
     }
@@ -192,6 +192,17 @@ public class PlayerBank extends Bank
             resourcesList.get(i).subResource(costList.get(i).getAmount());
         }
     }
+
+    public void subtractResource(ResourceType type, int amount)
+    {
+        playerResources.decrease(type, amount);
+    }
+
+    public void addResource(ResourceType type, int amount)
+    {
+        playerResources.increase(type, amount);
+    }
+
 
     /**
      * Determines if PlayerBank has the resources to purchase a DevCard
@@ -412,7 +423,7 @@ public class PlayerBank extends Bank
         {
             Collections.shuffle(resources);
             ResourceType robbedType = resources.get(0);
-            playerResources.decrease(robbedType, 1);
+            subtractResourceFromGameBank(robbedType, 1);
             return robbedType;
         }
         else

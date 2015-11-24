@@ -5,6 +5,8 @@ import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
 import shared.definitions.exceptions.CatanException;
 
+import java.util.logging.Logger;
+
 /**
  * The name and settings to use for the new game. Can be sent as form encoded
  * key-value pairs as well. The new game's ID can be read from the response.
@@ -14,6 +16,7 @@ import shared.definitions.exceptions.CatanException;
 public class CreateGameRequest implements CatanCommand
 {
     private boolean randomTiles, randomNumbers, randomPorts;
+    private static final Logger LOGGER = Logger.getLogger(CreateGameRequest.class.getName());
     private String name;
 
     /**
@@ -55,6 +58,7 @@ public class CreateGameRequest implements CatanCommand
      */
     @Override public String execute(int gameID) throws CatanException
     {
+        //LOGGER.info("executing CreateGameRequest(%b, %b, %b, %s",randomTiles, randomNumbers, randomPorts, name);
         return AbstractServerFacade.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name).toString();
     }
 }

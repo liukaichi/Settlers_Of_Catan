@@ -353,10 +353,10 @@ public class PlayerBankTest
             e.printStackTrace();
         }
 
-        test2.payResource(ResourceType.SHEEP, 2);
+        //test2.payResource(ResourceType.SHEEP, 2);
         assertEquals(17, gameSheep().getAmount());
 
-        test3.payResource(ResourceType.SHEEP, 1);
+        //test3.payResource(ResourceType.SHEEP, 1);
         assertEquals(18, gameSheep().getAmount());
     }
 

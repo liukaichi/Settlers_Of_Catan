@@ -112,8 +112,7 @@ public class ServerModel extends ClientModel
         return this;
     }
 
-    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location)
-            throws CatanException
+    public ClientModel robPlayer(PlayerIndex playerIndex, PlayerIndex victim, HexLocation location) throws CatanException
     {
         getMap().setRobberLocation(location);
         Player robberPlayer = getPlayer(playerIndex);
@@ -156,22 +155,19 @@ public class ServerModel extends ClientModel
         return this;
     }
 
-    public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2)
-            throws CatanException
+    public ClientModel yearOfPlenty(PlayerIndex playerIndex, ResourceType resource1, ResourceType resource2) throws CatanException
     {
         Player player = getPlayer(playerIndex);
         player.playDevCard(DevCardType.YEAR_OF_PLENTY);
         player.getResources().getResource(resource1).addResource(1);
         player.getResources().getResource(resource2).addResource(1);
         String playerName = player.getName();
-        getLog().addMessageLine(playerName,
-                playerName + " used a Year of Plenty and got a " + resource1 + "and a " + resource2 + ".");
+        getLog().addMessageLine(playerName, playerName + " used a Year of Plenty and got a " + resource1 + "and a " + resource2 + ".");
         increaseVersionNumber();
         return this;
     }
 
-    public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2)
-            throws CatanException
+    public ClientModel roadBuilding(PlayerIndex playerIndex, EdgeLocation spot1, EdgeLocation spot2) throws CatanException
     {
         Player player = getPlayer(playerIndex);
         player.playDevCard(DevCardType.ROAD_BUILD);
@@ -182,8 +178,7 @@ public class ServerModel extends ClientModel
         return this;
     }
 
-    public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location)
-            throws CatanException
+    public ClientModel soldier(PlayerIndex playerIndex, PlayerIndex victimIndex, HexLocation location) throws CatanException
     {
         Player player = getPlayer(playerIndex);
         player.getBank().addKnights(1);
@@ -254,8 +249,7 @@ public class ServerModel extends ClientModel
         return this;
     }
 
-    public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree)
-            throws CatanException
+    public ClientModel buildSettlement(PlayerIndex playerIndex, VertexLocation location, boolean isFree) throws CatanException
     {
         location = location.getNormalizedLocation();
         Player player = getPlayer(playerIndex);
@@ -320,11 +314,10 @@ public class ServerModel extends ClientModel
 
     public ClientModel acceptTrade(PlayerIndex playerIndex, boolean willAccept) throws CatanException
     {
+
         if (!willAccept)
         {
-            getLog().addMessageLine(getPlayerName(playerIndex),
-                    getPlayerName(playerIndex) + " did not accept the trade.");
-            this.removeTradeOffer();
+            getLog().addMessageLine(getPlayerName(playerIndex), getPlayerName(playerIndex) + " did not accept the trade.");
         } else
         {
             TradeOffer offer = getTradeOffer();
@@ -336,11 +329,12 @@ public class ServerModel extends ClientModel
             getLog().addMessageLine(getPlayerName(playerIndex), getPlayerName(playerIndex) + " accepted the trade.");
         }
         increaseVersionNumber();
+        this.removeTradeOffer();
         return this;
     }
 
-    public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
-            ResourceType outputResource) throws CatanException
+    public ClientModel maritimeTrade(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource, ResourceType outputResource)
+            throws CatanException
     {
         Player player = getPlayer(playerIndex);
         player.maritimeTrade(ratio, inputResource, outputResource);
