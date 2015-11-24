@@ -930,7 +930,7 @@ public class CatanMap {
         List<PlayerIndex> players = new ArrayList<>();
         for (VertexLocation location : hexes.get(hexLocation).getVertices()) {
 
-            MapStructure structure = structures.get(location);
+            MapStructure structure = structures.get(location.getNormalizedLocation());
             if (structure != null && structure instanceof City) {
                 players.add(structure.getOwner());
             }
