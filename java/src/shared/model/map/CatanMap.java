@@ -906,7 +906,7 @@ public class CatanMap {
         Set<PlayerIndex> players = new HashSet<>();
         for (VertexLocation location : hexes.get(hexLocation).getVertices()) {
 
-            MapStructure structure = structures.get(location);
+            MapStructure structure = structures.get(location.getNormalizedLocation());
             if (structure != null) {
                 players.add(structure.getOwner());
             }
@@ -914,8 +914,8 @@ public class CatanMap {
         return players;
     }
 
-    public Set<PlayerIndex> getHexPlayersWithSettlement(HexLocation hexLocation) {
-        Set<PlayerIndex> players = new HashSet<>();
+    public List<PlayerIndex> getHexPlayersWithSettlement(HexLocation hexLocation) {
+        List<PlayerIndex> players = new ArrayList<>();
         for (VertexLocation location : hexes.get(hexLocation).getVertices()) {
 
             MapStructure structure = structures.get(location);
@@ -926,8 +926,8 @@ public class CatanMap {
         return players;
     }
 
-    public Set<PlayerIndex> getHexPlayersWithCity(HexLocation hexLocation) {
-        Set<PlayerIndex> players = new HashSet<>();
+    public List<PlayerIndex> getHexPlayersWithCity(HexLocation hexLocation) {
+        List<PlayerIndex> players = new ArrayList<>();
         for (VertexLocation location : hexes.get(hexLocation).getVertices()) {
 
             MapStructure structure = structures.get(location);

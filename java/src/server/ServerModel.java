@@ -51,7 +51,7 @@ public class ServerModel extends ClientModel
         this();
         this.setGameInfo(gameInfo);
         populatePlayers(gameInfo.getPlayers());
-        this.bank = new Bank(true);
+        this.bank = new Bank(true, players);
         this.chat = new Chat();
         this.log = new Log();
         this.map = new CatanMap(randomTiles, randomNumbers, randomPorts);
@@ -67,6 +67,10 @@ public class ServerModel extends ClientModel
         for (PlayerInfo pInfo : players)
         {
             this.players.add(new Player(pInfo));
+        }
+        if (this instanceof ServerModel)
+        {
+            bank.setPlayers(this.players);
         }
     }
 
@@ -88,7 +92,7 @@ public class ServerModel extends ClientModel
     {
         for (Hex hex : getMap().getHexesByNumber(number))
         {
-            Set<PlayerIndex> players = getMap().getHexPlayersWithCity(hex.getLocation());
+            List<PlayerIndex> players = getMap().getHexPlayersWithCity(hex.getLocation());
             getBank().awardPlayers(hex.getResourceType(), StructureType.CITY, players);
             players = getMap().getHexPlayersWithSettlement(hex.getLocation());
             getBank().awardPlayers(hex.getResourceType(), StructureType.SETTLEMENT, players);
@@ -113,12 +117,21 @@ public class ServerModel extends ClientModel
     {
         getMap().setRobberLocation(location);
         Player robberPlayer = getPlayer(playerIndex);
-        Player victimPlayer = getPlayer(victim);
-        ResourceType robbedType = victimPlayer.robPlayer();
-        robberPlayer.increaseResource(robbedType, 1);
+
         String robberName = robberPlayer.getName();
-        String victimName = victimPlayer.getName();
-        getLog().addMessageLine(robberName, robberName + " moved the robber and robbed " + victimName + ".");
+
+        if (victim == PlayerIndex.NONE)
+        {
+            getLog().addMessageLine(robberPlayer.getName(), robberPlayer.getName() + " don't got no one to rob!");
+        } else
+        {
+            Player victimPlayer = getPlayer(victim);
+            ResourceType robbedType = victimPlayer.robPlayer();
+            robberPlayer.increaseResource(robbedType, 1);
+            String victimName = victimPlayer.getName();
+            getLog().addMessageLine(robberName, robberName + " moved the robber and robbed " + victimName + ".");
+
+        }
         turnTracker.updateStatus(TurnStatus.Playing);
         increaseVersionNumber();
         return this;

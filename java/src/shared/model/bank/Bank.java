@@ -6,8 +6,10 @@ import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.card.DevCard;
 import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
+import shared.model.player.Player;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -20,6 +22,7 @@ public class Bank
 {
     private static Resources resources;
     private static Stack<DevCardType> devCardDeck;
+    private List<Player> players;
 
     private DevCards devCards;
 
@@ -31,6 +34,12 @@ public class Bank
     public Bank(boolean isGameBank)
     {
         initialize(isGameBank);
+    }
+
+    public Bank(boolean isGameBank, List<Player> players)
+    {
+        initialize(isGameBank);
+        this.players = players;
     }
 
     private void initializeDevCardDeck()
@@ -168,19 +177,28 @@ public class Bank
 
     }
 
-    public void awardPlayers(ResourceType resourceType, StructureType type, Set<PlayerIndex> players)
+    public void awardPlayers(ResourceType resourceType, StructureType type, List<PlayerIndex> playerIndices)
     {
         int num = 1;
         if (type.equals(StructureType.CITY))
         {
             num = 2;
         }
-        for (PlayerIndex playerIndex : players)
+        for (PlayerIndex playerIndex : playerIndices)
         {
             try
             {
-                giveResource(resourceType, num);
+                for (Player player : players)
+                {
+                    if (player.getPlayerIndex() == playerIndex)
+                    {
+                        player.getBank().earnResource(resourceType, num);
+                    }
+                }
             } catch (InsufficientResourcesException e)
+            {
+                e.printStackTrace();
+            } catch (CatanException e)
             {
                 e.printStackTrace();
             }
@@ -202,5 +220,10 @@ public class Bank
     public void addResource(ResourceType type, int amount)
     {
         resources.getResource(type).addResource(amount);
+    }
+
+    public void setPlayers(List<Player> players)
+    {
+        this.players = players;
     }
 }

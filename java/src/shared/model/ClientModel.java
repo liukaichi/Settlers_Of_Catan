@@ -68,8 +68,7 @@ public class ClientModel extends Observable
         JsonParser parser = new JsonParser();
         JsonObject model = (JsonObject) parser.parse(json);
         String resourceJson = model.get("deck").toString();
-        bank = new Bank(true);
-        bank.initDevCards(resourceJson);
+
         map = new CatanMap(model.getAsJsonObject("map").toString());
 
         gameInfo = new GameInfo();
@@ -84,6 +83,8 @@ public class ClientModel extends Observable
                 this.players.add(newPlayer);
             }
         }
+        bank = new Bank(true, this.players);
+        bank.initDevCards(resourceJson);
 
         log = new Log(model.getAsJsonObject("log").toString());
         chat = new Chat(model.getAsJsonObject("chat").toString());

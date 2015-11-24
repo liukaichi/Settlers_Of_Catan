@@ -412,7 +412,7 @@ public class PlayerBank extends Bank
         {
             Collections.shuffle(resources);
             ResourceType robbedType = resources.get(0);
-            subResource(robbedType, 1);
+            playerResources.decrease(robbedType, 1);
             return robbedType;
         }
         else
