@@ -496,7 +496,7 @@ public class Player
     }
 
     public void increaseResource(ResourceType robbedType, int amount) {
-        bank.addResourceToGameBank(robbedType,amount);
+        bank.addResource(robbedType,amount);
     }
 }
 
