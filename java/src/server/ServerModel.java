@@ -10,6 +10,8 @@ import shared.locations.VertexLocation;
 import shared.model.ClientModel;
 import shared.model.TurnTracker;
 import shared.model.bank.Bank;
+import shared.model.bank.card.DevCard;
+import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
 import shared.model.map.CatanMap;
 import shared.model.map.Hex;
@@ -150,6 +152,15 @@ public class ServerModel extends ClientModel
     public ClientModel finishTurn(PlayerIndex playerIndex)
     {
         turnTracker.finishTurn(playerIndex);
+        DevCards devCards = getPlayer(playerIndex).getBank().getDevCards();
+
+        for(DevCard card : devCards.getDevCardList()){
+            int unplayable = card.getAmount(DevCard.AmountType.UNPLAYABLE);
+            int playable = card.getAmount(DevCard.AmountType.PLAYABLE);
+            card.setAmountPlayable(playable + unplayable);
+            card.setAmountUnplayable(0);
+        }
+
         String playerName = getPlayerName(playerIndex);
         getLog().addMessageLine(playerName, playerName + "'s turn just ended.");
         increaseVersionNumber();

@@ -9,6 +9,10 @@ import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.PlayerBank;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * This class represents a list of Development Cards
  */
@@ -177,6 +181,11 @@ public class DevCards
             devCards.addProperty("yearOfPlenty", yearOfPlenty.getAmount(type));
         }
         return devCards;
+    }
+
+    public List<DevCard> getDevCardList()
+    {
+        return Arrays.asList(monopoly, roadBuilding, yearOfPlenty, soldier, monument);
     }
 
     @Override public boolean equals(Object o)
