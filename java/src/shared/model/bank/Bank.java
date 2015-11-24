@@ -194,12 +194,12 @@ public class Bank
         resources.decrease(outputResource, amountToTrade);
     }
 
-    public void subResource(ResourceType type, int amount)
+    public void subtractResourceFromGameBank(ResourceType type, int amount)
     {
         resources.getResource(type).subResource(amount);
     }
 
-    public void addResource(ResourceType type, int amount)
+    public void addResourceToGameBank(ResourceType type, int amount)
     {
         resources.getResource(type).addResource(amount);
     }

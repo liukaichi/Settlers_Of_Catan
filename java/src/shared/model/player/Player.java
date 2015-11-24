@@ -128,7 +128,7 @@ public class Player
             int amount = resource.getAmount();
             if (amount < 0)
             {
-                resource.addResource(resource.getAmount());
+                bank.addResource(type, Math.abs(resource.getAmount()));
 
             } else if (amount > 0)
             {
@@ -137,7 +137,7 @@ public class Player
                     throw new InsufficientResourcesException("Sender does not have enough of " + type);
                 } else
                 {
-                    resource.subResource(resource.getAmount());
+                    bank.subtractResource(type, Math.abs(resource.getAmount()));
                 }
             }
         }
@@ -157,11 +157,11 @@ public class Player
                     throw new InsufficientResourcesException("Receiver does not have enough of " + type);
                 } else
                 {
-                    bank.subResource(resource.getType(), resource.getAmount());
+                    bank.subtractResource(type, Math.abs(resource.getAmount()));
                 }
             } else if (amount > 0)
             {
-                resource.addResource(resource.getAmount());
+                bank.addResource(type, Math.abs(resource.getAmount()));
             }
         }
     }
@@ -496,7 +496,7 @@ public class Player
     }
 
     public void increaseResource(ResourceType robbedType, int amount) {
-        bank.addResource(robbedType,amount);
+        bank.addResourceToGameBank(robbedType,amount);
     }
 }
 
