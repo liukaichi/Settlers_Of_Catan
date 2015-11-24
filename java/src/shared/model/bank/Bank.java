@@ -10,7 +10,6 @@ import shared.model.player.Player;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.Stack;
 
 /**
