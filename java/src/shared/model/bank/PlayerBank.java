@@ -1,6 +1,5 @@
 package shared.model.bank;
 
-import client.facade.ClientFacade;
 import shared.definitions.DevCardType;
 import shared.definitions.PortType;
 import shared.definitions.ResourceType;
@@ -141,37 +140,27 @@ public class PlayerBank extends Bank
         return structures.getStructure(type).getAmount(BankStructure.AmountType.BUILT);
     }
 
-    @Override public void giveResource(ResourceType type, int num) throws InsufficientResourcesException
+    @Override public void payResource(ResourceType type, int num) throws InsufficientResourcesException
     {
         if ((playerResources.getResource(type).getAmount() - num) < 0)
         {
             throw new InsufficientResourcesException("Not enough of resource to give.");
         } else
         {
+            super.addResource(type, num);
             playerResources.getResource(type).subResource(num);
         }
     }
 
-    @Override public void takeResource(ResourceType type, int num) throws CatanException
+    @Override public void earnResource(ResourceType type, int num) throws CatanException
     {
         if ((playerResources.getResource(type).getAmount() + num) > 19)
         {
             throw new CatanException();
         } else
         {
+            super.subResource(type, num);
             playerResources.getResource(type).addResource(num);
-        }
-    }
-
-    public void payResource(ResourceType type, int num)
-    {
-        try
-        {
-            this.giveResource(type, num);
-            super.takeResource(type, num);
-        } catch (CatanException e)
-        {
-            e.printStackTrace();
         }
     }
 
@@ -207,7 +196,7 @@ public class PlayerBank extends Bank
     public boolean canBuyDevCard()
     {
         Resources cost = new Resources(0, 0, 1, 1, 1);
-        return hasEnoughResources(cost) && !ClientFacade.getInstance().getBank().getDevCardDeck().empty();
+        return hasEnoughResources(cost) && !super.getDevCardDeck().empty();
     }
 
     /**
