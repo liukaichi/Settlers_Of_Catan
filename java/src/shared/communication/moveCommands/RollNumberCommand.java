@@ -7,6 +7,7 @@ import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * rollNumber command object.
@@ -19,6 +20,8 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
      * The number rolled.
      */
     private int number;
+
+    private static final Logger LOGGER = Logger.getLogger(RollNumberCommand.class.getName());
 
     /**
      * Instantiates a RollNumberCommand with the given player and number.
@@ -68,6 +71,9 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance().rollNumber(gameID, getPlayerIndex(), this.number).toString();
-   }
+        LOGGER.info(String.format("executing RollNumberCommand(%d, %d) for game %d", getPlayerIndex().getIndex(), number, gameID));
+        String model = AbstractServerFacade.getInstance().rollNumber(gameID, getPlayerIndex(), this.number).toString();
+        LOGGER.fine(model);
+        return model;
+    }
 }

@@ -6,6 +6,8 @@ import server.manager.GameManager;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 
+import java.util.logging.Logger;
+
 /**
  * The ID of the game the player wants to join, and the color they want.
  *
@@ -15,6 +17,7 @@ public class JoinGameRequest implements CatanCommand
 {
     private int id;
     private CatanColor color;
+    private static final Logger LOGGER = Logger.getLogger(JoinGameRequest.class.getName());
 
     /**
      * Initializes a JoinGameRequest with the id of the game to join, and the color the player is joining with.
@@ -49,6 +52,7 @@ public class JoinGameRequest implements CatanCommand
      */
     @Override public String execute(int playerId) throws CatanException
     {
+        LOGGER.info(String.format("Executing JoinGameRequest(%d, %s) with player %d", id, color.name(), playerId));
         GameManager.getInstance().joinGame(playerId, id, color);
         return Integer.toString(id);
     }

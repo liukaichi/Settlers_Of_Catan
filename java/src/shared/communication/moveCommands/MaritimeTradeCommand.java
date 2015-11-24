@@ -10,6 +10,7 @@ import shared.definitions.exceptions.CatanException;
 import shared.model.player.TradeOffer;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * maritimeTrade command object.
@@ -29,6 +30,8 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
      */
     private ResourceType inputResource, outputResource;
 
+    private static final Logger LOGGER = Logger.getLogger(MaritimeTradeCommand.class.getName());
+
     /**
      * Instantiates a MaritimeTradeCommand with the given player, ratio of trade, and which resources area being traded.
      *
@@ -37,8 +40,7 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
      * @param inputResource  the resource the player is sending.
      * @param outputResource the resource the player is receiving.
      */
-    public MaritimeTradeCommand(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource,
-            ResourceType outputResource)
+    public MaritimeTradeCommand(PlayerIndex playerIndex, TradeRatio ratio, ResourceType inputResource, ResourceType outputResource)
     {
         super(MoveType.maritimeTrade, playerIndex);
         this.ratio = ratio;
@@ -85,9 +87,12 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance()
-                    .maritimeTrade(gameID, getPlayerIndex(), this.ratio, this.inputResource, this.outputResource)
-                    .toString();
+        LOGGER.info(String.format("executing MaritimeTradeCommand(%d, %d, %s, %s) for game %d", getPlayerIndex().getIndex(), ratio.getRatio(),
+                inputResource.toString(), outputResource.toString(), gameID));
+        String model = AbstractServerFacade.getInstance().maritimeTrade(gameID, getPlayerIndex(), this.ratio, this.inputResource, this.outputResource)
+                .toString();
+        LOGGER.fine(model);
+        return model;
 
     }
 }

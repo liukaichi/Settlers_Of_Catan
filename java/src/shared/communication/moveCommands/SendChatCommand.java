@@ -7,6 +7,7 @@ import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * sendChat command object.
@@ -19,6 +20,8 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
      * The content of the message.
      */
     private String content;
+
+    private static final Logger LOGGER = Logger.getLogger(SendChatCommand.class.getName());
 
     /**
      * Instantiates a SendChatCommand with the given player and message.
@@ -71,6 +74,9 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance().sendChat(gameID, getPlayerIndex(), this.content).toString();
-     }
+        LOGGER.info(String.format("executing SendChatCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), content, gameID));
+        String model = AbstractServerFacade.getInstance().sendChat(gameID, getPlayerIndex(), this.content).toString();
+        LOGGER.fine(model);
+        return model;
+    }
 }

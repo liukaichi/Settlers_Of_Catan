@@ -1,7 +1,6 @@
 package shared.communication.moveCommands;
 
 import com.google.gson.*;
-import jdk.nashorn.internal.parser.JSONParser;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
@@ -9,6 +8,7 @@ import shared.definitions.exceptions.CatanException;
 import shared.locations.EdgeLocation;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * buildRoad command object.
@@ -26,6 +26,8 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
      * Whether this is placed for free (setup).
      */
     private boolean isFree;
+
+    private static final Logger LOGGER = Logger.getLogger(BuildRoadCommand.class.getName());
 
     /**
      * Constructs a BuildRoadCommand based off of the index of the builder, the location, and whether it is free or not.
@@ -79,7 +81,10 @@ public class BuildRoadCommand extends MoveCommand implements JsonSerializer<Buil
      */
     @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance().buildRoad(gameID, getPlayerIndex(), roadLocation, isFree).toString();
-
+        LOGGER.info(String.format("executing BuildRoadCommand(%d, %s, %s) for game %d", getPlayerIndex().getIndex(), roadLocation.toString(),
+                String.valueOf(isFree), gameID));
+        String model = AbstractServerFacade.getInstance().buildRoad(gameID, getPlayerIndex(), roadLocation, isFree).toString();
+        LOGGER.fine(model);
+        return model;
     }
 }

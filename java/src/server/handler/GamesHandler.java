@@ -15,6 +15,7 @@ import java.lang.reflect.Constructor;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URLDecoder;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -43,7 +44,7 @@ public class GamesHandler implements HttpHandler
             if(cookie != null)
                 cookie = URLDecoder.decode(cookie,"UTF-8");
 
-            LOGGER.info("Received Cookie from uri "+uri.toString()+": "+cookie+"\n");
+            LOGGER.fine("Received Cookie from uri " + uri.toString() + ": " + cookie + "\n");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder jsonBuilder = new StringBuilder();
@@ -87,13 +88,13 @@ public class GamesHandler implements HttpHandler
             respHeaders.set("Content-Type", "text/html");
             // set cookie
             respHeaders.set("Set-cookie", cookie + ";Path=/;");
-            LOGGER.info(commandString + "- Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
+            LOGGER.fine(commandString + "- Set Response Header: Set-cookie: " + respHeaders.get("Set-cookie") + "\n");
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
         } catch (Exception e)
         {
             e.printStackTrace();
             response = e.getLocalizedMessage();
-            LOGGER.fine("Bad Request: "+HttpURLConnection.HTTP_BAD_REQUEST +" "+ e.getLocalizedMessage());
+            LOGGER.log(Level.SEVERE, "Bad Request: " + HttpURLConnection.HTTP_BAD_REQUEST, e);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 
         } finally

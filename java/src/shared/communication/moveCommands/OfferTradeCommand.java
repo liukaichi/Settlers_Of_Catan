@@ -8,6 +8,7 @@ import shared.definitions.exceptions.CatanException;
 import shared.model.player.TradeOffer;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * offerTrade command object.
@@ -22,6 +23,8 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
      */
     private TradeOffer offer;
 
+    private static final Logger LOGGER = Logger.getLogger(OfferTradeCommand.class.getName());
+
     /**
      * Instantiates a OfferTradeCommand. If resources are negative, it means they are being sent, and positive
      * means they are being received.
@@ -35,8 +38,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
      * @param ore      the amount of ore being sent or received.
      * @see TradeOffer
      */
-    public OfferTradeCommand(PlayerIndex sender, PlayerIndex receiver, int brick, int wood, int sheep, int wheat,
-            int ore)
+    public OfferTradeCommand(PlayerIndex sender, PlayerIndex receiver, int brick, int wood, int sheep, int wheat, int ore)
     {
         super(MoveType.offerTrade, sender);
         offer = new TradeOffer(sender, receiver, brick, wood, sheep, wheat, ore);
@@ -90,7 +92,9 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
      */
     @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance()
-                .offerTrade(gameID, offer.getSenderIndex(), this.offer, offer.getReceiverIndex()).toString();
+        LOGGER.info(String.format("executing OfferTradeCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), offer.toString(), gameID));
+        String model = AbstractServerFacade.getInstance().offerTrade(gameID, offer.getSenderIndex(), this.offer, offer.getReceiverIndex()).toString();
+        LOGGER.fine(model);
+        return model;
     }
 }

@@ -5,11 +5,10 @@ import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
-import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * Road_Building command object.
@@ -24,6 +23,8 @@ public class Road_BuildingCommand extends MoveCommand implements JsonSerializer<
      * The location of the road(s) to be built.
      */
     private EdgeLocation spot1, spot2;
+
+    private static final Logger LOGGER = Logger.getLogger(Road_BuildingCommand.class.getName());
 
     /**
      * Instantiates a Road_BuildingCommand based the given player, and two locations to build the roads.
@@ -76,7 +77,10 @@ public class Road_BuildingCommand extends MoveCommand implements JsonSerializer<
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance().roadBuilding(gameID, getPlayerIndex(), this.spot1, this.spot1)
-                    .toString();
+        LOGGER.info(String.format("executing Road_BuildingCommand(%d, %s, %s) for game %d", getPlayerIndex().getIndex(), spot1.toString(),
+                spot2.toString(), gameID));
+        String model = AbstractServerFacade.getInstance().roadBuilding(gameID, getPlayerIndex(), this.spot1, this.spot1).toString();
+        LOGGER.fine(model);
+        return model;
     }
 }

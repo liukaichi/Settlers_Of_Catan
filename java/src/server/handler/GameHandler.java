@@ -17,6 +17,7 @@ import java.net.URI;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -61,22 +62,23 @@ public class GameHandler implements HttpHandler
         try
         {
             URI uri = httpExchange.getRequestURI();
-            LOGGER.fine(httpExchange.getRequestMethod()+" "+uri.getPath()+" "+httpExchange.getResponseCode());
+            LOGGER.fine(httpExchange.getRequestMethod() + " " + uri.getPath() + " " + httpExchange.getResponseCode());
             String commandString = uri.getPath().split("/")[2];
-
 
             // set initial headers
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
 
-            String cookie = URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"),"UTF-8");
-            LOGGER.info("Received Cookie: "+cookie+"\n");
-            if(cookie == null){
+            String cookie = URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"), "UTF-8");
+            LOGGER.fine("Received Cookie: " + cookie + "\n");
+            if (cookie == null)
+            {
                 throw new Exception("No cookie found");
             }
             String[] cookies = cookie.split(";");
 
-            if(cookies.length < 2){
+            if (cookies.length < 2)
+            {
                 throw new Exception("Game cookie not set. Login and join before calling this method.");
             }
             //set gameID
@@ -96,17 +98,16 @@ public class GameHandler implements HttpHandler
             {
                 int version = -1;
                 Map<String, String> params = new HashMap<>();
-                if(uri.getQuery() != null)
+                if (uri.getQuery() != null)
                 {
                     params = parseQuery(uri.getQuery());
                     version = Integer.parseInt(params.get("version"));
                 }
                 ClientModel model;
 
-
                 if (params.isEmpty())
                 {
-                    model = facade.getGameState(gameID, -1);//TODO these need to get the proper game
+                    model = facade.getGameState(gameID, -1);
                 } else
                 {
                     model = facade.getGameState(gameID, version);
@@ -119,35 +120,33 @@ public class GameHandler implements HttpHandler
                 {
                     response = model.toString();
                 }
-            }
-            else if(commandString.toLowerCase().equals("listai"))
+            } else if (commandString.toLowerCase().equals("listai"))
             {
                 JsonArray array = new JsonArray();
                 array.add(new JsonPrimitive("LARGEST_ARMY"));
                 response = array.toString();
                 respHeaders.set("Content-Type", "application/json");
-            }
-            else if(commandString.toLowerCase().equals("addai"))
+            } else if (commandString.toLowerCase().equals("addai"))
             {
                 response = "Not implemented for this phase";
                 respHeaders.set("Set-cookie", cookie + ";Path=/;");
-                LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
+                LOGGER.fine("Set Response Header: Set-cookie: " + respHeaders.get("Set-cookie") + "\n");
                 httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND, response.length());
                 return;
             }
 
             // set cookie
             respHeaders.set("Set-cookie", cookie + ";Path=/;");
-            LOGGER.info("Set Response Header: Set-cookie: "+respHeaders.get("Set-cookie")+"\n");
+            LOGGER.fine("Set Response Header: Set-cookie: " + respHeaders.get("Set-cookie") + "\n");
 
             // send response
-//            response = "Success";
+            //            response = "Success";
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
         } catch (Exception e)
         {
             //e.printStackTrace();
             response = e.getLocalizedMessage();
-            LOGGER.fine("Bad Request: "+HttpURLConnection.HTTP_BAD_REQUEST +" "+ e.getLocalizedMessage());
+            LOGGER.log(Level.SEVERE, "Bad Request: " + HttpURLConnection.HTTP_BAD_REQUEST, e);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
         } finally
         {

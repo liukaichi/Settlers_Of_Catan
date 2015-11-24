@@ -3,16 +3,16 @@ package shared.communication;
 import server.facade.AbstractServerFacade;
 import shared.definitions.exceptions.CatanException;
 
+import java.util.logging.Logger;
+
 /**
- * The name and settings to use for the new game. Can be sent as form encoded
- * key-value pairs as well. The new game's ID can be read from the response.
+ * Can be executed to list the games in the server.
  *
  * @author Cache Staheli
  */
 public class ListGameRequest implements CatanCommand
 {
-    private boolean randomTiles, randomNumbers, randomPorts;
-    private String name;
+    private static final Logger LOGGER = Logger.getLogger(ListGameRequest.class.getName());
 
     /**
      * Creates a ListGameRequest.
@@ -30,6 +30,9 @@ public class ListGameRequest implements CatanCommand
      */
     @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance().listGames().toString();
+        LOGGER.info(String.format("executing ListGameRequest() for game %d", gameID));
+        String games = AbstractServerFacade.getInstance().listGames().toString();
+        LOGGER.fine(games);
+        return games;
     }
 }

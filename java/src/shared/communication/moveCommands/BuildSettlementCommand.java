@@ -6,9 +6,9 @@ import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
 import shared.locations.VertexLocation;
-import shared.model.bank.resource.Resources;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * buildSettlement command object.
@@ -27,6 +27,8 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
      * Whether this is placed for free (setup).
      */
     private boolean isFree;
+
+    private static final Logger LOGGER = Logger.getLogger(BuildSettlementCommand.class.getName());
 
     /**
      * Instantiates a BuildSettlementCommand from the player's index, the location, and whether or not it is free.
@@ -67,8 +69,7 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
     @Override public JsonElement serialize(BuildSettlementCommand src, Type srcType, JsonSerializationContext context)
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
-        obj.add("vertexLocation",
-                src.settlementLocation.serialize(src.settlementLocation, src.settlementLocation.getClass(), context));
+        obj.add("vertexLocation", src.settlementLocation.serialize(src.settlementLocation, src.settlementLocation.getClass(), context));
         obj.addProperty("free", isFree);
         return obj;
     }
@@ -81,7 +82,11 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
      */
     @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance().buildSettlement(gameID, getPlayerIndex(), settlementLocation, isFree)
-                .toString();
+        LOGGER.info(
+                String.format("executing BuildSettlementCommand(%d, %s, %s) for game %d", getPlayerIndex().getIndex(), settlementLocation.toString(),
+                        String.valueOf(isFree), gameID));
+        String model = AbstractServerFacade.getInstance().buildSettlement(gameID, getPlayerIndex(), settlementLocation, isFree).toString();
+        LOGGER.fine(model);
+        return model;
     }
 }

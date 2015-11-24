@@ -6,7 +6,8 @@ import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
-import shared.locations.HexLocation;
+
+import java.util.logging.Logger;
 
 /**
  * Monument command object.
@@ -15,6 +16,7 @@ import shared.locations.HexLocation;
  */
 public class MonumentCommand extends SimpleSerializableCommand
 {
+    private static final Logger LOGGER = Logger.getLogger(MonumentCommand.class.getName());
 
     /**
      * Player of playerIndex receives a Victory Point
@@ -35,7 +37,7 @@ public class MonumentCommand extends SimpleSerializableCommand
     {
         JsonParser parser = new JsonParser();
         JsonObject monumentObject = (JsonObject) parser.parse(json);
-         setPlayerIndex(PlayerIndex.fromInt(monumentObject.get("playerIndex").getAsInt()));
+        setPlayerIndex(PlayerIndex.fromInt(monumentObject.get("playerIndex").getAsInt()));
         setType(MoveType.Monument);
 
     }
@@ -46,7 +48,10 @@ public class MonumentCommand extends SimpleSerializableCommand
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance().monument(gameID, getPlayerIndex()).toString();
+        LOGGER.info(String.format("executing MonumentCommand(%d) for game %d", getPlayerIndex().getIndex(), gameID));
+        String model = AbstractServerFacade.getInstance().monument(gameID, getPlayerIndex()).toString();
+        LOGGER.fine(model);
+        return model;
 
     }
 }

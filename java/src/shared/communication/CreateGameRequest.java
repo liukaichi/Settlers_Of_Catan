@@ -58,7 +58,11 @@ public class CreateGameRequest implements CatanCommand
      */
     @Override public String execute(int gameID) throws CatanException
     {
-        //LOGGER.info("executing CreateGameRequest(%b, %b, %b, %s",randomTiles, randomNumbers, randomPorts, name);
-        return AbstractServerFacade.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name).toString();
+        LOGGER.info(
+                String.format("executing CreateGameRequest(%s, %s, %s, %s) for game %d", String.valueOf(randomTiles), String.valueOf(randomNumbers),
+                        String.valueOf(randomPorts), name, gameID));
+        String model = AbstractServerFacade.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name).toString();
+        LOGGER.fine(model);
+        return model;
     }
 }

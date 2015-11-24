@@ -1,13 +1,12 @@
 package shared.communication.moveCommands;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 import shared.locations.HexLocation;
+
+import java.util.logging.Logger;
 
 /**
  * Soldier command object.
@@ -16,6 +15,7 @@ import shared.locations.HexLocation;
  */
 public class SoldierCommand extends RobPlayerCommand
 {
+    private static final Logger LOGGER = Logger.getLogger(SoldierCommand.class.getName());
 
     /**
      * Instantiates a SoldierCommand with the given player, victim, and location of the new robber.
@@ -49,8 +49,11 @@ public class SoldierCommand extends RobPlayerCommand
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance()
-                    .soldier(gameID, getPlayerIndex(), this.getVictimIndex(), this.getLocation()).toString();
+        LOGGER.info(String.format("executing SoldierCommand(%d, %d, %s) for game %d", getPlayerIndex().getIndex(), getVictimIndex().getIndex(),
+                getLocation().toString(), gameID));
+        String model = AbstractServerFacade.getInstance().soldier(gameID, getPlayerIndex(), this.getVictimIndex(), this.getLocation()).toString();
+        LOGGER.fine(model);
+        return model;
 
     }
 

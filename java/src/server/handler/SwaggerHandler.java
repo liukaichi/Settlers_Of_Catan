@@ -4,11 +4,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.util.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +14,7 @@ public class SwaggerHandler
 {
     public abstract static class BaseFile implements HttpHandler
     {
-        private static Logger LOGGER = Logger.getLogger(BaseFile.class.getName());
+        protected static final Logger LOGGER = Logger.getLogger(BaseFile.class.getName());
         protected String rootPath;
 
         public BaseFile(String rootPath)
@@ -48,7 +46,6 @@ public class SwaggerHandler
                 exchange.sendResponseHeaders(404, -1);
                 OutputStream os = exchange.getResponseBody();
                 os.close();
-                System.out.println("Couldn't find the file " + new File(filepath).getAbsolutePath());
             }
         }
     }
@@ -78,7 +75,7 @@ public class SwaggerHandler
 
         @Override public void handle(HttpExchange exchange) throws IOException
         {
-            System.out.println(this.rootPath + " ___ " + this.getRequestPath(exchange));
+            LOGGER.log(Level.FINE, this.rootPath + " ___ " + this.getRequestPath(exchange));
             this.sendFile(exchange, this.rootPath + this.getRequestPath(exchange) + ".json");
         }
     }

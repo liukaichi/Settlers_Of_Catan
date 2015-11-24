@@ -8,6 +8,7 @@ import shared.definitions.exceptions.CatanException;
 import shared.model.bank.resource.Resources;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * discardCards command object.
@@ -22,6 +23,8 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      */
     private Resources discardedCards;
 
+    private static final Logger LOGGER = Logger.getLogger(DiscardCardsCommand.class.getName());
+
     /**
      * Packages a discard cards command for use by the server.
      *
@@ -32,8 +35,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      * @param wheatAmount the amount of wheat to discard.
      * @param woodAmount  the amount of wood to discard.
      */
-    public DiscardCardsCommand(PlayerIndex index, int brickAmount, int woodAmount, int sheepAmount, int wheatAmount,
-            int oreAmount)
+    public DiscardCardsCommand(PlayerIndex index, int brickAmount, int woodAmount, int sheepAmount, int wheatAmount, int oreAmount)
     {
         super(MoveType.discardCards, index);
         discardedCards = new Resources(brickAmount, woodAmount, sheepAmount, wheatAmount, oreAmount);
@@ -76,8 +78,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
     {
         JsonObject obj = (JsonObject) serializeCommand(src);
         // obj.add("discardedCards", context.serialize(src.discardedCards));
-        obj.add("discardedCards",
-                src.discardedCards.serialize(src.discardedCards, src.discardedCards.getClass(), context));
+        obj.add("discardedCards", src.discardedCards.serialize(src.discardedCards, src.discardedCards.getClass(), context));
         return obj;
     }
 
@@ -89,7 +90,9 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance().discardCards(gameID, getPlayerIndex(), this.discardedCards)
-                    .toString();
+        LOGGER.info(String.format("executing DiscardCardsCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), discardedCards, gameID));
+        String model = AbstractServerFacade.getInstance().discardCards(gameID, getPlayerIndex(), this.discardedCards).toString();
+        LOGGER.fine(model);
+        return model;
     }
 }

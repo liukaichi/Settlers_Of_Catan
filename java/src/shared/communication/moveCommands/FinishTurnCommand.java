@@ -7,6 +7,8 @@ import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
 
+import java.util.logging.Logger;
+
 /**
  * finishTurn command object.
  *
@@ -14,6 +16,8 @@ import shared.definitions.exceptions.CatanException;
  */
 public class FinishTurnCommand extends SimpleSerializableCommand
 {
+    private static final Logger LOGGER = Logger.getLogger(FinishTurnCommand.class.getName());
+
     /**
      * Instantiates a FinishTurnCommand from the given PlayerIndex.
      *
@@ -45,7 +49,10 @@ public class FinishTurnCommand extends SimpleSerializableCommand
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance().finishTurn(gameID, getPlayerIndex()).toString();
+        LOGGER.info(String.format("executing FinishTurnCommand(%d) for game %d", getPlayerIndex().getIndex(), gameID));
+        String model = AbstractServerFacade.getInstance().finishTurn(gameID, getPlayerIndex()).toString();
+        LOGGER.fine(model);
+        return model;
 
     }
 }

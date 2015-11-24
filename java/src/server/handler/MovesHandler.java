@@ -8,10 +8,10 @@ import shared.communication.CatanCommand;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
-import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URLDecoder;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -29,8 +29,7 @@ public class MovesHandler implements HttpHandler
      * @param httpExchange the httpExchange to parse.
      * @throws IOException
      */
-    @Override
-    public void handle(HttpExchange httpExchange) throws IOException
+    @Override public void handle(HttpExchange httpExchange) throws IOException
     {
         LOGGER.entering(this.getClass().getCanonicalName(), "handle");
         try
@@ -39,14 +38,16 @@ public class MovesHandler implements HttpHandler
             Headers respHeaders = httpExchange.getResponseHeaders();
             respHeaders.set("Content-Type", "text");
             //Handling cookie
-            String receivedCookie =  URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"),"UTF-8");
+            String receivedCookie = URLDecoder.decode(httpExchange.getRequestHeaders().getFirst("Cookie"), "UTF-8");
 
-            if(receivedCookie == null){
+            if (receivedCookie == null)
+            {
                 throw new Exception("No cookie found");
             }
 
             String[] cookies = receivedCookie.split(";");
-            if(cookies.length < 2){
+            if (cookies.length < 2)
+            {
                 throw new Exception("Game cookie not set");
             }
 
@@ -69,13 +70,10 @@ public class MovesHandler implements HttpHandler
             URI uri = httpExchange.getRequestURI();
             String commandString = uri.getPath().split("/")[2];
             InputStream requestBody = httpExchange.getRequestBody();
-            //TODO get the class name from the context
-            String className = "shared.communication.moveCommands."
-                    + Character.toUpperCase(commandString.charAt(0))
-                    + commandString.substring(1)
-                    + "Command";
+            String className =
+                    "shared.communication.moveCommands." + Character.toUpperCase(commandString.charAt(0)) + commandString.substring(1) + "Command";
             Constructor c = Class.forName(className).getConstructor(String.class);
-            CatanCommand newCommand = (CatanCommand)c.newInstance(json);
+            CatanCommand newCommand = (CatanCommand) c.newInstance(json);
 
             // send response
             response = newCommand.execute(gameID);
@@ -83,21 +81,21 @@ public class MovesHandler implements HttpHandler
 
             requestBody.close();
 
-
         } catch (Exception e)
         {
             //e.printStackTrace();
             response = e.getLocalizedMessage();
-            LOGGER.fine("Bad Request: "+HttpURLConnection.HTTP_BAD_REQUEST +" "+ e.getLocalizedMessage());
+            LOGGER.log(Level.SEVERE, "Bad Request: " + HttpURLConnection.HTTP_BAD_REQUEST, e);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
 
-        }
-        finally {
+        } finally
+        {
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
 
-            if (httpExchange != null) {
+            if (httpExchange != null)
+            {
                 httpExchange.close();
             }
             LOGGER.exiting(this.getClass().getCanonicalName(), "handle");

@@ -7,6 +7,7 @@ import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * acceptTrade command object.
@@ -19,6 +20,8 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
      * Whether you accept the trade or not.
      */
     private boolean willAccept;
+
+    private static final Logger LOGGER = Logger.getLogger(AcceptTradeCommand.class.getName());
 
     /**
      * Instantiates a AcceptTradeCommand with the given PlayerIndex and whether the player will accept the trade.
@@ -67,7 +70,9 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance().acceptTrade(gameID, this.getPlayerIndex(), willAccept).toString();
-
+        LOGGER.info(String.format("executing AcceptTradeCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), willAccept, gameID));
+        String model = AbstractServerFacade.getInstance().acceptTrade(gameID, this.getPlayerIndex(), willAccept).toString();
+        LOGGER.fine(model);
+        return model;
     }
 }

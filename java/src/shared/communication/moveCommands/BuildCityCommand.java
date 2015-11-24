@@ -8,6 +8,7 @@ import shared.definitions.exceptions.CatanException;
 import shared.locations.VertexLocation;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * buildCity command object.
@@ -22,6 +23,8 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
      * Location of the city.
      */
     private VertexLocation cityLocation;
+
+    private static final Logger LOGGER = Logger.getLogger(BuildCityCommand.class.getName());
 
     /**
      * Instantiates a BuildCityCommand with the given player and location.
@@ -72,6 +75,9 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
      */
     @Override public String execute(int gameID) throws CatanException
     {
-        return AbstractServerFacade.getInstance().buildCity(gameID, getPlayerIndex(), cityLocation).toString();
+        LOGGER.info(String.format("executing BuildCityCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), cityLocation.toString(), gameID));
+        String model = AbstractServerFacade.getInstance().buildCity(gameID, getPlayerIndex(), cityLocation).toString();
+        LOGGER.fine(model);
+        return model;
     }
 }

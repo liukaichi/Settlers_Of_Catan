@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -59,9 +60,14 @@ public class UserHandler implements HttpHandler
             if (commandString.equalsIgnoreCase("login"))
             {
                 user = facade.signInUser(creds);
+                LOGGER.info(String.format("executing login using %s", creds));
             } else if (commandString.equalsIgnoreCase("register"))
             {
                 user = facade.registerUser(creds);
+                LOGGER.info(String.format("executing register using %s", creds));
+            } else
+            {
+                throw new Exception("commandString doesn't match any allowed commands.");
             }
             //passing this point means login/register was successful.
 
@@ -70,16 +76,15 @@ public class UserHandler implements HttpHandler
 
             // set cookie
             respHeaders.set("Set-cookie", cookie + ";Path=/;");
-            LOGGER.info("Set Response Header: Set-cookie: '"+respHeaders.get("Set-cookie")+"'\n");
+            LOGGER.fine("Set Response Header: Set-cookie: '" + respHeaders.get("Set-cookie") + "'\n");
 
             // send response
             response = "Success";
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
         } catch (Exception e)
         {
-            e.printStackTrace();
             response = e.getLocalizedMessage();
-            LOGGER.fine("Bad Request: "+HttpURLConnection.HTTP_BAD_REQUEST +" "+ e.getLocalizedMessage());
+            LOGGER.log(Level.SEVERE, "Bad Request: " + HttpURLConnection.HTTP_BAD_REQUEST, e);
             httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
         } finally
         {

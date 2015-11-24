@@ -8,6 +8,7 @@ import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * Monopoly command object.
@@ -21,6 +22,7 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
      * The resource the Monopoly Card applies to.
      */
     private ResourceType resource;
+    private static final Logger LOGGER = Logger.getLogger(MonopolyCommand.class.getName());
 
     /**
      * The player takes all of one type of resource from all other players
@@ -47,7 +49,8 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
         setPlayerIndex(PlayerIndex.fromInt(monopolyObject.get("playerIndex").getAsInt()));
         this.resource = ResourceType.valueOf(monopolyObject.get("resource").getAsString().toUpperCase());
 
-        setType(MoveType.Monopoly);    }
+        setType(MoveType.Monopoly);
+    }
 
     /*
      * (non-Javadoc)
@@ -68,8 +71,10 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
      */
     @Override public String execute(int gameID) throws CatanException
     {
-
-            return AbstractServerFacade.getInstance().monopoly(gameID, getPlayerIndex(), this.resource).toString();
+        LOGGER.info(String.format("executing MonopolyCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), resource.toString(), gameID));
+        String model = AbstractServerFacade.getInstance().monopoly(gameID, getPlayerIndex(), this.resource).toString();
+        LOGGER.fine(model);
+        return model;
 
     }
 }

@@ -6,9 +6,9 @@ import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
-import shared.locations.EdgeLocation;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * Year_of_Plenty command object.
@@ -22,6 +22,8 @@ public class Year_of_PlentyCommand extends MoveCommand implements JsonSerializer
      * The resource(s) you collect.
      */
     private ResourceType resource1, resource2;
+
+    private static final Logger LOGGER = Logger.getLogger(Year_of_PlentyCommand.class.getName());
 
     /**
      * Player of playerIndex receives resource1 and resource2 for free.
@@ -71,9 +73,11 @@ public class Year_of_PlentyCommand extends MoveCommand implements JsonSerializer
      * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID) throws CatanException
-
     {
-            return AbstractServerFacade.getInstance().yearOfPlenty(gameID, getPlayerIndex(), this.resource1, this.resource2)
-                    .toString();
-     }
+        LOGGER.info(String.format("executing Year_of_PlentyCommand(%d, %s, %s) for game %d", getPlayerIndex().getIndex(), resource1.toString(),
+                resource2.toString(), gameID));
+        String model = AbstractServerFacade.getInstance().yearOfPlenty(gameID, getPlayerIndex(), this.resource1, this.resource2).toString();
+        LOGGER.fine(model);
+        return model;
+    }
 }

@@ -4,11 +4,11 @@ import com.google.gson.*;
 import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
-import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
 import shared.locations.HexLocation;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 /**
  * robPlayer command object
@@ -27,6 +27,8 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      * The location of the robber.
      */
     private HexLocation location;
+
+    private static final Logger LOGGER = Logger.getLogger(RobPlayerCommand.class.getName());
 
     public RobPlayerCommand()
     {
@@ -89,9 +91,12 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
      */
     @Override public String execute(int gameID) throws CatanException
     {
-            return AbstractServerFacade.getInstance().robPlayer(gameID, getPlayerIndex(), this.victimIndex, this.location)
-                    .toString();
-     }
+        LOGGER.info(String.format("executing RobPlayerCommand(%d, %d, %s) for game %d", getPlayerIndex().getIndex(), victimIndex.getIndex(),
+                location.toString(), gameID));
+        String model = AbstractServerFacade.getInstance().robPlayer(gameID, getPlayerIndex(), this.victimIndex, this.location).toString();
+        LOGGER.fine(model);
+        return model;
+    }
 
     public PlayerIndex getVictimIndex()
     {
