@@ -176,8 +176,8 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
          */
         JsonObject tradeOffer = new JsonObject();
         {
-            tradeOffer.addProperty("type", "offerTrade");
-            tradeOffer.addProperty("playerIndex", this.sender.getIndex());
+            tradeOffer.addProperty("sender", this.sender.getIndex());
+            tradeOffer.addProperty("receiver", this.receiver.getIndex());
 
             JsonObject jsonOffer = new JsonObject();
             {
@@ -188,7 +188,6 @@ public class TradeOffer implements JsonSerializer<TradeOffer>
                 jsonOffer.addProperty("wood", offer.getAmount(ResourceType.WOOD));
             }
             tradeOffer.add("offer", jsonOffer);
-            tradeOffer.addProperty("receiver", this.receiver.getIndex());
         }
         return tradeOffer.toString();
     }
