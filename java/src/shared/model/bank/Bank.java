@@ -133,7 +133,7 @@ public class Bank
     }
 
     /**
-     * Takes an amount of resources of the given type.
+     * The player takes an amount of resources of the given type from the bank.
      *
      * @param type the type to take.
      * @param num  the amount to take.

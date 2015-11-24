@@ -140,7 +140,7 @@ public class PlayerBank extends Bank
         return structures.getStructure(type).getAmount(BankStructure.AmountType.BUILT);
     }
 
-    @Override public void payResource(ResourceType type, int num) throws InsufficientResourcesException
+    public void payResource(ResourceType type, int num) throws InsufficientResourcesException
     {
         if ((playerResources.getResource(type).getAmount() - num) < 0)
         {
@@ -153,7 +153,7 @@ public class PlayerBank extends Bank
         }
     }
 
-    @Override public void earnResource(ResourceType type, int num) throws CatanException
+    public void earnResource(ResourceType type, int num) throws CatanException
     {
         if ((playerResources.getResource(type).getAmount() + num) > 19)
         {

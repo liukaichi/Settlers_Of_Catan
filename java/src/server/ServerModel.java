@@ -258,7 +258,7 @@ public class ServerModel extends ClientModel
                     {
                         if (vertex.getNormalizedLocation().equals(location))
                         {
-                            player.getResources().increase(ResourceType.toResourceType(hex.getHexType()));
+                            player.getBank().earnResource(ResourceType.toResourceType(hex.getHexType()), 1);
                         }
                     }
                 }
