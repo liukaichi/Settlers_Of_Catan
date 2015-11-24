@@ -845,7 +845,7 @@ import java.util.Map;
         for (Map.Entry<HexLocation, HexType> entry : hexes.entrySet())
         {
 //TODO return to normal
-            BufferedImage hexImage = process(entry.getKey(), getHexImage(entry.getValue()));
+            BufferedImage hexImage = /*process(entry.getKey(), */getHexImage(entry.getValue())/*)*/;
 
             Point2D hexCenter = getHexPoint(entry.getKey());
             Point2D hexCorner = new Point2D.Double((int) (hexCenter.getX() - HEX_IMAGE_WIDTH / 2),
