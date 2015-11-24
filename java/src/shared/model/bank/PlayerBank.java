@@ -155,6 +155,10 @@ public class PlayerBank extends Bank
 
     public void earnResource(ResourceType type, int num) throws CatanException
     {
+        if (type == null)
+        {
+            return;
+        }
         if ((playerResources.getResource(type).getAmount() + num) > 19)
         {
             throw new CatanException();
