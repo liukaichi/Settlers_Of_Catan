@@ -22,7 +22,6 @@ import shared.model.player.TradeOffer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Representation of the Model that is cached by the server. This has additional "do" methods that the client model
@@ -70,6 +69,7 @@ public class ServerModel extends ClientModel
         {
             this.players.add(new Player(pInfo));
         }
+
     }
 
     public ClientModel sendChat(PlayerIndex playerIndex, String content)
@@ -152,6 +152,8 @@ public class ServerModel extends ClientModel
     public ClientModel finishTurn(PlayerIndex playerIndex)
     {
         turnTracker.finishTurn(playerIndex);
+        Player player = getPlayer(playerIndex);
+        String playerName = player.getName();
         DevCards devCards = getPlayer(playerIndex).getBank().getDevCards();
 
         for(DevCard card : devCards.getDevCardList()){
@@ -160,10 +162,12 @@ public class ServerModel extends ClientModel
             card.setAmountPlayable(playable + unplayable);
             card.setAmountUnplayable(0);
         }
-
-        String playerName = getPlayerName(playerIndex);
         getLog().addMessageLine(playerName, playerName + "'s turn just ended.");
         increaseVersionNumber();
+        if (player.getVictoryPoints() == 10)
+        {
+            setWinner(playerIndex);
+        }
         return this;
     }
 
@@ -238,6 +242,7 @@ public class ServerModel extends ClientModel
         player.getBank().addMonuments(1);
 
         getLog().addMessageLine(player.getName(), player.getName() + " built a monument and gained a victory point");
+        player.incrementVictoryPoints();
         increaseVersionNumber();
         return this;
     }
@@ -298,6 +303,7 @@ public class ServerModel extends ClientModel
         }
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " built a settlement.");
+        player.incrementVictoryPoints();
         increaseVersionNumber();
         return this;
     }
@@ -315,6 +321,7 @@ public class ServerModel extends ClientModel
         }
         String playerName = player.getName();
         getLog().addMessageLine(playerName, playerName + " built a city.");
+        player.incrementVictoryPoints();
         increaseVersionNumber();
         return this;
     }

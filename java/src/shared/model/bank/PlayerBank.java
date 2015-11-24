@@ -434,4 +434,8 @@ public class PlayerBank extends Bank
 
     }
 
+    public void subtractVictoryPoints(int amount)
+    {
+        this.victoryPoints -= amount;
+    }
 }

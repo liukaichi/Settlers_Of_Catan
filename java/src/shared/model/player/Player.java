@@ -482,8 +482,8 @@ public class Player
             throw new InsufficientResourcesException("Not enough resources to trade away for maritime trade!");
         } else
         {
-            bank.getResources().increase(outputResource);
-            bank.getResources().decrease(inputResource, amountToTrade);
+            bank.addResource(outputResource, 1);
+            bank.subtractResource(inputResource, amountToTrade);
         }
     }
 
@@ -502,6 +502,21 @@ public class Player
 
     public void increaseResource(ResourceType robbedType, int amount) {
         bank.addResource(robbedType,amount);
+    }
+
+    public void incrementVictoryPoints()
+    {
+        incrementVictoryPoints(1);
+    }
+
+    public void incrementVictoryPoints(int amount)
+    {
+        bank.addVictoryPoints(amount);
+    }
+
+    public void decrementVictoryPoints(int amount)
+    {
+        bank.subtractVictoryPoints(amount);
     }
 }
 

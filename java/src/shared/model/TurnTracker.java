@@ -63,23 +63,26 @@ public class TurnTracker
      */
     public void updateLongestRoad(List<Player> players)
     {
-        int longestRoadCount = 5;
+        int longestRoadCount = 4;
         Player longestRoadPlayer = null;
         if (!longestRoad.equals(PlayerIndex.NONE))
         {
             longestRoadPlayer = players.get(longestRoad.getIndex());
             longestRoadCount = longestRoadPlayer.getStructureCount(StructureType.ROAD);
+            longestRoadPlayer.decrementVictoryPoints(2);
         }
         for (Player player : players)
         {
             if (player.getStructureCount(StructureType.ROAD) > longestRoadCount)
             {
+                longestRoadCount = player.getStructureCount(StructureType.ROAD);
                 longestRoadPlayer = player;
             }
         }
         if (longestRoadPlayer != null)
         {
             longestRoad = longestRoadPlayer.getPlayerIndex();
+            longestRoadPlayer.incrementVictoryPoints(2);
         }
     }
 
@@ -97,6 +100,7 @@ public class TurnTracker
         {
             largestArmyPlayer = players.get(largestArmy.getIndex());
             largestArmyCount = largestArmyPlayer.getKnights();
+            largestArmyPlayer.decrementVictoryPoints(2);
         }
         for (Player player : players)
         {
@@ -108,6 +112,7 @@ public class TurnTracker
         if (largestArmyPlayer != null)
         {
             largestArmy = largestArmyPlayer.getPlayerIndex();
+            largestArmyPlayer.incrementVictoryPoints(2);
         }
     }
 
