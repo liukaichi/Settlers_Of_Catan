@@ -397,6 +397,11 @@ public class Player
         return bank.getResources().getAllResources();
     }
 
+    public int getResourcesCount()
+    {
+        return getResources().totalResources();
+    }
+
 
     /**
      * Checks if the player can currently trade using a given resource

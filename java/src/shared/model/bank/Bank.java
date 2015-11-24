@@ -68,8 +68,11 @@ public class Bank
 
     private void initialize(boolean isGameBank)
     {
-        devCards = new DevCards(isGameBank);
-        resources = new Resources(isGameBank);
+        if (isGameBank)
+        {
+            devCards = new DevCards(isGameBank);
+            resources = new Resources(isGameBank);
+        }
         if (devCardDeck == null)
         {
             devCardDeck = new Stack<>();

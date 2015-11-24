@@ -68,10 +68,6 @@ public class ServerModel extends ClientModel
         {
             this.players.add(new Player(pInfo));
         }
-        if (this instanceof ServerModel)
-        {
-            bank.setPlayers(this.players);
-        }
     }
 
     public ClientModel sendChat(PlayerIndex playerIndex, String content)
@@ -103,7 +99,22 @@ public class ServerModel extends ClientModel
         //set the turn according to the roll number
         if (number == 7)
         {
-            turnTracker.updateStatus(TurnStatus.Robbing);
+            boolean shouldDiscard = false;
+            for (Player player : players)
+            {
+                if (player.getResourcesCount() > 7)
+                {
+                    shouldDiscard = true;
+                }
+            }
+            if (shouldDiscard)
+            {
+                turnTracker.updateStatus(TurnStatus.Discarding);
+            }
+            else
+            {
+                turnTracker.updateStatus(TurnStatus.Robbing);
+            }
         } else
         {
             turnTracker.updateStatus(TurnStatus.Playing);
@@ -345,8 +356,24 @@ public class ServerModel extends ClientModel
 
     public ClientModel discardCards(PlayerIndex playerIndex, Resources discardedCards)
     {
-        Player player = getPlayer(playerIndex);
-        player.discardCards(discardedCards);
+        Player playerToDiscard = getPlayer(playerIndex);
+        playerToDiscard.discardCards(discardedCards);
+        boolean shouldDiscard = false;
+        for (Player player : players)
+        {
+            if (player.getResourcesCount() > 7)
+            {
+                shouldDiscard = true;
+            }
+        }
+        if (shouldDiscard)
+        {
+            turnTracker.updateStatus(TurnStatus.Discarding);
+        }
+        else
+        {
+            turnTracker.updateStatus(TurnStatus.Robbing);
+        }
         increaseVersionNumber();
         return this;
     }

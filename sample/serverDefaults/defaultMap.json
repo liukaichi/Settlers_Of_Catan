@@ -396,11 +396,11 @@
     "lines": []
   },
   "bank": {
-    "brick": 24,
-    "wood": 24,
-    "sheep": 24,
-    "wheat": 24,
-    "ore": 24
+    "brick": 19,
+    "wood": 19,
+    "sheep": 19,
+    "wheat": 19,
+    "ore": 19
   },
   "turnTracker": {
     "status": "FirstRound",
