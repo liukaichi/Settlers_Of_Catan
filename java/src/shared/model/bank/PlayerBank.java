@@ -147,6 +147,7 @@ public class PlayerBank extends Bank
             throw new InsufficientResourcesException("Not enough of resource to give.");
         } else
         {
+            //
             super.addResource(type, num);
             playerResources.getResource(type).subResource(num);
         }
