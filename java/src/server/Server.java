@@ -47,7 +47,8 @@ public class Server
             createContexts();
             server.setExecutor(null); // creates a default executor
             AbstractServerFacade.setFacade(new ServerFacade());
-            IPersistenceFactory factory = PluginManager.createFactory(PERSISTENCE_TYPE);
+            PluginManager pluginManager = new PluginManager();
+            IPersistenceFactory factory = pluginManager.createFactory(PERSISTENCE_TYPE);
             UserManager.getInstance().setUserPersistence(factory.createUserPersistenceEngine());
             GameManager.getInstance().setGamePersistence(factory.createGamePersistenceEngine(CHECKPOINTS));
         } catch (Exception e)

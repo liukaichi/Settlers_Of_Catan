@@ -1,7 +1,14 @@
 package server.plugin;
 
+import server.facade.AbstractServerFacade;
+
 import java.io.FileNotFoundException;
 import java.io.InvalidClassException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.jar.JarFile;
 
 /**
@@ -17,12 +24,16 @@ public class PluginManager
      * @return the factory from the plugin associated with this factoryType.
      * @throws FileNotFoundException If there is no such plugin registered.
      */
-    public static IPersistenceFactory createFactory(String factoryType) throws FileNotFoundException
+    public IPersistenceFactory createFactory(String factoryType)
+            throws FileNotFoundException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
+            InstantiationException, InvocationTargetException, MalformedURLException
     {
 
-        URLClassLoader child = new URLClassLoader(myJar.toURL(),
+        URL url = new URL("C:\\Users\\liukaichi\\Programming\\RealSettlers\\java\\lib\\plugins\\SQLiteEngine.jar");
+
+        URLClassLoader child = new URLClassLoader(new URL[]{url},
                 this.getClass().getClassLoader());
-        Class classToLoad = Class.forName("com.MyClass", true, child);
+        Class classToLoad = Class.forName("com.SQLiteFactory", true, child);
         Method method = classToLoad.getDeclaredMethod("myMethod");
         Object instance = classToLoad.newInstance();
         Object result = method.invoke (instance);

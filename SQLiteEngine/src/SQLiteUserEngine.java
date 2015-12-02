@@ -9,7 +9,7 @@ public class SQLiteUserEngine implements IUserPersistenceEngine
 {
     @Override public int registerUser(Credentials credentials)
     {
-        return 0;
+        return 34567;
     }
 
     @Override public User getUser(int id)
