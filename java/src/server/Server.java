@@ -2,10 +2,14 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 import server.facade.AbstractServerFacade;
-import server.facade.MockServerFacade;
 import server.facade.ServerFacade;
 import server.handler.*;
+import server.manager.GameManager;
+import server.manager.UserManager;
+import server.plugin.IPersistenceFactory;
+import server.plugin.PluginManager;
 
+import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -81,18 +85,28 @@ public class Server
 
     public static void main(String[] args) {
 
-        switch(args.length) {
-            case 0:
-                //AbstractServerFacade.setFacade(new MockServerFacade());
-                AbstractServerFacade.setFacade(new ServerFacade());
-                Server.run();
-                break;
-            case 1:
-                int port = Integer.parseInt(args[0]);
-                //AbstractServerFacade.setFacade(new MockServerFacade());
-                AbstractServerFacade.setFacade(new ServerFacade());
-                Server.run(port);
-                break;
+        switch (args.length)
+        {
+        case 0:
+            //AbstractServerFacade.setFacade(new MockServerFacade());
+            AbstractServerFacade.setFacade(new ServerFacade());
+            Server.run();
+            break;
+        case 3:
+            int port = Integer.parseInt(args[0]);
+            //AbstractServerFacade.setFacade(new MockServerFacade());
+            AbstractServerFacade.setFacade(new ServerFacade());
+            try
+            {
+                IPersistenceFactory factory = PluginManager.createFactory(args[1]);
+                UserManager.getInstance().setUserPersistence(factory.createUserPersistenceEngine());
+                GameManager.getInstance().setGamePersistence(factory.createGamePersistenceEngine(Integer.parseInt(args[2])));
+            } catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+            Server.run(port);
+            break;
         }
     }
 }

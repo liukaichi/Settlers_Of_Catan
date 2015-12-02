@@ -5,6 +5,8 @@
     
 	<!-- Directory paths for the java server, javascript, and dest dir for the student copy -->
     <property name="port.arg" value="8081"/>
+	<property name="persistence-type.arg" value="sqlite"/>
+	<property name="checkpoint.arg" value="10"/>
 	<property name="host.arg" value="localhost"/>
     <property name="web.arg" value="gameplay"/>
     <property name="options.arg" value="ug"/>
@@ -64,6 +66,8 @@
 	<target name="our-server" depends="package" description="compiles, packages, and runs the student server">
 		<java jar="${java.dist}/catan-server.jar" dir="${java.dist}" fork="yes">
 			<arg value="${port.arg}"/>
+			<arg value="${persistence-type.arg}"/>
+			<arg value="${checkpoint.arg}"/>
 			<sysproperty key="com.sun.management.jmxremote" value=""/>
 			<assertions>
 				<enable/>

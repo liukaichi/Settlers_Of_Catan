@@ -17,7 +17,7 @@ public class PluginManager
      * @return the factory from the plugin associated with this factoryType.
      * @throws FileNotFoundException If there is no such plugin registered.
      */
-    public static AbstractPersistenceFactory createFactory(String factoryType) throws FileNotFoundException
+    public static IPersistenceFactory createFactory(String factoryType) throws FileNotFoundException
     {
         return null;
     }

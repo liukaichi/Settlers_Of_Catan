@@ -5,6 +5,7 @@ import client.data.PlayerInfo;
 import server.ServerModel;
 import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
+import server.plugin.IGamePersistenceEngine;
 import server.util.FileUtils;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
@@ -31,6 +32,7 @@ public class GameManager
 
     private Map<Integer, GameInfo> games;
     private Map<Integer, ServerModel> models;
+    private IGamePersistenceEngine gamePersistence;
 
     private GameManager()
     {
@@ -209,5 +211,10 @@ public class GameManager
         ServerModel model = new ServerModel(game, randomTiles, randomNumbers, randomPorts);
         models.put(newGameID, model);
         return game;
+    }
+
+    public void setGamePersistence(IGamePersistenceEngine gamePersistence)
+    {
+        this.gamePersistence = gamePersistence;
     }
 }

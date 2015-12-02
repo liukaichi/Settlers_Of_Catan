@@ -1,5 +1,6 @@
 package server.manager;
 
+import server.plugin.IUserPersistenceEngine;
 import shared.communication.Credentials;
 import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.InvalidCredentialsException;
@@ -20,6 +21,7 @@ public class UserManager
     private static UserManager _instance;
     private Map<Integer, Credentials> credentials;
     private int lastId = 16;
+    private IUserPersistenceEngine userPersistence;
 
     private UserManager()
     {
@@ -140,5 +142,10 @@ public class UserManager
             users.add(new User(entry.getValue(), entry.getKey()));
         }
         return users;
+    }
+
+    public void setUserPersistence(IUserPersistenceEngine userPersistence)
+    {
+        this.userPersistence = userPersistence;
     }
 }
