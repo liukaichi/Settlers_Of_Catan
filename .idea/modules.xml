@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SQLiteEngine/SQLiteEngine.iml" filepath="$PROJECT_DIR$/SQLiteEngine/SQLiteEngine.iml" />
       <module fileurl="file://$PROJECT_DIR$/The-Settlers-of-Catan.iml" filepath="$PROJECT_DIR$/The-Settlers-of-Catan.iml" />
     </modules>
   </component>

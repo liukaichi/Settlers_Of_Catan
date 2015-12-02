@@ -219,11 +219,6 @@ public class GameManager
         this.gamePersistence = gamePersistence;
     }
 
-    public IGamePersistenceEngine getGamePersistence()
-    {
-        return gamePersistence;
-    }
-
     public void saveCommand(int gameID, CatanCommand catanCommand)
     {
         gamePersistence.saveCommand(gameID, catanCommand, getGame(gameID));

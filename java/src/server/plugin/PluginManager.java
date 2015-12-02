@@ -19,6 +19,14 @@ public class PluginManager
      */
     public static IPersistenceFactory createFactory(String factoryType) throws FileNotFoundException
     {
+
+        URLClassLoader child = new URLClassLoader(myJar.toURL(),
+                this.getClass().getClassLoader());
+        Class classToLoad = Class.forName("com.MyClass", true, child);
+        Method method = classToLoad.getDeclaredMethod("myMethod");
+        Object instance = classToLoad.newInstance();
+        Object result = method.invoke (instance);
+
         return null;
     }
 
