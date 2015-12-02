@@ -6,17 +6,10 @@ package server.plugin;
 public interface IPersistenceFactory
 {
     /**
-     * Creates a UserPersistenceEngine. This method must be overridden to produce anything.
-     *
-     * @return a UserPersistenceEngine.
-     */
-    public IUserPersistenceEngine createUserPersistenceEngine();
-
-    /**
-     * Creates a GamePersistenceEngine. This method must be overridden to produce anything.
+     * Creates a PersistenceEngine. This method must be overridden to produce anything.
      *
      * @param commandsBetweenSaves the number of commands in between full saves of the model.
-     * @return a GamePersistenceEngine.
+     * @return a PersistenceEngine.
      */
-    public IGamePersistenceEngine createGamePersistenceEngine(int commandsBetweenSaves);
+    public IPersistenceEngine createPersistenceEngine(int commandsBetweenSaves);
 }

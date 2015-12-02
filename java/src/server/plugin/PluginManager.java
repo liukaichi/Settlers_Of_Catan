@@ -1,9 +1,12 @@
 package server.plugin;
 
 import server.facade.AbstractServerFacade;
+import shared.communication.CatanCommand;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InvalidClassException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -28,17 +31,23 @@ public class PluginManager
             throws FileNotFoundException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
             InstantiationException, InvocationTargetException, MalformedURLException
     {
+        //find the factory type and get the class info
+        File config = new File("java\\lib\\plugins\\config.txt");
 
-        URL url = new URL("C:\\Users\\liukaichi\\Programming\\RealSettlers\\java\\lib\\plugins\\SQLiteEngine.jar");
-
+        //make the class from the jar
+        URL url =  new File("java\\lib\\plugins\\SQLiteEngine.jar")
+                .toURI().toURL();
         URLClassLoader child = new URLClassLoader(new URL[]{url},
                 this.getClass().getClassLoader());
-        Class classToLoad = Class.forName("com.SQLiteFactory", true, child);
-        Method method = classToLoad.getDeclaredMethod("myMethod");
-        Object instance = classToLoad.newInstance();
-        Object result = method.invoke (instance);
+        Class classToLoad = Class.forName("SQLiteFactory", true, child);
 
-        return null;
+        //***weird method stuff?
+        //Method method = classToLoad.getDeclaredMethod("myMethod");
+        //Object instance = classToLoad.newInstance();
+        //Object result = method.invoke (instance);
+
+        Constructor c = classToLoad.getConstructor();
+        return (IPersistenceFactory) c.newInstance();
     }
 
     /**

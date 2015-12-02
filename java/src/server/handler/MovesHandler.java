@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 public class MovesHandler implements HttpHandler
 {
     private static Logger LOGGER = Logger.getLogger(MovesHandler.class.getName());
-    AbstractServerFacade facade = AbstractServerFacade.getInstance();
     private String response;
 
     /**

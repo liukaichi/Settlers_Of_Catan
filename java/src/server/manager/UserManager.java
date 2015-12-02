@@ -1,6 +1,6 @@
 package server.manager;
 
-import server.plugin.IUserPersistenceEngine;
+import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.InvalidCredentialsException;
@@ -20,9 +20,10 @@ public class UserManager
 {
     private static UserManager _instance;
     private Map<Integer, Credentials> credentials;
-    private IUserPersistenceEngine userPersistence;
+    private IPersistenceEngine persistenceEngine;
 
     private UserManager()
+
     {
         this.credentials = new HashMap<>();
         addDefaultUsers();
@@ -86,7 +87,7 @@ public class UserManager
      */
     public User userLogin(Credentials credentials) throws InvalidCredentialsException
     {
-        User user = userPersistence.getUser(credentials);
+        User user = persistenceEngine.getUser(credentials);
         if (user != null)
         {
             return user;
@@ -102,7 +103,7 @@ public class UserManager
      */
     public User userRegister(Credentials credentials) throws ExistingRegistrationException
     {
-        int userID = userPersistence.registerUser(credentials);
+        int userID = persistenceEngine.registerUser(credentials);
         if (userID == -1)
         {
             throw new ExistingRegistrationException("Failed to register - someone already has that username.");
@@ -143,8 +144,8 @@ public class UserManager
         return users;
     }
 
-    public void setUserPersistence(IUserPersistenceEngine userPersistence)
+    public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
-        this.userPersistence = userPersistence;
+        this.persistenceEngine = persistenceEngine;
     }
 }

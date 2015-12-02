@@ -1,20 +1,19 @@
-import server.plugin.IGamePersistenceEngine;
+import server.plugin.IPersistenceEngine;
 import server.plugin.IPersistenceFactory;
-import server.plugin.IUserPersistenceEngine;
 
 /**
  * Created by liukaichi on 12/2/2015.
  */
 public class SQLiteFactory implements IPersistenceFactory
 {
-
-    @Override public IUserPersistenceEngine createUserPersistenceEngine()
+    @Override public IPersistenceEngine createPersistenceEngine(int commandsBetweenSaves)
     {
-        return null;
+        return new SQLiteEngine(commandsBetweenSaves);
     }
 
-    @Override public IGamePersistenceEngine createGamePersistenceEngine(int commandsBetweenSaves)
+    public static void main(String[] args)
     {
-        return null;
+
     }
 }
+

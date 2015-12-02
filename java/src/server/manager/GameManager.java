@@ -5,7 +5,7 @@ import client.data.PlayerInfo;
 import server.ServerModel;
 import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
-import server.plugin.IGamePersistenceEngine;
+import server.plugin.IPersistenceEngine;
 import server.util.FileUtils;
 import shared.communication.CatanCommand;
 import shared.definitions.AIType;
@@ -33,7 +33,7 @@ public class GameManager
 
     private Map<Integer, GameInfo> games;
     private Map<Integer, ServerModel> models;
-    private IGamePersistenceEngine gamePersistence;
+    private IPersistenceEngine persistenceEngine;
 
     private GameManager()
     {
@@ -214,18 +214,18 @@ public class GameManager
         return game;
     }
 
-    public void setGamePersistence(IGamePersistenceEngine gamePersistence)
+    public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
-        this.gamePersistence = gamePersistence;
+        this.persistenceEngine = persistenceEngine;
     }
 
     public void saveCommand(int gameID, CatanCommand catanCommand)
     {
-        gamePersistence.saveCommand(gameID, catanCommand, getGame(gameID));
+        persistenceEngine.saveGame(gameID, catanCommand, getGame(gameID));
     }
 
     public void addPlayerToGame(int playerID, int gameID)
     {
-        gamePersistence.addPlayerToGame(playerID, gameID);
+        persistenceEngine.addPlayerToGame(playerID, gameID);
     }
 }

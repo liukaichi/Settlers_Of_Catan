@@ -6,10 +6,10 @@ import server.facade.ServerFacade;
 import server.handler.*;
 import server.manager.GameManager;
 import server.manager.UserManager;
+import server.plugin.IPersistenceEngine;
 import server.plugin.IPersistenceFactory;
 import server.plugin.PluginManager;
 
-import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -49,8 +49,9 @@ public class Server
             AbstractServerFacade.setFacade(new ServerFacade());
             PluginManager pluginManager = new PluginManager();
             IPersistenceFactory factory = pluginManager.createFactory(PERSISTENCE_TYPE);
-            UserManager.getInstance().setUserPersistence(factory.createUserPersistenceEngine());
-            GameManager.getInstance().setGamePersistence(factory.createGamePersistenceEngine(CHECKPOINTS));
+            IPersistenceEngine persistenceEngine = factory.createPersistenceEngine(CHECKPOINTS);
+            UserManager.getInstance().setPersistenceEngine(persistenceEngine);
+            GameManager.getInstance().setPersistenceEngine(persistenceEngine);
         } catch (Exception e)
         {
             e.printStackTrace();
