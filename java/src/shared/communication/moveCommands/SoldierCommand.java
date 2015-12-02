@@ -53,6 +53,7 @@ public class SoldierCommand extends RobPlayerCommand
                 getLocation().toString(), gameID));
         String model = AbstractServerFacade.getInstance().soldier(gameID, getPlayerIndex(), this.getVictimIndex(), this.getLocation()).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
 
     }

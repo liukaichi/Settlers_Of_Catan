@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author Cache Staheli
  */
-public class CreateGameRequest implements CatanCommand
+public class CreateGameRequest extends CatanCommand
 {
     private boolean randomTiles, randomNumbers, randomPorts;
     private static final Logger LOGGER = Logger.getLogger(CreateGameRequest.class.getName());
@@ -63,6 +63,8 @@ public class CreateGameRequest implements CatanCommand
                         String.valueOf(randomPorts), name, gameID));
         String model = AbstractServerFacade.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
+
 }

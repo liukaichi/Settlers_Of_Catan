@@ -77,6 +77,7 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
         LOGGER.info(String.format("executing SendChatCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), content, gameID));
         String model = AbstractServerFacade.getInstance().sendChat(gameID, getPlayerIndex(), this.content).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }

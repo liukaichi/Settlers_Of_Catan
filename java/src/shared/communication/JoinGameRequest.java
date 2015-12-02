@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author Cache Staheli
  */
-public class JoinGameRequest implements CatanCommand
+public class JoinGameRequest extends CatanCommand
 {
     private int id;
     private CatanColor color;
@@ -54,6 +54,12 @@ public class JoinGameRequest implements CatanCommand
     {
         LOGGER.info(String.format("Executing JoinGameRequest(%d, %s) with player %d", id, color.name(), playerId));
         GameManager.getInstance().joinGame(playerId, id, color);
+        persistMe(playerId);
         return Integer.toString(id);
+    }
+
+    @Override public void persistMe(int playerID)
+    {
+        GameManager.getInstance().addPlayerToGame(playerID, id);
     }
 }

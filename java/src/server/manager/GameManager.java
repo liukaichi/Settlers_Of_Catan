@@ -7,6 +7,7 @@ import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
 import server.plugin.IGamePersistenceEngine;
 import server.util.FileUtils;
+import shared.communication.CatanCommand;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
@@ -143,7 +144,7 @@ public class GameManager
                 {
                     User user = UserManager.getInstance().getUser(playerID);
                     PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
-                    game.addPlayer(player);
+                    game.addPlayerToGame(player);
                     return;
                 } else
                 {
@@ -177,7 +178,7 @@ public class GameManager
         int joinedGameSize = game.getPlayers().size();
         if (joinedGameSize < 4)
         {
-            //game.addPlayer(aiPlayers.get(joinedGameSize - 1));
+            //game.addPlayerToGame(aiPlayers.get(joinedGameSize - 1));
             try
             {
                 game.addPlayer(aiManager.createAIPlayer(game));
@@ -216,5 +217,20 @@ public class GameManager
     public void setGamePersistence(IGamePersistenceEngine gamePersistence)
     {
         this.gamePersistence = gamePersistence;
+    }
+
+    public IGamePersistenceEngine getGamePersistence()
+    {
+        return gamePersistence;
+    }
+
+    public void saveCommand(int gameID, CatanCommand catanCommand)
+    {
+        gamePersistence.saveCommand(gameID, catanCommand, getGame(gameID));
+    }
+
+    public void addPlayerToGame(int playerID, int gameID)
+    {
+        gamePersistence.addPlayerToGame(playerID, gameID);
     }
 }

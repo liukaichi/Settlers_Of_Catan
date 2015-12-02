@@ -93,6 +93,7 @@ public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<D
         LOGGER.info(String.format("executing DiscardCardsCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), discardedCards, gameID));
         String model = AbstractServerFacade.getInstance().discardCards(gameID, getPlayerIndex(), this.discardedCards).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }

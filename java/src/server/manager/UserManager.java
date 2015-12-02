@@ -20,7 +20,6 @@ public class UserManager
 {
     private static UserManager _instance;
     private Map<Integer, Credentials> credentials;
-    private int lastId = 16;
     private IUserPersistenceEngine userPersistence;
 
     private UserManager()
@@ -87,9 +86,10 @@ public class UserManager
      */
     public User userLogin(Credentials credentials) throws InvalidCredentialsException
     {
-        if (this.credentials.containsValue(credentials))
+        User user = userPersistence.getUser(credentials);
+        if (user != null)
         {
-            return getUserFromCredentials(credentials);
+            return user;
         }
         throw new InvalidCredentialsException("Failed to login - bad username or password.");
     }
@@ -102,15 +102,14 @@ public class UserManager
      */
     public User userRegister(Credentials credentials) throws ExistingRegistrationException
     {
-
-        if (this.credentials.containsValue(credentials))
+        int userID = userPersistence.registerUser(credentials);
+        if (userID == -1)
         {
             throw new ExistingRegistrationException("Failed to register - someone already has that username.");
         } else
         {
             // playerID is the new size of the credentials
-            this.credentials.put(++lastId, credentials);
-            return new User(credentials, lastId);
+            return new User(credentials, userID);
         }
     }
 

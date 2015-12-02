@@ -78,6 +78,7 @@ public class BuildCityCommand extends MoveCommand implements JsonSerializer<Buil
         LOGGER.info(String.format("executing BuildCityCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), cityLocation.toString(), gameID));
         String model = AbstractServerFacade.getInstance().buildCity(gameID, getPlayerIndex(), cityLocation).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }

@@ -74,6 +74,7 @@ public class MonopolyCommand extends MoveCommand implements JsonSerializer<Monop
         LOGGER.info(String.format("executing MonopolyCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), resource.toString(), gameID));
         String model = AbstractServerFacade.getInstance().monopoly(gameID, getPlayerIndex(), this.resource).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
 
     }

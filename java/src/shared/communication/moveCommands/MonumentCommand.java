@@ -51,6 +51,7 @@ public class MonumentCommand extends SimpleSerializableCommand
         LOGGER.info(String.format("executing MonumentCommand(%d) for game %d", getPlayerIndex().getIndex(), gameID));
         String model = AbstractServerFacade.getInstance().monument(gameID, getPlayerIndex()).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
 
     }

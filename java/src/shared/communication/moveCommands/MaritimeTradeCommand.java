@@ -92,6 +92,7 @@ public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<
         String model = AbstractServerFacade.getInstance().maritimeTrade(gameID, getPlayerIndex(), this.ratio, this.inputResource, this.outputResource)
                 .toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
 
     }

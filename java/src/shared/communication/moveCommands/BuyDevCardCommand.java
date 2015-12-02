@@ -50,6 +50,7 @@ public class BuyDevCardCommand extends SimpleSerializableCommand
         LOGGER.info(String.format("executing BuyDevCardCommand(%d) for game %d", getPlayerIndex().getIndex(), gameID));
         String model = AbstractServerFacade.getInstance().buyDevCard(gameID, getPlayerIndex()).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }

@@ -52,6 +52,7 @@ public class FinishTurnCommand extends SimpleSerializableCommand
         LOGGER.info(String.format("executing FinishTurnCommand(%d) for game %d", getPlayerIndex().getIndex(), gameID));
         String model = AbstractServerFacade.getInstance().finishTurn(gameID, getPlayerIndex()).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
 
     }

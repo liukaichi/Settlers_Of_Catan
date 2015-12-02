@@ -64,6 +64,7 @@ public class UserHandler implements HttpHandler
             } else if (commandString.equalsIgnoreCase("register"))
             {
                 user = facade.registerUser(creds);
+
                 LOGGER.info(String.format("executing register using %s", creds));
             } else
             {

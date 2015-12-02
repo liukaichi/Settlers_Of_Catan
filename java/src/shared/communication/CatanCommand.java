@@ -1,5 +1,7 @@
 package shared.communication;
 
+import server.manager.GameManager;
+import server.manager.UserManager;
 import shared.definitions.exceptions.CatanException;
 
 /**
@@ -13,7 +15,7 @@ import shared.definitions.exceptions.CatanException;
  * @see <a href="http://stackoverflow.com/questions/5658182/initializing-a-class-with-class-forname-and-which-have-a-constructor-which-tak">
  * Using Constructors with Class.forName()</a>
  */
-public interface CatanCommand
+public abstract class CatanCommand
 {
     /**
      * Executes a command on the server side. <br>
@@ -24,5 +26,11 @@ public interface CatanCommand
      * some commands return some other response object.
      * @see shared.model.ClientModel
      */
-    String execute(int gameID) throws CatanException;
+    public abstract String execute(int gameID) throws CatanException;
+
+    protected void persistMe(int gameID)
+    {
+        GameManager.getInstance().saveCommand(gameID, this);
+    }
+
 }

@@ -87,6 +87,7 @@ public class BuildSettlementCommand extends MoveCommand implements JsonSerialize
                         String.valueOf(isFree), gameID));
         String model = AbstractServerFacade.getInstance().buildSettlement(gameID, getPlayerIndex(), settlementLocation, isFree).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }

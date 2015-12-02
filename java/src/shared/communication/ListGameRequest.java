@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  *
  * @author Cache Staheli
  */
-public class ListGameRequest implements CatanCommand
+public class ListGameRequest extends CatanCommand
 {
     private static final Logger LOGGER = Logger.getLogger(ListGameRequest.class.getName());
 

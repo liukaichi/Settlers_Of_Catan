@@ -2,9 +2,11 @@ package shared.communication.moveCommands;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.sun.org.apache.xpath.internal.operations.String;
 import shared.communication.CatanCommand;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
+import shared.definitions.exceptions.CatanException;
 
 /**
  * All move commands objects contain at least the following properties. These
@@ -14,7 +16,7 @@ import shared.definitions.PlayerIndex;
  * @see MoveType
  * @see PlayerIndex
  */
-public abstract class MoveCommand implements CatanCommand
+public abstract class MoveCommand extends CatanCommand
 {
     /**
      * The type of the moveCommand
@@ -75,4 +77,6 @@ public abstract class MoveCommand implements CatanCommand
     {
         this.playerIndex = playerIndex;
     }
+
+
 }

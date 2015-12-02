@@ -73,6 +73,7 @@ public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<Ac
         LOGGER.info(String.format("executing AcceptTradeCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), willAccept, gameID));
         String model = AbstractServerFacade.getInstance().acceptTrade(gameID, this.getPlayerIndex(), willAccept).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }

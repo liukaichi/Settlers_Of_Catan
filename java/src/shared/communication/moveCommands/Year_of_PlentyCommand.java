@@ -78,6 +78,7 @@ public class Year_of_PlentyCommand extends MoveCommand implements JsonSerializer
                 resource2.toString(), gameID));
         String model = AbstractServerFacade.getInstance().yearOfPlenty(gameID, getPlayerIndex(), this.resource1, this.resource2).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }

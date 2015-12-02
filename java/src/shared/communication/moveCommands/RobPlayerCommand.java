@@ -95,6 +95,7 @@ public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobP
                 location.toString(), gameID));
         String model = AbstractServerFacade.getInstance().robPlayer(gameID, getPlayerIndex(), this.victimIndex, this.location).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 

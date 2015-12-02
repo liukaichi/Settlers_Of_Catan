@@ -95,6 +95,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
         LOGGER.info(String.format("executing OfferTradeCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), offer.toString(), gameID));
         String model = AbstractServerFacade.getInstance().offerTrade(gameID, offer.getSenderIndex(), this.offer, offer.getReceiverIndex()).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }

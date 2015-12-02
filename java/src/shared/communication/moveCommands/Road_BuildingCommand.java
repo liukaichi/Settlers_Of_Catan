@@ -81,6 +81,7 @@ public class Road_BuildingCommand extends MoveCommand implements JsonSerializer<
                 spot2.toString(), gameID));
         String model = AbstractServerFacade.getInstance().roadBuilding(gameID, getPlayerIndex(), this.spot1, this.spot1).toString();
         LOGGER.fine(model);
+        persistMe(gameID);
         return model;
     }
 }
