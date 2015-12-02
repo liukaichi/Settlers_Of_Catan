@@ -47,7 +47,7 @@ public class CatanCommandTests
             model = new ServerModel(command.execute(1));
             assertNotNull(model);
             offer = model.getTradeOffer();
-            assertNotNull(offer);
+            assertNull(offer);
         } catch (CatanException e)
         {
             e.printStackTrace();

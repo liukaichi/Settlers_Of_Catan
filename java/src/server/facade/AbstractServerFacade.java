@@ -39,7 +39,6 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
             _instance = new ServerFacade();
         }
         return _instance;
-
     }
 
     /**
