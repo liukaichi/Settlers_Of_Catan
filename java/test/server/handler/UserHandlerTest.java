@@ -9,7 +9,6 @@ import shared.communication.Credentials;
 import shared.definitions.exceptions.InvalidCredentialsException;
 import shared.definitions.exceptions.SignInException;
 
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -22,7 +21,7 @@ public class UserHandlerTest
 
     @BeforeClass public static void setupServer()
     {
-        String args[] = {};
+        String args[] = { "8080" };
         Server.main(args);
     }
 
@@ -83,30 +82,27 @@ public class UserHandlerTest
         PlayerInfo info = null;
         try
         { //too short of a username
-            info = proxy.userRegister(new Credentials("AB", "goodpassword"));
+            proxy.userRegister(new Credentials("AB", "goodpassword"));
             fail();
         } catch (InvalidCredentialsException e)
         {
-            assertTrue(info == null);
             assertTrue(e.getMessage().matches("Username must be between 3 and 7 characters."));
         }
 
         try
         { //too long of a username
-            info = proxy.userRegister(new Credentials("Abittoolong", "stuff"));
+            proxy.userRegister(new Credentials("Abittoolong", "stuff"));
             fail();
         } catch (InvalidCredentialsException e)
         {
-            assertTrue(info == null);
             assertTrue(e.getMessage().matches("Username must be between 3 and 7 characters."));
         }
         try
         { //too short of a password
-            info = proxy.userRegister(new Credentials("David", "good"));
+            proxy.userRegister(new Credentials("David", "good"));
             fail();
         } catch (InvalidCredentialsException e)
         {
-            assertTrue(info == null);
             assertTrue(e.getMessage().matches("Password must be at least 5 characters."));
         }
     }

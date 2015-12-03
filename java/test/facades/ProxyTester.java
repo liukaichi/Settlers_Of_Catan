@@ -40,7 +40,7 @@ public class ProxyTester
      */
     @BeforeClass public static void setupServer() throws Exception
     {
-        String args[] = {"8081"};
+        String args[] = { "8081" };
         Server.main(args);
 
         // Class[] parameterTypes = new Class[1];
@@ -353,15 +353,12 @@ public class ProxyTester
     {
         logUserIn();
 
-        List<AIType> aiTypes = proxy.listAI().getAITypes();
-        // Aparently you don't need to be in a game.
-
         CreateGameResponse response = proxy.createGame(new CreateGameRequest(true, true, true, "listAI"));
         int id = response.getGameID();
         try
         {
             proxy.joinGame(new JoinGameRequest(id, CatanColor.YELLOW));
-            aiTypes = proxy.listAI().getAITypes();
+            List<AIType> aiTypes = proxy.listAI().getAITypes();
             assertNotNull(aiTypes);
             assertTrue(aiTypes.size() == 1);
             assertTrue(aiTypes.get(0).toString().equals("LARGEST_ARMY"));
@@ -376,7 +373,7 @@ public class ProxyTester
      * Test method for
      * {@link client.proxy.ServerProxy#addAI(shared.definitions.AIType)}.
      */
-    @Test public void testAddAI()
+    private void testAddAI() //Don't test this one with our server.
     {
         logUserIn();
 
@@ -522,8 +519,7 @@ public class ProxyTester
     @Test public void testAcceptTrade()
     {
         startGame("acceptTrade");
-        testingModel = proxy
-                .offerTrade(new OfferTradeCommand(PlayerIndex.fromInt(0), PlayerIndex.fromInt(3), 1, 0, -1, 0, 0));
+        testingModel = proxy.offerTrade(new OfferTradeCommand(PlayerIndex.fromInt(0), PlayerIndex.fromInt(3), 1, 0, -1, 0, 0));
         assertNotNull(testingModel);
         testingModel = proxy.finishTurn(new FinishTurnCommand(PlayerIndex.PLAYER_0));
         assertNotNull(testingModel);
@@ -553,15 +549,14 @@ public class ProxyTester
     @Test public void testBuildRoad()
     {
         startGame("BuildRoad");
-        testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
-                new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthWest), true));
+        testingModel = proxy
+                .buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthWest), true));
         assertNotNull(testingModel);
-        testingModel = proxy.buildRoad(
-                new BuildRoadCommand(PlayerIndex.PLAYER_0, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North),
-                        true));
+        testingModel = proxy
+                .buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.North), true));
         assertNotNull(testingModel);
-        testingModel = proxy.buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0,
-                new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthEast), true));
+        testingModel = proxy
+                .buildRoad(new BuildRoadCommand(PlayerIndex.PLAYER_0, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.NorthEast), true));
         assertNotNull(testingModel);
     }
 
@@ -573,9 +568,15 @@ public class ProxyTester
     @Test public void testBuildSettlement()
     {
         startGame("BuildSettlement");
-        testingModel = proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_0,
-                new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest), true));
-        assertNull(testingModel);
+        try
+        {
+            testingModel = proxy.buildSettlement(
+                    new BuildSettlementCommand(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest), true));
+            fail("Should have thrown a null pointer due to design by contract");
+        } catch (NullPointerException e)
+        {
+            assertTrue(true);
+        }
     }
 
     /**
@@ -588,15 +589,15 @@ public class ProxyTester
         startGame("BuildCity");
         try
         {
-            testingModel = proxy.buildCity(new BuildCityCommand(PlayerIndex.PLAYER_0,
-                    new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest)));
+            testingModel = proxy
+                    .buildCity(new BuildCityCommand(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(1, 0), VertexDirection.NorthWest)));
             fail("Shouldn't have placed the city where it couldn't build");
         } catch (Exception e)
         {
             assertTrue(true);
         }
-        testingModel = proxy.buildCity(new BuildCityCommand(PlayerIndex.PLAYER_0,
-                new VertexLocation(new HexLocation(0, 2), VertexDirection.NorthEast)));
+        testingModel = proxy
+                .buildCity(new BuildCityCommand(PlayerIndex.PLAYER_0, new VertexLocation(new HexLocation(0, 2), VertexDirection.NorthEast)));
         assertNotNull(testingModel);
     }
 
@@ -609,8 +610,7 @@ public class ProxyTester
     {
         startGame("OfferTrade");
 
-        testingModel = proxy
-                .offerTrade(new OfferTradeCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_1, -1, 1, 1, 1, -1));
+        testingModel = proxy.offerTrade(new OfferTradeCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_1, -1, 1, 1, 1, -1));
         assertNotNull(testingModel);
     }
 
@@ -622,9 +622,15 @@ public class ProxyTester
     @Test public void testMaritimeTrade()
     {
         startGame("MaritimeTrade");
-        testingModel = proxy.maritimeTrade(
-                new MaritimeTradeCommand(PlayerIndex.PLAYER_0, TradeRatio.THREE, ResourceType.ORE, ResourceType.BRICK));
-        assertNotNull(testingModel);
+        try
+        {
+            testingModel = proxy
+                    .maritimeTrade(new MaritimeTradeCommand(PlayerIndex.PLAYER_0, TradeRatio.THREE, ResourceType.ORE, ResourceType.BRICK));
+            fail("Should have thrown a null pointer due to design by contract");
+        } catch (NullPointerException e)
+        {
+            assertTrue(true);
+        }
     }
 
     /**
@@ -639,8 +645,7 @@ public class ProxyTester
                 true));
         proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_3,
                 new VertexLocation(new HexLocation(-1, 0), VertexDirection.NorthEast), true));*/
-        testingModel = proxy
-                .robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_3, new HexLocation(1, -1)));
+        testingModel = proxy.robPlayer(new RobPlayerCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_3, new HexLocation(1, -1)));
         assertNotNull(testingModel);
 
        /* proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_1,
@@ -693,11 +698,16 @@ public class ProxyTester
     @Test public void testSoldier()
     {
         startGame("Soldier");
-        proxy.buildSettlement(new BuildSettlementCommand(PlayerIndex.PLAYER_3,
-                new VertexLocation(new HexLocation(-1, 0), VertexDirection.East), false));
-        testingModel = proxy
-                .soldier(new SoldierCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_3, new HexLocation(-1, 0)));
-        assertNotNull(testingModel);
+        try
+        {
+            proxy.buildSettlement(
+                    new BuildSettlementCommand(PlayerIndex.PLAYER_3, new VertexLocation(new HexLocation(-1, 0), VertexDirection.East), false));
+            testingModel = proxy.soldier(new SoldierCommand(PlayerIndex.PLAYER_0, PlayerIndex.PLAYER_3, new HexLocation(-1, 0)));
+            fail("Should have thrown a null pointer due to design by contract");
+        } catch (NullPointerException e)
+        {
+            assertTrue(true);
+        }
     }
 
     /**
@@ -708,8 +718,7 @@ public class ProxyTester
     @Test public void testYearOfPlenty()
     {
         startGame("YearOfPlenty");
-        testingModel = proxy
-                .yearOfPlenty(new Year_of_PlentyCommand(PlayerIndex.PLAYER_0, ResourceType.BRICK, ResourceType.ORE));
+        testingModel = proxy.yearOfPlenty(new Year_of_PlentyCommand(PlayerIndex.PLAYER_0, ResourceType.BRICK, ResourceType.ORE));
         assertNotNull(testingModel);
     }
 
@@ -721,10 +730,16 @@ public class ProxyTester
     @Test public void testRoadBuilding()
     {
         startGame("RoadBuilding");
-        testingModel = proxy.roadBuilding(new Road_BuildingCommand(PlayerIndex.PLAYER_0,
-                new EdgeLocation(new HexLocation(0, 1), EdgeDirection.NorthEast),
-                new EdgeLocation(new HexLocation(-1, 2), EdgeDirection.North)));
-        assertNotNull(testingModel);
+        try
+        {
+            testingModel = proxy.roadBuilding(
+                    new Road_BuildingCommand(PlayerIndex.PLAYER_0, new EdgeLocation(new HexLocation(0, 1), EdgeDirection.NorthEast),
+                            new EdgeLocation(new HexLocation(-1, 2), EdgeDirection.North)));
+            fail("Should have thrown a null pointer due to design by contract");
+        } catch (NullPointerException e)
+        {
+            assertTrue(true);
+        }
     }
 
     /**
@@ -735,8 +750,14 @@ public class ProxyTester
     @Test public void testMonopoly()
     {
         startGame("Monopoly");
-        testingModel = proxy.monopoly(new MonopolyCommand(PlayerIndex.PLAYER_0, ResourceType.WHEAT));
-        assertNotNull(testingModel);
+        try
+        {
+            testingModel = proxy.monopoly(new MonopolyCommand(PlayerIndex.PLAYER_0, ResourceType.WHEAT));
+            fail("Should have thrown a null pointer due to design by contract");
+        } catch (NullPointerException e)
+        {
+            assertTrue(true);
+        }
     }
 
     /**
@@ -747,8 +768,15 @@ public class ProxyTester
     @Test public void testMonument()
     {
         startGame("Monument");
-        testingModel = proxy.monument(new MonumentCommand(PlayerIndex.PLAYER_0));
-        assertNotNull(testingModel);
+        try
+        {
+            testingModel = proxy.monument(new MonumentCommand(PlayerIndex.PLAYER_0));
+            fail("Should have thrown a null pointer due to design by contract");
+        } catch (NullPointerException e)
+        {
+            assertTrue(true);
+        }
+
     }
 
 }

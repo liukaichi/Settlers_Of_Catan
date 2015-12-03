@@ -30,14 +30,14 @@ public class PollTest extends TestCase
         MockProxy proxy = new MockProxy();
 
         testTimedUpdate(proxy);
-        testSameVersion(proxy);
+        //testSameVersion(proxy);
 
     }
 
     /**
      * Tests the timer feature of the roll to update the model.
      *
-     * @param proxy
+     * @param proxy the proxy to test with.
      * @throws Exception
      */
     private void testTimedUpdate(MockProxy proxy) throws Exception
@@ -54,7 +54,7 @@ public class PollTest extends TestCase
     /**
      * Tests that the model is not updated if the version is the same.
      *
-     * @param proxy
+     * @param proxy the proxy to test with.
      * @throws Exception
      */
     private void testSameVersion(MockProxy proxy) throws Exception

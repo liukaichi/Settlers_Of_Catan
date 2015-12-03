@@ -8,6 +8,7 @@ import server.facade.MockServerFacade;
 import server.facade.ServerFacade;
 import shared.communication.moveCommands.AcceptTradeCommand;
 import shared.communication.moveCommands.BuildCityCommand;
+import shared.communication.moveCommands.OfferTradeCommand;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.definitions.exceptions.CatanException;
@@ -43,11 +44,17 @@ public class CatanCommandTests
             assertNotEquals(testOffer, offer);
 
             AbstractServerFacade.setFacade(new ServerFacade());
+            command = new OfferTradeCommand(PlayerIndex.PLAYER_1, PlayerIndex.PLAYER_0, 1, -1, 0, 0, 0);
+            model = new ServerModel(command.execute(1));
+            assertNotNull(model);
+            offer = model.getTradeOffer();
+            assertNotNull(offer);
+
             command = new AcceptTradeCommand(PlayerIndex.PLAYER_0, false);
             model = new ServerModel(command.execute(1));
             assertNotNull(model);
             offer = model.getTradeOffer();
-            assertNull(offer);
+            assertNotNull(offer);
         } catch (CatanException e)
         {
             e.printStackTrace();

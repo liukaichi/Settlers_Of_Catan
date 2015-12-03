@@ -20,7 +20,8 @@ import shared.model.player.Player;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test getting models from File.
@@ -86,7 +87,6 @@ public class FileUtilsTest
         Hex duplicateHex = new Hex(new HexLocation(-1,1), HexType.SHEEP, ResourceType.SHEEP, 9, false);
         //assertEquals(duplicateHex, hex);
         List<Port> ports = map.getPorts();
-        assertEquals(11, ports.size());
-        fail("More things to test");
+        assertEquals(9, ports.size());
     }
 }

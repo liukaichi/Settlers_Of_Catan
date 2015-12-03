@@ -4,9 +4,7 @@ import junit.framework.TestCase;
 import shared.definitions.ResourceType;
 import shared.model.bank.resource.Resource;
 
-/**
- * Created by Adrian on 9/28/2015.
- */
+
 public class ResourceTest extends TestCase
 {
 
@@ -26,15 +24,15 @@ public class ResourceTest extends TestCase
     {
         Resource test = setResourceWithoutAmount();
 
-        test.addResource(23);
-        assertEquals(test.getAmount(), 23);
+        test.addResource(19);
+        assertEquals(test.getAmount(), 19);
     }
 
     public void testSubResource() throws Exception
     {
-        Resource test = setResourceWithAmount(54);
+        Resource test = setResourceWithAmount(19);
 
-        test.subResource(24);
-        assertEquals(test.getAmount(), 30);
+        test.subResource(2);
+        assertEquals(test.getAmount(), 17);
     }
 }

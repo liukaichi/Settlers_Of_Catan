@@ -255,12 +255,17 @@ public class PlayerBank extends Bank
         if (isFree)
         {
             structures.getStructure(StructureType.ROAD).addAmountBuilt(1);
-        }
-        else if (canBuyRoad())
+        } else
         {
-            payResource(ResourceType.BRICK, 1);
-            payResource(ResourceType.WOOD, 1);
-            structures.getStructure(StructureType.ROAD).addAmountBuilt(1);
+            if (canBuyRoad())
+            {
+                payResource(ResourceType.BRICK, 1);
+                payResource(ResourceType.WOOD, 1);
+                structures.getStructure(StructureType.ROAD).addAmountBuilt(1);
+            } else
+            {
+                throw new InsufficientResourcesException("Can't buy road. Need 1 brick and 1 wood");
+            }
         }
     }
 
@@ -280,7 +285,7 @@ public class PlayerBank extends Bank
      * resources
      *
      * @throws InsufficientResourcesException
-     * @param isFree
+     * @param isFree if the settlement is free (Setup round only).
      */
     public void buySettlement(boolean isFree) throws CatanException
     {
@@ -310,7 +315,9 @@ public class PlayerBank extends Bank
     public boolean canBuyCity()
     {
         Resources cost = new Resources(0, 0, 0, 2, 3);
-        return hasEnoughResources(cost) && (structures.getAmountRemaining(StructureType.CITY) > 0);
+        int citiesRemaining = structures.getAmountRemaining(StructureType.CITY);
+        //int settlementsBuilt = structures.getStructure(StructureType.SETTLEMENT).getAmountBuilt(); Don't know if this works.
+        return hasEnoughResources(cost) && citiesRemaining > 0 /*&& settlementsBuilt > 0*/;
     }
 
     /**
@@ -350,7 +357,7 @@ public class PlayerBank extends Bank
      * Calls playAction() on the DevCard
      *
      * @param type the type of DevCard to play
-     * @param data
+     * @param data the data associated with the card.
      * @throws InsufficientResourcesException
      */
     public void playDevCard(DevCardType type, Object... data) throws InsufficientResourcesException
