@@ -11,5 +11,5 @@ public interface IPersistenceFactory
      * @param commandsBetweenSaves the number of commands in between full saves of the model.
      * @return a PersistenceEngine.
      */
-    public IPersistenceEngine createPersistenceEngine(int commandsBetweenSaves);
+    IPersistenceEngine createPersistenceEngine(int commandsBetweenSaves);
 }

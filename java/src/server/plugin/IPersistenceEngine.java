@@ -6,9 +6,9 @@ import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 
 /**
- * Created by liukaichi on 12/2/2015.
+ * Persistence Engine to save Settlers Of Catan game.
  */
-public interface IPersistenceEngine
+public abstract class IPersistenceEngine
 {
     //*********************GAME PERSISTENCE***********************//
 
@@ -19,21 +19,21 @@ public interface IPersistenceEngine
      * @param game the model of the game after the command is executed
      * @return if transaction was successful
      */
-    boolean saveGame(int gameID, CatanCommand catanCommand, ServerModel game);
+    public abstract boolean saveGame(int gameID, CatanCommand catanCommand, ServerModel game);
 
     /** Loads a game from the database given the gameID
      *
      * @param gameID ID of the game to be loaded
      * @return ServerModel of the game specified
      */
-    ServerModel loadGame(int gameID);
+    public abstract ServerModel loadGame(int gameID);
 
     /** Adds a player to the many-to-many table
      *
      * @param playerID the playerID
      * @param gameID the gameID
      */
-    void addPlayerToGame(int playerID, int gameID);
+    public abstract void addPlayerToGame(int playerID, int gameID);
 
 
 //*********************USER PERSISTENCE***********************//
@@ -43,7 +43,7 @@ public interface IPersistenceEngine
      * @param credentials the credentials to create the user from.
      * @return the id that is now associated with this user.
      */
-    int registerUser(Credentials credentials);
+    public abstract int registerUser(Credentials credentials);
 
     /**
      * Gets a user based on their id.
@@ -51,7 +51,7 @@ public interface IPersistenceEngine
      * @param id the id of the user.
      * @return the user who matches the id.
      */
-    User getUser(int id);
+    public abstract User getUser(int id);
 
     /**
      * Gets a user based on their credentials.
@@ -59,9 +59,10 @@ public interface IPersistenceEngine
      * @param credentials the credentials of the user.
      * @return the user who matches the credentials.
      */
-    User getUser(Credentials credentials);
+    public abstract User getUser(Credentials credentials);
 
-    boolean startTransaction();
-    boolean endTransaction();
+    public abstract boolean startTransaction();
+
+    public abstract boolean endTransaction(boolean commit);
 
 }
