@@ -18,4 +18,6 @@ public interface IGameAccess
     public ServerModel getGame(int gameID);
 
     public List<ServerModel> getAllGames();
+
+    public int getNumberOfCommands(int gameID);
 }

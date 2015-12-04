@@ -174,4 +174,39 @@ public class GameAccess implements IGameAccess
 
         return result;
     }
+
+    /**
+     *
+     * @param gameID
+     * @return number of commands
+     */
+    @Override public int getNumberOfCommands(int gameID)
+    {
+        int result = 0;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String query = "SELECT CurrentCommandNo FROM Game WHERE GameID = " + gameID;
+            engine.startTransaction();
+            stmt = engine.getConnection().prepareStatement(query);
+
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst()){
+                engine.endTransaction(true);
+            }
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+        }
+        catch (SQLException e) {
+            LOGGER.warning(e.getLocalizedMessage());
+        }
+        finally {
+            engine.safeClose(rs);
+            engine.safeClose(stmt);
+            engine.endTransaction(true);
+        }
+
+        return result;
+    }
 }
