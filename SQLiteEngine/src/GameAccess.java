@@ -3,6 +3,7 @@ import server.plugin.IGameAccess;
 
 import java.rmi.ServerException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,11 +21,55 @@ public class GameAccess implements IGameAccess
     }
 
     @Override
-    public void saveGame(int gameID, ServerModel game)
+    public void updateModel(int gameID, ServerModel game)
     {
-
+        PreparedStatement stmt = null;
+        try {
+            String query = "UPDATE Game SET Model = (" + game.toString() + ") WHERE GameID = " + gameID;
+            engine.startTransaction();
+            stmt = engine.getConnection().prepareStatement(query);
+            if (stmt.executeUpdate() != 1) {
+                engine.endTransaction(false);
+                throw new ServerException("Could not update ServerModel for gameID " + gameID);
+            }
+        }
+        catch (SQLException e) {
+            LOGGER.warning(e.getLocalizedMessage());
+        }
+        catch (ServerException e)
+        {
+            LOGGER.warning(e.getLocalizedMessage());
+        }
+        finally {
+            engine.safeClose(stmt);
+            engine.endTransaction(true);
+        }
     }
 
+    @Override public void addCommand(int gameID)
+    {
+        PreparedStatement stmt = null;
+        try {
+            String query = "UPDATE Game SET CurrentCommandNo = (CurrentCommandNo + 1) WHERE GameID = " + gameID;
+            engine.startTransaction();
+            stmt = engine.getConnection().prepareStatement(query);
+            if (stmt.executeUpdate() != 1) {
+                engine.endTransaction(false);
+                throw new ServerException("Could not update ServerModel for gameID " + gameID);
+            }
+        }
+        catch (SQLException e) {
+            LOGGER.warning(e.getLocalizedMessage());
+        }
+        catch (ServerException e)
+        {
+            LOGGER.warning(e.getLocalizedMessage());
+        }
+        finally {
+            engine.safeClose(stmt);
+            engine.endTransaction(true);
+        }
+    }
 
     @Override
     public void addGame(ServerModel game, String gameName)
@@ -66,12 +111,67 @@ public class GameAccess implements IGameAccess
     @Override
     public ServerModel getGame(int gameID)
     {
-        return null;
+        ServerModel result = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String query = "SELECT Model FROM Game WHERE GameID = " + gameID;
+            engine.startTransaction();
+            stmt = engine.getConnection().prepareStatement(query);
+
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst()){
+                engine.endTransaction(true);
+                return null;
+            }
+            while (rs.next()) {
+                String json = rs.getString(1);
+
+                result = new ServerModel(json);
+            }
+        }
+        catch (SQLException e) {
+            LOGGER.warning(e.getLocalizedMessage());
+        }
+        finally {
+            engine.safeClose(rs);
+            engine.safeClose(stmt);
+            engine.endTransaction(true);
+        }
+
+        return result;
     }
 
     @Override
     public List<ServerModel> getAllGames()
     {
-        return null;
+        List<ServerModel> result = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String query = "SELECT Model FROM Game";
+            engine.startTransaction();
+            stmt = engine.getConnection().prepareStatement(query);
+
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst()){
+                engine.endTransaction(true);
+                return null;
+            }
+            while (rs.next()) {
+                String json = rs.getString(1);
+                result.add(new ServerModel(json));
+            }
+        }
+        catch (SQLException e) {
+            LOGGER.warning(e.getLocalizedMessage());
+        }
+        finally {
+            engine.safeClose(rs);
+            engine.safeClose(stmt);
+            engine.endTransaction(true);
+        }
+
+        return result;
     }
 }

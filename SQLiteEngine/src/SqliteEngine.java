@@ -128,6 +128,18 @@ public class SQLiteEngine extends IPersistenceEngine
         return true;
     }
 
+    @Override public boolean addUser(User user)
+    {
+        //userAccess.addUser(user);
+        return false;
+    }
+
+    @Override public boolean addGame(ServerModel model, String name)
+    {
+        gameAccess.addGame(model,name);
+        return false;
+    }
+
     /**
      * Allows a program to determine if a transaction is still happening.
      *

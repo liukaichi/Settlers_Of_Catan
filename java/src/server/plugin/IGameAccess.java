@@ -9,7 +9,9 @@ import java.util.List;
  */
 public interface IGameAccess
 {
-    public void saveGame(int gameID, ServerModel game);
+    public void updateModel(int gameID, ServerModel game);
+
+    public void addCommand(int gameID);
 
     public void addGame(ServerModel game, String gameName);
 
