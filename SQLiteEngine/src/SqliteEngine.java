@@ -58,23 +58,10 @@ public class SQLiteEngine extends IPersistenceEngine
     }
     @Override public boolean saveGame(int gameID, CatanCommand catanCommand, ServerModel game)
     {
-        int currentNumberOfCommands = getCurrentNumberOfCommands(gameID);
-        if (commandsBetweenSaves % currentNumberOfCommands == 0) //it's time to save the model
+        int currentNumberOfCommands = getCurrentNumberOfCommands();
+        if (commandsBetweenSaves % currentNumberOfCommands == 0)
         {
-            try
-            {
-                gameAccess.updateModel(gameID,game);
-            } catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        try
-        {
-            gameAccess.addCommand(gameID);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
+
         }
         return false;
     }
@@ -154,17 +141,7 @@ public class SQLiteEngine extends IPersistenceEngine
 
     @Override public boolean addGame(ServerModel model, String name)
     {
-        startTransaction();
-        try
-        {
-            gameAccess.addGame(model,name);
-            endTransaction(true);
-        } catch (Exception e)
-        {
-            endTransaction(false);
-            e.printStackTrace();
-        }
-
+        gameAccess.addGame(model,name);
         return false;
     }
 
@@ -183,15 +160,9 @@ public class SQLiteEngine extends IPersistenceEngine
         return connection;
     }
 
-    private int getCurrentNumberOfCommands(int gameID)
+    private int getCurrentNumberOfCommands()
     {
-        try
-        {
-            return gameAccess.getNumberOfCommands(gameID);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        return -1;
     }
 
     /**
