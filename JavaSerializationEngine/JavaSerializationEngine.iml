@@ -7,5 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="SQLiteEngine" />
+    <orderEntry type="module" module-name="The-Settlers-of-Catan" />
   </component>
 </module>
