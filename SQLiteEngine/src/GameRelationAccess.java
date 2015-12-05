@@ -1,5 +1,7 @@
 import server.plugin.IGameRelationAccess;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -19,12 +21,48 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
 
     @Override public void addUserToGame(int userID, int gameID) throws Exception
     {
+        LOGGER.entering(getClass().getName(), "addUserToGame");
+        PreparedStatement statement = null;
+        ResultSet keyRS = null;
+        try {
+            String query = "INSERT into GameRelation (GameID, UserID) VALUES " +
+                    "(?,?)";
+            statement = engine.getConnection().prepareStatement(query);
+            statement.setInt(1, gameID);
+            statement.setInt(2, userID);
+            if (statement.executeUpdate() == 1) {
+                Statement keyStmt = engine.getConnection().createStatement();
+                keyRS = keyStmt.executeQuery("select last_insert_rowid()");
+            }
+        } catch (SQLException e) {
 
+        } finally {
+            SQLiteEngine.safeClose(statement);
+            SQLiteEngine.safeClose(keyRS);
+        }
     }
 
     @Override public List<Integer> listPlayersInGame(int gameID) throws Exception
     {
-        return null;
+        LOGGER.entering(getClass().getName(), "listPlayersInGame");
+        PreparedStatement statement = null;
+        ResultSet keyRS = null;
+        List<Integer> playerIDs = null;
+        try {
+            String query = "SELECT Player FROM Game WHERE GameID = " + gameID;
+            statement = engine.getConnection().prepareStatement(query);
+            keyRS = statement.executeQuery();
+            while (keyRS.next()) {
+                int playerID = keyRS.getInt(1);
+                playerIDs.add(playerID);
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            SQLiteEngine.safeClose(statement);
+            SQLiteEngine.safeClose(keyRS);
+            return playerIDs;
+        }
     }
 
     @Override public void initializeTable()
