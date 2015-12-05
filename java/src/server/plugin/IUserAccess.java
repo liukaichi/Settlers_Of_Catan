@@ -8,9 +8,9 @@ import shared.communication.Credentials;
  */
 public interface IUserAccess
 {
-    User getUser(Credentials credentials);
+    User getUser(Credentials credentials) throws Exception;
 
-    User getUser(int id);
+    User getUser(int id) throws Exception;
 
-    int registerUser(Credentials credentials);
+    int registerUser(Credentials credentials) throws Exception;
 }

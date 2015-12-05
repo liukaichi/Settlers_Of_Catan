@@ -2,6 +2,8 @@ package server.plugin;
 
 import server.ServerModel;
 
+import java.rmi.ServerException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -9,15 +11,15 @@ import java.util.List;
  */
 public interface IGameAccess
 {
-    void updateModel(int gameID, ServerModel game);
+    void updateModel(int gameID, ServerModel game) throws Exception;
 
-    void addCommand(int gameID);
+    void addCommand(int gameID) throws Exception;
 
-    void addGame(ServerModel game, String gameName);
+    void addGame(ServerModel game, String gameName) throws Exception;
 
-    ServerModel getGame(int gameID);
+    ServerModel getGame(int gameID) throws Exception;
 
-    List<ServerModel> getAllGames();
+    List<ServerModel> getAllGames() throws Exception;
 
-    int getNumberOfCommands(int gameID);
+    int getNumberOfCommands(int gameID) throws Exception;
 }

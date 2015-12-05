@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface IGameRelationAccess
 {
-    void addUserToGame(int userID, int gameID);
+    void addUserToGame(int userID, int gameID) throws Exception;
 
-    List<Integer> listPlayersInGame(int gameID);
+    List<Integer> listPlayersInGame(int gameID) throws Exception;
 }

@@ -15,30 +15,30 @@ public class CommandAccess implements ICommandAccess
     }
 
     @Override
-    public void saveCommand(int gameID, MoveCommand command)
+    public void saveCommand(int gameID, MoveCommand command) throws Exception
     {
 
     }
     @Override
-    public int getNumberOfCommandsInGame(int gameID)
+    public int getNumberOfCommandsInGame(int gameID) throws Exception
     {
         return -1;
     }
 
     @Override
-    public List<MoveCommand> getAllCommands(int gameID)
+    public List<MoveCommand> getAllCommands(int gameID) throws Exception
     {
         return getAllCommandsAfter(gameID, 0);
     }
 
     @Override
-    public List<MoveCommand> getAllCommandsAfter(int gameID, int sequenceNumber)
+    public List<MoveCommand> getAllCommandsAfter(int gameID, int sequenceNumber) throws Exception
     {
         return null;
     }
 
     @Override
-    public MoveCommand getCommand(int gameID, int sequenceNumber)
+    public MoveCommand getCommand(int gameID, int sequenceNumber) throws Exception
     {
         return null;
     }

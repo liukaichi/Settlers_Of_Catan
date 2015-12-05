@@ -1,10 +1,13 @@
+/*
 package server.manager;
 
 import server.plugin.IPersistenceEngine;
 
+*/
 /**
  * Created by liukaichi on 12/4/2015.
- */
+ *//*
+
 public class PersistenceManager
 {
     private static PersistenceManager _instance;
@@ -14,11 +17,13 @@ public class PersistenceManager
     {
     }
 
-    /**
+    */
+/**
      * Singleton pattern.
      *
      * @return the singleton instance of UserManager.
-     */
+     *//*
+
     public static PersistenceManager getInstance()
     {
         if (_instance == null)
@@ -34,3 +39,4 @@ public class PersistenceManager
     }
 
 }
+*/
