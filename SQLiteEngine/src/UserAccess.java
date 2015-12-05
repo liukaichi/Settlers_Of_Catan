@@ -5,7 +5,7 @@ import shared.communication.Credentials;
 /**
  * SQL Database Access Object for Users.
  */
-public class UserAccess implements IUserAccess
+public class UserAccess implements IUserAccess, IAccess
 {
     private SQLiteEngine engine;
     public UserAccess(SQLiteEngine engine)
@@ -26,5 +26,10 @@ public class UserAccess implements IUserAccess
     public int registerUser(Credentials credentials) throws Exception
     {
         return -1;
+    }
+
+    @Override public void initializeTable()
+    {
+
     }
 }

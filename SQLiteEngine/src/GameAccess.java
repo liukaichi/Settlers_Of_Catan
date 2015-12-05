@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * SQL Database Access Object for Games.
  */
-public class GameAccess implements IGameAccess
+public class GameAccess implements IGameAccess, IAccess
 {
     private SQLiteEngine engine;
     private final static Logger LOGGER = Logger.getLogger(GameAccess.class.getName());
@@ -132,5 +132,10 @@ public class GameAccess implements IGameAccess
         }
 
         return result;
+    }
+
+    @Override public void initializeTable()
+    {
+
     }
 }
