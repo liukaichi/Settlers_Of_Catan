@@ -2,8 +2,6 @@ package server.plugin;
 
 import server.ServerModel;
 
-import java.rmi.ServerException;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
