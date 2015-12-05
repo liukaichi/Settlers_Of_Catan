@@ -2,8 +2,11 @@ import server.manager.User;
 import server.plugin.IUserAccess;
 import shared.communication.Credentials;
 
+import java.rmi.ServerException;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * SQL Database Access Object for Users.
@@ -11,6 +14,7 @@ import java.sql.ResultSet;
 public class UserAccess implements IUserAccess, IAccess
 {
     private SQLiteEngine engine;
+
     public UserAccess(SQLiteEngine engine)
     {
         this.engine = engine;
@@ -21,17 +25,18 @@ public class UserAccess implements IUserAccess, IAccess
         User result = null;
         PreparedStatement stmt;
         ResultSet rs;
-        String query = "SELECT UserID FROM User WHERE Name = "
-                + credentials.getUsername()
-                + " AND UserID = "
-                + credentials.getPassword();
+        String query =
+                "SELECT UserID FROM User WHERE Name = " + credentials.getUsername() + " AND UserID = " + credentials
+                        .getPassword();
         stmt = engine.getConnection().prepareStatement(query);
 
         rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst()){
+        if (!rs.isBeforeFirst())
+        {
             return null;
         }
-        if (rs.next()) {
+        if (rs.next())
+        {
             int id = rs.getInt(1);
 
             result = new User(credentials, id);
@@ -42,12 +47,48 @@ public class UserAccess implements IUserAccess, IAccess
 
     public User getUser(int id) throws Exception
     {
-        return null;
+        User result = null;
+        PreparedStatement stmt;
+        ResultSet rs;
+        String query = "SELECT * FROM User WHERE UserID = " + id;
+        stmt = engine.getConnection().prepareStatement(query);
+
+        rs = stmt.executeQuery();
+        if (!rs.isBeforeFirst())
+        {
+            return null;
+        }
+        if (rs.next())
+        {
+            String name = rs.getString(2);
+            String password = rs.getString(3);
+            result = new User(name, password, id);
+        }
+
+        return result;
     }
 
     public int registerUser(Credentials credentials) throws Exception
     {
-        return -1;
+        PreparedStatement stmt = null;
+        ResultSet keyRS = null;
+        String query = "INSERT into User (Name, Password) VALUES " + "(?,?)";
+        stmt = engine.getConnection().prepareStatement(query);
+
+        stmt.setString(1, credentials.getUsername());
+        stmt.setString(2, credentials.getPassword().toString());
+        if (stmt.executeUpdate() == 1)
+        {
+            Statement keyStmt = engine.getConnection().createStatement();
+            keyRS = keyStmt.executeQuery("select last_insert_rowid()");
+            keyRS.next();
+            int id = keyRS.getInt(1);
+            return id;
+        } else
+        {
+            return -1;
+        }
+
     }
 
     @Override public void initializeTable()

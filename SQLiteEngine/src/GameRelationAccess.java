@@ -1,5 +1,8 @@
 import server.plugin.IGameRelationAccess;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 /**
@@ -15,7 +18,6 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
 
     public void addUserToGame(int userID, int gameID)
     {
-
     }
 
     public List<Integer> listPlayersInGame(int gameID)
