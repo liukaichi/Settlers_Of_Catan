@@ -1,1 +1,2 @@
 sqlite java\lib\plugins\SQLiteEngine.jar SQLiteFactory
+java java\lib\plugins\JavaSerializationEngine.jar JavaSerializationFactory
