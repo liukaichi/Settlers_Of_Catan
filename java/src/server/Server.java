@@ -43,7 +43,7 @@ public class Server
     {
         try
         {
-            server = HttpServer.create(new InetSocketAddress(HOST_NAME, PORT_NUMBER), 0);
+            server = HttpServer.create(new InetSocketAddress(HOST_NAME, PORT_NUMBER), MAX_WAITING_CONNECTIONS);
             createContexts();
             server.setExecutor(null); // creates a default executor
             AbstractServerFacade.setFacade(new ServerFacade());
