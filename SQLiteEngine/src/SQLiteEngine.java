@@ -76,27 +76,75 @@ public class SQLiteEngine extends IPersistenceEngine
 
     @Override public ServerModel loadGame(int gameID)
     {
-        return null;
+        try
+        {
+            startTransaction();
+            ServerModel model = gameAccess.getGame(gameID);
+            endTransaction(true);
+            return model;
+        } catch (Exception e)
+        {
+            endTransaction(false);
+            return null;
+        }
     }
 
     @Override public void addPlayerToGame(int playerID, int gameID)
     {
-
+        try
+        {
+            startTransaction();
+            gameRelationAccess.addUserToGame(playerID, gameID);
+            endTransaction(true);
+        } catch (Exception e)
+        {
+            endTransaction(false);
+        }
     }
 
     @Override public int registerUser(Credentials credentials)
     {
-        return 23456;
+        try
+        {
+            startTransaction();
+            int userID = userAccess.registerUser(credentials);
+            endTransaction(true);
+            return userID;
+        } catch (Exception e)
+        {
+            endTransaction(false);
+            return -1;
+        }
     }
 
     @Override public User getUser(int id)
     {
-        return null;
+        try
+        {
+            startTransaction();
+            User user = userAccess.getUser(id);
+            endTransaction(true);
+            return user;
+        } catch (Exception e)
+        {
+            endTransaction(false);
+            return null;
+        }
     }
 
     @Override public User getUser(Credentials credentials)
     {
-        return null;
+        try
+        {
+            startTransaction();
+            User user = userAccess.getUser(credentials);
+            endTransaction(true);
+            return user;
+        } catch (Exception e)
+        {
+            endTransaction(false);
+            return null;
+        }
     }
 
     @Override public boolean startTransaction()
@@ -141,12 +189,6 @@ public class SQLiteEngine extends IPersistenceEngine
         return true;
     }
 
-    @Override public boolean addUser(User user)
-    {
-        //userAccess.addUser(user);
-        return false;
-    }
-
     @Override public boolean addGame(ServerModel model, String name)
     {
         startTransaction();
@@ -185,9 +227,9 @@ public class SQLiteEngine extends IPersistenceEngine
             return gameAccess.getNumberOfCommands(gameID);
         } catch (Exception e)
         {
-            e.printStackTrace();
+            LOGGER.warning("Game does not exist");
         }
-        return -1;
+        return 0;
     }
 
     /**
@@ -198,7 +240,7 @@ public class SQLiteEngine extends IPersistenceEngine
         LOGGER.info("Initializing Database Connection");
         try
         {
-            Class.forName(DRIVER); //TODO I'm not sure this works like I think it does...
+            Class.forName(DRIVER);
         } catch (ClassNotFoundException e)
         {
             LOGGER.severe("Could not load database driver");
@@ -213,30 +255,10 @@ public class SQLiteEngine extends IPersistenceEngine
     public void initializeTables()
     {
         LOGGER.info("Initializing Tables");
-        initializeUser();
-        initializeGame();
-        initializeCommand();
-        initializeGameRelation();
-    }
-
-    private void initializeUser()
-    {
-        //TODO User SQL Schema goes here.
-    }
-
-    private void initializeGame()
-    {
-        //TODO Game SQL Schema goes here.
-    }
-
-    private void initializeCommand()
-    {
-        //TODO Command SQL Schema goes here.
-    }
-
-    private void initializeGameRelation()
-    {
-        //TODO GameRelation SQL Schema goes here.
+        userAccess.initializeTable();
+        gameAccess.initializeTable();
+        commandAccess.initializeTable();
+        gameRelationAccess.initializeTable();
     }
 
     /**
