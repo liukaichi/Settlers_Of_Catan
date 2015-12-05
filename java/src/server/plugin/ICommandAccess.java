@@ -9,12 +9,13 @@ import java.util.List;
  */
 public interface ICommandAccess
 {
-    public void saveCommand(int gameID, MoveCommand command);
-    public int getNumberOfCommandsInGame(int gameID);
+    void saveCommand(int gameID, MoveCommand command);
 
-    public List<MoveCommand> getAllCommands(int gameID);
+    int getNumberOfCommandsInGame(int gameID);
 
-    public List<MoveCommand> getAllCommandsAfter(int gameID, int sequenceNumber);
+    List<MoveCommand> getAllCommands(int gameID);
 
-    public MoveCommand getCommand(int gameID, int sequenceNumber);
+    List<MoveCommand> getAllCommandsAfter(int gameID, int sequenceNumber);
+
+    MoveCommand getCommand(int gameID, int sequenceNumber);
 }

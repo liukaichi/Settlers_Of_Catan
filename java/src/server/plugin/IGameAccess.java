@@ -9,15 +9,15 @@ import java.util.List;
  */
 public interface IGameAccess
 {
-    public void updateModel(int gameID, ServerModel game);
+    void updateModel(int gameID, ServerModel game);
 
-    public void addCommand(int gameID);
+    void addCommand(int gameID);
 
-    public void addGame(ServerModel game, String gameName);
+    void addGame(ServerModel game, String gameName);
 
-    public ServerModel getGame(int gameID);
+    ServerModel getGame(int gameID);
 
-    public List<ServerModel> getAllGames();
+    List<ServerModel> getAllGames();
 
-    public int getNumberOfCommands(int gameID);
+    int getNumberOfCommands(int gameID);
 }
