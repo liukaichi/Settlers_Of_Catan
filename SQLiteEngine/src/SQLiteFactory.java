@@ -10,10 +10,5 @@ public class SQLiteFactory implements IPersistenceFactory
     {
         return new SQLiteEngine(commandsBetweenSaves);
     }
-
-    public static void main(String[] args)
-    {
-
-    }
 }
 

@@ -6,11 +6,6 @@ import shared.communication.Credentials;
 import shared.definitions.exceptions.CatanException;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,10 +53,23 @@ public class SQLiteEngine extends IPersistenceEngine
     }
     @Override public boolean saveGame(int gameID, CatanCommand catanCommand, ServerModel game)
     {
-        int currentNumberOfCommands = getCurrentNumberOfCommands();
-        if (commandsBetweenSaves % currentNumberOfCommands == 0)
+        int currentNumberOfCommands = getCurrentNumberOfCommands(gameID);
+        if (commandsBetweenSaves % currentNumberOfCommands == 0) //it's time to save the model
         {
-
+            try
+            {
+                gameAccess.updateModel(gameID, game);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        try
+        {
+            gameAccess.addCommand(gameID);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
         return false;
     }
@@ -141,7 +149,17 @@ public class SQLiteEngine extends IPersistenceEngine
 
     @Override public boolean addGame(ServerModel model, String name)
     {
-        gameAccess.addGame(model,name);
+        startTransaction();
+        try
+        {
+            gameAccess.addGame(model, name);
+            endTransaction(true);
+        } catch (Exception e)
+        {
+            endTransaction(false);
+            e.printStackTrace();
+        }
+
         return false;
     }
 
@@ -160,8 +178,15 @@ public class SQLiteEngine extends IPersistenceEngine
         return connection;
     }
 
-    private int getCurrentNumberOfCommands()
+    private int getCurrentNumberOfCommands(int gameID)
     {
+        try
+        {
+            return gameAccess.getNumberOfCommands(gameID);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         return -1;
     }
 
