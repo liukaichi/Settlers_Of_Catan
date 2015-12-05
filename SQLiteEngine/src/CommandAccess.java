@@ -39,8 +39,9 @@ public class CommandAccess implements ICommandAccess, IAccess
         int count = -1;
         PreparedStatement stmt;
         ResultSet rs;
-        String query = "SELECT Count(\"x\") FROM Command WHERE GameID = " + gameID;
+        String query = "SELECT Count(\"x\") FROM Command WHERE GameID = ?";
         stmt = engine.getConnection().prepareStatement(query);
+        stmt.setInt(1, gameID);
 
         rs = stmt.executeQuery();
         while (rs.next()){
