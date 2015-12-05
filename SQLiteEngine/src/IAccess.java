@@ -3,5 +3,5 @@
  */
 public interface IAccess
 {
-    void initializeTable();
+    void initialize();
 }

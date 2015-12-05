@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class GameAccess implements IGameAccess, IAccess
 {
-    @Override public void initializeTable()
+    @Override public void initialize()
     {
 
     }

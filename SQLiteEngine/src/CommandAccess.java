@@ -104,9 +104,9 @@ public class CommandAccess implements ICommandAccess, IAccess
         return command;
     }
 
-    @Override public void initializeTable()
+    @Override public void initialize()
     {
-        LOGGER.entering(getClass().getName(), "initializeTable");
+        LOGGER.entering(getClass().getName(), "initialize");
         Statement stat = null;
         try
         {

@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class GameRelationAccess implements IGameRelationAccess, IAccess
 {
-    @Override public void initializeTable()
+    @Override public void initialize()
     {
 
     }

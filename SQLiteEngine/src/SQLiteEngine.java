@@ -255,10 +255,10 @@ public class SQLiteEngine extends IPersistenceEngine
     public void initializeTables()
     {
         LOGGER.info("Initializing Tables");
-        userAccess.initializeTable();
-        gameAccess.initializeTable();
-        commandAccess.initializeTable();
-        gameRelationAccess.initializeTable();
+        userAccess.initialize();
+        gameAccess.initialize();
+        commandAccess.initialize();
+        gameRelationAccess.initialize();
     }
 
     /**

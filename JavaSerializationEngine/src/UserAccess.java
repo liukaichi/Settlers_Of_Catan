@@ -7,7 +7,7 @@ import shared.communication.Credentials;
  */
 public class UserAccess implements IUserAccess, IAccess
 {
-    @Override public void initializeTable()
+    @Override public void initialize()
     {
 
     }

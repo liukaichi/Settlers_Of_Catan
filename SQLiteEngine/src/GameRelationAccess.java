@@ -66,9 +66,9 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
         }
     }
 
-    @Override public void initializeTable()
+    @Override public void initialize()
     {
-        LOGGER.entering(getClass().getName(), "initializeTable");
+        LOGGER.entering(getClass().getName(), "initialize");
         Statement stat = null;
         try
         {
