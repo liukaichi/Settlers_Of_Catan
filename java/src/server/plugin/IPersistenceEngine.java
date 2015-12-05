@@ -65,7 +65,6 @@ public abstract class IPersistenceEngine
 
     public abstract boolean endTransaction(boolean commit);
 
-    public abstract boolean addUser(User user);
     public abstract boolean addGame(ServerModel model, String name);
 
 

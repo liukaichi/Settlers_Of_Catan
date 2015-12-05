@@ -2,10 +2,7 @@ import server.ServerModel;
 import server.plugin.IGameAccess;
 
 import java.rmi.ServerException;
-import java.sql.Blob;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -136,6 +133,20 @@ public class GameAccess implements IGameAccess, IAccess
 
     @Override public void initializeTable()
     {
-
+        LOGGER.entering(getClass().getName(), "initializeTable");
+        Statement stat = null;
+        try
+        {
+            stat = engine.getConnection().createStatement();
+            stat.executeUpdate("DROP TABLE IF EXISTS Game;");
+            stat.executeUpdate("CREATE TABLE Game (" + "GameID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " + "Model BLOB NOT NULL , "
+                    + "CurrentCommandNo INTEGER NOT NULL DEFAULT 0, " + "Name VARCHAR " + ")");
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            SQLiteEngine.safeClose(stat);
+        }
     }
 }
