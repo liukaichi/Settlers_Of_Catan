@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  */
 public class SQLiteEngine extends IPersistenceEngine
 {
+    //stuff
     private static final String DRIVER = "org.sqlite.JDBC";
     private static final String DATABASE_DIRECTORY = "database";
     private static final String DATABASE_FILE = "database.sqlite";
