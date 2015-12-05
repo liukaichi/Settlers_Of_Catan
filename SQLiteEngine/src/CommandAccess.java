@@ -112,8 +112,11 @@ public class CommandAccess implements ICommandAccess, IAccess
         {
             stat = engine.getConnection().createStatement();
             stat.executeUpdate("DROP TABLE IF EXISTS Command;");
-            stat.executeUpdate("CREATE TABLE Command (" + "SequenceNo PRIMARY KEY AUTOINCREMENT INTEGER, " + "Command BLOB NOT NULL, "
-                    + "GameID INTEGER REFERENCES Game(GameID) NOT NULL" + ")");
+            stat.executeUpdate("CREATE TABLE Command (" +
+                    "SequenceNo PRIMARY KEY AUTOINCREMENT INTEGER, " +
+                    "Command BLOB NOT NULL, "
+                    + "GameID INTEGER REFERENCES Game(GameID) NOT NULL" +
+                    ")");
 
         } catch (SQLException e)
         {
