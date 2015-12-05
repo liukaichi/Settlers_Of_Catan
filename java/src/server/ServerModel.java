@@ -21,6 +21,7 @@ import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**

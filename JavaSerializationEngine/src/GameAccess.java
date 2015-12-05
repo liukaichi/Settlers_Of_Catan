@@ -1,33 +1,29 @@
 import server.ServerModel;
 import server.plugin.IGameAccess;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by dtaylor on 12/5/2015.
  */
 public class GameAccess implements IGameAccess, IAccess
 {
-    Map<Integer, ServerModel> models;
+    List<Map.Entry<String, ServerModel>> games;
     @Override public void initialize()
     {
-        models = new HashMap<>();
+        games = new ArrayList<>();
     }
 
     @Override public void updateModel(int gameID, ServerModel game) throws Exception
     {
-        ServerModel model = models.get(gameID);
+        Map.Entry<String, ServerModel> model = games.get(gameID);
         if(model != null)
         {
-            models.put(gameID, game);
+            games.set(gameID, new AbstractMap.SimpleEntry<>(model.getKey(),game));
+            //games.get(gameID).updateModel(game);
         }
-        else
-        {
-            models.put(gameID, game);
-        }
+        throw new Exception("No model to update");
     }
 
     @Override public void addCommand(int gameID) throws Exception
@@ -37,21 +33,26 @@ public class GameAccess implements IGameAccess, IAccess
 
     @Override public void addGame(ServerModel game, String gameName) throws Exception
     {
-
+        games.add(new AbstractMap.SimpleEntry<>(gameName, game);
     }
 
     @Override public ServerModel getGame(int gameID) throws Exception
     {
-        return null;
+        Map.Entry<String, ServerModel> game = games.get(gameID);
+        if(game == null)
+            throw new Exception("No game has the ID: "+ gameID);
+        return game.getValue();
     }
 
     @Override public List<ServerModel> getAllGames() throws Exception
     {
-        return null;
+        return games.stream().map(Map.Entry::getValue).collect(Collectors.toList());
     }
 
     @Override public int getNumberOfCommands(int gameID) throws Exception
     {
-        return 0;
+        if(games.get(gameID) != null)
+            return games.size();
+        throw new Exception("No games in database");
     }
 }

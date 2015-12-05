@@ -30,7 +30,7 @@ import java.util.Observable;
 public class ClientModel extends Observable
 {
     protected TradeOffer tradeOffer;
-    private GameInfo gameInfo;
+    protected GameInfo gameInfo;
     protected List<Player> players;
     protected Bank bank;
     protected Chat chat;
