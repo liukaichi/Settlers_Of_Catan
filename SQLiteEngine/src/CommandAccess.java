@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * SQL Database Access Object for Commands.
  */
-public class CommandAccess implements ICommandAccess
+public class CommandAccess implements ICommandAccess, IAccess
 {
     private SQLiteEngine engine;
     public CommandAccess(SQLiteEngine engine)
@@ -43,4 +43,8 @@ public class CommandAccess implements ICommandAccess
         return null;
     }
 
+    @Override public void initializeTable()
+    {
+
+    }
 }
