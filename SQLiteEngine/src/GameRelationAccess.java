@@ -72,10 +72,15 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
         Statement stat = null;
         try
         {
+            // @formatter:off
             stat = engine.getConnection().createStatement();
             stat.executeUpdate("DROP TABLE IF EXISTS GameRelation;");
             stat.executeUpdate(
-                    "CREATE TABLE GameRelation (" + "GameID INTEGER REFERENCES  Game(GameID), " + "UserID INTEGER REFERENCES User(UserID)" + ")");
+                    "CREATE TABLE GameRelation ("
+                            + "GameID INTEGER REFERENCES  Game(GameID), "
+                            + "UserID INTEGER REFERENCES User(UserID)"
+                            + ")");
+            // @formatter:on
         } catch (SQLException e)
         {
             e.printStackTrace();

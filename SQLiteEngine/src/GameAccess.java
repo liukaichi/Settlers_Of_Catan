@@ -32,19 +32,6 @@ public class GameAccess implements IGameAccess, IAccess
         }
     }
 
-    @Override public void addCommand(int gameID) throws Exception
-    {
-        PreparedStatement stmt = null;
-        String query = "UPDATE Game SET CurrentCommandNo = (CurrentCommandNo + 1) WHERE GameID = (?)";
-        engine.startTransaction();
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, gameID);
-        if (stmt.executeUpdate() != 1)
-        {
-            throw new ServerException("Could not update ServerModel for gameID " + gameID);
-        }
-    }
-
     @Override public void addGame(ServerModel game, String gameName) throws Exception
     {
         PreparedStatement stmt = null;
@@ -143,10 +130,15 @@ public class GameAccess implements IGameAccess, IAccess
         Statement stat = null;
         try
         {
+            // @formatter:off
             stat = engine.getConnection().createStatement();
             stat.executeUpdate("DROP TABLE IF EXISTS Game;");
-            stat.executeUpdate("CREATE TABLE Game (" + "GameID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , " + "Model BLOB NOT NULL , "
-                    + "CurrentCommandNo INTEGER NOT NULL DEFAULT 0, " + "Name VARCHAR " + ")");
+            stat.executeUpdate("CREATE TABLE Game ("
+                    + "GameID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , "
+                    + "Model BLOB NOT NULL , "
+                    + "Name VARCHAR "
+                    + ")");
+            // @formatter:on
         } catch (SQLException e)
         {
             e.printStackTrace();

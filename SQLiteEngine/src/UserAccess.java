@@ -2,12 +2,8 @@ import server.manager.User;
 import server.plugin.IUserAccess;
 import shared.communication.Credentials;
 
-import java.rmi.ServerException;
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
@@ -19,6 +15,7 @@ public class UserAccess implements IUserAccess, IAccess
 {
     private SQLiteEngine engine;
     private final static Logger LOGGER = Logger.getLogger(UserAccess.class.getName());
+
     public UserAccess(SQLiteEngine engine)
     {
         this.engine = engine;
@@ -29,10 +26,10 @@ public class UserAccess implements IUserAccess, IAccess
         User result = null;
         PreparedStatement stmt;
         ResultSet rs;
-        String query =
-                "SELECT UserID FROM User WHERE Name = " + credentials.getUsername() + " AND UserID = " + credentials
-                        .getPassword();
+        String query = "SELECT UserID FROM User WHERE Name = ? AND Password = ?";
         stmt = engine.getConnection().prepareStatement(query);
+        stmt.setString(1, credentials.getUsername());
+        stmt.setString(2, credentials.getPassword().getPasswordPlainText());
 
         rs = stmt.executeQuery();
         if (!rs.isBeforeFirst())
@@ -54,8 +51,9 @@ public class UserAccess implements IUserAccess, IAccess
         User result = null;
         PreparedStatement stmt;
         ResultSet rs;
-        String query = "SELECT * FROM User WHERE UserID = " + id;
+        String query = "SELECT * FROM User WHERE UserID = ?";
         stmt = engine.getConnection().prepareStatement(query);
+        stmt.setInt(1, id);
 
         rs = stmt.executeQuery();
         if (!rs.isBeforeFirst())
@@ -76,7 +74,7 @@ public class UserAccess implements IUserAccess, IAccess
     {
         PreparedStatement stmt = null;
         ResultSet keyRS = null;
-        String query = "INSERT into User (Name, Password) VALUES " + "(?,?)";
+        String query = "INSERT INTO User (Name, Password) VALUES (?,?)";
         stmt = engine.getConnection().prepareStatement(query);
 
         stmt.setString(1, credentials.getUsername());
@@ -101,11 +99,15 @@ public class UserAccess implements IUserAccess, IAccess
         Statement stat = null;
         try
         {
+            // @formatter:off
             stat = engine.getConnection().createStatement();
             stat.executeUpdate("DROP TABLE IF EXISTS User;");
-            stat.executeUpdate("CREATE TABLE User (" + "UserID INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ," + "Username TEXT NOT NULL  UNIQUE , "
-                    + "Password TEXT NOT NULL ," + ");");
-
+            stat.executeUpdate("CREATE TABLE User ("
+                    + "UserID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                    + "Username TEXT NOT NULL  UNIQUE, "
+                    + "Password TEXT NOT NULL, "
+                    + ");");
+            // @formatter:on
         } catch (SQLException e)
         {
             e.printStackTrace();

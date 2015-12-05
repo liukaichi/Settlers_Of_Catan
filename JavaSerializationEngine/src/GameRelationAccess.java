@@ -10,21 +10,23 @@ import java.util.Map;
  */
 public class GameRelationAccess implements IGameRelationAccess, IAccess
 {
-    Map<Integer, List<Integer>> users;
+    private Map<Integer, List<Integer>> users;
 
     @Override public void initialize()
     {
         users = new HashMap<>();
     }
 
-    @Override
-    public void addUserToGame(int gameID, int userID) throws Exception
+    @Override public void addUserToGame(int gameID, int userID) throws Exception
     {
         List<Integer> gameUsers = users.get(gameID);
-        if (gameUsers != null) {
+        if (gameUsers != null)
+        {
             gameUsers.add(userID);
-        } else {
-            users.put(gameID, new ArrayList<Integer>() {{
+        } else
+        {
+            users.put(gameID, new ArrayList<Integer>()
+            {{
                 add(userID);
             }});
         }
@@ -33,9 +35,11 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
     @Override public List<Integer> listPlayersInGame(int gameID) throws Exception
     {
         List<Integer> gameUsers = users.get(gameID);
-        if (gameUsers != null) {
+        if (gameUsers != null)
+        {
             return gameUsers;
-        } else {
+        } else
+        {
             throw new Exception("There are no players in the game to list in game: " + gameID);
         }
 
