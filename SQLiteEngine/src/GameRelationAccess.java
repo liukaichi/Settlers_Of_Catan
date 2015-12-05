@@ -49,8 +49,9 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
         ResultSet keyRS = null;
         List<Integer> playerIDs = null;
         try {
-            String query = "SELECT Player FROM Game WHERE GameID = " + gameID;
+            String query = "SELECT Player FROM Game WHERE GameID = ?";
             statement = engine.getConnection().prepareStatement(query);
+            statement.setInt(1, gameID);
             keyRS = statement.executeQuery();
             while (keyRS.next()) {
                 int playerID = keyRS.getInt(1);
