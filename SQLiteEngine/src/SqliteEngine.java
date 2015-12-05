@@ -6,11 +6,6 @@ import shared.communication.Credentials;
 import shared.definitions.exceptions.CatanException;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,7 +58,7 @@ public class SQLiteEngine extends IPersistenceEngine
         {
             try
             {
-                gameAccess.updateModel(gameID,game);
+                gameAccess.updateModel(gameID, game);
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -157,7 +152,7 @@ public class SQLiteEngine extends IPersistenceEngine
         startTransaction();
         try
         {
-            gameAccess.addGame(model,name);
+            gameAccess.addGame(model, name);
             endTransaction(true);
         } catch (Exception e)
         {
@@ -192,6 +187,7 @@ public class SQLiteEngine extends IPersistenceEngine
         {
             e.printStackTrace();
         }
+        return -1;
     }
 
     /**
