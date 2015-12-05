@@ -33,7 +33,7 @@ public class GameAccess implements IGameAccess, IAccess
 
     @Override public void addGame(ServerModel game, String gameName) throws Exception
     {
-        games.add(new AbstractMap.SimpleEntry<>(gameName, game);
+        games.add(new AbstractMap.SimpleEntry<>(gameName, game));
     }
 
     @Override public ServerModel getGame(int gameID) throws Exception
