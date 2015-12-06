@@ -63,14 +63,14 @@ public class SQLiteEngine extends IPersistenceEngine
             {
                 e.printStackTrace();
             }
-        }
+        }/*
         try
         {
             gameAccess.addCommand(gameID);
         } catch (Exception e)
         {
             e.printStackTrace();
-        }
+        }*/
         return false;
     }
 

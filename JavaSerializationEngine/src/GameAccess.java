@@ -1,3 +1,4 @@
+import database.Game;
 import server.ServerModel;
 import server.plugin.IGameAccess;
 
@@ -9,44 +10,40 @@ import java.util.stream.Collectors;
  */
 public class GameAccess implements IGameAccess, IAccess
 {
-    List<Map.Entry<String, ServerModel>> games;
+    List<Game> games;
+
     @Override public void initialize()
     {
         games = new ArrayList<>();
     }
 
-    @Override public void updateModel(int gameID, ServerModel game) throws Exception
+    @Override public void updateModel(int gameID, ServerModel model) throws Exception
     {
-        Map.Entry<String, ServerModel> model = games.get(gameID);
-        if(model != null)
+        Game game = games.get(gameID);
+        if(game != null)
         {
-            games.set(gameID, new AbstractMap.SimpleEntry<>(model.getKey(),game));
+            game.setModel(model);
             //games.get(gameID).updateModel(game);
         }
         throw new Exception("No model to update");
     }
 
-    @Override public void addCommand(int gameID) throws Exception
-    {
-
-    }
-
     @Override public void addGame(ServerModel game, String gameName) throws Exception
     {
-        games.add(new AbstractMap.SimpleEntry<>(gameName, game));
+        games.add(new Game(game, gameName, games.size()));
     }
 
     @Override public ServerModel getGame(int gameID) throws Exception
     {
-        Map.Entry<String, ServerModel> game = games.get(gameID);
+        Game game = games.get(gameID);
         if(game == null)
             throw new Exception("No game has the ID: "+ gameID);
-        return game.getValue();
+        return game.getModel();
     }
 
     @Override public List<ServerModel> getAllGames() throws Exception
     {
-        return games.stream().map(Map.Entry::getValue).collect(Collectors.toList());
+        return games.stream().map(Game::getModel).collect(Collectors.toList());
     }
 
     @Override public int getNumberOfCommands(int gameID) throws Exception
