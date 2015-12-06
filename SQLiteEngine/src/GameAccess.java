@@ -39,7 +39,7 @@ public class GameAccess implements IGameAccess, IAccess
         }
     }
 
-    @Override public void addGame(ServerModel game, String gameName) throws Exception
+    @Override public int addGame(ServerModel game, String gameName) throws Exception
     {
         PreparedStatement stmt = null;
         ResultSet keyRS = null;
@@ -55,6 +55,8 @@ public class GameAccess implements IGameAccess, IAccess
                 keyRS = keyStmt.executeQuery("SELECT last_insert_rowid()");
                 keyRS.next();
                 int id = keyRS.getInt(1);
+                return id;
+
             } else
             {
                 throw new ServerException("Query wasn't executed properly to add a game");

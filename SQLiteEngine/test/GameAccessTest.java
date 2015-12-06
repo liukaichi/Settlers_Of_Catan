@@ -1,40 +1,63 @@
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import server.ServerModel;
+import static org.junit.Assert.*;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 /**
- * Created by cstaheli on 12/4/2015.
+ * Created by Adrian on 12/5/2015.
  */
-public class GameAccessTest
-{
+public class GameAccessTest extends BaseTest {
 
-    @Before public void setUp() throws Exception
-    {
+    GameAccess dao;
+
+    @Before
+    public void init(){
+        dao = new GameAccess(engine);
+    }
+
+    public void populateGames() throws Exception {
 
     }
 
-    @After public void tearDown() throws Exception
-    {
+    @Test
+    public void testUpdateModel() throws Exception {
 
     }
 
-    @Test public void testSaveGame() throws Exception
-    {
+    @Test
+    public void testAddOneGame() throws Exception {
+        ServerModel game = new ServerModel(new String(Files.readAllBytes(Paths.get("../sample/complexJSONModel.json"))));
+        int gameId;
+        engine.startTransaction();
+        gameId = dao.addGame(game, "Test");
+        engine.endTransaction(true);
+
+        engine.startTransaction();
+        ServerModel savedGame = dao.getGame(gameId);
+        engine.endTransaction(true);
+
+        assertEquals(game, savedGame);
+    }
+
+    @Test
+    public void testGetGame() throws Exception {
 
     }
 
-    @Test public void testAddGame() throws Exception
-    {
+    @Test
+    public void testGetAllGames() throws Exception {
 
     }
 
-    @Test public void testGetGame() throws Exception
-    {
+    @Test
+    public void testGetNumberOfCommands() throws Exception {
 
     }
 
-    @Test public void testGetAllGames() throws Exception
-    {
+    @Test
+    public void testInitialize() throws Exception {
 
     }
 }
