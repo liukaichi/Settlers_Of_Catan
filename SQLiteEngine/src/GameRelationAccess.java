@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -47,9 +48,9 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
         LOGGER.entering(getClass().getName(), "listPlayersInGame");
         PreparedStatement statement = null;
         ResultSet keyRS = null;
-        List<Integer> playerIDs = null;
+        List<Integer> playerIDs = new ArrayList<>();
         try {
-            String query = "SELECT Player FROM Game WHERE GameID = ?";
+            String query = "SELECT UserID FROM GameRelation WHERE GameID = (?)";
             statement = engine.getConnection().prepareStatement(query);
             statement.setInt(1, gameID);
             keyRS = statement.executeQuery();
