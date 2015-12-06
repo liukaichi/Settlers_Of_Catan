@@ -206,11 +206,13 @@ public class GameManager
 
     public GameInfo createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
-        int newGameID = games.size();
+        int newGameID = persistenceEngine.getNextGameID();
+        //int newGameID = games.size();
         GameInfo game = new GameInfo(newGameID, name);
         games.put(newGameID, game);
         ServerModel model = new ServerModel(game, randomTiles, randomNumbers, randomPorts);
         models.put(newGameID, model);
+        persistenceEngine.addGame(model, name);
         return game;
     }
 

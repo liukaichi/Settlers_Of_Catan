@@ -54,7 +54,7 @@ public class SQLiteEngine extends IPersistenceEngine
 
     @Override public boolean saveGame(int gameID, MoveCommand moveCommand, ServerModel game)
     {
-        int currentNumberOfCommands = getCurrentNumberOfCommands(gameID);
+        int currentNumberOfCommands = game.getVersion(); //hopefully the version number is the same as commandCount
         if (commandsBetweenSaves % currentNumberOfCommands == 0) //it's time to save the model
         {
             try
@@ -215,6 +215,21 @@ public class SQLiteEngine extends IPersistenceEngine
         return false;
     }
 
+    @Override public int getNextGameID()
+    {
+        try
+        {
+            startTransaction();
+            int nextID = gameAccess.getNextGameID();
+            endTransaction(true);
+            return nextID;
+        } catch (Exception e)
+        {
+            endTransaction(false);
+            return -1;
+        }
+    }
+
     /**
      * Allows a program to determine if a transaction is still happening.
      *
@@ -228,18 +243,6 @@ public class SQLiteEngine extends IPersistenceEngine
     public Connection getConnection()
     {
         return connection;
-    }
-
-    private int getCurrentNumberOfCommands(int gameID)
-    {
-        try
-        {
-            return gameAccess.getNumberOfCommands(gameID);
-        } catch (Exception e)
-        {
-            LOGGER.warning("Game does not exist");
-        }
-        return 0;
     }
 
     /**

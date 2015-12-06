@@ -2,7 +2,9 @@ package shared.communication;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.newdawn.slick.Game;
 import server.facade.AbstractServerFacade;
+import server.manager.GameManager;
 import shared.definitions.exceptions.CatanException;
 
 import java.util.logging.Logger;
@@ -63,12 +65,13 @@ public class CreateGameRequest extends CatanCommand
                         String.valueOf(randomPorts), name, gameID));
         String model = AbstractServerFacade.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name).toString();
         LOGGER.fine(model);
-        persistMe(gameID);
+        persistMe();
         return model;
     }
 
-    private void persistMe(int gameID)
+    private void persistMe()
     {
+        GameManager.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name);
         //TODO this doesn't work.
     }
 

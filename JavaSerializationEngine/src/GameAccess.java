@@ -48,11 +48,9 @@ public class GameAccess implements IGameAccess, IAccess
         return games.stream().map(Game::getModel).collect(Collectors.toList());
     }
 
-    @Override public int getNumberOfCommands(int gameID) throws Exception
+    @Override public int getNextGameID() throws Exception
     {
-        Game game = Database.getInstance().getGame(gameID);
-        if(game.getCommands() != null)
-            return game.getCommands().size();
-        throw new Exception("No games in database");
+        return 0; //TODO Implement this.
     }
+
 }

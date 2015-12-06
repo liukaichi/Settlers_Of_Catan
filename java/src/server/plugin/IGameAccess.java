@@ -16,4 +16,6 @@ public interface IGameAccess
     ServerModel getGame(int gameID) throws Exception;
 
     List<ServerModel> getAllGames() throws Exception;
+
+    public int getNextGameID() throws Exception;
 }

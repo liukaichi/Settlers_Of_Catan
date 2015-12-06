@@ -44,10 +44,20 @@ public class GameAccess implements IGameAccess, IAccess
         PreparedStatement stmt = null;
         ResultSet keyRS = null;
         try
-        {
+        {/*
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutput out = null;
+            try {
+                out = new ObjectOutputStream(bos);
+                out.writeObject(myObj);
+
+                byte[] yourBytes = bos.toByteArray();*/
+
             String query = "INSERT INTO Game (Model, Name) VALUES (?,?)";
             stmt = engine.getConnection().prepareStatement(query);
-            stmt.setBlob(1, (Blob) game);
+            Blob blob = engine.getConnection().createBlob();
+            blob.setBytes(1, game.toString().getBytes());
+            stmt.setBlob(1, blob);
             stmt.setString(2, gameName);
             if (stmt.executeUpdate() == 1)
             {
@@ -150,5 +160,18 @@ public class GameAccess implements IGameAccess, IAccess
         {
             SQLiteEngine.safeClose(stat);
         }
+    }
+
+    @Override
+    public int getNextGameID() throws Exception
+    {
+        int nextID = 0;
+        ResultSet keyRS;
+        Statement keyStmt = engine.getConnection().createStatement();
+        keyRS = keyStmt.executeQuery("SELECT MAX(GameID) FROM Game");
+        keyRS.next();
+        int lastID = keyRS.getInt(1);
+        nextID = lastID + 1;
+        return nextID;
     }
 }
