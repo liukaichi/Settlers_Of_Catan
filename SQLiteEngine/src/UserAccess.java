@@ -125,9 +125,9 @@ public class UserAccess implements IUserAccess, IAccess
             stat.executeUpdate("DROP TABLE IF EXISTS User;");
             stat.executeUpdate("CREATE TABLE User ("
                     + "UserID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
-                    + "Username TEXT NOT NULL  UNIQUE, "
-                    + "Password TEXT NOT NULL, "
-                    + ");");
+                    + "Username TEXT NOT NULL UNIQUE, "
+                    + "Password TEXT NOT NULL"
+                    + ")");
             // @formatter:on
         } catch (SQLException e)
         {

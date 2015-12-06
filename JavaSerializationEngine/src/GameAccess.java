@@ -27,10 +27,11 @@ public class GameAccess implements IGameAccess, IAccess
         throw new Exception("No model to update");
     }
 
-    @Override public void addGame(ServerModel game, String gameName) throws Exception
+    @Override public int addGame(ServerModel game, String gameName) throws Exception
     {
         List<Game> games = Database.getInstance().getGames();
         games.add(new Game(game, gameName, games.size()));
+        return games.size();
     }
 
     @Override public ServerModel getGame(int gameID) throws Exception
