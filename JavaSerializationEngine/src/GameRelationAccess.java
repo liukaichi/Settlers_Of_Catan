@@ -1,3 +1,4 @@
+import database.Database;
 import server.plugin.IGameRelationAccess;
 
 import java.util.ArrayList;
@@ -10,31 +11,25 @@ import java.util.Map;
  */
 public class GameRelationAccess implements IGameRelationAccess, IAccess
 {
-    private Map<Integer, List<Integer>> users;
-
     @Override public void initialize()
     {
-        users = new HashMap<>();
     }
 
     @Override public void addUserToGame(int gameID, int userID) throws Exception
     {
-        List<Integer> gameUsers = users.get(gameID);
+        List<Integer> gameUsers = Database.getInstance().getUsers(gameID);
         if (gameUsers != null)
         {
             gameUsers.add(userID);
         } else
         {
-            users.put(gameID, new ArrayList<Integer>()
-            {{
-                add(userID);
-            }});
+            throw new Exception("No such gameID or Users");
         }
     }
 
     @Override public List<Integer> listPlayersInGame(int gameID) throws Exception
     {
-        List<Integer> gameUsers = users.get(gameID);
+        List<Integer> gameUsers = Database.getInstance().getUsers(gameID);
         if (gameUsers != null)
         {
             return gameUsers;

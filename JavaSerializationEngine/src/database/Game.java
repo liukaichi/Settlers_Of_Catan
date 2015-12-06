@@ -15,6 +15,7 @@ public class Game
     String name;
     int gameID;
     List<MoveCommand> commands;
+    List<Integer> users;
     public Game(ServerModel model, String name, int gameID)
     {
         this.model = model;
@@ -56,6 +57,16 @@ public class Game
     public List<MoveCommand> getCommands()
     {
         return commands;
+    }
+
+    public List<Integer> getUsers()
+    {
+        return users;
+    }
+
+    public void setUsers(List<Integer> users)
+    {
+        this.users = users;
     }
 
     public void setCommands(List<MoveCommand> commands)

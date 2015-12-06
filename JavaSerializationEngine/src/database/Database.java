@@ -49,4 +49,14 @@ public class Database
         }
         return null;
     }
+
+    public List<Integer> getUsers(int gameID)
+    {
+        Game game = getGame(gameID);
+        if(game != null)
+        {
+            return game.getUsers();
+        }
+        return null;
+    }
 }
