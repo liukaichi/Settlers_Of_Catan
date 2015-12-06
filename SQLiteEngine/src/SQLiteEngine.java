@@ -1,8 +1,8 @@
 import server.ServerModel;
 import server.manager.User;
 import server.plugin.IPersistenceEngine;
-import shared.communication.CatanCommand;
 import shared.communication.Credentials;
+import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.exceptions.CatanException;
 
 import java.io.File;
@@ -51,7 +51,8 @@ public class SQLiteEngine extends IPersistenceEngine
         this.commandsBetweenSaves = commandsBetweenSaves;
 
     }
-    @Override public boolean saveGame(int gameID, CatanCommand catanCommand, ServerModel game)
+
+    @Override public boolean saveGame(int gameID, MoveCommand moveCommand, ServerModel game)
     {
         int currentNumberOfCommands = getCurrentNumberOfCommands(gameID);
         if (commandsBetweenSaves % currentNumberOfCommands == 0) //it's time to save the model
@@ -66,7 +67,7 @@ public class SQLiteEngine extends IPersistenceEngine
         }/*
         try
         {
-            gameAccess.addCommand(gameID);
+            commandAccess.saveCommand(gameID, moveCommand);
         } catch (Exception e)
         {
             e.printStackTrace();
