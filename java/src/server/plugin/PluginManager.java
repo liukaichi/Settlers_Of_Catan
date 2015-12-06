@@ -38,7 +38,7 @@ public class PluginManager
     {
             config = new HashMap<>();
             //find the factory type and get the class info
-            File configFile = new File("java\\lib\\plugins\\config.txt");
+            File configFile = new File("plugins\\config.txt");
         if(configFile.exists())
         {
             List<String> lines = Files.readAllLines(configFile.toPath());

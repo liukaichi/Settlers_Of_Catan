@@ -103,6 +103,7 @@ public class UserManager
      */
     public User userRegister(Credentials credentials) throws ExistingRegistrationException
     {
+
         int userID = persistenceEngine.registerUser(credentials);
         if (userID == -1)
         {

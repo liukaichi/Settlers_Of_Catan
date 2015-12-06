@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 public class SQLiteEngine extends IPersistenceEngine
 {
     private static final String DRIVER = "org.sqlite.JDBC";
-    private static final String DATABASE_DIRECTORY = "database";
-    private static final String DATABASE_FILE = "database.sqlite";
+    private static final String DATABASE_DIRECTORY = "plugins\\SQLiteEngine";
+    private static final String DATABASE_FILE = "CatanDatabase.sqlite";
     private static final String DATABASE_URL = "jdbc:sqlite:" + DATABASE_DIRECTORY + File.separator + DATABASE_FILE;
 
     private static final int DEFAULT_COMMAND_BETWEEN_SAVES = 10;
@@ -74,6 +74,29 @@ public class SQLiteEngine extends IPersistenceEngine
         return false;
     }
 
+
+
+
+
+
+
+
+
+    @Override public int registerUser(Credentials credentials)
+    {
+        try
+        {
+            startTransaction();
+            int userID = userAccess.registerUser(credentials);
+            endTransaction(true);
+            return userID;
+        } catch (Exception e)
+        {
+            endTransaction(false);
+            return -1;
+        }
+    }
+
     @Override public ServerModel loadGame(int gameID)
     {
         try
@@ -102,20 +125,6 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override public int registerUser(Credentials credentials)
-    {
-        try
-        {
-            startTransaction();
-            int userID = userAccess.registerUser(credentials);
-            endTransaction(true);
-            return userID;
-        } catch (Exception e)
-        {
-            endTransaction(false);
-            return -1;
-        }
-    }
 
     @Override public User getUser(int id)
     {
