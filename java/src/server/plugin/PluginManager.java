@@ -1,15 +1,12 @@
 package server.plugin;
 
-import server.facade.AbstractServerFacade;
-import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 import shared.definitions.exceptions.InvalidCredentialsException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InvalidClassException;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -38,7 +35,7 @@ public class PluginManager
     {
             config = new HashMap<>();
             //find the factory type and get the class info
-            File configFile = new File("plugins\\config.txt");
+        File configFile = new File("plugins\\config.txt");
         if(configFile.exists())
         {
             List<String> lines = Files.readAllLines(configFile.toPath());

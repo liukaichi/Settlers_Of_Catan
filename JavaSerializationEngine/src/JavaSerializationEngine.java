@@ -1,15 +1,15 @@
 import server.ServerModel;
 import server.manager.User;
 import server.plugin.IPersistenceEngine;
-import shared.communication.CatanCommand;
 import shared.communication.Credentials;
+import shared.communication.moveCommands.MoveCommand;
 
 /**
  * Created by dtaylor on 12/5/2015.
  */
 public class JavaSerializationEngine extends IPersistenceEngine
 {
-    @Override public boolean saveGame(int gameID, CatanCommand catanCommand, ServerModel game)
+    @Override public boolean saveGame(int gameID, MoveCommand moveCommand, ServerModel game)
     {
         return false;
     }

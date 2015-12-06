@@ -7,7 +7,7 @@ import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
 import server.plugin.IPersistenceEngine;
 import server.util.FileUtils;
-import shared.communication.CatanCommand;
+import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
@@ -219,9 +219,9 @@ public class GameManager
         this.persistenceEngine = persistenceEngine;
     }
 
-    public void saveCommand(int gameID, CatanCommand catanCommand)
+    public void saveCommand(int gameID, MoveCommand moveCommand)
     {
-        persistenceEngine.saveGame(gameID, catanCommand, getGame(gameID));
+        persistenceEngine.saveGame(gameID, moveCommand, getGame(gameID));
     }
 
     public void addPlayerToGame(int playerID, int gameID)

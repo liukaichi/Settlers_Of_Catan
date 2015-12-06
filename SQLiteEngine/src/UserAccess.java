@@ -24,23 +24,30 @@ public class UserAccess implements IUserAccess, IAccess
     public User getUser(Credentials credentials) throws Exception
     {
         User result = null;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String query = "SELECT UserID FROM User WHERE Name = ? AND Password = ?";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setString(1, credentials.getUsername());
-        stmt.setString(2, credentials.getPassword().getPasswordPlainText());
-
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try
         {
-            return null;
-        }
-        if (rs.next())
-        {
-            int id = rs.getInt(1);
+            String query = "SELECT UserID FROM User WHERE Name = ? AND Password = ?";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setString(1, credentials.getUsername());
+            stmt.setString(2, credentials.getPassword().getPasswordPlainText());
 
-            result = new User(credentials, id);
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst())
+            {
+                return null;
+            }
+            if (rs.next())
+            {
+                int id = rs.getInt(1);
+
+                result = new User(credentials, id);
+            }
+        } finally
+        {
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
         }
 
         return result;
@@ -49,22 +56,29 @@ public class UserAccess implements IUserAccess, IAccess
     public User getUser(int id) throws Exception
     {
         User result = null;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String query = "SELECT * FROM User WHERE UserID = ?";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, id);
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try
+        {
+            String query = "SELECT * FROM User WHERE UserID = ?";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setInt(1, id);
 
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst())
+            {
+                return null;
+            }
+            if (rs.next())
+            {
+                String name = rs.getString(2);
+                String password = rs.getString(3);
+                result = new User(name, password, id);
+            }
+        } finally
         {
-            return null;
-        }
-        if (rs.next())
-        {
-            String name = rs.getString(2);
-            String password = rs.getString(3);
-            result = new User(name, password, id);
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
         }
 
         return result;
@@ -74,21 +88,28 @@ public class UserAccess implements IUserAccess, IAccess
     {
         PreparedStatement stmt = null;
         ResultSet keyRS = null;
-        String query = "INSERT INTO User (Name, Password) VALUES (?,?)";
-        stmt = engine.getConnection().prepareStatement(query);
+        try
+        {
+            String query = "INSERT INTO User (Name, Password) VALUES (?,?)";
+            stmt = engine.getConnection().prepareStatement(query);
 
-        stmt.setString(1, credentials.getUsername());
-        stmt.setString(2, credentials.getPassword().toString());
-        if (stmt.executeUpdate() == 1)
+            stmt.setString(1, credentials.getUsername());
+            stmt.setString(2, credentials.getPassword().toString());
+            if (stmt.executeUpdate() == 1)
+            {
+                Statement keyStmt = engine.getConnection().createStatement();
+                keyRS = keyStmt.executeQuery("SELECT last_insert_rowid()");
+                keyRS.next();
+                int id = keyRS.getInt(1);
+                return id;
+            } else
+            {
+                return -1;
+            }
+        } finally
         {
-            Statement keyStmt = engine.getConnection().createStatement();
-            keyRS = keyStmt.executeQuery("select last_insert_rowid()");
-            keyRS.next();
-            int id = keyRS.getInt(1);
-            return id;
-        } else
-        {
-            return -1;
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(keyRS);
         }
 
     }

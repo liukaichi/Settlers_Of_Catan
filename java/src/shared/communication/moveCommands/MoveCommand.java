@@ -2,11 +2,10 @@ package shared.communication.moveCommands;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sun.org.apache.xpath.internal.operations.String;
+import server.manager.GameManager;
 import shared.communication.CatanCommand;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
-import shared.definitions.exceptions.CatanException;
 
 /**
  * All move commands objects contain at least the following properties. These
@@ -78,5 +77,9 @@ public abstract class MoveCommand extends CatanCommand
         this.playerIndex = playerIndex;
     }
 
+    protected void persistMe(int gameID)
+    {
+        GameManager.getInstance().saveCommand(gameID, this);
+    }
 
 }

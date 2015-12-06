@@ -1,7 +1,5 @@
 package shared.communication;
 
-import server.manager.GameManager;
-import server.manager.UserManager;
 import shared.definitions.exceptions.CatanException;
 
 /**
@@ -27,10 +25,4 @@ public abstract class CatanCommand
      * @see shared.model.ClientModel
      */
     public abstract String execute(int gameID) throws CatanException;
-
-    protected void persistMe(int gameID)
-    {
-        GameManager.getInstance().saveCommand(gameID, this);
-    }
-
 }

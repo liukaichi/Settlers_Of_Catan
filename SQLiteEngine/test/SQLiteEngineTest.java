@@ -1,7 +1,8 @@
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 import server.ServerModel;
-import shared.communication.CatanCommand;
 import shared.communication.moveCommands.MonopolyCommand;
+import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 
@@ -32,7 +33,7 @@ public class SQLiteEngineTest
 
     @Test public void testSaveGame() throws Exception
     {
-        CatanCommand command  = new MonopolyCommand(PlayerIndex.PLAYER_0, ResourceType.WHEAT);
+        MoveCommand command = new MonopolyCommand(PlayerIndex.PLAYER_0, ResourceType.WHEAT);
         engine.startTransaction();
         engine.saveGame(2, command, game);
         assertEquals(true,true);

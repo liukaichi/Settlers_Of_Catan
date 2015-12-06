@@ -23,12 +23,19 @@ public class GameAccess implements IGameAccess, IAccess
     @Override public void updateModel(int gameID, ServerModel game) throws Exception
     {
         PreparedStatement stmt = null;
-        String query = "UPDATE Game SET Model = (" + game.toString() + ") WHERE GameID = (?)";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, gameID);
-        if (stmt.executeUpdate() != 1)
+        try
         {
-            throw new ServerException("Could not update ServerModel for gameID " + gameID);
+            String query = "UPDATE Game SET Model = ? WHERE GameID = ?";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setBlob(1, (Blob) game);
+            stmt.setInt(2, gameID);
+            if (stmt.executeUpdate() != 1)
+            {
+                throw new ServerException("Could not update ServerModel for gameID " + gameID);
+            }
+        } finally
+        {
+            SQLiteEngine.safeClose(stmt);
         }
     }
 
@@ -36,42 +43,55 @@ public class GameAccess implements IGameAccess, IAccess
     {
         PreparedStatement stmt = null;
         ResultSet keyRS = null;
-        String query = "INSERT into Game (Model, CurrentCommandNo, Name) VALUES " + "(?,?,?)";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setBlob(1, (Blob) game);
-        stmt.setInt(2, 0);
-        stmt.setString(3, gameName);
-        if (stmt.executeUpdate() == 1)
+        try
         {
-            Statement keyStmt = engine.getConnection().createStatement();
-            keyRS = keyStmt.executeQuery("select last_insert_rowid()");
-            keyRS.next();
-            int id = keyRS.getInt(1);
-        } else
+            String query = "INSERT INTO Game (Model, Name) VALUES (?,?)";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setBlob(1, (Blob) game);
+            stmt.setString(2, gameName);
+            if (stmt.executeUpdate() == 1)
+            {
+                Statement keyStmt = engine.getConnection().createStatement();
+                keyRS = keyStmt.executeQuery("SELECT last_insert_rowid()");
+                keyRS.next();
+                int id = keyRS.getInt(1);
+            } else
+            {
+                throw new ServerException("Query wasn't executed properly to add a game");
+            }
+        } finally
         {
-            throw new ServerException("Query wasn't executed properly to add a game");
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(keyRS);
         }
     }
 
     @Override public ServerModel getGame(int gameID) throws Exception
     {
         ServerModel result = null;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String query = "SELECT Model FROM Game WHERE GameID = (?)";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, gameID);
-
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try
         {
-            return null;
-        }
-        while (rs.next())
-        {
-            String json = rs.getString(1);
+            String query = "SELECT Model FROM Game WHERE GameID = ?";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setInt(1, gameID);
 
-            result = new ServerModel(json);
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst())
+            {
+                return null;
+            }
+            while (rs.next())
+            {
+                String json = rs.getString(1);
+
+                result = new ServerModel(json);
+            }
+        } finally
+        {
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
         }
 
         return result;
@@ -82,43 +102,25 @@ public class GameAccess implements IGameAccess, IAccess
         List<ServerModel> result = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String query = "SELECT Model FROM Game";
-        stmt = engine.getConnection().prepareStatement(query);
+        try
+        {
+            String query = "SELECT Model FROM Game";
+            stmt = engine.getConnection().prepareStatement(query);
 
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst())
+            {
+                return null;
+            }
+            while (rs.next())
+            {
+                String json = rs.getString(1);
+                result.add(new ServerModel(json));
+            }
+        } finally
         {
-            return null;
-        }
-        while (rs.next())
-        {
-            String json = rs.getString(1);
-            result.add(new ServerModel(json));
-        }
-
-        return result;
-    }
-
-    /**
-     * @param gameID
-     * @return number of commands
-     */
-    @Override public int getNumberOfCommands(int gameID) throws Exception
-    {
-        int result = 0;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String query = "SELECT CurrentCommandNo FROM Game WHERE GameID = (?)";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, gameID);
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
-        {
-            return result;
-        }
-        while (rs.next())
-        {
-            result = rs.getInt(1);
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
         }
 
         return result;

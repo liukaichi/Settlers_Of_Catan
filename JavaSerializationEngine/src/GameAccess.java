@@ -1,3 +1,4 @@
+import database.Database;
 import database.Game;
 import server.ServerModel;
 import server.plugin.IGameAccess;
@@ -10,16 +11,14 @@ import java.util.stream.Collectors;
  */
 public class GameAccess implements IGameAccess, IAccess
 {
-    List<Game> games;
-
     @Override public void initialize()
     {
-        games = new ArrayList<>();
+
     }
 
     @Override public void updateModel(int gameID, ServerModel model) throws Exception
     {
-        Game game = games.get(gameID);
+        Game game = Database.getInstance().getGame(gameID);
         if(game != null)
         {
             game.setModel(model);
@@ -30,12 +29,13 @@ public class GameAccess implements IGameAccess, IAccess
 
     @Override public void addGame(ServerModel game, String gameName) throws Exception
     {
+        List<Game> games = Database.getInstance().getGames();
         games.add(new Game(game, gameName, games.size()));
     }
 
     @Override public ServerModel getGame(int gameID) throws Exception
     {
-        Game game = games.get(gameID);
+        Game game = Database.getInstance().getGame(gameID);
         if(game == null)
             throw new Exception("No game has the ID: "+ gameID);
         return game.getModel();
@@ -43,13 +43,15 @@ public class GameAccess implements IGameAccess, IAccess
 
     @Override public List<ServerModel> getAllGames() throws Exception
     {
+        List<Game> games = Database.getInstance().getGames();
         return games.stream().map(Game::getModel).collect(Collectors.toList());
     }
 
     @Override public int getNumberOfCommands(int gameID) throws Exception
     {
-        if(games.get(gameID) != null)
-            return games.size();
+        Game game = Database.getInstance().getGame(gameID);
+        if(game.getCommands() != null)
+            return game.getCommands().size();
         throw new Exception("No games in database");
     }
 }

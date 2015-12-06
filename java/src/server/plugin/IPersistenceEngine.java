@@ -2,8 +2,8 @@ package server.plugin;
 
 import server.ServerModel;
 import server.manager.User;
-import shared.communication.CatanCommand;
 import shared.communication.Credentials;
+import shared.communication.moveCommands.MoveCommand;
 
 /**
  * Persistence Engine to save Settlers Of Catan game.
@@ -15,11 +15,11 @@ public abstract class IPersistenceEngine
     /** Saves the game after commands have been made
      *
      * @param gameID gameID to save to
-     * @param catanCommand the command to be saved
+     * @param moveCommand the command to be saved
      * @param game the model of the game after the command is executed
      * @return if transaction was successful
      */
-    public abstract boolean saveGame(int gameID, CatanCommand catanCommand, ServerModel game);
+    public abstract boolean saveGame(int gameID, MoveCommand moveCommand, ServerModel game);
 
     /** Loads a game from the database given the gameID
      *
