@@ -1,3 +1,4 @@
+import database.Database;
 import server.ServerModel;
 import server.manager.User;
 import server.plugin.IPersistenceEngine;
