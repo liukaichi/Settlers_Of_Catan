@@ -58,7 +58,7 @@ public class JoinGameRequest extends CatanCommand
         return Integer.toString(id);
     }
 
-    @Override public void persistMe(int playerID)
+    public void persistMe(int playerID)
     {
         GameManager.getInstance().addPlayerToGame(playerID, id);
     }

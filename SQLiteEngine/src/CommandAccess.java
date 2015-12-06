@@ -24,33 +24,45 @@ public class CommandAccess implements ICommandAccess, IAccess
     @Override public void saveCommand(int gameID, MoveCommand command) throws Exception
     {
         PreparedStatement stmt = null;
-        ResultSet keyRS = null;
-        String query = "INSERT INTO Command (Command, GameID) VALUES (?,?)";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setBlob(1, (Blob) command);
-        stmt.setInt(2, gameID);
-        if (stmt.executeUpdate() != 1)
+        try
         {
-            throw new ServerException("Query wasn't executed properly to add a game");
+            String query = "INSERT INTO Command (Command, GameID) VALUES (?,?)";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setBlob(1, (Blob) command);
+            stmt.setInt(2, gameID);
+            if (stmt.executeUpdate() != 1)
+            {
+                throw new ServerException("Query wasn't executed properly to add a game");
+            }
+        } finally
+        {
+            SQLiteEngine.safeClose(stmt);
         }
     }
 
     @Override public int getNumberOfCommandsInGame(int gameID) throws Exception
     {
         int count = -1;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String query = "SELECT Count(\'x\') FROM Command WHERE GameID = ?";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, gameID);
-
-        rs = stmt.executeQuery();
-        while (rs.next())
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try
         {
-            count = rs.getInt(1);
+            String query = "SELECT Count(\'x\') FROM Command WHERE GameID = ?";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setInt(1, gameID);
+
+            rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                count = rs.getInt(1);
+            }
+            if (count == -1)
+                throw new Exception("unable to count number of commands");
+        } finally
+        {
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
         }
-        if (count == -1)
-            throw new Exception("unable to count number of commands");
         return count;
     }
 
@@ -64,22 +76,28 @@ public class CommandAccess implements ICommandAccess, IAccess
         List<MoveCommand> result = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String query = "SELECT Command FROM Command WHERE GameID = ? AND SequenceNo > ?";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, gameID);
-        stmt.setInt(2, sequenceNumber);
-
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
+        try
         {
-            return null;
-        }
-        while (rs.next())
-        {
-            MoveCommand command = (MoveCommand) rs.getBlob(1);
-            result.add(command);
-        }
+            String query = "SELECT Command FROM Command WHERE GameID = ? AND SequenceNo > ?";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setInt(1, gameID);
+            stmt.setInt(2, sequenceNumber);
 
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst())
+            {
+                return null;
+            }
+            while (rs.next())
+            {
+                MoveCommand command = (MoveCommand) rs.getBlob(1);
+                result.add(command);
+            }
+        } finally
+        {
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
+        }
         return result;
     }
 
@@ -87,24 +105,34 @@ public class CommandAccess implements ICommandAccess, IAccess
     {
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String query = "SELECT Command FROM Command WHERE GameID = ? AND SequenceNo = ?";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, gameID);
-        stmt.setInt(2, sequenceNumber);
+        try
+        {
+            String query = "SELECT Command FROM Command WHERE GameID = ? AND SequenceNo = ?";
+            stmt = engine.getConnection().prepareStatement(query);
+            stmt.setInt(1, gameID);
+            stmt.setInt(2, sequenceNumber);
 
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst())
+            {
+                return null;
+            }
+            MoveCommand command = null;
+            while (rs.next())
+            {
+                command = (MoveCommand) rs.getBlob(1);
+            }
+            if (command == null)
+                throw new Exception("Command does not exist");
+            else
+            {
+                return command;
+            }
+        } finally
         {
-            return null;
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
         }
-        MoveCommand command = null;
-        while (rs.next())
-        {
-            command = (MoveCommand) rs.getBlob(1);
-        }
-        if (command == null)
-            throw new Exception("Command does not exist");
-        return command;
     }
 
     @Override public void initialize()

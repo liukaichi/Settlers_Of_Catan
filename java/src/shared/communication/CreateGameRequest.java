@@ -67,4 +67,10 @@ public class CreateGameRequest extends CatanCommand
         return model;
     }
 
+    private void persistMe(int gameID)
+    {
+        //TODO this doesn't work.
+    }
+
+
 }

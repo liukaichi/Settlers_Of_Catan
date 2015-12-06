@@ -102,43 +102,25 @@ public class GameAccess implements IGameAccess, IAccess
         List<ServerModel> result = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        String query = "SELECT Model FROM Game";
-        stmt = engine.getConnection().prepareStatement(query);
+        try
+        {
+            String query = "SELECT Model FROM Game";
+            stmt = engine.getConnection().prepareStatement(query);
 
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst())
+            {
+                return null;
+            }
+            while (rs.next())
+            {
+                String json = rs.getString(1);
+                result.add(new ServerModel(json));
+            }
+        } finally
         {
-            return null;
-        }
-        while (rs.next())
-        {
-            String json = rs.getString(1);
-            result.add(new ServerModel(json));
-        }
-
-        return result;
-    }
-
-    /**
-     * @param gameID
-     * @return number of commands
-     */
-    @Override public int getNumberOfCommands(int gameID) throws Exception
-    {
-        int result = 0;
-        PreparedStatement stmt;
-        ResultSet rs;
-        String query = "SELECT CurrentCommandNo FROM Game WHERE GameID = (?)";
-        stmt = engine.getConnection().prepareStatement(query);
-        stmt.setInt(1, gameID);
-        rs = stmt.executeQuery();
-        if (!rs.isBeforeFirst())
-        {
-            return result;
-        }
-        while (rs.next())
-        {
-            result = rs.getInt(1);
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
         }
 
         return result;
