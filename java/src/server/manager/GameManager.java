@@ -212,7 +212,6 @@ public class GameManager
         games.put(newGameID, game);
         ServerModel model = new ServerModel(game, randomTiles, randomNumbers, randomPorts);
         models.put(newGameID, model);
-        game.setId(persistenceEngine.addGame(model, name));
         return game;
     }
 

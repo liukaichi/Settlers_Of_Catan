@@ -49,9 +49,9 @@ public class JavaSerializationEngine extends IPersistenceEngine
         return false;
     }
 
-    @Override public int addGame(ServerModel model, String name)
+    @Override public boolean addGame(ServerModel model, String name)
     {
-        return -1;
+        return false;
     }
 
     @Override public int getNextGameID()

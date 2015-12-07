@@ -201,22 +201,21 @@ public class SQLiteEngine extends IPersistenceEngine
         return true;
     }
 
-    @Override public int addGame(ServerModel model, String name)
+    @Override public boolean addGame(ServerModel model, String name)
     {
         startTransaction();
-        int result = -1;
         try
         {
 
-            result = gameAccess.addGame(model, name);
+            gameAccess.addGame(model, name);
             endTransaction(true);
         } catch (Exception e)
         {
             endTransaction(false);
             LOGGER.log(Level.SEVERE, "", e);
+            return false;
         }
-
-        return result;
+        return true;
     }
 
     @Override public int getNextGameID()
