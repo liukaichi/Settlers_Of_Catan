@@ -7,6 +7,7 @@ import java.rmi.ServerException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -35,10 +36,15 @@ public class GameAccess implements IGameAccess, IAccess
             {
                 throw new ServerException("Could not update ServerModel for gameID " + gameID);
             }
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to updateModel");
+            throw e;
         } finally
         {
             SQLiteEngine.safeClose(stmt);
         }
+
     }
 
     @Override public int addGame(ServerModel game, String gameName) throws Exception
@@ -56,7 +62,7 @@ public class GameAccess implements IGameAccess, IAccess
             if (stmt.executeUpdate() == 1)
             {
                 Statement keyStmt = engine.getConnection().createStatement();
-                keyRS = keyStmt.executeQuery("SELECT last_insert_rowid()");
+                keyRS = keyStmt.executeQuery("SELECT MAX(GameID) FROM Game");
                 keyRS.next();
                 int id = keyRS.getInt(1);
                 return id;
@@ -65,16 +71,17 @@ public class GameAccess implements IGameAccess, IAccess
             {
                 throw new ServerException("Query wasn't executed properly to add a game");
             }
-        }
-        finally
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to addGame");
+            throw e;
+        } finally
         {
             SQLiteEngine.safeClose(stmt);
             SQLiteEngine.safeClose(keyRS);
         }
 
     }
-
-
 
     @Override public ServerModel getGame(int gameID) throws Exception
     {
@@ -98,6 +105,10 @@ public class GameAccess implements IGameAccess, IAccess
 
                 result = new ServerModel(json);
             }
+        }catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to getGame");
+            throw e;
         } finally
         {
             SQLiteEngine.safeClose(stmt);
@@ -127,7 +138,11 @@ public class GameAccess implements IGameAccess, IAccess
                 String json = rs.getString(1);
                 result.add(new ServerModel(json));
             }
-        } finally
+        } catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to getAllGames");
+            throw e;
+        }finally
         {
             SQLiteEngine.safeClose(stmt);
             SQLiteEngine.safeClose(rs);
@@ -151,9 +166,9 @@ public class GameAccess implements IGameAccess, IAccess
                     + "Name VARCHAR "
                     + ")");
             // @formatter:on
-        } catch (SQLException e)
+        } catch(Exception e)
         {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to initialize Game table", e);
         } finally
         {
             SQLiteEngine.safeClose(stat);
@@ -173,8 +188,11 @@ public class GameAccess implements IGameAccess, IAccess
             int lastID = keyRS.getInt(1);
             nextID = lastID + 1;
             return nextID;
-        }
-        finally
+        } catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to getNextGameID");
+            throw e;
+        }finally
         {
             SQLiteEngine.safeClose(keyRS);
             SQLiteEngine.safeClose(keyStmt);

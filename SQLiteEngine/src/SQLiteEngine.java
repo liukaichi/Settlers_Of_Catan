@@ -5,7 +5,6 @@ import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.exceptions.CatanException;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.ObjectOutputStream;
@@ -202,12 +201,14 @@ public class SQLiteEngine extends IPersistenceEngine
         return true;
     }
 
-    @Override public boolean addGame(ServerModel model, String name)
+    @Override public int addGame(ServerModel model, String name)
     {
         startTransaction();
+        int result = -1;
         try
         {
-            gameAccess.addGame(model, name);
+
+            result = gameAccess.addGame(model, name);
             endTransaction(true);
         } catch (Exception e)
         {
@@ -215,7 +216,7 @@ public class SQLiteEngine extends IPersistenceEngine
             LOGGER.log(Level.SEVERE, "", e);
         }
 
-        return false;
+        return result;
     }
 
     @Override public int getNextGameID()
