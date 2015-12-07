@@ -3,13 +3,13 @@ import database.Game;
 import server.ServerModel;
 import server.plugin.IGameAccess;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Created by dtaylor on 12/5/2015.
  */
-public class GameAccess implements IGameAccess, IAccess
+public class GameAccess implements IGameAccess
 {
     @Override public void initialize()
     {

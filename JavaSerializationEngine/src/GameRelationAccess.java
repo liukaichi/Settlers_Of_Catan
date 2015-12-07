@@ -1,15 +1,12 @@
 import database.Database;
 import server.plugin.IGameRelationAccess;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dtaylor on 12/5/2015.
  */
-public class GameRelationAccess implements IGameRelationAccess, IAccess
+public class GameRelationAccess implements IGameRelationAccess
 {
     @Override public void initialize()
     {

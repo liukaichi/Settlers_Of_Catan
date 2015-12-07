@@ -1,10 +1,11 @@
 import server.ServerModel;
 import server.plugin.IGameAccess;
 
-import javax.sql.rowset.serial.SerialBlob;
-import java.io.*;
 import java.rmi.ServerException;
-import java.sql.*;
+import java.sql.Blob;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
 /**
  * SQL Database Access Object for Games.
  */
-public class GameAccess implements IGameAccess, IAccess
+public class GameAccess implements IGameAccess
 {
     private SQLiteEngine engine;
     private final static Logger LOGGER = Logger.getLogger(GameAccess.class.getName());
@@ -34,11 +35,11 @@ public class GameAccess implements IGameAccess, IAccess
             stmt.setInt(2, gameID);
             if (stmt.executeUpdate() != 1)
             {
-                throw new ServerException("Could not update ServerModel for gameID " + gameID);
+                throw new ServerException(String.format("Could not update ServerModel for gameID(%d)", gameID));
             }
         } catch (Exception e)
         {
-            LOGGER.log(Level.SEVERE, "Failed to updateModel");
+            LOGGER.severe(String.format("Failed to update game(%d)", gameID));
             throw e;
         } finally
         {
@@ -51,7 +52,7 @@ public class GameAccess implements IGameAccess, IAccess
     {
         PreparedStatement stmt = null;
         ResultSet keyRS = null;
-
+        Statement keyStmt = null;
         try
         {
             String query = "INSERT INTO Game (Model, Name) VALUES (?,?)";
@@ -61,24 +62,23 @@ public class GameAccess implements IGameAccess, IAccess
             stmt.setString(2, gameName);
             if (stmt.executeUpdate() == 1)
             {
-                Statement keyStmt = engine.getConnection().createStatement();
+                keyStmt = engine.getConnection().createStatement();
                 keyRS = keyStmt.executeQuery("SELECT MAX(GameID) FROM Game");
                 keyRS.next();
-                int id = keyRS.getInt(1);
-                return id;
-
+                return keyRS.getInt(1);
             } else
             {
                 throw new ServerException("Query wasn't executed properly to add a game");
             }
         } catch (Exception e)
         {
-            LOGGER.log(Level.SEVERE, "Failed to addGame");
+            LOGGER.severe("Failed to add game");
             throw e;
         } finally
         {
             SQLiteEngine.safeClose(stmt);
             SQLiteEngine.safeClose(keyRS);
+            SQLiteEngine.safeClose(keyStmt);
         }
 
     }
@@ -105,9 +105,9 @@ public class GameAccess implements IGameAccess, IAccess
 
                 result = new ServerModel(json);
             }
-        }catch(Exception e)
+        } catch (Exception e)
         {
-            LOGGER.log(Level.SEVERE, "Failed to getGame");
+            LOGGER.severe(String.format("Failed to getGame(%d)", gameID));
             throw e;
         } finally
         {
@@ -138,11 +138,11 @@ public class GameAccess implements IGameAccess, IAccess
                 String json = rs.getString(1);
                 result.add(new ServerModel(json));
             }
-        } catch(Exception e)
+        } catch (Exception e)
         {
-            LOGGER.log(Level.SEVERE, "Failed to getAllGames");
+            LOGGER.severe("Failed to get all games");
             throw e;
-        }finally
+        } finally
         {
             SQLiteEngine.safeClose(stmt);
             SQLiteEngine.safeClose(rs);
@@ -166,7 +166,7 @@ public class GameAccess implements IGameAccess, IAccess
                     + "Name VARCHAR "
                     + ")");
             // @formatter:on
-        } catch(Exception e)
+        } catch (Exception e)
         {
             LOGGER.log(Level.SEVERE, "Failed to initialize Game table", e);
         } finally
@@ -188,11 +188,11 @@ public class GameAccess implements IGameAccess, IAccess
             int lastID = keyRS.getInt(1);
             nextID = lastID + 1;
             return nextID;
-        } catch(Exception e)
+        } catch (Exception e)
         {
-            LOGGER.log(Level.SEVERE, "Failed to getNextGameID");
+            LOGGER.severe("Failed to get next game id");
             throw e;
-        }finally
+        } finally
         {
             SQLiteEngine.safeClose(keyRS);
             SQLiteEngine.safeClose(keyStmt);

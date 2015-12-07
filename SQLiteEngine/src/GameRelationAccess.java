@@ -6,15 +6,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * SQL Database Access Object for the Join table between Users and Games.
  */
-public class GameRelationAccess implements IGameRelationAccess, IAccess
+public class GameRelationAccess implements IGameRelationAccess
 {
     private Logger LOGGER = Logger.getLogger(GameRelationAccess.class.getName());
     private SQLiteEngine engine;
+
     public GameRelationAccess(SQLiteEngine engine)
     {
         this.engine = engine;
@@ -25,21 +27,27 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
         LOGGER.entering(getClass().getName(), "addUserToGame");
         PreparedStatement statement = null;
         ResultSet keyRS = null;
-        try {
-            String query = "INSERT into GameRelation (GameID, UserID) VALUES " +
-                    "(?,?)";
+        Statement keyStmt = null;
+        try
+        {
+            String query = "INSERT INTO GameRelation (GameID, UserID) VALUES (?,?)";
             statement = engine.getConnection().prepareStatement(query);
             statement.setInt(1, gameID);
             statement.setInt(2, userID);
-            if (statement.executeUpdate() == 1) {
-                Statement keyStmt = engine.getConnection().createStatement();
-                keyRS = keyStmt.executeQuery("select last_insert_rowid()");
+            if (statement.executeUpdate() == 1)
+            {
+                keyStmt = engine.getConnection().createStatement();
+                keyRS = keyStmt.executeQuery("SELECT last_insert_rowid()");
             }
-        } catch (SQLException e) {
-
-        } finally {
+        } catch (SQLException e)
+        {
+            LOGGER.severe(String.format("Failed add user(%d) to game(%d)", userID, gameID));
+            throw e;
+        } finally
+        {
             SQLiteEngine.safeClose(statement);
             SQLiteEngine.safeClose(keyRS);
+            SQLiteEngine.safeClose(keyStmt);
         }
     }
 
@@ -49,21 +57,26 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
         PreparedStatement statement = null;
         ResultSet keyRS = null;
         List<Integer> playerIDs = new ArrayList<>();
-        try {
-            String query = "SELECT UserID FROM GameRelation WHERE GameID = (?)";
+        try
+        {
+            String query = "SELECT UserID FROM GameRelation WHERE GameID = ?";
             statement = engine.getConnection().prepareStatement(query);
             statement.setInt(1, gameID);
             keyRS = statement.executeQuery();
-            while (keyRS.next()) {
+            while (keyRS.next())
+            {
                 int playerID = keyRS.getInt(1);
                 playerIDs.add(playerID);
             }
-        } catch (SQLException e) {
-
-        } finally {
+            return playerIDs;
+        } catch (SQLException e)
+        {
+            LOGGER.severe(String.format("Failed to list players in game(%d)", gameID));
+            throw e;
+        } finally
+        {
             SQLiteEngine.safeClose(statement);
             SQLiteEngine.safeClose(keyRS);
-            return playerIDs;
         }
     }
 
@@ -84,7 +97,7 @@ public class GameRelationAccess implements IGameRelationAccess, IAccess
             // @formatter:on
         } catch (SQLException e)
         {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to create GameRelation table", e);
         } finally
         {
             SQLiteEngine.safeClose(stat);

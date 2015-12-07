@@ -78,6 +78,12 @@ public class Credentials implements JsonSerializer<Credentials>
         return password;
     }
 
+    public String getPasswordPlainText()
+    {
+        return password.getPasswordPlainText();
+    }
+
+
     public void setPassword(String password) throws InvalidCredentialsException
     {
         this.password.setPassword(password);

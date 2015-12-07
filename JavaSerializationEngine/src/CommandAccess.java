@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 /**
  * Created by dtaylor on 12/5/2015.
  */
-public class CommandAccess implements ICommandAccess, IAccess
+public class CommandAccess implements ICommandAccess
 {
     @Override public void initialize()
     {

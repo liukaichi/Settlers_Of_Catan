@@ -5,12 +5,13 @@ import java.rmi.ServerException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * SQL Database Access Object for Commands.
  */
-public class CommandAccess implements ICommandAccess, IAccess
+public class CommandAccess implements ICommandAccess
 {
     private final static Logger LOGGER = Logger.getLogger(CommandAccess.class.getName());
 
@@ -34,6 +35,10 @@ public class CommandAccess implements ICommandAccess, IAccess
             {
                 throw new ServerException("Query wasn't executed properly to add a game");
             }
+        } catch (SQLException e)
+        {
+            LOGGER.severe("Failed to save command");
+            throw e;
         } finally
         {
             SQLiteEngine.safeClose(stmt);
@@ -58,6 +63,10 @@ public class CommandAccess implements ICommandAccess, IAccess
             }
             if (count == -1)
                 throw new Exception("unable to count number of commands");
+        } catch (SQLException e)
+        {
+            LOGGER.severe("Failed to get number of commands in game");
+            throw e;
         } finally
         {
             SQLiteEngine.safeClose(stmt);
@@ -93,6 +102,10 @@ public class CommandAccess implements ICommandAccess, IAccess
                 MoveCommand command = (MoveCommand) rs.getBlob(1);
                 result.add(command);
             }
+        } catch (SQLException e)
+        {
+            LOGGER.severe("Failed to get all commands after " + sequenceNumber);
+            throw e;
         } finally
         {
             SQLiteEngine.safeClose(stmt);
@@ -128,6 +141,11 @@ public class CommandAccess implements ICommandAccess, IAccess
             {
                 return command;
             }
+
+        } catch (SQLException e)
+        {
+            LOGGER.severe("Failed to get command");
+            throw e;
         } finally
         {
             SQLiteEngine.safeClose(stmt);
@@ -153,7 +171,7 @@ public class CommandAccess implements ICommandAccess, IAccess
             // @formatter:on
         } catch (SQLException e)
         {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to create Command table", e);
         } finally
         {
             SQLiteEngine.safeClose(stat);

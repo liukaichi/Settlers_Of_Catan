@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by dtaylor on 12/5/2015.
  */
-public class UserAccess implements IUserAccess, IAccess
+public class UserAccess implements IUserAccess
 {
     Map<Integer, List<User>> users;
 
