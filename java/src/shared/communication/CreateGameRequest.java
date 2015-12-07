@@ -65,7 +65,7 @@ public class CreateGameRequest extends CatanCommand
                         String.valueOf(randomPorts), name, gameID));
         String model = AbstractServerFacade.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name).toString();
         LOGGER.fine(model);
-        persistMe();
+        //persistMe();
         return model;
     }
 

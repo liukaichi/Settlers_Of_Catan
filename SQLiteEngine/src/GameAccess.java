@@ -1,6 +1,8 @@
 import server.ServerModel;
 import server.plugin.IGameAccess;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.*;
 import java.rmi.ServerException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,21 +45,13 @@ public class GameAccess implements IGameAccess, IAccess
     {
         PreparedStatement stmt = null;
         ResultSet keyRS = null;
+
         try
-        {/*
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutput out = null;
-            try {
-                out = new ObjectOutputStream(bos);
-                out.writeObject(myObj);
-
-                byte[] yourBytes = bos.toByteArray();*/
-
+        {
             String query = "INSERT INTO Game (Model, Name) VALUES (?,?)";
-            stmt = engine.getConnection().prepareStatement(query);
-            Blob blob = engine.getConnection().createBlob();
-            blob.setBytes(1, game.toString().getBytes());
-            stmt.setBlob(1, blob);
+            stmt = this.engine.getConnection().prepareStatement(query);
+            stmt = engine.addBlobToStatement(stmt, 1, game);
+
             stmt.setString(2, gameName);
             if (stmt.executeUpdate() == 1)
             {
@@ -71,12 +65,16 @@ public class GameAccess implements IGameAccess, IAccess
             {
                 throw new ServerException("Query wasn't executed properly to add a game");
             }
-        } finally
+        }
+        finally
         {
             SQLiteEngine.safeClose(stmt);
             SQLiteEngine.safeClose(keyRS);
         }
+
     }
+
+
 
     @Override public ServerModel getGame(int gameID) throws Exception
     {
@@ -162,16 +160,25 @@ public class GameAccess implements IGameAccess, IAccess
         }
     }
 
-    @Override
-    public int getNextGameID() throws Exception
+    @Override public int getNextGameID() throws Exception
     {
-        int nextID = 0;
-        ResultSet keyRS;
-        Statement keyStmt = engine.getConnection().createStatement();
-        keyRS = keyStmt.executeQuery("SELECT MAX(GameID) FROM Game");
-        keyRS.next();
-        int lastID = keyRS.getInt(1);
-        nextID = lastID + 1;
-        return nextID;
+        ResultSet keyRS = null;
+        Statement keyStmt = null;
+        try
+        {
+            int nextID = 0;
+            keyStmt = engine.getConnection().createStatement();
+            keyRS = keyStmt.executeQuery("SELECT MAX(GameID) FROM Game");
+            keyRS.next();
+            int lastID = keyRS.getInt(1);
+            nextID = lastID + 1;
+            return nextID;
+        }
+        finally
+        {
+            SQLiteEngine.safeClose(keyRS);
+            SQLiteEngine.safeClose(keyStmt);
+
+        }
     }
 }

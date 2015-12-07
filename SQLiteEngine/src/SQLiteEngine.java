@@ -5,7 +5,10 @@ import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.exceptions.CatanException;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.ObjectOutputStream;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -209,7 +212,7 @@ public class SQLiteEngine extends IPersistenceEngine
         } catch (Exception e)
         {
             endTransaction(false);
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "", e);
         }
 
         return false;
@@ -347,6 +350,25 @@ public class SQLiteEngine extends IPersistenceEngine
             {
                 LOGGER.severe("ResultSet not safely closed");
             }
+        }
+    }
+
+    public PreparedStatement addBlobToStatement(PreparedStatement stmt, int index, ServerModel game) throws Exception
+    {
+        try
+        {
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            ObjectOutputStream stream = new ObjectOutputStream(byteStream);
+            stream.writeObject(game);
+            stream.close();
+            byte byteArray[] = byteStream.toByteArray();
+            //ByteArrayInputStream byteInput = new ByteArrayInputStream(byteArray);
+            stmt.setBytes(index, byteArray);
+            return stmt;
+        } catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to Blob the Object.");
+            throw e;
         }
     }
 

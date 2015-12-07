@@ -20,6 +20,7 @@ import shared.model.message.Log;
 import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
  * Representation of the Model that is cached by the server. This has additional "do" methods that the client model
  * does not have.
  */
-public class ServerModel extends ClientModel
+public class ServerModel extends ClientModel implements Serializable
 {
     /**
      * Initializes a default copy of the Server's model.

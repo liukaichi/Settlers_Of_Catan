@@ -53,4 +53,9 @@ public class JavaSerializationEngine extends IPersistenceEngine
     {
         return false;
     }
+
+    @Override public int getNextGameID()
+    {
+        return 0;
+    }
 }
