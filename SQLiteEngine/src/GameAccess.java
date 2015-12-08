@@ -144,7 +144,7 @@ public class GameAccess implements IGameAccess
                 rs = stmt.executeQuery();
             if (!rs.isBeforeFirst())
             {
-                return null;
+                return result;
             }
             while (rs.next())
             {
@@ -203,13 +203,15 @@ public class GameAccess implements IGameAccess
             int nextID = 0;
             keyStmt = engine.getConnection().createStatement();
             keyRS = keyStmt.executeQuery("SELECT IFNULL(seq, -1) FROM sqlite_sequence where name = \"Game\"");
-            keyRS.next();
-            int lastID = keyRS.getInt(1);
-            nextID = lastID + 1;
+            if (keyRS.next())
+            {
+                int lastID = keyRS.getInt(1);
+                nextID = lastID + 1;
+            }
             return nextID;
         } catch (Exception e)
         {
-            throw e;
+                throw e;
         } finally
         {
             SQLiteEngine.safeClose(keyRS);
