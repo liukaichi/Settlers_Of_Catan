@@ -203,13 +203,11 @@ public class GameAccess implements IGameAccess
             return nextID;
         } catch (Exception e)
         {
-
             throw e;
         } finally
         {
             SQLiteEngine.safeClose(keyRS);
             SQLiteEngine.safeClose(keyStmt);
-
         }
     }
 }

@@ -148,5 +148,7 @@ public class UserManager
     public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
+        credentials = persistenceEngine.getAllUsers();
+        credentials.put()
     }
 }

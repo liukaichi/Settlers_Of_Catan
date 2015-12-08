@@ -7,6 +7,7 @@ import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Persistence Engine to save Settlers Of Catan game.
@@ -74,4 +75,5 @@ public abstract class IPersistenceEngine
 
     public abstract List<ServerModel> getAllGames();
 
+    public abstract Map<Integer, Credentials> getAllUsers();
 }

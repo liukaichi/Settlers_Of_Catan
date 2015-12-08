@@ -5,6 +5,7 @@ import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dtaylor on 12/5/2015.
@@ -62,6 +63,11 @@ public class JavaSerializationEngine extends IPersistenceEngine
     }
 
     @Override public List<ServerModel> getAllGames()
+    {
+        return null;
+    }
+
+    @Override public Map<Integer, Credentials> getAllUsers()
     {
         return null;
     }

@@ -8,6 +8,7 @@ import shared.definitions.exceptions.CatanException;
 import java.io.*;
 import java.sql.*;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -240,6 +241,22 @@ public class SQLiteEngine extends IPersistenceEngine
         {
             startTransaction();
             List<ServerModel> result = gameAccess.getAllGames();
+            endTransaction(true);
+            return result;
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "", e);
+            endTransaction(false);
+            return null;
+        }
+    }
+
+    @Override public Map<Integer, Credentials> getAllUsers()
+    {
+        try
+        {
+            startTransaction();
+            Map<Integer, Credentials> result = userAccess.getAllUsers();
             endTransaction(true);
             return result;
         } catch (Exception e)
