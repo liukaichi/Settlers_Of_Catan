@@ -17,8 +17,14 @@ public class CommandAccess implements ICommandAccess
 
     private SQLiteEngine engine;
 
+    private CommandAccess()
+    {
+
+    }
+
     public CommandAccess(SQLiteEngine engine)
     {
+        this();
         this.engine = engine;
     }
 

@@ -13,7 +13,7 @@ import java.util.Map;
 public class Database
 {
     private static Database _instance;
-    List<Game> games;
+    private List<Game> games;
     private Map<Integer, Credentials> credentials;
 
     public static Database getInstance()

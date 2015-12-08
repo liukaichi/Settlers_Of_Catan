@@ -17,8 +17,14 @@ public class UserAccess implements IUserAccess
     private SQLiteEngine engine;
     private final static Logger LOGGER = Logger.getLogger(UserAccess.class.getName());
 
+    private UserAccess()
+    {
+
+    }
+
     public UserAccess(SQLiteEngine engine)
     {
+        this();
         this.engine = engine;
     }
 
