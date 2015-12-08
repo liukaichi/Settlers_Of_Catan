@@ -44,7 +44,7 @@ public class UserAccess implements IUserAccess
     @Override public int registerUser(Credentials credentials) throws Exception
     {
         Map<Integer, Credentials> creds = Database.getInstance().getCredentials();
-        int nextID = creds.size();
+        int nextID = creds.size()+1;
         creds.put(nextID, credentials);
         return nextID;
     }

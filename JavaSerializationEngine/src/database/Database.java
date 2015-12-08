@@ -4,6 +4,7 @@ import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,13 @@ public class Database
 
     public Database()
     {
+        initialize();
+    }
+
+    public void initialize()
+    {
         games = new ArrayList<>();
+        credentials = new HashMap<>();
     }
 
     public void setGames(List<Game> games)
@@ -70,4 +77,5 @@ public class Database
     public void setCredentials(Map<Integer, Credentials> credentials) {
         this.credentials = credentials;
     }
+
 }
