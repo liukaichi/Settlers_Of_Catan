@@ -40,7 +40,7 @@ public class GameRelationAccess implements IGameRelationAccess
             statement = engine.getConnection().prepareStatement(query);
             statement.setInt(1, gameID);
             statement.setInt(2, userID);
-            statement.execute(query);
+            statement.executeUpdate();
         } catch (SQLException e)
         {
             LOGGER.severe(String.format("Failed add user(%d) to game(%d)", userID, gameID));

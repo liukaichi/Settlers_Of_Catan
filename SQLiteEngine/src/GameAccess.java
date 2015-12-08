@@ -39,7 +39,7 @@ public class GameAccess implements IGameAccess
         {
             String query = "UPDATE Game SET Model = ? WHERE GameID = ?";
             stmt = engine.getConnection().prepareStatement(query);
-            stmt.setBlob(1, (Blob) game);
+            stmt = engine.addBlobToStatement(stmt, 1, game);
             stmt.setInt(2, gameID);
             if (stmt.executeUpdate() != 1)
             {

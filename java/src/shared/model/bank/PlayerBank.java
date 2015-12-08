@@ -13,6 +13,7 @@ import shared.model.bank.resource.Resources;
 import shared.model.bank.structure.BankStructure;
 import shared.model.bank.structure.Structures;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * This class extends Bank with properties and methods specific to the player
  */
-public class PlayerBank extends Bank
+public class PlayerBank extends Bank implements Serializable
 {
     private Structures structures;
     private int knights, victoryPoints, monuments;

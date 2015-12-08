@@ -2,10 +2,12 @@ package shared.model.bank.structure;
 
 import shared.definitions.StructureType;
 
+import java.io.Serializable;
+
 /**
  * This class represents a list of BankStructure in the Catan game
  */
-public class Structures
+public class Structures implements Serializable
 {
     private BankStructure road, settlement, city;
 

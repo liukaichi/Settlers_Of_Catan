@@ -5,6 +5,8 @@ import com.google.gson.JsonParser;
 import shared.definitions.CatanColor;
 import shared.definitions.PlayerIndex;
 
+import java.io.Serializable;
+
 /**
  * Used to pass player information into views<br>
  * <br>
@@ -16,7 +18,7 @@ import shared.definitions.PlayerIndex;
  * <li>Color: player's color (cannot be null)</li>
  * </ul>
  */
-public class PlayerInfo
+public class PlayerInfo implements Serializable
 {
 
     private int id;
