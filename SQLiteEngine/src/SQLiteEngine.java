@@ -1,9 +1,10 @@
+import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.User;
-import server.manager.UserManager;
 import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
+import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 
 import java.io.*;
@@ -117,17 +118,29 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override public void addPlayerToGame(int playerID, int gameID)
+    /**
+     *
+     * @param player the playerID
+     * @param gameID the gameID
+     * @return the Server Model of the game after the player is added.
+     */
+    @Override public ServerModel addPlayerToGame(PlayerInfo player, int gameID)
     {
         try
         {
             startTransaction();
-            gameRelationAccess.addUserToGame(playerID, gameID);
+            gameRelationAccess.addUserToGame(player.getId(), gameID);
+            ServerModel model = gameAccess.getGame(gameID);
+            model.addPlayer(player);
+            gameAccess.updateModel(gameID, model);
             endTransaction(true);
+            return model;
+
         } catch (Exception e)
         {
             endTransaction(false);
         }
+        return null;
     }
 
 
@@ -261,6 +274,24 @@ public class SQLiteEngine extends IPersistenceEngine
             Map<Integer, Credentials> result = userAccess.getAllUsers();
             endTransaction(true);
             return result;
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "", e);
+            endTransaction(false);
+            return null;
+        }
+    }
+
+    @Override public ServerModel updateColor(int gameID, CatanColor color, int playerID)
+    {
+        try
+        {
+            startTransaction();
+            ServerModel newModel = gameAccess.getGame(gameID);
+            newModel.setPlayerColor(color, playerID);
+            gameAccess.updateModel(gameID, newModel);
+            endTransaction(true);
+            return newModel;
         } catch (Exception e)
         {
             LOGGER.log(Level.SEVERE, "", e);

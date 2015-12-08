@@ -1,10 +1,13 @@
+import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.User;
 import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
+import shared.definitions.CatanColor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,15 +86,16 @@ public class JavaSerializationEngine extends IPersistenceEngine
         }
     }
 
-    @Override public void addPlayerToGame(int playerID, int gameID)
+    @Override public ServerModel addPlayerToGame(PlayerInfo player, int gameID)
     {
         try
         {
-            gameRelationAccess.addUserToGame(playerID, gameID);
+            gameRelationAccess.addUserToGame(player.getId(), gameID);
         } catch (Exception e)
         {
             LOGGER.log(Level.SEVERE, "Failed to add player to game", e);
         }
+        return null;
     }
 
     @Override public int registerUser(Credentials credentials)
@@ -175,6 +179,16 @@ public class JavaSerializationEngine extends IPersistenceEngine
             LOGGER.log(Level.SEVERE, "Failed to get all games.", e);
             return null;
         }
+    }
+
+    @Override public Map<Integer, Credentials> getAllUsers()
+    {
+        return null;
+    }
+
+    @Override public ServerModel updateColor(int gameID, CatanColor color, int playerID)
+    {
+        return null;
     }
 
 }

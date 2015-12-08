@@ -202,7 +202,7 @@ public class GameAccess implements IGameAccess
         {
             int nextID = 0;
             keyStmt = engine.getConnection().createStatement();
-            keyRS = keyStmt.executeQuery("SELECT seq FROM sqlite_sequence where name = \"Game\"");
+            keyRS = keyStmt.executeQuery("SELECT IFNULL(seq, -1) FROM sqlite_sequence where name = \"Game\"");
             keyRS.next();
             int lastID = keyRS.getInt(1);
             nextID = lastID + 1;

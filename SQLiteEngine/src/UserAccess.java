@@ -37,7 +37,7 @@ public class UserAccess implements IUserAccess
         ResultSet rs = null;
         try
         {
-            String query = "SELECT UserID FROM User WHERE Name = ? AND Password = ?";
+            String query = "SELECT UserID FROM User WHERE Username = ? AND Password = ?";
             stmt = engine.getConnection().prepareStatement(query);
             stmt.setString(1, credentials.getUsername());
             stmt.setString(2, credentials.getPassword().getPasswordPlainText());

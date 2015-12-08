@@ -12,7 +12,7 @@ public class GameRelationAccess implements IGameRelationAccess
     {
     }
 
-    @Override public void addUserToGame(int gameID, int userID) throws Exception
+    @Override public void addUserToGame(int userID, int gameID) throws Exception
     {
         List<Integer> gameUsers = Database.getInstance().getUsers(gameID);
         if (gameUsers != null)

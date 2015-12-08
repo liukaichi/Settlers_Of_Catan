@@ -124,12 +124,20 @@ public class GameManager
             {
                 games.get(gameID).setPlayerColor(color, playerID);
                 models.get(gameID).setPlayerColor(color, playerID);
+                ServerModel updatedModel = persistenceEngine.updateColor(gameID, color, playerID);
+                games.replace(gameID, updatedModel.getGameInfo());
+                models.replace(gameID, updatedModel);
                 return;
             }
             else if (game.getPlayers().size() < 4) {
+
+
+                //add player to game
+                //update local copy
                 User user = UserManager.getInstance().getUser(playerID);
                 PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
                 player.setPlayerIndex(game.getPlayers().size());
+                persistenceEngine.addPlayerToGame(player, gameID);
                 game.addPlayer(player);
                 models.get(gameID).addPlayer(player);
                 return;
@@ -240,8 +248,9 @@ public class GameManager
         persistenceEngine.saveGame(gameID, moveCommand, getGame(gameID));
     }
 
-    public void addPlayerToGame(int playerID, int gameID)
+/*    public void addPlayerToGame(int playerID, int gameID)
     {
-        persistenceEngine.addPlayerToGame(playerID, gameID);
-    }
+        User user = persistenceEngine.getUser(playerID);
+        persistenceEngine.addPlayerToGame(player, gameID);
+    }*/
 }
