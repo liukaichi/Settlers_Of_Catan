@@ -105,6 +105,7 @@ public class JavaSerializationEngine extends IPersistenceEngine
             return userAccess.registerUser(credentials);
         } catch (Exception e)
         {
+
             LOGGER.log(Level.SEVERE, "Failed to register user.", e);
             return -1;
         }
