@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -107,7 +108,7 @@ public class UserAccess implements IUserAccess
         Statement keyStmt = null;
         try
         {
-            String query = "INSERT INTO User (Name, Password) VALUES (?,?)";
+            String query = "INSERT INTO User (Username, Password) VALUES (?,?)";
             stmt = engine.getConnection().prepareStatement(query);
 
             stmt.setString(1, credentials.getUsername());
@@ -159,8 +160,39 @@ public class UserAccess implements IUserAccess
         }
     }
 
-    public Map<Integer, Credentials> getAllUsers()
+    public Map<Integer, Credentials> getAllUsers() throws Exception
     {
-        return null;
+        Map<Integer, Credentials> result = new HashMap<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try
+        {
+            String query = "SELECT * FROM User";
+            stmt = engine.getConnection().prepareStatement(query);
+
+            rs = stmt.executeQuery();
+            if (!rs.isBeforeFirst())
+            {
+                return null;
+            }
+            while (rs.next())
+            {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String password = rs.getString(3);
+                result.put(id,new Credentials(name, password));
+            }
+
+        } catch (Exception e)
+        {
+            LOGGER.severe("Failed to get all games");
+            throw e;
+        } finally
+        {
+            SQLiteEngine.safeClose(stmt);
+            SQLiteEngine.safeClose(rs);
+            return result;
+        }
+
     }
 }

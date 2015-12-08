@@ -227,6 +227,12 @@ public class GameManager
     public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
+        List<ServerModel> serverModelList = persistenceEngine.getAllGames();
+        for (ServerModel serverModel : serverModelList)
+        {
+            games.put(serverModel.getGameInfo().getId(), serverModel.getGameInfo());
+            models.put(serverModel.getGameInfo().getId(), serverModel);
+        }
     }
 
     public void saveCommand(int gameID, MoveCommand moveCommand)

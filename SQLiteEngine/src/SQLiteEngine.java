@@ -1,5 +1,6 @@
 import server.ServerModel;
 import server.manager.User;
+import server.manager.UserManager;
 import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
@@ -36,6 +37,7 @@ public class SQLiteEngine extends IPersistenceEngine
     private SQLiteEngine()
     {
         connection = null;
+
         userAccess = new UserAccess(this);
         gameAccess = new GameAccess(this);
         commandAccess = new CommandAccess(this);
