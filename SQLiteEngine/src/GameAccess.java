@@ -21,8 +21,14 @@ public class GameAccess implements IGameAccess
     private SQLiteEngine engine;
     private final static Logger LOGGER = Logger.getLogger(GameAccess.class.getName());
 
+    private GameAccess()
+    {
+
+    }
+
     public GameAccess(SQLiteEngine engine)
     {
+        this();
         this.engine = engine;
     }
 

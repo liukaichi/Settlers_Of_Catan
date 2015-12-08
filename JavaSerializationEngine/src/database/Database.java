@@ -1,9 +1,11 @@
 package database;
 
+import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dtaylor on 12/5/2015.
@@ -11,7 +13,8 @@ import java.util.List;
 public class Database
 {
     private static Database _instance;
-    List<Game> games;
+    private List<Game> games;
+    private Map<Integer, Credentials> credentials;
 
     public static Database getInstance()
     {
@@ -58,5 +61,13 @@ public class Database
             return game.getUsers();
         }
         return null;
+    }
+
+    public Map<Integer, Credentials> getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Map<Integer, Credentials> credentials) {
+        this.credentials = credentials;
     }
 }
