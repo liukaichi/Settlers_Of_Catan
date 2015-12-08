@@ -8,6 +8,6 @@ public class JavaSerializationFactory implements IPersistenceFactory
 {
     @Override public IPersistenceEngine createPersistenceEngine(int commandsBetweenSaves)
     {
-        return null;
+        return new JavaSerializationEngine(commandsBetweenSaves);
     }
 }

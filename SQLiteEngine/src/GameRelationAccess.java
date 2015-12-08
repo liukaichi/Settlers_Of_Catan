@@ -17,8 +17,14 @@ public class GameRelationAccess implements IGameRelationAccess
     private Logger LOGGER = Logger.getLogger(GameRelationAccess.class.getName());
     private SQLiteEngine engine;
 
+    private GameRelationAccess()
+    {
+
+    }
+
     public GameRelationAccess(SQLiteEngine engine)
     {
+        this();
         this.engine = engine;
     }
 
@@ -34,6 +40,7 @@ public class GameRelationAccess implements IGameRelationAccess
             statement = engine.getConnection().prepareStatement(query);
             statement.setInt(1, gameID);
             statement.setInt(2, userID);
+            statement.execute(query);
         } catch (SQLException e)
         {
             LOGGER.severe(String.format("Failed add user(%d) to game(%d)", userID, gameID));
