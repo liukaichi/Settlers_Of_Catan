@@ -17,10 +17,6 @@ import shared.model.player.TradeOffer;
  */
 public class MockServerFacade extends AbstractServerFacade
 {
-    public MockServerFacade()
-    {
-
-    }
 
     @Override public ClientModel getGameState(int gameID, int version)
     {

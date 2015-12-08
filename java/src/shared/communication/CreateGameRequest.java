@@ -2,7 +2,6 @@ package shared.communication;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.newdawn.slick.Game;
 import server.facade.AbstractServerFacade;
 import server.manager.GameManager;
 import shared.definitions.exceptions.CatanException;
