@@ -7,6 +7,8 @@ import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
+import java.io.Serializable;
+
 /**
  * Structures in our design include settlements, cities and roads. These are
  * represented by the structure object in our Catan game. They are each worth a
@@ -14,7 +16,7 @@ import shared.locations.VertexLocation;
  *
  * @author amandafisher
  */
-public abstract class MapStructure
+public abstract class MapStructure implements Serializable
 {
     private PlayerIndex owner;
     private VertexLocation location;

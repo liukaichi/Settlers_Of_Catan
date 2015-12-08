@@ -4,11 +4,11 @@ import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.exceptions.CatanException;
+import shared.model.message.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.sql.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -203,6 +203,7 @@ public class SQLiteEngine extends IPersistenceEngine
 
     @Override public boolean addGame(ServerModel model, String name)
     {
+        LOGGER.log(Level.FINE, "Adding Game...");
         startTransaction();
         try
         {
@@ -228,8 +229,25 @@ public class SQLiteEngine extends IPersistenceEngine
             return nextID;
         } catch (Exception e)
         {
+            LOGGER.log(Level.SEVERE, "Couldn't get next game ID", e);
             endTransaction(false);
             return -1;
+        }
+    }
+
+    @Override public List<ServerModel> getAllGames()
+    {
+        try
+        {
+            startTransaction();
+            List<ServerModel> result = gameAccess.getAllGames();
+            endTransaction(true);
+            return result;
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "", e);
+            endTransaction(false);
+            return null;
         }
     }
 
@@ -360,9 +378,17 @@ public class SQLiteEngine extends IPersistenceEngine
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             ObjectOutputStream stream = new ObjectOutputStream(byteStream);
             stream.writeObject(game);
+            stream.writeObject(null);
             stream.close();
             byte byteArray[] = byteStream.toByteArray();
-            //ByteArrayInputStream byteInput = new ByteArrayInputStream(byteArray);
+
+
+/* To test written Object output.
+            ByteArrayInputStream input = new ByteArrayInputStream(byteArray);
+            ObjectInputStream in = new ObjectInputStream(input);
+            ServerModel model = (ServerModel) in.readObject();
+*/
+
             stmt.setBytes(index, byteArray);
             return stmt;
         } catch(Exception e)

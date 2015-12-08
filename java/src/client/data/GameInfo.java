@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.CatanColor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * <li>Players: List of players who have joined the game (can be empty)</li>
  * </ul>
  */
-public class GameInfo
+public class GameInfo implements Serializable
 {
     private int id;
     private String title;

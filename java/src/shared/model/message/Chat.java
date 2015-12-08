@@ -1,5 +1,7 @@
 package shared.model.message;
 
+import java.io.Serializable;
+
 /**
  * Represents the list of messages in the chat.
  *

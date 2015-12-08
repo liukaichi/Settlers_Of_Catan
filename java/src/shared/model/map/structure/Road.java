@@ -7,10 +7,12 @@ import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 
+import java.io.Serializable;
+
 /**
  * Object representing a road or a hex edge in the Catan game
  */
-public class Road
+public class Road implements Serializable
 {
     private PlayerIndex owner;
     private EdgeLocation location;

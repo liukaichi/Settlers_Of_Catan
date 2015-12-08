@@ -2,12 +2,13 @@ package shared.locations;
 
 import com.google.gson.*;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
 /**
  * Represents the location of an edge on a hex map
  */
-public class EdgeLocation implements JsonSerializer<EdgeLocation>
+public class EdgeLocation implements JsonSerializer<EdgeLocation>, Serializable
 {
 
     private HexLocation hexLoc;

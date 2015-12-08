@@ -1,5 +1,6 @@
 package shared.model.bank;
 
+import javafx.beans.Observable;
 import shared.definitions.*;
 import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
@@ -8,6 +9,7 @@ import shared.model.bank.card.DevCards;
 import shared.model.bank.resource.Resources;
 import shared.model.player.Player;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -17,7 +19,7 @@ import java.util.Stack;
  *
  * @author dtaylor
  */
-public class Bank
+public class Bank implements Serializable
 {
     private static Resources resources;
     private static Stack<DevCardType> devCardDeck;

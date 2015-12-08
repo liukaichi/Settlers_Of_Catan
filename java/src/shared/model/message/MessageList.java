@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @see Chat
  * @see Log
  */
-public abstract class MessageList
+public abstract class MessageList implements Serializable
 {
     private List<MessageLine> lines;
 

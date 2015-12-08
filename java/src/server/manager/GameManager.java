@@ -98,7 +98,13 @@ public class GameManager
      */
     public List<GameInfo> listGames()
     {
-        return new ArrayList<>(games.values());
+        List<GameInfo> result = new ArrayList<>();
+        List<ServerModel> list = persistenceEngine.getAllGames();
+        for (ServerModel model : list)
+        {
+            result.add(model.getGameInfo());
+        }
+        return result;
     }
 
     /**
@@ -212,6 +218,8 @@ public class GameManager
         games.put(newGameID, game);
         ServerModel model = new ServerModel(game, randomTiles, randomNumbers, randomPorts);
         models.put(newGameID, model);
+        persistenceEngine.addGame(model, name);
+
         return game;
     }
 

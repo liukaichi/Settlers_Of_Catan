@@ -17,6 +17,7 @@ import shared.model.message.Log;
 import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Observable;
  *
  * @author amandafisher
  */
-public class ClientModel extends Observable
+public class ClientModel extends Observable implements Serializable
 {
     protected TradeOffer tradeOffer;
     protected GameInfo gameInfo;

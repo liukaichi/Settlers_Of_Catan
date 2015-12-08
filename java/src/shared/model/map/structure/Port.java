@@ -10,12 +10,14 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.model.map.Hex;
 
+import java.io.Serializable;
+
 /**
  * Object representing a port in the Catan game
  *
  * @author amandafisher
  */
-public class Port
+public class Port implements Serializable
 {
     /**
      * This indicates which resource the port trade is available with

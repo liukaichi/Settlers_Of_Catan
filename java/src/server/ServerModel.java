@@ -29,8 +29,10 @@ import java.util.List;
  * Representation of the Model that is cached by the server. This has additional "do" methods that the client model
  * does not have.
  */
+
 public class ServerModel extends ClientModel implements Serializable
 {
+    static final long serialVersionUID = 42L;
     /**
      * Initializes a default copy of the Server's model.
      */
@@ -465,5 +467,11 @@ public class ServerModel extends ClientModel implements Serializable
     public void addPlayer(PlayerInfo playerInfo)
     {
         this.players.add(new Player(playerInfo));
+        this.gameInfo.addPlayer(playerInfo);
+    }
+
+    public GameInfo getGameInfo()
+    {
+        return gameInfo;
     }
 }

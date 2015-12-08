@@ -9,6 +9,7 @@ import shared.definitions.exceptions.CatanException;
 import shared.definitions.exceptions.InsufficientResourcesException;
 import shared.model.bank.PlayerBank;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * This class represents a list of Development Cards
  */
-public class DevCards
+public class DevCards implements Serializable
 {
 
     private DevCard monopoly, roadBuilding, yearOfPlenty, soldier, monument;

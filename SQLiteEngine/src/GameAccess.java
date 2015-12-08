@@ -1,6 +1,8 @@
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import server.ServerModel;
 import server.plugin.IGameAccess;
 
+import java.io.ObjectInputStream;
 import java.rmi.ServerException;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
@@ -121,22 +123,28 @@ public class GameAccess implements IGameAccess
     @Override public List<ServerModel> getAllGames() throws Exception
     {
         List<ServerModel> result = new ArrayList<>();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try
-        {
-            String query = "SELECT Model FROM Game";
-            stmt = engine.getConnection().prepareStatement(query);
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+            try
+            {
+                String query = "SELECT Model FROM Game";
+                stmt = engine.getConnection().prepareStatement(query);
 
-            rs = stmt.executeQuery();
+                rs = stmt.executeQuery();
             if (!rs.isBeforeFirst())
             {
                 return null;
             }
             while (rs.next())
             {
-                String json = rs.getString(1);
-                result.add(new ServerModel(json));
+                byte modelBytes[] = rs.getBytes(1);
+                ObjectInputStream stream = new ObjectInputStream(new ByteInputStream(modelBytes, modelBytes.length));
+                Object o;
+                while ((o = stream.readObject()) != null)
+                {
+                    ServerModel model = (ServerModel) o;
+                    result.add(model);
+                }
             }
         } catch (Exception e)
         {
@@ -183,14 +191,14 @@ public class GameAccess implements IGameAccess
         {
             int nextID = 0;
             keyStmt = engine.getConnection().createStatement();
-            keyRS = keyStmt.executeQuery("SELECT MAX(GameID) FROM Game");
+            keyRS = keyStmt.executeQuery("SELECT seq FROM sqlite_sequence where name = \"Game\"");
             keyRS.next();
             int lastID = keyRS.getInt(1);
             nextID = lastID + 1;
             return nextID;
         } catch (Exception e)
         {
-            LOGGER.severe("Failed to get next game id");
+
             throw e;
         } finally
         {

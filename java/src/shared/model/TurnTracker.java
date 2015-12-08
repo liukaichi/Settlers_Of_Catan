@@ -8,6 +8,7 @@ import shared.definitions.StructureType;
 import shared.definitions.TurnStatus;
 import shared.model.player.Player;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author amandafisher
  */
-public class TurnTracker
+public class TurnTracker implements Serializable
 {
     private PlayerIndex currentTurn, longestRoad, largestArmy;
     private TurnStatus status;

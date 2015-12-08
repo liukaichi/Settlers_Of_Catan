@@ -5,6 +5,8 @@ import server.manager.User;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 
+import java.util.List;
+
 /**
  * Persistence Engine to save Settlers Of Catan game.
  */
@@ -68,4 +70,6 @@ public abstract class IPersistenceEngine
     public abstract boolean addGame(ServerModel model, String name);
 
     public abstract int getNextGameID();
+
+    public abstract List<ServerModel> getAllGames();
 }

@@ -6,6 +6,7 @@ import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Map;
 /**
  * Represents a Hex tile on the map.
  */
-public class Hex implements Comparable<Hex>
+public class Hex implements Comparable<Hex>, Serializable
 {
     private Map<VertexDirection, VertexLocation> vertices;
     private Map<EdgeDirection, EdgeLocation> edges;

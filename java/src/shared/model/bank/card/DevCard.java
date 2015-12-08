@@ -3,10 +3,12 @@ package shared.model.bank.card;
 import shared.definitions.DevCardType;
 import shared.model.bank.PlayerBank;
 
+import java.io.Serializable;
+
 /**
  * This class represents a Development Card
  */
-public abstract class DevCard
+public abstract class DevCard implements Serializable
 {
     private DevCardType type;
     private int amountPlayable, amountUnplayable, amountPlayed;
