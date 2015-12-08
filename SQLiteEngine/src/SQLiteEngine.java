@@ -370,13 +370,13 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    public PreparedStatement addBlobToStatement(PreparedStatement stmt, int index, ServerModel game) throws Exception
+    public PreparedStatement addBlobToStatement(PreparedStatement stmt, int index, Object obj) throws Exception
     {
         try
         {
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             ObjectOutputStream stream = new ObjectOutputStream(byteStream);
-            stream.writeObject(game);
+            stream.writeObject(obj);
             stream.writeObject(null);
             stream.close();
             byte byteArray[] = byteStream.toByteArray();
