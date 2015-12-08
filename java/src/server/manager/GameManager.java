@@ -116,7 +116,8 @@ public class GameManager
      */
     public void joinGame(int playerID, int gameID, CatanColor color) throws GameQueryException
     {
-        GameInfo game = games.get(gameID);
+        GameInfo game = persistenceEngine.loadGame(gameID).getGameInfo();
+        //GameInfo game = games.get(gameID);
         if(game != null)
         {
             if(game.playerAlreadyJoined(playerID))

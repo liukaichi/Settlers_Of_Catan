@@ -1,5 +1,6 @@
 package server.plugin;
 
+import client.data.GameInfo;
 import server.ServerModel;
 import server.manager.User;
 import shared.communication.Credentials;
@@ -72,4 +73,5 @@ public abstract class IPersistenceEngine
     public abstract int getNextGameID();
 
     public abstract List<ServerModel> getAllGames();
+
 }

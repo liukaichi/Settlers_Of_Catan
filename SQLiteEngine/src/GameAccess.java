@@ -103,9 +103,14 @@ public class GameAccess implements IGameAccess
             }
             while (rs.next())
             {
-                String json = rs.getString(1);
+                byte modelBytes[] = rs.getBytes(1);
+                ObjectInputStream stream = new ObjectInputStream(new ByteInputStream(modelBytes, modelBytes.length));
+                Object o;
+                while ((o = stream.readObject()) != null)
+                {
 
-                result = new ServerModel(json);
+                    result = (ServerModel) o;
+                }
             }
         } catch (Exception e)
         {

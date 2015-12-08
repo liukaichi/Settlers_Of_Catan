@@ -4,7 +4,6 @@ import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.exceptions.CatanException;
-import shared.model.message.Log;
 
 import java.io.*;
 import java.sql.*;

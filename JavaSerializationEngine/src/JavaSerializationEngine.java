@@ -4,6 +4,8 @@ import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 
+import java.util.List;
+
 /**
  * Created by dtaylor on 12/5/2015.
  */
@@ -58,4 +60,10 @@ public class JavaSerializationEngine extends IPersistenceEngine
     {
         return 0;
     }
+
+    @Override public List<ServerModel> getAllGames()
+    {
+        return null;
+    }
+
 }
