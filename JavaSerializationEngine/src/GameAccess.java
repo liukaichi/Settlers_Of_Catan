@@ -50,7 +50,7 @@ public class GameAccess implements IGameAccess
 
     @Override public int getNextGameID() throws Exception
     {
-        return 0; //TODO Implement this.
+        return Database.getInstance().getGames().size();
     }
 
 }
