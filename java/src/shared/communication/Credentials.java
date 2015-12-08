@@ -3,6 +3,7 @@ package shared.communication;
 import com.google.gson.*;
 import shared.definitions.exceptions.InvalidCredentialsException;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
 /**
@@ -11,7 +12,7 @@ import java.lang.reflect.Type;
  *
  * @author amandafisher
  */
-public class Credentials implements JsonSerializer<Credentials>
+public class Credentials implements JsonSerializer<Credentials>, Serializable
 {
 
     private Username username;

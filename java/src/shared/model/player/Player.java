@@ -17,13 +17,14 @@ import shared.model.bank.resource.Resources;
 import shared.model.map.CatanMap;
 import shared.model.map.structure.Port;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Represents a player playing the game. There can be up to 4 players in a
  * single game.
  */
-public class Player
+public class Player implements Serializable
 {
     /**
      * @see Bank

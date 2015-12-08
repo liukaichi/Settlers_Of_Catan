@@ -3,6 +3,7 @@ package shared.model.bank.resource;
 import com.google.gson.*;
 import shared.definitions.ResourceType;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author amandafisher
  */
-public class Resources implements JsonSerializer<Resources>
+public class Resources implements JsonSerializer<Resources>, Serializable
 {
     private Resource brick, wood, sheep, wheat, ore;
 

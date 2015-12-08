@@ -73,4 +73,24 @@ public class User
     {
         return credentials.getUsername();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (credentials == null)
+        {
+            if (other.credentials != null)
+                return false;
+        } else if (!credentials.equals(other.credentials))
+            return false;
+        if (playerID != other.playerID)
+            return false;
+        return true;
+    }
 }

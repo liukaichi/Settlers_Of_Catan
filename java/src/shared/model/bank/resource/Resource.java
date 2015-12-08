@@ -2,12 +2,14 @@ package shared.model.bank.resource;
 
 import shared.definitions.ResourceType;
 
+import java.io.Serializable;
+
 /**
  * Object representing a resource in the Catan game
  *
  * @author amandafisher
  */
-public class Resource
+public class Resource implements Serializable
 {
     private ResourceType type;
     private int amount;

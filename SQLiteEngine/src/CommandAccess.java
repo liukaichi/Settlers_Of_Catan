@@ -1,6 +1,9 @@
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import server.ServerModel;
 import server.plugin.ICommandAccess;
 import shared.communication.moveCommands.MoveCommand;
 
+import java.io.ObjectInputStream;
 import java.rmi.ServerException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,10 +36,12 @@ public class CommandAccess implements ICommandAccess
         PreparedStatement stmt = null;
         try
         {
-            String query = "INSERT INTO Command (Command, GameID) VALUES (?,?)";
+            String query = "INSERT INTO Command (SequenceNo, Command, GameID) " +
+                    "VALUES ((SELECT IFNULL(MAX(SequenceNo), 0) + 1 FROM Command WHERE GameID = ?),?,?)";
             stmt = engine.getConnection().prepareStatement(query);
-            stmt.setBlob(1, (Blob) command);
-            stmt.setInt(2, gameID);
+            stmt.setInt(1, gameID);
+            stmt = engine.addBlobToStatement(stmt, 2, command);
+            stmt.setInt(3, gameID);
             if (stmt.executeUpdate() != 1)
             {
                 throw new ServerException("Query wasn't executed properly to add a game");
@@ -105,8 +110,16 @@ public class CommandAccess implements ICommandAccess
             }
             while (rs.next())
             {
-                MoveCommand command = (MoveCommand) rs.getBlob(1);
-                result.add(command);
+                MoveCommand command;
+
+                byte modelBytes[] = rs.getBytes(1);
+                ObjectInputStream stream = new ObjectInputStream(new ByteInputStream(modelBytes, modelBytes.length));
+                Object o;
+                while ((o = stream.readObject()) != null)
+                {
+                    command = (MoveCommand) o;
+                    result.add(command);
+                }
             }
         } catch (SQLException e)
         {
@@ -139,7 +152,15 @@ public class CommandAccess implements ICommandAccess
             MoveCommand command = null;
             while (rs.next())
             {
-                command = (MoveCommand) rs.getBlob(1);
+//                command = (MoveCommand) rs.getBlob(1);
+                byte modelBytes[] = rs.getBytes(1);
+                ObjectInputStream stream = new ObjectInputStream(new ByteInputStream(modelBytes, modelBytes.length));
+                Object o;
+                while ((o = stream.readObject()) != null)
+                {
+
+                    command = (MoveCommand) o;
+                }
             }
             if (command == null)
                 throw new Exception("Command does not exist");
@@ -169,7 +190,7 @@ public class CommandAccess implements ICommandAccess
             stat = engine.getConnection().createStatement();
             stat.executeUpdate("DROP TABLE IF EXISTS Command;");
             stat.executeUpdate("CREATE TABLE Command (" +
-                    "SequenceNo INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "SequenceNo INTEGER NOT NULL, " +
                     "Command BLOB NOT NULL, " +
                     "GameID INTEGER NOT NULL, "
                     + "FOREIGN KEY(GameID) REFERENCES Game(GameID)" +

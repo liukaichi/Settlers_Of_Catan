@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by dtaylor on 12/5/2015.
+ * A Persistince engine that users Java Serialization
  */
 public class JavaSerializationEngine extends IPersistenceEngine
 {

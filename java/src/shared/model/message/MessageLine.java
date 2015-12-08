@@ -4,10 +4,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import shared.definitions.PlayerIndex;
 
+import java.io.Serializable;
+
 /**
  * Represents a single message line in the chat.
  */
-public class MessageLine
+public class MessageLine implements Serializable
 {
     /**
      * The text body of the message.

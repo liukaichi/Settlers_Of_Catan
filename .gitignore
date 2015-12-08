@@ -1,11 +1,6 @@
 /bin/
-java/build/
-doc/
 .idea/
 *.xml
-.idea/workspace.xml
-
-java/dist/
-tester/
+*.sqlite
 tester.zip
 docs/

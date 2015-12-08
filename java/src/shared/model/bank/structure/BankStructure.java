@@ -3,10 +3,12 @@ package shared.model.bank.structure;
 import shared.definitions.StructureType;
 import shared.definitions.exceptions.CatanException;
 
+import java.io.Serializable;
+
 /**
  * This class represents a MapStructure in the Catan game
  */
-public class BankStructure
+public class BankStructure implements Serializable
 {
     private final int amountMax;
     private StructureType type;
