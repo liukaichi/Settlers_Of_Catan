@@ -7,6 +7,8 @@ import shared.communication.CatanCommand;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 
+import java.io.Serializable;
+
 /**
  * All move commands objects contain at least the following properties. These
  * properties are described once here and should be assumed for each move type.
@@ -15,7 +17,7 @@ import shared.definitions.PlayerIndex;
  * @see MoveType
  * @see PlayerIndex
  */
-public abstract class MoveCommand extends CatanCommand
+public abstract class MoveCommand extends CatanCommand implements Serializable
 {
     /**
      * The type of the moveCommand

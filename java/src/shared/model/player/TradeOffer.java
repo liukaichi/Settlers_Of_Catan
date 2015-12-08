@@ -1,11 +1,11 @@
 package shared.model.player;
 
-import client.data.PlayerInfo;
 import com.google.gson.*;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
 import shared.model.bank.resource.Resources;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
@@ -14,7 +14,7 @@ import java.util.HashMap;
  *
  * @author amandafisher
  */
-public class TradeOffer implements JsonSerializer<TradeOffer>
+public class TradeOffer implements JsonSerializer<TradeOffer>, Serializable
 {
     /**
      * player index of the sender and receiver of player trade

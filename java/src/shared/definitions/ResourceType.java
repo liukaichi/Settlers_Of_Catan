@@ -1,11 +1,13 @@
 package shared.definitions;
 
+import java.io.Serializable;
+
 /**
  * Defines the types of resources.
  *
  * @author Cache Staheli
  */
-public enum ResourceType
+public enum ResourceType implements Serializable
 {
     WOOD, BRICK, SHEEP, WHEAT, ORE;
 

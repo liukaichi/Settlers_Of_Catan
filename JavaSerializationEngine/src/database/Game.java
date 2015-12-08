@@ -3,19 +3,21 @@ package database;
 import server.ServerModel;
 import shared.communication.moveCommands.MoveCommand;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by dtaylor on 12/5/2015.
  */
-public class Game
+public class Game implements Serializable
 {
-    ServerModel model;
-    String name;
-    int gameID;
-    List<MoveCommand> commands;
-    List<Integer> users;
+    private ServerModel model;
+    private String name;
+    private int gameID;
+    private List<MoveCommand> commands;
+    private List<Integer> users;
+
     public Game(ServerModel model, String name, int gameID)
     {
         this.model = model;
