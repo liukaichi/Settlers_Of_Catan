@@ -45,12 +45,12 @@ public class UserManager
 
     private User getUserFromCredentials(Credentials credentials)
     {
-        User user = new User(credentials, -1);
+        User user = null;
         for (Map.Entry<Integer, Credentials> entry : this.credentials.entrySet())
         {
             if (Objects.equals(credentials, entry.getValue()))
             {
-                user.assignUserID(entry.getKey());
+                user = new User(credentials, entry.getKey());
                 break;
             }
         }
