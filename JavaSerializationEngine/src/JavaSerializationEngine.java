@@ -194,7 +194,7 @@ public class JavaSerializationEngine extends IPersistenceEngine
         } catch (Exception e)
         {
             LOGGER.log(Level.SEVERE, "Failed to get all games.", e);
-            return null;
+            return new ArrayList<>();
         }
     }
 

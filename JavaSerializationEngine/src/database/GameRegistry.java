@@ -19,8 +19,9 @@ import java.util.logging.Logger;
  */
 public class GameRegistry implements Serializable
 {
-    static final long serialVersionUID = 42L;
+
     private static final Logger LOGGER = Logger.getLogger(GameRegistry.class.getName());
+    private static final long serialVersionUID = -6002923688045998664L;
     private static GameRegistry _instance;
     public static GameRegistry getInstance()
     {
