@@ -32,8 +32,6 @@ public class GameRelationAccess implements IGameRelationAccess
     {
         LOGGER.entering(getClass().getName(), "addUserToGame");
         PreparedStatement statement = null;
-        ResultSet keyRS = null;
-        Statement keyStmt = null;
         try
         {
             String query = "INSERT INTO GameRelation (GameID, UserID) VALUES (?,?)";
@@ -48,8 +46,6 @@ public class GameRelationAccess implements IGameRelationAccess
         } finally
         {
             SQLiteEngine.safeClose(statement);
-            SQLiteEngine.safeClose(keyRS);
-            SQLiteEngine.safeClose(keyStmt);
         }
     }
 

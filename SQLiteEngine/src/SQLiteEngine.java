@@ -61,11 +61,14 @@ public class SQLiteEngine extends IPersistenceEngine
     /**
      * A method called once to load the driver for the database.
      */
-    public static void initialize() throws CatanException {
+    public static void initialize() throws CatanException
+    {
         LOGGER.info("Initializing Database Connection");
-        try {
+        try
+        {
             Class.forName(DRIVER);
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e)
+        {
             LOGGER.severe("Could not load database driver");
             throw new CatanException("Could not load database driver", e);
         }
@@ -76,11 +79,15 @@ public class SQLiteEngine extends IPersistenceEngine
      *
      * @param connection the connection to close.
      */
-    public static void safeClose(Connection connection) {
-        if (connection != null) {
-            try {
+    public static void safeClose(Connection connection)
+    {
+        if (connection != null)
+        {
+            try
+            {
                 connection.close();
-            } catch (SQLException e) {
+            } catch (SQLException e)
+            {
                 LOGGER.severe("Connection not safely closed");
             }
         }
@@ -91,11 +98,15 @@ public class SQLiteEngine extends IPersistenceEngine
      *
      * @param statement the statement to close.
      */
-    public static void safeClose(Statement statement) {
-        if (statement != null) {
-            try {
+    public static void safeClose(Statement statement)
+    {
+        if (statement != null)
+        {
+            try
+            {
                 statement.close();
-            } catch (SQLException e) {
+            } catch (SQLException e)
+            {
                 LOGGER.severe("Statement not safely closed");
             }
         }
@@ -106,11 +117,15 @@ public class SQLiteEngine extends IPersistenceEngine
      *
      * @param statement the PreparedStatement to close
      */
-    public static void safeClose(PreparedStatement statement) {
-        if (statement != null) {
-            try {
+    public static void safeClose(PreparedStatement statement)
+    {
+        if (statement != null)
+        {
+            try
+            {
                 statement.close();
-            } catch (SQLException e) {
+            } catch (SQLException e)
+            {
                 LOGGER.severe("PreparedStatement not safely closed");
             }
         }
@@ -121,11 +136,15 @@ public class SQLiteEngine extends IPersistenceEngine
      *
      * @param resultSet the ResultSet to close.
      */
-    public static void safeClose(ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
+    public static void safeClose(ResultSet resultSet)
+    {
+        if (resultSet != null)
+        {
+            try
+            {
                 resultSet.close();
-            } catch (SQLException e) {
+            } catch (SQLException e)
+            {
                 LOGGER.severe("ResultSet not safely closed");
             }
         }
@@ -192,7 +211,6 @@ public class SQLiteEngine extends IPersistenceEngine
     }
 
     /**
-     *
      * @param player the playerID
      * @param gameID the gameID
      * @return the Server Model of the game after the player is added.
@@ -216,8 +234,7 @@ public class SQLiteEngine extends IPersistenceEngine
         return null;
     }
 
-    @Override
-    public User getUser(int id)
+    @Override public User getUser(int id)
     {
         try
         {
@@ -232,8 +249,7 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override
-    public User getUser(Credentials credentials)
+    @Override public User getUser(Credentials credentials)
     {
         try
         {
@@ -248,8 +264,7 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override
-    public boolean startTransaction()
+    @Override public boolean startTransaction()
     {
         LOGGER.log(Level.INFO, "Starting Transaction");
         assert connection == null;
@@ -265,16 +280,17 @@ public class SQLiteEngine extends IPersistenceEngine
         return true;
     }
 
-    @Override
-    public boolean endTransaction(boolean commit)
+    @Override public boolean endTransaction(boolean commit)
     {
         LOGGER.entering(getClass().getName(), "endTransaction");
         try
         {
-            if (commit) {
+            if (commit)
+            {
                 connection.commit();
                 LOGGER.log(Level.INFO, "Ending Transaction: Commit");
-            } else {
+            } else
+            {
                 connection.rollback();
                 LOGGER.log(Level.INFO, "Ending Transaction: Roll Back");
             }
@@ -282,15 +298,15 @@ public class SQLiteEngine extends IPersistenceEngine
         {
             LOGGER.log(Level.SEVERE, "Could not end transaction", e);
             return false;
-        } finally {
+        } finally
+        {
             safeClose(connection);
             connection = null;
         }
         return true;
     }
 
-    @Override
-    public boolean addGame(ServerModel model, String name)
+    @Override public boolean addGame(ServerModel model, String name)
     {
         LOGGER.log(Level.FINE, "Adding Game...");
         startTransaction();
@@ -308,8 +324,7 @@ public class SQLiteEngine extends IPersistenceEngine
         return true;
     }
 
-    @Override
-    public int getNextGameID()
+    @Override public int getNextGameID()
     {
         try
         {
@@ -325,8 +340,7 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override
-    public List<ServerModel> getAllGames()
+    @Override public List<ServerModel> getAllGames()
     {
         try
         {
@@ -342,8 +356,7 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override
-    public Map<Integer, Credentials> getAllUsers()
+    @Override public Map<Integer, Credentials> getAllUsers()
     {
         try
         {
@@ -359,37 +372,38 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override
-    public ServerModel updateColor(int gameID, CatanColor color, int playerID)
+    @Override public ServerModel updateColor(int gameID, CatanColor color, int playerID)
     {
-        try {
+        try
+        {
             startTransaction();
             ServerModel newModel = gameAccess.getGame(gameID);
             newModel.setPlayerColor(color, playerID);
             gameAccess.updateModel(gameID, newModel);
             endTransaction(true);
             return newModel;
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             LOGGER.log(Level.SEVERE, "", e);
             endTransaction(false);
             return null;
         }
     }
 
-    @Override
-    public List<MoveCommand> getCommandBatch(int gameID, int sequenceNo) {
+    @Override public List<MoveCommand> getCommandBatch(int gameID, int sequenceNo)
+    {
         List<MoveCommand> commands = new ArrayList<>();
         try
         {
             startTransaction();
             commands = commandAccess.getAllCommandsAfter(gameID, sequenceNo);
             endTransaction(true);
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             LOGGER.log(Level.SEVERE, "", e);
             endTransaction(false);
-        } finally {
-            return commands;
         }
+        return commands;
     }
 
     /**
@@ -440,7 +454,7 @@ public class SQLiteEngine extends IPersistenceEngine
 
             stmt.setBytes(index, byteArray);
             return stmt;
-        } catch(Exception e)
+        } catch (Exception e)
         {
             LOGGER.log(Level.SEVERE, "Failed to Blob the Object.");
             throw e;

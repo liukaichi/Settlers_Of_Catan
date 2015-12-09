@@ -60,16 +60,14 @@ public class JavaSerializationEngine extends IPersistenceEngine
             {
                 LOGGER.log(Level.SEVERE, "Failed to update game", e);
             }
-        } else
+        }
+        try
         {
-            try
-            {
-                commandAccess.saveCommand(gameID, moveCommand);
-                return true;
-            } catch (Exception e)
-            {
-                LOGGER.log(Level.SEVERE, "Failed to save command", e);
-            }
+            commandAccess.saveCommand(gameID, moveCommand);
+            return true;
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to save command", e);
         }
         return false;
     }
