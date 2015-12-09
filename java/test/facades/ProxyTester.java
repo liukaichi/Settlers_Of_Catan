@@ -70,9 +70,10 @@ public class ProxyTester
     {
         expectedModel = new ClientModel();
         testingModel = new ClientModel();
-        proxy = new ServerProxy();
+        proxy = new ServerProxy();/*
         server = new Server();
-        server.start();
+        server.start();*/
+        Server.main(new String[]{"8081", "sqlite"});
         try {
             Thread.sleep(2000);
         } catch(InterruptedException ex) {

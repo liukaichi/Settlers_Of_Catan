@@ -198,9 +198,9 @@ public class GameAccess implements IGameAccess
         Statement keyStmt = null;
         try
         {
-            int nextID = 0;
+            int nextID = 1;
             keyStmt = engine.getConnection().createStatement();
-            keyRS = keyStmt.executeQuery("SELECT IFNULL(seq, -1) FROM sqlite_sequence where name = \"Game\"");
+            keyRS = keyStmt.executeQuery("SELECT IFNULL(seq, 0) FROM sqlite_sequence where name = \"Game\"");
             if (keyRS.next())
             {
                 int lastID = keyRS.getInt(1);
