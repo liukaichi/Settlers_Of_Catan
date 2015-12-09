@@ -16,6 +16,7 @@
     <property name="java.src.dir" value="${java.dir}/src"/>
 	<property name="java.test.dir" value="${java.dir}/test"/>
     <property name="java.lib.dir" value="${java.dir}/lib"/>
+	<property name="plugin.dir" value="plugins"/>
     <!-- JavaScript source folder -->
     <property name="javascript.dir" value="gameplay/js"/>
     
@@ -190,9 +191,9 @@
 		</jar>
 	</target>
 
-	<target name="delete-databases" depends="package" description="deletes the data from a database">
-		<delete dir="${java.dist}/plugins/JavaSerializationEngine" failonerror="false"/>
-		<delete dir="${java.dist}/plugins/SQLiteEngine" failonerror="false"/>
+	<target name="delete-databases" depends="compile" description="deletes the data from a database">
+		<delete dir="${plugin.dir}/JavaSerializationEngine" failonerror="false"/>
+		<delete dir="${plugin.dir}/SQLiteEngine" failonerror="false"/>
 	</target>
     
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
