@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class Log extends MessageList
 {
+    private static final long serialVersionUID = 7761692651932121116L;
+
     public Log()
     {
         super();

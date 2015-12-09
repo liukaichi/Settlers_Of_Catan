@@ -9,6 +9,8 @@ package shared.definitions.exceptions;
 public class InsufficientResourcesException extends CatanException
 {
 
+    private static final long serialVersionUID = -3727116331200872216L;
+
     /**
      * @param string the message to throw.
      */

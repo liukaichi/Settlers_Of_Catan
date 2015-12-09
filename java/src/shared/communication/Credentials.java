@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 public class Credentials implements JsonSerializer<Credentials>, Serializable
 {
 
+    private static final long serialVersionUID = -2114743979957414450L;
     private Username username;
     private Password password;
 

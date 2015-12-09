@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class BuildCityCommand extends MoveCommand implements JsonSerializer<BuildCityCommand>
 {
 
+    private static final long serialVersionUID = 1196972435140717156L;
     /**
      * Location of the city.
      */

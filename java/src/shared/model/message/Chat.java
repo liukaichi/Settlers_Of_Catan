@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class Chat extends MessageList
 {
 
+    private static final long serialVersionUID = 8868107196153454667L;
 
     public Chat()
     {

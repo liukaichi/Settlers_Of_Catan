@@ -16,6 +16,7 @@ import java.util.HashMap;
  */
 public class TradeOffer implements JsonSerializer<TradeOffer>, Serializable
 {
+    private static final long serialVersionUID = -1179353031924309373L;
     /**
      * player index of the sender and receiver of player trade
      */

@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class Resources implements JsonSerializer<Resources>, Serializable
 {
+    private static final long serialVersionUID = -1638205659533246709L;
     private Resource brick, wood, sheep, wheat, ore;
 
     private static final Logger LOGGER = Logger.getLogger(Resource.class.getName());

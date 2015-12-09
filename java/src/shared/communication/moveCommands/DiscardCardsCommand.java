@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  */
 public class DiscardCardsCommand extends MoveCommand implements JsonSerializer<DiscardCardsCommand>
 {
+    private static final long serialVersionUID = 1661649728664350203L;
     /**
      * List of discarded cards.
      */

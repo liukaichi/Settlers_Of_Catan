@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  */
 public class MonopolyCommand extends MoveCommand implements JsonSerializer<MonopolyCommand>
 {
+    private static final long serialVersionUID = -1939660666267624568L;
     /**
      * The resource the Monopoly Card applies to.
      */

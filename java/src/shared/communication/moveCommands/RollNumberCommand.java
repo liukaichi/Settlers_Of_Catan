@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class RollNumberCommand extends MoveCommand implements JsonSerializer<RollNumberCommand>
 {
+    private static final long serialVersionUID = 7409030532535008042L;
     /**
      * The number rolled.
      */

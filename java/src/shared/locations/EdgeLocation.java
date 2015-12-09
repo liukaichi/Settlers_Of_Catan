@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 public class EdgeLocation implements JsonSerializer<EdgeLocation>, Serializable
 {
 
+    private static final long serialVersionUID = 8223962700300409011L;
     private HexLocation hexLoc;
     private EdgeDirection dir;
 

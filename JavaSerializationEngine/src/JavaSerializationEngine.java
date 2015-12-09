@@ -97,7 +97,10 @@ public class JavaSerializationEngine extends IPersistenceEngine
     {
         try
         {
-            gameRelationAccess.addUserToGame(player.getId(), gameID);
+            //gameRelationAccess.addUserToGame(player.getId(), gameID);
+            Game game = new Game(gameAccess.getGame(gameID));
+            game.getModel().addPlayer(player);
+            game.serialize();
         } catch (Exception e)
         {
             LOGGER.log(Level.SEVERE, "Failed to add player to game", e);

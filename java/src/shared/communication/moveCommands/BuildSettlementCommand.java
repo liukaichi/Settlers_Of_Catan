@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class BuildSettlementCommand extends MoveCommand implements JsonSerializer<BuildSettlementCommand>
 {
 
+    private static final long serialVersionUID = -7154332687930081459L;
     /**
      * Location of the Settlement.
      */

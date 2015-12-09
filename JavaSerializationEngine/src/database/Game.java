@@ -1,5 +1,6 @@
 package database;
 
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 import server.ServerModel;
 
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class Game implements Serializable
 {
+    static final long serialVersionUID = 42L;
     private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
     private ServerModel model;
     private String title;
@@ -22,9 +24,17 @@ public class Game implements Serializable
 
     public Game(ServerModel model, String title, int gameID)
     {
+        this(model);
         this.model = model;
         this.title = title;
         this.gameID = gameID;
+    }
+
+    public Game(ServerModel game)
+    {
+        GameInfo gameInfo = game.getGameInfo();
+        this.gameID = gameInfo.getId();
+        this.title = gameInfo.getTitle();
     }
 
     public int getGameID()

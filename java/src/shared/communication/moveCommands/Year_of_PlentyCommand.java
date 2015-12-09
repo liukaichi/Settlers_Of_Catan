@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  */
 public class Year_of_PlentyCommand extends MoveCommand implements JsonSerializer<Year_of_PlentyCommand>
 {
+    private static final long serialVersionUID = 174803860706791984L;
     /**
      * The resource(s) you collect.
      */

@@ -11,6 +11,8 @@ import shared.locations.VertexLocation;
 public class Settlement extends MapStructure
 {
 
+    private static final long serialVersionUID = 401171496984235434L;
+
     /**
      * Creates a new settlement.
      * @param owner the owner of the settlement.

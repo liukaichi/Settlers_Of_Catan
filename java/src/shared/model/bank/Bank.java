@@ -21,6 +21,7 @@ import java.util.Stack;
  */
 public class Bank implements Serializable
 {
+    private static final long serialVersionUID = 6893648318869210728L;
     private static Resources resources;
     private static Stack<DevCardType> devCardDeck;
     private List<Player> players;

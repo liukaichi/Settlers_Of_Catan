@@ -26,6 +26,7 @@ import java.util.List;
  */
 public class Player implements Serializable
 {
+    private static final long serialVersionUID = 6446144986210449718L;
     /**
      * @see Bank
      */

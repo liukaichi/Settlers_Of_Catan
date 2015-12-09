@@ -17,6 +17,7 @@ import java.util.List;
  */
 public abstract class MessageList implements Serializable
 {
+    private static final long serialVersionUID = 5566400657428621149L;
     private List<MessageLine> lines;
 
     public MessageList()

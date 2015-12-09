@@ -8,6 +8,8 @@ package shared.definitions.exceptions;
 public class DiscardException extends CatanException
 {
 
+    private static final long serialVersionUID = 3274594918017942511L;
+
     /**
      * @param string the message to throw.
      */

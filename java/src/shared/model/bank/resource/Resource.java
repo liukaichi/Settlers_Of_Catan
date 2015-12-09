@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 public class Resource implements Serializable
 {
+    private static final long serialVersionUID = 5730119732201650376L;
     private ResourceType type;
     private int amount;
 

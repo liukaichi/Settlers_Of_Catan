@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  */
 public class MaritimeTradeCommand extends MoveCommand implements JsonSerializer<MaritimeTradeCommand>
 {
+    private static final long serialVersionUID = -9010157899674313852L;
     /**
      * The ratio at which the maritime offer is being extended.
      */

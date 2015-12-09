@@ -8,6 +8,8 @@ package shared.definitions.exceptions;
 public class InvalidCredentialsException extends SignInException
 {
 
+    private static final long serialVersionUID = 6754638489139466638L;
+
     /**
      * Creates a new exception with a message.
      *

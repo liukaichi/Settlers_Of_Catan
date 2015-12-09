@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public class Hex implements Comparable<Hex>, Serializable
 {
+    private static final long serialVersionUID = -6549624721379327338L;
     private Map<VertexDirection, VertexLocation> vertices;
     private Map<EdgeDirection, EdgeLocation> edges;
     /**

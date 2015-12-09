@@ -19,6 +19,7 @@ import java.io.Serializable;
  */
 public class Port implements Serializable
 {
+    private static final long serialVersionUID = -619734400686565921L;
     /**
      * This indicates which resource the port trade is available with
      */

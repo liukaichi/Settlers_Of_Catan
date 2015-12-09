@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 public class MessageLine implements Serializable
 {
+    private static final long serialVersionUID = -5273254851544133069L;
     /**
      * The text body of the message.
      */

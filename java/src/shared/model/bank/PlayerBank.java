@@ -23,6 +23,7 @@ import java.util.List;
  */
 public class PlayerBank extends Bank implements Serializable
 {
+    private static final long serialVersionUID = 1937086232803994733L;
     private Structures structures;
     private int knights, victoryPoints, monuments;
     private Resources playerResources;

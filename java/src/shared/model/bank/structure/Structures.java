@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class Structures implements Serializable
 {
+    private static final long serialVersionUID = 361582146400470875L;
     private BankStructure road, settlement, city;
 
     public Structures()

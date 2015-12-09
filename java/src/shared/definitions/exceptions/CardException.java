@@ -8,6 +8,8 @@ package shared.definitions.exceptions;
 public class CardException extends CatanException
 {
 
+    private static final long serialVersionUID = -5169694020436609708L;
+
     /**
      * @param string the message to accompany the exception.
      */

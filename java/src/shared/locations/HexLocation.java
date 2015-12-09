@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class HexLocation implements Comparable<HexLocation>, Serializable
 {
 
+    private static final long serialVersionUID = -654751048435350322L;
     private int x;
     private int y;
 

@@ -8,6 +8,8 @@ package shared.definitions.exceptions;
 public class CatanException extends Exception
 {
 
+    private static final long serialVersionUID = 2001295725549176680L;
+
     /**
      * @param string
      */

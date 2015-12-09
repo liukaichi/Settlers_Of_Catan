@@ -11,6 +11,8 @@ import shared.locations.VertexLocation;
 public class City extends MapStructure
 {
 
+    private static final long serialVersionUID = 3075205856434979505L;
+
     /**
      * Creates a new City for the player associated with the given location.
      *

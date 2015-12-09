@@ -18,6 +18,7 @@ import java.io.Serializable;
  */
 public abstract class MapStructure implements Serializable
 {
+    private static final long serialVersionUID = 7190061240268105873L;
     private PlayerIndex owner;
     private VertexLocation location;
     private int victoryPointValue;

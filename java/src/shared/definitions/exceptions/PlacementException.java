@@ -9,6 +9,8 @@ package shared.definitions.exceptions;
 public class PlacementException extends CatanException
 {
 
+    private static final long serialVersionUID = -7708829423472119646L;
+
     /**
      * @param string the message to throw.
      */
