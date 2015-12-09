@@ -101,8 +101,6 @@ public class JavaSerializationEngine extends IPersistenceEngine
             //gameRelationAccess.addUserToGame(player.getId(), gameID);
             Game game = new Game(gameAccess.getGame(gameID));
             game.getModel().addPlayer(player);
-            GameInfo info = game.getModel().getGameInfo();
-            info.addPlayer(player);
             game.serialize();
         } catch (Exception e)
         {
@@ -210,7 +208,11 @@ public class JavaSerializationEngine extends IPersistenceEngine
         //already updated
         try
         {
-            return gameAccess.getGame(gameID);
+            ServerModel model = gameAccess.getGame(gameID);
+            model.getGameInfo().setPlayerColor(color,playerID);
+            Game game = new Game(model);
+            game.serialize();
+            return game.getModel();
         }
         catch(Exception e)
         {
