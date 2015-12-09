@@ -1,2 +1,2 @@
-sqlite plugins\SQLiteEngine.jar SQLiteFactory
-java plugins\JavaSerializationEngine.jar JavaSerializationFactory
+sqlite SQLiteEngine.jar SQLiteFactory
+java JavaSerializationEngine.jar JavaSerializationFactory
