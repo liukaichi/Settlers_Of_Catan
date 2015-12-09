@@ -19,6 +19,8 @@ import java.lang.reflect.Type;
 public abstract class SimpleSerializableCommand extends MoveCommand implements JsonSerializer<SimpleSerializableCommand>
 {
 
+    private static final long serialVersionUID = 5919426977623219793L;
+
     /**
      * @param type        the type of move.
      * @param playerIndex the index of the player sending the command.

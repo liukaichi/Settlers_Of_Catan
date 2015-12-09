@@ -134,6 +134,8 @@ public class PluginManager
 
     private class FactoryTypeException extends Exception
     {
+        private static final long serialVersionUID = 8433573830897107523L;
+
         FactoryTypeException(String message)
         {
             super(message);

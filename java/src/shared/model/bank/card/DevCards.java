@@ -20,6 +20,7 @@ import java.util.List;
 public class DevCards implements Serializable
 {
 
+    private static final long serialVersionUID = -3980645116635388446L;
     private DevCard monopoly, roadBuilding, yearOfPlenty, soldier, monument;
 
     public DevCards()
@@ -82,6 +83,8 @@ public class DevCards implements Serializable
     {
         monopoly = new DevCard(DevCardType.MONOPOLY)
         {
+            private static final long serialVersionUID = -7776231042072106220L;
+
             @Override public void playAction(PlayerBank context, Object data)
             {
                 //name 1 resource
@@ -91,6 +94,8 @@ public class DevCards implements Serializable
 
         roadBuilding = new DevCard(DevCardType.ROAD_BUILD)
         {
+            private static final long serialVersionUID = -5430856387781252399L;
+
             @Override public void playAction(PlayerBank context, Object data)
             {
                 try
@@ -110,6 +115,8 @@ public class DevCards implements Serializable
 
         yearOfPlenty = new DevCard(DevCardType.YEAR_OF_PLENTY)
         {
+            private static final long serialVersionUID = 1727925863791607745L;
+
             @Override public void playAction(PlayerBank context, Object data)
             {
                 //take 2 resources from supply
@@ -124,6 +131,8 @@ public class DevCards implements Serializable
 
         soldier = new DevCard(DevCardType.SOLDIER)
         {
+            private static final long serialVersionUID = 7503957538481665980L;
+
             @Override public void playAction(PlayerBank context, Object data)
             {
                 //move robber
@@ -133,6 +142,8 @@ public class DevCards implements Serializable
 
         monument = new DevCard(DevCardType.MONUMENT)
         {
+            private static final long serialVersionUID = 8376801985366926291L;
+
             @Override public void playAction(PlayerBank context, Object data)
             {
                 context.addMonuments(1);

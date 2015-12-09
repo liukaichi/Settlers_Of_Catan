@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class MonumentCommand extends SimpleSerializableCommand
 {
     private static final Logger LOGGER = Logger.getLogger(MonumentCommand.class.getName());
+    private static final long serialVersionUID = 7290538303044176447L;
 
     /**
      * Player of playerIndex receives a Victory Point

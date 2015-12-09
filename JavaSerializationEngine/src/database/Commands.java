@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  */
 public class Commands
 {
+    static final long serialVersionUID = 42L;
     private static final Logger LOGGER = Logger.getLogger(Commands.class.getName());
     private int gameID;
     private List<MoveCommand> commands;

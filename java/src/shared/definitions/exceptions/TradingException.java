@@ -8,6 +8,8 @@ package shared.definitions.exceptions;
 public class TradingException extends CatanException
 {
 
+    private static final long serialVersionUID = 816871976938935244L;
+
     /**
      * @param string the message to throw.
      */

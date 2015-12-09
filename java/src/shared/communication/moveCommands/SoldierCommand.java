@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 public class SoldierCommand extends RobPlayerCommand
 {
     private static final Logger LOGGER = Logger.getLogger(SoldierCommand.class.getName());
+    private static final long serialVersionUID = -794275463663006069L;
 
     /**
      * Instantiates a SoldierCommand with the given player, victim, and location of the new robber.

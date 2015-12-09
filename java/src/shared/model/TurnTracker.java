@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class TurnTracker implements Serializable
 {
+    private static final long serialVersionUID = -1529591291368999175L;
     private PlayerIndex currentTurn, longestRoad, largestArmy;
     private TurnStatus status;
     private int LAST_PLAYER = 3;

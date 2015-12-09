@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 public class Road implements Serializable
 {
+    private static final long serialVersionUID = -2756237326563963370L;
     private PlayerIndex owner;
     private EdgeLocation location;
 

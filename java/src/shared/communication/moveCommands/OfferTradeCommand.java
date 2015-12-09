@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  */
 public class OfferTradeCommand extends MoveCommand implements JsonSerializer<OfferTradeCommand>
 {
+    private static final long serialVersionUID = 8231967200724159794L;
     /**
      * What you get (+) and what you give (-), as well as with whom.
      */

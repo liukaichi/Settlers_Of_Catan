@@ -5,6 +5,8 @@ package shared.definitions.exceptions;
  */
 public class ExistingRegistrationException extends SignInException
 {
+    private static final long serialVersionUID = 627977341872169085L;
+
     public ExistingRegistrationException(String string)
     {
         super(string);

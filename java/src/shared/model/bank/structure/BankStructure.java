@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 public class BankStructure implements Serializable
 {
+    private static final long serialVersionUID = -8007572359773399105L;
     private final int amountMax;
     private StructureType type;
     private int amountBuilt;

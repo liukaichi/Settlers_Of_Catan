@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 public abstract class DevCard implements Serializable
 {
+    private static final long serialVersionUID = 1455079386690794070L;
     private DevCardType type;
     private int amountPlayable, amountUnplayable, amountPlayed;
 

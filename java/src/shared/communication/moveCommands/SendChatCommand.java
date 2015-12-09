@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class SendChatCommand extends MoveCommand implements JsonSerializer<SendChatCommand>
 {
+    private static final long serialVersionUID = 6402701122854599161L;
     /**
      * The content of the message.
      */

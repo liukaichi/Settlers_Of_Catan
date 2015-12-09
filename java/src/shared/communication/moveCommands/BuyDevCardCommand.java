@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class BuyDevCardCommand extends SimpleSerializableCommand
 {
     private static final Logger LOGGER = Logger.getLogger(BuyDevCardCommand.class.getName());
+    private static final long serialVersionUID = -8945394942590712575L;
 
     /**
      * Player of playerIndex receives a Development Card and loses a sheep, ore and wheat each.

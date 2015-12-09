@@ -21,6 +21,7 @@ import java.io.Serializable;
 public class PlayerInfo implements Serializable
 {
 
+    private static final long serialVersionUID = -6664101032500471675L;
     private int id;
     // private int playerIndex; change to PlayerIndex
     private PlayerIndex playerIndex;

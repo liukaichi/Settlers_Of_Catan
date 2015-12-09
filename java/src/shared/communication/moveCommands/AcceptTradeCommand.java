@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class AcceptTradeCommand extends MoveCommand implements JsonSerializer<AcceptTradeCommand>
 {
+    private static final long serialVersionUID = -9129495201174965603L;
     /**
      * Whether you accept the trade or not.
      */

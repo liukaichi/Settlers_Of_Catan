@@ -16,6 +16,7 @@ import shared.model.player.Player;
 public class RobPlayerInfo extends PlayerInfo
 {
 
+    private static final long serialVersionUID = -8910962931281336657L;
     private int numCards;
 
     public RobPlayerInfo()

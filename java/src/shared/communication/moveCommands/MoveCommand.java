@@ -19,6 +19,7 @@ import java.io.Serializable;
  */
 public abstract class MoveCommand extends CatanCommand implements Serializable
 {
+    private static final long serialVersionUID = 318789614473392884L;
     /**
      * The type of the moveCommand
      */

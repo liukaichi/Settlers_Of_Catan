@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  */
 public class CatanMap implements Serializable
 {
+    private static final long serialVersionUID = -5436502447154889792L;
     // populated on map initialization
     private List<Port> ports = new ArrayList<>();
     private Map<HexLocation, Hex> hexes = new TreeMap<>();

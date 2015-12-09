@@ -5,6 +5,8 @@ package shared.definitions.exceptions;
  */
 public class SignInException extends CatanException
 {
+    private static final long serialVersionUID = 6225767916178253134L;
+
     public SignInException(String s)
     {
         super(s);

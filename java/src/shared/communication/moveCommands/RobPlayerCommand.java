@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class RobPlayerCommand extends MoveCommand implements JsonSerializer<RobPlayerCommand>
 {
 
+    private static final long serialVersionUID = -3244778350719162499L;
     /**
      * The information about the player being robbed.
      */

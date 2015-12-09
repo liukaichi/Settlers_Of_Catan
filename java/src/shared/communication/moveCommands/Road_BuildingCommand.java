@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class Road_BuildingCommand extends MoveCommand implements JsonSerializer<Road_BuildingCommand>
 {
 
+    private static final long serialVersionUID = 1189791461721677129L;
     /**
      * The location of the road(s) to be built.
      */

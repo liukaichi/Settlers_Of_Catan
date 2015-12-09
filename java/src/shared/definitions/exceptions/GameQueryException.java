@@ -9,6 +9,8 @@ package shared.definitions.exceptions;
 public class GameQueryException extends CatanException
 {
 
+    private static final long serialVersionUID = 1135927085600568451L;
+
     /**
      * @param string the message to throw.
      */

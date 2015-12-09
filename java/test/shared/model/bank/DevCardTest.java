@@ -14,6 +14,8 @@ public class DevCardTest extends TestCase
     {
         return new DevCard(DevCardType.MONUMENT)
         {
+            private static final long serialVersionUID = -3248994836375510567L;
+
             @Override public void playAction(PlayerBank context, Object data)
             {
                 //vp ++
@@ -25,6 +27,8 @@ public class DevCardTest extends TestCase
     {
         DevCard test = new DevCard(DevCardType.ROAD_BUILD)
         {
+            private static final long serialVersionUID = 1091263191673731188L;
+
             @Override public void playAction(PlayerBank context, Object data)
             {
                 //road +2

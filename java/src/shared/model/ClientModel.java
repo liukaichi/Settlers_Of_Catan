@@ -30,6 +30,7 @@ import java.util.Observable;
  */
 public class ClientModel extends Observable implements Serializable
 {
+    private static final long serialVersionUID = 7794302683271182171L;
     protected TradeOffer tradeOffer;
     protected GameInfo gameInfo;
     protected List<Player> players;

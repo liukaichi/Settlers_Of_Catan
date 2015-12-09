@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
  */
 public class VertexLocation implements JsonSerializer<VertexLocation>, Serializable
 {
+    private static final long serialVersionUID = 6338379806253276977L;
     private HexLocation hexLoc;
     private VertexDirection dir;
 

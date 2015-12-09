@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class FinishTurnCommand extends SimpleSerializableCommand
 {
     private static final Logger LOGGER = Logger.getLogger(FinishTurnCommand.class.getName());
+    private static final long serialVersionUID = -2957735873047029876L;
 
     /**
      * Instantiates a FinishTurnCommand from the given PlayerIndex.
