@@ -12,9 +12,7 @@ public class BaseTest {
         engine = new SQLiteEngine(10);
         try {
             SQLiteEngine.initialize();
-            engine.startTransaction();
             engine.initializeDatabase();
-            engine.endTransaction(true);
         } catch (CatanException e) {
             e.printStackTrace();
         }
