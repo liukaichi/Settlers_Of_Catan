@@ -56,7 +56,8 @@ public class GameAccess implements IGameAccess
 
     @Override public int getNextGameID() throws Exception
     {
-        return 0;
+        GameRegistry gameRegistry = GameRegistry.getInstance();
+        return gameRegistry.getNextGameID();
     }
 
 }

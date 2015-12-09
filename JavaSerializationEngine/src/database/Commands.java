@@ -83,5 +83,25 @@ public class Commands
         }
         return commands;
     }
+
+    public void add(MoveCommand command)
+    {
+        commands.add(command);
+    }
+
+    public int getNumberOfCommandsInGame()
+    {
+        return commands.size();
+    }
+
+    public List<MoveCommand> toList()
+    {
+        return commands;
+    }
+
+    public MoveCommand get(int sequenceNumber)
+    {
+        return commands.get(sequenceNumber);
+    }
 }
 

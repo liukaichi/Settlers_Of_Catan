@@ -1,3 +1,5 @@
+import database.Game;
+import database.GameRegistry;
 import server.plugin.IGameRelationAccess;
 
 import java.util.List;
@@ -9,34 +11,17 @@ public class GameRelationAccess implements IGameRelationAccess
 {
     @Override public void initialize()
     {
+        //not needed in java serialization
     }
 
     @Override public void addUserToGame(int userID, int gameID) throws Exception
     {
-        /*
-        List<Integer> gameUsers = Database.getInstance().getUsers(gameID);
-        if (gameUsers != null)
-        {
-            gameUsers.add(userID);
-        } else
-        {
-            throw new Exception("No such gameID or Users");
-        }*/
+        //not needed in java serialization
     }
 
     @Override public List<Integer> listPlayersInGame(int gameID) throws Exception
     {
-        /*
-        List<Integer> gameUsers = Database.getInstance().getUsers(gameID);
-        if (gameUsers != null)
-        {
-            return gameUsers;
-        } else
-        {
-            throw new Exception("There are no players in the game to list in game: " + gameID);
-        }
-        */
+        //not needed in java serialization
         return null;
-
     }
 }

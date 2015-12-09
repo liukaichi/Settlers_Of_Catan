@@ -153,4 +153,10 @@ public class GameRegistry implements Serializable
         }
         return loadedGames;
     }
+
+    public int getNextGameID()
+    {
+        return games.size();
+    }
+
 }

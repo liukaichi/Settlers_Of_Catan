@@ -1,5 +1,6 @@
 package database;
 
+import client.data.PlayerInfo;
 import server.ServerModel;
 
 import java.io.*;
@@ -12,13 +13,13 @@ import java.util.List;
 public class Game implements Serializable
 {
     private ServerModel model;
-    private String name;
+    private String title;
     private int gameID;
 
-    public Game(ServerModel model, String name, int gameID)
+    public Game(ServerModel model, String title, int gameID)
     {
         this.model = model;
-        this.name = name;
+        this.title = title;
         this.gameID = gameID;
     }
 
@@ -45,7 +46,7 @@ public class Game implements Serializable
             FileOutputStream fout = null;
             try
             {
-                fout = new FileOutputStream(Paths.get("..", "plugins", "SQLiteEngine", this.name).toFile(), true);
+                fout = new FileOutputStream(Paths.get("..", "plugins", "SQLiteEngine", this.title).toFile(), true);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
