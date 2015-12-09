@@ -10,6 +10,7 @@ import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +30,40 @@ public class PluginManager
         parseConfig();
     }
 
+    /**
+     * Registers a new plugin with the configuration file.
+     *
+     * @param factoryType the factory type to be associated with the plugin.
+     * @param jar         the jar that the plugin is located in.
+     * @throws InvalidClassException if the Jar is invalid, or does not contain a factory as required.
+     */
+    public static void registerPlugin(String factoryType, JarFile jar) throws InvalidClassException {
+        throw new InvalidClassException(
+                "The Jar file provided is invalid. Please ensure that the jar contains all of the necessary pieces for a plugin, including a factory. ");
+    }
+
+    public static void main(String[] args) {
+        try {
+            PluginManager manager = new PluginManager();
+            IPersistenceFactory factory = manager.createFactory("sqlite");
+            try {
+                int response = factory.createPersistenceEngine(10).registerUser(new Credentials("David", "david"));
+                Logger.getAnonymousLogger().info(String.valueOf(response));
+            } catch (InvalidCredentialsException e) {
+                e.printStackTrace();
+            }
+        } catch (FactoryTypeException e) {
+
+        }
+    }
+
     private void parseConfig()
     {
         try
         {
             config = new HashMap<>();
             //find the factory type and get the class info
-            File configFile = new File("plugins\\config.txt");
+            File configFile = new File("plugins" + File.separator + "config.txt");
             if (configFile.exists())
             {
                 List<String> lines = Files.readAllLines(configFile.toPath());
@@ -43,7 +71,7 @@ public class PluginManager
                 {
                     String[] factoryConfig = line.trim().split(" ");
                     String type = factoryConfig[0];
-                    String path = factoryConfig[1];
+                    String path = Paths.get("plugins", factoryConfig[1]).toString();
                     String className = factoryConfig[2];
                     config.put(type, new FactoryConfig(type, path, className));
                 }
@@ -72,39 +100,6 @@ public class PluginManager
             return createFactoryFromJar(factoryConfig.path, factoryConfig.className);
         else
             throw new FactoryTypeException("Can't find " + factoryType);
-    }
-
-    /**
-     * Registers a new plugin with the configuration file.
-     *
-     * @param factoryType the factory type to be associated with the plugin.
-     * @param jar         the jar that the plugin is located in.
-     * @throws InvalidClassException if the Jar is invalid, or does not contain a factory as required.
-     */
-    public static void registerPlugin(String factoryType, JarFile jar) throws InvalidClassException
-    {
-        throw new InvalidClassException(
-                "The Jar file provided is invalid. Please ensure that the jar contains all of the necessary pieces for a plugin, including a factory. ");
-    }
-
-    public static void main(String[] args)
-    {
-        try
-        {
-            PluginManager manager = new PluginManager();
-            IPersistenceFactory factory = manager.createFactory("sqlite");
-            try
-            {
-                int response = factory.createPersistenceEngine(10).registerUser(new Credentials("David", "david"));
-                Logger.getAnonymousLogger().info(String.valueOf(response));
-            } catch (InvalidCredentialsException e)
-            {
-                e.printStackTrace();
-            }
-        } catch (FactoryTypeException e)
-        {
-
-        }
     }
 
     public IPersistenceFactory createFactoryFromJar(String jarPath, String className)
