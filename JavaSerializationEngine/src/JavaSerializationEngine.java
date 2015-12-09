@@ -99,7 +99,7 @@ public class JavaSerializationEngine extends IPersistenceEngine
         {
             LOGGER.log(Level.SEVERE, "Failed to add player to game", e);
         }
-        return null;
+        return null; //TODO why does this return null?
     }
 
     @Override public int registerUser(Credentials credentials)

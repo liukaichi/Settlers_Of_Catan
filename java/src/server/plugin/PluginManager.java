@@ -102,7 +102,7 @@ public class PluginManager
             throw new FactoryTypeException("Can't find " + factoryType);
     }
 
-    public IPersistenceFactory createFactoryFromJar(String jarPath, String className)
+    public IPersistenceFactory createFactoryFromJar(String jarPath, String className) throws FactoryTypeException
     {
         URLClassLoader loader = null;
         try
@@ -113,9 +113,8 @@ public class PluginManager
             return instance;
         } catch (Exception e)
         {
-            e.printStackTrace();
+            throw new FactoryTypeException("Failed to create Factory", e);
         }
-        return null;
     }
 
     private class FactoryConfig
@@ -136,9 +135,14 @@ public class PluginManager
     {
         private static final long serialVersionUID = 8433573830897107523L;
 
-        FactoryTypeException(String message)
+        public FactoryTypeException(String message)
         {
             super(message);
+        }
+
+        public FactoryTypeException(String message, Exception e)
+        {
+            super(message, e);
         }
     }
 }
