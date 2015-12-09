@@ -4,7 +4,6 @@ import server.plugin.IGameAccess;
 
 import java.io.ObjectInputStream;
 import java.rmi.ServerException;
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -38,8 +37,8 @@ public class GameAccess implements IGameAccess
         try
         {
             String query = "UPDATE Game SET Model = ? WHERE GameID = ?";
-            stmt = engine.getConnection().prepareStatement(query);
-            stmt = engine.addBlobToStatement(stmt, 1, game);
+            stmt = this.engine.getConnection().prepareStatement(query);
+            stmt = this.engine.addBlobToStatement(stmt, 1, game);
             stmt.setInt(2, gameID);
             if (stmt.executeUpdate() != 1)
             {
@@ -144,7 +143,7 @@ public class GameAccess implements IGameAccess
                 rs = stmt.executeQuery();
             if (!rs.isBeforeFirst())
             {
-                return null;
+                return result;
             }
             while (rs.next())
             {
@@ -202,20 +201,20 @@ public class GameAccess implements IGameAccess
         {
             int nextID = 0;
             keyStmt = engine.getConnection().createStatement();
-            keyRS = keyStmt.executeQuery("SELECT seq FROM sqlite_sequence where name = \"Game\"");
-            keyRS.next();
-            int lastID = keyRS.getInt(1);
-            nextID = lastID + 1;
+            keyRS = keyStmt.executeQuery("SELECT IFNULL(seq, -1) FROM sqlite_sequence where name = \"Game\"");
+            if (keyRS.next())
+            {
+                int lastID = keyRS.getInt(1);
+                nextID = lastID + 1;
+            }
             return nextID;
         } catch (Exception e)
         {
-
-            throw e;
+                throw e;
         } finally
         {
             SQLiteEngine.safeClose(keyRS);
             SQLiteEngine.safeClose(keyStmt);
-
         }
     }
 }

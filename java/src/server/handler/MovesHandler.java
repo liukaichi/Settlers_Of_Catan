@@ -51,9 +51,16 @@ public class MovesHandler implements HttpHandler
             }
 
             //set gameID
-            int gameID = Integer.parseInt(cookies[1].substring(cookies[1].indexOf('=') + 1));
-
-            //resend the cookie
+            int gameID;
+            if (cookies[1].contains("catan.game"))
+            {
+                gameID = Integer.parseInt(cookies[1].substring(cookies[1].indexOf('=') + 1));
+            }
+            else
+            {
+                gameID = Integer.parseInt(cookies[0].substring(cookies[0].indexOf('=') + 1));
+            }
+             //resend the cookie
             respHeaders.set("Set-cookie", receivedCookie + ";Path=/;");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));

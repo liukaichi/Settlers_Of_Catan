@@ -7,6 +7,7 @@ import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
 import server.plugin.IPersistenceEngine;
 import server.util.FileUtils;
+import shared.communication.CatanCommand;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
@@ -124,14 +125,22 @@ public class GameManager
             {
                 games.get(gameID).setPlayerColor(color, playerID);
                 models.get(gameID).setPlayerColor(color, playerID);
+                ServerModel updatedModel = persistenceEngine.updateColor(gameID, color, playerID);
+                games.replace(gameID, updatedModel.getGameInfo());
+                models.replace(gameID, updatedModel);
                 return;
             }
             else if (game.getPlayers().size() < 4) {
+
+
+                //add player to game
+                //update local copy
                 User user = UserManager.getInstance().getUser(playerID);
                 PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
                 player.setPlayerIndex(game.getPlayers().size());
-                game.addPlayer(player);
+                persistenceEngine.addPlayerToGame(player, gameID);
                 models.get(gameID).addPlayer(player);
+                games.get(gameID).addPlayer(player);
                 return;
             } else {
 
@@ -227,6 +236,8 @@ public class GameManager
     public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
+        loadPersistedGames();
+        loadPersistedCommands();
     }
 
     public void saveCommand(int gameID, MoveCommand moveCommand)
@@ -234,8 +245,28 @@ public class GameManager
         persistenceEngine.saveGame(gameID, moveCommand, getGame(gameID));
     }
 
-    public void addPlayerToGame(int playerID, int gameID)
+    private void loadPersistedGames()
     {
-        persistenceEngine.addPlayerToGame(playerID, gameID);
+        List<ServerModel> serverModelList = persistenceEngine.getAllGames();
+        for (ServerModel serverModel : serverModelList)
+        {
+            games.put(serverModel.getGameInfo().getId(), serverModel.getGameInfo());
+            models.put(serverModel.getGameInfo().getId(), serverModel);
+        }
     }
+    private void loadPersistedCommands()
+    {
+        for (Map.Entry<Integer, ServerModel> set : models.entrySet())
+        {
+            List<MoveCommand> commands = persistenceEngine.getCommandBatch(set.getKey(), set.getValue().getVersion());
+            //TODO: EXECUTE COMMANDS ON THESE MODELS
+        }
+
+    }
+
+/*    public void addPlayerToGame(int playerID, int gameID)
+    {
+        User user = persistenceEngine.getUser(playerID);
+        persistenceEngine.addPlayerToGame(player, gameID);
+    }*/
 }

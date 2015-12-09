@@ -1,13 +1,18 @@
+import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.User;
 import server.plugin.IPersistenceEngine;
+import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
+import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +40,7 @@ public class SQLiteEngine extends IPersistenceEngine
     private SQLiteEngine()
     {
         connection = null;
+
         userAccess = new UserAccess(this);
         gameAccess = new GameAccess(this);
         commandAccess = new CommandAccess(this);
@@ -60,19 +66,26 @@ public class SQLiteEngine extends IPersistenceEngine
         {
             try
             {
+                startTransaction();
                 gameAccess.updateModel(gameID, game);
+                endTransaction(true);
             } catch (Exception e)
             {
-                e.printStackTrace();
+                endTransaction(false);
+                LOGGER.log(Level.SEVERE, "Model didn't update correctly", e);
             }
-        }/*
+        }
         try
         {
+            startTransaction();
             commandAccess.saveCommand(gameID, moveCommand);
+            endTransaction(true);
+            return true;
         } catch (Exception e)
         {
-            e.printStackTrace();
-        }*/
+            endTransaction(false);
+            LOGGER.log(Level.SEVERE, "Command didn't update correctly", e);
+        }
         return false;
     }
 
@@ -114,17 +127,29 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override public void addPlayerToGame(int playerID, int gameID)
+    /**
+     *
+     * @param player the playerID
+     * @param gameID the gameID
+     * @return the Server Model of the game after the player is added.
+     */
+    @Override public ServerModel addPlayerToGame(PlayerInfo player, int gameID)
     {
         try
         {
             startTransaction();
-            gameRelationAccess.addUserToGame(playerID, gameID);
+            gameRelationAccess.addUserToGame(player.getId(), gameID);
+            ServerModel model = gameAccess.getGame(gameID);
+            model.addPlayer(player);
+            gameAccess.updateModel(gameID, model);
             endTransaction(true);
+            return model;
+
         } catch (Exception e)
         {
             endTransaction(false);
         }
+        return null;
     }
 
 
@@ -247,6 +272,57 @@ public class SQLiteEngine extends IPersistenceEngine
             LOGGER.log(Level.SEVERE, "", e);
             endTransaction(false);
             return null;
+        }
+    }
+
+    @Override public Map<Integer, Credentials> getAllUsers()
+    {
+        try
+        {
+            startTransaction();
+            Map<Integer, Credentials> result = userAccess.getAllUsers();
+            endTransaction(true);
+            return result;
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "", e);
+            endTransaction(false);
+            return null;
+        }
+    }
+
+    @Override public ServerModel updateColor(int gameID, CatanColor color, int playerID)
+    {
+        try
+        {
+            startTransaction();
+            ServerModel newModel = gameAccess.getGame(gameID);
+            newModel.setPlayerColor(color, playerID);
+            gameAccess.updateModel(gameID, newModel);
+            endTransaction(true);
+            return newModel;
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "", e);
+            endTransaction(false);
+            return null;
+        }
+    }
+
+    @Override public List<MoveCommand> getCommandBatch(int gameID, int sequenceNo)
+    {   List<MoveCommand> commands = new ArrayList<>();
+        try
+        {
+            startTransaction();
+            commands = commandAccess.getAllCommandsAfter(gameID, sequenceNo);
+            endTransaction(true);
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "", e);
+            endTransaction(false);
+        } finally
+        {
+            return commands;
         }
     }
 

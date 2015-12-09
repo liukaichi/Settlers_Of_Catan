@@ -111,6 +111,7 @@ public class UserManager
         } else
         {
             // playerID is the new size of the credentials
+            this.credentials.put(userID,credentials);
             return new User(credentials, userID);
         }
     }
@@ -148,5 +149,7 @@ public class UserManager
     public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
+        credentials = persistenceEngine.getAllUsers();
+
     }
 }

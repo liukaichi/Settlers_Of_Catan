@@ -1,12 +1,16 @@
 package server.plugin;
 
-import client.data.GameInfo;
+import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.User;
+import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
+import shared.definitions.CatanColor;
+import shared.model.player.Player;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Persistence Engine to save Settlers Of Catan game.
@@ -32,11 +36,9 @@ public abstract class IPersistenceEngine
     public abstract ServerModel loadGame(int gameID);
 
     /** Adds a player to the many-to-many table
-     *
-     * @param playerID the playerID
-     * @param gameID the gameID
-     */
-    public abstract void addPlayerToGame(int playerID, int gameID);
+     *  @param player the playerID
+     * @param gameID the gameID*/
+    public abstract ServerModel addPlayerToGame(PlayerInfo player, int gameID);
 
 
 //*********************USER PERSISTENCE***********************//
@@ -74,4 +76,9 @@ public abstract class IPersistenceEngine
 
     public abstract List<ServerModel> getAllGames();
 
+    public abstract Map<Integer, Credentials> getAllUsers();
+
+    public abstract ServerModel updateColor(int gameID, CatanColor color, int playerID);
+
+    public abstract List<MoveCommand> getCommandBatch(int gameID, int sequenceNo);
 }
