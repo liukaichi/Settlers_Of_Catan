@@ -193,11 +193,10 @@
 
 	<target name="delete-databases" depends="compile" description="deletes the data from a database">
 		<delete includeemptydirs="true" failonerror="false">
-			<fileset dir="${plugin.dir}/JavaSerializationEngine">
+			<fileset dir="${plugin.dir}">
 				<include name="*/**"/>
-			</fileset>
-			<fileset dir="${plugin.dir}/SQLiteEngine">
-				<include name="*/**"/>
+				<exclude name="config.txt"/>
+				<exclude name="*.jar"/>
 			</fileset>
 		</delete>
 	</target>
