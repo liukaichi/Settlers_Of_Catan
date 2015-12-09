@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class PluginManager
 {
-    Map<String, FactoryConfig> config;
+    private Map<String, FactoryConfig> config;
 
     public PluginManager()
     {
@@ -32,26 +32,25 @@ public class PluginManager
     private void parseConfig()
     {
         try
-    {
+        {
             config = new HashMap<>();
             //find the factory type and get the class info
-        File configFile = new File("plugins\\config.txt");
-        if(configFile.exists())
-        {
-            List<String> lines = Files.readAllLines(configFile.toPath());
-            for (String line : lines)
+            File configFile = new File("plugins\\config.txt");
+            if (configFile.exists())
             {
-                String[] factoryConfig = line.trim().split(" ");
-                String type = factoryConfig[0];
-                String path = factoryConfig[1];
-                String className = factoryConfig[2];
-                config.put(type, new FactoryConfig(type, path, className));
+                List<String> lines = Files.readAllLines(configFile.toPath());
+                for (String line : lines)
+                {
+                    String[] factoryConfig = line.trim().split(" ");
+                    String type = factoryConfig[0];
+                    String path = factoryConfig[1];
+                    String className = factoryConfig[2];
+                    config.put(type, new FactoryConfig(type, path, className));
+                }
+            } else
+            {
+                throw new Exception("File does not exist");
             }
-        }
-        else
-        {
-            throw new Exception("File does not exist");
-        }
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -67,12 +66,12 @@ public class PluginManager
      */
     public IPersistenceFactory createFactory(String factoryType) throws FactoryTypeException
     {
-        FactoryConfig factoryConfig= config.get(factoryType);
+        FactoryConfig factoryConfig = config.get(factoryType);
         //make the class from the jar
-        if(factoryConfig != null)
+        if (factoryConfig != null)
             return createFactoryFromJar(factoryConfig.path, factoryConfig.className);
         else
-            throw new FactoryTypeException("Can't find "+factoryType);
+            throw new FactoryTypeException("Can't find " + factoryType);
     }
 
     /**
@@ -102,8 +101,7 @@ public class PluginManager
             {
                 e.printStackTrace();
             }
-        }
-        catch(FactoryTypeException e)
+        } catch (FactoryTypeException e)
         {
 
         }
@@ -114,8 +112,7 @@ public class PluginManager
         URLClassLoader loader = null;
         try
         {
-            loader = new URLClassLoader(new URL[] { new File(jarPath).toURI().toURL() },
-                    this.getClass().getClassLoader());
+            loader = new URLClassLoader(new URL[] { new File(jarPath).toURI().toURL() }, this.getClass().getClassLoader());
             Constructor classConstructor = Class.forName(className, true, loader).getConstructor();
             IPersistenceFactory instance = (IPersistenceFactory) classConstructor.newInstance();
             return instance;
