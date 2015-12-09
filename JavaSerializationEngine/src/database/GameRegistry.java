@@ -60,9 +60,13 @@ public class GameRegistry implements Serializable
 
     public int registerUser(Credentials credentials)
     {
-        int nextID = users.size()+1;
-        users.put(nextID, credentials);
-        return nextID;
+        if(getUser(credentials) == null)
+        {
+            int nextID = users.size() + 1;
+            users.put(nextID, credentials);
+            return nextID;
+        }
+        return -1;
     }
 
     public User getUser(Credentials credentials)
