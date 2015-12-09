@@ -198,19 +198,14 @@ public class JavaSerializationEngine extends IPersistenceEngine
 
     @Override public void saveGame(ServerModel serverModel)
     {
-        //already updated
         try
         {
-            ServerModel model = gameAccess.getGame(gameID);
-            model.getGameInfo().setPlayerColor(color,playerID);
-            Game game = new Game(model);
+            Game game = new Game(serverModel);
             game.serialize();
-            return game.getModel();
         }
         catch(Exception e)
         {
-            LOGGER.log(Level.SEVERE, "Failed to update color.", e);
-            return null;
+            LOGGER.log(Level.SEVERE, "Failed to force save model", e);
         }
     }
 
