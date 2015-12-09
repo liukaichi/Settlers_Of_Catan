@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 /**
  * Created by dtaylor on 12/8/2015.
  */
-public class Commands
+public class Commands implements Serializable
 {
-    static final long serialVersionUID = 42L;
     private static final Logger LOGGER = Logger.getLogger(Commands.class.getName());
+    private static final long serialVersionUID = -7695233013054000465L;
     private int gameID;
     private List<MoveCommand> commands;
 

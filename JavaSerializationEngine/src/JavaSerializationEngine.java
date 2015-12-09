@@ -65,7 +65,6 @@ public class JavaSerializationEngine extends IPersistenceEngine
             try
             {
                 gameAccess.updateModel(gameID, game);
-                return true;
             } catch (Exception e)
             {
                 LOGGER.log(Level.SEVERE, "Failed to update game", e);

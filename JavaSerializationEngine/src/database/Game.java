@@ -16,8 +16,8 @@ import java.util.logging.Logger;
  */
 public class Game implements Serializable
 {
-    static final long serialVersionUID = 42L;
     private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
+    private static final long serialVersionUID = 3466601296016291408L;
     private ServerModel model;
     private String title;
     private int gameID;
