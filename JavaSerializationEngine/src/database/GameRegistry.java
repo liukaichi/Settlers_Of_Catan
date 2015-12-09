@@ -124,7 +124,7 @@ public class GameRegistry implements Serializable
                 {
                     db.createNewFile();
                 }
-                fout = new FileOutputStream(db, true);
+                fout = new FileOutputStream(db, false);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
