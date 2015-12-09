@@ -45,12 +45,12 @@ public class UserManager
 
     private User getUserFromCredentials(Credentials credentials)
     {
-        User user = new User(credentials, -1);
+        User user = null;
         for (Map.Entry<Integer, Credentials> entry : this.credentials.entrySet())
         {
             if (Objects.equals(credentials, entry.getValue()))
             {
-                user.assignUserID(entry.getKey());
+                user = new User(credentials, entry.getKey());
                 break;
             }
         }
@@ -103,16 +103,23 @@ public class UserManager
      */
     public User userRegister(Credentials credentials) throws ExistingRegistrationException
     {
-
-        int userID = persistenceEngine.registerUser(credentials);
-        if (userID == -1)
+        User user = getUserFromCredentials(credentials);
+        if(user == null)
         {
-            throw new ExistingRegistrationException("Failed to register - someone already has that username.");
-        } else
+            int userID = persistenceEngine.registerUser(credentials);
+            if (userID == -1)
+            {
+                throw new ExistingRegistrationException("Failed to register - someone already has that username.");
+            } else
+            {
+                // playerID is the new size of the credentials
+                this.credentials.put(userID, credentials);
+                return new User(credentials, userID);
+            }
+        }
+        else
         {
-            // playerID is the new size of the credentials
-            this.credentials.put(userID,credentials);
-            return new User(credentials, userID);
+            return user;
         }
     }
 
