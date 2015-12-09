@@ -2,19 +2,20 @@ package database;
 
 import shared.communication.moveCommands.MoveCommand;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by dtaylor on 12/8/2015.
  */
 public class Commands
 {
+    private static final Logger LOGGER = Logger.getLogger(Commands.class.getName());
     private int gameID;
     private List<MoveCommand> commands;
 
@@ -32,7 +33,12 @@ public class Commands
             FileOutputStream fout = null;
             try
             {
-                fout = new FileOutputStream(Paths.get("..","plugins","SQLiteEngine",String.valueOf(gameID),"Commands").toFile(), true);
+                File file = Paths.get("..","plugins").toFile();
+                if(!file.exists())
+                {
+                    Files.createDirectory(file.toPath());
+                }
+                fout = new FileOutputStream(Paths.get("..","plugins","JavaSerializationEngine",String.valueOf(gameID)+"Commands").toFile(), true);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
@@ -61,14 +67,17 @@ public class Commands
         {
             ObjectInputStream objectinputstream = null;
             FileInputStream streamIn;
+            File file = null;
             try
             {
-                streamIn = new FileInputStream(Paths.get("..","plugins","SQLiteEngine",String.valueOf(gameID),"Commands").toFile());
+                file = Paths.get("..","plugins","JavaSerializationEngine",String.valueOf(gameID)+"Commands").toFile();
+                streamIn = new FileInputStream(file);
                 objectinputstream = new ObjectInputStream(streamIn);
                 commands = (Commands) objectinputstream.readObject();
             } catch (Exception e)
             {
-                e.printStackTrace();
+                LOGGER.log(Level.WARNING,"File not found", e);
+                return new Commands(gameID);
             } finally
             {
                 if (objectinputstream != null)

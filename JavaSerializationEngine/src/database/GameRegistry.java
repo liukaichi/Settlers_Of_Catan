@@ -7,19 +7,33 @@ import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.exceptions.CatanException;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by dtaylor on 12/8/2015.
  */
 public class GameRegistry implements Serializable
 {
+    private static final Logger LOGGER = Logger.getLogger(GameRegistry.class.getName());
     private static GameRegistry _instance;
     public static GameRegistry getInstance()
     {
         if(_instance == null)
-            _instance = new GameRegistry();
+        {
+            try
+            {
+                _instance = deserialize();
+            }
+            catch(Exception e)
+            {
+                _instance = new GameRegistry();
+                LOGGER.log(Level.WARNING,"File not found", e);
+            }
+        }
         return _instance;
     }
 
@@ -51,12 +65,12 @@ public class GameRegistry implements Serializable
 
     public User getUser(Credentials credentials)
     {
-        User user = new User(credentials, -1);
+        User user = null;
         for (Map.Entry<Integer, Credentials> entry : users.entrySet())
         {
             if (Objects.equals(credentials, entry.getValue()))
             {
-                user.assignUserID(entry.getKey());
+                user = new User(credentials, entry.getKey());
                 break;
             }
         }
@@ -98,7 +112,7 @@ public class GameRegistry implements Serializable
             FileOutputStream fout = null;
             try
             {
-                fout = new FileOutputStream(Paths.get("..","plugins","SQLiteEngine","GameRegistry.db").toFile(), true);
+                fout = new FileOutputStream(Paths.get("..","plugins","JavaSerializationEngine","GameRegistry.db").toFile(), true);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
@@ -127,12 +141,18 @@ public class GameRegistry implements Serializable
         FileInputStream streamIn;
         try
         {
-            streamIn = new FileInputStream(Paths.get("..","plugins","SQLiteEngine","GameRegistry.db").toFile());
+            File file = Paths.get("..","plugins").toFile();
+            if(!file.exists())
+            {
+                Files.createDirectory(file.toPath());
+            }
+            streamIn = new FileInputStream(Paths.get("..","plugins","JavaSerializationEngine","GameRegistry.db").toFile());
             objectinputstream = new ObjectInputStream(streamIn);
             gameRegistry = (GameRegistry) objectinputstream.readObject();
-        } catch (Exception e)
+        } catch (FileNotFoundException e)
         {
-            throw e;
+            LOGGER.log(Level.WARNING,"File not found", e);
+            return new GameRegistry();
         } finally
         {
             if (objectinputstream != null)
@@ -140,8 +160,7 @@ public class GameRegistry implements Serializable
                 objectinputstream.close();
             }
         }
-        _instance = gameRegistry;
-        return _instance;
+        return gameRegistry;
     }
 
     public List<Game> loadAllGames() throws CatanException
@@ -159,4 +178,8 @@ public class GameRegistry implements Serializable
         return games.size();
     }
 
+    public Map<Integer, Credentials> getAllUsers()
+    {
+        return users;
+    }
 }

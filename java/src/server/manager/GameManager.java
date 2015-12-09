@@ -278,7 +278,6 @@ public class GameManager
                 List<MoveCommand> commands = persistenceEngine
                         .getCommandBatch(set.getKey(), set.getValue().getVersion());
 
-                GameManager.setIsLoadingGame(true);
                 for (MoveCommand command : commands)
                 {
                     command.execute(set.getKey());
@@ -289,13 +288,7 @@ public class GameManager
             LOGGER.log(Level.SEVERE, "A command failed to load!", e);
         } finally
         {
-            GameManager.setIsLoadingGame(true);
+            GameManager.setIsLoadingGame(false);
         }
     }
-
-/*    public void addPlayerToGame(int playerID, int gameID)
-    {
-        User user = persistenceEngine.getUser(playerID);
-        persistenceEngine.addPlayerToGame(player, gameID);
-    }*/
 }
