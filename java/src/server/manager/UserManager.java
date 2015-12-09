@@ -149,7 +149,11 @@ public class UserManager
     public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
-        credentials = persistenceEngine.getAllUsers();
 
+    }
+
+    public void loadUsers()
+    {
+        credentials = persistenceEngine.getAllUsers();
     }
 }

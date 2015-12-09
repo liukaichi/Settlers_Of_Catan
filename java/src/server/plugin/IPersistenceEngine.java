@@ -81,4 +81,6 @@ public abstract class IPersistenceEngine
     public abstract ServerModel updateColor(int gameID, CatanColor color, int playerID);
 
     public abstract List<MoveCommand> getCommandBatch(int gameID, int sequenceNo);
+
+    public abstract void initializeDatabase();
 }

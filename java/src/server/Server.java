@@ -1,6 +1,7 @@
 package server;
 
 import com.sun.net.httpserver.HttpServer;
+import org.newdawn.slick.Game;
 import server.facade.AbstractServerFacade;
 import server.facade.ServerFacade;
 import server.handler.*;
@@ -50,8 +51,18 @@ public class Server
             PluginManager pluginManager = new PluginManager();
             IPersistenceFactory factory = pluginManager.createFactory(PERSISTENCE_TYPE);
             IPersistenceEngine persistenceEngine = factory.createPersistenceEngine(CHECKPOINTS);
-            UserManager.getInstance().setPersistenceEngine(persistenceEngine);
-            GameManager.getInstance().setPersistenceEngine(persistenceEngine);
+
+            UserManager userManager = UserManager.getInstance();
+            GameManager gameManager = GameManager.getInstance();
+
+            userManager.setPersistenceEngine(persistenceEngine);
+            gameManager.setPersistenceEngine(persistenceEngine);
+
+
+            persistenceEngine.initializeDatabase();
+            userManager.loadUsers();
+            gameManager.loadPersistedGames();
+            gameManager.loadPersistedCommands();
         } catch (Exception e)
         {
             e.printStackTrace();

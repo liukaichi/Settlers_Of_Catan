@@ -425,13 +425,23 @@ public class SQLiteEngine extends IPersistenceEngine
      * Creates all of the tables in the database if they do not currently exist.
      * The tables to be created are the User, Game, Command, and Game Relation Tables.
      */
-    public void initializeTables()
+    @Override
+    public void initializeDatabase()
     {
         LOGGER.info("Initializing Tables");
-        userAccess.initialize();
-        gameAccess.initialize();
-        commandAccess.initialize();
-        gameRelationAccess.initialize();
+        try
+        {
+            startTransaction();
+            userAccess.initialize();
+            gameAccess.initialize();
+            commandAccess.initialize();
+            gameRelationAccess.initialize();
+            endTransaction(true);
+        } catch(Exception e)
+        {
+            endTransaction(false);
+        }
+
     }
 
     public PreparedStatement addBlobToStatement(PreparedStatement stmt, int index, Object obj) throws Exception

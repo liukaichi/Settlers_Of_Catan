@@ -246,8 +246,7 @@ public class GameManager
     public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
-        loadPersistedGames();
-        loadPersistedCommands();
+
     }
 
     public void saveCommand(int gameID, MoveCommand moveCommand)
@@ -258,7 +257,7 @@ public class GameManager
         }
     }
 
-    private void loadPersistedGames()
+    public void loadPersistedGames()
     {
         List<ServerModel> serverModelList = persistenceEngine.getAllGames();
         for (ServerModel serverModel : serverModelList)
@@ -268,7 +267,7 @@ public class GameManager
         }
     }
 
-    private void loadPersistedCommands()
+    public void loadPersistedCommands()
     {
         GameManager.setIsLoadingGame(true);
         try
@@ -291,4 +290,11 @@ public class GameManager
             GameManager.setIsLoadingGame(false);
         }
     }
+
+
+/*    public void addPlayerToGame(int playerID, int gameID)
+    {
+        User user = persistenceEngine.getUser(playerID);
+        persistenceEngine.addPlayerToGame(player, gameID);
+    }*/
 }

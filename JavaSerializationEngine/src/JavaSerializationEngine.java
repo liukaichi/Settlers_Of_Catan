@@ -222,4 +222,9 @@ public class JavaSerializationEngine extends IPersistenceEngine
         }
     }
 
+    @Override public void initializeDatabase()
+    {
+
+    }
+
 }
