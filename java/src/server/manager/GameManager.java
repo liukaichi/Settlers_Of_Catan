@@ -271,7 +271,8 @@ public class GameManager
         List<ServerModel> serverModelList = persistenceEngine.getAllGames();
         for (ServerModel serverModel : serverModelList)
         {
-            games.put(serverModel.getGameInfo().getId(), serverModel.getGameInfo());
+            GameInfo info = serverModel.getGameInfo();
+            games.put(serverModel.getGameInfo().getId(), new GameInfo(info.toString()));
             models.put(serverModel.getGameInfo().getId(), serverModel);
         }
     }
