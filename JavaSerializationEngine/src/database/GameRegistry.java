@@ -148,9 +148,18 @@ public class GameRegistry implements Serializable
         FileInputStream streamIn;
         try
         {
-            streamIn = new FileInputStream(Paths.get("plugins","JavaSerializationEngine","GameRegistry.db").toFile());
-            objectinputstream = new ObjectInputStream(streamIn);
-            gameRegistry = (GameRegistry) objectinputstream.readObject();
+            String currentDIR = System.getProperty("user.dir");
+            File file = Paths.get("plugins","JavaSerializationEngine","GameRegistry.db").toFile();
+            if(file.exists())
+            {
+                streamIn = new FileInputStream(file);
+                objectinputstream = new ObjectInputStream(streamIn);
+                gameRegistry = (GameRegistry) objectinputstream.readObject();
+            }
+            else
+            {
+                throw new FileNotFoundException("File not found");
+            }
         } catch (FileNotFoundException e)
         {
             LOGGER.log(Level.WARNING,"File not found", e);

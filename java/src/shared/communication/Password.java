@@ -2,6 +2,7 @@ package shared.communication;
 
 import shared.definitions.exceptions.InvalidCredentialsException;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
@@ -9,8 +10,9 @@ import java.util.HashSet;
  *
  * @author amandafisher
  */
-public class Password
+public class Password implements Serializable
 {
+    private static final long serialVersionUID = -7337981439281322386L;
     private String password;
     private HashSet<String> allowedInvalidPasswords;
 

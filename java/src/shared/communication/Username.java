@@ -2,14 +2,17 @@ package shared.communication;
 
 import shared.definitions.exceptions.InvalidCredentialsException;
 
+import java.io.Serializable;
+
 /**
  * Object that represents a string holding the username of the player.
  *
  * @author amandafisher
  */
-public class Username
+public class Username implements Serializable
 {
 
+    private static final long serialVersionUID = -8198397907446071356L;
     private String username;
 
     private Username()
