@@ -106,7 +106,7 @@ public class CommandAccess implements ICommandAccess
             rs = stmt.executeQuery();
             if (!rs.isBeforeFirst())
             {
-                return null;
+                return result;
             }
             while (rs.next())
             {

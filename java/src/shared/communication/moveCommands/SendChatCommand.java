@@ -73,11 +73,12 @@ public class SendChatCommand extends MoveCommand implements JsonSerializer<SendC
      * @return the Json representation of the model after the command is executed.
      */
     @Override public String execute(int gameID) throws CatanException
-    {
-        LOGGER.info(String.format("executing SendChatCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), content, gameID));
-        String model = AbstractServerFacade.getInstance().sendChat(gameID, getPlayerIndex(), this.content).toString();
-        LOGGER.fine(model);
-        persistMe(gameID);
-        return model;
-    }
+{
+    LOGGER.info(String.format("executing SendChatCommand(%d, %s) for game %d", getPlayerIndex().getIndex(), content, gameID));
+    String model = AbstractServerFacade.getInstance().sendChat(gameID, getPlayerIndex(), this.content).toString();
+    LOGGER.fine(model);
+    persistMe(gameID);
+    return model;
+}
+
 }

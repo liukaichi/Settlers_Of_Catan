@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The Manager that holds all of the games. Various options that the facades take use this manager. Uses the singleton
@@ -31,10 +33,12 @@ public class GameManager
 {
     private static GameManager _instance = null;
     private static AIManager aiManager;
+    private final static Logger LOGGER = Logger.getLogger(GameManager.class.getName());
 
     private Map<Integer, GameInfo> games;
     private Map<Integer, ServerModel> models;
     private IPersistenceEngine persistenceEngine;
+    private static boolean isLoadingGame = false;
 
     private GameManager()
     {
@@ -56,6 +60,11 @@ public class GameManager
             _instance = new GameManager();
         }
         return _instance;
+    }
+
+    public static void setIsLoadingGame(boolean newIsLoadingGame)
+    {
+        isLoadingGame = newIsLoadingGame;
     }
 
     private void addExistingGames()
@@ -119,9 +128,9 @@ public class GameManager
     {
         GameInfo game = persistenceEngine.loadGame(gameID).getGameInfo();
         //GameInfo game = games.get(gameID);
-        if(game != null)
+        if (game != null)
         {
-            if(game.playerAlreadyJoined(playerID))
+            if (game.playerAlreadyJoined(playerID))
             {
                 games.get(gameID).setPlayerColor(color, playerID);
                 models.get(gameID).setPlayerColor(color, playerID);
@@ -129,9 +138,8 @@ public class GameManager
                 games.replace(gameID, updatedModel.getGameInfo());
                 models.replace(gameID, updatedModel);
                 return;
-            }
-            else if (game.getPlayers().size() < 4) {
-
+            } else if (game.getPlayers().size() < 4)
+            {
 
                 //add player to game
                 //update local copy
@@ -142,11 +150,14 @@ public class GameManager
                 models.get(gameID).addPlayer(player);
                 games.get(gameID).addPlayer(player);
                 return;
-            } else {
+            } else
+            {
 
-                if (!game.hasPlayer(playerID)) {
+                if (!game.hasPlayer(playerID))
+                {
                     throw new GameQueryException("Four players in game. Unable to join.");
-                } else {
+                } else
+                {
                     return;
                 }
             }
@@ -223,7 +234,6 @@ public class GameManager
     public GameInfo createGame(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name)
     {
         int newGameID = persistenceEngine.getNextGameID();
-        //int newGameID = games.size();
         GameInfo game = new GameInfo(newGameID, name);
         games.put(newGameID, game);
         ServerModel model = new ServerModel(game, randomTiles, randomNumbers, randomPorts);
@@ -242,7 +252,10 @@ public class GameManager
 
     public void saveCommand(int gameID, MoveCommand moveCommand)
     {
-        persistenceEngine.saveGame(gameID, moveCommand, getGame(gameID));
+        if (!isLoadingGame)
+        {
+            persistenceEngine.saveGame(gameID, moveCommand, getGame(gameID));
+        }
     }
 
     private void loadPersistedGames()
@@ -254,14 +267,30 @@ public class GameManager
             models.put(serverModel.getGameInfo().getId(), serverModel);
         }
     }
+
     private void loadPersistedCommands()
     {
-        for (Map.Entry<Integer, ServerModel> set : models.entrySet())
+        GameManager.setIsLoadingGame(true);
+        try
         {
-            List<MoveCommand> commands = persistenceEngine.getCommandBatch(set.getKey(), set.getValue().getVersion());
-            //TODO: EXECUTE COMMANDS ON THESE MODELS
-        }
+            for (Map.Entry<Integer, ServerModel> set : models.entrySet())
+            {
+                List<MoveCommand> commands = persistenceEngine
+                        .getCommandBatch(set.getKey(), set.getValue().getVersion());
 
+                GameManager.setIsLoadingGame(true);
+                for (MoveCommand command : commands)
+                {
+                    command.execute(set.getKey());
+                }
+            }
+        } catch (CatanException e)
+        {
+            LOGGER.log(Level.SEVERE, "A command failed to load!", e);
+        } finally
+        {
+            GameManager.setIsLoadingGame(true);
+        }
     }
 
 /*    public void addPlayerToGame(int playerID, int gameID)
