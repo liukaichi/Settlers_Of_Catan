@@ -153,7 +153,7 @@ public class SQLiteEngine extends IPersistenceEngine
     @Override public boolean saveGame(int gameID, MoveCommand moveCommand, ServerModel game)
     {
         int currentNumberOfCommands = game.getVersion(); //hopefully the version number is the same as commandCount
-        if (commandsBetweenSaves % currentNumberOfCommands == 0) //it's time to save the model
+        if (currentNumberOfCommands % commandsBetweenSaves == 0) //it's time to save the model
         {
             try
             {
@@ -231,6 +231,7 @@ public class SQLiteEngine extends IPersistenceEngine
         {
             endTransaction(false);
         }
+
         return null;
     }
 
