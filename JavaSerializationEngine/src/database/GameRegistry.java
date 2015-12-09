@@ -107,6 +107,7 @@ public class GameRegistry implements Serializable
         Game game = new Game(model, gameName, games.size());
         games.put(game.getGameID(), gameName);
         game.serialize();
+        serialize();
         return game.getGameID();
     }
 
@@ -152,7 +153,6 @@ public class GameRegistry implements Serializable
         FileInputStream streamIn;
         try
         {
-            String currentDIR = System.getProperty("user.dir");
             File file = Paths.get("plugins","JavaSerializationEngine","GameRegistry.db").toFile();
             if(file.exists())
             {
@@ -166,7 +166,7 @@ public class GameRegistry implements Serializable
             }
         } catch (FileNotFoundException e)
         {
-            LOGGER.log(Level.WARNING,"File not found", e);
+            //LOGGER.log(Level.WARNING,"File not found", e);
             return new GameRegistry();
         } finally
         {

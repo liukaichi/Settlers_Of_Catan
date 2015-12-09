@@ -99,7 +99,7 @@ public class Game implements Serializable
                 game = (Game) objectinputstream.readObject();
             } catch (Exception e)
             {
-                LOGGER.log(Level.WARNING,"File not found", e);
+                //LOGGER.log(Level.WARNING,"File not found", e);
             } finally
             {
                 if (objectinputstream != null)

@@ -44,7 +44,7 @@ public class Commands
                 oos.writeObject(this);
             } catch (Exception e)
             {
-                e.printStackTrace();
+                //e.printStackTrace();
             } finally
             {
                 if (oos != null)
@@ -77,7 +77,7 @@ public class Commands
                 commands = (Commands) objectinputstream.readObject();
             } catch (Exception e)
             {
-                LOGGER.log(Level.WARNING,"File not found", e);
+                //LOGGER.log(Level.WARNING,"File not found", e);
                 return new Commands(gameID);
             } finally
             {

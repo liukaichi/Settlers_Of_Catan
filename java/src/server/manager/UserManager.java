@@ -113,7 +113,11 @@ public class UserManager
     public User userRegister(Credentials credentials) throws ExistingRegistrationException
     {
         User user = getUserFromCredentials(credentials);
-        if(user == null)
+        if(user != null)
+        {
+            throw new ExistingRegistrationException("User already exists");
+        }
+        else
         {
             int userID = persistenceEngine.registerUser(credentials);
             if (userID == -1)
@@ -125,10 +129,6 @@ public class UserManager
                 this.credentials.put(userID, credentials);
                 return new User(credentials, userID);
             }
-        }
-        else
-        {
-            return user;
         }
     }
 
