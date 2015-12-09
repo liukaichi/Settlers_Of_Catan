@@ -13,30 +13,32 @@ public class GameAccessTest {
     private static GameAccess gameAccess;
     private static ServerModel model;
     @BeforeClass
-    public void setUp() throws Exception {
+    static public void setUp() throws Exception {
         gameAccess = new GameAccess();
         model = new ServerModel();
-        model.updateModel(FileUtils.getModelFromFile("sample/serverDefaults/", "game-2"));
+        model.updateModel(FileUtils.getModelFromFile("../sample/serverDefaults/", "game-2"));
     }
 
     @Before
     public void initialize() throws Exception {
         Database.getInstance().initialize(); //clear database
+        assertEquals(1,gameAccess.addGame(model, "TestGame"));
     }
 
     @Test
     public void testUpdateModel() throws Exception {
-        gameAccess.updateModel(0,model);
+        gameAccess.updateModel(1,model);
     }
 
     @Test
     public void testAddGame() throws Exception {
-        assertEquals(0,gameAccess.addGame(model, "TestGame"));
+        assertEquals(2,gameAccess.addGame(model, "TestGame"));
+        assertEquals(3,gameAccess.addGame(model, "TestGame2"));
     }
 
     @Test
     public void testGetGame() throws Exception {
-        gameAccess.getGame(0);
+        assertEquals(model,gameAccess.getGame(1));
     }
 
     @Test

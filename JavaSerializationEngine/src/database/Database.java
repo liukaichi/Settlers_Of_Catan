@@ -47,7 +47,7 @@ public class Database
 
     public Game getGame(int gameID)
     {
-        return games.get(gameID);
+        return games.get(gameID-1);
     }
 
     public List<MoveCommand> getGameCommands(int gameID)

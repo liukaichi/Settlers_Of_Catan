@@ -24,7 +24,10 @@ public class GameAccess implements IGameAccess
             game.setModel(model);
             //games.get(gameID).updateModel(game);
         }
-        throw new Exception("No model to update");
+        else
+        {
+            throw new Exception("No model to update");
+        }
     }
 
     @Override public int addGame(ServerModel game, String gameName) throws Exception
