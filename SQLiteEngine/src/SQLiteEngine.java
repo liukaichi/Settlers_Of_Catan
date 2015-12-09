@@ -9,6 +9,9 @@ import shared.definitions.exceptions.CatanException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -424,6 +427,24 @@ public class SQLiteEngine extends IPersistenceEngine
     @Override
     public void initializeDatabase()
     {
+        try
+        {
+            boolean fileCreated = false;
+            Path file = Paths.get("plugins");
+            if (!Files.exists(file))
+            {
+                Files.createDirectory(file);
+            }
+            Path db = Paths.get("plugins", "SQLiteEngine");
+            if (!Files.exists(db))
+            {
+                Files.createDirectory(db);
+            }
+        }
+        catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE,"Failed to create folders for data persistence", e);
+        }
         LOGGER.info("Initializing Tables");
         try
         {
