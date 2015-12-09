@@ -114,7 +114,7 @@ public class GameInfo implements Serializable
      */
     public void addPlayer(PlayerInfo newPlayer)
     {
-        if (players.size() < 4)
+        if (players.size() < 4 && !players.contains(newPlayer))
         {
             players.add(newPlayer);
         }

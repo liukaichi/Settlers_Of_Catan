@@ -11,6 +11,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.bank.Bank;
 import shared.model.bank.card.DevCard;
+import shared.model.bank.resource.Resources;
 import shared.model.map.CatanMap;
 import shared.model.message.Chat;
 import shared.model.message.Log;
@@ -357,7 +358,11 @@ public class ClientModel extends Observable implements Serializable
         if(chat != null)
             model.add("chat", parser.parse(chat.toString()));
         if(bank != null)
-            model.add("bank", parser.parse(bank.getResources().toString()));
+        {
+            Resources resources = bank.getResources();
+            if(resources != null)
+                model.add("bank", parser.parse(resources.toString()));
+        }
         if(turnTracker != null)
             model.add("turnTracker", parser.parse(turnTracker.toString()));
         if(winner != null)

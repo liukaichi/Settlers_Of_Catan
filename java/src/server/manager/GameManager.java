@@ -44,7 +44,7 @@ public class GameManager
         games = new HashMap<>();
         models = new HashMap<>();
         aiManager = new AIManager();
-        //this.addExistingGames();
+        this.addExistingGames();
     }
 
     /**
