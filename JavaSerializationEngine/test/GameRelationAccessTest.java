@@ -1,4 +1,3 @@
-import database.Database;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,7 +16,7 @@ public class GameRelationAccessTest {
 
     @Before
     public void initialize() throws Exception {
-        Database.getInstance().initialize(); //clear database
+        //Database.getInstance().initialize(); //clear database
     }
 
     @Test

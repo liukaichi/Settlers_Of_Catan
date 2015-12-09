@@ -1,4 +1,3 @@
-import database.Database;
 import org.junit.*;
 import server.ServerModel;
 import server.util.FileUtils;
@@ -21,7 +20,7 @@ public class GameAccessTest {
 
     @Before
     public void initialize() throws Exception {
-        Database.getInstance().initialize(); //clear database
+        //Database.getInstance().initialize(); //clear database
         assertEquals(1,gameAccess.addGame(model, "TestGame"));
     }
 

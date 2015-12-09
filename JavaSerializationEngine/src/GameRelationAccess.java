@@ -1,4 +1,3 @@
-import database.Database;
 import server.plugin.IGameRelationAccess;
 
 import java.util.List;
@@ -14,6 +13,7 @@ public class GameRelationAccess implements IGameRelationAccess
 
     @Override public void addUserToGame(int userID, int gameID) throws Exception
     {
+        /*
         List<Integer> gameUsers = Database.getInstance().getUsers(gameID);
         if (gameUsers != null)
         {
@@ -21,11 +21,12 @@ public class GameRelationAccess implements IGameRelationAccess
         } else
         {
             throw new Exception("No such gameID or Users");
-        }
+        }*/
     }
 
     @Override public List<Integer> listPlayersInGame(int gameID) throws Exception
     {
+        /*
         List<Integer> gameUsers = Database.getInstance().getUsers(gameID);
         if (gameUsers != null)
         {
@@ -34,6 +35,8 @@ public class GameRelationAccess implements IGameRelationAccess
         {
             throw new Exception("There are no players in the game to list in game: " + gameID);
         }
+        */
+        return null;
 
     }
 }

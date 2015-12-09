@@ -1,40 +1,27 @@
 package database;
 
-import server.ServerModel;
+import shared.communication.moveCommands.MoveCommand;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by dtaylor on 12/5/2015.
+ * Created by dtaylor on 12/8/2015.
  */
-public class Game implements Serializable
+public class Commands
 {
-    private ServerModel model;
-    private String name;
     private int gameID;
+    private List<MoveCommand> commands;
 
-    public Game(ServerModel model, String name, int gameID)
+    public Commands(int gameID)
     {
-        this.model = model;
-        this.name = name;
         this.gameID = gameID;
-    }
-
-    public int getGameID()
-    {
-        return this.gameID;
-    }
-
-    public void setModel(ServerModel model)
-    {
-        this.model = model;
-    }
-
-    public ServerModel getModel()
-    {
-        return model;
+        this.commands = new ArrayList<>();
     }
 
     public void serialize()
@@ -45,7 +32,7 @@ public class Game implements Serializable
             FileOutputStream fout = null;
             try
             {
-                fout = new FileOutputStream(Paths.get("..", "plugins", "SQLiteEngine", this.name).toFile(), true);
+                fout = new FileOutputStream(Paths.get("..","plugins","SQLiteEngine",String.valueOf(gameID),"Commands").toFile(), true);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
@@ -58,25 +45,27 @@ public class Game implements Serializable
                     oos.close();
                 }
             }
-        } catch (Exception ex)
+        }
+        catch(Exception ex)
         {
             ex.printStackTrace();
         }
 
+
     }
 
-    public static Game deserialize(String filename)
+    public static Commands deserialize(int gameID)
     {
-        Game game = null;
+        Commands commands = null;
         try
         {
             ObjectInputStream objectinputstream = null;
             FileInputStream streamIn;
             try
             {
-                streamIn = new FileInputStream(Paths.get("..", "plugins", "SQLiteEngine", filename).toFile());
+                streamIn = new FileInputStream(Paths.get("..","plugins","SQLiteEngine",String.valueOf(gameID),"Commands").toFile());
                 objectinputstream = new ObjectInputStream(streamIn);
-                game = (Game) objectinputstream.readObject();
+                commands = (Commands) objectinputstream.readObject();
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -87,10 +76,12 @@ public class Game implements Serializable
                     objectinputstream.close();
                 }
             }
-        } catch (Exception ex)
+        }
+        catch(Exception ex)
         {
             ex.printStackTrace();
         }
-        return game;
+        return commands;
     }
 }
+
