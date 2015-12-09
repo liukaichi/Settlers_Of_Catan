@@ -177,8 +177,7 @@ public class GameAccess implements IGameAccess
         {
             // @formatter:off
             stat = engine.getConnection().createStatement();
-            stat.executeUpdate("DROP TABLE IF EXISTS Game;");
-            stat.executeUpdate("CREATE TABLE Game ("
+            stat.executeUpdate("CREATE TABLE IF NOT EXISTS Game ("
                     + "GameID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , "
                     + "Model BLOB NOT NULL , "
                     + "Name VARCHAR "

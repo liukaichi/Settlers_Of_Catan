@@ -188,8 +188,7 @@ public class CommandAccess implements ICommandAccess
         {
             // @formatter:off
             stat = engine.getConnection().createStatement();
-            stat.executeUpdate("DROP TABLE IF EXISTS Command;");
-            stat.executeUpdate("CREATE TABLE Command (" +
+            stat.executeUpdate("CREATE TABLE IF NOT EXISTS Command (" +
                     "SequenceNo INTEGER NOT NULL, " +
                     "Command BLOB NOT NULL, " +
                     "GameID INTEGER NOT NULL, "

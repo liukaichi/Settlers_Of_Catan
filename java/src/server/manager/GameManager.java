@@ -210,7 +210,7 @@ public class GameManager
             {
                 game.addPlayer(aiManager.createAIPlayer(game));
             } catch (CatanException e)
-            {
+                {
                 throw new GameQueryException(e.getMessage());
             }
         } else

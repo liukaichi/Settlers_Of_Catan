@@ -86,9 +86,8 @@ public class GameRelationAccess implements IGameRelationAccess
         {
             // @formatter:off
             stat = engine.getConnection().createStatement();
-            stat.executeUpdate("DROP TABLE IF EXISTS GameRelation;");
             stat.executeUpdate(
-                    "CREATE TABLE GameRelation ("
+                    "CREATE TABLE IF NOT EXISTS GameRelation ("
                             + "GameID INTEGER REFERENCES  Game(GameID), "
                             + "UserID INTEGER REFERENCES User(UserID)"
                             + ")");

@@ -144,8 +144,7 @@ public class UserAccess implements IUserAccess
         {
             // @formatter:off
             stat = this.engine.getConnection().createStatement();
-            stat.executeUpdate("DROP TABLE IF EXISTS User;");
-            stat.executeUpdate("CREATE TABLE User ("
+            stat.executeUpdate("CREATE TABLE IF NOT EXISTS User ("
                     + "UserID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
                     + "Username TEXT NOT NULL UNIQUE, "
                     + "Password TEXT NOT NULL"
