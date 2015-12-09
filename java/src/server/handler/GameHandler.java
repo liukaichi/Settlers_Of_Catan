@@ -82,8 +82,15 @@ public class GameHandler implements HttpHandler
                 throw new Exception("Game cookie not set. Login and join before calling this method.");
             }
             //set gameID
-            int gameID = Integer.parseInt(cookies[1].substring(cookies[1].indexOf('=') + 1));
-
+            int gameID;
+            if (cookies[1].contains("catan.game"))
+            {
+                gameID = Integer.parseInt(cookies[1].substring(cookies[1].indexOf('=') + 1));
+            }
+            else
+            {
+                gameID = Integer.parseInt(cookies[0].substring(cookies[0].indexOf('=') + 1));
+            }
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody()));
             StringBuilder builder = new StringBuilder();
             String json;

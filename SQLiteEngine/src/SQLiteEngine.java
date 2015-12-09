@@ -64,19 +64,26 @@ public class SQLiteEngine extends IPersistenceEngine
         {
             try
             {
+                startTransaction();
                 gameAccess.updateModel(gameID, game);
+                endTransaction(true);
             } catch (Exception e)
             {
-                e.printStackTrace();
+                endTransaction(false);
+                LOGGER.log(Level.SEVERE, "Model didn't update correctly", e);
             }
-        }/*
+        }
         try
         {
+            startTransaction();
             commandAccess.saveCommand(gameID, moveCommand);
+            endTransaction(true);
+            return true;
         } catch (Exception e)
         {
-            e.printStackTrace();
-        }*/
+            endTransaction(false);
+            LOGGER.log(Level.SEVERE, "Command didn't update correctly", e);
+        }
         return false;
     }
 

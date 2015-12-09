@@ -138,8 +138,8 @@ public class GameManager
                 PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
                 player.setPlayerIndex(game.getPlayers().size());
                 persistenceEngine.addPlayerToGame(player, gameID);
-                game.addPlayer(player);
                 models.get(gameID).addPlayer(player);
+                games.get(gameID).addPlayer(player);
                 return;
             } else {
 

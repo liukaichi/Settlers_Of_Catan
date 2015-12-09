@@ -4,7 +4,6 @@ import server.plugin.IGameAccess;
 
 import java.io.ObjectInputStream;
 import java.rmi.ServerException;
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -38,8 +37,8 @@ public class GameAccess implements IGameAccess
         try
         {
             String query = "UPDATE Game SET Model = ? WHERE GameID = ?";
-            stmt = engine.getConnection().prepareStatement(query);
-            stmt = engine.addBlobToStatement(stmt, 1, game);
+            stmt = this.engine.getConnection().prepareStatement(query);
+            stmt = this.engine.addBlobToStatement(stmt, 1, game);
             stmt.setInt(2, gameID);
             if (stmt.executeUpdate() != 1)
             {
