@@ -87,10 +87,19 @@ public class UserManager
      */
     public User userLogin(Credentials credentials) throws InvalidCredentialsException
     {
-        User user = persistenceEngine.getUser(credentials);
+
+        User user = getUserFromCredentials(credentials);
         if (user != null)
         {
             return user;
+        }
+        else
+        {
+            user = persistenceEngine.getUser(credentials);
+            if(user != null)
+            {
+                return user;
+            }
         }
         throw new InvalidCredentialsException("Failed to login - bad username or password.");
     }
