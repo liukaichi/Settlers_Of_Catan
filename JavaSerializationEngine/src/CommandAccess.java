@@ -25,6 +25,7 @@ public class CommandAccess implements ICommandAccess
         {
             throw new Exception("no such gameID: " + gameID);
         }
+        Database.getInstance().serialize();
     }
 
     @Override public int getNumberOfCommandsInGame(int gameID) throws Exception

@@ -3,6 +3,11 @@ package database;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,4 +83,62 @@ public class Database
         this.credentials = credentials;
     }
 
+    public void serialize()
+    {
+        try
+        {
+            ObjectOutputStream oos = null;
+            FileOutputStream fout = null;
+            try
+            {
+                fout = new FileOutputStream("..\\plugins\\SQLiteEngine\\catan.db", true);
+                oos = new ObjectOutputStream(fout);
+                oos.writeObject(this);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            } finally
+            {
+                if (oos != null)
+                {
+                    oos.close();
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+
+    }
+    public static Database deserialize()
+    {
+        Database database = null;
+        try
+        {
+            ObjectInputStream objectinputstream = null;
+            FileInputStream streamIn;
+            try
+            {
+                streamIn = new FileInputStream("..\\plugins\\SQLiteEngine\\catan.db");
+                objectinputstream = new ObjectInputStream(streamIn);
+                database = (Database) objectinputstream.readObject();
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            } finally
+            {
+                if (objectinputstream != null)
+                {
+                    objectinputstream.close();
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return database;
+    }
 }
