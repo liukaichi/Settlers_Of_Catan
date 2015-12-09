@@ -2,6 +2,7 @@ import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.User;
 import server.plugin.IPersistenceEngine;
+import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.CatanColor;
@@ -9,6 +10,7 @@ import shared.definitions.exceptions.CatanException;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -304,6 +306,23 @@ public class SQLiteEngine extends IPersistenceEngine
             LOGGER.log(Level.SEVERE, "", e);
             endTransaction(false);
             return null;
+        }
+    }
+
+    @Override public List<MoveCommand> getCommandBatch(int gameID, int sequenceNo)
+    {   List<MoveCommand> commands = new ArrayList<>();
+        try
+        {
+            startTransaction();
+            commands = commandAccess.getAllCommandsAfter(gameID, sequenceNo);
+            endTransaction(true);
+        } catch (Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "", e);
+            endTransaction(false);
+        } finally
+        {
+            return commands;
         }
     }
 

@@ -7,6 +7,7 @@ import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
 import server.plugin.IPersistenceEngine;
 import server.util.FileUtils;
+import shared.communication.CatanCommand;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
@@ -235,6 +236,17 @@ public class GameManager
     public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
+        loadPersistedGames();
+        loadPersistedCommands();
+    }
+
+    public void saveCommand(int gameID, MoveCommand moveCommand)
+    {
+        persistenceEngine.saveGame(gameID, moveCommand, getGame(gameID));
+    }
+
+    private void loadPersistedGames()
+    {
         List<ServerModel> serverModelList = persistenceEngine.getAllGames();
         for (ServerModel serverModel : serverModelList)
         {
@@ -242,10 +254,14 @@ public class GameManager
             models.put(serverModel.getGameInfo().getId(), serverModel);
         }
     }
-
-    public void saveCommand(int gameID, MoveCommand moveCommand)
+    private void loadPersistedCommands()
     {
-        persistenceEngine.saveGame(gameID, moveCommand, getGame(gameID));
+        for (Map.Entry<Integer, ServerModel> set : models.entrySet())
+        {
+            List<MoveCommand> commands = persistenceEngine.getCommandBatch(set.getKey(), set.getValue().getVersion());
+            //TODO: EXECUTE COMMANDS ON THESE MODELS
+        }
+
     }
 
 /*    public void addPlayerToGame(int playerID, int gameID)

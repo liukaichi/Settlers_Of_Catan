@@ -192,4 +192,9 @@ public class JavaSerializationEngine extends IPersistenceEngine
         return null;
     }
 
+    @Override public List<MoveCommand> getCommandBatch(int gameID, int sequenceNo)
+    {
+        return null;
+    }
+
 }

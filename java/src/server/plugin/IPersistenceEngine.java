@@ -3,6 +3,7 @@ package server.plugin;
 import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.User;
+import shared.communication.CatanCommand;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.CatanColor;
@@ -78,4 +79,6 @@ public abstract class IPersistenceEngine
     public abstract Map<Integer, Credentials> getAllUsers();
 
     public abstract ServerModel updateColor(int gameID, CatanColor color, int playerID);
+
+    public abstract List<MoveCommand> getCommandBatch(int gameID, int sequenceNo);
 }
