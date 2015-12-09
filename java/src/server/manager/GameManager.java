@@ -7,7 +7,6 @@ import server.facade.IGameFacade;
 import server.facade.IGamesFacade;
 import server.plugin.IPersistenceEngine;
 import server.util.FileUtils;
-import shared.communication.CatanCommand;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
@@ -126,7 +125,15 @@ public class GameManager
      */
     public void joinGame(int playerID, int gameID, CatanColor color) throws GameQueryException
     {
-        ServerModel model = persistenceEngine.loadGame(gameID);
+        ServerModel model;
+        if (models.containsKey(gameID))
+        {
+            model = models.get(gameID);
+        }
+        else
+        {
+            model = persistenceEngine.loadGame(gameID);
+        }
         if(model != null)
         {
             GameInfo game =model.getGameInfo();
@@ -137,9 +144,7 @@ public class GameManager
                 {
                     games.get(gameID).setPlayerColor(color, playerID);
                     models.get(gameID).setPlayerColor(color, playerID);
-                    ServerModel updatedModel = persistenceEngine.updateColor(gameID, color, playerID);
-                    games.replace(gameID, updatedModel.getGameInfo());
-                    models.replace(gameID, updatedModel);
+                    persistenceEngine.saveGame(models.get(gameID));
                     return;
                 } else if (game.getPlayers().size() < 4)
                 {

@@ -1,17 +1,11 @@
-import client.data.GameInfo;
 import client.data.PlayerInfo;
-import client.main.Catan;
 import database.Game;
-import database.GameRegistry;
 import server.ServerModel;
 import server.manager.User;
 import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
-import shared.definitions.CatanColor;
-import shared.definitions.exceptions.CatanException;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -202,7 +196,7 @@ public class JavaSerializationEngine extends IPersistenceEngine
         return userAccess.getAllUsers();
     }
 
-    @Override public ServerModel updateColor(int gameID, CatanColor color, int playerID)
+    @Override public void saveGame(ServerModel serverModel)
     {
         //already updated
         try

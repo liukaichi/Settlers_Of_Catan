@@ -78,7 +78,7 @@ public abstract class IPersistenceEngine
 
     public abstract Map<Integer, Credentials> getAllUsers();
 
-    public abstract ServerModel updateColor(int gameID, CatanColor color, int playerID);
+    public abstract void saveGame(ServerModel serverModel);
 
     public abstract List<MoveCommand> getCommandBatch(int gameID, int sequenceNo);
 

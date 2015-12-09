@@ -4,7 +4,6 @@ import server.manager.User;
 import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
-import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 
 import java.io.ByteArrayOutputStream;
@@ -373,21 +372,17 @@ public class SQLiteEngine extends IPersistenceEngine
         }
     }
 
-    @Override public ServerModel updateColor(int gameID, CatanColor color, int playerID)
+    @Override public void saveGame(ServerModel serverModel)
     {
         try
         {
             startTransaction();
-            ServerModel newModel = gameAccess.getGame(gameID);
-            newModel.setPlayerColor(color, playerID);
-            gameAccess.updateModel(gameID, newModel);
+            gameAccess.updateModel(serverModel.getGameInfo().getId(), serverModel);
             endTransaction(true);
-            return newModel;
         } catch (Exception e)
         {
             LOGGER.log(Level.SEVERE, "", e);
             endTransaction(false);
-            return null;
         }
     }
 
