@@ -1,7 +1,6 @@
 package server;
 
 import com.sun.net.httpserver.HttpServer;
-import org.newdawn.slick.Game;
 import server.facade.AbstractServerFacade;
 import server.facade.ServerFacade;
 import server.handler.*;
