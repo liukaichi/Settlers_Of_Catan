@@ -26,7 +26,7 @@ public class UserManager
 
     {
         this.credentials = new HashMap<>();
-        addDefaultUsers();
+        //addDefaultUsers();
     }
 
     /**
