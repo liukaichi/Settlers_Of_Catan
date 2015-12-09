@@ -291,10 +291,4 @@ public class GameManager
             GameManager.setIsLoadingGame(false);
         }
     }
-
-/*    public void addPlayerToGame(int playerID, int gameID)
-    {
-        User user = persistenceEngine.getUser(playerID);
-        persistenceEngine.addPlayerToGame(player, gameID);
-    }*/
 }

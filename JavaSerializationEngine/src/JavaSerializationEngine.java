@@ -1,11 +1,16 @@
 import client.data.PlayerInfo;
+import client.main.Catan;
+import database.Game;
+import database.GameRegistry;
 import server.ServerModel;
 import server.manager.User;
 import server.plugin.IPersistenceEngine;
 import shared.communication.Credentials;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.CatanColor;
+import shared.definitions.exceptions.CatanException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -172,6 +177,11 @@ public class JavaSerializationEngine extends IPersistenceEngine
     {
         try
         {
+            List<ServerModel> allGames = gameAccess.getAllGames();
+            if(allGames == null)
+            {
+                allGames = new ArrayList<ServerModel>();
+            }
             return gameAccess.getAllGames();
         } catch (Exception e)
         {
@@ -182,17 +192,34 @@ public class JavaSerializationEngine extends IPersistenceEngine
 
     @Override public Map<Integer, Credentials> getAllUsers()
     {
-        return null;
+        return userAccess.getAllUsers();
     }
 
     @Override public ServerModel updateColor(int gameID, CatanColor color, int playerID)
     {
-        return null;
+        //already updated
+        try
+        {
+            return gameAccess.getGame(gameID);
+        }
+        catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to update color.", e);
+            return null;
+        }
     }
 
     @Override public List<MoveCommand> getCommandBatch(int gameID, int sequenceNo)
     {
-        return null;
+        try
+        {
+            return commandAccess.getAllCommandsAfter(gameID, sequenceNo);
+        }
+        catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE, "Failed to get command batch.", e);
+            return null;
+        }
     }
 
 }

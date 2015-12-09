@@ -4,14 +4,18 @@ import client.data.PlayerInfo;
 import server.ServerModel;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by dtaylor on 12/5/2015.
  */
 public class Game implements Serializable
 {
+    private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
     private ServerModel model;
     private String title;
     private int gameID;
@@ -46,7 +50,12 @@ public class Game implements Serializable
             FileOutputStream fout = null;
             try
             {
-                fout = new FileOutputStream(Paths.get("..", "plugins", "SQLiteEngine", this.title).toFile(), true);
+                File file = Paths.get("..","plugins").toFile();
+                if(!file.exists())
+                {
+                    Files.createDirectory(file.toPath());
+                }
+                fout = new FileOutputStream(Paths.get("..", "plugins", "JavaSerializationEngine", this.title).toFile(), true);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
@@ -75,12 +84,12 @@ public class Game implements Serializable
             FileInputStream streamIn;
             try
             {
-                streamIn = new FileInputStream(Paths.get("..", "plugins", "SQLiteEngine", filename).toFile());
+                streamIn = new FileInputStream(Paths.get("..", "plugins", "JavaSerializationEngine", filename).toFile());
                 objectinputstream = new ObjectInputStream(streamIn);
                 game = (Game) objectinputstream.readObject();
             } catch (Exception e)
             {
-                e.printStackTrace();
+                LOGGER.log(Level.WARNING,"File not found", e);
             } finally
             {
                 if (objectinputstream != null)

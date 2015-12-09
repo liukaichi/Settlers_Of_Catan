@@ -3,11 +3,14 @@ import server.manager.User;
 import server.plugin.IUserAccess;
 import shared.communication.Credentials;
 
+import java.util.Map;
+
 /**
  * Created by dtaylor on 12/5/2015.
  */
 public class UserAccess implements IUserAccess
 {
+
     /**
      * Load serialized users into memory
      */
@@ -41,5 +44,11 @@ public class UserAccess implements IUserAccess
         int userID = gameRegistry.registerUser(credentials);
         gameRegistry.serialize();
         return userID;
+    }
+
+    public Map<Integer, Credentials> getAllUsers()
+    {
+        GameRegistry gameRegistry = GameRegistry.getInstance();
+        return gameRegistry.getAllUsers();
     }
 }
