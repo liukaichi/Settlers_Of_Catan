@@ -21,11 +21,13 @@ import shared.locations.*;
 import shared.model.ClientModel;
 import shared.model.message.Chat;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
+/** This requires that you run the TA's server.
  * @author cstaheli
  */
 public class ProxyTester
@@ -40,8 +42,8 @@ public class ProxyTester
      */
     @BeforeClass public static void setupServer() throws Exception
     {
-        String args[] = { "8081" };
-        Server.main(args);
+        /*String args[] = { "8081" };
+        Server.main(args);*/
 
         // Class[] parameterTypes = new Class[1];
         // parameterTypes[1] = Credentials.class;
@@ -69,13 +71,13 @@ public class ProxyTester
         expectedModel = new ClientModel();
         testingModel = new ClientModel();
         proxy = new ServerProxy();
-        /*server = new Server("localhost",8081);
+        server = new Server();
         server.start();
         try {
-            Thread.sleep(4000);
+            Thread.sleep(2000);
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
-        }*/
+        }
     }
 
     /**
