@@ -10,6 +10,10 @@ import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -224,7 +228,24 @@ public class JavaSerializationEngine extends IPersistenceEngine
 
     @Override public void initializeDatabase()
     {
-
+        try
+        {
+            boolean fileCreated = false;
+            Path file = Paths.get("plugins");
+            if (!Files.exists(file))
+            {
+                Files.createDirectory(file);
+            }
+            Path db = Paths.get("plugins", "JavaSerializationEngine");
+            if (!Files.exists(db))
+            {
+                Files.createDirectory(db);
+            }
+        }
+        catch(Exception e)
+        {
+            LOGGER.log(Level.SEVERE,"Failed to create folders for data persistence", e);
+        }
     }
 
 }

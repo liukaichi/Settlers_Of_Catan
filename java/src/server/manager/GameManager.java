@@ -126,39 +126,43 @@ public class GameManager
      */
     public void joinGame(int playerID, int gameID, CatanColor color) throws GameQueryException
     {
-        GameInfo game = persistenceEngine.loadGame(gameID).getGameInfo();
-        //GameInfo game = games.get(gameID);
-        if (game != null)
+        ServerModel model = persistenceEngine.loadGame(gameID);
+        if(model != null)
         {
-            if (game.playerAlreadyJoined(playerID))
+            GameInfo game =model.getGameInfo();
+            //GameInfo game = games.get(gameID);
+            if (game != null)
             {
-                games.get(gameID).setPlayerColor(color, playerID);
-                models.get(gameID).setPlayerColor(color, playerID);
-                ServerModel updatedModel = persistenceEngine.updateColor(gameID, color, playerID);
-                games.replace(gameID, updatedModel.getGameInfo());
-                models.replace(gameID, updatedModel);
-                return;
-            } else if (game.getPlayers().size() < 4)
-            {
-
-                //add player to game
-                //update local copy
-                User user = UserManager.getInstance().getUser(playerID);
-                PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
-                player.setPlayerIndex(game.getPlayers().size());
-                persistenceEngine.addPlayerToGame(player, gameID);
-                models.get(gameID).addPlayer(player);
-                games.get(gameID).addPlayer(player);
-                return;
-            } else
-            {
-
-                if (!game.hasPlayer(playerID))
+                if (game.playerAlreadyJoined(playerID))
                 {
-                    throw new GameQueryException("Four players in game. Unable to join.");
+                    games.get(gameID).setPlayerColor(color, playerID);
+                    models.get(gameID).setPlayerColor(color, playerID);
+                    ServerModel updatedModel = persistenceEngine.updateColor(gameID, color, playerID);
+                    games.replace(gameID, updatedModel.getGameInfo());
+                    models.replace(gameID, updatedModel);
+                    return;
+                } else if (game.getPlayers().size() < 4)
+                {
+
+                    //add player to game
+                    //update local copy
+                    User user = UserManager.getInstance().getUser(playerID);
+                    PlayerInfo player = new PlayerInfo(user.getPlayerID(), user.getUserName(), color);
+                    player.setPlayerIndex(game.getPlayers().size());
+                    persistenceEngine.addPlayerToGame(player, gameID);
+                    models.get(gameID).addPlayer(player);
+                    games.get(gameID).addPlayer(player);
+                    return;
                 } else
                 {
-                    return;
+
+                    if (!game.hasPlayer(playerID))
+                    {
+                        throw new GameQueryException("Four players in game. Unable to join.");
+                    } else
+                    {
+                        return;
+                    }
                 }
             }
         }

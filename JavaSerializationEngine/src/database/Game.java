@@ -50,12 +50,12 @@ public class Game implements Serializable
             FileOutputStream fout = null;
             try
             {
-                File file = Paths.get("..","plugins").toFile();
-                if(!file.exists())
+                File db = Paths.get("plugins", "JavaSerializationEngine", this.title).toFile();
+                if(!db.exists())
                 {
-                    Files.createDirectory(file.toPath());
+                    db.createNewFile();
                 }
-                fout = new FileOutputStream(Paths.get("..", "plugins", "JavaSerializationEngine", this.title).toFile(), true);
+                fout = new FileOutputStream(db, true);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
@@ -84,7 +84,7 @@ public class Game implements Serializable
             FileInputStream streamIn;
             try
             {
-                streamIn = new FileInputStream(Paths.get("..", "plugins", "JavaSerializationEngine", filename).toFile());
+                streamIn = new FileInputStream(Paths.get("plugins", "JavaSerializationEngine", filename).toFile());
                 objectinputstream = new ObjectInputStream(streamIn);
                 game = (Game) objectinputstream.readObject();
             } catch (Exception e)
