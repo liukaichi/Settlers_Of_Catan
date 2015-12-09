@@ -25,7 +25,7 @@ public class Server
     private static int PORT_NUMBER = 8081;
     private static String HOST_NAME = "0.0.0.0";
     private static int CHECKPOINTS = 10;
-    private static String PERSISTENCE_TYPE = "java";
+    private static String PERSISTENCE_TYPE = "sqlite";
     private HttpServer server;
     private Logger LOGGER = Logger.getLogger(this.getClass().getName());
 
