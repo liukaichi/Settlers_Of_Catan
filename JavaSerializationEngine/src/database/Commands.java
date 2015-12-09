@@ -33,12 +33,12 @@ public class Commands
             FileOutputStream fout = null;
             try
             {
-                File file = Paths.get("..","plugins").toFile();
-                if(!file.exists())
+                File db = Paths.get("plugins","JavaSerializationEngine",String.valueOf(gameID)+"Commands").toFile();
+                if(!db.exists())
                 {
-                    Files.createDirectory(file.toPath());
+                    db.createNewFile();
                 }
-                fout = new FileOutputStream(Paths.get("..","plugins","JavaSerializationEngine",String.valueOf(gameID)+"Commands").toFile(), true);
+                fout = new FileOutputStream(db, true);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
@@ -70,7 +70,7 @@ public class Commands
             File file = null;
             try
             {
-                file = Paths.get("..","plugins","JavaSerializationEngine",String.valueOf(gameID)+"Commands").toFile();
+                file = Paths.get("plugins","JavaSerializationEngine",String.valueOf(gameID)+"Commands").toFile();
                 streamIn = new FileInputStream(file);
                 objectinputstream = new ObjectInputStream(streamIn);
                 commands = (Commands) objectinputstream.readObject();

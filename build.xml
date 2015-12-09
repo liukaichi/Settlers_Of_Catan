@@ -189,6 +189,11 @@
 			</manifest>
 		</jar>
 	</target>
+
+	<target name="delete-databases" depends="package" description="deletes the data from a database">
+		<delete dir="${java.dist}/plugins/JavaSerializationEngine" failonerror="false"/>
+		<delete dir="${java.dist}/plugins/SQLiteEngine" failonerror="false"/>
+	</target>
     
     <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
         <zip destfile="./tester.zip" basedir="${java.dist}" />

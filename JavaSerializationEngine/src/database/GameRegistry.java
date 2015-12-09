@@ -7,6 +7,7 @@ import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.exceptions.CatanException;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -112,7 +113,12 @@ public class GameRegistry implements Serializable
             FileOutputStream fout = null;
             try
             {
-                fout = new FileOutputStream(Paths.get("..","plugins","JavaSerializationEngine","GameRegistry.db").toFile(), true);
+                File db = Paths.get("plugins","JavaSerializationEngine","GameRegistry.db").toFile();
+                if(!db.exists())
+                {
+                    db.createNewFile();
+                }
+                fout = new FileOutputStream(db, true);
                 oos = new ObjectOutputStream(fout);
                 oos.writeObject(this);
             } catch (Exception e)
@@ -141,12 +147,7 @@ public class GameRegistry implements Serializable
         FileInputStream streamIn;
         try
         {
-            File file = Paths.get("..","plugins").toFile();
-            if(!file.exists())
-            {
-                Files.createDirectory(file.toPath());
-            }
-            streamIn = new FileInputStream(Paths.get("..","plugins","JavaSerializationEngine","GameRegistry.db").toFile());
+            streamIn = new FileInputStream(Paths.get("plugins","JavaSerializationEngine","GameRegistry.db").toFile());
             objectinputstream = new ObjectInputStream(streamIn);
             gameRegistry = (GameRegistry) objectinputstream.readObject();
         } catch (FileNotFoundException e)
