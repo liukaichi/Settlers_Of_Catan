@@ -4,3 +4,9 @@
 *.sqlite
 tester.zip
 docs/
+java/build/
+java/dist/
+*.class
+plugins/JavaSerializationEngine.jar
+plugins/JavaSerializationEngine/
+plugins/SQLiteEngine.jar
