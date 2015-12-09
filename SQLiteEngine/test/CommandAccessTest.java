@@ -7,6 +7,7 @@ import shared.communication.moveCommands.MonumentCommand;
 import shared.communication.moveCommands.MoveCommand;
 import shared.definitions.PlayerIndex;
 import shared.definitions.ResourceType;
+import shared.model.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,15 +60,22 @@ public class CommandAccessTest extends BaseTest
 
     @Test public void testSaveCommand() throws Exception
     {
-//        int gameId = 3;
-//        populateGame3Commands();
-//
-//        engine.startTransaction();
-//        dao.saveCommand(gameId, new MonopolyCommand(PlayerIndex.PLAYER_0, ResourceType.WOOD));
-//        engine.endTransaction(true);
-//
-//        engine.startTransaction();
-//        dao.
+        int gameId = 123;
+
+        engine.startTransaction();
+        dao.saveCommand(gameId, new MonopolyCommand(PlayerIndex.PLAYER_0, ResourceType.WOOD));
+        dao.saveCommand(gameId, new MonopolyCommand(PlayerIndex.PLAYER_1, ResourceType.WHEAT));
+        dao.saveCommand(gameId, new MonopolyCommand(PlayerIndex.PLAYER_2, ResourceType.WOOD));
+        dao.saveCommand(gameId, new MonopolyCommand(PlayerIndex.PLAYER_3, ResourceType.SHEEP));
+        engine.endTransaction(true);
+
+        engine.startTransaction();
+        List<MoveCommand> list = dao.getAllCommands(gameId);
+        engine.endTransaction(false);
+
+        assertEquals(4, list.size());
+        assertEquals(PlayerIndex.PLAYER_1, list.get(1).getPlayerIndex());
+        assertEquals(MonopolyCommand.class, list.get(3).getClass());
     }
 
     @Test public void testGetNumberOfCommandsInGame() throws Exception
@@ -99,7 +107,16 @@ public class CommandAccessTest extends BaseTest
 
     @Test public void testGetAllCommandsAfter() throws Exception
     {
+        populateGame111Commands();
+        populateGame3Commands();
 
+        engine.startTransaction();
+        List<MoveCommand> list = dao.getAllCommandsAfter(3, 3);
+        List<MoveCommand> list2 = dao.getAllCommandsAfter(111, 6);
+        engine.endTransaction(false);
+
+        assertEquals(3, list.size());
+        assertEquals(0, list2.size());
     }
 
     @Test public void testGetCommand() throws Exception
