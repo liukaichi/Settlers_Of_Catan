@@ -33,6 +33,7 @@ public class Game implements Serializable
     public Game(ServerModel game)
     {
         GameInfo gameInfo = game.getGameInfo();
+        this.model = game;
         this.gameID = gameInfo.getId();
         this.title = gameInfo.getTitle();
     }

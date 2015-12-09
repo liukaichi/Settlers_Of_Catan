@@ -1,3 +1,4 @@
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.main.Catan;
 import database.Game;
@@ -100,6 +101,8 @@ public class JavaSerializationEngine extends IPersistenceEngine
             //gameRelationAccess.addUserToGame(player.getId(), gameID);
             Game game = new Game(gameAccess.getGame(gameID));
             game.getModel().addPlayer(player);
+            GameInfo info = game.getModel().getGameInfo();
+            info.addPlayer(player);
             game.serialize();
         } catch (Exception e)
         {

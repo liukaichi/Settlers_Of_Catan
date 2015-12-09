@@ -104,7 +104,7 @@ public class GameRegistry implements Serializable
 
     public int addGame(ServerModel model, String gameName)
     {
-        Game game = new Game(model, gameName, games.size());
+        Game game = new Game(model, gameName, games.size()+1);
         games.put(game.getGameID(), gameName);
         game.serialize();
         serialize();
@@ -190,7 +190,7 @@ public class GameRegistry implements Serializable
 
     public int getNextGameID()
     {
-        return games.size();
+        return games.size()+1;
     }
 
     public Map<Integer, Credentials> getAllUsers()
