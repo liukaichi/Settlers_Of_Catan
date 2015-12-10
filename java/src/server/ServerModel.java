@@ -22,7 +22,6 @@ import shared.model.player.TradeOffer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -473,5 +472,12 @@ public class ServerModel extends ClientModel implements Serializable
     public GameInfo getGameInfo()
     {
         return gameInfo;
+    }
+
+    public int getCurrentTurnID()
+    {
+        PlayerIndex currentTurn = getTurnTracker().getCurrentTurn();
+        Player player = getPlayer(currentTurn);
+        return player.getID();
     }
 }

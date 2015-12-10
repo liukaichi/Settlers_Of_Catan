@@ -1,9 +1,8 @@
 package server.facade;
 
 import client.data.GameInfo;
-import server.manager.GameManager;
-import server.manager.User;
-import server.manager.UserManager;
+import server.ServerModel;
+import server.manager.*;
 import shared.communication.CreateGameResponse;
 import shared.communication.Credentials;
 import shared.communication.ListAIResponse;
@@ -13,6 +12,7 @@ import shared.definitions.CatanColor;
 import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.GameQueryException;
 import shared.definitions.exceptions.InvalidCredentialsException;
+import shared.model.ClientModel;
 
 import java.util.List;
 
@@ -93,5 +93,17 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
     {
         GameInfo game = GameManager.getInstance().createGame(randomTiles, randomNumbers, randomPorts, name);
         return new CreateGameResponse(game);
+    }
+
+    public ClientModel playAITurns(int gameID)
+    {
+        GameManager gameManager = GameManager.getInstance();
+        ServerModel currentGame = gameManager.getGame(gameID);
+        int currentTurnID = currentGame.getCurrentTurnID();
+        AIManager aiManager = GameManager.getAIManager();
+        AIUser aiUser = aiManager.getAIUser(currentTurnID);
+        if (aiUser != null)
+            aiUser.playTurn(gameID);
+        return gameManager.getGame(gameID);
     }
 }

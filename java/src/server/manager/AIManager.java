@@ -2,19 +2,22 @@ package server.manager;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import shared.definitions.AIType;
 import shared.definitions.CatanColor;
 import shared.definitions.exceptions.CatanException;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 /**
  * Manager for all things "AI."
  */
-class AIManager
+public class AIManager
 {
-    ArrayList<String> aiNames;
+    private ArrayList<String> aiNames;
     private int id = 0;
+    private Map<Integer, AIUser> aiTypes;
 
     public AIManager()
     {
@@ -26,7 +29,7 @@ class AIManager
         aiNames.add("Squall");
     }
 
-    public PlayerInfo createAIPlayer(GameInfo gameInfo) throws CatanException
+    public PlayerInfo createAIPlayer(GameInfo gameInfo, AIType type) throws CatanException
     {
         ArrayList<CatanColor> usedColors = new ArrayList<>();
         ArrayList<String> usedNames = new ArrayList<>();
@@ -35,7 +38,7 @@ class AIManager
             usedColors.add(info.getColor());
             usedNames.add(info.getName());
         }
-        return new PlayerInfo(--id, randomName(usedNames), randomColor(usedColors));
+        return new AIUser(--id, randomName(usedNames), randomColor(usedColors), type);
     }
 
     private CatanColor randomColor(ArrayList<CatanColor> usedColors)
@@ -58,5 +61,10 @@ class AIManager
             name = aiNames.get(rand.nextInt(5));
         }
         return name;
+    }
+
+    public AIUser getAIUser(int userID)
+    {
+        return aiTypes.get(userID);
     }
 }

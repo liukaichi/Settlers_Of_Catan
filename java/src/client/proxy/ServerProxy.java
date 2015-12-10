@@ -223,10 +223,7 @@ public class ServerProxy implements IProxy
     {
         Gson gson = new GsonBuilder().registerTypeAdapter(AIType.class, aiType).create();
         String request = gson.toJson(aiType);
-        //String response = doPost(ADD_AI, request);
-
-        //TO-DO remove this test response and put back the doPost one.
-        String response = "Yay";
+        String response = doPost(ADD_AI, request);
         LOGGER.log(Level.INFO, "Add AI Response:" + response);
         if (response == null)
         {
