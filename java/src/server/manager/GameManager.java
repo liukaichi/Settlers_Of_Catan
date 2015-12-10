@@ -217,7 +217,7 @@ public class GameManager
             //game.addPlayerToGame(aiPlayers.get(joinedGameSize - 1));
             try
             {
-                game.addPlayer(aiManager.createAIPlayer(game));
+                game.addPlayer(aiManager.createAIPlayer(game, type));
             } catch (CatanException e)
                 {
                 throw new GameQueryException(e.getMessage());
@@ -299,6 +299,11 @@ public class GameManager
         {
             GameManager.setIsLoadingGame(false);
         }
+    }
+
+    public static AIManager getAIManager()
+    {
+        return aiManager;
     }
 
 
