@@ -5,6 +5,7 @@ import server.facade.AbstractServerFacade;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;
+import shared.model.player.Player;
 import shared.model.player.TradeOffer;
 
 import java.lang.reflect.Type;
@@ -97,6 +98,7 @@ public class OfferTradeCommand extends MoveCommand implements JsonSerializer<Off
         String model = AbstractServerFacade.getInstance().offerTrade(gameID, offer.getSenderIndex(), this.offer, offer.getReceiverIndex()).toString();
         LOGGER.fine(model);
         persistMe(gameID);
+        AbstractServerFacade.getInstance().playAITurns(gameID);
         return model;
     }
 }

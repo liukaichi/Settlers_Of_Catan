@@ -1209,4 +1209,16 @@ public class CatanMap implements Serializable
         CatanMap map = new CatanMap(true, true, true);
         createMapGui(map);
     }
+
+    public EdgeLocation getRandomEdgeLocation()
+    {
+        Random generator = new Random();
+        Object[] values = getHexes().values().toArray();
+        Hex hex = (Hex) values[generator.nextInt(values.length)];
+
+        Object[] edges = EdgeDirection.values();
+        EdgeDirection randomDirection = (EdgeDirection) edges[generator.nextInt(edges.length)];
+        return new EdgeLocation(hex.getLocation(), randomDirection).getNormalizedLocation();
+
+    }
 }

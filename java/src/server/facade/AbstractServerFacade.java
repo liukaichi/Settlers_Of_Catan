@@ -1,6 +1,7 @@
 package server.facade;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import server.ServerModel;
 import server.manager.*;
 import shared.communication.CreateGameResponse;
@@ -9,6 +10,7 @@ import shared.communication.ListAIResponse;
 import shared.communication.ListGamesResponse;
 import shared.definitions.AIType;
 import shared.definitions.CatanColor;
+import shared.definitions.TurnStatus;
 import shared.definitions.exceptions.ExistingRegistrationException;
 import shared.definitions.exceptions.GameQueryException;
 import shared.definitions.exceptions.InvalidCredentialsException;
@@ -102,8 +104,35 @@ public abstract class AbstractServerFacade implements IGameFacade, IGamesFacade,
         int currentTurnID = currentGame.getCurrentTurnID();
         AIManager aiManager = GameManager.getAIManager();
         AIUser aiUser = aiManager.getAIUser(currentTurnID);
+        if (currentGame.getTradeOffer() != null)
+        {
+            aiUser = aiManager.getAIUser(currentGame.getPlayerID((currentGame.getTradeOffer().getReceiver())));
+        }
         if (aiUser != null)
             aiUser.playTurn(gameID);
+
         return gameManager.getGame(gameID);
+    }
+
+    public void checkAIDiscards(int gameID)
+    {
+        GameManager gameManager = GameManager.getInstance();
+        ServerModel currentGame = gameManager.getGame(gameID);
+        int currentTurnID = currentGame.getCurrentTurnID();
+        AIManager aiManager = GameManager.getAIManager();
+        AIUser aiUser = aiManager.getAIUser(currentTurnID);
+
+
+        if (currentGame.getTurnTracker().getStatus() == TurnStatus.Discarding)
+        {
+            for (PlayerInfo player : currentGame.getPlayerInfos())
+            {
+                if (player.getId() < 0)
+                {
+                    aiUser = aiManager.getAIUser(player.getId());
+                    aiUser.discard(gameID);
+                }
+            }
+        }
     }
 }

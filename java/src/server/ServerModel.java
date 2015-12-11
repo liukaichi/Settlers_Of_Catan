@@ -480,4 +480,16 @@ public class ServerModel extends ClientModel implements Serializable
         Player player = getPlayer(currentTurn);
         return player.getID();
     }
+
+    public int getPlayerID(int playerIndex)
+    {
+        for (PlayerInfo player :gameInfo.getPlayers())
+        {
+            if (player.getPlayerIndex().getIndex() == playerIndex)
+            {
+                return player.getId();
+            }
+        }
+        return -5;
+    }
 }

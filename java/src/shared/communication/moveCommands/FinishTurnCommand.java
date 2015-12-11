@@ -3,6 +3,7 @@ package shared.communication.moveCommands;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import server.facade.AbstractServerFacade;
+import server.manager.GameManager;
 import shared.definitions.MoveType;
 import shared.definitions.PlayerIndex;
 import shared.definitions.exceptions.CatanException;

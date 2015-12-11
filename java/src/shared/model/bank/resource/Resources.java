@@ -207,4 +207,6 @@ public class Resources implements JsonSerializer<Resources>, Serializable
     {
         getResource(type).subResource(amount);
     }
+
+
 }

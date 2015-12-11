@@ -21,7 +21,7 @@ public enum AIType implements JsonSerializer<AIType>
     /*
      * (non-Javadoc)
      * 
-     * @see com.google.gson.JsonSerializer#serialize(java.lang.Object,
+     * @see com.google.gson  .JsonSerializer#serialize(java.lang.Object,
      * java.lang.reflect.Type, com.google.gson.JsonSerializationContext)
      */
     @Override public JsonElement serialize(AIType src, Type srcType, JsonSerializationContext context)

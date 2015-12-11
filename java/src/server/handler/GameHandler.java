@@ -6,6 +6,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.facade.AbstractServerFacade;
+import server.manager.GameManager;
 import shared.definitions.AIType;
 import shared.model.ClientModel;
 
@@ -136,8 +137,8 @@ public class GameHandler implements HttpHandler
                 respHeaders.set("Content-Type", "application/json");
             } else if (commandString.toLowerCase().equals("addai"))
             {
-                String aiType = request.substring(request.indexOf(':') + 3, request.length() - 2);
-                facade.addAI(gameID, AIType.valueOf(aiType));
+                String aitype = request.substring(request.indexOf(':') + 2,   request.length() - 2);
+                facade.addAI(gameID, shared.definitions.AIType.valueOf(aitype));
                 response = "Not implemented for this phase";
                 respHeaders.set("Set-cookie", cookie + ";Path=/;");
                 LOGGER.fine("Set Response Header: Set-cookie: " + respHeaders.get("Set-cookie") + "\n");

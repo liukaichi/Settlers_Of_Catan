@@ -76,6 +76,7 @@ public class RollNumberCommand extends MoveCommand implements JsonSerializer<Rol
         String model = AbstractServerFacade.getInstance().rollNumber(gameID, getPlayerIndex(), this.number).toString();
         LOGGER.fine(model);
         persistMe(gameID);
+        AbstractServerFacade.getInstance().checkAIDiscards(gameID);
         return model;
     }
 }
